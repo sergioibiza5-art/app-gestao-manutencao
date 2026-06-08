@@ -107,7 +107,7 @@ export async function getModuleData() {
         sgqRecords,
         equipmentTypes,
       ] = await Promise.all([
-        prisma.expense.findMany({ orderBy: { date: "desc" }, take: 30 }),
+        prisma.expense.findMany({ orderBy: { date: "desc" }, take: 30, include: { equipment: true, documents: true } }),
         prisma.monthlyBill.findMany({ orderBy: { name: "asc" }, take: 50 }),
         prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 50, include: { equipment: true } }),
         prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
@@ -171,12 +171,27 @@ export async function getEquipmentDetail(id: string) {
           maintenanceLogs: { orderBy: { date: "desc" }, take: 50, include: { user: true } },
           maintenanceSchedules: { orderBy: { scheduledAt: "asc" }, take: 50 },
           calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30 },
+          expenses: { orderBy: { date: "desc" }, take: 50, include: { documents: true } },
           documents: { orderBy: { createdAt: "desc" }, take: 30 },
         },
       });
 
       return equipment;
     },
+    null,
+  );
+}
+
+export async function getExpenseDetail(id: string) {
+  return readDb(
+    async (prisma) =>
+      prisma.expense.findUnique({
+        where: { id },
+        include: {
+          equipment: true,
+          documents: true,
+        },
+      }),
     null,
   );
 }

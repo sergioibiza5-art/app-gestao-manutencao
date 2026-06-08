@@ -142,6 +142,7 @@ model Equipment {
   maintenanceLogs MaintenanceLog[]
   maintenanceSchedules MaintenanceSchedule[]
   calibrationLogs CalibrationLog[]
+  expenses        Expense[]
   documents       Document[]
 
   createdAt DateTime @default(now())
@@ -430,6 +431,9 @@ model Expense {
   amount      Decimal       @db.Decimal(10, 2)
   status      ExpenseStatus @default(PAID)
   notes       String?
+
+  equipmentId String?
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
 
   userId String?
   user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)

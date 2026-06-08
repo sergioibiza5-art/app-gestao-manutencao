@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ClipboardCheck, ExternalLink, History, Ruler, Wrench } from "lucide-react";
+import { ArrowLeft, ClipboardCheck, ExternalLink, History, Receipt, Ruler, Wrench } from "lucide-react";
 
 import { createEquipmentInterventionLog, updateEquipmentBasics } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -35,6 +35,7 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
   }
 
   const activeTemplate = equipment.equipmentType?.checklistTemplates[0];
+  const equipmentExpenseTotal = equipment.expenses.reduce((sum, expense) => sum + Number(expense.amount ?? 0), 0);
   const historyItems = [
     ...equipment.interventionLogs.map((item) => ({
       id: item.id,
@@ -187,6 +188,42 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
             <button className={buttonClass}>Guardar alterações</button>
           </div>
         </form>
+      </Panel>
+
+      <Panel>
+        <div className="flex items-center gap-3">
+          <Receipt size={22} className="text-amber-300" />
+          <h2 className="text-xl font-semibold text-zinc-50">Despesas associadas</h2>
+        </div>
+        <div className="mt-4 rounded-lg border border-amber-300/20 bg-amber-300/10 p-4">
+          <p className="text-sm text-amber-100/70">Total registado neste equipamento</p>
+          <p className="mt-1 text-3xl font-semibold text-amber-200">{formatCurrency(equipmentExpenseTotal)}</p>
+        </div>
+        <div className="mt-4 space-y-3">
+          {equipment.expenses.length === 0 ? (
+            <EmptyState title="Sem despesas associadas" description="Quando associares despesas a este equipamento, elas aparecem aqui com a respetiva fatura." />
+          ) : (
+            equipment.expenses.map((expense) => {
+              const invoice = expense.documents.find((document) => document.type === "INVOICE" && document.fileUrl);
+
+              return (
+                <Link key={expense.id} href={`/despesas/${expense.id}`} className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 transition hover:border-amber-300/50">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <h3 className="font-semibold text-zinc-100">{expense.title}</h3>
+                      <p className="mt-1 text-sm text-zinc-500">{expense.supplier ?? expense.category}</p>
+                      {invoice && <p className="mt-1 text-xs font-medium text-sky-300">Fatura associada</p>}
+                    </div>
+                    <div className="text-left sm:text-right">
+                      <p className="font-semibold text-amber-300">{formatCurrency(expense.amount)}</p>
+                      <p className="mt-1 text-xs text-zinc-500">{formatDate(expense.date)}</p>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })
+          )}
+        </div>
       </Panel>
 
       <Panel>

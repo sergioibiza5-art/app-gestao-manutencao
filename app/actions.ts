@@ -84,8 +84,11 @@ async function getSystemUserId() {
 
 export async function createExpense(formData: FormData) {
   const prisma = getPrisma();
+  const equipmentId = optionalText(formData, "equipmentId");
+  const invoiceUrl = optionalText(formData, "invoiceUrl");
+  const invoiceName = optionalText(formData, "invoiceName");
 
-  await prisma.expense.create({
+  const expense = await prisma.expense.create({
     data: {
       title: text(formData, "title"),
       category: text(formData, "category") || "Geral",
@@ -94,11 +97,103 @@ export async function createExpense(formData: FormData) {
       date: optionalDate(formData, "date") ?? new Date(),
       status: enumValue(formData, "status", expenseStatuses, "PAID"),
       notes: optionalText(formData, "notes"),
+      equipmentId,
     },
   });
 
+  if (invoiceUrl) {
+    await prisma.document.create({
+      data: {
+        title: invoiceName || `Fatura - ${expense.title}`,
+        type: "INVOICE",
+        fileUrl: invoiceUrl,
+        fileName: invoiceName,
+        notes: "Documento associado a despesa.",
+        expenseId: expense.id,
+        equipmentId,
+      },
+    });
+  }
+
   revalidatePath("/");
   revalidatePath("/despesas");
+  if (equipmentId) revalidatePath(`/inventario/${equipmentId}`);
+}
+
+export async function updateExpense(formData: FormData) {
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = optionalText(formData, "equipmentId");
+  const invoiceUrl = optionalText(formData, "invoiceUrl");
+  const invoiceName = optionalText(formData, "invoiceName");
+
+  if (!id) {
+    return;
+  }
+
+  await prisma.expense.update({
+    where: { id },
+    data: {
+      title: text(formData, "title"),
+      category: text(formData, "category") || "Geral",
+      supplier: optionalText(formData, "supplier"),
+      amount: decimal(formData, "amount"),
+      date: optionalDate(formData, "date") ?? new Date(),
+      status: enumValue(formData, "status", expenseStatuses, "PAID"),
+      notes: optionalText(formData, "notes"),
+      equipmentId,
+    },
+  });
+
+  if (invoiceUrl) {
+    const existingInvoice = await prisma.document.findFirst({
+      where: { expenseId: id, type: "INVOICE" },
+      select: { id: true },
+    });
+
+    if (existingInvoice) {
+      await prisma.document.update({
+        where: { id: existingInvoice.id },
+        data: {
+          title: invoiceName || "Fatura",
+          fileUrl: invoiceUrl,
+          fileName: invoiceName,
+          equipmentId,
+        },
+      });
+    } else {
+      await prisma.document.create({
+        data: {
+          title: invoiceName || "Fatura",
+          type: "INVOICE",
+          fileUrl: invoiceUrl,
+          fileName: invoiceName,
+          notes: "Documento associado a despesa.",
+          expenseId: id,
+          equipmentId,
+        },
+      });
+    }
+  }
+
+  revalidatePath("/");
+  revalidatePath("/despesas");
+  revalidatePath(`/despesas/${id}`);
+  if (equipmentId) revalidatePath(`/inventario/${equipmentId}`);
+}
+
+export async function deleteExpense(formData: FormData) {
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+
+  if (!id) {
+    return;
+  }
+
+  await prisma.expense.delete({ where: { id } });
+  revalidatePath("/");
+  revalidatePath("/despesas");
+  redirect("/despesas");
 }
 
 export async function createQuickEntry(formData: FormData) {
