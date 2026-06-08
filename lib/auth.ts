@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { getPrisma } from "@/lib/prisma";
+import type { UserRole } from "@prisma/client";
 
 const cookieName = "casa_sgq_session";
 const sessionTtlMs = 1000 * 60 * 60 * 12;
@@ -82,4 +83,31 @@ export async function requireUser() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
   return user;
+}
+
+const roleRank: Record<UserRole, number> = {
+  VIEWER: 0,
+  USER: 1,
+  MANAGER: 2,
+  ADMIN: 3,
+};
+
+export async function requireRole(minRole: UserRole) {
+  const user = await requireUser();
+  if (roleRank[user.role] < roleRank[minRole]) {
+    redirect("/");
+  }
+  return user;
+}
+
+export async function requireCanWrite() {
+  return requireRole("USER");
+}
+
+export async function requireCanManage() {
+  return requireRole("MANAGER");
+}
+
+export async function requireCanAdmin() {
+  return requireRole("ADMIN");
 }

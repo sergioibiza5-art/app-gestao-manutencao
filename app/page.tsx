@@ -27,7 +27,7 @@ export default async function Page() {
   const tasks = dashboard.tasks.length > 0
     ? dashboard.tasks.map((task) => ({
         title: task.title,
-        area: task.equipment?.name ?? task.frequency,
+        area: task.equipment?.name ?? task.frequency ?? "Pontual",
         due: formatShortDate(task.dueDate ?? task.nextDue),
         status: task.status,
         accent: "border-l-teal-400",
@@ -35,9 +35,9 @@ export default async function Page() {
     : fallbackTasks;
   const calendar = dashboard.calendar.length > 0
     ? dashboard.calendar.map((event) => ({
-        date: formatShortDate(event.dueDate ?? event.nextDue),
+        date: formatShortDate(event.scheduledAt),
         title: event.title,
-        tag: event.frequency,
+        tag: event.equipment?.name ?? event.frequency,
       }))
     : fallbackCalendar;
   const kpis = [

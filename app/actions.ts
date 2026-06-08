@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
-import { createSession, destroySession, hashPassword, verifyPassword } from "@/lib/auth";
+import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanWrite, verifyPassword } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 
 function text(formData: FormData, key: string) {
@@ -46,6 +46,13 @@ function intValue(formData: FormData, key: string) {
 function optionalDate(formData: FormData, key: string) {
   const value = text(formData, key);
   return value.length > 0 ? new Date(value) : null;
+}
+
+function dateWithTime(formData: FormData, dateKey: string, timeKey: string) {
+  const dateValue = text(formData, dateKey);
+  const timeValue = text(formData, timeKey);
+  if (!dateValue) return null;
+  return new Date(`${dateValue}T${timeValue || "00:00"}`);
 }
 
 function enumValue<T extends string>(formData: FormData, key: string, allowed: readonly T[], fallback: T) {
@@ -117,6 +124,7 @@ async function getSystemUserId() {
 }
 
 export async function createExpense(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
   const vehicleId = optionalText(formData, "vehicleId");
@@ -160,6 +168,7 @@ export async function createExpense(formData: FormData) {
 }
 
 export async function updateExpense(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
@@ -228,6 +237,7 @@ export async function updateExpense(formData: FormData) {
 }
 
 export async function deleteExpense(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
 
@@ -250,6 +260,7 @@ export async function deleteExpense(formData: FormData) {
 }
 
 export async function createQuickEntry(formData: FormData) {
+  await requireCanWrite();
   const type = text(formData, "entryType");
   const title = text(formData, "title") || text(formData, "supplier") || "Registo rápido";
   const costCenter = optionalText(formData, "costCenter");
@@ -287,6 +298,7 @@ export async function createQuickEntry(formData: FormData) {
 }
 
 export async function createMonthlyBill(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
 
   await prisma.monthlyBill.create({
@@ -303,6 +315,7 @@ export async function createMonthlyBill(formData: FormData) {
 }
 
 export async function createBudget(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const month = intValue(formData, "month") || new Date().getMonth() + 1;
   const year = intValue(formData, "year") || new Date().getFullYear();
@@ -335,19 +348,23 @@ export async function createBudget(formData: FormData) {
 
 export async function createTask(formData: FormData) {
   const prisma = getPrisma();
-  const userId = await getSystemUserId();
+  const user = await requireCanWrite();
   const equipmentId = optionalText(formData, "equipmentId");
+  const isRecurring = text(formData, "isRecurring") === "true";
+  const dueDate = dateWithTime(formData, "dueDate", "dueTime");
 
   await prisma.task.create({
     data: {
       title: text(formData, "title"),
       description: optionalText(formData, "description"),
-      frequency: enumValue(formData, "frequency", taskFrequencies, "MONTHLY"),
+      frequency: isRecurring ? enumValue(formData, "frequency", taskFrequencies, "MONTHLY") : null,
+      isRecurring,
       status: enumValue(formData, "status", taskStatuses, "PENDING"),
-      startDate: optionalDate(formData, "startDate") ?? new Date(),
-      dueDate: optionalDate(formData, "dueDate"),
+      startDate: dateWithTime(formData, "startDate", "startTime") ?? dueDate ?? new Date(),
+      dueDate,
+      dueTime: optionalText(formData, "dueTime"),
       nextDue: optionalDate(formData, "nextDue"),
-      createdById: userId,
+      createdById: user.id,
       equipmentId,
     },
   });
@@ -356,7 +373,47 @@ export async function createTask(formData: FormData) {
   revalidatePath("/tarefas");
 }
 
+export async function updateTask(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const isRecurring = text(formData, "isRecurring") === "true";
+  const dueDate = dateWithTime(formData, "dueDate", "dueTime");
+
+  if (!id) return;
+
+  await prisma.task.update({
+    where: { id },
+    data: {
+      title: text(formData, "title"),
+      description: optionalText(formData, "description"),
+      frequency: isRecurring ? enumValue(formData, "frequency", taskFrequencies, "MONTHLY") : null,
+      isRecurring,
+      status: enumValue(formData, "status", taskStatuses, "PENDING"),
+      startDate: dateWithTime(formData, "startDate", "startTime") ?? dueDate ?? new Date(),
+      dueDate,
+      dueTime: optionalText(formData, "dueTime"),
+      equipmentId: optionalText(formData, "equipmentId"),
+    },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/tarefas");
+}
+
+export async function deleteTask(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.task.delete({ where: { id } });
+  revalidatePath("/");
+  revalidatePath("/tarefas");
+}
+
 export async function createEquipment(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const plans = [
     interventionPlanFromForm(formData, "inspectionInternal", "INSPECTION", "INTERNAL"),
@@ -393,6 +450,7 @@ export async function createEquipment(formData: FormData) {
 }
 
 export async function updateEquipmentBasics(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const equipmentId = text(formData, "equipmentId");
 
@@ -427,6 +485,7 @@ export async function updateEquipmentBasics(formData: FormData) {
 }
 
 export async function createEquipmentTypeWithChecklist(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const typeName = text(formData, "typeName");
   const templateTitle = text(formData, "templateTitle") || `Checklist ${typeName}`;
@@ -514,6 +573,7 @@ function interventionPlanFromForm(formData: FormData, prefix: string, kind: Inte
 }
 
 export async function createEquipmentInterventionLog(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
 
@@ -541,6 +601,7 @@ export async function createEquipmentInterventionLog(formData: FormData) {
 }
 
 export async function createInternalMaintenanceChecklistRecord(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = text(formData, "equipmentId");
   const templateId = text(formData, "templateId");
@@ -609,6 +670,7 @@ export async function createInternalMaintenanceChecklistRecord(formData: FormDat
 }
 
 export async function createConsumable(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
 
@@ -632,6 +694,7 @@ export async function createConsumable(formData: FormData) {
 }
 
 export async function createMaintenanceLog(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
 
@@ -660,6 +723,7 @@ export async function createMaintenanceLog(formData: FormData) {
 }
 
 export async function updateMaintenanceLog(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
@@ -690,6 +754,7 @@ export async function updateMaintenanceLog(formData: FormData) {
 }
 
 export async function deleteMaintenanceLog(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
 
@@ -753,6 +818,7 @@ function generateMaintenanceDates(year: number, startDate: Date, frequency: Task
 }
 
 export async function createAnnualMaintenanceSchedule(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
 
@@ -784,6 +850,7 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
 }
 
 export async function updateMaintenanceSchedule(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
@@ -813,6 +880,7 @@ export async function updateMaintenanceSchedule(formData: FormData) {
 }
 
 export async function deleteMaintenanceSchedule(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
 
@@ -825,7 +893,146 @@ export async function deleteMaintenanceSchedule(formData: FormData) {
   revalidatePath("/manutencao");
 }
 
+async function nextWorkOrderNumber() {
+  const prisma = getPrisma();
+  const count = await prisma.workOrder.count();
+  return `OP-${String(count + 1).padStart(5, "0")}`;
+}
+
+export async function createWorkOrderFromSchedule(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const scheduleId = text(formData, "scheduleId");
+
+  if (!scheduleId) return;
+
+  const schedule = await prisma.maintenanceSchedule.findUnique({
+    where: { id: scheduleId },
+    include: {
+      equipment: {
+        include: {
+          equipmentType: {
+            include: {
+              checklistTemplates: {
+                where: { active: true },
+                orderBy: { createdAt: "desc" },
+                take: 1,
+              },
+            },
+          },
+        },
+      },
+      workOrder: true,
+    },
+  });
+
+  if (!schedule) return;
+  if (schedule.workOrder) redirect(`/manutencao/${schedule.id}`);
+
+  const workOrder = await prisma.workOrder.create({
+    data: {
+      number: await nextWorkOrderNumber(),
+      title: schedule.title,
+      type: schedule.type,
+      equipmentId: schedule.equipmentId,
+      scheduleId: schedule.id,
+      templateId: schedule.equipment.equipmentType?.checklistTemplates[0]?.id,
+      notes: schedule.notes,
+    },
+  });
+
+  await prisma.maintenanceSchedule.update({
+    where: { id: schedule.id },
+    data: { status: "SCHEDULED" },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath(`/manutencao/${schedule.id}`);
+  redirect(`/manutencao/${schedule.id}?op=${workOrder.id}`);
+}
+
+export async function completeWorkOrder(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  const equipmentId = text(formData, "equipmentId");
+  const templateId = optionalText(formData, "templateId");
+  const itemIds = formData.getAll("itemId").filter((value): value is string => typeof value === "string");
+  const performedAt = dateWithTime(formData, "performedAt", "performedTime") ?? new Date();
+
+  if (!workOrderId || !equipmentId) return;
+
+  const workOrder = await prisma.workOrder.findUnique({ where: { id: workOrderId } });
+  if (!workOrder) return;
+
+  const checklistRecord =
+    templateId && itemIds.length > 0
+      ? await prisma.internalMaintenanceRecord.create({
+          data: {
+            equipmentId,
+            templateId,
+            documentNo: workOrder.number,
+            year: performedAt.getFullYear(),
+            month: performedAt.getMonth() + 1,
+            performedAt,
+            responsible: optionalText(formData, "performedBy"),
+            result: optionalText(formData, "result"),
+            notes: optionalText(formData, "notes"),
+            responses: {
+              create: itemIds.map((itemId) => ({
+                itemId,
+                status: enumValue(formData, `status_${itemId}`, checklistResponseStatuses, "OK"),
+                obs: optionalText(formData, `obs_${itemId}`),
+              })),
+            },
+          },
+        })
+      : null;
+
+  const maintenanceLog = await prisma.maintenanceLog.create({
+    data: {
+      title: workOrder.title,
+      description: optionalText(formData, "actionsDone") || "Ordem de servico executada.",
+      type: workOrder.type,
+      date: performedAt,
+      supplier: optionalText(formData, "supplier"),
+      performedBy: optionalText(formData, "performedBy"),
+      cost: decimal(formData, "amount"),
+      notes: optionalText(formData, "notes"),
+      equipmentId,
+    },
+  });
+
+  await prisma.workOrder.update({
+    where: { id: workOrderId },
+    data: {
+      status: "DONE",
+      closedAt: performedAt,
+      performedBy: optionalText(formData, "performedBy"),
+      actionsDone: optionalText(formData, "actionsDone"),
+      result: optionalText(formData, "result"),
+      notes: optionalText(formData, "notes"),
+      checklistRecordId: checklistRecord?.id,
+      maintenanceLogId: maintenanceLog.id,
+    },
+  });
+
+  if (workOrder.scheduleId) {
+    await prisma.maintenanceSchedule.update({
+      where: { id: workOrder.scheduleId },
+      data: { status: "DONE" },
+    });
+  }
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath(`/manutencao/${workOrder.scheduleId}`);
+  revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
 export async function createCalibrationLog(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
 
@@ -851,6 +1058,7 @@ export async function createCalibrationLog(formData: FormData) {
 }
 
 export async function createDocument(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
 
   await prisma.document.create({
@@ -870,6 +1078,7 @@ export async function createDocument(formData: FormData) {
 }
 
 export async function createUser(formData: FormData) {
+  await requireCanAdmin();
   const prisma = getPrisma();
   const password = optionalText(formData, "password");
 
@@ -886,7 +1095,40 @@ export async function createUser(formData: FormData) {
   revalidatePath("/acessos");
 }
 
+export async function updateUser(formData: FormData) {
+  await requireCanAdmin();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const password = optionalText(formData, "password");
+
+  if (!id) return;
+
+  await prisma.user.update({
+    where: { id },
+    data: {
+      name: text(formData, "name"),
+      email: text(formData, "email").toLowerCase(),
+      ...(password ? { password: hashPassword(password) } : {}),
+      role: enumValue(formData, "role", userRoles, "USER"),
+      active: text(formData, "active") !== "false",
+    },
+  });
+
+  revalidatePath("/acessos");
+}
+
+export async function deleteUser(formData: FormData) {
+  await requireCanAdmin();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.user.delete({ where: { id } });
+  revalidatePath("/acessos");
+}
+
 export async function createVehicle(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
 
   await prisma.vehicle.create({
@@ -905,6 +1147,7 @@ export async function createVehicle(formData: FormData) {
 }
 
 export async function updateVehicle(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
 
@@ -930,6 +1173,7 @@ export async function updateVehicle(formData: FormData) {
 }
 
 export async function deleteVehicle(formData: FormData) {
+  await requireCanAdmin();
   const prisma = getPrisma();
   const id = text(formData, "id");
 
@@ -943,6 +1187,7 @@ export async function deleteVehicle(formData: FormData) {
 }
 
 export async function createVehicleKmLog(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const vehicleId = text(formData, "vehicleId");
 
@@ -1003,6 +1248,7 @@ async function estimatedVehicleDueDate(vehicleId: string, nextDueKm: number | nu
 }
 
 export async function updateVehicleKmLog(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const vehicleId = text(formData, "vehicleId");
@@ -1026,6 +1272,7 @@ export async function updateVehicleKmLog(formData: FormData) {
 }
 
 export async function deleteVehicleKmLog(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const vehicleId = optionalText(formData, "vehicleId");
@@ -1040,6 +1287,7 @@ export async function deleteVehicleKmLog(formData: FormData) {
 }
 
 export async function createVehicleService(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const vehicleId = text(formData, "vehicleId");
 
@@ -1070,6 +1318,7 @@ export async function createVehicleService(formData: FormData) {
 }
 
 export async function updateVehicleService(formData: FormData) {
+  await requireCanWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const vehicleId = text(formData, "vehicleId");
@@ -1102,6 +1351,7 @@ export async function updateVehicleService(formData: FormData) {
 }
 
 export async function deleteVehicleService(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const vehicleId = optionalText(formData, "vehicleId");
@@ -1116,6 +1366,7 @@ export async function deleteVehicleService(formData: FormData) {
 }
 
 export async function createSgqRecord(formData: FormData) {
+  await requireCanManage();
   const prisma = getPrisma();
   const userId = await getSystemUserId();
 

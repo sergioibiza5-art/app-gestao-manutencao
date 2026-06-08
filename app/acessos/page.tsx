@@ -1,9 +1,16 @@
-import { createSgqRecord, createUser } from "@/app/actions";
+import { createSgqRecord, createUser, deleteUser, updateUser } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
+
+const roleDescriptions = [
+  ["ADMIN", "Acesso total: utilizadores, permissoes, configuracao, apagar registos e gerir SGQ."],
+  ["MANAGER", "Planeia e gere: equipamentos, manutencoes, frota, checklists, documentos e aprovacao operacional."],
+  ["USER", "Executa trabalho diario: tarefas, leituras, checklists, despesas, documentos e registos de intervencao."],
+  ["VIEWER", "Consulta apenas: dashboard, historicos, calendario, documentos e fichas, sem criar ou editar."],
+];
 
 export default async function AccessPage() {
   const { users, sgqRecords } = await getModuleData();
@@ -56,6 +63,18 @@ export default async function AccessPage() {
         </Panel>
       </section>
 
+      <Panel>
+        <h2 className="text-xl font-semibold text-zinc-50">Niveis de acesso</h2>
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          {roleDescriptions.map(([role, description]) => (
+            <article key={role} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+              <h3 className="font-semibold text-violet-200">{role}</h3>
+              <p className="mt-2 text-sm leading-6 text-zinc-500">{description}</p>
+            </article>
+          ))}
+        </div>
+      </Panel>
+
       <section className="grid gap-4 xl:grid-cols-2">
         <Panel>
           <h2 className="text-xl font-semibold text-zinc-50">Utilizadores</h2>
@@ -65,13 +84,29 @@ export default async function AccessPage() {
             ) : (
               users.map((user) => (
                 <article key={user.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-semibold text-zinc-100">{user.name}</h3>
-                      <p className="mt-1 text-sm text-zinc-500">{user.email}</p>
-                    </div>
-                    <p className="text-sm font-medium text-violet-300">{user.role}</p>
-                  </div>
+                  <form action={updateUser} className="grid gap-2 md:grid-cols-2">
+                    <input type="hidden" name="id" value={user.id} />
+                    <input name="name" className={inputClass} defaultValue={user.name} />
+                    <input name="email" type="email" className={inputClass} defaultValue={user.email} />
+                    <input name="password" type="password" className={inputClass} placeholder="Nova palavra-passe" />
+                    <select name="role" className={inputClass} defaultValue={user.role}>
+                      <option value="ADMIN">Admin</option>
+                      <option value="MANAGER">Gestor</option>
+                      <option value="USER">Utilizador</option>
+                      <option value="VIEWER">Leitura</option>
+                    </select>
+                    <select name="active" className={inputClass} defaultValue={user.active ? "true" : "false"}>
+                      <option value="true">Ativo</option>
+                      <option value="false">Inativo</option>
+                    </select>
+                    <button className="inline-flex h-11 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">Atualizar</button>
+                  </form>
+                  <form action={deleteUser} className="mt-2">
+                    <input type="hidden" name="id" value={user.id} />
+                    <button className="inline-flex h-9 items-center justify-center rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 text-xs font-semibold text-rose-200">
+                      Eliminar utilizador
+                    </button>
+                  </form>
                 </article>
               ))
             )}

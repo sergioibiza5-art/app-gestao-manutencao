@@ -1,6 +1,6 @@
 import { CalendarDays, Filter, Map, Plus, Trash2 } from "lucide-react";
 
-import { createAnnualMaintenanceSchedule, createMaintenanceLog, deleteMaintenanceLog, deleteMaintenanceSchedule, updateMaintenanceLog, updateMaintenanceSchedule } from "@/app/actions";
+import { createAnnualMaintenanceSchedule, createMaintenanceLog, createWorkOrderFromSchedule, deleteMaintenanceLog, deleteMaintenanceSchedule, updateMaintenanceLog, updateMaintenanceSchedule } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getMaintenanceData } from "@/lib/data";
@@ -116,6 +116,12 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 {formatDate(range.start)} até {formatDate(range.end)}
               </p>
             </div>
+            <div className="mb-1 grid gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:grid-cols-[1fr_1fr_1fr_auto]">
+              <span>Periodo</span>
+              <span>Data base</span>
+              <span>Tipo</span>
+              <span />
+            </div>
             <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_auto]">
               <select name="view" defaultValue={selectedView} className={inputClass}>
                 <option value="day">Dia</option>
@@ -162,6 +168,20 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                           <span className="rounded-md border border-zinc-800 px-2 py-1">{statusLabel(schedule.status)}</span>
                           <span className="rounded-md border border-zinc-800 px-2 py-1">{schedule.frequency}</span>
                           {schedule.costCenter && <span className="rounded-md border border-zinc-800 px-2 py-1">CC {schedule.costCenter}</span>}
+                          {schedule.workOrder && <span className="rounded-md border border-teal-300/30 px-2 py-1 text-teal-200">{schedule.workOrder.number}</span>}
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <a href={`/manutencao/${schedule.id}`} className="inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+                            Abrir agendamento
+                          </a>
+                          {!schedule.workOrder && (
+                            <form action={createWorkOrderFromSchedule}>
+                              <input type="hidden" name="scheduleId" value={schedule.id} />
+                              <button className="inline-flex h-10 items-center justify-center rounded-lg bg-teal-300 px-3 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
+                                Criar OP
+                              </button>
+                            </form>
+                          )}
                         </div>
                         <form action={updateMaintenanceSchedule} className="mt-3 grid gap-2 md:grid-cols-2">
                           <input type="hidden" name="id" value={schedule.id} />

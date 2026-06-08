@@ -51,11 +51,12 @@ export async function getDashboardData() {
           take: 4,
           include: { equipment: true },
         }),
-        prisma.task.findMany({
+        prisma.maintenanceSchedule.findMany({
           where: {
-            OR: [{ dueDate: { gte: now } }, { nextDue: { gte: now } }],
+            status: "SCHEDULED",
+            scheduledAt: { gte: now },
           },
-          orderBy: [{ dueDate: "asc" }, { nextDue: "asc" }],
+          orderBy: { scheduledAt: "asc" },
           take: 4,
           include: { equipment: true },
         }),
@@ -110,7 +111,7 @@ export async function getModuleData() {
       ] = await Promise.all([
         prisma.expense.findMany({ orderBy: { date: "desc" }, take: 30, include: { equipment: true, vehicle: true, documents: true } }),
         prisma.monthlyBill.findMany({ orderBy: { name: "asc" }, take: 50 }),
-        prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 50, include: { equipment: true } }),
+        prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true } }),
         prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 40, include: { equipment: true } }),
@@ -300,11 +301,14 @@ export async function getMaintenanceData(filters: { view?: string; date?: string
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.maintenanceSchedule.findMany({
           where: {
-            scheduledAt: { gte: start, lte: end },
+            OR: [
+              { scheduledAt: { gte: start, lte: end } },
+              { scheduledAt: { lt: start }, status: "SCHEDULED" },
+            ],
             ...(type ? { type } : {}),
           },
           orderBy: { scheduledAt: "asc" },
-          include: { equipment: true },
+          include: { equipment: true, workOrder: true },
           take: 370,
         }),
       ]);
@@ -312,6 +316,38 @@ export async function getMaintenanceData(filters: { view?: string; date?: string
       return { equipment, maintenanceLogs, schedules, range: { start, end }, view, type };
     },
     { equipment: [], maintenanceLogs: [], schedules: [], range: { start, end }, view, type },
+  );
+}
+
+export async function getMaintenanceScheduleDetail(id: string) {
+  return readDb(
+    async (prisma) =>
+      prisma.maintenanceSchedule.findUnique({
+        where: { id },
+        include: {
+          equipment: {
+            include: {
+              equipmentType: {
+                include: {
+                  checklistTemplates: {
+                    where: { active: true },
+                    orderBy: { createdAt: "desc" },
+                    include: { items: { where: { active: true }, orderBy: { order: "asc" } } },
+                  },
+                },
+              },
+            },
+          },
+          workOrder: {
+            include: {
+              template: { include: { items: { where: { active: true }, orderBy: { order: "asc" } } } },
+              checklistRecord: { include: { responses: { include: { item: true } } } },
+              maintenanceLog: true,
+            },
+          },
+        },
+      }),
+    null,
   );
 }
 
