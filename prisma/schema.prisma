@@ -1,0 +1,571 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  USER
+  VIEWER
+}
+
+enum TaskFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  FOUR_MONTHLY
+  SEMIANNUAL
+  ANNUAL
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum EquipmentStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+  DISCARDED
+}
+
+enum DocumentType {
+  INVOICE
+  WARRANTY
+  MANUAL
+  CERTIFICATE
+  CONTRACT
+  OTHER
+}
+
+enum ExpenseStatus {
+  PENDING
+  PAID
+  CANCELED
+}
+
+enum SGQStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum MaintenanceType {
+  INTERNAL
+  EXTERNAL
+}
+
+enum MaintenanceScheduleStatus {
+  SCHEDULED
+  DONE
+  CANCELED
+}
+
+enum InterventionKind {
+  INSPECTION
+  MAINTENANCE
+}
+
+enum ChecklistResponseStatus {
+  OK
+  NOT_OK
+  NA
+}
+
+enum VehicleFuel {
+  GASOLINE
+  DIESEL
+  HYBRID
+  ELECTRIC
+  LPG
+  OTHER
+}
+
+enum VehicleServiceType {
+  MAINTENANCE
+  REVISION
+  INSPECTION
+  COST
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String?
+  role      UserRole @default(USER)
+  active    Boolean  @default(true)
+
+  tasksCreated      Task[]              @relation("TaskCreatedBy")
+  tasksAssigned     Task[]              @relation("TaskAssignedTo")
+  expenses          Expense[]
+  maintenanceLogs   MaintenanceLog[]
+  calibrationLogs   CalibrationLog[]
+  documents         Document[]
+  sgqRecordsCreated SGQRecord[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Equipment {
+  id             String          @id @default(cuid())
+  name           String
+  code           String?         @unique
+  category       String
+  brand          String?
+  model          String?
+  serialNumber   String?
+  supplier       String?
+  location       String?
+  responsibleDepartment String?
+  isMeasurementMonitoring Boolean @default(false)
+  equipmentTypeId String?
+  equipmentType   EquipmentType? @relation(fields: [equipmentTypeId], references: [id], onDelete: SetNull)
+  purchaseDate   DateTime?
+  warrantyUntil  DateTime?
+  status         EquipmentStatus @default(ACTIVE)
+  notes          String?
+
+  tasks           Task[]
+  interventionPlans EquipmentInterventionPlan[]
+  interventionLogs EquipmentInterventionLog[]
+  internalMaintenanceRecords InternalMaintenanceRecord[]
+  maintenanceLogs MaintenanceLog[]
+  maintenanceSchedules MaintenanceSchedule[]
+  calibrationLogs CalibrationLog[]
+  documents       Document[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EquipmentType {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String?
+
+  equipment Equipment[]
+  checklistTemplates ChecklistTemplate[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChecklistTemplate {
+  id          String @id @default(cuid())
+  title       String
+  version     String @default("1.0")
+  active      Boolean @default(true)
+  notes       String?
+
+  equipmentTypeId String
+  equipmentType   EquipmentType @relation(fields: [equipmentTypeId], references: [id], onDelete: Cascade)
+
+  items ChecklistItem[]
+  records InternalMaintenanceRecord[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active])
+}
+
+model ChecklistItem {
+  id                String @id @default(cuid())
+  order             Int
+  check             String
+  expectedCondition String
+  photoRequired     Boolean @default(false)
+  active            Boolean @default(true)
+
+  templateId String
+  template   ChecklistTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  responses ChecklistResponse[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+  @@index([active])
+}
+
+model InternalMaintenanceRecord {
+  id          String @id @default(cuid())
+  documentNo  String?
+  year        Int?
+  month       Int?
+  performedAt DateTime @default(now())
+  responsible String?
+  result      String?
+  notes       String?
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  templateId String
+  template   ChecklistTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict)
+
+  responses ChecklistResponse[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([performedAt])
+  @@index([year, month])
+}
+
+model ChecklistResponse {
+  id      String @id @default(cuid())
+  status  ChecklistResponseStatus
+  obs     String?
+
+  recordId String
+  record   InternalMaintenanceRecord @relation(fields: [recordId], references: [id], onDelete: Cascade)
+
+  itemId String
+  item   ChecklistItem @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  photos ChecklistPhoto[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([recordId, itemId])
+}
+
+model ChecklistPhoto {
+  id       String @id @default(cuid())
+  fileUrl  String
+  fileName String?
+  caption  String?
+
+  responseId String
+  response   ChecklistResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Task {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  frequency   TaskFrequency
+  status      TaskStatus    @default(PENDING)
+
+  startDate DateTime
+  dueDate   DateTime?
+  lastDone  DateTime?
+  nextDue   DateTime?
+
+  equipmentId String?
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
+
+  createdById String
+  createdBy   User @relation("TaskCreatedBy", fields: [createdById], references: [id])
+
+  assignedToId String?
+  assignedTo   User? @relation("TaskAssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MaintenanceLog {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  type        MaintenanceType @default(INTERNAL)
+  date        DateTime @default(now())
+  cost        Decimal? @db.Decimal(10, 2)
+  supplier    String?
+  costCenter  String?
+  performedBy String?
+  nextDate    DateTime?
+  notes       String?
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  userId String?
+  user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  documents Document[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EquipmentInterventionPlan {
+  id          String           @id @default(cuid())
+  kind        InterventionKind
+  type        MaintenanceType
+  frequency   TaskFrequency
+  actions     String
+  active      Boolean          @default(true)
+  notes       String?
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([kind])
+  @@index([type])
+}
+
+model EquipmentInterventionLog {
+  id          String           @id @default(cuid())
+  kind        InterventionKind
+  type        MaintenanceType
+  title       String
+  performedAt DateTime         @default(now())
+  performedBy String?
+  actionsDone String
+  result      String?
+  notes       String?
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([performedAt])
+  @@index([kind])
+  @@index([type])
+}
+
+model MaintenanceSchedule {
+  id          String                    @id @default(cuid())
+  title       String
+  description String?
+  type        MaintenanceType           @default(INTERNAL)
+  status      MaintenanceScheduleStatus @default(SCHEDULED)
+  scheduledAt DateTime
+  frequency   TaskFrequency
+  supplier    String?
+  costCenter  String?
+  notes       String?
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([scheduledAt])
+  @@index([type])
+  @@index([status])
+}
+
+model CalibrationLog {
+  id              String   @id @default(cuid())
+  title           String
+  certificateNo   String?
+  calibrationDate DateTime
+  nextDueDate     DateTime?
+  result          String?
+  approved        Boolean  @default(true)
+  notes           String?
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  userId String?
+  user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  documents Document[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Consumable {
+  id             String  @id @default(cuid())
+  name           String
+  category       String
+  unit           String
+  currentStock   Decimal @default(0) @db.Decimal(10, 2)
+  minimumStock   Decimal @default(0) @db.Decimal(10, 2)
+  location       String?
+  supplier       String?
+  notes          String?
+
+  movements ConsumableMovement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ConsumableMovement {
+  id           String   @id @default(cuid())
+  type         String
+  quantity     Decimal  @db.Decimal(10, 2)
+  reason       String?
+  date         DateTime @default(now())
+
+  consumableId String
+  consumable   Consumable @relation(fields: [consumableId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Expense {
+  id          String        @id @default(cuid())
+  date        DateTime      @default(now())
+  title       String
+  category    String
+  supplier    String?
+  amount      Decimal       @db.Decimal(10, 2)
+  status      ExpenseStatus @default(PAID)
+  notes       String?
+
+  userId String?
+  user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  documents Document[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MonthlyBill {
+  id          String  @id @default(cuid())
+  name        String
+  category    String
+  amount      Decimal @db.Decimal(10, 2)
+  dueDay      Int
+  active      Boolean @default(true)
+  notes       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Budget {
+  id          String  @id @default(cuid())
+  year        Int
+  month       Int?
+  category    String
+  planned     Decimal @db.Decimal(10, 2)
+  spent       Decimal @default(0) @db.Decimal(10, 2)
+  notes       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([year, month, category])
+}
+
+model Document {
+  id          String       @id @default(cuid())
+  title       String
+  type        DocumentType
+  fileUrl     String?
+  fileName    String?
+  expiryDate  DateTime?
+  notes       String?
+
+  equipmentId String?
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
+
+  expenseId String?
+  expense   Expense? @relation(fields: [expenseId], references: [id], onDelete: SetNull)
+
+  maintenanceLogId String?
+  maintenanceLog   MaintenanceLog? @relation(fields: [maintenanceLogId], references: [id], onDelete: SetNull)
+
+  calibrationLogId String?
+  calibrationLog   CalibrationLog? @relation(fields: [calibrationLogId], references: [id], onDelete: SetNull)
+
+  uploadedById String?
+  uploadedBy   User? @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SGQRecord {
+  id          String    @id @default(cuid())
+  code        String?   @unique
+  title       String
+  description String?
+  status      SGQStatus @default(DRAFT)
+  version     String    @default("1.0")
+  approvedAt  DateTime?
+  notes       String?
+
+  createdById String?
+  createdBy   User? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vehicle {
+  id          String      @id @default(cuid())
+  brand       String
+  model       String
+  plate       String      @unique
+  fuel        VehicleFuel
+  year        Int?
+  driver      String?
+  notes       String?
+
+  kmLogs   VehicleKmLog[]
+  services VehicleService[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VehicleKmLog {
+  id        String   @id @default(cuid())
+  date      DateTime
+  odometer  Int
+  notes     String?
+
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([date])
+  @@index([odometer])
+}
+
+model VehicleService {
+  id          String             @id @default(cuid())
+  type        VehicleServiceType
+  title       String
+  date        DateTime
+  odometer    Int?
+  cost        Decimal?           @db.Decimal(10, 2)
+  supplier    String?
+  nextDueDate DateTime?
+  nextDueKm   Int?
+  notes       String?
+
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type])
+  @@index([date])
+  @@index([nextDueDate])
+  @@index([nextDueKm])
+}
