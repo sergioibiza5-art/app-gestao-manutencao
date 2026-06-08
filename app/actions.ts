@@ -85,6 +85,7 @@ async function getSystemUserId() {
 export async function createExpense(formData: FormData) {
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
+  const vehicleId = optionalText(formData, "vehicleId");
   const invoiceUrl = optionalText(formData, "invoiceUrl");
   const invoiceName = optionalText(formData, "invoiceName");
 
@@ -98,6 +99,7 @@ export async function createExpense(formData: FormData) {
       status: enumValue(formData, "status", expenseStatuses, "PAID"),
       notes: optionalText(formData, "notes"),
       equipmentId,
+      vehicleId,
     },
   });
 
@@ -111,6 +113,7 @@ export async function createExpense(formData: FormData) {
         notes: "Documento associado a despesa.",
         expenseId: expense.id,
         equipmentId,
+        vehicleId,
       },
     });
   }
@@ -118,12 +121,15 @@ export async function createExpense(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/despesas");
   if (equipmentId) revalidatePath(`/inventario/${equipmentId}`);
+  if (vehicleId) revalidatePath(`/frota/${vehicleId}`);
+  revalidatePath("/frota");
 }
 
 export async function updateExpense(formData: FormData) {
   const prisma = getPrisma();
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
+  const vehicleId = optionalText(formData, "vehicleId");
   const invoiceUrl = optionalText(formData, "invoiceUrl");
   const invoiceName = optionalText(formData, "invoiceName");
 
@@ -142,6 +148,7 @@ export async function updateExpense(formData: FormData) {
       status: enumValue(formData, "status", expenseStatuses, "PAID"),
       notes: optionalText(formData, "notes"),
       equipmentId,
+      vehicleId,
     },
   });
 
@@ -159,6 +166,7 @@ export async function updateExpense(formData: FormData) {
           fileUrl: invoiceUrl,
           fileName: invoiceName,
           equipmentId,
+          vehicleId,
         },
       });
     } else {
@@ -171,6 +179,7 @@ export async function updateExpense(formData: FormData) {
           notes: "Documento associado a despesa.",
           expenseId: id,
           equipmentId,
+          vehicleId,
         },
       });
     }
@@ -180,6 +189,8 @@ export async function updateExpense(formData: FormData) {
   revalidatePath("/despesas");
   revalidatePath(`/despesas/${id}`);
   if (equipmentId) revalidatePath(`/inventario/${equipmentId}`);
+  if (vehicleId) revalidatePath(`/frota/${vehicleId}`);
+  revalidatePath("/frota");
 }
 
 export async function deleteExpense(formData: FormData) {
@@ -190,9 +201,17 @@ export async function deleteExpense(formData: FormData) {
     return;
   }
 
+  const expense = await prisma.expense.findUnique({
+    where: { id },
+    select: { equipmentId: true, vehicleId: true },
+  });
+
   await prisma.expense.delete({ where: { id } });
   revalidatePath("/");
   revalidatePath("/despesas");
+  revalidatePath("/frota");
+  if (expense?.equipmentId) revalidatePath(`/inventario/${expense.equipmentId}`);
+  if (expense?.vehicleId) revalidatePath(`/frota/${expense.vehicleId}`);
   redirect("/despesas");
 }
 

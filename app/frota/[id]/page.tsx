@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calculator, ClipboardCheck, Gauge, Pencil, Trash2, Wrench } from "lucide-react";
+import { ArrowLeft, Calculator, ClipboardCheck, FileText, Gauge, Pencil, Receipt, Trash2, Wrench } from "lucide-react";
 
 import {
   createVehicleKmLog,
@@ -65,6 +65,9 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
     notFound();
   }
 
+  const invoiceCost = vehicle.metrics.invoiceCost;
+  const totalVehicleCost = vehicle.metrics.totalCost;
+
   return (
     <AppShell activeHref="/frota">
       <PageHeader
@@ -94,7 +97,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
         </Panel>
         <Panel>
           <p className="text-sm text-zinc-500">Custo total</p>
-          <p className="mt-2 text-3xl font-semibold text-amber-200">{formatCurrency(vehicle.metrics.totalCost)}</p>
+          <p className="mt-2 text-3xl font-semibold text-amber-200">{formatCurrency(totalVehicleCost)}</p>
         </Panel>
       </section>
 
@@ -286,6 +289,48 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                   </form>
                 </article>
               ))
+            )}
+          </div>
+        </Panel>
+      </section>
+
+      <section>
+        <Panel>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-center gap-3">
+              <Receipt size={22} className="text-amber-300" />
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">Faturas associadas</h2>
+                <p className="mt-1 text-sm text-zinc-500">Despesas ligadas a esta viatura no modulo financeiro.</p>
+              </div>
+            </div>
+            <p className="text-lg font-semibold text-amber-200">{formatCurrency(invoiceCost)}</p>
+          </div>
+          <div className="mt-4 space-y-3">
+            {vehicle.expenses.length === 0 ? (
+              <EmptyState title="Sem faturas" description="Associa uma despesa a esta viatura para acompanhar custos de manutencao, revisao ou pneus." />
+            ) : (
+              vehicle.expenses.map((expense) => {
+                const invoice = expense.documents.find((document) => document.type === "INVOICE" && document.fileUrl);
+
+                return (
+                  <Link key={expense.id} href={`/despesas/${expense.id}`} className="block rounded-lg border border-zinc-800 bg-black/20 p-3 transition hover:border-amber-300/50 hover:bg-zinc-950/70">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <h3 className="font-semibold text-zinc-100">{expense.title}</h3>
+                        <p className="mt-1 text-sm text-zinc-500">{formatDate(expense.date)} - {expense.supplier ?? expense.category}</p>
+                        {invoice && (
+                          <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-sky-300">
+                            <FileText size={13} />
+                            Fatura associada
+                          </span>
+                        )}
+                      </div>
+                      <p className="font-semibold text-amber-200">{formatCurrency(expense.amount)}</p>
+                    </div>
+                  </Link>
+                );
+              })
             )}
           </div>
         </Panel>

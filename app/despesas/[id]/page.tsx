@@ -27,13 +27,18 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
   }
 
   const invoice = expense.documents.find((document) => document.type === "INVOICE");
+  const associationLabel = expense.equipment
+    ? expense.equipment.name
+    : expense.vehicle
+      ? `${expense.vehicle.brand} ${expense.vehicle.model} - ${expense.vehicle.plate}`
+      : "sem equipamento ou viatura associada";
 
   return (
     <AppShell activeHref="/despesas">
       <PageHeader
         eyebrow="Despesa"
         title={expense.title}
-        description={`${formatCurrency(expense.amount)} · ${formatDate(expense.date)} · ${expense.equipment?.name ?? "sem equipamento associado"}`}
+        description={`${formatCurrency(expense.amount)} - ${formatDate(expense.date)} - ${associationLabel}`}
         action={
           <Link href="/despesas" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-amber-300/50">
             <ArrowLeft size={17} />
@@ -66,7 +71,15 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
               {moduleData.equipment.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
-                  {item.code ? ` · ${item.code}` : ""}
+                  {item.code ? ` - ${item.code}` : ""}
+                </option>
+              ))}
+            </select>
+            <select name="vehicleId" className={inputClass} defaultValue={expense.vehicleId ?? ""}>
+              <option value="">Sem viatura associada</option>
+              {moduleData.vehicles.map((vehicle) => (
+                <option key={vehicle.id} value={vehicle.id}>
+                  {vehicle.brand} {vehicle.model} - {vehicle.plate}
                 </option>
               ))}
             </select>
@@ -96,6 +109,7 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
                 ["Fornecedor", expense.supplier ?? "Sem fornecedor"],
                 ["Categoria", expense.category],
                 ["Equipamento", expense.equipment?.name ?? "Sem equipamento"],
+                ["Viatura", expense.vehicle ? `${expense.vehicle.brand} ${expense.vehicle.model} - ${expense.vehicle.plate}` : "Sem viatura"],
                 ["Data", formatDate(expense.date)],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">

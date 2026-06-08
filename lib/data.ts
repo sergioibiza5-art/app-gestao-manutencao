@@ -106,21 +106,23 @@ export async function getModuleData() {
         users,
         sgqRecords,
         equipmentTypes,
+        vehicles,
       ] = await Promise.all([
-        prisma.expense.findMany({ orderBy: { date: "desc" }, take: 30, include: { equipment: true, documents: true } }),
+        prisma.expense.findMany({ orderBy: { date: "desc" }, take: 30, include: { equipment: true, vehicle: true, documents: true } }),
         prisma.monthlyBill.findMany({ orderBy: { name: "asc" }, take: 50 }),
         prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 50, include: { equipment: true } }),
         prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 40, include: { equipment: true } }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100 }),
-        prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true } }),
+        prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
         prisma.user.findMany({ orderBy: { name: "asc" }, take: 50 }),
         prisma.sGQRecord.findMany({ orderBy: { createdAt: "desc" }, take: 50 }),
         prisma.equipmentType.findMany({ orderBy: { name: "asc" }, include: { checklistTemplates: { where: { active: true }, include: { items: true } } } }),
+        prisma.vehicle.findMany({ orderBy: [{ brand: "asc" }, { model: "asc" }], take: 100 }),
       ]);
 
-      return { expenses, monthlyBills, tasks, equipment, maintenanceLogs, calibrationLogs, consumables, documents, users, sgqRecords, equipmentTypes };
+      return { expenses, monthlyBills, tasks, equipment, maintenanceLogs, calibrationLogs, consumables, documents, users, sgqRecords, equipmentTypes, vehicles };
     },
     {
       expenses: [],
@@ -134,6 +136,7 @@ export async function getModuleData() {
       users: [],
       sgqRecords: [],
       equipmentTypes: [],
+      vehicles: [],
     },
   );
 }
@@ -189,6 +192,7 @@ export async function getExpenseDetail(id: string) {
         where: { id },
         include: {
           equipment: true,
+          vehicle: true,
           documents: true,
         },
       }),
@@ -325,6 +329,7 @@ function enrichVehicle<
   T extends {
     kmLogs: { date: Date; odometer: number }[];
     services: { type: string; nextDueKm: number | null; nextDueDate: Date | null; cost: unknown }[];
+    expenses?: { amount: unknown }[];
   },
 >(vehicle: T) {
   const sortedKm = [...vehicle.kmLogs].sort((a, b) => a.date.getTime() - b.date.getTime());
@@ -339,7 +344,9 @@ function enrichVehicle<
     kmUntilRevision !== null && kmUntilRevision > 0 && averageKmDay > 0
       ? addDays(lastKm!.date, Math.ceil(kmUntilRevision / averageKmDay))
       : latestRevision?.nextDueDate ?? null;
-  const totalCost = vehicle.services.reduce((sum, service) => sum + Number(service.cost ?? 0), 0);
+  const serviceCost = vehicle.services.reduce((sum, service) => sum + Number(service.cost ?? 0), 0);
+  const invoiceCost = vehicle.expenses?.reduce((sum, expense) => sum + Number(expense.amount ?? 0), 0) ?? 0;
+  const totalCost = serviceCost + invoiceCost;
   const nextInspection = vehicle.services
     .filter((service) => service.type === "INSPECTION" && service.nextDueDate)
     .sort((a, b) => a.nextDueDate!.getTime() - b.nextDueDate!.getTime())[0];
@@ -353,6 +360,8 @@ function enrichVehicle<
       averageKmYear: averageKmDay * 365,
       estimatedRevisionDate,
       kmUntilRevision,
+      serviceCost,
+      invoiceCost,
       totalCost,
       nextInspectionDate: nextInspection?.nextDueDate ?? null,
     },
@@ -367,6 +376,8 @@ export async function getFleetData() {
         include: {
           kmLogs: { orderBy: { date: "asc" } },
           services: { orderBy: { date: "desc" } },
+          expenses: { orderBy: { date: "desc" }, take: 50, include: { documents: true } },
+          documents: { orderBy: { createdAt: "desc" }, take: 30 },
         },
       });
 
@@ -386,6 +397,8 @@ export async function getVehicleDetail(id: string) {
         include: {
           kmLogs: { orderBy: { date: "asc" } },
           services: { orderBy: { date: "desc" } },
+          expenses: { orderBy: { date: "desc" }, take: 50, include: { documents: true } },
+          documents: { orderBy: { createdAt: "desc" }, take: 30 },
         },
       });
 

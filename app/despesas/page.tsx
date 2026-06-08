@@ -10,7 +10,7 @@ import { formatCurrency, formatDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 export default async function ExpensesPage() {
-  const { expenses, equipment } = await getModuleData();
+  const { expenses, equipment, vehicles } = await getModuleData();
 
   return (
     <AppShell activeHref="/despesas">
@@ -47,6 +47,14 @@ export default async function ExpensesPage() {
                 </option>
               ))}
             </select>
+            <select name="vehicleId" className={inputClass}>
+              <option value="">Sem viatura associada</option>
+              {vehicles.map((vehicle) => (
+                <option key={vehicle.id} value={vehicle.id}>
+                  {vehicle.brand} {vehicle.model} - {vehicle.plate}
+                </option>
+              ))}
+            </select>
             <div className="grid gap-3 md:grid-cols-2">
               <input name="invoiceUrl" className={inputClass} placeholder="Link/caminho da fatura" />
               <input name="invoiceName" className={inputClass} placeholder="Nome do ficheiro" />
@@ -72,7 +80,11 @@ export default async function ExpensesPage() {
                         <h3 className="font-semibold text-zinc-100">{expense.title}</h3>
                         <p className="mt-1 text-sm text-zinc-500">{expense.supplier ?? expense.category}</p>
                         <p className="mt-1 text-xs text-zinc-600">
-                          {expense.equipment ? `Equipamento: ${expense.equipment.name}` : "Sem equipamento associado"}
+                          {expense.equipment
+                            ? `Equipamento: ${expense.equipment.name}`
+                            : expense.vehicle
+                              ? `Viatura: ${expense.vehicle.brand} ${expense.vehicle.model} - ${expense.vehicle.plate}`
+                              : "Sem equipamento ou viatura associada"}
                         </p>
                         {invoice && (
                           <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-sky-300">

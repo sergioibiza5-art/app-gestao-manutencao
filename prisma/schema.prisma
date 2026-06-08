@@ -435,6 +435,9 @@ model Expense {
   equipmentId String?
   equipment   Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
 
+  vehicleId String?
+  vehicle   Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+
   userId String?
   user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
@@ -484,6 +487,9 @@ model Document {
   equipmentId String?
   equipment   Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
 
+  vehicleId String?
+  vehicle   Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+
   expenseId String?
   expense   Expense? @relation(fields: [expenseId], references: [id], onDelete: SetNull)
 
@@ -529,6 +535,8 @@ model Vehicle {
 
   kmLogs   VehicleKmLog[]
   services VehicleService[]
+  expenses Expense[]
+  documents Document[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
