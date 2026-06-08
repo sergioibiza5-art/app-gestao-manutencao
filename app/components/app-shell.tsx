@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { HomeIcon, Search, ShieldCheck } from "lucide-react";
+import { HomeIcon, LogOut, Search, ShieldCheck } from "lucide-react";
 
+import { logoutUser } from "@/app/actions";
+import { requireUser } from "@/lib/auth";
 import { navigation } from "@/lib/navigation";
 
 type AppShellProps = {
@@ -9,7 +11,9 @@ type AppShellProps = {
   children: ReactNode;
 };
 
-export function AppShell({ activeHref = "/", children }: AppShellProps) {
+export async function AppShell({ activeHref = "/", children }: AppShellProps) {
+  const user = await requireUser();
+
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.10),transparent_25%),#070807]">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
@@ -22,9 +26,20 @@ export function AppShell({ activeHref = "/", children }: AppShellProps) {
               <span className="block truncate text-lg font-semibold text-zinc-50 sm:text-2xl">Gestão de manutenção</span>
             </span>
           </Link>
-          <button className="grid size-11 shrink-0 place-items-center rounded-lg border border-zinc-800 bg-zinc-950/70 text-zinc-200 transition hover:border-teal-300/50 hover:text-teal-200" aria-label="Pesquisa e filtros">
-            <Search size={20} />
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="hidden min-w-0 text-right sm:block">
+              <p className="truncate text-sm font-semibold text-zinc-100">{user.name}</p>
+              <p className="text-xs text-zinc-500">{user.role}</p>
+            </div>
+            <button className="grid size-11 place-items-center rounded-lg border border-zinc-800 bg-zinc-950/70 text-zinc-200 transition hover:border-teal-300/50 hover:text-teal-200" aria-label="Pesquisa e filtros">
+              <Search size={20} />
+            </button>
+            <form action={logoutUser}>
+              <button className="grid size-11 place-items-center rounded-lg border border-zinc-800 bg-zinc-950/70 text-zinc-200 transition hover:border-rose-300/50 hover:text-rose-200" aria-label="Sair">
+                <LogOut size={19} />
+              </button>
+            </form>
+          </div>
         </header>
 
         <div className="grid min-w-0 gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">

@@ -114,7 +114,7 @@ export async function getModuleData() {
         prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 40, include: { equipment: true } }),
-        prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100 }),
+        prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100, include: { equipment: true } }),
         prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
         prisma.user.findMany({ orderBy: { name: "asc" }, take: 50 }),
         prisma.sGQRecord.findMany({ orderBy: { createdAt: "desc" }, take: 50 }),
@@ -176,6 +176,7 @@ export async function getEquipmentDetail(id: string) {
           calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30 },
           expenses: { orderBy: { date: "desc" }, take: 50, include: { documents: true } },
           documents: { orderBy: { createdAt: "desc" }, take: 30 },
+          consumables: { orderBy: { name: "asc" }, take: 50 },
         },
       });
 

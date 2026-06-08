@@ -111,9 +111,23 @@ model User {
   calibrationLogs   CalibrationLog[]
   documents         Document[]
   sgqRecordsCreated SGQRecord[]
+  sessions          Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt])
 }
 
 model Equipment {
@@ -144,6 +158,7 @@ model Equipment {
   calibrationLogs CalibrationLog[]
   expenses        Expense[]
   documents       Document[]
+  consumables     Consumable[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -402,6 +417,9 @@ model Consumable {
   location       String?
   supplier       String?
   notes          String?
+
+  equipmentId String?
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id], onDelete: SetNull)
 
   movements ConsumableMovement[]
 

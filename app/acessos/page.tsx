@@ -22,6 +22,7 @@ export default async function AccessPage() {
           <form action={createUser} className="mt-4 space-y-3">
             <input name="name" required className={inputClass} placeholder="Nome" />
             <input name="email" required type="email" className={inputClass} placeholder="Email" />
+            <input name="password" type="password" className={inputClass} placeholder="Palavra-passe inicial" />
             <select name="role" className={inputClass}>
               <option value="ADMIN">Admin</option>
               <option value="MANAGER">Gestor</option>

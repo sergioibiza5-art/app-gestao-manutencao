@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
+import { createSession, destroySession, hashPassword, verifyPassword } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 
 function text(formData: FormData, key: string) {
@@ -66,6 +67,39 @@ const maintenanceScheduleStatuses = ["SCHEDULED", "DONE", "CANCELED"] as const s
 const vehicleFuels = ["GASOLINE", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"] as const satisfies readonly VehicleFuel[];
 const vehicleServiceTypes = ["MAINTENANCE", "REVISION", "INSPECTION", "COST"] as const satisfies readonly VehicleServiceType[];
 
+export async function loginUser(formData: FormData) {
+  const prisma = getPrisma();
+  const email = text(formData, "email").toLowerCase();
+  const password = text(formData, "password");
+
+  if (!email || !password) {
+    redirect("/login?erro=credenciais");
+  }
+
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (!user || !user.active) {
+    redirect("/login?erro=credenciais");
+  }
+
+  if (!user.password) {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { password: hashPassword(password) },
+    });
+  } else if (!verifyPassword(password, user.password)) {
+    redirect("/login?erro=credenciais");
+  }
+
+  await createSession(user.id);
+  redirect("/");
+}
+
+export async function logoutUser() {
+  await destroySession();
+  redirect("/login");
+}
+
 async function getSystemUserId() {
   const prisma = getPrisma();
   const user = await prisma.user.upsert({
@@ -120,7 +154,7 @@ export async function createExpense(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/despesas");
-  if (equipmentId) revalidatePath(`/inventario/${equipmentId}`);
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   if (vehicleId) revalidatePath(`/frota/${vehicleId}`);
   revalidatePath("/frota");
 }
@@ -188,7 +222,7 @@ export async function updateExpense(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/despesas");
   revalidatePath(`/despesas/${id}`);
-  if (equipmentId) revalidatePath(`/inventario/${equipmentId}`);
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   if (vehicleId) revalidatePath(`/frota/${vehicleId}`);
   revalidatePath("/frota");
 }
@@ -210,7 +244,7 @@ export async function deleteExpense(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/despesas");
   revalidatePath("/frota");
-  if (expense?.equipmentId) revalidatePath(`/inventario/${expense.equipmentId}`);
+  if (expense?.equipmentId) revalidatePath(`/equipamentos/${expense.equipmentId}`);
   if (expense?.vehicleId) revalidatePath(`/frota/${expense.vehicleId}`);
   redirect("/despesas");
 }
@@ -353,7 +387,7 @@ export async function createEquipment(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/inventario");
+  revalidatePath("/equipamentos");
   revalidatePath("/manutencao");
   revalidatePath("/calibracao");
 }
@@ -387,7 +421,8 @@ export async function updateEquipmentBasics(formData: FormData) {
     },
   });
 
-  revalidatePath("/inventario");
+  revalidatePath("/equipamentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
   revalidatePath(`/inventario/${equipmentId}`);
 }
 
@@ -396,6 +431,22 @@ export async function createEquipmentTypeWithChecklist(formData: FormData) {
   const typeName = text(formData, "typeName");
   const templateTitle = text(formData, "templateTitle") || `Checklist ${typeName}`;
   const rawItems = text(formData, "items");
+  const itemChecks = formData.getAll("itemCheck").filter((value): value is string => typeof value === "string");
+  const itemExpectedConditions = formData.getAll("itemExpectedCondition").filter((value): value is string => typeof value === "string");
+  const itemPhotoRequired = new Set(formData.getAll("itemPhotoRequired").filter((value): value is string => typeof value === "string"));
+  const structuredItems = itemChecks
+    .map((check, index) => {
+      const trimmedCheck = check.trim();
+      return trimmedCheck
+        ? {
+            order: index + 1,
+            check: trimmedCheck,
+            expectedCondition: itemExpectedConditions[index]?.trim() || "Condicao conforme criterio definido",
+            photoRequired: itemPhotoRequired.has(String(index)),
+          }
+        : null;
+    })
+    .filter((item) => item !== null);
   const items = rawItems
     .split(/\r?\n/)
     .map((line, index) => {
@@ -411,7 +462,9 @@ export async function createEquipmentTypeWithChecklist(formData: FormData) {
     })
     .filter((item) => item !== null);
 
-  if (!typeName || items.length === 0) {
+  const checklistItems = structuredItems.length > 0 ? structuredItems : items;
+
+  if (!typeName || checklistItems.length === 0) {
     return;
   }
 
@@ -424,7 +477,7 @@ export async function createEquipmentTypeWithChecklist(formData: FormData) {
           title: templateTitle,
           version: text(formData, "version") || "1.0",
           notes: optionalText(formData, "notes"),
-          items: { create: items },
+          items: { create: checklistItems },
         },
       },
     },
@@ -436,14 +489,14 @@ export async function createEquipmentTypeWithChecklist(formData: FormData) {
           title: templateTitle,
           version: text(formData, "version") || "1.0",
           notes: optionalText(formData, "notes"),
-          items: { create: items },
+          items: { create: checklistItems },
         },
       },
     },
   });
 
   revalidatePath("/checklists");
-  revalidatePath("/inventario");
+  revalidatePath("/equipamentos");
 }
 
 function interventionPlanFromForm(formData: FormData, prefix: string, kind: InterventionKind, type: MaintenanceType) {
@@ -482,7 +535,8 @@ export async function createEquipmentInterventionLog(formData: FormData) {
     },
   });
 
-  revalidatePath("/inventario");
+  revalidatePath("/equipamentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
   revalidatePath(`/inventario/${equipmentId}`);
 }
 
@@ -547,13 +601,16 @@ export async function createInternalMaintenanceChecklistRecord(formData: FormDat
     },
   });
 
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath(`/equipamentos/${equipmentId}/checklist-interna`);
   revalidatePath(`/inventario/${equipmentId}`);
   revalidatePath(`/inventario/${equipmentId}/checklist-interna`);
-  redirect(`/inventario/${equipmentId}/checklist-interna/${record.id}`);
+  redirect(`/equipamentos/${equipmentId}/checklist-interna/${record.id}`);
 }
 
 export async function createConsumable(formData: FormData) {
   const prisma = getPrisma();
+  const equipmentId = optionalText(formData, "equipmentId");
 
   await prisma.consumable.create({
     data: {
@@ -565,11 +622,13 @@ export async function createConsumable(formData: FormData) {
       location: optionalText(formData, "location"),
       supplier: optionalText(formData, "supplier"),
       notes: optionalText(formData, "notes"),
+      equipmentId,
     },
   });
 
   revalidatePath("/");
   revalidatePath("/inventario");
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
 }
 
 export async function createMaintenanceLog(formData: FormData) {
@@ -627,7 +686,7 @@ export async function updateMaintenanceLog(formData: FormData) {
   });
 
   revalidatePath("/manutencao");
-  revalidatePath(`/inventario/${equipmentId}`);
+  revalidatePath(`/equipamentos/${equipmentId}`);
 }
 
 export async function deleteMaintenanceLog(formData: FormData) {
@@ -812,11 +871,13 @@ export async function createDocument(formData: FormData) {
 
 export async function createUser(formData: FormData) {
   const prisma = getPrisma();
+  const password = optionalText(formData, "password");
 
   await prisma.user.create({
     data: {
       name: text(formData, "name"),
-      email: text(formData, "email"),
+      email: text(formData, "email").toLowerCase(),
+      password: password ? hashPassword(password) : null,
       role: enumValue(formData, "role", userRoles, "USER"),
       active: text(formData, "active") !== "false",
     },
