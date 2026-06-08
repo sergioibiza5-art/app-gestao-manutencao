@@ -17,8 +17,24 @@ function optionalText(formData: FormData, key: string) {
 }
 
 function decimal(formData: FormData, key: string) {
-  const value = text(formData, key).replace(",", ".");
-  return value.length > 0 ? value : "0";
+  const rawValue = text(formData, key);
+
+  if (!rawValue) {
+    return "0";
+  }
+
+  const value = rawValue.replace(/\s/g, "").replace(/[^\d,.-]/g, "");
+  const lastComma = value.lastIndexOf(",");
+  const lastDot = value.lastIndexOf(".");
+  const decimalSeparator = lastComma > lastDot ? "," : lastDot > -1 ? "." : "";
+  const negative = value.startsWith("-");
+  const unsigned = value.replace(/-/g, "");
+  const normalized = decimalSeparator
+    ? `${unsigned.slice(0, unsigned.lastIndexOf(decimalSeparator)).replace(/[,.]/g, "")}.${unsigned.slice(unsigned.lastIndexOf(decimalSeparator) + 1).replace(/[,.]/g, "")}`
+    : unsigned.replace(/[,.]/g, "");
+  const parsed = Number(`${negative ? "-" : ""}${normalized}`);
+
+  return Number.isFinite(parsed) ? parsed.toFixed(2) : "0";
 }
 
 function intValue(formData: FormData, key: string) {
