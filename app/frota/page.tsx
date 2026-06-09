@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Car, Gauge, Plus } from "lucide-react";
+import { Car, Gauge, Plus } from "lucide-react";
 
 import { createVehicle } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -73,7 +73,7 @@ export default async function FleetPage() {
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[380px_minmax(0,1fr)]">
+      <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)]">
         <Panel className="min-w-0">
           <div className="flex items-center gap-3">
             <Car size={22} className="shrink-0 text-blue-300" />
@@ -83,14 +83,14 @@ export default async function FleetPage() {
           </div>
 
           <form action={createVehicle} className="mt-4 space-y-3">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3">
               <input name="brand" required className={`${inputClass} w-full min-w-0`} placeholder="Marca" />
               <input name="model" required className={`${inputClass} w-full min-w-0`} placeholder="Modelo" />
             </div>
 
             <input name="plate" required className={`${inputClass} w-full min-w-0`} placeholder="Matrícula" />
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3">
               <select name="fuel" className={`${inputClass} w-full min-w-0`}>
                 <option value="DIESEL">Gasóleo</option>
                 <option value="GASOLINE">Gasolina</option>
@@ -116,60 +116,87 @@ export default async function FleetPage() {
             <h2 className="text-xl font-semibold text-zinc-50">Veículos cadastrados</h2>
           </div>
 
-          <div className="mt-4 space-y-2">
+          <div className="mt-4">
             {vehicles.length === 0 ? (
               <EmptyState
                 title="Sem veículos cadastrados"
                 description="Cria a primeira viatura para começar a controlar km, revisões, custos e inspeções."
               />
             ) : (
-              vehicles.map((vehicle) => (
-                <Link
-                  key={vehicle.id}
-                  href={`/frota/${vehicle.id}`}
-                  className="grid min-w-0 gap-3 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/70 2xl:grid-cols-[minmax(220px,1.4fr)_repeat(4,minmax(105px,0.45fr))_auto]"
-                >
-                  <div className="min-w-0">
-                    <p className="truncate text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">
-                      {vehicle.plate}
-                    </p>
+              <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/40">
+                <div className="hidden grid-cols-[120px_minmax(220px,1.4fr)_minmax(160px,1fr)_110px_110px_120px_130px_70px] gap-0 border-b border-zinc-800 bg-black/30 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 xl:grid">
+                  <div>Matrícula</div>
+                  <div>Veículo</div>
+                  <div>Condutor</div>
+                  <div className="text-right">Km</div>
+                  <div className="text-right">Km/dia</div>
+                  <div className="text-right">Custo</div>
+                  <div>Próx. revisão</div>
+                  <div></div>
+                </div>
 
-                    <h3 className="mt-1 truncate text-lg font-semibold leading-snug text-zinc-50">
-                      {vehicle.brand} {vehicle.model}
-                    </h3>
+                <div className="divide-y divide-zinc-800">
+                  {vehicles.map((vehicle) => (
+                    <Link
+                      key={vehicle.id}
+                      href={`/frota/${vehicle.id}`}
+                      className="block transition hover:bg-zinc-900/70 xl:grid xl:grid-cols-[120px_minmax(220px,1.4fr)_minmax(160px,1fr)_110px_110px_120px_130px_70px] xl:items-center xl:px-4 xl:py-3"
+                    >
+                      <div className="grid gap-3 p-4 xl:contents">
+                        <div className="min-w-0">
+                          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 xl:text-sm xl:tracking-normal">
+                            {vehicle.plate}
+                          </p>
+                        </div>
 
-                    <p className="mt-1 truncate text-sm leading-5 text-zinc-500">
-                      {fuelLabel(vehicle.fuel)} · {vehicle.year ?? "sem ano"} · {vehicle.driver ?? "sem condutor"}
-                    </p>
-                  </div>
+                        <div className="min-w-0">
+                          <p className="truncate text-base font-semibold text-zinc-50">
+                            {vehicle.brand} {vehicle.model}
+                          </p>
+                          <p className="mt-1 text-sm text-zinc-500 xl:hidden">
+                            {fuelLabel(vehicle.fuel)} · {vehicle.year ?? "sem ano"}
+                          </p>
+                        </div>
 
-                  <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
-                    <p className="text-xs text-zinc-500">Km atuais</p>
-                    <p className="mt-1 font-semibold text-blue-200">{rounded(vehicle.metrics.latestKm)}</p>
-                  </div>
+                        <div className="min-w-0">
+                          <p className="text-xs text-zinc-500 xl:hidden">Condutor</p>
+                          <p className="truncate text-sm text-zinc-400">
+                            {vehicle.driver ?? "Sem condutor"}
+                          </p>
+                        </div>
 
-                  <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
-                    <p className="text-xs text-zinc-500">Km/dia</p>
-                    <p className="mt-1 font-semibold text-teal-200">{rounded(vehicle.metrics.averageKmDay)}</p>
-                  </div>
+                        <div className="grid grid-cols-2 gap-3 xl:contents">
+                          <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 xl:border-0 xl:bg-transparent xl:p-0 xl:text-right">
+                            <p className="text-xs text-zinc-500 xl:hidden">Km atuais</p>
+                            <p className="font-semibold text-blue-200">{rounded(vehicle.metrics.latestKm)}</p>
+                          </div>
 
-                  <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
-                    <p className="text-xs text-zinc-500">Custo total</p>
-                    <p className="mt-1 font-semibold text-amber-200">{formatCurrency(vehicle.metrics.totalCost)}</p>
-                  </div>
+                          <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 xl:border-0 xl:bg-transparent xl:p-0 xl:text-right">
+                            <p className="text-xs text-zinc-500 xl:hidden">Km/dia</p>
+                            <p className="font-semibold text-teal-200">{rounded(vehicle.metrics.averageKmDay)}</p>
+                          </div>
 
-                  <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
-                    <p className="text-xs text-zinc-500">Próx. revisão</p>
-                    <p className="mt-1 font-semibold text-blue-200">
-                      {formatDate(vehicle.metrics.estimatedRevisionDate)}
-                    </p>
-                  </div>
+                          <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 xl:border-0 xl:bg-transparent xl:p-0 xl:text-right">
+                            <p className="text-xs text-zinc-500 xl:hidden">Custo total</p>
+                            <p className="font-semibold text-amber-200">{formatCurrency(vehicle.metrics.totalCost)}</p>
+                          </div>
 
-                  <span className="hidden items-center justify-end text-zinc-500 2xl:flex">
-                    <ArrowRight size={18} />
-                  </span>
-                </Link>
-              ))
+                          <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 xl:border-0 xl:bg-transparent xl:p-0">
+                            <p className="text-xs text-zinc-500 xl:hidden">Próx. revisão</p>
+                            <p className="font-semibold text-blue-200">
+                              {formatDate(vehicle.metrics.estimatedRevisionDate)}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="hidden justify-end text-zinc-500 xl:flex">
+                          Abrir
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         </Panel>
