@@ -1384,3 +1384,69 @@ export async function createSgqRecord(formData: FormData) {
 
   revalidatePath("/acessos");
 }
+
+export async function createEquipmentInterventionPlan(formData: FormData) {
+  await requireCanManage();
+
+  const prisma = getPrisma();
+  const equipmentId = text(formData, "equipmentId");
+
+  if (!equipmentId) return;
+
+  await prisma.equipmentInterventionPlan.create({
+    data: {
+      equipmentId,
+      kind: enumValue(formData, "kind", interventionKinds, "MAINTENANCE"),
+      type: enumValue(formData, "type", maintenanceTypes, "INTERNAL"),
+      frequency: enumValue(formData, "frequency", taskFrequencies, "MONTHLY"),
+      actions: text(formData, "actions") || "Ações a definir",
+      active: text(formData, "active") !== "false",
+      notes: optionalText(formData, "notes"),
+    },
+  });
+
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath(`/inventario/${equipmentId}`);
+}
+
+export async function updateEquipmentInterventionPlan(formData: FormData) {
+  await requireCanManage();
+
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = text(formData, "equipmentId");
+
+  if (!id || !equipmentId) return;
+
+  await prisma.equipmentInterventionPlan.update({
+    where: { id },
+    data: {
+      kind: enumValue(formData, "kind", interventionKinds, "MAINTENANCE"),
+      type: enumValue(formData, "type", maintenanceTypes, "INTERNAL"),
+      frequency: enumValue(formData, "frequency", taskFrequencies, "MONTHLY"),
+      actions: text(formData, "actions") || "Ações a definir",
+      active: text(formData, "active") !== "false",
+      notes: optionalText(formData, "notes"),
+    },
+  });
+
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath(`/inventario/${equipmentId}`);
+}
+
+export async function deleteEquipmentInterventionPlan(formData: FormData) {
+  await requireCanManage();
+
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = text(formData, "equipmentId");
+
+  if (!id || !equipmentId) return;
+
+  await prisma.equipmentInterventionPlan.delete({
+    where: { id },
+  });
+
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath(`/inventario/${equipmentId}`);
+}

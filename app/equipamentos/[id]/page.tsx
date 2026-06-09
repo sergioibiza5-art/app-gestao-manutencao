@@ -1,10 +1,33 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ClipboardCheck, ExternalLink, History, Package, Receipt, Ruler, Wrench } from "lucide-react";
+import {
+  ArrowLeft,
+  ClipboardCheck,
+  ExternalLink,
+  History,
+  Package,
+  Receipt,
+  Ruler,
+  Trash2,
+  Wrench,
+} from "lucide-react";
 
-import { createEquipmentInterventionLog, updateEquipmentBasics } from "@/app/actions";
+import {
+  createEquipmentInterventionLog,
+  createEquipmentInterventionPlan,
+  deleteEquipmentInterventionPlan,
+  updateEquipmentBasics,
+  updateEquipmentInterventionPlan,
+} from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
-import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
+import {
+  buttonClass,
+  EmptyState,
+  inputClass,
+  PageHeader,
+  Panel,
+  textareaClass,
+} from "@/app/components/ui";
 import { getEquipmentDetail, getEquipmentTypes } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 
@@ -22,20 +45,41 @@ function typeLabel(type: string) {
   return type === "EXTERNAL" ? "Externa" : "Interna";
 }
 
+function frequencyLabel(frequency: string) {
+  const labels: Record<string, string> = {
+    DAILY: "Diária",
+    WEEKLY: "Semanal",
+    MONTHLY: "Mensal",
+    QUARTERLY: "Trimestral",
+    FOUR_MONTHLY: "Quadrimestral",
+    SEMIANNUAL: "Semestral",
+    ANNUAL: "Anual",
+  };
+
+  return labels[frequency] ?? frequency;
+}
+
 function dateInputValue(date: Date | null) {
   return date ? date.toISOString().slice(0, 10) : "";
 }
 
 export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {
   const { id } = await params;
-  const [equipment, equipmentTypes] = await Promise.all([getEquipmentDetail(id), getEquipmentTypes()]);
+  const [equipment, equipmentTypes] = await Promise.all([
+    getEquipmentDetail(id),
+    getEquipmentTypes(),
+  ]);
 
   if (!equipment) {
     notFound();
   }
 
   const activeTemplate = equipment.equipmentType?.checklistTemplates[0];
-  const equipmentExpenseTotal = equipment.expenses.reduce((sum, expense) => sum + Number(expense.amount ?? 0), 0);
+  const equipmentExpenseTotal = equipment.expenses.reduce(
+    (sum, expense) => sum + Number(expense.amount ?? 0),
+    0
+  );
+
   const historyItems = [
     ...equipment.interventionLogs.map((item) => ({
       id: item.id,
@@ -78,12 +122,19 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
         action={
           <div className="flex flex-wrap gap-2">
             {activeTemplate && (
-              <Link href={`/equipamentos/${equipment.id}/checklist-interna`} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
+              <Link
+                href={`/equipamentos/${equipment.id}/checklist-interna`}
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200"
+              >
                 <ClipboardCheck size={17} />
                 Checklist interna
               </Link>
             )}
-            <Link href="/equipamentos" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+
+            <Link
+              href="/equipamentos"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50"
+            >
               <ArrowLeft size={17} />
               Equipamentos
             </Link>
@@ -94,9 +145,13 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
       <section className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
         <Panel>
           <div className="flex items-center gap-3">
-            <Ruler size={22} className={equipment.isMeasurementMonitoring ? "text-lime-300" : "text-zinc-500"} />
+            <Ruler
+              size={22}
+              className={equipment.isMeasurementMonitoring ? "text-lime-300" : "text-zinc-500"}
+            />
             <h2 className="text-xl font-semibold text-zinc-50">Cadastro</h2>
           </div>
+
           <dl className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Código interno", equipment.code ?? "Sem código"],
@@ -124,22 +179,41 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
             <ClipboardCheck size={22} className="text-teal-300" />
             <h2 className="text-xl font-semibold text-zinc-50">Planos de intervenção</h2>
           </div>
+
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {equipment.interventionPlans.length === 0 ? (
               <div className="md:col-span-2">
-                <EmptyState title="Sem planos definidos" description="No cadastro do equipamento podes selecionar inspeções e manutenções internas/externas." />
+                <EmptyState
+                  title="Sem planos definidos"
+                  description="Cria planos de inspeção ou manutenção para este equipamento."
+                />
               </div>
             ) : (
               equipment.interventionPlans.map((plan) => (
                 <article key={plan.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-semibold text-zinc-100">{kindLabel(plan.kind)} {typeLabel(plan.type).toLowerCase()}</h3>
-                      <p className="mt-1 text-sm text-zinc-500">{plan.frequency}</p>
+                      <h3 className="font-semibold text-zinc-100">
+                        {kindLabel(plan.kind)} {typeLabel(plan.type).toLowerCase()}
+                      </h3>
+                      <p className="mt-1 text-sm text-zinc-500">
+                        {frequencyLabel(plan.frequency)}
+                      </p>
                     </div>
-                    <span className="rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200">Ativo</span>
+
+                    <span
+                      className={
+                        plan.active
+                          ? "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"
+                          : "rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-400"
+                      }
+                    >
+                      {plan.active ? "Ativo" : "Inativo"}
+                    </span>
                   </div>
+
                   <p className="mt-3 text-sm leading-6 text-zinc-400">{plan.actions}</p>
+                  {plan.notes && <p className="mt-2 text-xs text-zinc-500">{plan.notes}</p>}
                 </article>
               ))
             )}
@@ -150,8 +224,140 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
       <Panel>
         <div className="flex items-center gap-3">
           <ClipboardCheck size={22} className="text-teal-300" />
+          <h2 className="text-xl font-semibold text-zinc-50">Editar planos de intervenção</h2>
+        </div>
+
+        <div className="mt-4 grid gap-4 xl:grid-cols-2">
+          {equipment.interventionPlans.length === 0 ? (
+            <EmptyState
+              title="Sem planos para editar"
+              description="Cria um novo plano abaixo para este equipamento."
+            />
+          ) : (
+            equipment.interventionPlans.map((plan) => (
+              <form
+                key={plan.id}
+                action={updateEquipmentInterventionPlan}
+                className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-950/55 p-4"
+              >
+                <input type="hidden" name="id" value={plan.id} />
+                <input type="hidden" name="equipmentId" value={equipment.id} />
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <select name="kind" className={inputClass} defaultValue={plan.kind}>
+                    <option value="INSPECTION">Inspeção</option>
+                    <option value="MAINTENANCE">Manutenção</option>
+                  </select>
+
+                  <select name="type" className={inputClass} defaultValue={plan.type}>
+                    <option value="INTERNAL">Interna</option>
+                    <option value="EXTERNAL">Externa</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <select name="frequency" className={inputClass} defaultValue={plan.frequency}>
+                    <option value="DAILY">Diária</option>
+                    <option value="WEEKLY">Semanal</option>
+                    <option value="MONTHLY">Mensal</option>
+                    <option value="QUARTERLY">Trimestral</option>
+                    <option value="FOUR_MONTHLY">Quadrimestral</option>
+                    <option value="SEMIANNUAL">Semestral</option>
+                    <option value="ANNUAL">Anual</option>
+                  </select>
+
+                  <select name="active" className={inputClass} defaultValue={plan.active ? "true" : "false"}>
+                    <option value="true">Ativo</option>
+                    <option value="false">Inativo</option>
+                  </select>
+                </div>
+
+                <textarea
+                  name="actions"
+                  required
+                  className={textareaClass}
+                  defaultValue={plan.actions}
+                  placeholder="Ações previstas"
+                />
+
+                <textarea
+                  name="notes"
+                  className={textareaClass}
+                  defaultValue={plan.notes ?? ""}
+                  placeholder="Notas"
+                />
+
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <button className={`${buttonClass} flex-1`}>Guardar plano</button>
+
+                  <button
+                    formAction={deleteEquipmentInterventionPlan}
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 text-sm font-semibold text-red-200 transition hover:border-red-400"
+                  >
+                    <Trash2 size={16} />
+                    Apagar
+                  </button>
+                </div>
+              </form>
+            ))
+          )}
+        </div>
+
+        <div className="mt-6 rounded-xl border border-zinc-800 bg-black/20 p-4">
+          <h3 className="font-semibold text-zinc-100">Novo plano</h3>
+
+          <form action={createEquipmentInterventionPlan} className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+            <input type="hidden" name="equipmentId" value={equipment.id} />
+
+            <select name="kind" className={inputClass}>
+              <option value="INSPECTION">Inspeção</option>
+              <option value="MAINTENANCE">Manutenção</option>
+            </select>
+
+            <select name="type" className={inputClass}>
+              <option value="INTERNAL">Interna</option>
+              <option value="EXTERNAL">Externa</option>
+            </select>
+
+            <select name="frequency" className={inputClass}>
+              <option value="DAILY">Diária</option>
+              <option value="WEEKLY">Semanal</option>
+              <option value="MONTHLY">Mensal</option>
+              <option value="QUARTERLY">Trimestral</option>
+              <option value="FOUR_MONTHLY">Quadrimestral</option>
+              <option value="SEMIANNUAL">Semestral</option>
+              <option value="ANNUAL">Anual</option>
+            </select>
+
+            <select name="active" className={inputClass}>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+
+            <button className={buttonClass}>Criar plano</button>
+
+            <textarea
+              name="actions"
+              required
+              className={`${textareaClass} md:col-span-2 xl:col-span-5`}
+              placeholder="Ações previstas"
+            />
+
+            <textarea
+              name="notes"
+              className={`${textareaClass} md:col-span-2 xl:col-span-5`}
+              placeholder="Notas"
+            />
+          </form>
+        </div>
+      </Panel>
+
+      <Panel>
+        <div className="flex items-center gap-3">
+          <ClipboardCheck size={22} className="text-teal-300" />
           <h2 className="text-xl font-semibold text-zinc-50">Atualizar cadastro</h2>
         </div>
+
         <form action={updateEquipmentBasics} className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           <input type="hidden" name="equipmentId" value={equipment.id} />
           <input name="name" required className={inputClass} defaultValue={equipment.name} placeholder="Nome do equipamento" />
@@ -163,6 +369,7 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
           <input name="brand" className={inputClass} defaultValue={equipment.brand ?? ""} placeholder="Fabricante / Marca" />
           <input name="model" className={inputClass} defaultValue={equipment.model ?? ""} placeholder="Modelo" />
           <input name="serialNumber" className={inputClass} defaultValue={equipment.serialNumber ?? ""} placeholder="N.º de série" />
+
           <select name="equipmentTypeId" className={inputClass} defaultValue={equipment.equipmentTypeId ?? ""}>
             <option value="">Sem tipo/checklist associado</option>
             {equipmentTypes.map((type) => (
@@ -171,19 +378,30 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
               </option>
             ))}
           </select>
+
           <select name="isMeasurementMonitoring" className={inputClass} defaultValue={equipment.isMeasurementMonitoring ? "true" : "false"}>
             <option value="false">Não é equipamento de medição/monitorização</option>
             <option value="true">É equipamento de medição/monitorização</option>
           </select>
+
           <input name="category" className={inputClass} defaultValue={equipment.category} placeholder="Categoria" />
+
           <select name="status" className={inputClass} defaultValue={equipment.status}>
             <option value="ACTIVE">Ativo</option>
             <option value="MAINTENANCE">Em manutenção</option>
             <option value="INACTIVE">Inativo</option>
             <option value="DISCARDED">Abatido</option>
           </select>
+
           <input name="warrantyUntil" type="date" className={inputClass} defaultValue={dateInputValue(equipment.warrantyUntil)} />
-          <textarea name="notes" className={`${textareaClass} md:col-span-2 xl:col-span-3`} defaultValue={equipment.notes ?? ""} placeholder="Notas gerais do equipamento" />
+
+          <textarea
+            name="notes"
+            className={`${textareaClass} md:col-span-2 xl:col-span-3`}
+            defaultValue={equipment.notes ?? ""}
+            placeholder="Notas gerais do equipamento"
+          />
+
           <div className="md:col-span-2 xl:col-span-3">
             <button className={buttonClass}>Guardar alterações</button>
           </div>
@@ -195,25 +413,35 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
           <Receipt size={22} className="text-amber-300" />
           <h2 className="text-xl font-semibold text-zinc-50">Despesas associadas</h2>
         </div>
+
         <div className="mt-4 rounded-lg border border-amber-300/20 bg-amber-300/10 p-4">
           <p className="text-sm text-amber-100/70">Total registado neste equipamento</p>
           <p className="mt-1 text-3xl font-semibold text-amber-200">{formatCurrency(equipmentExpenseTotal)}</p>
         </div>
+
         <div className="mt-4 space-y-3">
           {equipment.expenses.length === 0 ? (
-            <EmptyState title="Sem despesas associadas" description="Quando associares despesas a este equipamento, elas aparecem aqui com a respetiva fatura." />
+            <EmptyState
+              title="Sem despesas associadas"
+              description="Quando associares despesas a este equipamento, elas aparecem aqui com a respetiva fatura."
+            />
           ) : (
             equipment.expenses.map((expense) => {
               const invoice = expense.documents.find((document) => document.type === "INVOICE" && document.fileUrl);
 
               return (
-                <Link key={expense.id} href={`/despesas/${expense.id}`} className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 transition hover:border-amber-300/50">
+                <Link
+                  key={expense.id}
+                  href={`/despesas/${expense.id}`}
+                  className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 transition hover:border-amber-300/50"
+                >
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h3 className="font-semibold text-zinc-100">{expense.title}</h3>
                       <p className="mt-1 text-sm text-zinc-500">{expense.supplier ?? expense.category}</p>
                       {invoice && <p className="mt-1 text-xs font-medium text-sky-300">Fatura associada</p>}
                     </div>
+
                     <div className="text-left sm:text-right">
                       <p className="font-semibold text-amber-300">{formatCurrency(expense.amount)}</p>
                       <p className="mt-1 text-xs text-zinc-500">{formatDate(expense.date)}</p>
@@ -229,22 +457,33 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
       <Panel>
         <div className="flex items-center gap-3">
           <Package size={22} className="text-amber-300" />
-          <h2 className="text-xl font-semibold text-zinc-50">Pecas e consumiveis associados</h2>
+          <h2 className="text-xl font-semibold text-zinc-50">Peças e consumíveis associados</h2>
         </div>
+
         <div className="mt-4 space-y-3">
           {equipment.consumables.length === 0 ? (
-            <EmptyState title="Sem stock associado" description="Quando associares pecas ou consumiveis a este equipamento, eles aparecem aqui." />
+            <EmptyState
+              title="Sem stock associado"
+              description="Quando associares peças ou consumíveis a este equipamento, eles aparecem aqui."
+            />
           ) : (
             equipment.consumables.map((item) => (
               <article key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <h3 className="font-semibold text-zinc-100">{item.name}</h3>
-                    <p className="mt-1 text-sm text-zinc-500">{item.category} - {item.location ?? "sem localizacao"}</p>
+                    <p className="mt-1 text-sm text-zinc-500">
+                      {item.category} - {item.location ?? "sem localização"}
+                    </p>
                   </div>
+
                   <div className="text-left sm:text-right">
-                    <p className="font-semibold text-amber-300">{String(item.currentStock)} {item.unit}</p>
-                    <p className="mt-1 text-xs text-zinc-500">Minimo: {String(item.minimumStock)} {item.unit}</p>
+                    <p className="font-semibold text-amber-300">
+                      {String(item.currentStock)} {item.unit}
+                    </p>
+                    <p className="mt-1 text-xs text-zinc-500">
+                      Mínimo: {String(item.minimumStock)} {item.unit}
+                    </p>
                   </div>
                 </div>
               </article>
@@ -258,32 +497,48 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
           <ClipboardCheck size={22} className="text-sky-300" />
           <h2 className="text-xl font-semibold text-zinc-50">Checklists internas preenchidas</h2>
         </div>
+
         <div className="mt-4 space-y-3">
           {equipment.internalMaintenanceRecords.length === 0 ? (
-            <EmptyState title="Sem checklists preenchidas" description="Quando executares a manutenção interna por checklist, os registos aparecem aqui com respostas e fotos." />
+            <EmptyState
+              title="Sem checklists preenchidas"
+              description="Quando executares a manutenção interna por checklist, os registos aparecem aqui com respostas e fotos."
+            />
           ) : (
             equipment.internalMaintenanceRecords.map((record) => (
               <article key={record.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">{record.template.title}</p>
+                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">
+                      {record.template.title}
+                    </p>
                     <h3 className="mt-1 font-semibold text-zinc-100">{record.documentNo ?? "Sem documento"}</h3>
-                    <p className="mt-2 text-sm text-zinc-500">Responsável: {record.responsible ?? "Sem responsável"}</p>
+                    <p className="mt-2 text-sm text-zinc-500">
+                      Responsável: {record.responsible ?? "Sem responsável"}
+                    </p>
                   </div>
+
                   <div className="text-left sm:text-right">
                     <p className="text-sm font-medium text-sky-300">{formatDate(record.performedAt)}</p>
                     <p className="mt-1 text-xs text-zinc-500">{record.responses.length} resposta(s)</p>
-                    <Link href={`/equipamentos/${equipment.id}/checklist-interna/${record.id}`} className="mt-3 inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs font-semibold text-zinc-100 transition hover:border-sky-300/60">
+
+                    <Link
+                      href={`/equipamentos/${equipment.id}/checklist-interna/${record.id}`}
+                      className="mt-3 inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs font-semibold text-zinc-100 transition hover:border-sky-300/60"
+                    >
                       <ExternalLink size={14} />
                       Abrir documento
                     </Link>
                   </div>
                 </div>
+
                 <div className="mt-4 grid gap-2 md:grid-cols-2">
                   {record.responses.slice(0, 8).map((response) => (
                     <div key={response.id} className="rounded-md border border-zinc-800 px-3 py-2 text-sm text-zinc-400">
                       <span className="font-medium text-zinc-200">{response.status}</span> · {response.item.check}
-                      {response.photos.length > 0 && <span className="ml-2 text-sky-300">{response.photos.length} foto(s)</span>}
+                      {response.photos.length > 0 && (
+                        <span className="ml-2 text-sky-300">{response.photos.length} foto(s)</span>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -299,26 +554,32 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
             <Wrench size={22} className="text-cyan-300" />
             <h2 className="text-xl font-semibold text-zinc-50">Registar intervenção</h2>
           </div>
+
           <form action={createEquipmentInterventionLog} className="mt-4 space-y-3">
             <input type="hidden" name="equipmentId" value={equipment.id} />
             <input name="title" required className={inputClass} placeholder="Título da intervenção" />
+
             <div className="grid grid-cols-2 gap-3">
               <select name="kind" className={inputClass}>
                 <option value="INSPECTION">Inspeção</option>
                 <option value="MAINTENANCE">Manutenção</option>
               </select>
+
               <select name="type" className={inputClass}>
                 <option value="INTERNAL">Interna</option>
                 <option value="EXTERNAL">Externa</option>
               </select>
             </div>
+
             <div className="grid grid-cols-2 gap-3">
               <input name="performedAt" type="date" className={inputClass} />
               <input name="performedBy" className={inputClass} placeholder="Feito por" />
             </div>
+
             <textarea name="actionsDone" required className={textareaClass} placeholder="O que foi feito" />
             <input name="result" className={inputClass} placeholder="Resultado / estado final" />
             <textarea name="notes" className={textareaClass} placeholder="Notas" />
+
             <button className={buttonClass}>Guardar intervenção</button>
           </form>
         </Panel>
@@ -328,9 +589,13 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
             <History size={22} className="text-amber-300" />
             <h2 className="text-xl font-semibold text-zinc-50">Histórico de intervenções</h2>
           </div>
+
           <div className="mt-4 space-y-3">
             {historyItems.length === 0 ? (
-              <EmptyState title="Sem histórico" description="Quando forem feitas inspeções, manutenções ou calibrações, ficam registadas aqui." />
+              <EmptyState
+                title="Sem histórico"
+                description="Quando forem feitas inspeções, manutenções ou calibrações, ficam registadas aqui."
+              />
             ) : (
               historyItems.map((item) => (
                 <article key={`${item.type}-${item.id}`} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
@@ -341,6 +606,7 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
                       <p className="mt-2 text-sm leading-6 text-zinc-400">{item.description}</p>
                       <p className="mt-2 text-sm text-zinc-500">Por: {item.by}</p>
                     </div>
+
                     <div className="text-left sm:text-right">
                       <p className="text-sm font-medium text-teal-300">{formatDate(item.date)}</p>
                       {item.cost !== null && <p className="mt-1 text-sm text-cyan-300">{formatCurrency(item.cost)}</p>}
