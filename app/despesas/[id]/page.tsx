@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 import { ArrowLeft, ExternalLink, FileText, Trash2 } from "lucide-react";
 
 import { deleteExpense, updateExpense } from "@/app/actions";
@@ -16,6 +17,15 @@ type ExpenseDetailPageProps = {
 
 function dateInputValue(date: Date | null | undefined) {
   return date ? date.toISOString().slice(0, 10) : "";
+}
+
+function FieldLabel({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <label className="grid gap-1 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+      {label}
+      {children}
+    </label>
+  );
 }
 
 export default async function ExpenseDetailPage({ params }: ExpenseDetailPageProps) {
@@ -52,42 +62,64 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
           <h2 className="text-xl font-semibold text-zinc-50">Editar despesa</h2>
           <form action={updateExpense} className="mt-4 space-y-3">
             <input type="hidden" name="id" value={expense.id} />
-            <input name="title" required className={inputClass} defaultValue={expense.title} placeholder="Titulo" />
-            <input name="supplier" className={inputClass} defaultValue={expense.supplier ?? ""} placeholder="Fornecedor" />
+            <FieldLabel label="Titulo">
+              <input name="title" required className={inputClass} defaultValue={expense.title} placeholder="Titulo" />
+            </FieldLabel>
+            <FieldLabel label="Fornecedor">
+              <input name="supplier" className={inputClass} defaultValue={expense.supplier ?? ""} placeholder="Fornecedor" />
+            </FieldLabel>
             <div className="grid grid-cols-2 gap-3">
-              <input name="amount" required className={inputClass} defaultValue={String(expense.amount)} placeholder="Valor" />
-              <input name="category" className={inputClass} defaultValue={expense.category} placeholder="Categoria" />
+              <FieldLabel label="Valor">
+                <input name="amount" required className={inputClass} defaultValue={String(expense.amount)} placeholder="Valor" />
+              </FieldLabel>
+              <FieldLabel label="Centro de custo">
+                <input name="category" className={inputClass} defaultValue={expense.category} placeholder="Centro de custo" />
+              </FieldLabel>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <input name="date" type="date" className={inputClass} defaultValue={dateInputValue(expense.date)} />
-              <select name="status" className={inputClass} defaultValue={expense.status}>
-                <option value="PAID">Pago</option>
-                <option value="PENDING">Pendente</option>
-                <option value="CANCELED">Cancelado</option>
+              <FieldLabel label="Data">
+                <input name="date" type="date" className={inputClass} defaultValue={dateInputValue(expense.date)} />
+              </FieldLabel>
+              <FieldLabel label="Estado">
+                <select name="status" className={inputClass} defaultValue={expense.status}>
+                  <option value="PAID">Pago</option>
+                  <option value="PENDING">Pendente</option>
+                  <option value="CANCELED">Cancelado</option>
+                </select>
+              </FieldLabel>
+            </div>
+            <FieldLabel label="Equipamento">
+              <select name="equipmentId" className={inputClass} defaultValue={expense.equipmentId ?? ""}>
+                <option value="">Sem equipamento associado</option>
+                {moduleData.equipment.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                    {item.code ? ` - ${item.code}` : ""}
+                  </option>
+                ))}
               </select>
-            </div>
-            <select name="equipmentId" className={inputClass} defaultValue={expense.equipmentId ?? ""}>
-              <option value="">Sem equipamento associado</option>
-              {moduleData.equipment.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                  {item.code ? ` - ${item.code}` : ""}
-                </option>
-              ))}
-            </select>
-            <select name="vehicleId" className={inputClass} defaultValue={expense.vehicleId ?? ""}>
-              <option value="">Sem viatura associada</option>
-              {moduleData.vehicles.map((vehicle) => (
-                <option key={vehicle.id} value={vehicle.id}>
-                  {vehicle.brand} {vehicle.model} - {vehicle.plate}
-                </option>
-              ))}
-            </select>
+            </FieldLabel>
+            <FieldLabel label="Viatura">
+              <select name="vehicleId" className={inputClass} defaultValue={expense.vehicleId ?? ""}>
+                <option value="">Sem viatura associada</option>
+                {moduleData.vehicles.map((vehicle) => (
+                  <option key={vehicle.id} value={vehicle.id}>
+                    {vehicle.brand} {vehicle.model} - {vehicle.plate}
+                  </option>
+                ))}
+              </select>
+            </FieldLabel>
             <div className="grid gap-3 md:grid-cols-2">
-              <input name="invoiceUrl" className={inputClass} defaultValue={invoice?.fileUrl ?? ""} placeholder="Link/caminho da fatura" />
-              <input name="invoiceName" className={inputClass} defaultValue={invoice?.fileName ?? invoice?.title ?? ""} placeholder="Nome do ficheiro" />
+              <FieldLabel label="Link da fatura">
+                <input name="invoiceUrl" className={inputClass} defaultValue={invoice?.fileUrl ?? ""} placeholder="Link/caminho da fatura" />
+              </FieldLabel>
+              <FieldLabel label="Nome do ficheiro">
+                <input name="invoiceName" className={inputClass} defaultValue={invoice?.fileName ?? invoice?.title ?? ""} placeholder="Nome do ficheiro" />
+              </FieldLabel>
             </div>
-            <textarea name="notes" className={textareaClass} defaultValue={expense.notes ?? ""} placeholder="Notas" />
+            <FieldLabel label="Notas">
+              <textarea name="notes" className={textareaClass} defaultValue={expense.notes ?? ""} placeholder="Notas" />
+            </FieldLabel>
             <button className={buttonClass}>Guardar alteracoes</button>
           </form>
           <form action={deleteExpense} className="mt-3">
@@ -107,7 +139,7 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
                 ["Valor", formatCurrency(expense.amount)],
                 ["Estado", expense.status],
                 ["Fornecedor", expense.supplier ?? "Sem fornecedor"],
-                ["Categoria", expense.category],
+                ["Centro de custo", expense.category],
                 ["Equipamento", expense.equipment?.name ?? "Sem equipamento"],
                 ["Viatura", expense.vehicle ? `${expense.vehicle.brand} ${expense.vehicle.model} - ${expense.vehicle.plate}` : "Sem viatura"],
                 ["Data", formatDate(expense.date)],

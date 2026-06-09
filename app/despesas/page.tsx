@@ -28,7 +28,7 @@ export default async function ExpensesPage() {
             <input name="supplier" className={inputClass} placeholder="Fornecedor" />
             <div className="grid grid-cols-2 gap-3">
               <input name="amount" required className={inputClass} placeholder="Valor" />
-              <input name="category" className={inputClass} placeholder="Categoria" />
+              <input name="category" className={inputClass} placeholder="Centro de custo" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <input name="date" type="date" className={inputClass} />
@@ -59,7 +59,7 @@ export default async function ExpensesPage() {
               <input name="invoiceUrl" className={inputClass} placeholder="Link/caminho da fatura" />
               <input name="invoiceName" className={inputClass} placeholder="Nome do ficheiro" />
             </div>
-            <textarea name="notes" className={textareaClass} placeholder="Notas, centro de custo ou referencia documental" />
+            <textarea name="notes" className={textareaClass} placeholder="Notas ou referencia documental" />
             <button className={buttonClass}>Guardar despesa</button>
           </form>
         </Panel>

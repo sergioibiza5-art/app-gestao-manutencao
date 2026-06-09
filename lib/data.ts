@@ -54,10 +54,8 @@ export async function getDashboardData() {
         prisma.maintenanceSchedule.findMany({
           where: {
             status: "SCHEDULED",
-            scheduledAt: { gte: now },
           },
           orderBy: { scheduledAt: "asc" },
-          take: 4,
           include: { equipment: true },
         }),
       ]);

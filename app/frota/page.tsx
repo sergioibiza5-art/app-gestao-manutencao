@@ -60,7 +60,7 @@ export default async function FleetPage() {
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[0.65fr_1.35fr]">
+      <section className="grid gap-4 xl:grid-cols-[0.55fr_1.45fr]">
         <Panel>
           <div className="flex items-center gap-3">
             <Car size={22} className="text-blue-300" />
@@ -102,12 +102,12 @@ export default async function FleetPage() {
                 <Link
                   key={vehicle.id}
                   href={`/frota/${vehicle.id}`}
-                  className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/70 lg:grid-cols-[minmax(0,1.25fr)_repeat(4,minmax(95px,0.35fr))_auto]"
+                  className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/70 lg:grid-cols-[minmax(230px,1.65fr)_repeat(4,minmax(95px,0.4fr))_auto]"
                 >
                   <div className="min-w-0">
                     <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">{vehicle.plate}</p>
-                    <h3 className="mt-1 truncate text-lg font-semibold text-zinc-50">{vehicle.brand} {vehicle.model}</h3>
-                    <p className="mt-1 truncate text-sm text-zinc-500">
+                    <h3 className="mt-1 text-lg font-semibold leading-snug text-zinc-50">{vehicle.brand} {vehicle.model}</h3>
+                    <p className="mt-1 text-sm leading-5 text-zinc-500">
                       {fuelLabel(vehicle.fuel)} · {vehicle.year ?? "sem ano"} · {vehicle.driver ?? "sem condutor"}
                     </p>
                   </div>
