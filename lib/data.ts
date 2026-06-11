@@ -107,7 +107,7 @@ export async function getModuleData() {
         equipmentTypes,
         vehicles,
       ] = await Promise.all([
-        prisma.expense.findMany({ orderBy: { date: "desc" }, take: 30, include: { equipment: true, vehicle: true, documents: true } }),
+        prisma.expense.findMany({ orderBy: { date: "desc" }, include: { equipment: true, vehicle: true, documents: true } }),
         prisma.monthlyBill.findMany({ orderBy: { name: "asc" }, take: 50 }),
         prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true } }),
         prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
