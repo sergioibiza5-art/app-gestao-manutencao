@@ -496,6 +496,7 @@ model Expense {
   title       String
   category    String
   supplier    String?
+  costCenter  String?
   amount      Decimal       @db.Decimal(10, 2)
   status      ExpenseStatus @default(PAID)
   notes       String?
