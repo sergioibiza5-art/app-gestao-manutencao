@@ -442,3 +442,115 @@ export async function getVehicleDetail(id: string) {
     null,
   );
 }
+export async function getAnalyticsData() {
+  return readDb(
+    async (prisma) => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const yearStart = new Date(year, 0, 1);
+      const yearEnd = new Date(year + 1, 0, 1);
+
+      const [expenses, budgets] = await Promise.all([
+        prisma.expense.findMany({
+          where: {
+            date: {
+              gte: yearStart,
+              lt: yearEnd,
+            },
+          },
+          orderBy: { date: "desc" },
+          include: {
+            equipment: true,
+            vehicle: true,
+          },
+        }),
+        prisma.budget.findMany({
+          where: {
+            year,
+          },
+        }),
+      ]);
+
+      const totalExpenses = expenses.reduce(
+        (sum, expense) => sum + Number(expense.amount ?? 0),
+        0,
+      );
+
+      const totalBudget = budgets.reduce(
+        (sum, budget) => sum + Number(budget.planned ?? 0),
+        0,
+      );
+
+      const bySupplier = Object.values(
+        expenses.reduce<Record<string, { name: string; total: number; count: number }>>(
+          (acc, expense) => {
+            const key = expense.supplier || "Sem fornecedor";
+            acc[key] ??= { name: key, total: 0, count: 0 };
+            acc[key].total += Number(expense.amount ?? 0);
+            acc[key].count += 1;
+            return acc;
+          },
+          {},
+        ),
+      ).sort((a, b) => b.total - a.total);
+
+      const byCostCenter = Object.values(
+        expenses.reduce<Record<string, { name: string; total: number; count: number }>>(
+          (acc, expense) => {
+            const key = expense.costCenter || expense.category || "Sem centro de custo";
+            acc[key] ??= { name: key, total: 0, count: 0 };
+            acc[key].total += Number(expense.amount ?? 0);
+            acc[key].count += 1;
+            return acc;
+          },
+          {},
+        ),
+      ).sort((a, b) => b.total - a.total);
+
+      const byEquipment = Object.values(
+        expenses.reduce<Record<string, { name: string; code: string; total: number; count: number }>>(
+          (acc, expense) => {
+            const key =
+              expense.equipment?.id ||
+              expense.vehicle?.id ||
+              "sem-equipamento";
+
+            const name =
+              expense.equipment?.name ||
+              (expense.vehicle ? `${expense.vehicle.brand} ${expense.vehicle.model}` : "Sem equipamento");
+
+            const code =
+              expense.equipment?.code ||
+              expense.vehicle?.plate ||
+              "—";
+
+            acc[key] ??= { name, code, total: 0, count: 0 };
+            acc[key].total += Number(expense.amount ?? 0);
+            acc[key].count += 1;
+            return acc;
+          },
+          {},
+        ),
+      ).sort((a, b) => b.total - a.total);
+
+      return {
+        year,
+        totalBudget,
+        totalExpenses,
+        remainingBudget: totalBudget - totalExpenses,
+        bySupplier,
+        byCostCenter,
+        byEquipment,
+      };
+    },
+    {
+      year: new Date().getFullYear(),
+      totalBudget: 0,
+      totalExpenses: 0,
+      remainingBudget: 0,
+      bySupplier: [],
+      byCostCenter: [],
+      byEquipment: [],
+    },
+  );
+}

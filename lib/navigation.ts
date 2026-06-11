@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   Car,
   ClipboardCheck,
   FileText,
@@ -15,6 +16,9 @@ import {
 export const navigation = [
   { name: "Dashboard", href: "/", meta: "Visao diaria", icon: LayoutDashboard, color: "bg-teal-400/15 text-teal-200" },
   { name: "Despesas", href: "/despesas", meta: "Faturas e recibos", icon: Receipt, color: "bg-amber-400/15 text-amber-200" },
+
+  { name: "Analises", href: "/analises", meta: "Fornecedores e custos", icon: BarChart3, color: "bg-emerald-400/15 text-emerald-200" },
+
   { name: "Tarefas", href: "/tarefas", meta: "Recorrencias", icon: ClipboardCheck, color: "bg-teal-400/15 text-teal-200" },
   { name: "Manutencao", href: "/manutencao", meta: "Ativos e infraestrutura", icon: Wrench, color: "bg-cyan-400/15 text-cyan-200" },
   { name: "Equipamentos", href: "/equipamentos", meta: "Cadastro e planos", icon: Settings, color: "bg-orange-400/15 text-orange-200" },
