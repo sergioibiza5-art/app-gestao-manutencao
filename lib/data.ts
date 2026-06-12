@@ -1,9 +1,38 @@
 import { readDb } from "@/lib/prisma";
 
-export async function getDashboardData() {
+function dashboardRange(view?: string, dateValue?: string) {
+  const today = new Date();
+  const base = dateValue ? new Date(dateValue) : today;
+
+  if (view === "year") {
+    return {
+      start: new Date(base.getFullYear(), 0, 1),
+      end: new Date(base.getFullYear(), 11, 31, 23, 59, 59, 999),
+    };
+  }
+
+  if (view === "week") {
+    const start = new Date(base);
+    const day = (start.getDay() + 6) % 7;
+    start.setDate(start.getDate() - day);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    end.setHours(23, 59, 59, 999);
+    return { start, end };
+  }
+
+  return {
+    start: new Date(base.getFullYear(), base.getMonth(), 1),
+    end: new Date(base.getFullYear(), base.getMonth() + 1, 0, 23, 59, 59, 999),
+  };
+}
+
+export async function getDashboardData(filters?: { view?: string; date?: string }) {
   return readDb(
     async (prisma) => {
       const now = new Date();
+      const range = dashboardRange(filters?.view, filters?.date);
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
       const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
@@ -17,6 +46,7 @@ export async function getDashboardData() {
         sgqTotal,
         tasks,
         calendar,
+        vehicles,
       ] = await Promise.all([
         prisma.task.count({
           where: {
@@ -54,11 +84,47 @@ export async function getDashboardData() {
         prisma.maintenanceSchedule.findMany({
           where: {
             status: "SCHEDULED",
+            OR: [
+              { scheduledAt: { gte: range.start, lte: range.end } },
+              { scheduledAt: { lt: range.start } },
+            ],
           },
           orderBy: { scheduledAt: "asc" },
           include: { equipment: true },
         }),
+        prisma.vehicle.findMany({
+          orderBy: [{ brand: "asc" }, { model: "asc" }],
+          include: {
+            kmLogs: { orderBy: { date: "asc" } },
+            services: { orderBy: { date: "desc" } },
+            expenses: true,
+          },
+        }),
       ]);
+      const fleetAlerts = vehicles
+        .map(enrichVehicle)
+        .flatMap((vehicle) => [
+          vehicle.metrics.estimatedRevisionDate
+            ? {
+                id: `${vehicle.id}-revision`,
+                type: "Revisao",
+                title: `${vehicle.brand} ${vehicle.model}`,
+                plate: vehicle.plate,
+                dueDate: vehicle.metrics.estimatedRevisionDate,
+              }
+            : null,
+          vehicle.metrics.nextInspectionDate
+            ? {
+                id: `${vehicle.id}-inspection`,
+                type: "Inspecao",
+                title: `${vehicle.brand} ${vehicle.model}`,
+                plate: vehicle.plate,
+                dueDate: vehicle.metrics.nextInspectionDate,
+              }
+            : null,
+        ])
+        .filter((item) => item !== null)
+        .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
 
       return {
         kpis: {
@@ -72,6 +138,8 @@ export async function getDashboardData() {
         },
         tasks,
         calendar,
+        fleetAlerts,
+        range,
       };
     },
     {
@@ -86,6 +154,8 @@ export async function getDashboardData() {
       },
       tasks: [],
       calendar: [],
+      fleetAlerts: [],
+      range: dashboardRange(),
     },
   );
 }
@@ -112,7 +182,7 @@ export async function getModuleData() {
         prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true } }),
         prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
-        prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 40, include: { equipment: true } }),
+        prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 200, include: { equipment: true, documents: true } }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100, include: { equipment: true } }),
         prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
         prisma.user.findMany({ orderBy: { name: "asc" }, take: 50 }),
@@ -147,6 +217,8 @@ export async function getEquipmentDetail(id: string) {
         where: { id },
         include: {
           interventionPlans: { orderBy: [{ kind: "asc" }, { type: "asc" }] },
+          parentEquipment: true,
+          childEquipment: { orderBy: { name: "asc" } },
           interventionLogs: { orderBy: { performedAt: "desc" }, take: 50 },
           equipmentType: {
             include: {
@@ -225,6 +297,17 @@ export async function getEquipmentTypes() {
       prisma.equipmentType.findMany({
         orderBy: { name: "asc" },
         include: { checklistTemplates: { where: { active: true }, include: { items: true } } },
+      }),
+    [],
+  );
+}
+
+export async function getEquipmentOptions() {
+  return readDb(
+    async (prisma) =>
+      prisma.equipment.findMany({
+        orderBy: { name: "asc" },
+        select: { id: true, name: true, code: true, isMeasurementMonitoring: true },
       }),
     [],
   );
@@ -339,7 +422,8 @@ export async function getMaintenanceScheduleDetail(id: string) {
           workOrder: {
             include: {
               template: { include: { items: { where: { active: true }, orderBy: { order: "asc" } } } },
-              checklistRecord: { include: { responses: { include: { item: true } } } },
+              documents: { orderBy: { createdAt: "desc" } },
+              checklistRecord: { include: { responses: { include: { item: true, photos: true } } } },
               maintenanceLog: true,
             },
           },

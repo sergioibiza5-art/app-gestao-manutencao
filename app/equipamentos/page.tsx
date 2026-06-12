@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   ClipboardList,
+  FileSpreadsheet,
   Filter,
   Plus,
   Ruler,
@@ -10,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 
-import { createEquipment } from "@/app/actions";
+import { createEquipment, importEquipmentCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import {
   buttonClass,
@@ -138,6 +139,9 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
   const measurement = params.measurement || "all";
   const currentPage = Math.max(Number(params.page || 1), 1);
   const pageSize = 25;
+  const templateHref =
+    "data:text/csv;charset=utf-8," +
+    encodeURIComponent("nome;codigo_interno;data_aquisicao;fornecedor;localizacao;departamento;marca;modelo;numero_serie;medicao_monitorizacao;categoria\nCompressor 1;COMP-01;2026-01-10;Fornecedor;Sala tecnica;Manutencao;Marca;Modelo;SN001;nao;Infraestrutura\n");
 
   const locations = Array.from(
     new Set(equipment.map((item) => item.location).filter(Boolean) as string[])
@@ -332,6 +336,15 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
                   ))}
                 </select>
 
+                <select name="parentEquipmentId" className={inputClass}>
+                  <option value="">Sem equipamento-pai</option>
+                  {equipment.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}{item.code ? ` - ${item.code}` : ""}
+                    </option>
+                  ))}
+                </select>
+
                 <select name="isMeasurementMonitoring" className={inputClass}>
                   <option value="false">Não é equipamento de medição/monitorização</option>
                   <option value="true">É equipamento de medição/monitorização</option>
@@ -380,6 +393,19 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
               <textarea name="notes" className={textareaClass} placeholder="Notas gerais do equipamento" />
               <button className={buttonClass}>Guardar equipamento</button>
             </form>
+            <div className="mt-6 rounded-lg border border-zinc-800 bg-black/20 p-4">
+              <div className="flex items-center gap-3">
+                <FileSpreadsheet size={20} className="text-lime-300" />
+                <h3 className="font-semibold text-zinc-100">Importar por Excel/CSV</h3>
+              </div>
+              <a href={templateHref} download="modelo_equipamentos.csv" className="mt-3 inline-flex text-sm font-semibold text-lime-200">
+                Descarregar modelo
+              </a>
+              <form action={importEquipmentCsv} encType="multipart/form-data" className="mt-3 grid gap-3">
+                <input name="file" type="file" accept=".csv,text/csv" className={inputClass} />
+                <button className={buttonClass}>Importar equipamentos</button>
+              </form>
+            </div>
           </Panel>
         </div>
       </div>

@@ -60,6 +60,25 @@ function enumValue<T extends string>(formData: FormData, key: string, allowed: r
   return allowed.includes(value as T) ? (value as T) : fallback;
 }
 
+function csvRows(content: string) {
+  const lines = content.replace(/^\uFEFF/, "").split(/\r?\n/).filter((line) => line.trim().length > 0);
+  if (lines.length < 2) return [];
+
+  const split = (line: string) => line.split(";").map((cell) => cell.trim().replace(/^"|"$/g, ""));
+  const headers = split(lines[0]);
+
+  return lines.slice(1).map((line) => {
+    const values = split(line);
+    return Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ""]));
+  });
+}
+
+async function uploadedText(formData: FormData, key: string) {
+  const file = formData.get(key);
+  if (!(file instanceof File) || file.size === 0) return "";
+  return file.text();
+}
+
 const expenseStatuses = ["PENDING", "PAID", "CANCELED"] as const satisfies readonly ExpenseStatus[];
 const taskFrequencies = ["DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "FOUR_MONTHLY", "SEMIANNUAL", "ANNUAL"] as const satisfies readonly TaskFrequency[];
 const taskStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"] as const satisfies readonly TaskStatus[];
@@ -434,6 +453,7 @@ export async function createEquipment(formData: FormData) {
       location: optionalText(formData, "location"),
       responsibleDepartment: optionalText(formData, "responsibleDepartment"),
       isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
+      parentEquipmentId: optionalText(formData, "parentEquipmentId"),
       equipmentTypeId: optionalText(formData, "equipmentTypeId"),
       purchaseDate: optionalDate(formData, "purchaseDate"),
       warrantyUntil: optionalDate(formData, "warrantyUntil"),
@@ -471,6 +491,7 @@ export async function updateEquipmentBasics(formData: FormData) {
       location: optionalText(formData, "location"),
       responsibleDepartment: optionalText(formData, "responsibleDepartment"),
       isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
+      parentEquipmentId: optionalText(formData, "parentEquipmentId") === equipmentId ? null : optionalText(formData, "parentEquipmentId"),
       equipmentTypeId: optionalText(formData, "equipmentTypeId"),
       purchaseDate: optionalDate(formData, "purchaseDate"),
       warrantyUntil: optionalDate(formData, "warrantyUntil"),
@@ -984,6 +1005,15 @@ export async function completeWorkOrder(formData: FormData) {
                 itemId,
                 status: enumValue(formData, `status_${itemId}`, checklistResponseStatuses, "OK"),
                 obs: optionalText(formData, `obs_${itemId}`),
+                photos: optionalText(formData, `photoUrl_${itemId}`)
+                  ? {
+                      create: {
+                        fileUrl: text(formData, `photoUrl_${itemId}`),
+                        fileName: optionalText(formData, `photoName_${itemId}`),
+                        caption: optionalText(formData, `photoCaption_${itemId}`),
+                      },
+                    }
+                  : undefined,
               })),
             },
           },
@@ -1018,6 +1048,22 @@ export async function completeWorkOrder(formData: FormData) {
     },
   });
 
+  const documentUrl = optionalText(formData, "documentUrl");
+  if (documentUrl) {
+    await prisma.document.create({
+      data: {
+        title: optionalText(formData, "documentTitle") ?? `Documento ${workOrder.number}`,
+        type: "OTHER",
+        fileUrl: documentUrl,
+        fileName: optionalText(formData, "documentName"),
+        notes: optionalText(formData, "documentNotes"),
+        equipmentId,
+        maintenanceLogId: maintenanceLog.id,
+        workOrderId,
+      },
+    });
+  }
+
   if (workOrder.scheduleId) {
     await prisma.maintenanceSchedule.update({
       where: { id: workOrder.scheduleId },
@@ -1040,7 +1086,7 @@ export async function createCalibrationLog(formData: FormData) {
     return;
   }
 
-  await prisma.calibrationLog.create({
+  const calibration = await prisma.calibrationLog.create({
     data: {
       title: text(formData, "title") || "Calibração",
       certificateNo: optionalText(formData, "certificateNo"),
@@ -1053,7 +1099,141 @@ export async function createCalibrationLog(formData: FormData) {
     },
   });
 
+  const certificateUrl = optionalText(formData, "certificateUrl");
+  if (certificateUrl) {
+    await prisma.document.create({
+      data: {
+        title: optionalText(formData, "certificateTitle") ?? `Certificado ${calibration.certificateNo ?? calibration.title}`,
+        type: "CERTIFICATE",
+        fileUrl: certificateUrl,
+        fileName: optionalText(formData, "certificateFileName"),
+        equipmentId,
+        calibrationLogId: calibration.id,
+      },
+    });
+  }
+
   revalidatePath("/");
+  revalidatePath("/calibracao");
+}
+
+export async function importEquipmentCsv(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const rows = csvRows(await uploadedText(formData, "file"));
+
+  for (const row of rows) {
+    const name = row.nome || row.name;
+    if (!name) continue;
+
+    await prisma.equipment.upsert({
+      where: { code: row.codigo_interno || row.code || `IMPORT-${name}` },
+      update: {
+        name,
+        category: row.categoria || "Geral",
+        brand: row.marca || row.brand || null,
+        model: row.modelo || row.model || null,
+        serialNumber: row.numero_serie || null,
+        supplier: row.fornecedor || null,
+        location: row.localizacao || null,
+        responsibleDepartment: row.departamento || null,
+        isMeasurementMonitoring: ["sim", "true", "1"].includes(String(row.medicao_monitorizacao || "").toLowerCase()),
+        purchaseDate: row.data_aquisicao ? new Date(row.data_aquisicao) : null,
+        status: "ACTIVE",
+      },
+      create: {
+        name,
+        code: row.codigo_interno || row.code || `IMPORT-${name}`,
+        category: row.categoria || "Geral",
+        brand: row.marca || row.brand || null,
+        model: row.modelo || row.model || null,
+        serialNumber: row.numero_serie || null,
+        supplier: row.fornecedor || null,
+        location: row.localizacao || null,
+        responsibleDepartment: row.departamento || null,
+        isMeasurementMonitoring: ["sim", "true", "1"].includes(String(row.medicao_monitorizacao || "").toLowerCase()),
+        purchaseDate: row.data_aquisicao ? new Date(row.data_aquisicao) : null,
+        status: "ACTIVE",
+      },
+    });
+  }
+
+  revalidatePath("/equipamentos");
+  revalidatePath("/calibracao");
+}
+
+export async function importConsumablesCsv(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const rows = csvRows(await uploadedText(formData, "file"));
+
+  for (const row of rows) {
+    const name = row.nome || row.name;
+    if (!name) continue;
+
+    const equipment = row.codigo_equipamento
+      ? await prisma.equipment.findFirst({ where: { code: row.codigo_equipamento } })
+      : null;
+
+    await prisma.consumable.create({
+      data: {
+        name,
+        category: row.categoria || "Consumivel",
+        unit: row.unidade || "un",
+        currentStock: row.stock_atual || "0",
+        minimumStock: row.stock_minimo || "0",
+        location: row.localizacao || null,
+        supplier: row.fornecedor || null,
+        notes: row.notas || null,
+        equipmentId: equipment?.id,
+      },
+    });
+  }
+
+  revalidatePath("/inventario");
+}
+
+export async function importCalibrationsCsv(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const rows = csvRows(await uploadedText(formData, "file"));
+
+  for (const row of rows) {
+    const equipment = await prisma.equipment.findFirst({
+      where: {
+        OR: [
+          { code: row.codigo_equipamento || "" },
+          { name: row.equipamento || "" },
+        ],
+      },
+    });
+    if (!equipment) continue;
+
+    await prisma.calibrationLog.create({
+      data: {
+        equipmentId: equipment.id,
+        title: row.descricao || row.titulo || "Calibracao",
+        certificateNo: row.numero_certificado || null,
+        calibrationDate: row.data_calibracao ? new Date(row.data_calibracao) : new Date(),
+        nextDueDate: row.proxima_validade ? new Date(row.proxima_validade) : null,
+        result: row.resultado || null,
+        approved: !["nao", "false", "0"].includes(String(row.aprovado || "sim").toLowerCase()),
+        notes: row.notas || null,
+        documents: row.link_certificado
+          ? {
+              create: {
+                title: row.nome_ficheiro || `Certificado ${row.numero_certificado || row.descricao || equipment.name}`,
+                type: "CERTIFICATE",
+                fileUrl: row.link_certificado,
+                fileName: row.nome_ficheiro || null,
+                equipmentId: equipment.id,
+              },
+            }
+          : undefined,
+      },
+    });
+  }
+
   revalidatePath("/calibracao");
 }
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, PackagePlus } from "lucide-react";
+import { ArrowRight, FileSpreadsheet, PackagePlus } from "lucide-react";
 
-import { createConsumable } from "@/app/actions";
+import { createConsumable, importConsumablesCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
@@ -10,6 +10,9 @@ export const dynamic = "force-dynamic";
 
 export default async function InventoryPage() {
   const { consumables, equipment } = await getModuleData();
+  const templateHref =
+    "data:text/csv;charset=utf-8," +
+    encodeURIComponent("nome;categoria;unidade;stock_atual;stock_minimo;localizacao;fornecedor;codigo_equipamento;notas\nFiltro oleo;Peca;un;4;1;Armazem;Fornecedor;COMP-01;\n");
 
   return (
     <AppShell activeHref="/inventario">
@@ -49,6 +52,19 @@ export default async function InventoryPage() {
             <textarea name="notes" className={textareaClass} placeholder="Notas, referencia, compatibilidade ou centro de custo" />
             <button className={buttonClass}>Guardar item</button>
           </form>
+          <div className="mt-6 rounded-lg border border-zinc-800 bg-black/20 p-4">
+            <div className="flex items-center gap-3">
+              <FileSpreadsheet size={20} className="text-lime-300" />
+              <h3 className="font-semibold text-zinc-100">Importar por Excel/CSV</h3>
+            </div>
+            <a href={templateHref} download="modelo_inventario.csv" className="mt-3 inline-flex text-sm font-semibold text-lime-200">
+              Descarregar modelo
+            </a>
+            <form action={importConsumablesCsv} encType="multipart/form-data" className="mt-3 grid gap-3">
+              <input name="file" type="file" accept=".csv,text/csv" className={inputClass} />
+              <button className={buttonClass}>Importar inventario</button>
+            </form>
+          </div>
         </Panel>
 
         <Panel>

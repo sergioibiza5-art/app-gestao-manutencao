@@ -81,8 +81,32 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
             <h2 className="text-xl font-semibold text-zinc-50">Execucao</h2>
           </div>
           {workOrder?.status === "DONE" ? (
-            <div className="mt-4 rounded-lg border border-teal-300/25 bg-teal-300/10 p-4 text-sm text-teal-100">
-              OP concluida. O historico e a checklist ficaram associados ao equipamento.
+            <div className="mt-4 space-y-4">
+              <div className="rounded-lg border border-teal-300/25 bg-teal-300/10 p-4 text-sm text-teal-100">
+                OP concluida. O historico, os documentos e a checklist ficaram associados ao equipamento.
+              </div>
+              <dl className="grid gap-3 md:grid-cols-2">
+                {[
+                  ["Feito por", workOrder.performedBy ?? "Sem responsavel"],
+                  ["Resultado", workOrder.result ?? "Sem resultado"],
+                  ["O que foi feito", workOrder.actionsDone ?? "Sem descricao"],
+                  ["Notas", workOrder.notes ?? "Sem notas"],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                    <dt className="text-xs text-zinc-500">{label}</dt>
+                    <dd className="mt-1 text-sm font-medium text-zinc-100">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              {workOrder.documents.length > 0 && (
+                <div className="space-y-2">
+                  {workOrder.documents.map((document) => (
+                    <a key={document.id} href={document.fileUrl ?? "#"} target="_blank" rel="noreferrer" className="block rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm font-semibold text-sky-200">
+                      {document.title}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           ) : canFillChecklist ? (
             <form action={completeWorkOrder} className="mt-4 space-y-4">
@@ -100,7 +124,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
               <textarea name="actionsDone" required className={textareaClass} placeholder="O que foi feito" />
               <div className="space-y-2">
                 {template.items.map((item) => (
-                  <div key={item.id} className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_160px_1fr]">
+                  <div key={item.id} className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_150px_1fr]">
                     <input type="hidden" name="itemId" value={item.id} />
                     <div>
                       <p className="font-medium text-zinc-100">{item.order}. {item.check}</p>
@@ -112,8 +136,15 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                       <option value="NA">N/A</option>
                     </select>
                     <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." />
+                    <input name={`photoUrl_${item.id}`} className={`${inputClass} md:col-start-2`} placeholder="Link da foto" />
+                    <input name={`photoName_${item.id}`} className={inputClass} placeholder="Nome da foto" />
                   </div>
                 ))}
+              </div>
+              <div className="grid gap-3 md:grid-cols-2">
+                <input name="documentTitle" className={inputClass} placeholder="Titulo do documento da OP" />
+                <input name="documentName" className={inputClass} placeholder="Nome do ficheiro" />
+                <input name="documentUrl" className={`${inputClass} md:col-span-2`} placeholder="Link/caminho do documento associado" />
               </div>
               <textarea name="notes" className={textareaClass} placeholder="Notas finais" />
               <button className={buttonClass}>Concluir OP</button>

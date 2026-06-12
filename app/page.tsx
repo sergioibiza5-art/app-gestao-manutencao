@@ -1,9 +1,9 @@
-import { CalendarDays, SlidersHorizontal } from "lucide-react";
+import { CalendarDays, Car, Filter, SlidersHorizontal } from "lucide-react";
 
 import { AppShell } from "@/app/components/app-shell";
-import { Panel } from "@/app/components/ui";
+import { buttonClass, inputClass, Panel } from "@/app/components/ui";
 import { getDashboardData } from "@/lib/data";
-import { formatCurrency, formatShortDate } from "@/lib/format";
+import { formatCurrency, formatDate, formatShortDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -18,8 +18,15 @@ const fallbackCalendar = [
   { date: "12 Jun", title: "Revisao quadro eletrico", tag: "Anual" },
 ];
 
-export default async function Page() {
-  const dashboard = await getDashboardData();
+type DashboardPageProps = {
+  searchParams?: Promise<{ view?: string; date?: string }>;
+};
+
+export default async function Page({ searchParams }: DashboardPageProps) {
+  const params = (await searchParams) ?? {};
+  const selectedView = params.view || "month";
+  const selectedDate = params.date || new Date().toISOString().slice(0, 10);
+  const dashboard = await getDashboardData({ view: selectedView, date: selectedDate });
   const tasks = dashboard.tasks.length > 0
     ? dashboard.tasks.map((task) => ({
         title: task.title,
@@ -46,9 +53,23 @@ export default async function Page() {
   return (
     <AppShell activeHref="/">
       <section className="glass-panel rounded-lg p-4 sm:p-5">
-        <div>
-          <p className="text-sm text-zinc-500">Resumo diario</p>
-          <h2 className="text-2xl font-semibold text-zinc-50">Dashboard</h2>
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <p className="text-sm text-zinc-500">Resumo diario</p>
+            <h2 className="text-2xl font-semibold text-zinc-50">Dashboard</h2>
+          </div>
+          <form className="grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
+            <select name="view" defaultValue={selectedView} className={inputClass}>
+              <option value="week">Semana</option>
+              <option value="month">Mes atual</option>
+              <option value="year">Ano</option>
+            </select>
+            <input name="date" type="date" defaultValue={selectedDate} className={inputClass} />
+            <button className={buttonClass}>
+              <Filter size={16} />
+              Filtrar
+            </button>
+          </form>
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-3 xl:grid-cols-4">
@@ -61,6 +82,34 @@ export default async function Page() {
           ))}
         </div>
       </section>
+
+      <Panel>
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-sm text-zinc-500">Frota</p>
+            <h2 className="text-xl font-semibold text-zinc-50">Proximas revisoes e inspecoes</h2>
+          </div>
+          <Car size={22} className="text-blue-300" />
+        </div>
+        <div className="grid gap-3 md:grid-cols-3">
+          {dashboard.fleetAlerts.length === 0 ? (
+            <p className="rounded-lg border border-dashed border-zinc-800 bg-zinc-950/45 p-4 text-sm text-zinc-500 md:col-span-3">
+              Sem revisoes ou inspecoes com data estimada.
+            </p>
+          ) : (
+            dashboard.fleetAlerts.slice(0, 6).map((item) => (
+              <div key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
+                <p className={item.type === "Inspecao" ? "text-sm font-semibold text-lime-200" : "text-sm font-semibold text-blue-200"}>
+                  {item.type}
+                </p>
+                <h3 className="mt-2 font-medium text-zinc-100">{item.title}</h3>
+                <p className="mt-1 text-xs text-zinc-500">{item.plate}</p>
+                <p className="mt-3 text-sm font-semibold text-zinc-200">{formatDate(item.dueDate)}</p>
+              </div>
+            ))
+          )}
+        </div>
+      </Panel>
 
       <section className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
         <Panel>

@@ -28,7 +28,7 @@ import {
   Panel,
   textareaClass,
 } from "@/app/components/ui";
-import { getEquipmentDetail, getEquipmentTypes } from "@/lib/data";
+import { getEquipmentDetail, getEquipmentOptions, getEquipmentTypes } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -65,9 +65,10 @@ function dateInputValue(date: Date | null) {
 
 export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {
   const { id } = await params;
-  const [equipment, equipmentTypes] = await Promise.all([
+  const [equipment, equipmentTypes, equipmentOptions] = await Promise.all([
     getEquipmentDetail(id),
     getEquipmentTypes(),
+    getEquipmentOptions(),
   ]);
 
   if (!equipment) {
@@ -165,6 +166,7 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
               ["N.º de série", equipment.serialNumber ?? "Sem n.º série"],
               ["Medição e monitorização", equipment.isMeasurementMonitoring ? "Sim" : "Não"],
               ["Estado", equipment.status],
+              ["Faz parte de", equipment.parentEquipment?.name ?? "Sem equipamento-pai"],
             ].map(([label, value]) => (
               <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">
                 <dt className="text-xs text-zinc-500">{label}</dt>
@@ -215,6 +217,46 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
                   <p className="mt-3 text-sm leading-6 text-zinc-400">{plan.actions}</p>
                   {plan.notes && <p className="mt-2 text-xs text-zinc-500">{plan.notes}</p>}
                 </article>
+              ))
+            )}
+          </div>
+        </Panel>
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <Panel>
+          <div className="flex items-center gap-3">
+            <Package size={22} className="text-orange-300" />
+            <h2 className="text-xl font-semibold text-zinc-50">Equipamentos associados</h2>
+          </div>
+          <div className="mt-4 space-y-3">
+            {equipment.childEquipment.length === 0 ? (
+              <EmptyState title="Sem equipamentos associados" description="Associa compressores, tanques, secadores ou subconjuntos pelo campo equipamento-pai." />
+            ) : (
+              equipment.childEquipment.map((child) => (
+                <Link key={child.id} href={`/equipamentos/${child.id}`} className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 transition hover:border-orange-300/50">
+                  <h3 className="font-semibold text-zinc-100">{child.name}</h3>
+                  <p className="mt-1 text-sm text-zinc-500">{child.code ?? "Sem codigo"}</p>
+                </Link>
+              ))
+            )}
+          </div>
+        </Panel>
+
+        <Panel>
+          <div className="flex items-center gap-3">
+            <Ruler size={22} className="text-lime-300" />
+            <h2 className="text-xl font-semibold text-zinc-50">Equipamentos de calibracao associados</h2>
+          </div>
+          <div className="mt-4 space-y-3">
+            {equipment.childEquipment.filter((child) => child.isMeasurementMonitoring).length === 0 ? (
+              <EmptyState title="Sem equipamentos de calibracao associados" description="Quando um equipamento de medicao fizer parte deste conjunto, aparece aqui." />
+            ) : (
+              equipment.childEquipment.filter((child) => child.isMeasurementMonitoring).map((child) => (
+                <Link key={child.id} href={`/equipamentos/${child.id}`} className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 transition hover:border-lime-300/50">
+                  <h3 className="font-semibold text-zinc-100">{child.name}</h3>
+                  <p className="mt-1 text-sm text-zinc-500">{child.code ?? "Sem codigo"}</p>
+                </Link>
               ))
             )}
           </div>
@@ -377,6 +419,17 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
                 {type.name}
               </option>
             ))}
+          </select>
+
+          <select name="parentEquipmentId" className={inputClass} defaultValue={equipment.parentEquipmentId ?? ""}>
+            <option value="">Sem equipamento-pai</option>
+            {equipmentOptions
+              .filter((item) => item.id !== equipment.id)
+              .map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}{item.code ? ` - ${item.code}` : ""}
+                </option>
+              ))}
           </select>
 
           <select name="isMeasurementMonitoring" className={inputClass} defaultValue={equipment.isMeasurementMonitoring ? "true" : "false"}>

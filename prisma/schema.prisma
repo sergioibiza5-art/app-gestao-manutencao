@@ -149,6 +149,9 @@ model Equipment {
   location       String?
   responsibleDepartment String?
   isMeasurementMonitoring Boolean @default(false)
+  parentEquipmentId String?
+  parentEquipment   Equipment? @relation("EquipmentHierarchy", fields: [parentEquipmentId], references: [id], onDelete: SetNull)
+  childEquipment    Equipment[] @relation("EquipmentHierarchy")
   equipmentTypeId String?
   equipmentType   EquipmentType? @relation(fields: [equipmentTypeId], references: [id], onDelete: SetNull)
   purchaseDate   DateTime?
@@ -428,6 +431,8 @@ model WorkOrder {
   maintenanceLogId String? @unique
   maintenanceLog   MaintenanceLog? @relation(fields: [maintenanceLogId], references: [id], onDelete: SetNull)
 
+  documents Document[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -567,6 +572,9 @@ model Document {
 
   calibrationLogId String?
   calibrationLog   CalibrationLog? @relation(fields: [calibrationLogId], references: [id], onDelete: SetNull)
+
+  workOrderId String?
+  workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id], onDelete: SetNull)
 
   uploadedById String?
   uploadedBy   User? @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
