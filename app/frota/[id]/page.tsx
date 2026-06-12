@@ -23,8 +23,16 @@ type VehicleDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-function dateInputValue(date: Date | null | undefined) {
-  return date ? date.toISOString().slice(0, 10) : "";
+function dateInputValue(date: Date | string | null | undefined) {
+  if (!date) return "";
+
+  const parsed = date instanceof Date ? date : new Date(date);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return "";
+  }
+
+  return parsed.toISOString().slice(0, 10);
 }
 
 function serviceLabel(type: string) {
