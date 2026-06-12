@@ -193,7 +193,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
               <Wrench size={22} className="text-amber-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Registar servico, revisao, custo ou inspecao</h2>
             </div>
-            <form action={createVehicleService} className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <form action={createVehicleService} className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[150px_minmax(220px,1.4fr)_160px_130px]">
               <input type="hidden" name="vehicleId" value={vehicle.id} />
               <select name="type" className={inputClass}>
                 <option value="MAINTENANCE">Manutencao</option>
@@ -228,7 +228,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
             {vehicle.kmLogs.length === 0 ? (
               <EmptyState title="Sem km" description="Regista leituras de quilometros para calcular medias." />
             ) : (
-              [...vehicle.kmLogs].reverse().map((log) => (
+              [...vehicle.kmLogs].reverse().slice(0, 8).map((log) => (
                 <div key={log.id} className="rounded-lg border border-zinc-800 p-3">
                   <form action={updateVehicleKmLog} className="grid gap-2 md:grid-cols-[1fr_1fr_auto]">
                     <input type="hidden" name="id" value={log.id} />
@@ -245,6 +245,11 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                   </form>
                 </div>
               ))
+            )}
+            {vehicle.kmLogs.length > 8 && (
+              <p className="rounded-lg border border-zinc-800 bg-zinc-950/45 p-3 text-sm text-zinc-500">
+                A mostrar os 8 registos mais recentes de {vehicle.kmLogs.length}. Os restantes ficam guardados para calculo de medias.
+              </p>
             )}
           </div>
         </Panel>
@@ -268,7 +273,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                     </div>
                     <p className="font-semibold text-amber-200">{formatCurrency(service.cost)}</p>
                   </div>
-                  <form action={updateVehicleService} className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+                  <form action={updateVehicleService} className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-[150px_minmax(220px,1.4fr)_160px_130px]">
                     <input type="hidden" name="id" value={service.id} />
                     <input type="hidden" name="vehicleId" value={vehicle.id} />
                     <select name="type" className={inputClass} defaultValue={service.type}>
@@ -277,7 +282,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                       <option value="INSPECTION">Inspecao</option>
                       <option value="COST">Custo</option>
                     </select>
-                    <input name="title" className={inputClass} defaultValue={service.title} />
+                    <input name="title" className={inputClass} defaultValue={service.title} placeholder="Titulo" />
                     <input name="date" type="date" className={inputClass} defaultValue={dateInputValue(service.date)} />
                     <input name="odometer" className={inputClass} defaultValue={service.odometer ?? ""} placeholder="Km" />
                     <input name="cost" className={inputClass} defaultValue={service.cost ? String(service.cost) : ""} placeholder="Custo" />
