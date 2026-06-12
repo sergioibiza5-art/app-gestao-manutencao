@@ -102,13 +102,25 @@ export async function loginUser(formData: FormData) {
     redirect("/login?erro=credenciais");
   }
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const users = await prisma.user.findMany({
+    where: { email, active: true },
+    orderBy: { createdAt: "asc" },
+  });
+  const user = users.find((item) =>
+    item.role === "TICKET" && item.pin
+      ? verifyPassword(password, item.pin)
+      : verifyPassword(password, item.password),
+  ) ?? (users.length === 1 ? users[0] : null);
 
-  if (!user || !user.active) {
+  if (!user) {
     redirect("/login?erro=credenciais");
   }
 
-  if (!user.password) {
+  if (user.role === "TICKET") {
+    if (!user.pin || !verifyPassword(password, user.pin)) {
+      redirect("/login?erro=credenciais");
+    }
+  } else if (!user.password && users.length === 1) {
     await prisma.user.update({
       where: { id: user.id },
       data: { password: hashPassword(password) },
@@ -128,15 +140,21 @@ export async function logoutUser() {
 
 async function getSystemUserId() {
   const prisma = getPrisma();
-  const user = await prisma.user.upsert({
+  const existingUser = await prisma.user.findFirst({
     where: { email: "sistema@casa.local" },
-    update: {},
-    create: {
+    select: { id: true },
+  });
+
+  if (existingUser) {
+    return existingUser.id;
+  }
+
+  const user = await prisma.user.create({
+    data: {
       name: "Sistema",
       email: "sistema@casa.local",
       role: "ADMIN",
     },
-    select: { id: true },
   });
 
   return user.id;
@@ -771,6 +789,7 @@ export async function createConsumable(formData: FormData) {
       unit: text(formData, "unit") || "un",
       currentStock: decimal(formData, "currentStock") || decimal(formData, "amount"),
       minimumStock: decimal(formData, "minimumStock"),
+      unitCost: decimal(formData, "unitCost"),
       location: optionalText(formData, "location"),
       supplier: optionalText(formData, "supplier"),
       notes: optionalText(formData, "notes"),
@@ -995,6 +1014,11 @@ async function nextTicketNumber() {
   return `TK-${String(count + 1).padStart(5, "0")}`;
 }
 
+function elapsedSeconds(startedAt: Date | null, end = new Date()) {
+  if (!startedAt) return 0;
+  return Math.max(Math.floor((end.getTime() - startedAt.getTime()) / 1000), 0);
+}
+
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
   const prisma = getPrisma();
@@ -1006,19 +1030,45 @@ export async function createMaintenanceTicket(formData: FormData) {
   const equipment = await prisma.equipment.findUnique({ where: { id: equipmentId } });
   if (!equipment) return;
 
-  await prisma.maintenanceTicket.create({
-    data: {
-      number: await nextTicketNumber(),
-      title: text(formData, "title") || `Avaria - ${equipment.name}`,
-      problem,
-      priority: enumValue(formData, "priority", ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const, "NORMAL"),
-      location: optionalText(formData, "location") ?? equipment.location,
-      equipmentId,
-      openedById: user.id,
-    },
+  if (user.role === "TICKET") {
+    const canOpen = await prisma.ticketEquipmentAccess.findUnique({
+      where: { userId_equipmentId: { userId: user.id, equipmentId } },
+    });
+    if (!canOpen) return;
+  }
+
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.create({
+      data: {
+        number: await nextTicketNumber(),
+        title: text(formData, "title") || `Avaria - ${equipment.name}`,
+        problem,
+        priority: enumValue(formData, "priority", ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const, "NORMAL"),
+        location: optionalText(formData, "location") ?? equipment.location,
+        equipmentId,
+        openedById: user.id,
+      },
+    });
+
+    const recipients = await tx.user.findMany({
+      where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
+      select: { id: true },
+    });
+
+    if (recipients.length > 0) {
+      await tx.notification.createMany({
+        data: recipients.map((recipient) => ({
+          userId: recipient.id,
+          title: `Novo ticket ${ticket.number}`,
+          body: `${equipment.name}: ${ticket.title}`,
+          href: "/tickets",
+        })),
+      });
+    }
   });
 
   revalidatePath("/tickets");
+  revalidatePath("/");
 }
 
 export async function startMaintenanceTicket(formData: FormData) {
@@ -1027,11 +1077,12 @@ export async function startMaintenanceTicket(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
-  await prisma.maintenanceTicket.update({
-    where: { id },
+  await prisma.maintenanceTicket.updateMany({
+    where: { id, status: { in: ["OPEN", "PAUSED"] } },
     data: {
       status: "IN_PROGRESS",
       startedAt: new Date(),
+      pausedAt: null,
       assignedToId: user.id,
     },
   });
@@ -1044,45 +1095,83 @@ export async function pauseMaintenanceTicket(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
+  const ticket = await prisma.maintenanceTicket.findUnique({ where: { id } });
+  if (!ticket || ticket.status !== "IN_PROGRESS") return;
+
   await prisma.maintenanceTicket.update({
     where: { id },
-    data: { status: "PAUSED", pausedAt: new Date() },
+    data: {
+      status: "PAUSED",
+      pausedAt: new Date(),
+      startedAt: null,
+      totalWorkSeconds: ticket.totalWorkSeconds + elapsedSeconds(ticket.startedAt),
+    },
   });
   revalidatePath("/tickets");
 }
 
 export async function completeMaintenanceTicket(formData: FormData) {
-  await requireCanWrite();
+  const user = await requireCanWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
 
   const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
   const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
+  const usageNotes = formData.getAll("usageNotes").filter((value): value is string => typeof value === "string");
 
   await prisma.$transaction(async (tx) => {
-    await tx.ticketConsumableUsage.deleteMany({ where: { ticketId: id } });
-    await tx.maintenanceTicket.update({
+    const ticket = await tx.maintenanceTicket.findUnique({
       where: { id },
-      data: {
-        status: "DONE",
-        completedAt: new Date(),
-        solution: optionalText(formData, "solution"),
-      },
+      include: { assignedTo: true },
     });
+    if (!ticket) return;
+
+    const totalWorkSeconds =
+      ticket.totalWorkSeconds +
+      (ticket.status === "IN_PROGRESS" ? elapsedSeconds(ticket.startedAt) : 0);
+    const assignedHourlyRate = Number(ticket.assignedTo?.hourlyRate ?? user.hourlyRate ?? 0);
+    const laborCost = (totalWorkSeconds / 3600) * assignedHourlyRate;
+
+    await tx.ticketConsumableUsage.deleteMany({ where: { ticketId: id } });
+    let consumableCost = 0;
 
     for (let index = 0; index < consumableIds.length; index += 1) {
       const consumableId = consumableIds[index];
       const quantity = quantities[index];
       if (!consumableId || !quantity || Number(quantity) <= 0) continue;
+
+      const consumable = await tx.consumable.findUnique({ where: { id: consumableId } });
+      if (!consumable) continue;
+
+      const unitCost = Number(consumable.unitCost ?? 0);
+      consumableCost += Number(quantity) * unitCost;
+
       await tx.ticketConsumableUsage.create({
         data: {
           ticketId: id,
           consumableId,
           quantity,
+          unitCost: unitCost.toFixed(2),
+          notes: usageNotes[index] || null,
         },
       });
     }
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "DONE",
+        completedAt: new Date(),
+        startedAt: null,
+        totalWorkSeconds,
+        laborCost: laborCost.toFixed(2),
+        consumableCost: consumableCost.toFixed(2),
+        totalCost: (laborCost + consumableCost).toFixed(2),
+        solution: optionalText(formData, "solution"),
+        observations: optionalText(formData, "observations"),
+      },
+    });
   });
 
   revalidatePath("/tickets");
@@ -1099,6 +1188,16 @@ export async function validateMaintenanceTicket(formData: FormData) {
     include: { equipment: true, consumables: { include: { consumable: true } } },
   });
   if (!ticket) return;
+  if (ticket.workOrderId) return;
+
+  const ticketCostNotes = [
+    `Problema: ${ticket.problem}`,
+    ticket.observations ? `Observacoes: ${ticket.observations}` : null,
+    `Tempo de trabalho: ${Math.round(ticket.totalWorkSeconds / 60)} min`,
+    `Mao de obra: ${Number(ticket.laborCost).toFixed(2)} EUR`,
+    `Consumiveis: ${Number(ticket.consumableCost).toFixed(2)} EUR`,
+    `Custo total: ${Number(ticket.totalCost).toFixed(2)} EUR`,
+  ].filter(Boolean).join("\n");
 
   const workOrder = await prisma.workOrder.create({
     data: {
@@ -1111,13 +1210,13 @@ export async function validateMaintenanceTicket(formData: FormData) {
       performedBy: user.name,
       actionsDone: ticket.solution ?? "Ticket validado pela manutencao.",
       result: "VALIDADO",
-      notes: `Problema: ${ticket.problem}`,
+      notes: ticketCostNotes,
       equipmentId: ticket.equipmentId,
     },
   });
 
   const consumablesText = ticket.consumables
-    .map((item) => `${item.consumable.name}: ${String(item.quantity)} ${item.consumable.unit}`)
+    .map((item) => `${item.consumable.name}: ${String(item.quantity)} ${item.consumable.unit} x ${Number(item.unitCost).toFixed(2)} EUR${item.notes ? ` - ${item.notes}` : ""}`)
     .join("\n");
 
   const maintenanceLog = await prisma.maintenanceLog.create({
@@ -1126,8 +1225,9 @@ export async function validateMaintenanceTicket(formData: FormData) {
       description: ticket.solution ?? ticket.problem,
       type: "INTERNAL",
       date: ticket.completedAt ?? new Date(),
+      cost: Number(ticket.totalCost).toFixed(2),
       performedBy: user.name,
-      notes: consumablesText ? `Consumiveis:\n${consumablesText}` : null,
+      notes: consumablesText ? `${ticketCostNotes}\n\nConsumiveis:\n${consumablesText}` : ticketCostNotes,
       equipmentId: ticket.equipmentId,
     },
   });
@@ -1456,6 +1556,7 @@ export async function importConsumablesCsv(formData: FormData) {
         unit: row.unidade || "un",
         currentStock: row.stock_atual || "0",
         minimumStock: row.stock_minimo || "0",
+        unitCost: (row.custo_unitario || row.unit_cost || "0").replace(",", "."),
         location: row.localizacao || null,
         supplier: row.fornecedor || null,
         notes: row.notas || null,
@@ -1535,15 +1636,29 @@ export async function createUser(formData: FormData) {
   await requireCanAdmin();
   const prisma = getPrisma();
   const password = optionalText(formData, "password");
+  const pin = optionalText(formData, "pin");
+  const role = enumValue(formData, "role", userRoles, "USER");
+  const equipmentIds = formData.getAll("ticketEquipmentId").filter((value): value is string => typeof value === "string" && value.length > 0);
 
-  await prisma.user.create({
-    data: {
-      name: text(formData, "name"),
-      email: text(formData, "email").toLowerCase(),
-      password: password ? hashPassword(password) : null,
-      role: enumValue(formData, "role", userRoles, "USER"),
-      active: text(formData, "active") !== "false",
-    },
+  await prisma.$transaction(async (tx) => {
+    const user = await tx.user.create({
+      data: {
+        name: text(formData, "name"),
+        email: text(formData, "email").toLowerCase(),
+        password: role === "TICKET" ? null : password ? hashPassword(password) : null,
+        pin: role === "TICKET" && pin ? hashPassword(pin) : null,
+        hourlyRate: decimal(formData, "hourlyRate"),
+        role,
+        active: text(formData, "active") !== "false",
+      },
+    });
+
+    if (equipmentIds.length > 0) {
+      await tx.ticketEquipmentAccess.createMany({
+        data: equipmentIds.map((equipmentId) => ({ userId: user.id, equipmentId })),
+        skipDuplicates: true,
+      });
+    }
   });
 
   revalidatePath("/acessos");
@@ -1554,18 +1669,33 @@ export async function updateUser(formData: FormData) {
   const prisma = getPrisma();
   const id = text(formData, "id");
   const password = optionalText(formData, "password");
+  const pin = optionalText(formData, "pin");
+  const role = enumValue(formData, "role", userRoles, "USER");
+  const equipmentIds = formData.getAll("ticketEquipmentId").filter((value): value is string => typeof value === "string" && value.length > 0);
 
   if (!id) return;
 
-  await prisma.user.update({
-    where: { id },
-    data: {
-      name: text(formData, "name"),
-      email: text(formData, "email").toLowerCase(),
-      ...(password ? { password: hashPassword(password) } : {}),
-      role: enumValue(formData, "role", userRoles, "USER"),
-      active: text(formData, "active") !== "false",
-    },
+  await prisma.$transaction(async (tx) => {
+    await tx.user.update({
+      where: { id },
+      data: {
+        name: text(formData, "name"),
+        email: text(formData, "email").toLowerCase(),
+        ...(password && role !== "TICKET" ? { password: hashPassword(password) } : {}),
+        ...(pin && role === "TICKET" ? { pin: hashPassword(pin) } : {}),
+        hourlyRate: decimal(formData, "hourlyRate"),
+        role,
+        active: text(formData, "active") !== "false",
+      },
+    });
+
+    await tx.ticketEquipmentAccess.deleteMany({ where: { userId: id } });
+    if (equipmentIds.length > 0) {
+      await tx.ticketEquipmentAccess.createMany({
+        data: equipmentIds.map((equipmentId) => ({ userId: id, equipmentId })),
+        skipDuplicates: true,
+      });
+    }
   });
 
   revalidatePath("/acessos");

@@ -1,4 +1,4 @@
-import { CheckCircle2, Pause, Play, Siren, Wrench } from "lucide-react";
+import { Bell, CheckCircle2, Pause, Play, Siren, Wrench } from "lucide-react";
 
 import {
   completeMaintenanceTicket,
@@ -9,9 +9,10 @@ import {
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
+import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { requireUser } from "@/lib/auth";
 import { getTicketsData } from "@/lib/data";
-import { formatDate } from "@/lib/format";
+import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,17 @@ function statusLabel(status: string) {
 
 function hours(value: number) {
   return new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 1 }).format(Number.isFinite(value) ? value : 0);
+}
+
+function workTime(ticket: { totalWorkSeconds: number; startedAt: Date | null; status: string }) {
+  const activeSeconds =
+    ticket.status === "IN_PROGRESS" && ticket.startedAt
+      ? Math.max(Math.floor((Date.now() - ticket.startedAt.getTime()) / 1000), 0)
+      : 0;
+  const total = ticket.totalWorkSeconds + activeSeconds;
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
 function TicketCreateForm({ equipment, compact = false }: { equipment: Array<{ id: string; name: string; code: string | null; location: string | null }>; compact?: boolean }) {
@@ -61,7 +73,7 @@ function TicketCreateForm({ equipment, compact = false }: { equipment: Array<{ i
 
 export default async function TicketsPage() {
   const user = await requireUser();
-  const data = await getTicketsData();
+  const data = await getTicketsData({ id: user.id, role: user.role });
   const isTicketOnly = user.role === "TICKET";
 
   if (isTicketOnly) {
@@ -110,6 +122,30 @@ export default async function TicketsPage() {
 
       <section className="grid gap-4 xl:grid-cols-[0.65fr_1.35fr]">
         <div className="space-y-4">
+          <Panel>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Bell size={21} className="text-amber-300" />
+                <h2 className="text-xl font-semibold text-zinc-50">Notificacoes</h2>
+              </div>
+              <span className="rounded-full border border-amber-300/30 px-2 py-1 text-xs font-semibold text-amber-200">
+                {data.unreadNotifications} novas
+              </span>
+            </div>
+            <div className="mt-4 space-y-2">
+              {data.notifications.length === 0 ? (
+                <EmptyState title="Sem notificacoes" description="Quando entrar um ticket, aparece aqui." />
+              ) : (
+                data.notifications.map((notification) => (
+                  <div key={notification.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-3">
+                    <p className="text-sm font-semibold text-zinc-100">{notification.title}</p>
+                    <p className="mt-1 text-xs text-zinc-500">{notification.body ?? "Sem detalhe"}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          </Panel>
+
           <Panel>
             <div className="flex items-center gap-3">
               <Siren size={22} className="text-red-300" />
@@ -172,48 +208,50 @@ export default async function TicketsPage() {
                     <div className="text-sm text-zinc-500 xl:text-right">
                       <p>Aberto: {formatDate(ticket.openedAt)}</p>
                       <p>Por: {ticket.openedBy?.name ?? "Sistema"}</p>
+                      <p>Tempo: {workTime(ticket)}</p>
+                      <p>Custo: {formatCurrency(ticket.totalCost)}</p>
                       {ticket.workOrder && <p className="mt-2 font-semibold text-teal-300">{ticket.workOrder.number}</p>}
                     </div>
                   </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">
-                    <form action={startMaintenanceTicket}>
-                      <input type="hidden" name="id" value={ticket.id} />
-                      <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-3 text-sm font-semibold text-cyan-100">
-                        <Play size={15} />
-                        Iniciar
-                      </button>
-                    </form>
-                    <form action={pauseMaintenanceTicket}>
-                      <input type="hidden" name="id" value={ticket.id} />
-                      <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-300/35 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100">
-                        <Pause size={15} />
-                        Pausar
-                      </button>
-                    </form>
+                    {(ticket.status === "OPEN" || ticket.status === "PAUSED") && (
+                      <form action={startMaintenanceTicket}>
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-3 text-sm font-semibold text-cyan-100">
+                          <Play size={15} />
+                          {ticket.status === "PAUSED" ? "Retomar" : "Iniciar"}
+                        </button>
+                      </form>
+                    )}
+                    {ticket.status === "IN_PROGRESS" && (
+                      <form action={pauseMaintenanceTicket}>
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-300/35 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100">
+                          <Pause size={15} />
+                          Pausar
+                        </button>
+                      </form>
+                    )}
                   </div>
 
-                  <form action={completeMaintenanceTicket} className="mt-4 grid gap-3">
-                    <input type="hidden" name="id" value={ticket.id} />
-                    <textarea name="solution" className={textareaClass} defaultValue={ticket.solution ?? ""} placeholder="Solucao aplicada / descricao do trabalho" />
-                    <div className="grid gap-2 md:grid-cols-[1fr_130px]">
-                      {[0, 1, 2].map((index) => (
-                        <div key={index} className="contents">
-                          <select name="consumableId" className={inputClass} defaultValue={ticket.consumables[index]?.consumableId ?? ""}>
-                            <option value="">Consumivel usado</option>
-                            {data.consumables.map((item) => (
-                              <option key={item.id} value={item.id}>{item.name} ({String(item.currentStock)} {item.unit})</option>
-                            ))}
-                          </select>
-                          <input name="quantity" className={inputClass} defaultValue={ticket.consumables[index] ? String(ticket.consumables[index].quantity) : ""} placeholder="Qtd." />
-                        </div>
-                      ))}
-                    </div>
-                    <button className={`${buttonClass} w-fit`}>
-                      <CheckCircle2 size={17} />
-                      Concluir trabalho
-                    </button>
-                  </form>
+                  {(ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED" || ticket.status === "DONE") && (
+                    <form action={completeMaintenanceTicket} className="mt-4 grid gap-3">
+                      <input type="hidden" name="id" value={ticket.id} />
+                      <textarea name="solution" className={textareaClass} defaultValue={ticket.solution ?? ""} placeholder="Solucao aplicada / descricao do trabalho" />
+                      <textarea name="observations" className={textareaClass} defaultValue={ticket.observations ?? ""} placeholder="Observacoes internas da OP" />
+                      <TicketConsumables consumables={data.consumables} initialUsages={ticket.consumables} />
+                      <div className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm text-zinc-400 md:grid-cols-3">
+                        <p>Mao de obra: <strong className="text-zinc-100">{formatCurrency(ticket.laborCost)}</strong></p>
+                        <p>Consumiveis: <strong className="text-zinc-100">{formatCurrency(ticket.consumableCost)}</strong></p>
+                        <p>Total OP: <strong className="text-amber-200">{formatCurrency(ticket.totalCost)}</strong></p>
+                      </div>
+                      <button className={`${buttonClass} w-fit`}>
+                        <CheckCircle2 size={17} />
+                        Guardar / concluir trabalho
+                      </button>
+                    </form>
+                  )}
 
                   {ticket.status === "DONE" && (
                     <form action={validateMaintenanceTicket} className="mt-3">

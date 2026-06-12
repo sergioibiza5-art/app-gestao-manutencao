@@ -123,8 +123,10 @@ enum WorkOrderStatus {
 model User {
   id        String   @id @default(cuid())
   name      String
-  email     String   @unique
+  email     String
   password  String?
+  pin       String?
+  hourlyRate Decimal @default(0) @db.Decimal(10, 2)
   role      UserRole @default(USER)
   active    Boolean  @default(true)
 
@@ -138,9 +140,13 @@ model User {
   sessions          Session[]
   ticketsOpened     MaintenanceTicket[] @relation("TicketOpenedBy")
   ticketsAssigned   MaintenanceTicket[] @relation("TicketAssignedTo")
+  ticketEquipmentAccess TicketEquipmentAccess[]
+  notifications     Notification[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([email])
 }
 
 model Session {
@@ -186,6 +192,7 @@ model Equipment {
   maintenanceSchedules MaintenanceSchedule[]
   workOrders     WorkOrder[]
   tickets        MaintenanceTicket[]
+  ticketUserAccess TicketEquipmentAccess[]
   calibrationLogs CalibrationLog[]
   expenses        Expense[]
   documents       Document[]
@@ -470,6 +477,11 @@ model MaintenanceTicket {
   status      MaintenanceTicketStatus @default(OPEN)
   priority    MaintenanceTicketPriority @default(NORMAL)
   location    String?
+  observations String?
+  totalWorkSeconds Int @default(0)
+  laborCost   Decimal @default(0) @db.Decimal(10, 2)
+  consumableCost Decimal @default(0) @db.Decimal(10, 2)
+  totalCost   Decimal @default(0) @db.Decimal(10, 2)
 
   openedAt    DateTime @default(now())
   startedAt   DateTime?
@@ -499,9 +511,25 @@ model MaintenanceTicket {
   @@index([equipmentId])
 }
 
+model TicketEquipmentAccess {
+  id String @id @default(cuid())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, equipmentId])
+  @@index([equipmentId])
+}
+
 model TicketConsumableUsage {
   id       String  @id @default(cuid())
   quantity Decimal @default(0) @db.Decimal(10, 2)
+  unitCost Decimal @default(0) @db.Decimal(10, 2)
   notes    String?
 
   ticketId String
@@ -514,6 +542,22 @@ model TicketConsumableUsage {
 
   @@index([ticketId])
   @@index([consumableId])
+}
+
+model Notification {
+  id        String @id @default(cuid())
+  title     String
+  body      String?
+  href      String?
+  readAt    DateTime?
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, readAt])
+  @@index([createdAt])
 }
 
 model CalibrationLog {
@@ -545,6 +589,7 @@ model Consumable {
   unit           String
   currentStock   Decimal @default(0) @db.Decimal(10, 2)
   minimumStock   Decimal @default(0) @db.Decimal(10, 2)
+  unitCost       Decimal @default(0) @db.Decimal(10, 2)
   location       String?
   supplier       String?
   notes          String?

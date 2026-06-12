@@ -14,7 +14,7 @@ const roleDescriptions = [
 ];
 
 export default async function AccessPage() {
-  const { users, sgqRecords } = await getModuleData();
+  const { users, sgqRecords, equipment } = await getModuleData();
 
   return (
     <AppShell activeHref="/acessos">
@@ -31,6 +31,8 @@ export default async function AccessPage() {
             <input name="name" required className={inputClass} placeholder="Nome" />
             <input name="email" required type="email" className={inputClass} placeholder="Email" />
             <input name="password" type="password" className={inputClass} placeholder="Palavra-passe inicial" />
+            <input name="pin" inputMode="numeric" className={inputClass} placeholder="PIN do posto / ticket" />
+            <input name="hourlyRate" className={inputClass} placeholder="Custo hora mao de obra" />
             <select name="role" className={inputClass}>
               <option value="ADMIN">Admin</option>
               <option value="MANAGER">Gestor</option>
@@ -42,6 +44,17 @@ export default async function AccessPage() {
               <option value="true">Ativo</option>
               <option value="false">Inativo</option>
             </select>
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+              <p className="text-sm font-semibold text-zinc-100">Equipamentos autorizados para ticket</p>
+              <div className="mt-3 grid max-h-52 gap-2 overflow-y-auto pr-1">
+                {equipment.map((item) => (
+                  <label key={item.id} className="flex items-center gap-2 rounded-md border border-zinc-800 bg-black/20 px-3 py-2 text-sm text-zinc-300">
+                    <input type="checkbox" name="ticketEquipmentId" value={item.id} className="size-4 accent-teal-300" />
+                    <span>{item.name}{item.code ? ` - ${item.code}` : ""}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
             <button className={buttonClass}>Guardar utilizador</button>
           </form>
         </Panel>
@@ -91,6 +104,8 @@ export default async function AccessPage() {
                     <input name="name" className={inputClass} defaultValue={user.name} />
                     <input name="email" type="email" className={inputClass} defaultValue={user.email} />
                     <input name="password" type="password" className={inputClass} placeholder="Nova palavra-passe" />
+                    <input name="pin" inputMode="numeric" className={inputClass} placeholder="Novo PIN ticket" />
+                    <input name="hourlyRate" className={inputClass} defaultValue={String(user.hourlyRate ?? 0)} placeholder="Custo hora" />
                     <select name="role" className={inputClass} defaultValue={user.role}>
                       <option value="ADMIN">Admin</option>
                       <option value="MANAGER">Gestor</option>
@@ -102,6 +117,20 @@ export default async function AccessPage() {
                       <option value="true">Ativo</option>
                       <option value="false">Inativo</option>
                     </select>
+                    <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 md:col-span-2">
+                      <p className="text-sm font-semibold text-zinc-100">Equipamentos permitidos para este posto</p>
+                      <div className="mt-3 grid max-h-52 gap-2 overflow-y-auto pr-1 md:grid-cols-2">
+                        {equipment.map((item) => {
+                          const checked = user.ticketEquipmentAccess.some((access) => access.equipmentId === item.id);
+                          return (
+                            <label key={item.id} className="flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-950/45 px-3 py-2 text-sm text-zinc-300">
+                              <input type="checkbox" name="ticketEquipmentId" value={item.id} defaultChecked={checked} className="size-4 accent-teal-300" />
+                              <span>{item.name}{item.code ? ` - ${item.code}` : ""}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
                     <button className="inline-flex h-11 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">Atualizar</button>
                   </form>
                   <form action={deleteUser} className="mt-2">

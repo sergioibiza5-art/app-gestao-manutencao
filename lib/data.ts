@@ -185,7 +185,11 @@ export async function getModuleData() {
         prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 200, include: { equipment: true, documents: true } }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100, include: { equipment: true } }),
         prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
-        prisma.user.findMany({ orderBy: { name: "asc" }, take: 50 }),
+        prisma.user.findMany({
+          orderBy: { name: "asc" },
+          take: 50,
+          include: { ticketEquipmentAccess: { include: { equipment: true } } },
+        }),
         prisma.sGQRecord.findMany({ orderBy: { createdAt: "desc" }, take: 50 }),
         prisma.equipmentType.findMany({ orderBy: { name: "asc" }, include: { checklistTemplates: { where: { active: true }, include: { items: true } } } }),
         prisma.vehicle.findMany({ orderBy: [{ brand: "asc" }, { model: "asc" }], take: 100 }),
@@ -660,11 +664,13 @@ export async function getAnalyticsData(filters?: {
   );
 }
 
-export async function getTicketsData() {
+export async function getTicketsData(user?: { id: string; role: string }) {
   return readDb(
     async (prisma) => {
-      const [tickets, equipment, consumables] = await Promise.all([
+      const isTicketOnly = user?.role === "TICKET";
+      const [tickets, equipment, consumables, notifications] = await Promise.all([
         prisma.maintenanceTicket.findMany({
+          where: isTicketOnly ? { openedById: user.id } : undefined,
           orderBy: { openedAt: "desc" },
           include: {
             equipment: true,
@@ -674,14 +680,30 @@ export async function getTicketsData() {
             consumables: { include: { consumable: true } },
           },
         }),
-        prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 300 }),
+        prisma.equipment.findMany({
+          where: isTicketOnly
+            ? { ticketUserAccess: { some: { userId: user.id } } }
+            : undefined,
+          orderBy: { name: "asc" },
+          take: 300,
+        }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 300 }),
+        user
+          ? prisma.notification.findMany({
+              where: { userId: user.id },
+              orderBy: { createdAt: "desc" },
+              take: 8,
+            })
+          : Promise.resolve([]),
       ]);
 
-      const closedTickets = tickets.filter((ticket) => ticket.startedAt && ticket.completedAt);
-      const averageRepairMs =
+      const closedTickets = tickets.filter((ticket) => ticket.totalWorkSeconds > 0 || (ticket.startedAt && ticket.completedAt));
+      const averageRepairSeconds =
         closedTickets.length > 0
-          ? closedTickets.reduce((sum, ticket) => sum + (ticket.completedAt!.getTime() - ticket.startedAt!.getTime()), 0) / closedTickets.length
+          ? closedTickets.reduce((sum, ticket) => {
+              if (ticket.totalWorkSeconds > 0) return sum + ticket.totalWorkSeconds;
+              return sum + Math.max(Math.floor((ticket.completedAt!.getTime() - ticket.startedAt!.getTime()) / 1000), 0);
+            }, 0) / closedTickets.length
           : 0;
       const repeatedProblems = Object.values(
         tickets.reduce<Record<string, { name: string; count: number }>>((acc, ticket) => {
@@ -704,12 +726,14 @@ export async function getTicketsData() {
         tickets,
         equipment,
         consumables,
+        notifications,
+        unreadNotifications: notifications.filter((notification) => notification.readAt === null).length,
         kpis: {
           open: tickets.filter((ticket) => ticket.status === "OPEN").length,
           inProgress: tickets.filter((ticket) => ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED").length,
           waitingValidation: tickets.filter((ticket) => ticket.status === "DONE").length,
           validated: tickets.filter((ticket) => ticket.status === "VALIDATED").length,
-          averageRepairHours: averageRepairMs / 3_600_000,
+          averageRepairHours: averageRepairSeconds / 3600,
           repeatedProblems: repeatedProblems.slice(0, 5),
           byEquipment: byEquipment.slice(0, 5),
         },
@@ -719,6 +743,8 @@ export async function getTicketsData() {
       tickets: [],
       equipment: [],
       consumables: [],
+      notifications: [],
+      unreadNotifications: 0,
       kpis: {
         open: 0,
         inProgress: 0,

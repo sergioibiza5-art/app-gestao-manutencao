@@ -12,7 +12,7 @@ export default async function InventoryPage() {
   const { consumables, equipment } = await getModuleData();
   const templateHref =
     "data:text/csv;charset=utf-8," +
-    encodeURIComponent("nome;categoria;unidade;stock_atual;stock_minimo;localizacao;fornecedor;codigo_equipamento;notas\nFiltro oleo;Peca;un;4;1;Armazem;Fornecedor;COMP-01;\n");
+    encodeURIComponent("nome;categoria;unidade;stock_atual;stock_minimo;custo_unitario;localizacao;fornecedor;codigo_equipamento;notas\nFiltro oleo;Peca;un;4;1;12,50;Armazem;Fornecedor;COMP-01;\n");
 
   return (
     <AppShell activeHref="/inventario">
@@ -38,6 +38,7 @@ export default async function InventoryPage() {
               <input name="currentStock" className={inputClass} placeholder="Stock atual" />
               <input name="minimumStock" className={inputClass} placeholder="Stock minimo" />
             </div>
+            <input name="unitCost" className={inputClass} placeholder="Custo unitario" />
             <select name="equipmentId" className={inputClass}>
               <option value="">Sem equipamento associado</option>
               {equipment.map((item) => (
@@ -91,6 +92,7 @@ export default async function InventoryPage() {
                     <div className="text-left sm:text-right">
                       <p className="font-semibold text-amber-300">{String(item.currentStock)} {item.unit}</p>
                       <p className="mt-1 text-xs text-zinc-500">Minimo: {String(item.minimumStock)} {item.unit}</p>
+                      <p className="mt-1 text-xs text-zinc-500">Custo: {String(item.unitCost)} EUR/{item.unit}</p>
                     </div>
                   </div>
                 </article>
