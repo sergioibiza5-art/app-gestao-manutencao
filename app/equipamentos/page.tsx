@@ -382,8 +382,7 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
             </form>
           </Panel>
         </div>
-
-</div>
+      </div>
 
         <Panel className="min-w-0">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
