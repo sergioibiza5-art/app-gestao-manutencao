@@ -36,7 +36,7 @@ function periodLabel(year: string, month: string) {
 }
 
 function BarChart({ title, rows }: { title: string; rows: AnalysisRow[] }) {
-  const chartRows = rows.slice(0, 10);
+  const chartRows = rows;
   const max = Math.max(...chartRows.map((row) => row.total), 0);
 
   return (
@@ -46,7 +46,7 @@ function BarChart({ title, rows }: { title: string; rows: AnalysisRow[] }) {
         <h2 className="text-lg font-semibold text-zinc-50">{title}</h2>
       </div>
 
-      <div className="mt-4 space-y-3">
+      <div className="mt-4 max-h-[560px] space-y-3 overflow-y-auto pr-1">
         {chartRows.length === 0 ? (
           <EmptyState title="Sem dados" description="Ainda nao existem valores para apresentar." />
         ) : (

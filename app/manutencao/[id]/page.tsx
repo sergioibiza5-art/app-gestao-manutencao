@@ -124,7 +124,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
               <textarea name="actionsDone" required className={textareaClass} placeholder="O que foi feito" />
               <div className="space-y-2">
                 {template.items.map((item) => (
-                  <div key={item.id} className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_150px_1fr]">
+                  <div key={item.id} className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_150px_1fr]">
                     <input type="hidden" name="itemId" value={item.id} />
                     <div>
                       <p className="font-medium text-zinc-100">{item.order}. {item.check}</p>
@@ -136,8 +136,10 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                       <option value="NA">N/A</option>
                     </select>
                     <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." />
-                    <input name={`photoUrl_${item.id}`} className={`${inputClass} md:col-start-2`} placeholder="Link da foto" />
-                    <input name={`photoName_${item.id}`} className={inputClass} placeholder="Nome da foto" />
+                    <div className="grid gap-2 rounded-lg border border-zinc-800 bg-black/20 p-2 md:col-span-3 md:grid-cols-[1fr_220px]">
+                      <input name={`photoUrl_${item.id}`} className={inputClass} placeholder={item.photoRequired ? "Foto obrigatoria - link/caminho" : "Foto - link/caminho"} />
+                      <input name={`photoName_${item.id}`} className={inputClass} placeholder="Nome da foto" />
+                    </div>
                   </div>
                 ))}
               </div>

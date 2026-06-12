@@ -5,8 +5,23 @@ import { Plus, Trash2 } from "lucide-react";
 
 import { buttonClass, inputClass, textareaClass } from "@/app/components/ui";
 
+type ChecklistBuilderRow = {
+  id?: string;
+  check: string;
+  expected: string;
+  photo: boolean;
+};
+
 type ChecklistTemplateBuilderProps = {
   action: (formData: FormData) => void | Promise<void>;
+  templateId?: string;
+  typeName?: string;
+  templateTitle?: string;
+  version?: string;
+  description?: string | null;
+  notes?: string | null;
+  rows?: ChecklistBuilderRow[];
+  submitLabel?: string;
 };
 
 const expectedOptions = [
@@ -19,14 +34,24 @@ const expectedOptions = [
   "Condicao conforme criterio definido",
 ];
 
-const initialRows = [
+const initialRows: ChecklistBuilderRow[] = [
   { check: "Nivel de combustivel/bateria", expected: "Dentro dos parametros corretos", photo: true },
   { check: "Estado da bateria", expected: "Limpo e em bom estado", photo: true },
   { check: "Oleo do motor/hidraulico", expected: "Sem fugas", photo: true },
 ];
 
-export function ChecklistTemplateBuilder({ action }: ChecklistTemplateBuilderProps) {
-  const [rows, setRows] = useState(initialRows);
+export function ChecklistTemplateBuilder({
+  action,
+  templateId,
+  typeName = "",
+  templateTitle = "",
+  version = "1.0",
+  description = "",
+  notes = "",
+  rows: initialTemplateRows,
+  submitLabel = "Guardar template",
+}: ChecklistTemplateBuilderProps) {
+  const [rows, setRows] = useState(initialTemplateRows && initialTemplateRows.length > 0 ? initialTemplateRows : initialRows);
 
   function updateRow(index: number, field: "check" | "expected" | "photo", value: string | boolean) {
     setRows((current) => current.map((row, rowIndex) => (rowIndex === index ? { ...row, [field]: value } : row)));
@@ -42,11 +67,12 @@ export function ChecklistTemplateBuilder({ action }: ChecklistTemplateBuilderPro
 
   return (
     <form action={action} className="mt-4 space-y-3">
-      <input name="typeName" required className={inputClass} placeholder="Tipo de equipamento, ex.: Empilhador" />
-      <input name="templateTitle" className={inputClass} placeholder="Titulo do template" />
+      {templateId && <input type="hidden" name="templateId" value={templateId} />}
+      <input name="typeName" required className={inputClass} defaultValue={typeName} placeholder="Tipo de equipamento, ex.: Empilhador" />
+      <input name="templateTitle" className={inputClass} defaultValue={templateTitle} placeholder="Titulo do template" />
       <div className="grid grid-cols-2 gap-3">
-        <input name="version" defaultValue="1.0" className={inputClass} placeholder="Versao" />
-        <input name="description" className={inputClass} placeholder="Descricao do tipo" />
+        <input name="version" defaultValue={version} className={inputClass} placeholder="Versao" />
+        <input name="description" className={inputClass} defaultValue={description ?? ""} placeholder="Descricao do tipo" />
       </div>
 
       <div className="space-y-2 rounded-lg border border-zinc-800 bg-zinc-950/45 p-3">
@@ -58,6 +84,7 @@ export function ChecklistTemplateBuilder({ action }: ChecklistTemplateBuilderPro
         </div>
         {rows.map((row, index) => (
           <div key={index} className="grid grid-cols-[1fr_1fr_72px_42px] gap-2">
+            <input type="hidden" name="itemId" value={row.id ?? ""} />
             <input name="itemCheck" className={inputClass} value={row.check} onChange={(event) => updateRow(index, "check", event.target.value)} placeholder="Verificar" />
             <select name="itemExpectedCondition" className={inputClass} value={row.expected} onChange={(event) => updateRow(index, "expected", event.target.value)}>
               {expectedOptions.map((option) => (
@@ -78,8 +105,8 @@ export function ChecklistTemplateBuilder({ action }: ChecklistTemplateBuilderPro
         </button>
       </div>
 
-      <textarea name="notes" className={textareaClass} placeholder="Notas do template" />
-      <button className={buttonClass}>Guardar template</button>
+      <textarea name="notes" className={textareaClass} defaultValue={notes ?? ""} placeholder="Notas do template" />
+      <button className={buttonClass}>{submitLabel}</button>
     </form>
   );
 }

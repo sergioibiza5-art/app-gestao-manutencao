@@ -579,6 +579,75 @@ export async function createEquipmentTypeWithChecklist(formData: FormData) {
   revalidatePath("/equipamentos");
 }
 
+export async function updateChecklistTemplate(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const templateId = text(formData, "templateId");
+  const typeName = text(formData, "typeName");
+  const itemIds = formData.getAll("itemId").filter((value): value is string => typeof value === "string");
+  const itemChecks = formData.getAll("itemCheck").filter((value): value is string => typeof value === "string");
+  const itemExpectedConditions = formData.getAll("itemExpectedCondition").filter((value): value is string => typeof value === "string");
+  const itemPhotoRequired = new Set(formData.getAll("itemPhotoRequired").filter((value): value is string => typeof value === "string"));
+
+  if (!templateId || !typeName) return;
+
+  const template = await prisma.checklistTemplate.findUnique({
+    where: { id: templateId },
+    include: { equipmentType: true, items: true },
+  });
+  if (!template) return;
+
+  const keptIds = itemIds.filter(Boolean);
+
+  await prisma.$transaction(async (tx) => {
+    await tx.equipmentType.update({
+      where: { id: template.equipmentTypeId },
+      data: {
+        name: typeName,
+        description: optionalText(formData, "description"),
+      },
+    });
+
+    await tx.checklistTemplate.update({
+      where: { id: templateId },
+      data: {
+        title: text(formData, "templateTitle") || template.title,
+        version: text(formData, "version") || "1.0",
+        notes: optionalText(formData, "notes"),
+      },
+    });
+
+    await tx.checklistItem.updateMany({
+      where: { templateId, id: { notIn: keptIds.length > 0 ? keptIds : [""] } },
+      data: { active: false },
+    });
+
+    for (let index = 0; index < itemChecks.length; index += 1) {
+      const check = itemChecks[index]?.trim();
+      if (!check) continue;
+
+      const data = {
+        order: index + 1,
+        check,
+        expectedCondition: itemExpectedConditions[index]?.trim() || "Condicao conforme criterio definido",
+        photoRequired: itemPhotoRequired.has(String(index)),
+        active: true,
+      };
+
+      const itemId = itemIds[index];
+      if (itemId) {
+        await tx.checklistItem.update({ where: { id: itemId }, data });
+      } else {
+        await tx.checklistItem.create({ data: { ...data, templateId } });
+      }
+    }
+  });
+
+  revalidatePath("/checklists");
+  revalidatePath("/equipamentos");
+  revalidatePath("/manutencao");
+}
+
 function interventionPlanFromForm(formData: FormData, prefix: string, kind: InterventionKind, type: MaintenanceType) {
   if (text(formData, `${prefix}Enabled`) !== "true") {
     return null;

@@ -1,6 +1,6 @@
 import { Rows3 } from "lucide-react";
 
-import { createEquipmentTypeWithChecklist } from "@/app/actions";
+import { createEquipmentTypeWithChecklist, updateChecklistTemplate } from "@/app/actions";
 import { ChecklistTemplateBuilder } from "@/app/checklists/checklist-template-builder";
 import { AppShell } from "@/app/components/app-shell";
 import { EmptyState, PageHeader, Panel } from "@/app/components/ui";
@@ -53,17 +53,25 @@ export default async function ChecklistsPage() {
                           <p className="text-xs text-zinc-500">v{template.version}</p>
                         </div>
                         <p className="mt-2 text-sm text-zinc-500">{template.items.length} item(ns)</p>
-                        <div className="mt-3 grid gap-2">
-                          {template.items.slice(0, 6).map((item) => (
-                            <div key={item.id} className="rounded-md border border-zinc-800 px-3 py-2 text-sm text-zinc-400">
-                              {item.order}. {item.check}
-                              {item.photoRequired ? <span className="ml-2 text-xs text-sky-300">foto</span> : null}
-                            </div>
-                          ))}
-                          {template.items.length > 6 && (
-                            <p className="text-xs text-zinc-600">+ {template.items.length - 6} itens</p>
-                          )}
-                        </div>
+                        <ChecklistTemplateBuilder
+                          action={updateChecklistTemplate}
+                          templateId={template.id}
+                          typeName={type.name}
+                          templateTitle={template.title}
+                          version={template.version}
+                          description={type.description}
+                          notes={template.notes}
+                          rows={template.items
+                            .filter((item) => item.active)
+                            .sort((a, b) => a.order - b.order)
+                            .map((item) => ({
+                              id: item.id,
+                              check: item.check,
+                              expected: item.expectedCondition,
+                              photo: item.photoRequired,
+                            }))}
+                          submitLabel="Guardar alteracoes"
+                        />
                       </div>
                     ))}
                   </div>

@@ -193,7 +193,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
               <Wrench size={22} className="text-amber-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Registar servico, revisao, custo ou inspecao</h2>
             </div>
-            <form action={createVehicleService} className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[150px_minmax(220px,1.4fr)_160px_130px]">
+            <form action={createVehicleService} className="mt-4 grid gap-3 md:grid-cols-2 2xl:grid-cols-[170px_minmax(260px,1.4fr)_190px_150px]">
               <input type="hidden" name="vehicleId" value={vehicle.id} />
               <select name="type" className={inputClass}>
                 <option value="MAINTENANCE">Manutencao</option>
@@ -211,7 +211,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                 <input name="nextDueDate" type="date" className={inputClass} />
                 <p className="px-1 text-xs leading-5 text-zinc-500">Data manual apenas se ainda nao houver historico de km suficiente.</p>
               </div>
-              <textarea name="notes" className={`${textareaClass} md:col-span-2 xl:col-span-3`} placeholder="Notas" />
+              <textarea name="notes" className={`${textareaClass} md:col-span-2 2xl:col-span-3`} placeholder="Notas" />
               <button className={`${buttonClass} self-start`}>Guardar servico</button>
             </form>
           </Panel>
@@ -273,7 +273,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                     </div>
                     <p className="font-semibold text-amber-200">{formatCurrency(service.cost)}</p>
                   </div>
-                  <form action={updateVehicleService} className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-[150px_minmax(220px,1.4fr)_160px_130px]">
+                  <form action={updateVehicleService} className="mt-3 grid gap-3 md:grid-cols-2 2xl:grid-cols-[170px_minmax(260px,1.4fr)_190px_150px]">
                     <input type="hidden" name="id" value={service.id} />
                     <input type="hidden" name="vehicleId" value={vehicle.id} />
                     <select name="type" className={inputClass} defaultValue={service.type}>
@@ -292,7 +292,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                       <input name="nextDueDate" type="date" className={inputClass} defaultValue={dateInputValue(service.nextDueDate)} />
                       <p className="px-1 text-xs leading-5 text-zinc-500">Recalculada pelos km se houver historico.</p>
                     </div>
-                    <textarea name="notes" className={`${textareaClass} md:col-span-2 xl:col-span-3`} defaultValue={service.notes ?? ""} />
+                    <textarea name="notes" className={`${textareaClass} md:col-span-2 2xl:col-span-3`} defaultValue={service.notes ?? ""} />
                     <button className="inline-flex h-11 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">Editar servico</button>
                   </form>
                   <form action={deleteVehicleService} className="mt-2">
