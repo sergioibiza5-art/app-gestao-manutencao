@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
-import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanWrite, verifyPassword } from "@/lib/auth";
+import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 
 function text(formData: FormData, key: string) {
@@ -84,7 +84,7 @@ const taskFrequencies = ["DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "FOUR_MONTHL
 const taskStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"] as const satisfies readonly TaskStatus[];
 const equipmentStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE", "DISCARDED"] as const satisfies readonly EquipmentStatus[];
 const documentTypes = ["INVOICE", "WARRANTY", "MANUAL", "CERTIFICATE", "CONTRACT", "OTHER"] as const satisfies readonly DocumentType[];
-const userRoles = ["ADMIN", "MANAGER", "USER", "VIEWER"] as const satisfies readonly UserRole[];
+const userRoles = ["ADMIN", "MANAGER", "USER", "VIEWER", "TICKET"] as const satisfies readonly UserRole[];
 const sgqStatuses = ["DRAFT", "ACTIVE", "ARCHIVED"] as const satisfies readonly SGQStatus[];
 const maintenanceTypes = ["INTERNAL", "EXTERNAL"] as const satisfies readonly MaintenanceType[];
 const interventionKinds = ["INSPECTION", "MAINTENANCE"] as const satisfies readonly InterventionKind[];
@@ -118,7 +118,7 @@ export async function loginUser(formData: FormData) {
   }
 
   await createSession(user.id);
-  redirect("/");
+  redirect(user.role === "TICKET" ? "/tickets" : "/");
 }
 
 export async function logoutUser() {
@@ -989,6 +989,168 @@ async function nextWorkOrderNumber() {
   return `OP-${String(count + 1).padStart(5, "0")}`;
 }
 
+async function nextTicketNumber() {
+  const prisma = getPrisma();
+  const count = await prisma.maintenanceTicket.count();
+  return `TK-${String(count + 1).padStart(5, "0")}`;
+}
+
+export async function createMaintenanceTicket(formData: FormData) {
+  const user = await requireUser();
+  const prisma = getPrisma();
+  const equipmentId = optionalText(formData, "equipmentId");
+  const problem = text(formData, "problem");
+
+  if (!equipmentId || !problem) return;
+
+  const equipment = await prisma.equipment.findUnique({ where: { id: equipmentId } });
+  if (!equipment) return;
+
+  await prisma.maintenanceTicket.create({
+    data: {
+      number: await nextTicketNumber(),
+      title: text(formData, "title") || `Avaria - ${equipment.name}`,
+      problem,
+      priority: enumValue(formData, "priority", ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const, "NORMAL"),
+      location: optionalText(formData, "location") ?? equipment.location,
+      equipmentId,
+      openedById: user.id,
+    },
+  });
+
+  revalidatePath("/tickets");
+}
+
+export async function startMaintenanceTicket(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.maintenanceTicket.update({
+    where: { id },
+    data: {
+      status: "IN_PROGRESS",
+      startedAt: new Date(),
+      assignedToId: user.id,
+    },
+  });
+  revalidatePath("/tickets");
+}
+
+export async function pauseMaintenanceTicket(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.maintenanceTicket.update({
+    where: { id },
+    data: { status: "PAUSED", pausedAt: new Date() },
+  });
+  revalidatePath("/tickets");
+}
+
+export async function completeMaintenanceTicket(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
+  const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
+
+  await prisma.$transaction(async (tx) => {
+    await tx.ticketConsumableUsage.deleteMany({ where: { ticketId: id } });
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "DONE",
+        completedAt: new Date(),
+        solution: optionalText(formData, "solution"),
+      },
+    });
+
+    for (let index = 0; index < consumableIds.length; index += 1) {
+      const consumableId = consumableIds[index];
+      const quantity = quantities[index];
+      if (!consumableId || !quantity || Number(quantity) <= 0) continue;
+      await tx.ticketConsumableUsage.create({
+        data: {
+          ticketId: id,
+          consumableId,
+          quantity,
+        },
+      });
+    }
+  });
+
+  revalidatePath("/tickets");
+}
+
+export async function validateMaintenanceTicket(formData: FormData) {
+  const user = await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  const ticket = await prisma.maintenanceTicket.findUnique({
+    where: { id },
+    include: { equipment: true, consumables: { include: { consumable: true } } },
+  });
+  if (!ticket) return;
+
+  const workOrder = await prisma.workOrder.create({
+    data: {
+      number: await nextWorkOrderNumber(),
+      title: `Ticket ${ticket.number} - ${ticket.title}`,
+      type: "INTERNAL",
+      status: "DONE",
+      openedAt: ticket.openedAt,
+      closedAt: ticket.completedAt ?? new Date(),
+      performedBy: user.name,
+      actionsDone: ticket.solution ?? "Ticket validado pela manutencao.",
+      result: "VALIDADO",
+      notes: `Problema: ${ticket.problem}`,
+      equipmentId: ticket.equipmentId,
+    },
+  });
+
+  const consumablesText = ticket.consumables
+    .map((item) => `${item.consumable.name}: ${String(item.quantity)} ${item.consumable.unit}`)
+    .join("\n");
+
+  const maintenanceLog = await prisma.maintenanceLog.create({
+    data: {
+      title: workOrder.title,
+      description: ticket.solution ?? ticket.problem,
+      type: "INTERNAL",
+      date: ticket.completedAt ?? new Date(),
+      performedBy: user.name,
+      notes: consumablesText ? `Consumiveis:\n${consumablesText}` : null,
+      equipmentId: ticket.equipmentId,
+    },
+  });
+
+  await prisma.workOrder.update({
+    where: { id: workOrder.id },
+    data: { maintenanceLogId: maintenanceLog.id },
+  });
+
+  await prisma.maintenanceTicket.update({
+    where: { id },
+    data: {
+      status: "VALIDATED",
+      validatedAt: new Date(),
+      workOrderId: workOrder.id,
+    },
+  });
+
+  revalidatePath("/tickets");
+  revalidatePath("/manutencao");
+  revalidatePath(`/equipamentos/${ticket.equipmentId}`);
+}
+
 export async function createWorkOrderFromSchedule(formData: FormData) {
   await requireCanWrite();
   const prisma = getPrisma();
@@ -1184,6 +1346,49 @@ export async function createCalibrationLog(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/calibracao");
+}
+
+export async function updateCalibrationLog(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  const calibration = await prisma.calibrationLog.update({
+    where: { id },
+    data: {
+      title: text(formData, "title") || "Calibracao",
+      certificateNo: optionalText(formData, "certificateNo"),
+      calibrationDate: optionalDate(formData, "calibrationDate") ?? new Date(),
+      nextDueDate: optionalDate(formData, "nextDueDate"),
+      result: optionalText(formData, "result"),
+      approved: text(formData, "approved") !== "false",
+      notes: optionalText(formData, "notes"),
+    },
+  });
+
+  const certificateUrl = optionalText(formData, "certificateUrl");
+  if (certificateUrl) {
+    const existing = await prisma.document.findFirst({
+      where: { calibrationLogId: id, type: "CERTIFICATE" },
+    });
+    const data = {
+      title: optionalText(formData, "certificateTitle") ?? `Certificado ${calibration.certificateNo ?? calibration.title}`,
+      type: "CERTIFICATE" as const,
+      fileUrl: certificateUrl,
+      fileName: optionalText(formData, "certificateFileName"),
+      equipmentId: calibration.equipmentId,
+      calibrationLogId: id,
+    };
+    if (existing) {
+      await prisma.document.update({ where: { id: existing.id }, data });
+    } else {
+      await prisma.document.create({ data });
+    }
+  }
+
+  revalidatePath("/calibracao");
+  revalidatePath(`/equipamentos/${calibration.equipmentId}`);
 }
 
 export async function importEquipmentCsv(formData: FormData) {

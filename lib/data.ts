@@ -33,6 +33,10 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
     async (prisma) => {
       const now = new Date();
       const range = dashboardRange(filters?.view, filters?.date);
+      const todayStart = new Date(now);
+      todayStart.setHours(0, 0, 0, 0);
+      const todayEnd = new Date(now);
+      todayEnd.setHours(23, 59, 59, 999);
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
       const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
@@ -40,10 +44,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         tasksToday,
         criticalTasks,
         expenses,
-        equipmentCount,
-        equipmentAttention,
-        sgqActive,
-        sgqTotal,
+        maintenanceToday,
         tasks,
         calendar,
         vehicles,
@@ -69,12 +70,12 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
             },
           },
         }),
-        prisma.equipment.count(),
-        prisma.equipment.count({
-          where: { status: { in: ["MAINTENANCE", "INACTIVE"] } },
+        prisma.maintenanceSchedule.count({
+          where: {
+            status: "SCHEDULED",
+            scheduledAt: { gte: todayStart, lte: todayEnd },
+          },
         }),
-        prisma.sGQRecord.count({ where: { status: "ACTIVE" } }),
-        prisma.sGQRecord.count(),
         prisma.task.findMany({
           where: { status: { in: ["PENDING", "IN_PROGRESS"] } },
           orderBy: [{ dueDate: "asc" }, { nextDue: "asc" }],
@@ -125,16 +126,17 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         ])
         .filter((item) => item !== null)
         .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+      const fleetDueLimit = new Date(now);
+      fleetDueLimit.setDate(fleetDueLimit.getDate() + 30);
+      const fleetDueSoon = fleetAlerts.filter((item) => item.dueDate <= fleetDueLimit).length;
 
       return {
         kpis: {
           tasksToday,
           criticalTasks,
           monthlyExpenses: expenses._sum.amount ?? 0,
-          equipmentCount,
-          equipmentAttention,
-          sgqPercent: sgqTotal > 0 ? Math.round((sgqActive / sgqTotal) * 100) : 100,
-          sgqPending: Math.max(sgqTotal - sgqActive, 0),
+          maintenanceToday,
+          fleetDueSoon,
         },
         tasks,
         calendar,
@@ -147,10 +149,8 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         tasksToday: 8,
         criticalTasks: 3,
         monthlyExpenses: 1284,
-        equipmentCount: 42,
-        equipmentAttention: 5,
-        sgqPercent: 96,
-        sgqPending: 2,
+        maintenanceToday: 0,
+        fleetDueSoon: 0,
       },
       tasks: [],
       calendar: [],
@@ -244,7 +244,7 @@ export async function getEquipmentDetail(id: string) {
           },
           maintenanceLogs: { orderBy: { date: "desc" }, take: 50, include: { user: true } },
           maintenanceSchedules: { orderBy: { scheduledAt: "asc" }, take: 50 },
-          calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30 },
+          calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30, include: { documents: true } },
           expenses: { orderBy: { date: "desc" }, take: 50, include: { documents: true } },
           documents: { orderBy: { createdAt: "desc" }, take: 30 },
           consumables: { orderBy: { name: "asc" }, take: 50 },
@@ -656,6 +656,78 @@ export async function getAnalyticsData(filters?: {
       suppliers: [],
       costCenters: [],
       equipmentOptions: [],
+    },
+  );
+}
+
+export async function getTicketsData() {
+  return readDb(
+    async (prisma) => {
+      const [tickets, equipment, consumables] = await Promise.all([
+        prisma.maintenanceTicket.findMany({
+          orderBy: { openedAt: "desc" },
+          include: {
+            equipment: true,
+            openedBy: true,
+            assignedTo: true,
+            workOrder: true,
+            consumables: { include: { consumable: true } },
+          },
+        }),
+        prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 300 }),
+        prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 300 }),
+      ]);
+
+      const closedTickets = tickets.filter((ticket) => ticket.startedAt && ticket.completedAt);
+      const averageRepairMs =
+        closedTickets.length > 0
+          ? closedTickets.reduce((sum, ticket) => sum + (ticket.completedAt!.getTime() - ticket.startedAt!.getTime()), 0) / closedTickets.length
+          : 0;
+      const repeatedProblems = Object.values(
+        tickets.reduce<Record<string, { name: string; count: number }>>((acc, ticket) => {
+          const key = ticket.title || ticket.problem.slice(0, 60);
+          acc[key] ??= { name: key, count: 0 };
+          acc[key].count += 1;
+          return acc;
+        }, {}),
+      ).sort((a, b) => b.count - a.count);
+      const byEquipment = Object.values(
+        tickets.reduce<Record<string, { name: string; count: number }>>((acc, ticket) => {
+          const key = ticket.equipmentId;
+          acc[key] ??= { name: ticket.equipment.name, count: 0 };
+          acc[key].count += 1;
+          return acc;
+        }, {}),
+      ).sort((a, b) => b.count - a.count);
+
+      return {
+        tickets,
+        equipment,
+        consumables,
+        kpis: {
+          open: tickets.filter((ticket) => ticket.status === "OPEN").length,
+          inProgress: tickets.filter((ticket) => ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED").length,
+          waitingValidation: tickets.filter((ticket) => ticket.status === "DONE").length,
+          validated: tickets.filter((ticket) => ticket.status === "VALIDATED").length,
+          averageRepairHours: averageRepairMs / 3_600_000,
+          repeatedProblems: repeatedProblems.slice(0, 5),
+          byEquipment: byEquipment.slice(0, 5),
+        },
+      };
+    },
+    {
+      tickets: [],
+      equipment: [],
+      consumables: [],
+      kpis: {
+        open: 0,
+        inProgress: 0,
+        waitingValidation: 0,
+        validated: 0,
+        averageRepairHours: 0,
+        repeatedProblems: [],
+        byEquipment: [],
+      },
     },
   );
 }

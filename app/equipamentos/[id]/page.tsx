@@ -509,6 +509,44 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
 
       <Panel>
         <div className="flex items-center gap-3">
+          <Ruler size={22} className="text-lime-300" />
+          <h2 className="text-xl font-semibold text-zinc-50">Calibracoes e certificados</h2>
+        </div>
+
+        <div className="mt-4 space-y-3">
+          {equipment.calibrationLogs.length === 0 ? (
+            <EmptyState title="Sem calibracoes registadas" description="Quando este equipamento tiver certificados de calibracao, ficam visiveis aqui." />
+          ) : (
+            equipment.calibrationLogs.map((log) => {
+              const certificate = log.documents.find((document) => document.type === "CERTIFICATE" && document.fileUrl);
+              return (
+                <article key={log.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <h3 className="font-semibold text-zinc-100">{log.title}</h3>
+                      <p className="mt-1 text-sm text-zinc-500">{log.certificateNo ?? "Sem certificado"} - {log.result ?? "Sem resultado"}</p>
+                      {certificate && (
+                        <a href={certificate.fileUrl ?? "#"} target="_blank" rel="noreferrer" className="mt-2 inline-flex text-xs font-semibold text-sky-300">
+                          Abrir certificado
+                        </a>
+                      )}
+                    </div>
+                    <div className="text-left sm:text-right">
+                      <p className={log.approved ? "text-sm font-semibold text-emerald-300" : "text-sm font-semibold text-rose-300"}>
+                        {log.approved ? "Aprovado" : "Reprovado"}
+                      </p>
+                      <p className="mt-1 text-xs text-zinc-500">Prox.: {formatDate(log.nextDueDate)}</p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })
+          )}
+        </div>
+      </Panel>
+
+      <Panel>
+        <div className="flex items-center gap-3">
           <Package size={22} className="text-amber-300" />
           <h2 className="text-xl font-semibold text-zinc-50">Peças e consumíveis associados</h2>
         </div>

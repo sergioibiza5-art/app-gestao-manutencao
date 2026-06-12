@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { redirect } from "next/navigation";
 import { HomeIcon, LogOut, Search, ShieldCheck } from "lucide-react";
 
 import { logoutUser } from "@/app/actions";
@@ -13,6 +14,12 @@ type AppShellProps = {
 
 export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   const user = await requireUser();
+  if (user.role === "TICKET" && activeHref !== "/tickets") {
+    redirect("/tickets");
+  }
+  const visibleNavigation = user.role === "TICKET"
+    ? navigation.filter((item) => item.href === "/tickets")
+    : navigation;
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.10),transparent_25%),#070807]">
@@ -53,7 +60,7 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
             </div>
 
             <nav className="flex max-w-full gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">
-              {navigation.map((item) => {
+              {visibleNavigation.map((item) => {
                 const Icon = item.icon;
                 const active = item.href === activeHref;
 

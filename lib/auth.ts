@@ -86,6 +86,7 @@ export async function requireUser() {
 }
 
 const roleRank: Record<UserRole, number> = {
+  TICKET: -1,
   VIEWER: 0,
   USER: 1,
   MANAGER: 2,

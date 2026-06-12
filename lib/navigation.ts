@@ -11,10 +11,12 @@ import {
   Settings,
   UserCog,
   Wrench,
+  Siren,
 } from "lucide-react";
 
 export const navigation = [
   { name: "Dashboard", href: "/", meta: "Visao diaria", icon: LayoutDashboard, color: "bg-teal-400/15 text-teal-200" },
+  { name: "Tickets", href: "/tickets", meta: "Avarias e tempos", icon: Siren, color: "bg-red-400/15 text-red-200" },
   { name: "Despesas", href: "/despesas", meta: "Faturas e recibos", icon: Receipt, color: "bg-amber-400/15 text-amber-200" },
 
   { name: "Analises", href: "/analises", meta: "Fornecedores e custos", icon: BarChart3, color: "bg-emerald-400/15 text-emerald-200" },

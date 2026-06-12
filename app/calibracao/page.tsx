@@ -1,6 +1,6 @@
 import { FileSpreadsheet, Search } from "lucide-react";
 
-import { createCalibrationLog, importCalibrationsCsv } from "@/app/actions";
+import { createCalibrationLog, importCalibrationsCsv, updateCalibrationLog } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
@@ -122,6 +122,22 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                         <p className="mt-1 text-xs text-zinc-500">Prox.: {formatDate(log.nextDueDate)}</p>
                       </div>
                     </div>
+                    <form action={updateCalibrationLog} className="mt-4 grid gap-2 md:grid-cols-2">
+                      <input type="hidden" name="id" value={log.id} />
+                      <input name="title" className={inputClass} defaultValue={log.title} placeholder="Descricao" />
+                      <input name="certificateNo" className={inputClass} defaultValue={log.certificateNo ?? ""} placeholder="N. certificado" />
+                      <input name="calibrationDate" type="date" className={inputClass} defaultValue={log.calibrationDate.toISOString().slice(0, 10)} />
+                      <input name="nextDueDate" type="date" className={inputClass} defaultValue={log.nextDueDate?.toISOString().slice(0, 10) ?? ""} />
+                      <input name="result" className={inputClass} defaultValue={log.result ?? ""} placeholder="Resultado" />
+                      <select name="approved" className={inputClass} defaultValue={log.approved ? "true" : "false"}>
+                        <option value="true">Aprovado</option>
+                        <option value="false">Reprovado</option>
+                      </select>
+                      <input name="certificateUrl" className={inputClass} defaultValue={certificate?.fileUrl ?? ""} placeholder="Link/caminho do certificado" />
+                      <input name="certificateFileName" className={inputClass} defaultValue={certificate?.fileName ?? ""} placeholder="Nome do ficheiro" />
+                      <textarea name="notes" className={`${textareaClass} md:col-span-2`} defaultValue={log.notes ?? ""} placeholder="Notas" />
+                      <button className={buttonClass}>Guardar certificado</button>
+                    </form>
                   </article>
                 );
               })

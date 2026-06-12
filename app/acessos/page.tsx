@@ -10,6 +10,7 @@ const roleDescriptions = [
   ["MANAGER", "Planeia e gere: equipamentos, manutencoes, frota, checklists, documentos e aprovacao operacional."],
   ["USER", "Executa trabalho diario: tarefas, leituras, checklists, despesas, documentos e registos de intervencao."],
   ["VIEWER", "Consulta apenas: dashboard, historicos, calendario, documentos e fichas, sem criar ou editar."],
+  ["TICKET", "Posto de trabalho: apenas cria tickets de avaria para a maquina/posto, sem acesso aos restantes modulos."],
 ];
 
 export default async function AccessPage() {
@@ -35,6 +36,7 @@ export default async function AccessPage() {
               <option value="MANAGER">Gestor</option>
               <option value="USER">Utilizador</option>
               <option value="VIEWER">Leitura</option>
+              <option value="TICKET">Posto / Ticket</option>
             </select>
             <select name="active" className={inputClass}>
               <option value="true">Ativo</option>
@@ -94,6 +96,7 @@ export default async function AccessPage() {
                       <option value="MANAGER">Gestor</option>
                       <option value="USER">Utilizador</option>
                       <option value="VIEWER">Leitura</option>
+                      <option value="TICKET">Posto / Ticket</option>
                     </select>
                     <select name="active" className={inputClass} defaultValue={user.active ? "true" : "false"}>
                       <option value="true">Ativo</option>
