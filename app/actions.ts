@@ -1,5 +1,5 @@
 "use server";
-
+import { sendTelegramMessage } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -1205,6 +1205,18 @@ export async function createMaintenanceTicket(formData: FormData) {
     body: notificationData.body,
     url: notificationData.url,
   });
+
+await sendTelegramMessage(
+  [
+    "🚨 <b>Novo ticket de manutenção</b>",
+    "",
+    `<b>Título:</b> ${notificationData.title}`,
+    `<b>Descrição:</b> ${notificationData.body}`,
+    "",
+    `<b>Estado:</b> Aberto`,
+    `<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets`,
+  ].join("\n"),
+);
 
   revalidatePath("/tickets");
   revalidatePath("/");
