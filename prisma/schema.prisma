@@ -143,6 +143,7 @@ model User {
   ticketsAssigned   MaintenanceTicket[] @relation("TicketAssignedTo")
   ticketEquipmentAccess TicketEquipmentAccess[]
   notifications     Notification[]
+  pushSubscriptions PushSubscription[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -559,6 +560,24 @@ model Notification {
 
   @@index([userId, readAt])
   @@index([createdAt])
+}
+
+model PushSubscription {
+  id        String  @id @default(cuid())
+  endpoint  String  @unique
+  p256dh    String
+  auth      String
+  userAgent String?
+  active    Boolean @default(true)
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([active])
 }
 
 model CalibrationLog {

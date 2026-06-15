@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Gestão de Manutenção",
   description: "Aplicação privada para manutenção, despesas, inventário e controlo SGQ doméstico.",
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({

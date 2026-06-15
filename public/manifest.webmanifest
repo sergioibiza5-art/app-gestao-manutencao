@@ -1,0 +1,10 @@
+{
+  "name": "Gestao de manutencao",
+  "short_name": "Manutencao",
+  "description": "App privada de gestao de manutencao, tickets e SGQ.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070807",
+  "theme_color": "#14b8a6"
+}

@@ -4,8 +4,18 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
+import type { PushSubscription as WebPushSubscription } from "web-push";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
+
+type PushSubscriptionPayload = {
+  endpoint?: string | null;
+  keys?: {
+    p256dh?: string | null;
+    auth?: string | null;
+  } | null;
+  userAgent?: string | null;
+};
 
 function text(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -1033,6 +1043,107 @@ async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketN
   });
 }
 
+function pushConfig() {
+  const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const privateKey = process.env.VAPID_PRIVATE_KEY;
+  const subject = process.env.VAPID_SUBJECT || "mailto:manutencao@localhost";
+
+  if (!publicKey || !privateKey) {
+    return null;
+  }
+
+  return { publicKey, privateKey, subject };
+}
+
+async function sendTicketPushNotifications(
+  recipientIds: string[],
+  payload: { title: string; body: string; url: string },
+) {
+  const config = pushConfig();
+  if (!config || recipientIds.length === 0) return;
+
+  const prisma = getPrisma();
+  const subscriptions = await prisma.pushSubscription.findMany({
+    where: { active: true, userId: { in: recipientIds } },
+  });
+
+  if (subscriptions.length === 0) return;
+
+  const webPushModule = await import("web-push");
+  const webPush = webPushModule.default ?? webPushModule;
+  webPush.setVapidDetails(config.subject, config.publicKey, config.privateKey);
+
+  await Promise.all(
+    subscriptions.map(async (subscription) => {
+      const webPushSubscription: WebPushSubscription = {
+        endpoint: subscription.endpoint,
+        keys: {
+          p256dh: subscription.p256dh,
+          auth: subscription.auth,
+        },
+      };
+
+      try {
+        await webPush.sendNotification(webPushSubscription, JSON.stringify(payload));
+      } catch (error) {
+        const statusCode = typeof error === "object" && error !== null && "statusCode" in error
+          ? Number((error as { statusCode?: unknown }).statusCode)
+          : 0;
+
+        if (statusCode === 404 || statusCode === 410) {
+          await prisma.pushSubscription.updateMany({
+            where: { endpoint: subscription.endpoint },
+            data: { active: false },
+          });
+        }
+      }
+    }),
+  );
+}
+
+export async function savePushSubscription(subscription: PushSubscriptionPayload) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const endpoint = subscription.endpoint?.trim();
+  const p256dh = subscription.keys?.p256dh?.trim();
+  const auth = subscription.keys?.auth?.trim();
+
+  if (!endpoint || !p256dh || !auth) return { ok: false };
+
+  await prisma.pushSubscription.upsert({
+    where: { endpoint },
+    create: {
+      endpoint,
+      p256dh,
+      auth,
+      userAgent: subscription.userAgent?.slice(0, 255) ?? null,
+      userId: user.id,
+    },
+    update: {
+      p256dh,
+      auth,
+      userAgent: subscription.userAgent?.slice(0, 255) ?? null,
+      userId: user.id,
+      active: true,
+    },
+  });
+
+  return { ok: true };
+}
+
+export async function disablePushSubscription(endpoint: string) {
+  await requireCanWrite();
+  const value = endpoint.trim();
+  if (!value) return { ok: false };
+
+  await getPrisma().pushSubscription.updateMany({
+    where: { endpoint: value },
+    data: { active: false },
+  });
+
+  return { ok: true };
+}
+
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
   const prisma = getPrisma();
@@ -1051,7 +1162,7 @@ export async function createMaintenanceTicket(formData: FormData) {
     if (!canOpen) return;
   }
 
-  await prisma.$transaction(async (tx) => {
+  const notificationData = await prisma.$transaction(async (tx) => {
     const ticket = await tx.maintenanceTicket.create({
       data: {
         number: await nextTicketNumber(),
@@ -1068,6 +1179,7 @@ export async function createMaintenanceTicket(formData: FormData) {
       where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
       select: { id: true },
     });
+    const recipientIds = recipients.map((recipient) => recipient.id);
 
     if (recipients.length > 0) {
       await tx.notification.createMany({
@@ -1079,6 +1191,19 @@ export async function createMaintenanceTicket(formData: FormData) {
         })),
       });
     }
+
+    return {
+      recipientIds,
+      title: `Novo ticket ${ticket.number}`,
+      body: `${equipment.name}: ${ticket.title}`,
+      url: "/tickets",
+    };
+  });
+
+  await sendTicketPushNotifications(notificationData.recipientIds, {
+    title: notificationData.title,
+    body: notificationData.body,
+    url: notificationData.url,
   });
 
   revalidatePath("/tickets");

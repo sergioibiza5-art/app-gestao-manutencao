@@ -1,4 +1,5 @@
-import { CalendarDays, Car, ClipboardCheck, DollarSign, Filter, Wrench } from "lucide-react";
+import Link from "next/link";
+import { AlertTriangle, CalendarDays, Car, ClipboardCheck, DollarSign, Filter, Wrench } from "lucide-react";
 
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, Panel } from "@/app/components/ui";
@@ -95,6 +96,48 @@ export default async function Page({ searchParams }: DashboardPageProps) {
           </div>
         </div>
       </section>
+
+      {dashboard.ticketAlerts.length > 0 ? (
+        <section className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-4">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+            <div className="flex items-start gap-3">
+              <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-amber-300/40 bg-amber-300/10 text-amber-200">
+                <AlertTriangle size={22} />
+              </span>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-200">Alerta de tickets</p>
+                <h2 className="mt-1 text-xl font-semibold text-zinc-50">
+                  {dashboard.kpis.openTickets} ticket{dashboard.kpis.openTickets === 1 ? "" : "s"} novo{dashboard.kpis.openTickets === 1 ? "" : "s"} por iniciar
+                </h2>
+                <p className="mt-1 text-sm text-zinc-400">Abre a fila de manutencao para iniciar, pausar, concluir ou validar o chamado.</p>
+              </div>
+            </div>
+            <Link href="/tickets" className={`${buttonClass} justify-center`}>
+              Ver tickets
+            </Link>
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {dashboard.ticketAlerts.map((ticket) => (
+              <Link
+                key={ticket.id}
+                href="/tickets"
+                className="rounded-lg border border-amber-300/20 bg-zinc-950/70 p-4 transition hover:border-amber-200/50"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-200">{ticket.number}</p>
+                    <h3 className="mt-2 truncate font-semibold text-zinc-100">{ticket.title}</h3>
+                    <p className="mt-1 truncate text-sm text-zinc-500">{ticket.equipment.name}</p>
+                  </div>
+                  <span className="rounded-md border border-zinc-800 px-2 py-1 text-xs text-zinc-300">{ticket.status}</span>
+                </div>
+                <p className="mt-3 line-clamp-2 text-sm text-zinc-400">{ticket.problem}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="grid gap-4 xl:grid-cols-3">
         <Panel>

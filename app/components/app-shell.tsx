@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { HomeIcon, LogOut, Search, ShieldCheck } from "lucide-react";
 
 import { logoutUser } from "@/app/actions";
+import { PushNotificationToggle } from "@/app/components/push-notification-toggle";
 import { requireUser } from "@/lib/auth";
 import { navigation } from "@/lib/navigation";
 
@@ -38,6 +39,9 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
               <p className="truncate text-sm font-semibold text-zinc-100">{user.name}</p>
               <p className="text-xs text-zinc-500">{user.role}</p>
             </div>
+            {user.role !== "TICKET" ? (
+              <PushNotificationToggle vapidPublicKey={process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY} />
+            ) : null}
             <button className="grid size-11 place-items-center rounded-lg border border-zinc-800 bg-zinc-950/70 text-zinc-200 transition hover:border-teal-300/50 hover:text-teal-200" aria-label="Pesquisa e filtros">
               <Search size={20} />
             </button>
