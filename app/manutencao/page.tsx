@@ -154,16 +154,19 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   </div>
                   <div className="grid gap-3 xl:grid-cols-2">
                     {items.map((schedule) => (
-                      <article key={schedule.id} className="rounded-lg border border-zinc-800 bg-black/25 p-3">
-                        <div className="flex items-start justify-between gap-3">
+                      <details key={schedule.id} className="group rounded-lg border border-zinc-800 bg-black/25 p-3 open:border-teal-300/35">
+                        <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
                           <div>
                             <h4 className="font-medium text-zinc-100">{schedule.title}</h4>
                             <p className="mt-1 text-sm text-zinc-500">{schedule.equipment.name}</p>
                           </div>
-                          <span className={schedule.type === "EXTERNAL" ? "rounded-md bg-amber-300/10 px-2 py-1 text-xs text-amber-200" : "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"}>
-                            {typeLabel(schedule.type)}
+                          <span className="flex flex-col items-end gap-2">
+                            <span className={schedule.type === "EXTERNAL" ? "rounded-md bg-amber-300/10 px-2 py-1 text-xs text-amber-200" : "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"}>
+                              {typeLabel(schedule.type)}
+                            </span>
+                            <span className="text-xs text-teal-300 group-open:hidden">Abrir</span>
                           </span>
-                        </div>
+                        </summary>
                         <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-500">
                           <span className="rounded-md border border-zinc-800 px-2 py-1">{statusLabel(schedule.status)}</span>
                           <span className="rounded-md border border-zinc-800 px-2 py-1">{schedule.frequency}</span>
@@ -223,7 +226,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                             Eliminar agendamento
                           </button>
                         </form>
-                      </article>
+                      </details>
                     ))}
                   </div>
                 </div>
@@ -270,8 +273,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               <EmptyState title="Sem manutenções registadas" description="Quando adicionares intervenções, o histórico por equipamento aparece aqui." />
             ) : (
               maintenanceLogs.map((log) => (
-                <article key={log.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <details key={log.id} className="group rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 open:border-cyan-300/35">
+                  <summary className="flex cursor-pointer list-none flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h3 className="font-semibold text-zinc-100">{log.title}</h3>
                       <p className="mt-1 text-sm text-zinc-500">
@@ -281,8 +284,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                     <div className="text-left sm:text-right">
                       <p className="font-semibold text-cyan-300">{formatCurrency(log.cost)}</p>
                       <p className="mt-1 text-xs text-zinc-500">{formatDate(log.date)}</p>
+                      <p className="mt-1 text-xs text-teal-300 group-open:hidden">Abrir registo</p>
                     </div>
-                  </div>
+                  </summary>
                   <form action={updateMaintenanceLog} className="mt-4 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
                     <input type="hidden" name="id" value={log.id} />
                     <select name="equipmentId" className={inputClass} defaultValue={log.equipmentId}>
@@ -312,7 +316,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                       Eliminar servico
                     </button>
                   </form>
-                </article>
+                </details>
               ))
             )}
           </div>

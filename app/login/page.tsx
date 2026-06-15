@@ -33,11 +33,11 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </div>
 
           <form action={loginUser} className="mt-6 space-y-3">
-            <input name="email" type="email" required className={inputClass} placeholder="Email" autoComplete="email" />
+            <input name="credential" required className={inputClass} placeholder="Email ou utilizador" autoComplete="username" />
             <input name="password" type="password" required className={inputClass} placeholder="Palavra-passe" autoComplete="current-password" />
             {params.erro && (
               <p className="rounded-lg border border-rose-400/25 bg-rose-400/10 px-3 py-2 text-sm text-rose-200">
-                Email ou palavra-passe incorretos.
+                Utilizador/email ou palavra-passe incorretos.
               </p>
             )}
             <button className={`${buttonClass} w-full`}>
@@ -47,7 +47,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </form>
 
           <p className="mt-4 text-sm leading-6 text-zinc-500">
-            No primeiro acesso de um utilizador antigo sem palavra-passe, a palavra-passe introduzida fica definida para esse utilizador.
+            Para postos de ticket usa o utilizador do posto e a palavra-passe definida nos acessos.
           </p>
         </div>
       </section>

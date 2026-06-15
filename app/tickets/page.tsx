@@ -1,4 +1,5 @@
 import { Bell, CheckCircle2, Pause, Play, Siren, Wrench } from "lucide-react";
+import Link from "next/link";
 
 import {
   completeMaintenanceTicket,
@@ -32,14 +33,18 @@ function hours(value: number) {
   return new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 1 }).format(Number.isFinite(value) ? value : 0);
 }
 
-function workTime(ticket: { totalWorkSeconds: number; startedAt: Date | null; status: string }) {
+function workTime(ticket: { totalWorkSeconds: number; startedAt: Date | null; completedAt?: Date | null; status: string }) {
+  if (ticket.totalWorkSeconds > 0) {
+    const h = Math.floor(ticket.totalWorkSeconds / 3600);
+    const m = Math.floor((ticket.totalWorkSeconds % 3600) / 60);
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  }
   const activeSeconds =
-    ticket.status === "IN_PROGRESS" && ticket.startedAt
-      ? Math.max(Math.floor((Date.now() - ticket.startedAt.getTime()) / 1000), 0)
+    ticket.startedAt
+      ? Math.max(Math.floor(((ticket.completedAt ?? new Date()).getTime() - ticket.startedAt.getTime()) / 1000), 0)
       : 0;
-  const total = ticket.totalWorkSeconds + activeSeconds;
-  const h = Math.floor(total / 3600);
-  const m = Math.floor((total % 3600) / 60);
+  const h = Math.floor(activeSeconds / 3600);
+  const m = Math.floor((activeSeconds % 3600) / 60);
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
@@ -137,10 +142,10 @@ export default async function TicketsPage() {
                 <EmptyState title="Sem notificacoes" description="Quando entrar um ticket, aparece aqui." />
               ) : (
                 data.notifications.map((notification) => (
-                  <div key={notification.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-3">
+                  <Link key={notification.id} href="/tickets" className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-3 transition hover:border-amber-300/40">
                     <p className="text-sm font-semibold text-zinc-100">{notification.title}</p>
                     <p className="mt-1 text-xs text-zinc-500">{notification.body ?? "Sem detalhe"}</p>
-                  </div>
+                  </Link>
                 ))
               )}
             </div>
@@ -197,21 +202,24 @@ export default async function TicketsPage() {
               <EmptyState title="Sem tickets" description="Quando um posto chamar a manutencao, o ticket aparece aqui." />
             ) : (
               data.tickets.map((ticket) => (
-                <article key={ticket.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                  <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
-                    <div>
+                <details key={ticket.id} id={ticket.id} className="group rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 open:border-teal-300/35">
+                  <summary className="flex cursor-pointer list-none flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                    <div className="min-w-0">
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">{ticket.number} - {statusLabel(ticket.status)}</p>
-                      <h3 className="mt-1 text-lg font-semibold text-zinc-100">{ticket.title}</h3>
-                      <p className="mt-1 text-sm text-zinc-500">{ticket.equipment.name} - {ticket.location ?? ticket.equipment.location ?? "sem local"}</p>
-                      <p className="mt-3 text-sm leading-6 text-zinc-400">{ticket.problem}</p>
+                      <h3 className="mt-1 truncate text-lg font-semibold text-zinc-100">{ticket.title}</h3>
+                      <p className="mt-1 truncate text-sm text-zinc-500">{ticket.equipment.name} - {ticket.location ?? ticket.equipment.location ?? "sem local"}</p>
                     </div>
-                    <div className="text-sm text-zinc-500 xl:text-right">
-                      <p>Aberto: {formatDate(ticket.openedAt)}</p>
-                      <p>Por: {ticket.openedBy?.name ?? "Sistema"}</p>
-                      <p>Tempo: {workTime(ticket)}</p>
-                      <p>Custo: {formatCurrency(ticket.totalCost)}</p>
-                      {ticket.workOrder && <p className="mt-2 font-semibold text-teal-300">{ticket.workOrder.number}</p>}
+                    <div className="grid gap-1 text-sm text-zinc-500 xl:text-right">
+                      <span>Aberto: {formatDate(ticket.openedAt)}</span>
+                      <span>Tempo: {workTime(ticket)}</span>
+                      <span>Custo: {formatCurrency(ticket.totalCost)}</span>
+                      {ticket.workOrder && <span className="font-semibold text-teal-300">{ticket.workOrder.number}</span>}
+                      <span className="text-xs text-teal-300 group-open:hidden">Abrir ticket</span>
                     </div>
+                  </summary>
+                  <div className="mt-4 border-t border-zinc-800 pt-4">
+                    <p className="text-sm leading-6 text-zinc-400">{ticket.problem}</p>
+                    <p className="mt-2 text-sm text-zinc-500">Por: {ticket.openedBy?.name ?? "Sistema"}</p>
                   </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -261,7 +269,7 @@ export default async function TicketsPage() {
                       </button>
                     </form>
                   )}
-                </article>
+                </details>
               ))
             )}
           </div>

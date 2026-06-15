@@ -29,9 +29,9 @@ export default async function AccessPage() {
           <h2 className="text-xl font-semibold text-zinc-50">Novo utilizador</h2>
           <form action={createUser} className="mt-4 space-y-3">
             <input name="name" required className={inputClass} placeholder="Nome" />
-            <input name="email" required type="email" className={inputClass} placeholder="Email" />
+            <input name="username" className={inputClass} placeholder="Utilizador do posto (sem email)" />
+            <input name="email" type="email" className={inputClass} placeholder="Email (perfis normais)" />
             <input name="password" type="password" className={inputClass} placeholder="Palavra-passe inicial" />
-            <input name="pin" inputMode="numeric" className={inputClass} placeholder="PIN do posto / ticket" />
             <input name="hourlyRate" className={inputClass} placeholder="Custo hora mao de obra" />
             <select name="role" className={inputClass}>
               <option value="ADMIN">Admin</option>
@@ -102,9 +102,9 @@ export default async function AccessPage() {
                   <form action={updateUser} className="grid gap-2 md:grid-cols-2">
                     <input type="hidden" name="id" value={user.id} />
                     <input name="name" className={inputClass} defaultValue={user.name} />
-                    <input name="email" type="email" className={inputClass} defaultValue={user.email} />
+                    <input name="username" className={inputClass} defaultValue={user.username ?? ""} placeholder="Utilizador do posto" />
+                    <input name="email" type="email" className={inputClass} defaultValue={user.email.endsWith("@ticket.local") ? "" : user.email} placeholder="Email" />
                     <input name="password" type="password" className={inputClass} placeholder="Nova palavra-passe" />
-                    <input name="pin" inputMode="numeric" className={inputClass} placeholder="Novo PIN ticket" />
                     <input name="hourlyRate" className={inputClass} defaultValue={String(user.hourlyRate ?? 0)} placeholder="Custo hora" />
                     <select name="role" className={inputClass} defaultValue={user.role}>
                       <option value="ADMIN">Admin</option>

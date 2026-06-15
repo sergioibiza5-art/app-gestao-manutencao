@@ -24,6 +24,7 @@ type ExpensesPageProps = {
     costCenter?: string;
     equipmentId?: string;
     vehicleId?: string;
+    page?: string;
   }>;
 };
 
@@ -41,6 +42,8 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
   const costCenter = String(params.costCenter ?? "");
   const equipmentId = String(params.equipmentId ?? "");
   const vehicleId = String(params.vehicleId ?? "");
+  const page = Math.max(Number(params.page ?? 1), 1);
+  const pageSize = 12;
 
   const suppliers = Array.from(
     new Set(expenses.map((expense) => expense.supplier).filter(Boolean) as string[])
@@ -83,6 +86,17 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
     (sum, expense) => sum + Number(expense.amount ?? 0),
     0
   );
+  const pageCount = Math.max(Math.ceil(filteredExpenses.length / pageSize), 1);
+  const currentPage = Math.min(page, pageCount);
+  const pagedExpenses = filteredExpenses.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const queryWithoutPage = new URLSearchParams(
+    Object.entries(params).filter(([key, value]) => key !== "page" && typeof value === "string" && value.length > 0) as string[][],
+  );
+  const pageHref = (targetPage: number) => {
+    const query = new URLSearchParams(queryWithoutPage);
+    query.set("page", String(targetPage));
+    return `/despesas?${query.toString()}`;
+  };
 
   return (
     <AppShell activeHref="/despesas">
@@ -228,7 +242,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
                 description="Não existem registos com os filtros selecionados."
               />
             ) : (
-              filteredExpenses.map((expense) => {
+              pagedExpenses.map((expense) => {
                 const invoice = expense.documents.find(
                   (document) => document.type === "INVOICE" && document.fileUrl
                 );
@@ -277,6 +291,27 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
               })
             )}
           </div>
+          {filteredExpenses.length > pageSize && (
+            <div className="mt-4 flex flex-col gap-3 border-t border-zinc-800 pt-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-zinc-500">
+                Pagina {currentPage} de {pageCount}
+              </p>
+              <div className="flex gap-2">
+                <Link
+                  href={pageHref(Math.max(currentPage - 1, 1))}
+                  className={`inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold ${currentPage === 1 ? "pointer-events-none text-zinc-700" : "text-zinc-100 hover:border-teal-300/50"}`}
+                >
+                  Anterior
+                </Link>
+                <Link
+                  href={pageHref(Math.min(currentPage + 1, pageCount))}
+                  className={`inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold ${currentPage === pageCount ? "pointer-events-none text-zinc-700" : "text-zinc-100 hover:border-teal-300/50"}`}
+                >
+                  Seguinte
+                </Link>
+              </div>
+            </div>
+          )}
         </Panel>
       </section>
     </AppShell>

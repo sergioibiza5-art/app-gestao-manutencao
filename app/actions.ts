@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
+import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 
@@ -15,6 +15,10 @@ function text(formData: FormData, key: string) {
 function optionalText(formData: FormData, key: string) {
   const value = text(formData, key);
   return value.length > 0 ? value : null;
+}
+
+function loginName(formData: FormData) {
+  return (text(formData, "username") || text(formData, "email")).toLowerCase().replace(/\s+/g, ".");
 }
 
 function decimal(formData: FormData, key: string) {
@@ -95,20 +99,23 @@ const vehicleServiceTypes = ["MAINTENANCE", "REVISION", "INSPECTION", "COST"] as
 
 export async function loginUser(formData: FormData) {
   const prisma = getPrisma();
-  const email = text(formData, "email").toLowerCase();
+  const credential = (text(formData, "credential") || text(formData, "email")).toLowerCase();
   const password = text(formData, "password");
 
-  if (!email || !password) {
+  if (!credential || !password) {
     redirect("/login?erro=credenciais");
   }
 
   const users = await prisma.user.findMany({
-    where: { email, active: true },
+    where: {
+      active: true,
+      OR: [{ email: credential }, { username: credential }],
+    },
     orderBy: { createdAt: "asc" },
   });
   const user = users.find((item) =>
-    item.role === "TICKET" && item.pin
-      ? verifyPassword(password, item.pin)
+    item.role === "TICKET"
+      ? verifyPassword(password, item.password) || verifyPassword(password, item.pin)
       : verifyPassword(password, item.password),
   ) ?? (users.length === 1 ? users[0] : null);
 
@@ -117,7 +124,7 @@ export async function loginUser(formData: FormData) {
   }
 
   if (user.role === "TICKET") {
-    if (!user.pin || !verifyPassword(password, user.pin)) {
+    if (!verifyPassword(password, user.password) && !verifyPassword(password, user.pin)) {
       redirect("/login?erro=credenciais");
     }
   } else if (!user.password && users.length === 1) {
@@ -1019,6 +1026,13 @@ function elapsedSeconds(startedAt: Date | null, end = new Date()) {
   return Math.max(Math.floor((end.getTime() - startedAt.getTime()) / 1000), 0);
 }
 
+async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketNumber: string) {
+  await tx.notification.updateMany({
+    where: { title: `Novo ticket ${ticketNumber}`, readAt: null },
+    data: { readAt: new Date() },
+  });
+}
+
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
   const prisma = getPrisma();
@@ -1077,14 +1091,20 @@ export async function startMaintenanceTicket(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
-  await prisma.maintenanceTicket.updateMany({
-    where: { id, status: { in: ["OPEN", "PAUSED"] } },
-    data: {
-      status: "IN_PROGRESS",
-      startedAt: new Date(),
-      pausedAt: null,
-      assignedToId: user.id,
-    },
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.findUnique({ where: { id } });
+    if (!ticket || !["OPEN", "PAUSED"].includes(ticket.status)) return;
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "IN_PROGRESS",
+        startedAt: ticket.startedAt ?? new Date(),
+        pausedAt: null,
+        assignedToId: user.id,
+      },
+    });
+    await markTicketNotificationsRead(tx, ticket.number);
   });
   revalidatePath("/tickets");
 }
@@ -1103,8 +1123,6 @@ export async function pauseMaintenanceTicket(formData: FormData) {
     data: {
       status: "PAUSED",
       pausedAt: new Date(),
-      startedAt: null,
-      totalWorkSeconds: ticket.totalWorkSeconds + elapsedSeconds(ticket.startedAt),
     },
   });
   revalidatePath("/tickets");
@@ -1127,14 +1145,22 @@ export async function completeMaintenanceTicket(formData: FormData) {
     });
     if (!ticket) return;
 
+    const completedAt = new Date();
     const totalWorkSeconds =
-      ticket.totalWorkSeconds +
-      (ticket.status === "IN_PROGRESS" ? elapsedSeconds(ticket.startedAt) : 0);
+      ticket.startedAt
+        ? elapsedSeconds(ticket.startedAt, completedAt)
+        : ticket.totalWorkSeconds;
     const assignedHourlyRate = Number(ticket.assignedTo?.hourlyRate ?? user.hourlyRate ?? 0);
     const laborCost = (totalWorkSeconds / 3600) * assignedHourlyRate;
 
+    const oldUsages = await tx.ticketConsumableUsage.findMany({ where: { ticketId: id } });
+    const oldQuantities = oldUsages.reduce<Record<string, number>>((acc, usage) => {
+      acc[usage.consumableId] = (acc[usage.consumableId] ?? 0) + Number(usage.quantity ?? 0);
+      return acc;
+    }, {});
     await tx.ticketConsumableUsage.deleteMany({ where: { ticketId: id } });
     let consumableCost = 0;
+    const newQuantities: Record<string, number> = {};
 
     for (let index = 0; index < consumableIds.length; index += 1) {
       const consumableId = consumableIds[index];
@@ -1145,7 +1171,9 @@ export async function completeMaintenanceTicket(formData: FormData) {
       if (!consumable) continue;
 
       const unitCost = Number(consumable.unitCost ?? 0);
-      consumableCost += Number(quantity) * unitCost;
+      const quantityNumber = Number(quantity);
+      newQuantities[consumableId] = (newQuantities[consumableId] ?? 0) + quantityNumber;
+      consumableCost += quantityNumber * unitCost;
 
       await tx.ticketConsumableUsage.create({
         data: {
@@ -1158,12 +1186,29 @@ export async function completeMaintenanceTicket(formData: FormData) {
       });
     }
 
+    const affectedConsumables = new Set([...Object.keys(oldQuantities), ...Object.keys(newQuantities)]);
+    for (const consumableId of affectedConsumables) {
+      const delta = (newQuantities[consumableId] ?? 0) - (oldQuantities[consumableId] ?? 0);
+      if (delta === 0) continue;
+      await tx.consumable.update({
+        where: { id: consumableId },
+        data: { currentStock: { decrement: delta } },
+      });
+      await tx.consumableMovement.create({
+        data: {
+          consumableId,
+          type: delta > 0 ? "SAIDA_TICKET" : "AJUSTE_TICKET",
+          quantity: Math.abs(delta).toFixed(2),
+          reason: `Ticket ${ticket.number}`,
+        },
+      });
+    }
+
     await tx.maintenanceTicket.update({
       where: { id },
       data: {
         status: "DONE",
-        completedAt: new Date(),
-        startedAt: null,
+        completedAt,
         totalWorkSeconds,
         laborCost: laborCost.toFixed(2),
         consumableCost: consumableCost.toFixed(2),
@@ -1172,6 +1217,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
         observations: optionalText(formData, "observations"),
       },
     });
+    await markTicketNotificationsRead(tx, ticket.number);
   });
 
   revalidatePath("/tickets");
@@ -1636,17 +1682,21 @@ export async function createUser(formData: FormData) {
   await requireCanAdmin();
   const prisma = getPrisma();
   const password = optionalText(formData, "password");
-  const pin = optionalText(formData, "pin");
   const role = enumValue(formData, "role", userRoles, "USER");
+  const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
+  const email = role === "TICKET"
+    ? `${username || `posto-${Date.now()}`}@ticket.local`
+    : text(formData, "email").toLowerCase();
   const equipmentIds = formData.getAll("ticketEquipmentId").filter((value): value is string => typeof value === "string" && value.length > 0);
 
   await prisma.$transaction(async (tx) => {
     const user = await tx.user.create({
       data: {
         name: text(formData, "name"),
-        email: text(formData, "email").toLowerCase(),
-        password: role === "TICKET" ? null : password ? hashPassword(password) : null,
-        pin: role === "TICKET" && pin ? hashPassword(pin) : null,
+        username,
+        email,
+        password: password ? hashPassword(password) : null,
+        pin: null,
         hourlyRate: decimal(formData, "hourlyRate"),
         role,
         active: text(formData, "active") !== "false",
@@ -1669,8 +1719,9 @@ export async function updateUser(formData: FormData) {
   const prisma = getPrisma();
   const id = text(formData, "id");
   const password = optionalText(formData, "password");
-  const pin = optionalText(formData, "pin");
   const role = enumValue(formData, "role", userRoles, "USER");
+  const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
+  const email = role === "TICKET" ? `${username || id}@ticket.local` : text(formData, "email").toLowerCase();
   const equipmentIds = formData.getAll("ticketEquipmentId").filter((value): value is string => typeof value === "string" && value.length > 0);
 
   if (!id) return;
@@ -1680,9 +1731,10 @@ export async function updateUser(formData: FormData) {
       where: { id },
       data: {
         name: text(formData, "name"),
-        email: text(formData, "email").toLowerCase(),
-        ...(password && role !== "TICKET" ? { password: hashPassword(password) } : {}),
-        ...(pin && role === "TICKET" ? { pin: hashPassword(pin) } : {}),
+        username,
+        email,
+        ...(password ? { password: hashPassword(password) } : {}),
+        ...(role === "TICKET" ? { pin: null } : {}),
         hourlyRate: decimal(formData, "hourlyRate"),
         role,
         active: text(formData, "active") !== "false",

@@ -690,12 +690,16 @@ export async function getTicketsData(user?: { id: string; role: string }) {
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 300 }),
         user
           ? prisma.notification.findMany({
-              where: { userId: user.id },
+              where: { userId: user.id, readAt: null },
               orderBy: { createdAt: "desc" },
               take: 8,
             })
           : Promise.resolve([]),
       ]);
+      const openTicketNumbers = new Set(tickets.filter((ticket) => ticket.status === "OPEN").map((ticket) => ticket.number));
+      const ticketNotifications = notifications.filter((notification) =>
+        Array.from(openTicketNumbers).some((number) => notification.title.includes(number)),
+      );
 
       const closedTickets = tickets.filter((ticket) => ticket.totalWorkSeconds > 0 || (ticket.startedAt && ticket.completedAt));
       const averageRepairSeconds =
@@ -726,8 +730,8 @@ export async function getTicketsData(user?: { id: string; role: string }) {
         tickets,
         equipment,
         consumables,
-        notifications,
-        unreadNotifications: notifications.filter((notification) => notification.readAt === null).length,
+        notifications: ticketNotifications,
+        unreadNotifications: ticketNotifications.length,
         kpis: {
           open: tickets.filter((ticket) => ticket.status === "OPEN").length,
           inProgress: tickets.filter((ticket) => ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED").length,

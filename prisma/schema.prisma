@@ -123,6 +123,7 @@ enum WorkOrderStatus {
 model User {
   id        String   @id @default(cuid())
   name      String
+  username  String?  @unique
   email     String
   password  String?
   pin       String?

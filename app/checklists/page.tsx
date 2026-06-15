@@ -35,16 +35,19 @@ export default async function ChecklistsPage() {
               <EmptyState title="Sem templates" description="Cria o primeiro tipo de equipamento para usar checklists nas manutencoes internas." />
             ) : (
               equipmentTypes.map((type) => (
-                <article key={type.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <details key={type.id} className="group rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 open:border-sky-300/35">
+                  <summary className="flex cursor-pointer list-none flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h3 className="font-semibold text-zinc-100">{type.name}</h3>
                       <p className="mt-1 text-sm text-zinc-500">{type.description ?? "Sem descricao"}</p>
                     </div>
-                    <span className="rounded-md bg-sky-300/10 px-2 py-1 text-xs text-sky-200">
-                      {type.checklistTemplates.length} template(s)
+                    <span className="flex flex-col items-start gap-2 sm:items-end">
+                      <span className="rounded-md bg-sky-300/10 px-2 py-1 text-xs text-sky-200">
+                        {type.checklistTemplates.length} template(s)
+                      </span>
+                      <span className="text-xs text-teal-300 group-open:hidden">Abrir templates</span>
                     </span>
-                  </div>
+                  </summary>
                   <div className="mt-4 space-y-3">
                     {type.checklistTemplates.map((template) => (
                       <div key={template.id} className="rounded-lg border border-zinc-800 bg-black/20 p-3">
@@ -75,7 +78,7 @@ export default async function ChecklistsPage() {
                       </div>
                     ))}
                   </div>
-                </article>
+                </details>
               ))
             )}
           </div>
