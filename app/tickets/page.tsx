@@ -80,7 +80,7 @@ function TicketCreateForm({ equipment, compact = false }: { equipment: Array<{ i
         <option value="HIGH">Alta</option>
         <option value="CRITICAL">Critica</option>
       </select>
-      <input name="location" className={inputClass} placeholder="Posto/localizacao" />
+      <input name="location" className={inputClass} placeholder="Nome do operador" />
       <textarea name="problem" required className={textareaClass} placeholder="Descreve o problema da maquina" />
       <button className={buttonClass}>
         <Siren size={17} />
