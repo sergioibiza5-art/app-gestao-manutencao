@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Bell, BellRing } from "lucide-react";
 
 import { savePushSubscription } from "@/app/actions";
@@ -8,6 +8,8 @@ import { savePushSubscription } from "@/app/actions";
 type PushNotificationToggleProps = {
   vapidPublicKey?: string;
 };
+
+type PushStatus = "idle" | "active" | "blocked" | "unsupported" | "missing";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -32,8 +34,40 @@ function browserSupportsPush() {
 }
 
 export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggleProps) {
-  const [status, setStatus] = useState<"idle" | "active" | "blocked" | "unsupported" | "missing">("idle");
+  const [status, setStatus] = useState<PushStatus>("idle");
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    async function checkCurrentSubscription() {
+      if (!vapidPublicKey) {
+        setStatus("missing");
+        return;
+      }
+
+      if (!browserSupportsPush()) {
+        setStatus("unsupported");
+        return;
+      }
+
+      if (Notification.permission === "denied") {
+        setStatus("blocked");
+        return;
+      }
+
+      try {
+        const registration = await navigator.serviceWorker.register("/sw.js");
+        const subscription = await registration.pushManager.getSubscription();
+
+        if (subscription) {
+          setStatus("active");
+        }
+      } catch {
+        setStatus("idle");
+      }
+    }
+
+    checkCurrentSubscription();
+  }, [vapidPublicKey]);
 
   async function enablePush() {
     if (!vapidPublicKey) {
@@ -47,6 +81,7 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
     }
 
     const permission = await Notification.requestPermission();
+
     if (permission !== "granted") {
       setStatus("blocked");
       return;
@@ -54,10 +89,14 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
 
     const registration = await navigator.serviceWorker.register("/sw.js");
     const existing = await registration.pushManager.getSubscription();
-    const subscription = existing ?? await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
-    });
+
+    const subscription =
+      existing ??
+      (await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+      }));
+
     const payload = subscription.toJSON();
 
     startTransition(async () => {
@@ -75,22 +114,25 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
   }
 
   const active = status === "active";
-  const title = status === "missing"
-    ? "Configura as chaves VAPID para ativar push"
-    : status === "blocked"
-      ? "Permissao de notificacoes bloqueada"
-      : status === "unsupported"
-        ? "Este browser nao suporta notificacoes push"
-        : active
-          ? "Alertas ativos neste dispositivo"
-          : "Ativar alertas de tickets";
+
+  const title =
+    status === "missing"
+      ? "Configura as chaves VAPID para ativar push"
+      : status === "blocked"
+        ? "Permissão de notificações bloqueada"
+        : status === "unsupported"
+          ? "Este browser não suporta notificações push"
+          : active
+            ? "Alertas ativos neste dispositivo"
+            : "Ativar alertas de tickets";
+
   const Icon = active ? BellRing : Bell;
 
   return (
     <button
       type="button"
       onClick={enablePush}
-      disabled={isPending}
+      disabled={isPending || active}
       title={title}
       aria-label={title}
       className={`hidden h-11 items-center gap-2 rounded-lg border px-3 text-sm font-semibold transition md:inline-flex ${
