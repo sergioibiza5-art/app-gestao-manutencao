@@ -679,7 +679,8 @@ export async function getTicketsData(user?: { id: string; role: string }) {
   return readDb(
     async (prisma) => {
       const isTicketOnly = user?.role === "TICKET";
-      const [tickets, equipment, consumables, notifications] = await Promise.all([
+
+      const [tickets, equipmentAccess, allEquipment, consumables, notifications] = await Promise.all([
         prisma.maintenanceTicket.findMany({
           where: isTicketOnly ? { openedById: user.id } : undefined,
           orderBy: { openedAt: "desc" },
@@ -691,14 +692,24 @@ export async function getTicketsData(user?: { id: string; role: string }) {
             consumables: { include: { consumable: true } },
           },
         }),
-        prisma.equipment.findMany({
-          where: isTicketOnly
-            ? { ticketUserAccess: { some: { userId: user.id } } }
-            : undefined,
-          orderBy: { name: "asc" },
-          take: 300,
-        }),
+
+        isTicketOnly
+          ? prisma.ticketEquipmentAccess.findMany({
+              where: { userId: user.id },
+              orderBy: { equipment: { name: "asc" } },
+              include: { equipment: true },
+            })
+          : Promise.resolve([]),
+
+        !isTicketOnly
+          ? prisma.equipment.findMany({
+              orderBy: { name: "asc" },
+              take: 500,
+            })
+          : Promise.resolve([]),
+
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 300 }),
+
         user
           ? prisma.notification.findMany({
               where: { userId: user.id, readAt: null },
@@ -707,19 +718,35 @@ export async function getTicketsData(user?: { id: string; role: string }) {
             })
           : Promise.resolve([]),
       ]);
-      const openTicketNumbers = new Set(tickets.filter((ticket) => ticket.status === "OPEN").map((ticket) => ticket.number));
+
+      const equipment = isTicketOnly
+        ? equipmentAccess.map((access) => access.equipment)
+        : allEquipment;
+
+      const openTicketNumbers = new Set(
+        tickets.filter((ticket) => ticket.status === "OPEN").map((ticket) => ticket.number),
+      );
+
       const ticketNotifications = notifications.filter((notification) =>
         Array.from(openTicketNumbers).some((number) => notification.title.includes(number)),
       );
 
-      const closedTickets = tickets.filter((ticket) => ticket.totalWorkSeconds > 0 || (ticket.startedAt && ticket.completedAt));
+      const closedTickets = tickets.filter(
+        (ticket) => ticket.totalWorkSeconds > 0 || (ticket.startedAt && ticket.completedAt),
+      );
+
       const averageRepairSeconds =
         closedTickets.length > 0
           ? closedTickets.reduce((sum, ticket) => {
               if (ticket.totalWorkSeconds > 0) return sum + ticket.totalWorkSeconds;
-              return sum + Math.max(Math.floor((ticket.completedAt!.getTime() - ticket.startedAt!.getTime()) / 1000), 0);
+
+              return sum + Math.max(
+                Math.floor((ticket.completedAt!.getTime() - ticket.startedAt!.getTime()) / 1000),
+                0,
+              );
             }, 0) / closedTickets.length
           : 0;
+
       const repeatedProblems = Object.values(
         tickets.reduce<Record<string, { name: string; count: number }>>((acc, ticket) => {
           const key = ticket.title || ticket.problem.slice(0, 60);
@@ -728,6 +755,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
           return acc;
         }, {}),
       ).sort((a, b) => b.count - a.count);
+
       const byEquipment = Object.values(
         tickets.reduce<Record<string, { name: string; count: number }>>((acc, ticket) => {
           const key = ticket.equipmentId;

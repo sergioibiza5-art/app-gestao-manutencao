@@ -1283,6 +1283,9 @@ export async function completeMaintenanceTicket(formData: FormData) {
     if (!ticket) return;
 
     const completedAt = new Date();
+
+    const downtimeSeconds = elapsedSeconds(ticket.openedAt, completedAt);
+
     const totalWorkSeconds =
       ticket.startedAt
         ? elapsedSeconds(ticket.startedAt, completedAt)
@@ -1347,6 +1350,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
         status: "DONE",
         completedAt,
         totalWorkSeconds,
+        downtimeSeconds,
         laborCost: laborCost.toFixed(2),
         consumableCost: consumableCost.toFixed(2),
         totalCost: (laborCost + consumableCost).toFixed(2),
@@ -1377,6 +1381,7 @@ export async function validateMaintenanceTicket(formData: FormData) {
     `Problema: ${ticket.problem}`,
     ticket.observations ? `Observacoes: ${ticket.observations}` : null,
     `Tempo de trabalho: ${Math.round(ticket.totalWorkSeconds / 60)} min`,
+    `Tempo de paragem: ${Math.round(ticket.downtimeSeconds / 60)} min`,
     `Mao de obra: ${Number(ticket.laborCost).toFixed(2)} EUR`,
     `Consumiveis: ${Number(ticket.consumableCost).toFixed(2)} EUR`,
     `Custo total: ${Number(ticket.totalCost).toFixed(2)} EUR`,
