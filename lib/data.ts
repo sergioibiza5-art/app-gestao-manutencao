@@ -287,6 +287,32 @@ export async function getExpenseDetail(id: string) {
   );
 }
 
+export async function getConsumableDetail(id: string) {
+  return readDb(
+    async (prisma) =>
+      prisma.consumable.findUnique({
+        where: { id },
+        include: {
+          equipment: true,
+          movements: { orderBy: { date: "desc" }, take: 80 },
+          ticketUsages: {
+            orderBy: { createdAt: "desc" },
+            take: 50,
+            include: {
+              ticket: {
+                include: {
+                  equipment: true,
+                  workOrder: true,
+                },
+              },
+            },
+          },
+        },
+      }),
+    null,
+  );
+}
+
 export async function getChecklistAdminData() {
   return readDb(
     async (prisma) => {
@@ -723,25 +749,31 @@ export async function getTicketsData(user?: { id: string; role: string }) {
         ? equipmentAccess.map((access) => access.equipment)
         : allEquipment;
 
-      const openTicketNumbers = new Set(
-        tickets.filter((ticket) => ticket.status === "OPEN").map((ticket) => ticket.number),
-      );
+      const openTicketSignatures = tickets
+        .filter((ticket) => ticket.status === "OPEN")
+        .map((ticket) => ({
+          number: ticket.number,
+          body: `${ticket.equipment.name}: ${ticket.title}`,
+        }));
 
       const ticketNotifications = notifications.filter((notification) =>
-        Array.from(openTicketNumbers).some((number) => notification.title.includes(number)),
+        openTicketSignatures.some((ticket) =>
+          notification.title === `Novo ticket ${ticket.number}` &&
+          (!notification.body || notification.body === ticket.body),
+        ),
       );
 
       const closedTickets = tickets.filter(
-        (ticket) => ticket.totalWorkSeconds > 0 || (ticket.startedAt && ticket.completedAt),
+        (ticket) => ticket.downtimeSeconds > 0 || ticket.completedAt,
       );
 
       const averageRepairSeconds =
         closedTickets.length > 0
           ? closedTickets.reduce((sum, ticket) => {
-              if (ticket.totalWorkSeconds > 0) return sum + ticket.totalWorkSeconds;
+              if (ticket.downtimeSeconds > 0) return sum + ticket.downtimeSeconds;
 
               return sum + Math.max(
-                Math.floor((ticket.completedAt!.getTime() - ticket.startedAt!.getTime()) / 1000),
+                Math.floor((ticket.completedAt!.getTime() - ticket.openedAt.getTime()) / 1000),
                 0,
               );
             }, 0) / closedTickets.length

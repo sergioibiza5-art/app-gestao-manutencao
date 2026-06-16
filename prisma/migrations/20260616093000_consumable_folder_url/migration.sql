@@ -1,0 +1,2 @@
+ALTER TABLE "Consumable"
+  ADD COLUMN IF NOT EXISTS "folderUrl" TEXT;

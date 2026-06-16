@@ -12,7 +12,7 @@ export default async function InventoryPage() {
   const { consumables, equipment } = await getModuleData();
   const templateHref =
     "data:text/csv;charset=utf-8," +
-    encodeURIComponent("nome;categoria;unidade;stock_atual;stock_minimo;custo_unitario;localizacao;fornecedor;codigo_equipamento;notas\nFiltro oleo;Peca;un;4;1;12,50;Armazem;Fornecedor;COMP-01;\n");
+    encodeURIComponent("nome;categoria;unidade;stock_atual;stock_minimo;custo_unitario;link_pasta;localizacao;fornecedor;codigo_equipamento;notas\nFiltro oleo;Peca;un;4;1;12,50;https://onedrive/pasta;Armazem;Fornecedor;COMP-01;\n");
 
   return (
     <AppShell activeHref="/inventario">
@@ -48,6 +48,7 @@ export default async function InventoryPage() {
                 </option>
               ))}
             </select>
+            <input name="folderUrl" className={inputClass} placeholder="Link da pasta do produto" />
             <input name="location" className={inputClass} placeholder="Localizacao" />
             <input name="supplier" className={inputClass} placeholder="Fornecedor" />
             <textarea name="notes" className={textareaClass} placeholder="Notas, referencia, compatibilidade ou centro de custo" />
@@ -78,7 +79,10 @@ export default async function InventoryPage() {
                 <article key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <h3 className="font-semibold text-zinc-100">{item.name}</h3>
+                      <Link href={`/inventario/consumiveis/${item.id}`} className="inline-flex items-center gap-2 font-semibold text-zinc-100 transition hover:text-teal-200">
+                        {item.name}
+                        <ArrowRight size={15} />
+                      </Link>
                       <p className="mt-1 text-sm text-zinc-500">
                         {item.category} - {item.location ?? "sem localizacao"} - {item.supplier ?? "sem fornecedor"}
                       </p>

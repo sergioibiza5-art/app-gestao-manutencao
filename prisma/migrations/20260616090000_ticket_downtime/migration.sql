@@ -1,0 +1,2 @@
+ALTER TABLE "MaintenanceTicket"
+  ADD COLUMN IF NOT EXISTS "downtimeSeconds" INTEGER NOT NULL DEFAULT 0;

@@ -807,6 +807,7 @@ export async function createConsumable(formData: FormData) {
       currentStock: decimal(formData, "currentStock") || decimal(formData, "amount"),
       minimumStock: decimal(formData, "minimumStock"),
       unitCost: decimal(formData, "unitCost"),
+      folderUrl: optionalText(formData, "folderUrl"),
       location: optionalText(formData, "location"),
       supplier: optionalText(formData, "supplier"),
       notes: optionalText(formData, "notes"),
@@ -817,6 +818,47 @@ export async function createConsumable(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/inventario");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function updateConsumable(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = optionalText(formData, "equipmentId");
+
+  if (!id) return;
+
+  await prisma.consumable.update({
+    where: { id },
+    data: {
+      name: text(formData, "name"),
+      category: text(formData, "category") || "Consumivel",
+      unit: text(formData, "unit") || "un",
+      currentStock: decimal(formData, "currentStock"),
+      minimumStock: decimal(formData, "minimumStock"),
+      unitCost: decimal(formData, "unitCost"),
+      folderUrl: optionalText(formData, "folderUrl"),
+      location: optionalText(formData, "location"),
+      supplier: optionalText(formData, "supplier"),
+      notes: optionalText(formData, "notes"),
+      equipmentId,
+    },
+  });
+
+  revalidatePath("/inventario");
+  revalidatePath(`/inventario/consumiveis/${id}`);
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function deleteConsumable(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.consumable.delete({ where: { id } });
+  revalidatePath("/inventario");
+  redirect("/inventario");
 }
 
 export async function createMaintenanceLog(formData: FormData) {
@@ -1034,6 +1076,13 @@ async function nextTicketNumber() {
 function elapsedSeconds(startedAt: Date | null, end = new Date()) {
   if (!startedAt) return 0;
   return Math.max(Math.floor((end.getTime() - startedAt.getTime()) / 1000), 0);
+}
+
+function durationNote(seconds: number) {
+  const safeSeconds = Math.max(seconds, 0);
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
 }
 
 async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketNumber: string) {
@@ -1282,12 +1331,16 @@ export async function completeMaintenanceTicket(formData: FormData) {
     });
     if (!ticket) return;
 
-    const completedAt = new Date();
+    const completedAt = ticket.completedAt ?? new Date();
 
-    const downtimeSeconds = elapsedSeconds(ticket.openedAt, completedAt);
+    const downtimeSeconds = ticket.downtimeSeconds > 0
+      ? ticket.downtimeSeconds
+      : elapsedSeconds(ticket.openedAt, completedAt);
 
     const totalWorkSeconds =
-      ticket.startedAt
+      ticket.totalWorkSeconds > 0
+        ? ticket.totalWorkSeconds
+        : ticket.startedAt
         ? elapsedSeconds(ticket.startedAt, completedAt)
         : ticket.totalWorkSeconds;
     const assignedHourlyRate = Number(ticket.assignedTo?.hourlyRate ?? user.hourlyRate ?? 0);
@@ -1380,8 +1433,8 @@ export async function validateMaintenanceTicket(formData: FormData) {
   const ticketCostNotes = [
     `Problema: ${ticket.problem}`,
     ticket.observations ? `Observacoes: ${ticket.observations}` : null,
-    `Tempo de trabalho: ${Math.round(ticket.totalWorkSeconds / 60)} min`,
-    `Tempo de paragem: ${Math.round(ticket.downtimeSeconds / 60)} min`,
+    `Tempo de paragem da maquina: ${durationNote(ticket.downtimeSeconds)}`,
+    `Tempo de trabalho da manutencao: ${durationNote(ticket.totalWorkSeconds)}`,
     `Mao de obra: ${Number(ticket.laborCost).toFixed(2)} EUR`,
     `Consumiveis: ${Number(ticket.consumableCost).toFixed(2)} EUR`,
     `Custo total: ${Number(ticket.totalCost).toFixed(2)} EUR`,
@@ -1745,6 +1798,7 @@ export async function importConsumablesCsv(formData: FormData) {
         currentStock: row.stock_atual || "0",
         minimumStock: row.stock_minimo || "0",
         unitCost: (row.custo_unitario || row.unit_cost || "0").replace(",", "."),
+        folderUrl: row.link_pasta || row.pasta || null,
         location: row.localizacao || null,
         supplier: row.fornecedor || null,
         notes: row.notas || null,

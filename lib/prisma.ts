@@ -11,8 +11,13 @@ export function getPrisma() {
   }
 
   if (!globalForPrisma.prisma) {
+    const requiresSsl =
+      process.env.DATABASE_URL.includes("sslmode=require") ||
+      process.env.DATABASE_URL.includes("sslmode=verify-full") ||
+      process.env.DATABASE_URL.includes("neon.tech");
     const adapter = new PrismaPg({
       connectionString: process.env.DATABASE_URL,
+      ...(requiresSsl ? { ssl: { rejectUnauthorized: false } } : {}),
     });
 
     globalForPrisma.prisma = new PrismaClient({ adapter });

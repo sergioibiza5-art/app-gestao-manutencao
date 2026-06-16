@@ -94,7 +94,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
                     <dt className="text-xs text-zinc-500">{label}</dt>
-                    <dd className="mt-1 text-sm font-medium text-zinc-100">{value}</dd>
+                    <dd className="mt-1 whitespace-pre-line text-sm font-medium text-zinc-100">{value}</dd>
                   </div>
                 ))}
               </dl>

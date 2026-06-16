@@ -613,6 +613,7 @@ model Consumable {
   currentStock Decimal @default(0) @db.Decimal(10, 2)
   minimumStock Decimal @default(0) @db.Decimal(10, 2)
   unitCost     Decimal @default(0) @db.Decimal(10, 2)
+  folderUrl    String?
   location     String?
   supplier     String?
   notes        String?

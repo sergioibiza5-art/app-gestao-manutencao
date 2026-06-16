@@ -33,19 +33,28 @@ function hours(value: number) {
   return new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 1 }).format(Number.isFinite(value) ? value : 0);
 }
 
+function duration(seconds: number) {
+  const safeSeconds = Math.max(seconds, 0);
+  const h = Math.floor(safeSeconds / 3600);
+  const m = Math.floor((safeSeconds % 3600) / 60);
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
 function workTime(ticket: { totalWorkSeconds: number; startedAt: Date | null; completedAt?: Date | null; status: string }) {
   if (ticket.totalWorkSeconds > 0) {
-    const h = Math.floor(ticket.totalWorkSeconds / 3600);
-    const m = Math.floor((ticket.totalWorkSeconds % 3600) / 60);
-    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    return duration(ticket.totalWorkSeconds);
   }
   const activeSeconds =
     ticket.startedAt
       ? Math.max(Math.floor(((ticket.completedAt ?? new Date()).getTime() - ticket.startedAt.getTime()) / 1000), 0)
       : 0;
-  const h = Math.floor(activeSeconds / 3600);
-  const m = Math.floor((activeSeconds % 3600) / 60);
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  return duration(activeSeconds);
+}
+
+function downtime(ticket: { downtimeSeconds: number; openedAt: Date; completedAt?: Date | null; status: string }) {
+  if (ticket.downtimeSeconds > 0) return duration(ticket.downtimeSeconds);
+  const end = ticket.completedAt ?? new Date();
+  return duration(Math.floor((end.getTime() - ticket.openedAt.getTime()) / 1000));
 }
 
 function TicketCreateForm({ equipment, compact = false }: { equipment: Array<{ id: string; name: string; code: string | null; location: string | null }>; compact?: boolean }) {
@@ -59,6 +68,11 @@ function TicketCreateForm({ equipment, compact = false }: { equipment: Array<{ i
           </option>
         ))}
       </select>
+      {equipment.length === 0 ? (
+        <p className="rounded-lg border border-amber-300/25 bg-amber-300/10 p-3 text-sm text-amber-100">
+          Este utilizador ainda nao tem equipamentos permitidos. Vai a Acessos e associa as maquinas ao utilizador de ticket.
+        </p>
+      ) : null}
       <input name="title" className={inputClass} placeholder="Titulo curto do problema" />
       <select name="priority" className={inputClass} defaultValue="NORMAL">
         <option value="LOW">Baixa</option>
@@ -211,7 +225,8 @@ export default async function TicketsPage() {
                     </div>
                     <div className="grid gap-1 text-sm text-zinc-500 xl:text-right">
                       <span>Aberto: {formatDate(ticket.openedAt)}</span>
-                      <span>Tempo: {workTime(ticket)}</span>
+                      <span>Paragem: {downtime(ticket)}</span>
+                      <span>Trabalho: {workTime(ticket)}</span>
                       <span>Custo: {formatCurrency(ticket.totalCost)}</span>
                       {ticket.workOrder && <span className="font-semibold text-teal-300">{ticket.workOrder.number}</span>}
                       <span className="text-xs text-teal-300 group-open:hidden">Abrir ticket</span>
@@ -220,6 +235,15 @@ export default async function TicketsPage() {
                   <div className="mt-4 border-t border-zinc-800 pt-4">
                     <p className="text-sm leading-6 text-zinc-400">{ticket.problem}</p>
                     <p className="mt-2 text-sm text-zinc-500">Por: {ticket.openedBy?.name ?? "Sistema"}</p>
+                    {ticket.workOrder ? (
+                      <div className="mt-3 rounded-lg border border-teal-300/25 bg-teal-300/10 p-3">
+                        <p className="text-sm font-semibold text-teal-100">OP {ticket.workOrder.number}</p>
+                        <p className="mt-1 text-sm text-zinc-300">{ticket.workOrder.title}</p>
+                        {ticket.workOrder.notes ? (
+                          <p className="mt-2 whitespace-pre-line text-xs leading-5 text-zinc-400">{ticket.workOrder.notes}</p>
+                        ) : null}
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -250,6 +274,8 @@ export default async function TicketsPage() {
                       <textarea name="observations" className={textareaClass} defaultValue={ticket.observations ?? ""} placeholder="Observacoes internas da OP" />
                       <TicketConsumables consumables={data.consumables} initialUsages={ticket.consumables} />
                       <div className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm text-zinc-400 md:grid-cols-3">
+                        <p>Paragem: <strong className="text-amber-100">{downtime(ticket)}</strong></p>
+                        <p>Trabalho: <strong className="text-zinc-100">{workTime(ticket)}</strong></p>
                         <p>Mao de obra: <strong className="text-zinc-100">{formatCurrency(ticket.laborCost)}</strong></p>
                         <p>Consumiveis: <strong className="text-zinc-100">{formatCurrency(ticket.consumableCost)}</strong></p>
                         <p>Total OP: <strong className="text-amber-200">{formatCurrency(ticket.totalCost)}</strong></p>
