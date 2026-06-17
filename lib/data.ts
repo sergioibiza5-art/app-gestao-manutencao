@@ -296,7 +296,15 @@ export async function getConsumableDetail(id: string) {
         where: { id },
         include: {
           equipment: true,
-          movements: { orderBy: { date: "desc" }, take: 80 },
+          movements: {
+            orderBy: { date: "desc" },
+            take: 80,
+            include: {
+              user: true,
+              ticket: { include: { equipment: true, workOrder: true } },
+              workOrder: true,
+            },
+          },
           ticketUsages: {
             orderBy: { createdAt: "desc" },
             take: 50,
@@ -719,6 +727,9 @@ export async function getTicketsData(user?: { id: string; role: string }) {
             equipment: true,
             openedBy: true,
             assignedTo: true,
+            startedBy: true,
+            completedBy: true,
+            validatedBy: true,
             workOrder: true,
             consumables: { include: { consumable: true } },
           },

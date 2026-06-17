@@ -134,6 +134,15 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
                         <div>
                           <p className="text-sm font-semibold text-zinc-100">{movement.type}</p>
                           <p className="mt-1 text-xs text-zinc-500">{movement.reason ?? "Sem motivo"}</p>
+                          <p className="mt-1 text-xs text-zinc-500">Por: {movement.user?.name ?? "Sem utilizador"}</p>
+                          {movement.ticket ? (
+                            <p className="mt-1 text-xs text-teal-300">
+                              {movement.ticket.number}
+                              {movement.ticket.workOrder ? ` · ${movement.ticket.workOrder.number}` : ""}
+                            </p>
+                          ) : movement.workOrder ? (
+                            <p className="mt-1 text-xs text-teal-300">{movement.workOrder.number}</p>
+                          ) : null}
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-semibold text-lime-200">{String(movement.quantity)} {item.unit}</p>

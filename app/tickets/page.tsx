@@ -22,66 +22,127 @@ function statusLabel(status: string) {
     OPEN: "Aberto",
     IN_PROGRESS: "Em curso",
     PAUSED: "Pausado",
-    DONE: "Concluido",
+    DONE: "Concluído",
     VALIDATED: "Validado",
     CANCELED: "Cancelado",
   };
+
   return labels[status] ?? status;
 }
 
+function ticketStatusClass(status: string) {
+  const classes: Record<string, string> = {
+    OPEN: "border-orange-300/45 bg-orange-300/10",
+    IN_PROGRESS: "border-yellow-300/45 bg-yellow-300/10",
+    PAUSED: "border-amber-300/45 bg-amber-300/10",
+    DONE: "border-blue-300/45 bg-blue-300/10",
+    VALIDATED: "border-green-300/45 bg-green-300/10",
+    CANCELED: "border-red-300/45 bg-red-300/10",
+  };
+
+  return classes[status] ?? "border-zinc-800 bg-zinc-950/65";
+}
+
+function ticketStatusTextClass(status: string) {
+  const classes: Record<string, string> = {
+    OPEN: "text-orange-300",
+    IN_PROGRESS: "text-yellow-300",
+    PAUSED: "text-amber-300",
+    DONE: "text-blue-300",
+    VALIDATED: "text-green-300",
+    CANCELED: "text-red-300",
+  };
+
+  return classes[status] ?? "text-zinc-500";
+}
+
 function hours(value: number) {
-  return new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 1 }).format(Number.isFinite(value) ? value : 0);
+  return new Intl.NumberFormat("pt-PT", {
+    maximumFractionDigits: 1,
+  }).format(Number.isFinite(value) ? value : 0);
 }
 
 function duration(seconds: number) {
-  const safeSeconds = Math.max(seconds, 0);
+  const safeSeconds = Math.max(Math.floor(seconds), 0);
   const h = Math.floor(safeSeconds / 3600);
   const m = Math.floor((safeSeconds % 3600) / 60);
+
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
-function workTime(ticket: { totalWorkSeconds: number; startedAt: Date | null; completedAt?: Date | null; status: string }) {
+function workTime(ticket: {
+  totalWorkSeconds: number;
+  startedAt: Date | null;
+  completedAt?: Date | null;
+}) {
   if (ticket.totalWorkSeconds > 0) {
     return duration(ticket.totalWorkSeconds);
   }
-  const activeSeconds =
-    ticket.startedAt
-      ? Math.max(Math.floor(((ticket.completedAt ?? new Date()).getTime() - ticket.startedAt.getTime()) / 1000), 0)
-      : 0;
+
+  const activeSeconds = ticket.startedAt
+    ? Math.max(Math.floor(((ticket.completedAt ?? new Date()).getTime() - ticket.startedAt.getTime()) / 1000), 0)
+    : 0;
+
   return duration(activeSeconds);
 }
 
-function downtime(ticket: { downtimeSeconds: number; openedAt: Date; completedAt?: Date | null; status: string }) {
-  if (ticket.downtimeSeconds > 0) return duration(ticket.downtimeSeconds);
+function downtime(ticket: {
+  downtimeSeconds: number;
+  openedAt: Date;
+  completedAt?: Date | null;
+}) {
+  if (ticket.downtimeSeconds > 0) {
+    return duration(ticket.downtimeSeconds);
+  }
+
   const end = ticket.completedAt ?? new Date();
+
   return duration(Math.floor((end.getTime() - ticket.openedAt.getTime()) / 1000));
 }
 
-function TicketCreateForm({ equipment, compact = false }: { equipment: Array<{ id: string; name: string; code: string | null; location: string | null }>; compact?: boolean }) {
+function TicketCreateForm({
+  equipment,
+  compact = false,
+}: {
+  equipment: Array<{
+    id: string;
+    name: string;
+    code: string | null;
+    location: string | null;
+  }>;
+  compact?: boolean;
+}) {
   return (
     <form action={createMaintenanceTicket} className={compact ? "grid gap-3" : "mt-4 grid gap-3"}>
       <select name="equipmentId" required className={inputClass}>
-        <option value="">Selecionar maquina/equipamento</option>
+        <option value="">Selecionar máquina/equipamento</option>
         {equipment.map((item) => (
           <option key={item.id} value={item.id}>
-            {item.name}{item.code ? ` - ${item.code}` : ""}
+            {item.name}
+            {item.code ? ` - ${item.code}` : ""}
           </option>
         ))}
       </select>
+
       {equipment.length === 0 ? (
         <p className="rounded-lg border border-amber-300/25 bg-amber-300/10 p-3 text-sm text-amber-100">
-          Este utilizador ainda nao tem equipamentos permitidos. Vai a Acessos e associa as maquinas ao utilizador de ticket.
+          Este utilizador ainda não tem equipamentos permitidos. Vai a Acessos e associa as máquinas ao utilizador de ticket.
         </p>
       ) : null}
-      <input name="title" className={inputClass} placeholder="Titulo curto do problema" />
+
+      <input name="title" className={inputClass} placeholder="Título curto do problema" />
+
       <select name="priority" className={inputClass} defaultValue="NORMAL">
         <option value="LOW">Baixa</option>
         <option value="NORMAL">Normal</option>
         <option value="HIGH">Alta</option>
-        <option value="CRITICAL">Critica</option>
+        <option value="CRITICAL">Crítica</option>
       </select>
+
       <input name="location" className={inputClass} placeholder="Nome do operador" />
-      <textarea name="problem" required className={textareaClass} placeholder="Descreve o problema da maquina" />
+
+      <textarea name="problem" required className={textareaClass} placeholder="Descreve o problema da máquina" />
+
       <button className={buttonClass}>
         <Siren size={17} />
         Criar ticket
@@ -104,12 +165,14 @@ export default async function TicketsPage() {
               <Siren size={24} className="text-red-300" />
               <div>
                 <p className="text-sm text-zinc-500">Posto de trabalho</p>
-                <h1 className="text-2xl font-semibold text-zinc-50">Chamar manutencao</h1>
+                <h1 className="text-2xl font-semibold text-zinc-50">Chamar manutenção</h1>
               </div>
             </div>
+
             <p className="mt-3 text-sm leading-6 text-zinc-400">
-              Seleciona a maquina e descreve o problema. A manutencao recebe o ticket para iniciar a reparacao.
+              Seleciona a máquina, coloca o nome do operador e descreve o problema. A manutenção recebe o ticket para iniciar a reparação.
             </p>
+
             <TicketCreateForm equipment={data.equipment} />
           </Panel>
         </section>
@@ -121,15 +184,15 @@ export default async function TicketsPage() {
     <AppShell activeHref="/tickets">
       <PageHeader
         eyebrow="Tickets"
-        title="Avarias e chamados de manutencao"
-        description="Regista avarias por posto, acompanha tempos de reparacao, consumiveis usados, solucoes e OP geradas."
+        title="Avarias e chamados de manutenção"
+        description="Regista avarias por posto, acompanha tempos de reparação, consumíveis usados, soluções e OP geradas."
       />
 
       <section className="grid gap-4 md:grid-cols-4">
         {[
-          ["Abertos", data.kpis.open, "text-red-300"],
-          ["Em curso/pausados", data.kpis.inProgress, "text-cyan-300"],
-          ["Por validar", data.kpis.waitingValidation, "text-amber-300"],
+          ["Abertos", data.kpis.open, "text-orange-300"],
+          ["Em curso/pausados", data.kpis.inProgress, "text-yellow-300"],
+          ["Por validar", data.kpis.waitingValidation, "text-blue-300"],
           ["MTTR horas", hours(data.kpis.averageRepairHours), "text-teal-300"],
         ].map(([label, value, tone]) => (
           <Panel key={label}>
@@ -145,18 +208,23 @@ export default async function TicketsPage() {
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Bell size={21} className="text-amber-300" />
-                <h2 className="text-xl font-semibold text-zinc-50">Notificacoes</h2>
+                <h2 className="text-xl font-semibold text-zinc-50">Notificações</h2>
               </div>
               <span className="rounded-full border border-amber-300/30 px-2 py-1 text-xs font-semibold text-amber-200">
                 {data.unreadNotifications} novas
               </span>
             </div>
+
             <div className="mt-4 space-y-2">
               {data.notifications.length === 0 ? (
-                <EmptyState title="Sem notificacoes" description="Quando entrar um ticket, aparece aqui." />
+                <EmptyState title="Sem notificações" description="Quando entrar um ticket, aparece aqui." />
               ) : (
                 data.notifications.map((notification) => (
-                  <Link key={notification.id} href="/tickets" className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-3 transition hover:border-amber-300/40">
+                  <Link
+                    key={notification.id}
+                    href="/tickets"
+                    className="block rounded-lg border border-zinc-800 bg-zinc-950/65 p-3 transition hover:border-amber-300/40"
+                  >
                     <p className="text-sm font-semibold text-zinc-100">{notification.title}</p>
                     <p className="mt-1 text-xs text-zinc-500">{notification.body ?? "Sem detalhe"}</p>
                   </Link>
@@ -170,14 +238,16 @@ export default async function TicketsPage() {
               <Siren size={22} className="text-red-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
             </div>
+
             <TicketCreateForm equipment={data.equipment} />
           </Panel>
 
           <Panel>
             <h2 className="text-xl font-semibold text-zinc-50">Problemas recorrentes</h2>
+
             <div className="mt-4 space-y-2">
               {data.kpis.repeatedProblems.length === 0 ? (
-                <EmptyState title="Sem dados" description="Ainda nao existem tickets suficientes." />
+                <EmptyState title="Sem dados" description="Ainda não existem tickets suficientes." />
               ) : (
                 data.kpis.repeatedProblems.map((item) => (
                   <div key={item.name} className="flex justify-between rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm">
@@ -191,6 +261,7 @@ export default async function TicketsPage() {
 
           <Panel>
             <h2 className="text-xl font-semibold text-zinc-50">Equipamentos com mais tickets</h2>
+
             <div className="mt-4 space-y-2">
               {data.kpis.byEquipment.length === 0 ? (
                 <EmptyState title="Sem dados" description="A contagem aparece quando existirem tickets." />
@@ -209,32 +280,56 @@ export default async function TicketsPage() {
         <Panel>
           <div className="flex items-center gap-3">
             <Wrench size={22} className="text-cyan-300" />
-            <h2 className="text-xl font-semibold text-zinc-50">Fila de manutencao</h2>
+            <h2 className="text-xl font-semibold text-zinc-50">Fila de manutenção</h2>
           </div>
+
           <div className="mt-4 space-y-3">
             {data.tickets.length === 0 ? (
-              <EmptyState title="Sem tickets" description="Quando um posto chamar a manutencao, o ticket aparece aqui." />
+              <EmptyState title="Sem tickets" description="Quando um posto chamar a manutenção, o ticket aparece aqui." />
             ) : (
               data.tickets.map((ticket) => (
-                <details key={ticket.id} id={ticket.id} className="group rounded-lg border border-zinc-800 bg-zinc-950/65 p-4 open:border-teal-300/35">
+                <details
+                  key={ticket.id}
+                  id={ticket.id}
+                  className={`group rounded-lg border p-4 transition open:border-teal-300/60 ${ticketStatusClass(ticket.status)}`}
+                >
                   <summary className="flex cursor-pointer list-none flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">{ticket.number} - {statusLabel(ticket.status)}</p>
+                      <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${ticketStatusTextClass(ticket.status)}`}>
+                        {ticket.number} - {statusLabel(ticket.status)}
+                      </p>
+
                       <h3 className="mt-1 truncate text-lg font-semibold text-zinc-100">{ticket.title}</h3>
-                      <p className="mt-1 truncate text-sm text-zinc-500">{ticket.equipment.name} - {ticket.location ?? ticket.equipment.location ?? "sem local"}</p>
+
+                      <p className="mt-1 truncate text-sm text-zinc-500">
+                        {ticket.equipment.name} - {ticket.location ?? ticket.equipment.location ?? "sem operador/local"}
+                      </p>
                     </div>
+
                     <div className="grid gap-1 text-sm text-zinc-500 xl:text-right">
                       <span>Aberto: {formatDate(ticket.openedAt)}</span>
                       <span>Paragem: {downtime(ticket)}</span>
                       <span>Trabalho: {workTime(ticket)}</span>
                       <span>Custo: {formatCurrency(ticket.totalCost)}</span>
-                      {ticket.workOrder && <span className="font-semibold text-teal-300">{ticket.workOrder.number}</span>}
+                      {ticket.workOrder ? <span className="font-semibold text-teal-300">{ticket.workOrder.number}</span> : null}
                       <span className="text-xs text-teal-300 group-open:hidden">Abrir ticket</span>
                     </div>
                   </summary>
+
                   <div className="mt-4 border-t border-zinc-800 pt-4">
                     <p className="text-sm leading-6 text-zinc-400">{ticket.problem}</p>
-                    <p className="mt-2 text-sm text-zinc-500">Por: {ticket.openedBy?.name ?? "Sistema"}</p>
+
+                    <div className="mt-3 grid gap-2 rounded-lg border border-zinc-800 bg-black/20 p-3 text-xs text-zinc-400 md:grid-cols-2">
+                      <p>
+                        Aberto por:{" "}
+                        <strong className="text-zinc-100">{ticket.openedBy?.name ?? "Sistema"}</strong>
+                      </p>
+                      <p>
+                        Responsável:{" "}
+                        <strong className="text-zinc-100">{ticket.assignedTo?.name ?? "Sem registo"}</strong>
+                      </p>
+                    </div>
+
                     {ticket.workOrder ? (
                       <div className="mt-3 rounded-lg border border-teal-300/25 bg-teal-300/10 p-3">
                         <p className="text-sm font-semibold text-teal-100">OP {ticket.workOrder.number}</p>
@@ -256,6 +351,7 @@ export default async function TicketsPage() {
                         </button>
                       </form>
                     )}
+
                     {ticket.status === "IN_PROGRESS" && (
                       <form action={pauseMaintenanceTicket}>
                         <input type="hidden" name="id" value={ticket.id} />
@@ -270,29 +366,54 @@ export default async function TicketsPage() {
                   {(ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED" || ticket.status === "DONE") && (
                     <form action={completeMaintenanceTicket} className="mt-4 grid gap-3">
                       <input type="hidden" name="id" value={ticket.id} />
-                      <textarea name="solution" className={textareaClass} defaultValue={ticket.solution ?? ""} placeholder="Solucao aplicada / descricao do trabalho" />
-                      <textarea name="observations" className={textareaClass} defaultValue={ticket.observations ?? ""} placeholder="Observacoes internas da OP" />
+
+                      <textarea
+                        name="solution"
+                        className={textareaClass}
+                        defaultValue={ticket.solution ?? ""}
+                        placeholder="Solução aplicada / descrição do trabalho"
+                      />
+
+                      <textarea
+                        name="observations"
+                        className={textareaClass}
+                        defaultValue={ticket.observations ?? ""}
+                        placeholder="Observações internas da OP"
+                      />
+
                       <TicketConsumables consumables={data.consumables} initialUsages={ticket.consumables} />
+
                       <div className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm text-zinc-400 md:grid-cols-3">
-                        <p>Paragem: <strong className="text-amber-100">{downtime(ticket)}</strong></p>
-                        <p>Trabalho: <strong className="text-zinc-100">{workTime(ticket)}</strong></p>
-                        <p>Mao de obra: <strong className="text-zinc-100">{formatCurrency(ticket.laborCost)}</strong></p>
-                        <p>Consumiveis: <strong className="text-zinc-100">{formatCurrency(ticket.consumableCost)}</strong></p>
-                        <p>Total OP: <strong className="text-amber-200">{formatCurrency(ticket.totalCost)}</strong></p>
+                        <p>
+                          Paragem: <strong className="text-amber-100">{downtime(ticket)}</strong>
+                        </p>
+                        <p>
+                          Trabalho: <strong className="text-zinc-100">{workTime(ticket)}</strong>
+                        </p>
+                        <p>
+                          Mão de obra: <strong className="text-zinc-100">{formatCurrency(ticket.laborCost)}</strong>
+                        </p>
+                        <p>
+                          Consumíveis: <strong className="text-zinc-100">{formatCurrency(ticket.consumableCost)}</strong>
+                        </p>
+                        <p>
+                          Total OP: <strong className="text-amber-200">{formatCurrency(ticket.totalCost)}</strong>
+                        </p>
                       </div>
+
                       <button className={`${buttonClass} w-fit`}>
                         <CheckCircle2 size={17} />
                         Guardar / concluir trabalho
                       </button>
-                    </form>
-                  )}
 
-                  {ticket.status === "DONE" && (
-                    <form action={validateMaintenanceTicket} className="mt-3">
-                      <input type="hidden" name="id" value={ticket.id} />
-                      <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
-                        Validar e criar OP
-                      </button>
+                      {ticket.status === "DONE" ? (
+                        <button
+                          formAction={validateMaintenanceTicket}
+                          className="inline-flex h-11 w-fit items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200"
+                        >
+                          Validar e criar OP
+                        </button>
+                      ) : null}
                     </form>
                   )}
                 </details>

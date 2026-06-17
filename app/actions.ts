@@ -32,8 +32,10 @@ function loginName(formData: FormData) {
 }
 
 function decimal(formData: FormData, key: string) {
-  const rawValue = text(formData, key);
+  return decimalString(text(formData, key));
+}
 
+function decimalString(rawValue: string) {
   if (!rawValue) {
     return "0";
   }
@@ -50,6 +52,10 @@ function decimal(formData: FormData, key: string) {
   const parsed = Number(`${negative ? "-" : ""}${normalized}`);
 
   return Number.isFinite(parsed) ? parsed.toFixed(2) : "0";
+}
+
+function decimalNumber(rawValue: string) {
+  return Number(decimalString(rawValue));
 }
 
 function intValue(formData: FormData, key: string) {
@@ -795,16 +801,17 @@ export async function createInternalMaintenanceChecklistRecord(formData: FormDat
 }
 
 export async function createConsumable(formData: FormData) {
-  await requireCanWrite();
+  const user = await requireCanWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
+  const initialStock = decimal(formData, "currentStock") || decimal(formData, "amount");
 
-  await prisma.consumable.create({
+  const consumable = await prisma.consumable.create({
     data: {
       name: text(formData, "title") || text(formData, "name"),
       category: text(formData, "category") || "Consumível",
       unit: text(formData, "unit") || "un",
-      currentStock: decimal(formData, "currentStock") || decimal(formData, "amount"),
+      currentStock: initialStock,
       minimumStock: decimal(formData, "minimumStock"),
       unitCost: decimal(formData, "unitCost"),
       folderUrl: optionalText(formData, "folderUrl"),
@@ -814,6 +821,18 @@ export async function createConsumable(formData: FormData) {
       equipmentId,
     },
   });
+
+  if (Number(initialStock) > 0) {
+    await prisma.consumableMovement.create({
+      data: {
+        consumableId: consumable.id,
+        type: "ENTRADA_INICIAL",
+        quantity: initialStock,
+        reason: "Criação do produto",
+        userId: user.id,
+      },
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/inventario");
@@ -821,12 +840,15 @@ export async function createConsumable(formData: FormData) {
 }
 
 export async function updateConsumable(formData: FormData) {
-  await requireCanWrite();
+  const user = await requireCanWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
 
   if (!id) return;
+
+  const current = await prisma.consumable.findUnique({ where: { id }, select: { currentStock: true } });
+  const newStock = decimal(formData, "currentStock");
 
   await prisma.consumable.update({
     where: { id },
@@ -834,7 +856,7 @@ export async function updateConsumable(formData: FormData) {
       name: text(formData, "name"),
       category: text(formData, "category") || "Consumivel",
       unit: text(formData, "unit") || "un",
-      currentStock: decimal(formData, "currentStock"),
+      currentStock: newStock,
       minimumStock: decimal(formData, "minimumStock"),
       unitCost: decimal(formData, "unitCost"),
       folderUrl: optionalText(formData, "folderUrl"),
@@ -844,6 +866,19 @@ export async function updateConsumable(formData: FormData) {
       equipmentId,
     },
   });
+
+  const delta = Number(newStock) - Number(current?.currentStock ?? 0);
+  if (delta !== 0) {
+    await prisma.consumableMovement.create({
+      data: {
+        consumableId: id,
+        type: delta > 0 ? "ENTRADA_MANUAL" : "SAIDA_MANUAL",
+        quantity: Math.abs(delta).toFixed(2),
+        reason: "Ajuste manual de stock",
+        userId: user.id,
+      },
+    });
+  }
 
   revalidatePath("/inventario");
   revalidatePath(`/inventario/consumiveis/${id}`);
@@ -1141,6 +1176,80 @@ async function refreshEquipmentMaintenanceStatus(tx: Prisma.TransactionClient, e
   }
 }
 
+async function syncTicketConsumables(
+  tx: Prisma.TransactionClient,
+  ticket: { id: string; number: string },
+  formData: FormData,
+  userId: string,
+) {
+  const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
+  const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
+  const usageNotes = formData.getAll("usageNotes").filter((value): value is string => typeof value === "string");
+  const hasConsumableFields = consumableIds.some((value) => value.trim().length > 0) || quantities.some((value) => value.trim().length > 0);
+
+  if (!hasConsumableFields) {
+    const existingUsages = await tx.ticketConsumableUsage.findMany({ where: { ticketId: ticket.id } });
+    return existingUsages.reduce((sum, usage) => sum + Number(usage.quantity ?? 0) * Number(usage.unitCost ?? 0), 0);
+  }
+
+  const oldUsages = await tx.ticketConsumableUsage.findMany({ where: { ticketId: ticket.id } });
+  const oldQuantities = oldUsages.reduce<Record<string, number>>((acc, usage) => {
+    acc[usage.consumableId] = (acc[usage.consumableId] ?? 0) + Number(usage.quantity ?? 0);
+    return acc;
+  }, {});
+
+  await tx.ticketConsumableUsage.deleteMany({ where: { ticketId: ticket.id } });
+
+  let consumableCost = 0;
+  const newQuantities: Record<string, number> = {};
+
+  for (let index = 0; index < consumableIds.length; index += 1) {
+    const consumableId = consumableIds[index]?.trim();
+    const quantityNumber = decimalNumber(quantities[index] ?? "");
+    if (!consumableId || quantityNumber <= 0) continue;
+
+    const consumable = await tx.consumable.findUnique({ where: { id: consumableId } });
+    if (!consumable) continue;
+
+    const unitCost = Number(consumable.unitCost ?? 0);
+    newQuantities[consumableId] = (newQuantities[consumableId] ?? 0) + quantityNumber;
+    consumableCost += quantityNumber * unitCost;
+
+    await tx.ticketConsumableUsage.create({
+      data: {
+        ticketId: ticket.id,
+        consumableId,
+        quantity: quantityNumber.toFixed(2),
+        unitCost: unitCost.toFixed(2),
+        notes: usageNotes[index] || null,
+      },
+    });
+  }
+
+  const affectedConsumables = new Set([...Object.keys(oldQuantities), ...Object.keys(newQuantities)]);
+  for (const consumableId of affectedConsumables) {
+    const delta = (newQuantities[consumableId] ?? 0) - (oldQuantities[consumableId] ?? 0);
+    if (delta === 0) continue;
+
+    await tx.consumable.update({
+      where: { id: consumableId },
+      data: { currentStock: { decrement: delta } },
+    });
+    await tx.consumableMovement.create({
+      data: {
+        consumableId,
+        type: delta > 0 ? "SAIDA_TICKET" : "AJUSTE_TICKET",
+        quantity: Math.abs(delta).toFixed(2),
+        reason: `Ticket ${ticket.number}`,
+        ticketId: ticket.id,
+        userId,
+      },
+    });
+  }
+
+  return consumableCost;
+}
+
 function pushConfig() {
   const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
@@ -1350,11 +1459,13 @@ export async function startMaintenanceTicket(formData: FormData) {
         startedAt: ticket.startedAt ?? new Date(),
         pausedAt: null,
         assignedToId: user.id,
+        startedById: ticket.startedById ?? user.id,
       },
     });
     await markTicketNotificationsRead(tx, ticket.number);
   });
   revalidatePath("/tickets");
+  revalidatePath("/inventario");
 }
 
 export async function pauseMaintenanceTicket(formData: FormData) {
@@ -1382,10 +1493,6 @@ export async function completeMaintenanceTicket(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
-  const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
-  const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
-  const usageNotes = formData.getAll("usageNotes").filter((value): value is string => typeof value === "string");
-
   await prisma.$transaction(async (tx) => {
     const ticket = await tx.maintenanceTicket.findUnique({
       where: { id },
@@ -1408,56 +1515,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
     const assignedHourlyRate = Number(ticket.assignedTo?.hourlyRate ?? user.hourlyRate ?? 0);
     const laborCost = (totalWorkSeconds / 3600) * assignedHourlyRate;
 
-    const oldUsages = await tx.ticketConsumableUsage.findMany({ where: { ticketId: id } });
-    const oldQuantities = oldUsages.reduce<Record<string, number>>((acc, usage) => {
-      acc[usage.consumableId] = (acc[usage.consumableId] ?? 0) + Number(usage.quantity ?? 0);
-      return acc;
-    }, {});
-    await tx.ticketConsumableUsage.deleteMany({ where: { ticketId: id } });
-    let consumableCost = 0;
-    const newQuantities: Record<string, number> = {};
-
-    for (let index = 0; index < consumableIds.length; index += 1) {
-      const consumableId = consumableIds[index];
-      const quantity = quantities[index];
-      if (!consumableId || !quantity || Number(quantity) <= 0) continue;
-
-      const consumable = await tx.consumable.findUnique({ where: { id: consumableId } });
-      if (!consumable) continue;
-
-      const unitCost = Number(consumable.unitCost ?? 0);
-      const quantityNumber = Number(quantity);
-      newQuantities[consumableId] = (newQuantities[consumableId] ?? 0) + quantityNumber;
-      consumableCost += quantityNumber * unitCost;
-
-      await tx.ticketConsumableUsage.create({
-        data: {
-          ticketId: id,
-          consumableId,
-          quantity,
-          unitCost: unitCost.toFixed(2),
-          notes: usageNotes[index] || null,
-        },
-      });
-    }
-
-    const affectedConsumables = new Set([...Object.keys(oldQuantities), ...Object.keys(newQuantities)]);
-    for (const consumableId of affectedConsumables) {
-      const delta = (newQuantities[consumableId] ?? 0) - (oldQuantities[consumableId] ?? 0);
-      if (delta === 0) continue;
-      await tx.consumable.update({
-        where: { id: consumableId },
-        data: { currentStock: { decrement: delta } },
-      });
-      await tx.consumableMovement.create({
-        data: {
-          consumableId,
-          type: delta > 0 ? "SAIDA_TICKET" : "AJUSTE_TICKET",
-          quantity: Math.abs(delta).toFixed(2),
-          reason: `Ticket ${ticket.number}`,
-        },
-      });
-    }
+    const consumableCost = await syncTicketConsumables(tx, ticket, formData, user.id);
 
     await tx.maintenanceTicket.update({
       where: { id },
@@ -1471,6 +1529,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
         totalCost: (laborCost + consumableCost).toFixed(2),
         solution: optionalText(formData, "solution"),
         observations: optionalText(formData, "observations"),
+        completedById: user.id,
       },
     });
     await markTicketNotificationsRead(tx, ticket.number);
@@ -1485,9 +1544,52 @@ export async function validateMaintenanceTicket(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
-  const ticket = await prisma.maintenanceTicket.findUnique({
-    where: { id },
-    include: { equipment: true, consumables: { include: { consumable: true } } },
+  const ticket = await prisma.$transaction(async (tx) => {
+    const currentTicket = await tx.maintenanceTicket.findUnique({
+      where: { id },
+      include: { assignedTo: true },
+    });
+    if (!currentTicket) return null;
+
+    const completedAt = currentTicket.completedAt ?? new Date();
+    const downtimeSeconds = currentTicket.downtimeSeconds > 0
+      ? currentTicket.downtimeSeconds
+      : elapsedSeconds(currentTicket.openedAt, completedAt);
+    const totalWorkSeconds =
+      currentTicket.totalWorkSeconds > 0
+        ? currentTicket.totalWorkSeconds
+        : currentTicket.startedAt
+        ? elapsedSeconds(currentTicket.startedAt, completedAt)
+        : 0;
+    const laborCost = (totalWorkSeconds / 3600) * Number(currentTicket.assignedTo?.hourlyRate ?? user.hourlyRate ?? 0);
+    const consumableCost = await syncTicketConsumables(tx, currentTicket, formData, user.id);
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "DONE",
+        completedAt,
+        downtimeSeconds,
+        totalWorkSeconds,
+        laborCost: laborCost.toFixed(2),
+        consumableCost: consumableCost.toFixed(2),
+        totalCost: (laborCost + consumableCost).toFixed(2),
+        solution: optionalText(formData, "solution") ?? currentTicket.solution,
+        observations: optionalText(formData, "observations") ?? currentTicket.observations,
+        completedById: currentTicket.completedById ?? user.id,
+      },
+    });
+
+    return tx.maintenanceTicket.findUnique({
+      where: { id },
+      include: {
+        equipment: true,
+        consumables: { include: { consumable: true } },
+        openedBy: true,
+        startedBy: true,
+        completedBy: true,
+      },
+    });
   });
   if (!ticket) return;
   if (ticket.workOrderId) return;
@@ -1495,6 +1597,10 @@ export async function validateMaintenanceTicket(formData: FormData) {
   const ticketCostNotes = [
     `Problema: ${ticket.problem}`,
     ticket.observations ? `Observacoes: ${ticket.observations}` : null,
+    `Aberto por: ${ticket.openedBy?.name ?? "Sistema"}`,
+    `Iniciado por: ${ticket.startedBy?.name ?? ticket.assignedToId ?? "Sem registo"}`,
+    `Concluido por: ${ticket.completedBy?.name ?? "Sem registo"}`,
+    `Validado por: ${user.name}`,
     `Tempo de paragem da maquina: ${durationNote(ticket.downtimeSeconds)}`,
     `Tempo de trabalho da manutencao: ${durationNote(ticket.totalWorkSeconds)}`,
     `Mao de obra: ${Number(ticket.laborCost).toFixed(2)} EUR`,
@@ -1543,17 +1649,24 @@ export async function validateMaintenanceTicket(formData: FormData) {
     data: { maintenanceLogId: maintenanceLog.id },
   });
 
+  await prisma.consumableMovement.updateMany({
+    where: { ticketId: id, workOrderId: null },
+    data: { workOrderId: workOrder.id },
+  });
+
   await prisma.maintenanceTicket.update({
     where: { id },
     data: {
       status: "VALIDATED",
       validatedAt: new Date(),
+      validatedById: user.id,
       workOrderId: workOrder.id,
     },
   });
 
   revalidatePath("/tickets");
   revalidatePath("/manutencao");
+  revalidatePath("/inventario");
   revalidatePath(`/equipamentos/${ticket.equipmentId}`);
 }
 

@@ -148,9 +148,13 @@ model User {
   sessions              Session[]
   ticketsOpened         MaintenanceTicket[]     @relation("TicketOpenedBy")
   ticketsAssigned       MaintenanceTicket[]     @relation("TicketAssignedTo")
+  ticketsStarted        MaintenanceTicket[]     @relation("TicketStartedBy")
+  ticketsCompleted      MaintenanceTicket[]     @relation("TicketCompletedBy")
+  ticketsValidated      MaintenanceTicket[]     @relation("TicketValidatedBy")
   ticketEquipmentAccess TicketEquipmentAccess[]
   notifications         Notification[]
   pushSubscriptions     PushSubscription[]
+  consumableMovements   ConsumableMovement[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -475,6 +479,7 @@ model WorkOrder {
 
   documents Document[]
   ticket    MaintenanceTicket?
+  consumableMovements ConsumableMovement[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -515,10 +520,20 @@ model MaintenanceTicket {
   assignedToId String?
   assignedTo   User?   @relation("TicketAssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
 
+  startedById String?
+  startedBy   User?   @relation("TicketStartedBy", fields: [startedById], references: [id], onDelete: SetNull)
+
+  completedById String?
+  completedBy   User?   @relation("TicketCompletedBy", fields: [completedById], references: [id], onDelete: SetNull)
+
+  validatedById String?
+  validatedBy   User?   @relation("TicketValidatedBy", fields: [validatedById], references: [id], onDelete: SetNull)
+
   workOrderId String?    @unique
   workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id], onDelete: SetNull)
 
   consumables TicketConsumableUsage[]
+  consumableMovements ConsumableMovement[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -650,7 +665,20 @@ model ConsumableMovement {
   consumableId String
   consumable   Consumable @relation(fields: [consumableId], references: [id], onDelete: Cascade)
 
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  ticketId String?
+  ticket   MaintenanceTicket? @relation(fields: [ticketId], references: [id], onDelete: SetNull)
+
+  workOrderId String?
+  workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id], onDelete: SetNull)
+
   createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([ticketId])
+  @@index([workOrderId])
 }
 
 model Expense {
