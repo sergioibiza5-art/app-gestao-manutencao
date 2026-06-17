@@ -2088,12 +2088,19 @@ export async function updateUser(formData: FormData) {
 
   if (!id) return;
 
+  const currentUser = await prisma.user.findUnique({
+  where: { id },
+  select: { username: true },
+  });
+
+const finalUsername = username || currentUser?.username || null;
+
   await prisma.$transaction(async (tx) => {
     await tx.user.update({
       where: { id },
       data: {
         name: text(formData, "name"),
-        username,
+        username: finalUsername,
         email,
         ...(password ? { password: hashPassword(password) } : {}),
         ...(role === "TICKET" ? { pin: null } : {}),
