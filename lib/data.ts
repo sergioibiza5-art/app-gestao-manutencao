@@ -98,7 +98,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
             ],
           },
           orderBy: { scheduledAt: "asc" },
-          include: { equipment: true },
+          include: { equipment: true, workOrder: true },
         }),
         prisma.vehicle.findMany({
           orderBy: [{ brand: "asc" }, { model: "asc" }],
@@ -139,6 +139,42 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       fleetDueLimit.setDate(fleetDueLimit.getDate() + 30);
       const fleetDueSoon = fleetAlerts.filter((item) => item.dueDate <= fleetDueLimit || (item.kmRemaining !== null && item.kmRemaining <= 1000)).length;
 
+      const operationalAlerts = [
+  ...tasks
+    .filter((task) => {
+      const due = task.dueDate ?? task.nextDue;
+      return due && due <= now;
+    })
+    .map((task) => ({
+      id: `task-${task.id}`,
+      type: "TASK",
+      title: task.title,
+      detail: task.equipment?.name ?? "Tarefa sem equipamento",
+      status: task.status,
+      date: task.dueDate ?? task.nextDue,
+      href: `/tarefas?taskId=${task.id}`,
+      tone: "teal",
+    })),
+
+  ...calendar
+    .filter((schedule) => {
+      const isLate = schedule.scheduledAt < todayStart && schedule.status === "SCHEDULED";
+      const hasOpenOp =
+        schedule.workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(schedule.workOrder.status);
+      return isLate || hasOpenOp || !schedule.workOrder;
+    })
+    .map((schedule) => ({
+      id: `schedule-${schedule.id}`,
+      type: "MAINTENANCE",
+      title: schedule.title,
+      detail: schedule.equipment.name,
+      status: schedule.workOrder?.status ?? "NO_OP",
+      date: schedule.scheduledAt,
+      href: `/manutencao?eventId=${schedule.id}`,
+      tone: schedule.scheduledAt < todayStart ? "rose" : "amber",
+    })),
+].slice(0, 8);
+
       return {
         kpis: {
           tasksToday,
@@ -152,6 +188,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         calendar,
         fleetAlerts,
         ticketAlerts,
+        operationalAlerts,
         range,
       };
     },
@@ -168,6 +205,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       calendar: [],
       fleetAlerts: [],
       ticketAlerts: [],
+      operationalAlerts: [],
       range: dashboardRange(),
     },
   );
