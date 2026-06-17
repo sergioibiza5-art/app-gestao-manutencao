@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { AlertTriangle, CalendarDays, Car, ClipboardCheck, DollarSign, Filter, Wrench } from "lucide-react";
+import {
+  AlertTriangle,
+  CalendarDays,
+  Car,
+  ClipboardCheck,
+  DollarSign,
+  Filter,
+  Wrench,
+} from "lucide-react";
 
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, Panel } from "@/app/components/ui";
@@ -55,7 +63,32 @@ const taskFrequencyLabels: Record<string, string> = {
   FOUR_MONTHLY: "Quadrimestral",
   SEMIANNUAL: "Semestral",
   ANNUAL: "Anual",
+  BIENNIAL: "2 em 2 anos",
+  FIVE_YEAR: "5 em 5 anos",
 };
+
+const alertStatusLabels: Record<string, string> = {
+  PENDING: "Tarefa pendente",
+  IN_PROGRESS: "Tarefa em curso",
+  OPEN: "OP criada",
+  PAUSED: "OP pausada",
+  DONE: "OP concluída",
+  VALIDATED: "OP validada",
+  CANCELED: "Cancelada",
+  NO_OP: "Sem OP criada",
+};
+
+function alertToneClass(tone: string) {
+  if (tone === "rose") {
+    return "border-rose-300/35 bg-rose-300/10 text-rose-100";
+  }
+
+  if (tone === "amber") {
+    return "border-amber-300/35 bg-amber-300/10 text-amber-100";
+  }
+
+  return "border-teal-300/35 bg-teal-300/10 text-teal-100";
+}
 
 type DashboardPageProps = {
   searchParams?: Promise<{ view?: string; date?: string }>;
@@ -172,6 +205,54 @@ export default async function Page({ searchParams }: DashboardPageProps) {
           </div>
         </div>
       </section>
+
+      {dashboard.operationalAlerts.length > 0 ? (
+        <section className="rounded-lg border border-rose-300/25 bg-rose-300/5 p-4">
+          <div className="mb-4 flex items-start gap-3">
+            <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-rose-300/35 bg-rose-300/10 text-rose-200">
+              <AlertTriangle size={22} />
+            </span>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-200">
+                Alertas operacionais
+              </p>
+              <h2 className="mt-1 text-xl font-semibold text-zinc-50">
+                Tarefas e manutenções a precisar de atenção
+              </h2>
+              <p className="mt-1 text-sm text-zinc-400">
+                Mostra tarefas vencidas, manutenções fora da data e OP criadas ou iniciadas.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {dashboard.operationalAlerts.map((alert) => (
+              <Link
+                key={alert.id}
+                href={alert.href}
+                className={`block rounded-lg border p-4 transition hover:border-rose-200/50 ${alertToneClass(alert.tone)}`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] opacity-80">
+                      {alert.type === "TASK" ? "Tarefa" : "Manutenção"}
+                    </p>
+                    <h3 className="mt-2 line-clamp-2 font-semibold text-zinc-50">{alert.title}</h3>
+                    <p className="mt-2 truncate text-sm text-zinc-400">{alert.detail}</p>
+                  </div>
+                  <span className="shrink-0 rounded-md bg-black/25 px-2 py-1 text-xs text-zinc-200">
+                    {formatShortDate(alert.date)}
+                  </span>
+                </div>
+
+                <p className="mt-3 inline-flex rounded-md border border-white/10 bg-black/20 px-2 py-1 text-xs font-semibold text-zinc-100">
+                  {alertStatusLabels[alert.status] ?? alert.status}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {dashboard.ticketAlerts.length > 0 ? (
         <section className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-4">
