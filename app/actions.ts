@@ -100,7 +100,30 @@ async function uploadedText(formData: FormData, key: string) {
 }
 
 const expenseStatuses = ["PENDING", "PAID", "CANCELED"] as const satisfies readonly ExpenseStatus[];
-const taskFrequencies = ["DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "FOUR_MONTHLY", "SEMIANNUAL", "ANNUAL"] as const satisfies readonly TaskFrequency[];
+
+const taskFrequencies = [
+  "DAILY",
+  "WEEKLY",
+  "MONTHLY",
+  "QUARTERLY",
+  "FOUR_MONTHLY",
+  "SEMIANNUAL",
+  "ANNUAL",
+  "BIENNIAL",
+  "FIVE_YEAR",
+] as const satisfies readonly TaskFrequency[];
+
+const monthIntervals: Record<TaskFrequency, number> = {
+  DAILY: 0,
+  WEEKLY: 0,
+  MONTHLY: 1,
+  QUARTERLY: 3,
+  FOUR_MONTHLY: 4,
+  SEMIANNUAL: 6,
+  ANNUAL: 12,
+  BIENNIAL: 24,
+  FIVE_YEAR: 60,
+};
 const taskStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"] as const satisfies readonly TaskStatus[];
 const equipmentStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE", "DISCARDED"] as const satisfies readonly EquipmentStatus[];
 const documentTypes = ["INVOICE", "WARRANTY", "MANUAL", "CERTIFICATE", "CONTRACT", "OTHER"] as const satisfies readonly DocumentType[];
@@ -1002,14 +1025,16 @@ function generateMaintenanceDates(year: number, startDate: Date, frequency: Task
   }
 
   const monthIntervals: Record<TaskFrequency, number> = {
-    DAILY: 0,
-    WEEKLY: 0,
-    MONTHLY: 1,
-    QUARTERLY: 3,
-    FOUR_MONTHLY: 4,
-    SEMIANNUAL: 6,
-    ANNUAL: 12,
-  };
+  DAILY: 0,
+  WEEKLY: 0,
+  MONTHLY: 1,
+  QUARTERLY: 3,
+  FOUR_MONTHLY: 4,
+  SEMIANNUAL: 6,
+  ANNUAL: 12,
+  BIENNIAL: 24,
+  FIVE_YEAR: 60,
+};
 
   const interval = monthIntervals[frequency] || 1;
   while (cursor <= yearEnd) {

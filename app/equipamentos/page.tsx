@@ -50,6 +50,8 @@ function FrequencySelect({ name }: { name: string }) {
       <option value="FOUR_MONTHLY">Quadrimestral</option>
       <option value="SEMIANNUAL">Semestral</option>
       <option value="ANNUAL">Anual</option>
+      <option value="BIENNIAL">Bienal (2 anos)</option>
+      <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
       <option value="WEEKLY">Semanal</option>
       <option value="DAILY">Diária</option>
     </select>

@@ -38,6 +38,8 @@ enum TaskFrequency {
   FOUR_MONTHLY
   SEMIANNUAL
   ANNUAL
+  BIENNIAL
+  FIVE_YEAR
 }
 
 enum TaskStatus {

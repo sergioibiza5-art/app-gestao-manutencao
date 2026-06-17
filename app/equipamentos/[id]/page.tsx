@@ -46,15 +46,17 @@ function typeLabel(type: string) {
 }
 
 function frequencyLabel(frequency: string) {
-  const labels: Record<string, string> = {
-    DAILY: "Diária",
-    WEEKLY: "Semanal",
-    MONTHLY: "Mensal",
-    QUARTERLY: "Trimestral",
-    FOUR_MONTHLY: "Quadrimestral",
-    SEMIANNUAL: "Semestral",
-    ANNUAL: "Anual",
-  };
+ const labels: Record<string, string> = {
+  DAILY: "Diária",
+  WEEKLY: "Semanal",
+  MONTHLY: "Mensal",
+  QUARTERLY: "Trimestral",
+  FOUR_MONTHLY: "Quadrimestral",
+  SEMIANNUAL: "Semestral",
+  ANNUAL: "Anual",
+  BIENNIAL: "Bienal (2 anos)",
+  FIVE_YEAR: "Quinquenal (5 anos)",
+};
 
   return labels[frequency] ?? frequency;
 }

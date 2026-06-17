@@ -27,6 +27,19 @@ import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
+const maintenanceTypeOptions = [
+  "Preventiva",
+  "Corretiva",
+  "Preditiva",
+  "Inspeção",
+  "Calibração",
+  "Lubrificação",
+  "Limpeza",
+  "Segurança",
+  "Melhoria",
+  "Outro",
+];
+
 type MaintenancePageProps = {
   searchParams: Promise<{
     view?: string;
@@ -228,14 +241,16 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               </select>
 
               <select name="frequency" className={inputClass}>
-                <option value="MONTHLY">Mensal</option>
-                <option value="QUARTERLY">Trimestral</option>
-                <option value="FOUR_MONTHLY">Quadrimestral</option>
-                <option value="SEMIANNUAL">Semestral</option>
-                <option value="ANNUAL">Anual</option>
-                <option value="WEEKLY">Semanal</option>
-                <option value="DAILY">Diária</option>
-              </select>
+  <option value="DAILY">Diária</option>
+  <option value="WEEKLY">Semanal</option>
+  <option value="MONTHLY">Mensal</option>
+  <option value="QUARTERLY">Trimestral</option>
+  <option value="FOUR_MONTHLY">Quadrimestral</option>
+  <option value="SEMIANNUAL">Semestral</option>
+  <option value="ANNUAL">Anual</option>
+  <option value="BIENNIAL">Bienal (2 anos)</option>
+  <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
+</select>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -244,7 +259,14 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
             </div>
 
             <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
-            <input name="costCenter" className={inputClass} placeholder="Centro de custos" />
+            <select name="costCenter" className={inputClass} defaultValue="">
+  <option value="">Tipo de manutenção</option>
+  {maintenanceTypeOptions.map((item) => (
+    <option key={item} value={item}>
+      {item}
+    </option>
+  ))}
+</select>
             <textarea name="description" className={textareaClass} placeholder="Descrição, critério SGQ ou instrução de trabalho" />
 
             <button className={buttonClass}>Criar agendamentos do ano</button>
