@@ -15,7 +15,7 @@ const fallbackTasks = [
     due: "09:00",
     status: "Critica",
     accent: "border-l-rose-400",
-    href: "/tasks",
+    href: "/tarefas",
   },
   {
     title: "Limpeza filtro AVAC",
@@ -23,7 +23,7 @@ const fallbackTasks = [
     due: "15:00",
     status: "Planeada",
     accent: "border-l-cyan-400",
-    href: "/tasks",
+    href: "/tarefas",
   },
   {
     title: "Conferir stock detergente tecnico",
@@ -31,13 +31,13 @@ const fallbackTasks = [
     due: "18:00",
     status: "Baixo risco",
     accent: "border-l-emerald-400",
-    href: "/tasks",
+    href: "/tarefas",
   },
 ];
 
 const fallbackCalendar = [
-  { date: "07 Jun", title: "Calibração balança", tag: "Semestral", href: "/maintenance" },
-  { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual", href: "/maintenance" },
+  { date: "07 Jun", title: "Calibração balança", tag: "Semestral", href: "/manutencao" },
+  { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual", href: "/manutencao" },
 ];
 
 const taskStatusLabels: Record<string, string> = {
@@ -75,7 +75,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
           due: formatShortDate(task.dueDate ?? task.nextDue),
           status: taskStatusLabels[task.status] ?? task.status,
           accent: "border-l-teal-400",
-          href: `/tasks?taskId=${task.id}`,
+          href: `/tarefas?taskId=${task.id}`,
         }))
       : fallbackTasks;
 
@@ -85,7 +85,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
           date: formatShortDate(event.scheduledAt),
           title: event.title,
           tag: event.equipment?.name ?? event.frequency,
-          href: `/maintenance?eventId=${event.id}`,
+          href: `/manutencao?eventId=${event.id}`,
         }))
       : fallbackCalendar;
 
@@ -267,7 +267,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
               dashboard.fleetAlerts.slice(0, 8).map((item) => (
                 <Link
                   key={item.id}
-                  href={`/fleet?alertId=${item.id}`}
+                  href={`/frota?alertId=${item.id}`}
                   className="block rounded-lg border border-zinc-800 bg-zinc-950/70 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/80"
                 >
                   <p className={item.type === "Inspeção" ? "text-sm font-semibold text-lime-200" : "text-sm font-semibold text-blue-200"}>
