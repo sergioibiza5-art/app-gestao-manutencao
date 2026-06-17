@@ -193,7 +193,42 @@ export async function getModuleData() {
         prisma.expense.findMany({ orderBy: { date: "desc" }, include: { equipment: true, vehicle: true, documents: true } }),
         prisma.monthlyBill.findMany({ orderBy: { name: "asc" }, take: 50 }),
         prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true } }),
-        prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100, include: { interventionPlans: true, equipmentType: true } }),
+        prisma.equipment.findMany({
+          orderBy: { name: "asc" },
+          take: 100,
+          include: {
+           interventionPlans: true,
+            equipmentType: true,
+           tickets: {
+              where: {
+                status: {
+                  in: ["IN_PROGRESS", "PAUSED"],
+                },
+              },
+              select: {
+                id: true,
+              },
+            },
+            maintenanceSchedules: {
+  where: {
+    workOrder: {
+      status: {
+        in: ["IN_PROGRESS", "PAUSED"],
+      },
+    },
+  },
+  select: {
+    id: true,
+    workOrder: {
+      select: {
+        id: true,
+        status: true,
+      },
+    },
+  },
+},
+          },
+      }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 200, include: { equipment: true, documents: true } }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100, include: { equipment: true } }),
