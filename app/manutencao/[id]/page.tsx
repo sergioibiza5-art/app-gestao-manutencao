@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 
-import { completeWorkOrder, createWorkOrderFromSchedule } from "@/app/actions";
+import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, startWorkOrder, validateWorkOrder } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getMaintenanceScheduleDetail } from "@/lib/data";
@@ -18,6 +18,34 @@ function typeLabel(type: string) {
   return type === "EXTERNAL" ? "Externa" : "Interna";
 }
 
+function scheduleStatusLabel(status: string) {
+  const labels: Record<string, string> = {
+    SCHEDULED: "Agendada",
+    DONE: "Concluída",
+    CANCELED: "Cancelada",
+  };
+  return labels[status] ?? status;
+}
+
+function workOrderStatusLabel(status: string) {
+  const labels: Record<string, string> = {
+    OPEN: "Aberta",
+    IN_PROGRESS: "Em curso",
+    PAUSED: "Pausada",
+    DONE: "Concluída",
+    VALIDATED: "Validada",
+    CANCELED: "Cancelada",
+  };
+  return labels[status] ?? status;
+}
+
+function durationLabel(seconds: number) {
+  const safeSeconds = Math.max(seconds, 0);
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
+}
+
 export default async function MaintenanceSchedulePage({ params }: MaintenanceSchedulePageProps) {
   const { id } = await params;
   const schedule = await getMaintenanceScheduleDetail(id);
@@ -28,14 +56,14 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
 
   const workOrder = schedule.workOrder;
   const template = workOrder?.template ?? schedule.equipment.equipmentType?.checklistTemplates[0];
-  const canFillChecklist = workOrder && workOrder.status !== "DONE" && template;
+  const canFillChecklist = workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status) && template;
 
   return (
     <AppShell activeHref="/manutencao">
       <PageHeader
         eyebrow="Agendamento"
         title={schedule.title}
-        description={`${schedule.equipment.name} - ${typeLabel(schedule.type)} - ${formatDate(schedule.scheduledAt)} - ${schedule.status}`}
+        description={`${schedule.equipment.name} - ${typeLabel(schedule.type)} - ${formatDate(schedule.scheduledAt)} - ${scheduleStatusLabel(schedule.status)}`}
         action={
           <Link href="/manutencao" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
             <ArrowLeft size={17} />
@@ -51,19 +79,53 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
             <h2 className="text-xl font-semibold text-zinc-50">Ordem de servico</h2>
           </div>
           {workOrder ? (
-            <dl className="mt-4 grid gap-3">
-              {[
-                ["Numero", workOrder.number],
-                ["Estado", workOrder.status],
-                ["Aberta em", formatDate(workOrder.openedAt)],
-                ["Fechada em", formatDate(workOrder.closedAt)],
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">
-                  <dt className="text-xs text-zinc-500">{label}</dt>
-                  <dd className="mt-1 text-sm font-medium text-zinc-100">{value}</dd>
-                </div>
-              ))}
-            </dl>
+            <>
+              <dl className="mt-4 grid gap-3">
+                {[
+                  ["Número", workOrder.number],
+                  ["Estado", workOrderStatusLabel(workOrder.status)],
+                  ["Aberta em", formatDate(workOrder.openedAt)],
+                  ["Iniciada em", formatDate(workOrder.startedAt)],
+                  ["Tempo registado", durationLabel(workOrder.totalWorkSeconds)],
+                  ["Fechada em", formatDate(workOrder.closedAt)],
+                  ["Validada em", formatDate(workOrder.validatedAt)],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">
+                    <dt className="text-xs text-zinc-500">{label}</dt>
+                    <dd className="mt-1 text-sm font-medium text-zinc-100">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {(workOrder.status === "OPEN" || workOrder.status === "PAUSED") && (
+                  <form action={startWorkOrder}>
+                    <input type="hidden" name="workOrderId" value={workOrder.id} />
+                    <input type="hidden" name="scheduleId" value={schedule.id} />
+                    <button className="inline-flex h-10 items-center justify-center rounded-lg border border-teal-300/40 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100">
+                      Iniciar
+                    </button>
+                  </form>
+                )}
+                {workOrder.status === "IN_PROGRESS" && (
+                  <form action={pauseWorkOrder}>
+                    <input type="hidden" name="workOrderId" value={workOrder.id} />
+                    <input type="hidden" name="scheduleId" value={schedule.id} />
+                    <button className="inline-flex h-10 items-center justify-center rounded-lg border border-amber-300/40 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100">
+                      Pausar
+                    </button>
+                  </form>
+                )}
+                {workOrder.status === "DONE" && (
+                  <form action={validateWorkOrder}>
+                    <input type="hidden" name="workOrderId" value={workOrder.id} />
+                    <input type="hidden" name="scheduleId" value={schedule.id} />
+                    <button className="inline-flex h-10 items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-300/10 px-3 text-sm font-semibold text-emerald-100">
+                      Validar
+                    </button>
+                  </form>
+                )}
+              </div>
+            </>
           ) : (
             <form action={createWorkOrderFromSchedule} className="mt-4">
               <input type="hidden" name="scheduleId" value={schedule.id} />
@@ -80,16 +142,17 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
             <ClipboardCheck size={22} className="text-teal-300" />
             <h2 className="text-xl font-semibold text-zinc-50">Execucao</h2>
           </div>
-          {workOrder?.status === "DONE" ? (
+          {workOrder?.status === "DONE" || workOrder?.status === "VALIDATED" ? (
             <div className="mt-4 space-y-4">
               <div className="rounded-lg border border-teal-300/25 bg-teal-300/10 p-4 text-sm text-teal-100">
-                OP concluida. O historico, os documentos e a checklist ficaram associados ao equipamento.
+                OP {workOrder.status === "VALIDATED" ? "validada" : "concluída"}. O histórico, os documentos e a checklist ficaram associados ao equipamento.
               </div>
               <dl className="grid gap-3 md:grid-cols-2">
                 {[
-                  ["Feito por", workOrder.performedBy ?? "Sem responsavel"],
+                  ["Tempo do serviço", durationLabel(workOrder.totalWorkSeconds)],
+                  ["Feito por", workOrder.performedBy ?? "Sem responsável"],
                   ["Resultado", workOrder.result ?? "Sem resultado"],
-                  ["O que foi feito", workOrder.actionsDone ?? "Sem descricao"],
+                  ["O que foi feito", workOrder.actionsDone ?? "Sem descrição"],
                   ["Notas", workOrder.notes ?? "Sem notas"],
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
@@ -113,6 +176,12 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
               <input type="hidden" name="workOrderId" value={workOrder.id} />
               <input type="hidden" name="equipmentId" value={schedule.equipmentId} />
               <input type="hidden" name="templateId" value={template.id} />
+              <input type="hidden" name="scheduleId" value={schedule.id} />
+              {workOrder.status !== "IN_PROGRESS" && (
+                <div className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-3 text-sm text-amber-100">
+                  Inicia a OP antes de concluir para o tempo ficar contado corretamente.
+                </div>
+              )}
               <div className="grid gap-3 md:grid-cols-3">
                 <input name="performedAt" type="date" className={inputClass} />
                 <input name="performedTime" type="time" className={inputClass} />
@@ -132,7 +201,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                     </div>
                     <select name={`status_${item.id}`} className={inputClass}>
                       <option value="OK">OK</option>
-                      <option value="NOT_OK">Nao OK</option>
+                      <option value="NOT_OK">Não OK</option>
                       <option value="NA">N/A</option>
                     </select>
                     <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." />
@@ -149,7 +218,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                 <input name="documentUrl" className={`${inputClass} md:col-span-2`} placeholder="Link/caminho do documento associado" />
               </div>
               <textarea name="notes" className={textareaClass} placeholder="Notas finais" />
-              <button className={buttonClass}>Concluir OP</button>
+              <button className={buttonClass}>Concluído</button>
             </form>
           ) : (
             <p className="mt-4 rounded-lg border border-dashed border-zinc-800 bg-zinc-950/45 p-4 text-sm text-zinc-500">

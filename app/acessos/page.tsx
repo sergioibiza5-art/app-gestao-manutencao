@@ -13,6 +13,16 @@ const roleDescriptions = [
   ["TICKET", "Posto de trabalho: apenas cria tickets de avaria para a maquina/posto, sem acesso aos restantes modulos."],
 ];
 
+const notifyDays = [
+  ["1", "Seg"],
+  ["2", "Ter"],
+  ["3", "Qua"],
+  ["4", "Qui"],
+  ["5", "Sex"],
+  ["6", "Sáb"],
+  ["0", "Dom"],
+];
+
 export default async function AccessPage() {
   const { users, sgqRecords, equipment } = await getModuleData();
 
@@ -44,6 +54,28 @@ export default async function AccessPage() {
               <option value="true">Ativo</option>
               <option value="false">Inativo</option>
             </select>
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+              <p className="text-sm font-semibold text-zinc-100">Horário de alertas</p>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <input name="notifyStartTime" type="time" defaultValue="08:00" className={inputClass} aria-label="Início dos alertas" />
+                <input name="notifyEndTime" type="time" defaultValue="18:00" className={inputClass} aria-label="Fim dos alertas" />
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {notifyDays.map(([value, label]) => (
+                  <label key={value} className="inline-flex items-center gap-2 rounded-md border border-zinc-800 bg-black/20 px-3 py-2 text-xs font-semibold text-zinc-300">
+                    <input type="checkbox" name="notifyDay" value={value} defaultChecked={["1", "2", "3", "4", "5"].includes(value)} className="size-4 accent-teal-300" />
+                    {label}
+                  </label>
+                ))}
+              </div>
+              <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_150px]">
+                <input name="telegramChatId" className={inputClass} placeholder="ID do chat Telegram" />
+                <select name="telegramEnabled" className={inputClass} defaultValue="true">
+                  <option value="true">Telegram ativo</option>
+                  <option value="false">Telegram desligado</option>
+                </select>
+              </div>
+            </div>
             <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
               <p className="text-sm font-semibold text-zinc-100">Equipamentos autorizados para ticket</p>
               <div className="mt-3 grid max-h-52 gap-2 overflow-y-auto pr-1">
@@ -117,6 +149,31 @@ export default async function AccessPage() {
                       <option value="true">Ativo</option>
                       <option value="false">Inativo</option>
                     </select>
+                    <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 md:col-span-2">
+                      <p className="text-sm font-semibold text-zinc-100">Horário de alertas</p>
+                      <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                        <input name="notifyStartTime" type="time" className={inputClass} defaultValue={user.notifyStartTime ?? "08:00"} aria-label="Início dos alertas" />
+                        <input name="notifyEndTime" type="time" className={inputClass} defaultValue={user.notifyEndTime ?? "18:00"} aria-label="Fim dos alertas" />
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {notifyDays.map(([value, label]) => {
+                          const checked = (user.notifyDays ?? "1,2,3,4,5").split(",").includes(value);
+                          return (
+                            <label key={value} className="inline-flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-950/45 px-3 py-2 text-xs font-semibold text-zinc-300">
+                              <input type="checkbox" name="notifyDay" value={value} defaultChecked={checked} className="size-4 accent-teal-300" />
+                              {label}
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_170px]">
+                        <input name="telegramChatId" className={inputClass} defaultValue={user.telegramChatId ?? ""} placeholder="ID do chat Telegram" />
+                        <select name="telegramEnabled" className={inputClass} defaultValue={user.telegramEnabled ? "true" : "false"}>
+                          <option value="true">Telegram ativo</option>
+                          <option value="false">Telegram desligado</option>
+                        </select>
+                      </div>
+                    </div>
                     <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 md:col-span-2">
                       <p className="text-sm font-semibold text-zinc-100">Equipamentos permitidos para este posto</p>
                       <div className="mt-3 grid max-h-52 gap-2 overflow-y-auto pr-1 md:grid-cols-2">

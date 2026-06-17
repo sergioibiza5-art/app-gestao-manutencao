@@ -116,7 +116,9 @@ enum VehicleServiceType {
 enum WorkOrderStatus {
   OPEN
   IN_PROGRESS
+  PAUSED
   DONE
+  VALIDATED
   CANCELED
 }
 
@@ -128,6 +130,11 @@ model User {
   password   String?
   pin        String?
   hourlyRate Decimal  @default(0) @db.Decimal(10, 2)
+  notifyStartTime String? @default("08:00")
+  notifyEndTime   String? @default("18:00")
+  notifyDays      String? @default("1,2,3,4,5")
+  telegramChatId  String?
+  telegramEnabled Boolean @default(true)
   role       UserRole @default(USER)
   active     Boolean  @default(true)
 
@@ -440,7 +447,12 @@ model WorkOrder {
   type        MaintenanceType @default(INTERNAL)
   status      WorkOrderStatus @default(OPEN)
   openedAt    DateTime        @default(now())
+  startedAt   DateTime?
+  pausedAt    DateTime?
   closedAt    DateTime?
+  validatedAt DateTime?
+  totalWorkSeconds Int        @default(0)
+  lastResumedAt    DateTime?
   performedBy String?
   actionsDone String?
   result      String?

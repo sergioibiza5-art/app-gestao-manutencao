@@ -104,8 +104,8 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
               filteredLogs.map((log) => {
                 const certificate = log.documents.find((document) => document.type === "CERTIFICATE" && document.fileUrl);
                 return (
-                  <article key={log.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <details key={log.id} className="group rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                    <summary className="flex cursor-pointer list-none flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h3 className="font-semibold text-zinc-100">{log.title}</h3>
                         <p className="mt-1 text-sm text-zinc-500">{log.equipment.name} - {log.certificateNo ?? "sem certificado"}</p>
@@ -121,7 +121,7 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">Prox.: {formatDate(log.nextDueDate)}</p>
                       </div>
-                    </div>
+                    </summary>
                     <form action={updateCalibrationLog} className="mt-4 grid gap-2 md:grid-cols-2">
                       <input type="hidden" name="id" value={log.id} />
                       <input name="title" className={inputClass} defaultValue={log.title} placeholder="Descricao" />
@@ -138,7 +138,7 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                       <textarea name="notes" className={`${textareaClass} md:col-span-2`} defaultValue={log.notes ?? ""} placeholder="Notas" />
                       <button className={buttonClass}>Guardar certificado</button>
                     </form>
-                  </article>
+                  </details>
                 );
               })
             )}

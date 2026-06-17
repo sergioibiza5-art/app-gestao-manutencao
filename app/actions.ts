@@ -1085,11 +1085,60 @@ function durationNote(seconds: number) {
   return `${hours}h ${String(minutes).padStart(2, "0")}m`;
 }
 
+function minutesFromClock(value?: string | null) {
+  const [hours, minutes] = String(value || "").split(":").map((part) => Number.parseInt(part, 10));
+  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
+  return hours * 60 + minutes;
+}
+
+function canReceiveTimedAlerts(user: {
+  notifyStartTime?: string | null;
+  notifyEndTime?: string | null;
+  notifyDays?: string | null;
+  telegramEnabled?: boolean | null;
+}) {
+  const now = new Date();
+  const lisbonNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Lisbon" }));
+  const day = lisbonNow.getDay();
+  const allowedDays = (user.notifyDays || "1,2,3,4,5")
+    .split(",")
+    .map((value) => Number.parseInt(value, 10))
+    .filter((value) => Number.isFinite(value));
+
+  if (allowedDays.length > 0 && !allowedDays.includes(day)) return false;
+
+  const start = minutesFromClock(user.notifyStartTime) ?? 0;
+  const end = minutesFromClock(user.notifyEndTime) ?? 24 * 60 - 1;
+  const current = lisbonNow.getHours() * 60 + lisbonNow.getMinutes();
+
+  if (start <= end) return current >= start && current <= end;
+  return current >= start || current <= end;
+}
+
 async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketNumber: string) {
   await tx.notification.updateMany({
     where: { title: `Novo ticket ${ticketNumber}`, readAt: null },
     data: { readAt: new Date() },
   });
+}
+
+async function refreshEquipmentMaintenanceStatus(tx: Prisma.TransactionClient, equipmentId: string) {
+  const activeWorkOrders = await tx.workOrder.count({
+    where: {
+      equipmentId,
+      status: { in: ["IN_PROGRESS", "PAUSED", "DONE"] },
+    },
+  });
+  const equipment = await tx.equipment.findUnique({ where: { id: equipmentId }, select: { status: true } });
+
+  if (activeWorkOrders > 0) {
+    await tx.equipment.update({ where: { id: equipmentId }, data: { status: "MAINTENANCE" } });
+    return;
+  }
+
+  if (equipment?.status === "MAINTENANCE") {
+    await tx.equipment.update({ where: { id: equipmentId }, data: { status: "ACTIVE" } });
+  }
 }
 
 function pushConfig() {
@@ -1226,9 +1275,16 @@ export async function createMaintenanceTicket(formData: FormData) {
 
     const recipients = await tx.user.findMany({
       where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
-      select: { id: true },
+      select: {
+        id: true,
+        notifyStartTime: true,
+        notifyEndTime: true,
+        notifyDays: true,
+        telegramChatId: true,
+        telegramEnabled: true,
+      },
     });
-    const recipientIds = recipients.map((recipient) => recipient.id);
+    const timedRecipients = recipients.filter(canReceiveTimedAlerts);
 
     if (recipients.length > 0) {
       await tx.notification.createMany({
@@ -1242,7 +1298,10 @@ export async function createMaintenanceTicket(formData: FormData) {
     }
 
     return {
-      recipientIds,
+      recipientIds: timedRecipients.map((recipient) => recipient.id),
+      telegramChatIds: timedRecipients
+        .filter((recipient) => recipient.telegramEnabled !== false && recipient.telegramChatId)
+        .map((recipient) => recipient.telegramChatId!),
       title: `Novo ticket ${ticket.number}`,
       body: `${equipment.name}: ${ticket.title}`,
       url: "/tickets",
@@ -1255,17 +1314,20 @@ export async function createMaintenanceTicket(formData: FormData) {
     url: notificationData.url,
   });
 
-await sendTelegramMessage(
-  [
-    "🚨 <b>Novo ticket de manutenção</b>",
-    "",
-    `<b>Título:</b> ${notificationData.title}`,
-    `<b>Descrição:</b> ${notificationData.body}`,
-    "",
-    `<b>Estado:</b> Aberto`,
-    `<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets`,
-  ].join("\n"),
-);
+  if (notificationData.recipientIds.length > 0) {
+    await sendTelegramMessage(
+      [
+        "🚨 <b>Novo ticket de manutenção</b>",
+        "",
+        `<b>Título:</b> ${notificationData.title}`,
+        `<b>Descrição:</b> ${notificationData.body}`,
+        "",
+        "<b>Estado:</b> Aberto",
+        "<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets",
+      ].join("\n"),
+      notificationData.telegramChatIds.length > 0 ? notificationData.telegramChatIds : undefined,
+    );
+  }
 
   revalidatePath("/tickets");
   revalidatePath("/");
@@ -1445,9 +1507,12 @@ export async function validateMaintenanceTicket(formData: FormData) {
       number: await nextWorkOrderNumber(),
       title: `Ticket ${ticket.number} - ${ticket.title}`,
       type: "INTERNAL",
-      status: "DONE",
+      status: "VALIDATED",
       openedAt: ticket.openedAt,
+      startedAt: ticket.startedAt,
       closedAt: ticket.completedAt ?? new Date(),
+      validatedAt: new Date(),
+      totalWorkSeconds: ticket.totalWorkSeconds,
       performedBy: user.name,
       actionsDone: ticket.solution ?? "Ticket validado pela manutencao.",
       result: "VALIDADO",
@@ -1545,6 +1610,65 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
   redirect(`/manutencao/${schedule.id}?op=${workOrder.id}`);
 }
 
+export async function startWorkOrder(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || !["OPEN", "PAUSED"].includes(workOrder.status)) return;
+
+    const now = new Date();
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "IN_PROGRESS",
+        startedAt: workOrder.startedAt ?? now,
+        pausedAt: null,
+        lastResumedAt: now,
+      },
+    });
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  const scheduleId = optionalText(formData, "scheduleId");
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
+}
+
+export async function pauseWorkOrder(formData: FormData) {
+  await requireCanWrite();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || workOrder.status !== "IN_PROGRESS") return;
+
+    const now = new Date();
+    const activeSeconds = elapsedSeconds(workOrder.lastResumedAt ?? workOrder.startedAt, now);
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "PAUSED",
+        pausedAt: now,
+        lastResumedAt: null,
+        totalWorkSeconds: workOrder.totalWorkSeconds + activeSeconds,
+      },
+    });
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  const scheduleId = optionalText(formData, "scheduleId");
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
+}
+
 export async function completeWorkOrder(formData: FormData) {
   await requireCanWrite();
   const prisma = getPrisma();
@@ -1558,6 +1682,10 @@ export async function completeWorkOrder(formData: FormData) {
 
   const workOrder = await prisma.workOrder.findUnique({ where: { id: workOrderId } });
   if (!workOrder) return;
+  const completionMoment = new Date();
+  const totalWorkSeconds =
+    workOrder.totalWorkSeconds +
+    (workOrder.status === "IN_PROGRESS" ? elapsedSeconds(workOrder.lastResumedAt ?? workOrder.startedAt, completionMoment) : 0);
 
   const checklistRecord =
     templateId && itemIds.length > 0
@@ -1611,6 +1739,9 @@ export async function completeWorkOrder(formData: FormData) {
     data: {
       status: "DONE",
       closedAt: performedAt,
+      pausedAt: null,
+      lastResumedAt: null,
+      totalWorkSeconds,
       performedBy: optionalText(formData, "performedBy"),
       actionsDone: optionalText(formData, "actionsDone"),
       result: optionalText(formData, "result"),
@@ -1643,10 +1774,40 @@ export async function completeWorkOrder(formData: FormData) {
     });
   }
 
+  await prisma.$transaction(async (tx) => {
+    await refreshEquipmentMaintenanceStatus(tx, equipmentId);
+  });
+
   revalidatePath("/");
   revalidatePath("/manutencao");
   revalidatePath(`/manutencao/${workOrder.scheduleId}`);
   revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function validateWorkOrder(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || workOrder.status !== "DONE") return;
+
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "VALIDATED",
+        validatedAt: new Date(),
+      },
+    });
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  const scheduleId = optionalText(formData, "scheduleId");
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function createCalibrationLog(formData: FormData) {
@@ -1894,6 +2055,11 @@ export async function createUser(formData: FormData) {
         password: password ? hashPassword(password) : null,
         pin: null,
         hourlyRate: decimal(formData, "hourlyRate"),
+        notifyStartTime: text(formData, "notifyStartTime") || "08:00",
+        notifyEndTime: text(formData, "notifyEndTime") || "18:00",
+        notifyDays: formData.getAll("notifyDay").filter((value): value is string => typeof value === "string").join(",") || "1,2,3,4,5",
+        telegramChatId: optionalText(formData, "telegramChatId"),
+        telegramEnabled: text(formData, "telegramEnabled") !== "false",
         role,
         active: text(formData, "active") !== "false",
       },
@@ -1932,6 +2098,11 @@ export async function updateUser(formData: FormData) {
         ...(password ? { password: hashPassword(password) } : {}),
         ...(role === "TICKET" ? { pin: null } : {}),
         hourlyRate: decimal(formData, "hourlyRate"),
+        notifyStartTime: text(formData, "notifyStartTime") || "08:00",
+        notifyEndTime: text(formData, "notifyEndTime") || "18:00",
+        notifyDays: formData.getAll("notifyDay").filter((value): value is string => typeof value === "string").join(",") || "1,2,3,4,5",
+        telegramChatId: optionalText(formData, "telegramChatId"),
+        telegramEnabled: text(formData, "telegramEnabled") !== "false",
         role,
         active: text(formData, "active") !== "false",
       },
@@ -2036,6 +2207,7 @@ export async function createVehicleKmLog(formData: FormData) {
     },
   });
 
+  revalidatePath("/");
   revalidatePath("/frota");
   revalidatePath(`/frota/${vehicleId}`);
 }
@@ -2099,6 +2271,7 @@ export async function updateVehicleKmLog(formData: FormData) {
     },
   });
 
+  revalidatePath("/");
   revalidatePath("/frota");
   revalidatePath(`/frota/${vehicleId}`);
 }
@@ -2114,6 +2287,7 @@ export async function deleteVehicleKmLog(formData: FormData) {
   }
 
   await prisma.vehicleKmLog.delete({ where: { id } });
+  revalidatePath("/");
   revalidatePath("/frota");
   if (vehicleId) revalidatePath(`/frota/${vehicleId}`);
 }
@@ -2145,6 +2319,7 @@ export async function createVehicleService(formData: FormData) {
     },
   });
 
+  revalidatePath("/");
   revalidatePath("/frota");
   revalidatePath(`/frota/${vehicleId}`);
 }
@@ -2178,6 +2353,7 @@ export async function updateVehicleService(formData: FormData) {
     },
   });
 
+  revalidatePath("/");
   revalidatePath("/frota");
   revalidatePath(`/frota/${vehicleId}`);
 }
@@ -2193,6 +2369,7 @@ export async function deleteVehicleService(formData: FormData) {
   }
 
   await prisma.vehicleService.delete({ where: { id } });
+  revalidatePath("/");
   revalidatePath("/frota");
   if (vehicleId) revalidatePath(`/frota/${vehicleId}`);
 }

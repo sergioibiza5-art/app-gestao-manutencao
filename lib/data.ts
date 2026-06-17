@@ -112,22 +112,24 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       const fleetAlerts = vehicles
         .map(enrichVehicle)
         .flatMap((vehicle) => [
-          vehicle.metrics.estimatedRevisionDate
+          vehicle.metrics.estimatedRevisionDate || vehicle.metrics.kmUntilRevision !== null
             ? {
                 id: `${vehicle.id}-revision`,
-                type: "Revisao",
+                type: "Revisão",
                 title: `${vehicle.brand} ${vehicle.model}`,
                 plate: vehicle.plate,
-                dueDate: vehicle.metrics.estimatedRevisionDate,
+                dueDate: vehicle.metrics.estimatedRevisionDate ?? new Date(0),
+                kmRemaining: vehicle.metrics.kmUntilRevision,
               }
             : null,
-          vehicle.metrics.nextInspectionDate
+          vehicle.metrics.nextInspectionDate || vehicle.metrics.kmUntilInspection !== null
             ? {
                 id: `${vehicle.id}-inspection`,
-                type: "Inspecao",
+                type: "Inspeção",
                 title: `${vehicle.brand} ${vehicle.model}`,
                 plate: vehicle.plate,
-                dueDate: vehicle.metrics.nextInspectionDate,
+                dueDate: vehicle.metrics.nextInspectionDate ?? new Date(0),
+                kmRemaining: vehicle.metrics.kmUntilInspection,
               }
             : null,
         ])
@@ -135,7 +137,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
       const fleetDueLimit = new Date(now);
       fleetDueLimit.setDate(fleetDueLimit.getDate() + 30);
-      const fleetDueSoon = fleetAlerts.filter((item) => item.dueDate <= fleetDueLimit).length;
+      const fleetDueSoon = fleetAlerts.filter((item) => item.dueDate <= fleetDueLimit || (item.kmRemaining !== null && item.kmRemaining <= 1000)).length;
 
       return {
         kpis: {
@@ -498,19 +500,21 @@ function enrichVehicle<
   const totalKm = firstKm && lastKm ? Math.max(lastKm.odometer - firstKm.odometer, 0) : 0;
   const totalDays = firstKm && lastKm ? daysBetween(firstKm.date, lastKm.date) : 1;
   const averageKmDay = totalKm / totalDays;
-  const latestRevision = vehicle.services.find((service) => service.type === "REVISION" && service.nextDueKm);
+  const latestRevision = vehicle.services.find((service) => service.type === "REVISION" && (service.nextDueKm || service.nextDueDate));
+  const latestInspection = vehicle.services.find((service) => service.type === "INSPECTION" && (service.nextDueKm || service.nextDueDate));
   const kmUntilRevision = latestRevision?.nextDueKm && lastKm ? latestRevision.nextDueKm - lastKm.odometer : null;
+  const kmUntilInspection = latestInspection?.nextDueKm && lastKm ? latestInspection.nextDueKm - lastKm.odometer : null;
   const estimatedRevisionDate =
     kmUntilRevision !== null && kmUntilRevision > 0 && averageKmDay > 0
       ? addDays(lastKm!.date, Math.ceil(kmUntilRevision / averageKmDay))
       : latestRevision?.nextDueDate ?? null;
+  const estimatedInspectionDate =
+    kmUntilInspection !== null && kmUntilInspection > 0 && averageKmDay > 0
+      ? addDays(lastKm!.date, Math.ceil(kmUntilInspection / averageKmDay))
+      : latestInspection?.nextDueDate ?? null;
   const serviceCost = vehicle.services.reduce((sum, service) => sum + Number(service.cost ?? 0), 0);
   const invoiceCost = vehicle.expenses?.reduce((sum, expense) => sum + Number(expense.amount ?? 0), 0) ?? 0;
   const totalCost = serviceCost + invoiceCost;
-  const nextInspection = vehicle.services
-    .filter((service) => service.type === "INSPECTION" && service.nextDueDate)
-    .sort((a, b) => a.nextDueDate!.getTime() - b.nextDueDate!.getTime())[0];
-
   return {
     ...vehicle,
     metrics: {
@@ -520,10 +524,11 @@ function enrichVehicle<
       averageKmYear: averageKmDay * 365,
       estimatedRevisionDate,
       kmUntilRevision,
+      kmUntilInspection,
       serviceCost,
       invoiceCost,
       totalCost,
-      nextInspectionDate: nextInspection?.nextDueDate ?? null,
+      nextInspectionDate: estimatedInspectionDate,
     },
   };
 }
