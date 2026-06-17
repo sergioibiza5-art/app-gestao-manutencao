@@ -9,14 +9,35 @@ import { formatCurrency, formatDate, formatShortDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 const fallbackTasks = [
-  { title: "Verificar bomba de agua", area: "Infraestrutura", due: "09:00", status: "Critica", accent: "border-l-rose-400" },
-  { title: "Limpeza filtro AVAC", area: "Manutencao", due: "15:00", status: "Planeada", accent: "border-l-cyan-400" },
-  { title: "Conferir stock detergente tecnico", area: "Inventario", due: "18:00", status: "Baixo risco", accent: "border-l-emerald-400" },
+  {
+    title: "Verificar bomba de agua",
+    area: "Infraestrutura",
+    due: "09:00",
+    status: "Critica",
+    accent: "border-l-rose-400",
+    href: "/tasks",
+  },
+  {
+    title: "Limpeza filtro AVAC",
+    area: "Manutencao",
+    due: "15:00",
+    status: "Planeada",
+    accent: "border-l-cyan-400",
+    href: "/tasks",
+  },
+  {
+    title: "Conferir stock detergente tecnico",
+    area: "Inventario",
+    due: "18:00",
+    status: "Baixo risco",
+    accent: "border-l-emerald-400",
+    href: "/tasks",
+  },
 ];
 
 const fallbackCalendar = [
-  { date: "07 Jun", title: "Calibração balança", tag: "Semestral" },
-  { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual" },
+  { date: "07 Jun", title: "Calibração balança", tag: "Semestral", href: "/maintenance" },
+  { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual", href: "/maintenance" },
 ];
 
 const taskStatusLabels: Record<string, string> = {
@@ -45,27 +66,62 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const selectedView = params.view || "month";
   const selectedDate = params.date || new Date().toISOString().slice(0, 10);
   const dashboard = await getDashboardData({ view: selectedView, date: selectedDate });
-  const tasks = dashboard.tasks.length > 0
-    ? dashboard.tasks.map((task) => ({
-        title: task.title,
-        area: task.equipment?.name ?? (task.frequency ? taskFrequencyLabels[task.frequency] : null) ?? "Pontual",
-        due: formatShortDate(task.dueDate ?? task.nextDue),
-        status: taskStatusLabels[task.status] ?? task.status,
-        accent: "border-l-teal-400",
-      }))
-    : fallbackTasks;
-  const calendar = dashboard.calendar.length > 0
-    ? dashboard.calendar.map((event) => ({
-        date: formatShortDate(event.scheduledAt),
-        title: event.title,
-        tag: event.equipment?.name ?? event.frequency,
-      }))
-    : fallbackCalendar;
+
+  const tasks =
+    dashboard.tasks.length > 0
+      ? dashboard.tasks.map((task) => ({
+          title: task.title,
+          area: task.equipment?.name ?? (task.frequency ? taskFrequencyLabels[task.frequency] : null) ?? "Pontual",
+          due: formatShortDate(task.dueDate ?? task.nextDue),
+          status: taskStatusLabels[task.status] ?? task.status,
+          accent: "border-l-teal-400",
+          href: `/tasks?taskId=${task.id}`,
+        }))
+      : fallbackTasks;
+
+  const calendar =
+    dashboard.calendar.length > 0
+      ? dashboard.calendar.map((event) => ({
+          date: formatShortDate(event.scheduledAt),
+          title: event.title,
+          tag: event.equipment?.name ?? event.frequency,
+          href: `/maintenance?eventId=${event.id}`,
+        }))
+      : fallbackCalendar;
+
   const kpis = [
-    { label: "Tarefas hoje", value: String(dashboard.kpis.tasksToday), detail: `${dashboard.kpis.criticalTasks} críticas`, tone: "text-teal-300", icon: ClipboardCheck, box: "border-teal-300/40 bg-teal-300/10 text-teal-200" },
-    { label: "Despesas mês", value: formatCurrency(dashboard.kpis.monthlyExpenses), detail: "Valor registado", tone: "text-amber-300", icon: DollarSign, box: "border-amber-300/40 bg-amber-300/10 text-amber-200" },
-    { label: "Manutenções hoje", value: String(dashboard.kpis.maintenanceToday), detail: "Agendadas para hoje", tone: "text-sky-300", icon: Wrench, box: "border-sky-300/40 bg-sky-300/10 text-sky-200" },
-    { label: "Frota a vencer", value: String(dashboard.kpis.fleetDueSoon), detail: "Próximos 30 dias ou 1000 km", tone: "text-lime-300", icon: Car, box: "border-lime-300/40 bg-lime-300/10 text-lime-200" },
+    {
+      label: "Tarefas hoje",
+      value: String(dashboard.kpis.tasksToday),
+      detail: `${dashboard.kpis.criticalTasks} críticas`,
+      tone: "text-teal-300",
+      icon: ClipboardCheck,
+      box: "border-teal-300/40 bg-teal-300/10 text-teal-200",
+    },
+    {
+      label: "Despesas mês",
+      value: formatCurrency(dashboard.kpis.monthlyExpenses),
+      detail: "Valor registado",
+      tone: "text-amber-300",
+      icon: DollarSign,
+      box: "border-amber-300/40 bg-amber-300/10 text-amber-200",
+    },
+    {
+      label: "Manutenções hoje",
+      value: String(dashboard.kpis.maintenanceToday),
+      detail: "Agendadas para hoje",
+      tone: "text-sky-300",
+      icon: Wrench,
+      box: "border-sky-300/40 bg-sky-300/10 text-sky-200",
+    },
+    {
+      label: "Frota a vencer",
+      value: String(dashboard.kpis.fleetDueSoon),
+      detail: "Próximos 30 dias ou 1000 km",
+      tone: "text-lime-300",
+      icon: Car,
+      box: "border-lime-300/40 bg-lime-300/10 text-lime-200",
+    },
   ];
 
   return (
@@ -76,6 +132,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             <h1 className="text-3xl font-semibold text-zinc-50">Dashboard</h1>
             <p className="mt-1 text-sm text-zinc-400">Resumo diário da manutenção</p>
           </div>
+
           <form className="grid gap-2 sm:grid-cols-[180px_180px_auto]">
             <select name="view" defaultValue={selectedView} className={inputClass} aria-label="Periodo da dashboard">
               <option value="week">Semana</option>
@@ -92,9 +149,11 @@ export default async function Page({ searchParams }: DashboardPageProps) {
 
         <div className="mt-5 rounded-lg border border-zinc-800 bg-zinc-950/35 p-3">
           <p className="px-1 text-xs font-semibold uppercase tracking-[0.18em] text-teal-300">Resumo diário</p>
+
           <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             {kpis.map((item) => {
               const Icon = item.icon;
+
               return (
                 <div key={item.label} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
                   <div className="flex items-center gap-4">
@@ -124,11 +183,15 @@ export default async function Page({ searchParams }: DashboardPageProps) {
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-200">Alerta de tickets</p>
                 <h2 className="mt-1 text-xl font-semibold text-zinc-50">
-                  {dashboard.kpis.openTickets} ticket{dashboard.kpis.openTickets === 1 ? "" : "s"} novo{dashboard.kpis.openTickets === 1 ? "" : "s"} por iniciar
+                  {dashboard.kpis.openTickets} ticket{dashboard.kpis.openTickets === 1 ? "" : "s"} novo
+                  {dashboard.kpis.openTickets === 1 ? "" : "s"} por iniciar
                 </h2>
-                <p className="mt-1 text-sm text-zinc-400">Abre a fila de manutenção para iniciar, pausar, concluir ou validar o chamado.</p>
+                <p className="mt-1 text-sm text-zinc-400">
+                  Abre a fila de manutenção para iniciar, pausar, concluir ou validar o chamado.
+                </p>
               </div>
             </div>
+
             <Link href="/tickets" className={`${buttonClass} justify-center`}>
               Ver tickets
             </Link>
@@ -138,7 +201,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             {dashboard.ticketAlerts.map((ticket) => (
               <Link
                 key={ticket.id}
-                href="/tickets"
+                href={`/tickets?ticketId=${ticket.id}`}
                 className="rounded-lg border border-amber-300/20 bg-zinc-950/70 p-4 transition hover:border-amber-200/50"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -165,9 +228,14 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             </div>
             <ClipboardCheck size={22} className="text-teal-300" />
           </div>
+
           <div className="space-y-3">
             {tasks.map((task) => (
-              <div key={`${task.title}-${task.due}`} className={`rounded-lg border border-zinc-800 border-l-4 ${task.accent} bg-zinc-950/70 p-4`}>
+              <Link
+                key={`${task.title}-${task.due}`}
+                href={task.href}
+                className={`block rounded-lg border border-zinc-800 border-l-4 ${task.accent} bg-zinc-950/70 p-4 transition hover:border-teal-300/50 hover:bg-zinc-900/80`}
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="font-semibold text-zinc-100">{task.title}</h3>
@@ -176,7 +244,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
                   <span className="rounded-md bg-zinc-900 px-2 py-1 text-xs text-zinc-300">{task.due}</span>
                 </div>
                 <p className="mt-3 text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">{task.status}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </Panel>
@@ -189,26 +257,33 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             </div>
             <Car size={22} className="text-blue-300" />
           </div>
-          <div className="max-h-[460px] space-y-3 overflow-y-auto pr-1">
+
+          <div className="max-h-115 space-y-3 overflow-y-auto pr-1">
             {dashboard.fleetAlerts.length === 0 ? (
               <p className="rounded-lg border border-dashed border-zinc-800 bg-zinc-950/45 p-4 text-sm text-zinc-500">
                 Sem revisões ou inspeções com data estimada.
               </p>
             ) : (
               dashboard.fleetAlerts.slice(0, 8).map((item) => (
-                <div key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
+                <Link
+                  key={item.id}
+                  href={`/fleet?alertId=${item.id}`}
+                  className="block rounded-lg border border-zinc-800 bg-zinc-950/70 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/80"
+                >
                   <p className={item.type === "Inspeção" ? "text-sm font-semibold text-lime-200" : "text-sm font-semibold text-blue-200"}>
                     {item.type}
                   </p>
                   <h3 className="mt-2 font-medium text-zinc-100">{item.title}</h3>
                   <p className="mt-1 text-xs text-zinc-500">{item.plate}</p>
-                  <p className="mt-3 text-sm font-semibold text-zinc-200">{item.dueDate.getTime() > 0 ? formatDate(item.dueDate) : "Vencido por km"}</p>
+                  <p className="mt-3 text-sm font-semibold text-zinc-200">
+                    {item.dueDate.getTime() > 0 ? formatDate(item.dueDate) : "Vencido por km"}
+                  </p>
                   {item.kmRemaining !== null && (
                     <p className={item.kmRemaining <= 1000 ? "mt-1 text-xs font-semibold text-amber-200" : "mt-1 text-xs text-zinc-500"}>
                       {item.kmRemaining <= 0 ? "Km ultrapassados" : `${item.kmRemaining.toLocaleString("pt-PT")} km restantes`}
                     </p>
                   )}
-                </div>
+                </Link>
               ))
             )}
           </div>
@@ -222,13 +297,18 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             </div>
             <CalendarDays size={22} className="text-cyan-300" />
           </div>
-          <div className="grid max-h-[460px] gap-3 overflow-y-auto pr-1">
+
+          <div className="grid max-h-115 gap-3 overflow-y-auto pr-1">
             {calendar.map((event) => (
-              <div key={`${event.title}-${event.date}`} className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
+              <Link
+                key={`${event.title}-${event.date}`}
+                href={event.href}
+                className="block rounded-lg border border-zinc-800 bg-zinc-950/70 p-4 transition hover:border-cyan-300/50 hover:bg-zinc-900/80"
+              >
                 <p className="text-sm font-semibold text-cyan-200">{event.date}</p>
                 <h3 className="mt-2 text-base font-medium text-zinc-100">{event.title}</h3>
                 <p className="mt-3 inline-flex rounded-md border border-zinc-800 px-2 py-1 text-xs text-zinc-400">{event.tag}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </Panel>
