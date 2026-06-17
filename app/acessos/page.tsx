@@ -23,7 +23,12 @@ const notifyDays = [
   ["0", "Dom"],
 ];
 
-export default async function AccessPage() {
+type AccessPageProps = {
+  searchParams?: Promise<{ erro?: string }>;
+};
+
+export default async function AccessPage({ searchParams }: AccessPageProps) {
+  const params = (await searchParams) ?? {};
   const { users, sgqRecords, equipment } = await getModuleData();
 
   return (
@@ -33,6 +38,12 @@ export default async function AccessPage() {
         title="Utilizadores, acessos e registos SGQ"
         description="Define níveis de acesso e mantém registos controlados com código, versão, estado e aprovação."
       />
+
+      {params.erro ? (
+        <div className="rounded-lg border border-rose-400/30 bg-rose-400/10 p-4 text-sm font-medium text-rose-100">
+          {params.erro}
+        </div>
+      ) : null}
 
       <section className="grid gap-4 xl:grid-cols-2">
         <Panel>

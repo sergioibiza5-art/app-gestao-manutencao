@@ -2046,6 +2046,17 @@ export async function createUser(formData: FormData) {
     : text(formData, "email").toLowerCase();
   const equipmentIds = formData.getAll("ticketEquipmentId").filter((value): value is string => typeof value === "string" && value.length > 0);
 
+  if (role === "TICKET" && !username) {
+    redirect("/acessos?erro=Define%20um%20utilizador%20para%20o%20posto%20de%20ticket.");
+  }
+
+  if (username) {
+    const duplicate = await prisma.user.findUnique({ where: { username }, select: { id: true } });
+    if (duplicate) {
+      redirect(`/acessos?erro=${encodeURIComponent(`O utilizador "${username}" já existe. Usa outro nome de utilizador.`)}`);
+    }
+  }
+
   await prisma.$transaction(async (tx) => {
     const user = await tx.user.create({
       data: {
@@ -2089,11 +2100,28 @@ export async function updateUser(formData: FormData) {
   if (!id) return;
 
   const currentUser = await prisma.user.findUnique({
-  where: { id },
-  select: { username: true },
+    where: { id },
+    select: { username: true },
   });
 
-const finalUsername = username || currentUser?.username || null;
+  const finalUsername = username || currentUser?.username || null;
+
+  if (role === "TICKET" && !finalUsername) {
+    redirect("/acessos?erro=Define%20um%20utilizador%20para%20o%20posto%20de%20ticket.");
+  }
+
+  if (finalUsername) {
+    const duplicate = await prisma.user.findFirst({
+      where: {
+        username: finalUsername,
+        NOT: { id },
+      },
+      select: { id: true },
+    });
+    if (duplicate) {
+      redirect(`/acessos?erro=${encodeURIComponent(`O utilizador "${finalUsername}" já existe. Usa outro nome de utilizador.`)}`);
+    }
+  }
 
   await prisma.$transaction(async (tx) => {
     await tx.user.update({
