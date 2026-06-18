@@ -8,11 +8,9 @@ import {
   Package,
   Receipt,
   Ruler,
-  Wrench,
 } from "lucide-react";
 
 import {
-  createEquipmentInterventionLog,
   updateEquipmentBasics,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -549,42 +547,7 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
         </div>
       </Panel>
 
-      <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
-        <Panel>
-          <div className="flex items-center gap-3">
-            <Wrench size={22} className="text-cyan-300" />
-            <h2 className="text-xl font-semibold text-zinc-50">Registar intervenção</h2>
-          </div>
-
-          <form action={createEquipmentInterventionLog} className="mt-4 space-y-3">
-            <input type="hidden" name="equipmentId" value={equipment.id} />
-            <input name="title" required className={inputClass} placeholder="Título da intervenção" />
-
-            <div className="grid grid-cols-2 gap-3">
-              <select name="kind" className={inputClass}>
-                <option value="INSPECTION">Inspeção</option>
-                <option value="MAINTENANCE">Manutenção</option>
-              </select>
-
-              <select name="type" className={inputClass}>
-                <option value="INTERNAL">Interna</option>
-                <option value="EXTERNAL">Externa</option>
-              </select>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <input name="performedAt" type="date" className={inputClass} />
-              <input name="performedBy" className={inputClass} placeholder="Feito por" />
-            </div>
-
-            <textarea name="actionsDone" required className={textareaClass} placeholder="O que foi feito" />
-            <input name="result" className={inputClass} placeholder="Resultado / estado final" />
-            <textarea name="notes" className={textareaClass} placeholder="Notas" />
-
-            <button className={buttonClass}>Guardar intervenção</button>
-          </form>
-        </Panel>
-
+      <section>
         <Panel>
           <div className="flex items-center gap-3">
             <History size={22} className="text-amber-300" />
