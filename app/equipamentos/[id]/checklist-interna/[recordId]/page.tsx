@@ -97,8 +97,10 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
           </div>
 
 {record.workOrder && (
-  <Link
+  <a
     href={`/equipamentos/${equipment.id}/checklist-interna/${record.id}`}
+    target="_blank"
+    rel="noreferrer"
     className="mt-4 block rounded-lg border border-sky-300/20 bg-sky-300/10 p-3 transition hover:border-sky-300/50"
   >
     <p className="text-xs uppercase tracking-[0.14em] text-sky-300">
@@ -107,7 +109,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
     <p className="mt-1 text-sm font-semibold text-sky-100">
       Documento {record.workOrder.number}
     </p>
-  </Link>
+  </a>
 )}
 
         </Panel>
