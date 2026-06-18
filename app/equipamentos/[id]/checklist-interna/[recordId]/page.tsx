@@ -37,7 +37,8 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
   const notOkCount = record.responses.filter((response) => response.status === "NOT_OK").length;
   const okCount = record.responses.filter((response) => response.status === "OK").length;
   const photoCount = record.responses.reduce((total, response) => total + response.photos.length, 0);
-
+  const opDocument = record.workOrder?.documents.find((document) => document.fileUrl);
+  
   return (
     <AppShell activeHref="/equipamentos">
       <PageHeader
@@ -96,9 +97,9 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
             <p className="mt-1 text-sm font-medium text-zinc-100">{record.result || "Sem resultado final"}</p>
           </div>
 
-{record.workOrder && (
+{opDocument?.fileUrl && (
   <a
-    href={`/equipamentos/${equipment.id}/checklist-interna/${record.id}`}
+    href={opDocument.fileUrl}
     target="_blank"
     rel="noreferrer"
     className="mt-4 block rounded-lg border border-sky-300/20 bg-sky-300/10 p-3 transition hover:border-sky-300/50"
@@ -107,7 +108,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
       Ordem de serviço associada
     </p>
     <p className="mt-1 text-sm font-semibold text-sky-100">
-      Documento {record.workOrder.number}
+      {opDocument.title || record.documentNo || "Abrir documento"}
     </p>
   </a>
 )}
