@@ -98,7 +98,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
 
 {record.workOrder && (
   <Link
-    href={`/manutencao/${record.workOrder.scheduleId}`}
+    href={`/equipamentos/${equipment.id}/checklist-interna/${record.id}`}
     className="mt-4 block rounded-lg border border-sky-300/20 bg-sky-300/10 p-3 transition hover:border-sky-300/50"
   >
     <p className="text-xs uppercase tracking-[0.14em] text-sky-300">
@@ -119,7 +119,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
           <h2 className="text-xl font-semibold text-zinc-50">Registo de inspeção e manutenção</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-230rder-collapse text-left text-sm">
+          <table className="w-full min-w-230 border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-zinc-800 text-xs uppercase tracking-[0.14em] text-zinc-500">
                 <th className="px-3 py-3 font-medium">Verificar</th>
