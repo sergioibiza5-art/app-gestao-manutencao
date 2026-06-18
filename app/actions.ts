@@ -1760,7 +1760,7 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
 }
 
 export async function startWorkOrder(formData: FormData) {
-  await requireCanWrite();
+  const user = await requireCanWrite();
   const prisma = getPrisma();
   const workOrderId = text(formData, "workOrderId");
   if (!workOrderId) return;
@@ -1771,14 +1771,15 @@ export async function startWorkOrder(formData: FormData) {
 
     const now = new Date();
     await tx.workOrder.update({
-      where: { id: workOrderId },
-      data: {
-        status: "IN_PROGRESS",
-        startedAt: workOrder.startedAt ?? now,
-        pausedAt: null,
-        lastResumedAt: now,
-      },
-    });
+  where: { id: workOrderId },
+  data: {
+    status: "IN_PROGRESS",
+    startedAt: workOrder.startedAt ?? now,
+    pausedAt: null,
+    lastResumedAt: now,
+    performedBy: workOrder.performedBy ?? user.name,
+  },
+});
     await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
   });
 
@@ -1819,18 +1820,19 @@ export async function pauseWorkOrder(formData: FormData) {
 }
 
 export async function completeWorkOrder(formData: FormData) {
-  await requireCanWrite();
+  const user = await requireCanWrite();
   const prisma = getPrisma();
   const workOrderId = text(formData, "workOrderId");
   const equipmentId = text(formData, "equipmentId");
   const templateId = optionalText(formData, "templateId");
   const itemIds = formData.getAll("itemId").filter((value): value is string => typeof value === "string");
-  const performedAt = dateWithTime(formData, "performedAt", "performedTime") ?? new Date();
 
   if (!workOrderId || !equipmentId) return;
 
   const workOrder = await prisma.workOrder.findUnique({ where: { id: workOrderId } });
   if (!workOrder) return;
+
+  const performedAt = workOrder.startedAt ?? new Date();
   const completionMoment = new Date();
   const totalWorkSeconds =
     workOrder.totalWorkSeconds +
@@ -1846,7 +1848,7 @@ export async function completeWorkOrder(formData: FormData) {
             year: performedAt.getFullYear(),
             month: performedAt.getMonth() + 1,
             performedAt,
-            responsible: optionalText(formData, "performedBy"),
+            responsible: workOrder.performedBy,
             result: optionalText(formData, "result"),
             notes: optionalText(formData, "notes"),
             responses: {
@@ -1875,9 +1877,9 @@ export async function completeWorkOrder(formData: FormData) {
       description: optionalText(formData, "actionsDone") || "Ordem de servico executada.",
       type: workOrder.type,
       date: performedAt,
-      supplier: optionalText(formData, "supplier"),
-      performedBy: optionalText(formData, "performedBy"),
-      cost: decimal(formData, "amount"),
+      supplier: workOrder.performedBy,
+performedBy: workOrder.performedBy,
+cost: Number(((totalWorkSeconds / 3600) * Number(user.hourlyRate ?? 0)).toFixed(2)),
       notes: optionalText(formData, "notes"),
       equipmentId,
     },

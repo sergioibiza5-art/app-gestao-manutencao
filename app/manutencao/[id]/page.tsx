@@ -182,15 +182,15 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   Inicia a OP antes de concluir para o tempo ficar contado corretamente.
                 </div>
               )}
-              <div className="grid gap-3 md:grid-cols-3">
-                <input name="performedAt" type="date" className={inputClass} />
-                <input name="performedTime" type="time" className={inputClass} />
-                <input name="performedBy" className={inputClass} placeholder="Responsavel" />
-                <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
-                <input name="amount" className={inputClass} placeholder="Custo" />
-                <input name="result" className={inputClass} placeholder="Resultado" />
-              </div>
-              <textarea name="actionsDone" required className={textareaClass} placeholder="O que foi feito" />
+              <div className="grid gap-3 md:grid-cols-2">
+  <select name="result" className={inputClass} defaultValue="Aprovado">
+    <option value="Aprovado">Aprovado</option>
+    <option value="Reprovado">Reprovado</option>
+    <option value="Em observações">Em observações</option>
+  </select>
+</div>
+
+<textarea name="actionsDone" className={textareaClass} placeholder="O que foi feito" />
               <div className="space-y-2">
                 {template.items.map((item) => (
                   <div key={item.id} className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_150px_1fr]">
