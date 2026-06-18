@@ -1123,14 +1123,25 @@ export async function deleteMaintenanceSchedule(formData: FormData) {
 
 async function nextWorkOrderNumber() {
   const prisma = getPrisma();
-  const count = await prisma.workOrder.count();
-  return `OP-${String(count + 1).padStart(5, "0")}`;
+
+  const lastWorkOrder = await prisma.workOrder.findFirst({
+    orderBy: { sequence: "desc" },
+    select: { sequence: true },
+  });
+
+  return `OP-${String((lastWorkOrder?.sequence ?? 0) + 1).padStart(5, "0")}`;
 }
 
 async function nextTicketNumber() {
   const prisma = getPrisma();
-  const count = await prisma.maintenanceTicket.count();
-  return `TK-${String(count + 1).padStart(5, "0")}`;
+
+  const lastTicket = await prisma.maintenanceTicket.findFirst({
+    orderBy: { openedAt: "desc" },
+    select: { number: true },
+  });
+
+  const lastNumber = Number(lastTicket?.number?.replace(/\D/g, "") || 0);
+  return `TK-${String(lastNumber + 1).padStart(5, "0")}`;
 }
 
 function elapsedSeconds(startedAt: Date | null, end = new Date()) {

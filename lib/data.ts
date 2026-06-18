@@ -233,7 +233,6 @@ export async function getModuleData() {
         prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true } }),
         prisma.equipment.findMany({
           orderBy: { name: "asc" },
-          take: 100,
           include: {
            interventionPlans: true,
             equipmentType: true,
