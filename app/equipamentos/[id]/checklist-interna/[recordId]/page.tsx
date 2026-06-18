@@ -46,10 +46,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
         description={`${record.template.title} · ${equipment.name} · ${equipment.code ?? "sem código"} · ${equipment.equipmentType?.name ?? "sem tipo"}`}
         action={
           <div className="flex flex-wrap gap-2">
-            <Link href={`/equipamentos/${equipment.id}/checklist-interna`} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
-              <FileText size={17} />
-              Nova checklist
-            </Link>
+            
             <Link href={`/equipamentos/${equipment.id}`} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
               <ArrowLeft size={17} />
               Ficha
@@ -98,6 +95,21 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
             <p className="text-xs text-zinc-500">Resultado final</p>
             <p className="mt-1 text-sm font-medium text-zinc-100">{record.result || "Sem resultado final"}</p>
           </div>
+
+{record.workOrder && (
+  <Link
+    href={`/manutencao/${record.workOrder.scheduleId}`}
+    className="mt-4 block rounded-lg border border-sky-300/20 bg-sky-300/10 p-3 transition hover:border-sky-300/50"
+  >
+    <p className="text-xs uppercase tracking-[0.14em] text-sky-300">
+      Ordem de serviço associada
+    </p>
+    <p className="mt-1 text-sm font-semibold text-sky-100">
+      Documento {record.workOrder.number}
+    </p>
+  </Link>
+)}
+
         </Panel>
       </section>
 
@@ -107,7 +119,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
           <h2 className="text-xl font-semibold text-zinc-50">Registo de inspeção e manutenção</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[920px] border-collapse text-left text-sm">
+          <table className="w-full min-w-230rder-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-zinc-800 text-xs uppercase tracking-[0.14em] text-zinc-500">
                 <th className="px-3 py-3 font-medium">Verificar</th>

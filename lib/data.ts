@@ -461,6 +461,7 @@ export async function getInternalMaintenanceRecord(equipmentId: string, recordId
         include: {
           equipment: { include: { equipmentType: true } },
           template: true,
+          workOrder: true,
           responses: {
             orderBy: { item: { order: "asc" } },
             include: {
