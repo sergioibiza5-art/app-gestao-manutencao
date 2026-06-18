@@ -332,11 +332,28 @@ export async function getEquipmentDetail(id: string) {
             },
           },
           maintenanceLogs: { orderBy: { date: "desc" }, take: 50, include: { user: true } },
-          maintenanceSchedules: { orderBy: { scheduledAt: "asc" }, take: 50 },
-          calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30, include: { documents: true } },
-          expenses: { orderBy: { date: "desc" }, take: 50, include: { documents: true } },
-          documents: { orderBy: { createdAt: "desc" }, take: 30 },
-          consumables: { orderBy: { name: "asc" }, take: 50 },
+maintenanceSchedules: { orderBy: { scheduledAt: "asc" }, take: 50 },
+
+tickets: {
+  orderBy: { openedAt: "desc" },
+  select: {
+    id: true,
+    status: true,
+    totalCost: true,
+  },
+},
+workOrders: {
+  orderBy: { openedAt: "desc" },
+  select: {
+    id: true,
+    status: true,
+  },
+},
+
+calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30, include: { documents: true } },
+expenses: { orderBy: { date: "desc" }, include: { documents: true } },
+documents: { orderBy: { createdAt: "desc" }, take: 30 },
+consumables: { orderBy: { name: "asc" }, take: 50 },
         },
       });
 

@@ -8,16 +8,12 @@ import {
   Package,
   Receipt,
   Ruler,
-  Trash2,
   Wrench,
 } from "lucide-react";
 
 import {
   createEquipmentInterventionLog,
-  createEquipmentInterventionPlan,
-  deleteEquipmentInterventionPlan,
   updateEquipmentBasics,
-  updateEquipmentInterventionPlan,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import {
@@ -46,17 +42,17 @@ function typeLabel(type: string) {
 }
 
 function frequencyLabel(frequency: string) {
- const labels: Record<string, string> = {
-  DAILY: "Diária",
-  WEEKLY: "Semanal",
-  MONTHLY: "Mensal",
-  QUARTERLY: "Trimestral",
-  FOUR_MONTHLY: "Quadrimestral",
-  SEMIANNUAL: "Semestral",
-  ANNUAL: "Anual",
-  BIENNIAL: "Bienal (2 anos)",
-  FIVE_YEAR: "Quinquenal (5 anos)",
-};
+  const labels: Record<string, string> = {
+    DAILY: "Diária",
+    WEEKLY: "Semanal",
+    MONTHLY: "Mensal",
+    QUARTERLY: "Trimestral",
+    FOUR_MONTHLY: "Quadrimestral",
+    SEMIANNUAL: "Semestral",
+    ANNUAL: "Anual",
+    BIENNIAL: "Bienal (2 anos)",
+    FIVE_YEAR: "Quinquenal (5 anos)",
+  };
 
   return labels[frequency] ?? frequency;
 }
@@ -82,6 +78,19 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
     (sum, expense) => sum + Number(expense.amount ?? 0),
     0
   );
+
+const ticketCostTotal = equipment.tickets.reduce(
+  (sum, ticket) => sum + Number(ticket.totalCost ?? 0),
+  0
+);
+
+const openTicketsCount = equipment.tickets.filter((ticket) =>
+  ["OPEN", "IN_PROGRESS", "PAUSED", "DONE"].includes(ticket.status)
+).length;
+
+const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
+  ["IN_PROGRESS", "PAUSED"].includes(workOrder.status)
+).length;
 
   const historyItems = [
     ...equipment.interventionLogs.map((item) => ({
@@ -121,7 +130,7 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
       <PageHeader
         eyebrow="Ficha de equipamento"
         title={equipment.name}
-        description="Consulta o cadastro, os planos, as checklists internas e o histórico das intervenções efetuadas."
+        description="Consulta o cadastro, as checklists internas e o histórico das intervenções efetuadas."
         action={
           <div className="flex flex-wrap gap-2">
             {activeTemplate && (
@@ -144,6 +153,36 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
           </div>
         }
       />
+
+<section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+  <Panel>
+    <p className="text-sm text-zinc-500">Despesas</p>
+    <p className="mt-2 text-3xl font-semibold text-amber-200">
+      {formatCurrency(equipmentExpenseTotal)}
+    </p>
+  </Panel>
+
+  <Panel>
+    <p className="text-sm text-zinc-500">Tickets</p>
+    <p className="mt-2 text-3xl font-semibold text-cyan-200">
+      {formatCurrency(ticketCostTotal)}
+    </p>
+  </Panel>
+
+  <Panel>
+    <p className="text-sm text-zinc-500">Tickets abertos</p>
+    <p className="mt-2 text-3xl font-semibold text-orange-300">
+      {openTicketsCount}
+    </p>
+  </Panel>
+
+  <Panel>
+    <p className="text-sm text-zinc-500">Manutenções iniciadas</p>
+    <p className="mt-2 text-3xl font-semibold text-teal-300">
+      {activeWorkOrdersCount}
+    </p>
+  </Panel>
+</section>
 
       <section className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
         <Panel>
@@ -189,7 +228,7 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
               <div className="md:col-span-2">
                 <EmptyState
                   title="Sem planos definidos"
-                  description="Cria planos de inspeção ou manutenção para este equipamento."
+                  description="Este equipamento ainda não tem planos de inspeção ou manutenção definidos."
                 />
               </div>
             ) : (
@@ -264,137 +303,6 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
           </div>
         </Panel>
       </section>
-
-      <Panel>
-        <div className="flex items-center gap-3">
-          <ClipboardCheck size={22} className="text-teal-300" />
-          <h2 className="text-xl font-semibold text-zinc-50">Editar planos de intervenção</h2>
-        </div>
-
-        <div className="mt-4 grid gap-4 xl:grid-cols-2">
-          {equipment.interventionPlans.length === 0 ? (
-            <EmptyState
-              title="Sem planos para editar"
-              description="Cria um novo plano abaixo para este equipamento."
-            />
-          ) : (
-            equipment.interventionPlans.map((plan) => (
-              <form
-                key={plan.id}
-                action={updateEquipmentInterventionPlan}
-                className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-950/55 p-4"
-              >
-                <input type="hidden" name="id" value={plan.id} />
-                <input type="hidden" name="equipmentId" value={equipment.id} />
-
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <select name="kind" className={inputClass} defaultValue={plan.kind}>
-                    <option value="INSPECTION">Inspeção</option>
-                    <option value="MAINTENANCE">Manutenção</option>
-                  </select>
-
-                  <select name="type" className={inputClass} defaultValue={plan.type}>
-                    <option value="INTERNAL">Interna</option>
-                    <option value="EXTERNAL">Externa</option>
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <select name="frequency" className={inputClass} defaultValue={plan.frequency}>
-                    <option value="DAILY">Diária</option>
-                    <option value="WEEKLY">Semanal</option>
-                    <option value="MONTHLY">Mensal</option>
-                    <option value="QUARTERLY">Trimestral</option>
-                    <option value="FOUR_MONTHLY">Quadrimestral</option>
-                    <option value="SEMIANNUAL">Semestral</option>
-                    <option value="ANNUAL">Anual</option>
-                  </select>
-
-                  <select name="active" className={inputClass} defaultValue={plan.active ? "true" : "false"}>
-                    <option value="true">Ativo</option>
-                    <option value="false">Inativo</option>
-                  </select>
-                </div>
-
-                <textarea
-                  name="actions"
-                  required
-                  className={textareaClass}
-                  defaultValue={plan.actions}
-                  placeholder="Ações previstas"
-                />
-
-                <textarea
-                  name="notes"
-                  className={textareaClass}
-                  defaultValue={plan.notes ?? ""}
-                  placeholder="Notas"
-                />
-
-                <div className="flex flex-col gap-2 sm:flex-row">
-                  <button className={`${buttonClass} flex-1`}>Guardar plano</button>
-
-                  <button
-                    formAction={deleteEquipmentInterventionPlan}
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 text-sm font-semibold text-red-200 transition hover:border-red-400"
-                  >
-                    <Trash2 size={16} />
-                    Apagar
-                  </button>
-                </div>
-              </form>
-            ))
-          )}
-        </div>
-
-        <div className="mt-6 rounded-xl border border-zinc-800 bg-black/20 p-4">
-          <h3 className="font-semibold text-zinc-100">Novo plano</h3>
-
-          <form action={createEquipmentInterventionPlan} className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-            <input type="hidden" name="equipmentId" value={equipment.id} />
-
-            <select name="kind" className={inputClass}>
-              <option value="INSPECTION">Inspeção</option>
-              <option value="MAINTENANCE">Manutenção</option>
-            </select>
-
-            <select name="type" className={inputClass}>
-              <option value="INTERNAL">Interna</option>
-              <option value="EXTERNAL">Externa</option>
-            </select>
-
-            <select name="frequency" className={inputClass}>
-              <option value="DAILY">Diária</option>
-              <option value="WEEKLY">Semanal</option>
-              <option value="MONTHLY">Mensal</option>
-              <option value="QUARTERLY">Trimestral</option>
-              <option value="FOUR_MONTHLY">Quadrimestral</option>
-              <option value="SEMIANNUAL">Semestral</option>
-              <option value="ANNUAL">Anual</option>
-            </select>
-
-            <select name="active" className={inputClass}>
-              <option value="true">Ativo</option>
-              <option value="false">Inativo</option>
-            </select>
-
-            <button className={buttonClass}>Criar plano</button>
-
-            <textarea
-              name="actions"
-              required
-              className={`${textareaClass} md:col-span-2 xl:col-span-5`}
-              placeholder="Ações previstas"
-            />
-
-            <textarea
-              name="notes"
-              className={`${textareaClass} md:col-span-2 xl:col-span-5`}
-              placeholder="Notas"
-            />
-          </form>
-        </div>
-      </Panel>
 
       <Panel>
         <div className="flex items-center gap-3">
