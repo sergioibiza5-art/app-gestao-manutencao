@@ -232,7 +232,7 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
         </Panel>
 
         <Panel>
-          <p className="text-sm text-zinc-500">Inativos por OP reprovada</p>
+          <p className="text-sm text-zinc-500">Inativos</p>
           <p className="mt-2 text-3xl font-semibold text-rose-200">{inactiveCount}</p>
         </Panel>
 
