@@ -332,7 +332,13 @@ export async function getEquipmentDetail(id: string) {
             },
           },
           maintenanceLogs: { orderBy: { date: "desc" }, take: 50, include: { user: true } },
-maintenanceSchedules: { orderBy: { scheduledAt: "asc" }, take: 50 },
+maintenanceSchedules: {
+  orderBy: { scheduledAt: "asc" },
+  take: 50,
+  include: {
+    workOrder: true,
+  },
+},
 
 tickets: {
   orderBy: { openedAt: "desc" },

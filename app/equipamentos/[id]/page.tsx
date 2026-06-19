@@ -222,34 +222,39 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
   </div>
 
   <div className="mt-4 space-y-4">
-    {equipment.interventionPlans.length > 0 && (
-      <div className="grid gap-3 md:grid-cols-2">
-        {equipment.interventionPlans.map((plan) => (
-          <article key={plan.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h3 className="font-semibold text-zinc-100">
-                  {kindLabel(plan.kind)} {typeLabel(plan.type).toLowerCase()}
-                </h3>
-                <p className="mt-1 text-sm text-teal-300">
-                  Periodicidade: {frequencyLabel(plan.frequency)}
-                </p>
-              </div>
+    {equipment.maintenanceSchedules.length > 0 && (
+  <div className="grid gap-3 md:grid-cols-2">
+    {equipment.maintenanceSchedules.map((schedule) => (
+          <article key={schedule.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+  <div className="flex items-start justify-between gap-3">
+    <div>
+      <h3 className="font-semibold text-zinc-100">
+        {schedule.title}
+      </h3>
+      <p className="mt-1 text-sm text-teal-300">
+        Periodicidade: {frequencyLabel(schedule.frequency)}
+      </p>
+    </div>
 
-              <span
-                className={
-                  plan.active
-                    ? "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"
-                    : "rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-400"
-                }
-              >
-                {plan.active ? "Ativo" : "Inativo"}
-              </span>
-            </div>
+    <span
+      className={
+        schedule.workOrder
+          ? "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"
+          : "rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-400"
+      }
+    >
+      {schedule.workOrder ? "OP criada" : "Agendado"}
+    </span>
+  </div>
 
-            <p className="mt-3 text-sm leading-6 text-zinc-400">{plan.actions}</p>
-            {plan.notes && <p className="mt-2 text-xs text-zinc-500">{plan.notes}</p>}
-          </article>
+  <p className="mt-3 text-sm leading-6 text-zinc-400">
+    {schedule.description ?? "Sem descrição"}
+  </p>
+
+  <p className="mt-2 text-xs text-zinc-500">
+    Próxima data: {formatDate(schedule.scheduledAt)}
+  </p>
+</article>
         ))}
       </div>
     )}
@@ -276,7 +281,8 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
       </div>
     )}
 
-    {equipment.interventionPlans.length === 0 && (!activeTemplate || activeTemplate.items.length === 0) && (
+    {equipment.maintenanceSchedules.length === 0 &&
+ (!activeTemplate || activeTemplate.items.length === 0) && (
       <EmptyState
         title="Sem planos definidos"
         description="Este equipamento ainda não tem planos nem checklist associada."
