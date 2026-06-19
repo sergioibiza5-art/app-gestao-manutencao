@@ -1389,6 +1389,10 @@ export async function disablePushSubscription(endpoint: string) {
 
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
+
+if (user.role === "VIEWER") {
+  return;
+}
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
   const problem = text(formData, "problem");
@@ -1475,7 +1479,7 @@ console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
         "<b>Estado:</b> Aberto",
         "<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets",
       ].join("\n"),
-      notificationData.telegramChatIds.length > 0 ? notificationData.telegramChatIds : undefined,
+      notificationData.telegramChatIds,
     );
   }
 
