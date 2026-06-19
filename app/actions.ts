@@ -1941,9 +1941,13 @@ export async function validateWorkOrder(formData: FormData) {
   const workOrderId = text(formData, "workOrderId");
   if (!workOrderId) return;
 
+  let equipmentId: string | null = null;
+
   await prisma.$transaction(async (tx) => {
     const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
     if (!workOrder || workOrder.status !== "DONE") return;
+
+    equipmentId = workOrder.equipmentId;
 
     await tx.workOrder.update({
       where: { id: workOrderId },
@@ -1952,11 +1956,21 @@ export async function validateWorkOrder(formData: FormData) {
         validatedAt: new Date(),
       },
     });
-    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+
+    await tx.equipment.update({
+      where: { id: workOrder.equipmentId },
+      data: {
+        status: String(workOrder.result || "").toLowerCase() === "reprovado" ? "INACTIVE" : "ACTIVE",
+      },
+    });
   });
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/equipamentos");
+
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+
   const scheduleId = optionalText(formData, "scheduleId");
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
