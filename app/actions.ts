@@ -1461,6 +1461,10 @@ telegramChatIds: timedRecipients
   });
 
   if (notificationData.recipientIds.length > 0) {
+
+console.log("RECIPIENT IDS:", notificationData.recipientIds);
+console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
+
     await sendTelegramMessage(
       [
         "🚨 <b>Novo ticket de manutenção</b>",
