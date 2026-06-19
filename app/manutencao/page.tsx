@@ -24,6 +24,7 @@ import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -286,7 +287,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               </p>
             </div>
 
-            <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_auto]">
+            <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_auto_auto]">
               <select name="view" defaultValue={selectedView} className={inputClass}>
                 <option value="day">Dia</option>
                 <option value="week">Semana</option>
@@ -301,6 +302,17 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 <option value="INTERNAL">Internas</option>
                 <option value="EXTERNAL">Externas</option>
               </select>
+
+<Link
+  href={
+    selectedView === "year"
+      ? `/manutencao?view=month&date=${selectedDate}&type=${selectedType}`
+      : `/manutencao?view=year&date=${selectedDate}&type=${selectedType}`
+  }
+  className="inline-flex h-11 items-center justify-center rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-300"
+>
+  {selectedView === "year" ? "Mostrar mês" : "Mostrar ano"}
+</Link>
 
               <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
                 <Filter size={17} />
