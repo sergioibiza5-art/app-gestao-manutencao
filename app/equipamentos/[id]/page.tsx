@@ -216,50 +216,74 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
         </Panel>
 
         <Panel>
-          <div className="flex items-center gap-3">
-            <ClipboardCheck size={22} className="text-teal-300" />
-            <h2 className="text-xl font-semibold text-zinc-50">Planos de intervenção</h2>
-          </div>
+  <div className="flex items-center gap-3">
+    <ClipboardCheck size={22} className="text-teal-300" />
+    <h2 className="text-xl font-semibold text-zinc-50">Planos de intervenção</h2>
+  </div>
 
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            {equipment.interventionPlans.length === 0 ? (
-              <div className="md:col-span-2">
-                <EmptyState
-                  title="Sem planos definidos"
-                  description="Este equipamento ainda não tem planos de inspeção ou manutenção definidos."
-                />
+  <div className="mt-4 space-y-4">
+    {equipment.interventionPlans.length > 0 && (
+      <div className="grid gap-3 md:grid-cols-2">
+        {equipment.interventionPlans.map((plan) => (
+          <article key={plan.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h3 className="font-semibold text-zinc-100">
+                  {kindLabel(plan.kind)} {typeLabel(plan.type).toLowerCase()}
+                </h3>
+                <p className="mt-1 text-sm text-teal-300">
+                  Periodicidade: {frequencyLabel(plan.frequency)}
+                </p>
               </div>
-            ) : (
-              equipment.interventionPlans.map((plan) => (
-                <article key={plan.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-semibold text-zinc-100">
-                        {kindLabel(plan.kind)} {typeLabel(plan.type).toLowerCase()}
-                      </h3>
-                      <p className="mt-1 text-sm text-zinc-500">
-                        {frequencyLabel(plan.frequency)}
-                      </p>
-                    </div>
 
-                    <span
-                      className={
-                        plan.active
-                          ? "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"
-                          : "rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-400"
-                      }
-                    >
-                      {plan.active ? "Ativo" : "Inativo"}
-                    </span>
-                  </div>
+              <span
+                className={
+                  plan.active
+                    ? "rounded-md bg-teal-300/10 px-2 py-1 text-xs text-teal-200"
+                    : "rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-400"
+                }
+              >
+                {plan.active ? "Ativo" : "Inativo"}
+              </span>
+            </div>
 
-                  <p className="mt-3 text-sm leading-6 text-zinc-400">{plan.actions}</p>
-                  {plan.notes && <p className="mt-2 text-xs text-zinc-500">{plan.notes}</p>}
-                </article>
-              ))
-            )}
-          </div>
-        </Panel>
+            <p className="mt-3 text-sm leading-6 text-zinc-400">{plan.actions}</p>
+            {plan.notes && <p className="mt-2 text-xs text-zinc-500">{plan.notes}</p>}
+          </article>
+        ))}
+      </div>
+    )}
+
+    {activeTemplate && activeTemplate.items.length > 0 && (
+      <div className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-zinc-500">
+          Checklist associada
+        </p>
+
+        <div className="space-y-2">
+          {activeTemplate.items.map((item) => (
+            <div key={item.id} className="rounded-lg border border-zinc-800 bg-black/20 p-3">
+              <p className="text-sm font-semibold text-zinc-100">
+                {item.order}. {item.check}
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                {item.expectedCondition}
+                {item.photoRequired ? " · Foto obrigatória" : ""}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {equipment.interventionPlans.length === 0 && (!activeTemplate || activeTemplate.items.length === 0) && (
+      <EmptyState
+        title="Sem planos definidos"
+        description="Este equipamento ainda não tem planos nem checklist associada."
+      />
+    )}
+  </div>
+</Panel>
       </section>
 
       <section className="grid gap-4 xl:grid-cols-2">
