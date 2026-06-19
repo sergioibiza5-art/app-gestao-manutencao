@@ -1,10 +1,12 @@
 export async function sendTelegramMessage(message: string, chatIds?: string[]) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const defaultChatId = process.env.TELEGRAM_CHAT_ID;
-  const recipients = chatIds && chatIds.length > 0 ? [...new Set(chatIds)] : defaultChatId ? [defaultChatId] : [];
+
+  const recipients =
+    chatIds && chatIds.length > 0
+      ? [...new Set(chatIds)]
+      : [];
 
   if (!token || recipients.length === 0) {
-    console.warn("Telegram não configurado.");
     return;
   }
 

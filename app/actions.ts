@@ -1444,9 +1444,10 @@ export async function createMaintenanceTicket(formData: FormData) {
 
     return {
       recipientIds: timedRecipients.map((recipient) => recipient.id),
-      telegramChatIds: timedRecipients
-        .filter((recipient) => recipient.telegramEnabled !== false && recipient.telegramChatId)
-        .map((recipient) => recipient.telegramChatId!),
+telegramChatIds: timedRecipients
+  .filter((recipient) => recipient.telegramEnabled !== false)
+  .map((recipient) => recipient.telegramChatId)
+  .filter((chatId): chatId is string => Boolean(chatId)),
       title: `Novo ticket ${ticket.number}`,
       body: `${equipment.name}: ${ticket.title}`,
       url: "/tickets",
