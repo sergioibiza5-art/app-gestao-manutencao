@@ -189,6 +189,7 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
 
   const activeCount = equipment.filter((item) => item.status === "ACTIVE").length;
   const maintenanceCount = equipment.filter((item) => item.status === "MAINTENANCE").length;
+  const inactiveCount = equipment.filter((item) => item.status === "INACTIVE").length;
   const measurementCount = equipment.filter((item) => item.isMeasurementMonitoring).length;
 
   const filterParams = {
@@ -214,7 +215,7 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
         }
       />
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         <Panel>
           <p className="text-sm text-zinc-500">Total</p>
           <p className="mt-2 text-3xl font-semibold text-zinc-50">{equipment.length}</p>
@@ -228,6 +229,11 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
         <Panel>
           <p className="text-sm text-zinc-500">Em manutenção</p>
           <p className="mt-2 text-3xl font-semibold text-amber-200">{maintenanceCount}</p>
+        </Panel>
+
+        <Panel>
+          <p className="text-sm text-zinc-500">Inativos por OP reprovada</p>
+          <p className="mt-2 text-3xl font-semibold text-rose-200">{inactiveCount}</p>
         </Panel>
 
         <Panel>
