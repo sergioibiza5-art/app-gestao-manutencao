@@ -199,7 +199,25 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
   const groupedSchedules = groupByDate(schedules);
   const year = new Date().getFullYear();
+const monthNames = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
 
+const schedulesByMonth = monthNames.map((month, index) => ({
+  month,
+  items: schedules.filter((schedule) => schedule.scheduledAt.getMonth() === index),
+}));
   return (
     <AppShell activeHref="/manutencao">
       <PageHeader
@@ -321,8 +339,54 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
             </form>
           </div>
 
-          <div className="mt-5 space-y-4">
-            {schedules.length === 0 ? (
+          {selectedView === "year" ? (
+  <div className="mt-5">
+    <h3 className="mb-4 text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
+      Calendário anual
+    </h3>
+
+    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      {schedulesByMonth.map(({ month, items }) => (
+        <div
+          key={month}
+          className="min-h-52.5 overflow-hidden rounded-xl border border-teal-300/25 bg-zinc-950/60"
+        >
+          <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">
+              {month}
+            </p>
+          </div>
+
+          <div className="space-y-2 p-3">
+            {items.length === 0 ? (
+              <p className="text-xs text-zinc-600">Sem agendamentos</p>
+            ) : (
+              items.map((schedule) => (
+                <a
+                  key={schedule.id}
+                  href={`/manutencao/${schedule.id}`}
+                  className="block rounded-lg border border-zinc-800 bg-black/30 p-2 transition hover:border-teal-300/50"
+                >
+                  <p className="text-xs font-semibold text-teal-300">
+                    {formatDate(schedule.scheduledAt)}
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-zinc-100">
+                    {schedule.title}
+                  </p>
+                  <p className="mt-1 text-xs text-zinc-500">
+                    {schedule.equipment.name} · {typeLabel(schedule.type)}
+                  </p>
+                </a>
+              ))
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+) : (
+  <div className="mt-5 space-y-4">
+    {schedules.length === 0 ? (
               <EmptyState
                 title="Sem agendamentos neste período"
                 description="Cria um agendamento anual ou altera o filtro para veres outros períodos."
@@ -510,7 +574,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 </div>
               ))
             )}
-          </div>
+                   </div>
+        )}
         </Panel>
       </section>
 
