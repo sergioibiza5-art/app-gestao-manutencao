@@ -1054,8 +1054,8 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
     return;
   }
 
-  const year = intValue(formData, "year") || new Date().getFullYear();
-  const startDate = optionalDate(formData, "startDate") ?? new Date(year, 0, 1);
+  const startDate = optionalDate(formData, "startDate") ?? new Date();
+  const year = startDate.getFullYear();
   const frequency = enumValue(formData, "frequency", taskFrequencies, "MONTHLY");
   const dates = generateMaintenanceDates(year, startDate, frequency);
 

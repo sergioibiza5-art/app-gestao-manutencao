@@ -271,21 +271,12 @@ const schedulesByMonth = monthNames.map((month, index) => ({
   <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
 </select>
             </div>
-
-              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-3">
-               <input
-                name="year"
-                defaultValue={year}
-               className={inputClass}
-               placeholder="Ano"
-             />
-
-              <input
-               name="startDate"
-               type="date"
-               className={`${inputClass} min-w-42.5`}
-             />
-            </div>
+             <input
+  name="startDate"
+  type="date"
+  required
+  className={inputClass}
+/>
 
             <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
             <select name="costCenter" className={inputClass} defaultValue="">
