@@ -56,6 +56,8 @@ const monthNames = [
   "Dezembro",
 ];
 
+const weekDayNames = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+
 type MaintenancePageProps = {
   searchParams: Promise<{
     view?: string;
@@ -188,6 +190,14 @@ function groupByDate<T extends { scheduledAt: Date }>(items: T[]) {
   }, {});
 }
 
+function sameCalendarDay(left: Date, right: Date) {
+  return (
+    left.getFullYear() === right.getFullYear() &&
+    left.getMonth() === right.getMonth() &&
+    left.getDate() === right.getDate()
+  );
+}
+
 export default async function MaintenancePage({ searchParams }: MaintenancePageProps) {
   const filters = await searchParams;
   const selectedView = filters.view || "month";
@@ -204,6 +214,16 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   });
 
   const groupedSchedules = groupByDate(schedules);
+  const weekBoardDays = weekDayNames.map((name, index) => {
+    const day = new Date(range.start);
+    day.setDate(range.start.getDate() + index);
+
+    return {
+      name,
+      date: day,
+      items: schedules.filter((schedule) => sameCalendarDay(new Date(schedule.scheduledAt), day)),
+    };
+  });
 
   const selectedMonthDate = new Date(selectedDate);
 
@@ -495,6 +515,55 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          ) : selectedView === "week" ? (
+            <div className="mt-5">
+              <div className="mb-4 flex flex-col gap-1">
+                <h3 className="text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
+                  Calendário semanal
+                </h3>
+                <p className="text-sm text-zinc-500">
+                  {formatDate(weekBoardDays[0].date)} até {formatDate(weekBoardDays[4].date)}
+                </p>
+              </div>
+
+              <div className="grid overflow-hidden rounded-xl border border-teal-300/25 bg-zinc-950/60 md:grid-cols-5">
+                {weekBoardDays.map((day) => (
+                  <div key={day.name} className="min-h-120 border-b border-teal-300/20 md:border-b-0 md:border-r md:last:border-r-0">
+                    <Link
+                      href={`/manutencao?view=day&date=${dateInputValue(day.date)}&type=${selectedType}`}
+                      className="block border-b border-teal-300/25 bg-teal-200/70 px-3 py-3 text-center transition hover:bg-teal-100"
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-950">{day.name}</p>
+                      <p className="mt-1 text-[11px] font-semibold text-teal-900">{formatDate(day.date)}</p>
+                      <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-teal-950/70">
+                        Ver dia
+                      </p>
+                    </Link>
+
+                    <div className="min-h-104 space-y-2 bg-teal-50/10 p-3">
+                      {day.items.length === 0 ? (
+                        <p className="text-sm text-zinc-600">Sem manutenções</p>
+                      ) : (
+                        day.items.map((schedule) => (
+                          <Link
+                            key={schedule.id}
+                            href={`/manutencao/${schedule.id}`}
+                            className={`block rounded-lg border p-3 transition ${scheduleCardTone(schedule)}`}
+                          >
+                            <p className="text-xs font-semibold text-teal-300">{formatDate(schedule.scheduledAt)}</p>
+                            <p className={`mt-1 font-semibold ${titleTone(schedule)}`}>{schedule.title}</p>
+                            <p className="mt-1 text-xs text-zinc-500">{schedule.equipment.name}</p>
+                            <p className="mt-2 inline-flex rounded-md border border-zinc-800 px-2 py-1 text-[11px] text-zinc-400">
+                              {typeLabel(schedule.type)}
+                            </p>
+                          </Link>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ) : (
