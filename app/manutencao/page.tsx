@@ -207,8 +207,6 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   const annualCalendar = filters.calendar === "year";
   const selectedEquipmentId = filters.equipmentId || "ALL";
 
-  const dataView = annualCalendar ? "year" : selectedView === "month-weeks" ? "month" : selectedView;
-
   const { equipment, maintenanceLogs, schedules, range } = await getMaintenanceData({
   view: selectedView,
   date: selectedDate,

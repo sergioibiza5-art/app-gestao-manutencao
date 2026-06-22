@@ -49,6 +49,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         tasks,
         calendar,
         vehicles,
+        calibrationLogs,
       ] = await Promise.all([
         prisma.task.count({
           where: {
@@ -108,6 +109,12 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
             expenses: true,
           },
         }),
+        prisma.calibrationLog.findMany({
+          where: { nextDueDate: { not: null } },
+          orderBy: { calibrationDate: "desc" },
+          take: 400,
+          include: { equipment: true },
+        }),
       ]);
       const fleetAlerts = vehicles
         .map(enrichVehicle)
@@ -138,6 +145,17 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       const fleetDueLimit = new Date(now);
       fleetDueLimit.setDate(fleetDueLimit.getDate() + 30);
       const fleetDueSoon = fleetAlerts.filter((item) => item.dueDate <= fleetDueLimit || (item.kmRemaining !== null && item.kmRemaining <= 1000)).length;
+      const calibrationDueLimit = new Date(now);
+      calibrationDueLimit.setDate(calibrationDueLimit.getDate() + 60);
+      const latestCalibrationByEquipment = Object.values(
+        calibrationLogs.reduce<Record<string, (typeof calibrationLogs)[number]>>((acc, log) => {
+          acc[log.equipmentId] ??= log;
+          return acc;
+        }, {}),
+      );
+      const calibrationAlerts = latestCalibrationByEquipment
+        .filter((log) => log.nextDueDate && log.nextDueDate <= calibrationDueLimit)
+        .sort((a, b) => (a.nextDueDate?.getTime() ?? 0) - (b.nextDueDate?.getTime() ?? 0));
 
       const operationalAlerts = [
   ...tasks
@@ -155,6 +173,21 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       href: `/tarefas?taskId=${task.id}`,
       tone: "teal",
     })),
+
+  ...calibrationAlerts.map((log) => {
+    const daysLeft = log.nextDueDate ? Math.ceil((log.nextDueDate.getTime() - todayStart.getTime()) / 86_400_000) : null;
+
+    return {
+      id: `calibration-${log.id}`,
+      type: "CALIBRATION",
+      title: log.title,
+      detail: `${log.equipment.name}${daysLeft !== null ? ` - ${daysLeft < 0 ? "vencida" : `${daysLeft} dias restantes`}` : ""}`,
+      status: daysLeft !== null && daysLeft < 0 ? "CALIBRATION_EXPIRED" : "CALIBRATION_DUE",
+      date: log.nextDueDate,
+      href: "/calibracao",
+      tone: daysLeft !== null && daysLeft < 0 ? "rose" : daysLeft !== null && daysLeft <= 30 ? "amber" : "teal",
+    };
+  }),
 
   ...calendar
     .filter((schedule) => {
@@ -187,6 +220,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         tasks,
         calendar,
         fleetAlerts,
+        calibrationAlerts,
         ticketAlerts,
         operationalAlerts,
         range,
@@ -204,9 +238,186 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       tasks: [],
       calendar: [],
       fleetAlerts: [],
+      calibrationAlerts: [],
       ticketAlerts: [],
       operationalAlerts: [],
       range: dashboardRange(),
+    },
+  );
+}
+
+function endOfDay(date: Date) {
+  const value = new Date(date);
+  value.setHours(23, 59, 59, 999);
+  return value;
+}
+
+function kpiRange(yearValue?: string, monthValue?: string) {
+  const now = new Date();
+  const year = yearValue && yearValue !== "all" ? Number(yearValue) : now.getFullYear();
+  const month = monthValue && monthValue !== "all" ? Number(monthValue) : null;
+
+  if (month !== null && Number.isFinite(month)) {
+    return {
+      selectedYear: String(year),
+      selectedMonth: String(month),
+      start: new Date(year, month - 1, 1),
+      end: new Date(year, month, 0, 23, 59, 59, 999),
+    };
+  }
+
+  return {
+    selectedYear: String(year),
+    selectedMonth: "all",
+    start: new Date(year, 0, 1),
+    end: new Date(year, 11, 31, 23, 59, 59, 999),
+  };
+}
+
+function includesAny(value: string, words: string[]) {
+  const normalized = value.toLowerCase();
+  return words.some((word) => normalized.includes(word));
+}
+
+function secondsBetween(start: Date | null, end: Date | null) {
+  if (!start || !end) return 0;
+  return Math.max(Math.floor((end.getTime() - start.getTime()) / 1000), 0);
+}
+
+function percentage(value: number, total: number) {
+  if (total <= 0) return 0;
+  return Number(((value / total) * 100).toFixed(1));
+}
+
+export async function getKpiData(filters?: { year?: string; month?: string }) {
+  return readDb(
+    async (prisma) => {
+      const range = kpiRange(filters?.year, filters?.month);
+      const [equipmentCount, workOrders, tickets, years] = await Promise.all([
+        prisma.equipment.count({ where: { status: { not: "DISCARDED" } } }),
+        prisma.workOrder.findMany({
+          where: { openedAt: { gte: range.start, lte: range.end } },
+          include: { equipment: true, schedule: true, ticket: true },
+          orderBy: { openedAt: "asc" },
+        }),
+        prisma.maintenanceTicket.findMany({
+          where: { openedAt: { gte: range.start, lte: range.end } },
+          include: { equipment: true, workOrder: true },
+          orderBy: { openedAt: "asc" },
+        }),
+        prisma.workOrder.findMany({
+          select: { openedAt: true },
+          orderBy: { openedAt: "asc" },
+          take: 5000,
+        }),
+      ]);
+
+      const periodSeconds = Math.max(secondsBetween(range.start, range.end), 1);
+      const failureTickets = tickets.filter((ticket) => ticket.status !== "CANCELED");
+      const downtimeSeconds = failureTickets.reduce((sum, ticket) => {
+        const stored = Number(ticket.downtimeSeconds ?? 0);
+        if (stored > 0) return sum + stored;
+        return sum + secondsBetween(ticket.openedAt, ticket.completedAt ?? ticket.validatedAt ?? new Date());
+      }, 0);
+
+      const completedTickets = failureTickets.filter((ticket) => ticket.completedAt || ticket.validatedAt);
+      const mttrSeconds =
+        completedTickets.length > 0
+          ? completedTickets.reduce((sum, ticket) => {
+              const stored = Number(ticket.totalWorkSeconds ?? 0);
+              if (stored > 0) return sum + stored;
+              return sum + secondsBetween(ticket.startedAt ?? ticket.openedAt, ticket.completedAt ?? ticket.validatedAt);
+            }, 0) / completedTickets.length
+          : 0;
+
+      const totalOperatingSeconds = Math.max(equipmentCount, 1) * periodSeconds;
+      const mtbfHours = failureTickets.length > 0 ? (totalOperatingSeconds - downtimeSeconds) / failureTickets.length / 3600 : totalOperatingSeconds / 3600;
+      const availability = percentage(Math.max(totalOperatingSeconds - downtimeSeconds, 0), totalOperatingSeconds);
+
+      const preventiveWorkOrders = workOrders.filter((workOrder) =>
+        includesAny(`${workOrder.title} ${workOrder.schedule?.costCenter ?? ""}`, ["prevent"]),
+      );
+      const preventivePercentage = percentage(preventiveWorkOrders.length, workOrders.length);
+
+      const completedWorkOrders = workOrders.filter((workOrder) => ["DONE", "VALIDATED"].includes(workOrder.status));
+      const scheduledCompleted = completedWorkOrders.filter((workOrder) => workOrder.schedule?.scheduledAt && workOrder.closedAt);
+      const onTimeCompleted = scheduledCompleted.filter((workOrder) => workOrder.closedAt! <= endOfDay(workOrder.schedule!.scheduledAt));
+      const onTimePercentage = percentage(onTimeCompleted.length, scheduledCompleted.length);
+
+      const workOrdersByStatus = Object.values(
+        workOrders.reduce<Record<string, { name: string; count: number }>>((acc, workOrder) => {
+          acc[workOrder.status] ??= { name: workOrder.status, count: 0 };
+          acc[workOrder.status].count += 1;
+          return acc;
+        }, {}),
+      );
+
+      const failuresByEquipment = Object.values(
+        failureTickets.reduce<Record<string, { id: string; name: string; count: number; downtimeHours: number }>>((acc, ticket) => {
+          const key = ticket.equipmentId;
+          acc[key] ??= { id: key, name: ticket.equipment.name, count: 0, downtimeHours: 0 };
+          acc[key].count += 1;
+          const stored = Number(ticket.downtimeSeconds ?? 0);
+          acc[key].downtimeHours += (stored > 0 ? stored : secondsBetween(ticket.openedAt, ticket.completedAt ?? ticket.validatedAt ?? new Date())) / 3600;
+          return acc;
+        }, {}),
+      ).sort((a, b) => b.count - a.count || b.downtimeHours - a.downtimeHours);
+
+      const recurringProblems = Object.values(
+        failureTickets.reduce<Record<string, { name: string; equipment: string; count: number }>>((acc, ticket) => {
+          const key = `${ticket.equipmentId}-${ticket.title.toLowerCase()}`;
+          acc[key] ??= { name: ticket.title, equipment: ticket.equipment.name, count: 0 };
+          acc[key].count += 1;
+          return acc;
+        }, {}),
+      ).sort((a, b) => b.count - a.count);
+
+      return {
+        selectedYear: range.selectedYear,
+        selectedMonth: range.selectedMonth,
+        years: Array.from(new Set(years.map((item) => item.openedAt.getFullYear()))).sort((a, b) => b - a),
+        period: { start: range.start, end: range.end },
+        cards: {
+          mtbfHours,
+          preventivePercentage,
+          onTimePercentage,
+          mttrHours: mttrSeconds / 3600,
+          availability,
+        },
+        totals: {
+          equipmentCount,
+          workOrders: workOrders.length,
+          completedWorkOrders: completedWorkOrders.length,
+          failures: failureTickets.length,
+          downtimeHours: downtimeSeconds / 3600,
+        },
+        workOrdersByStatus,
+        failuresByEquipment,
+        recurringProblems,
+      };
+    },
+    {
+      selectedYear: String(new Date().getFullYear()),
+      selectedMonth: "all",
+      years: [new Date().getFullYear()],
+      period: kpiRange().start ? { start: kpiRange().start, end: kpiRange().end } : { start: new Date(), end: new Date() },
+      cards: {
+        mtbfHours: 0,
+        preventivePercentage: 0,
+        onTimePercentage: 0,
+        mttrHours: 0,
+        availability: 0,
+      },
+      totals: {
+        equipmentCount: 0,
+        workOrders: 0,
+        completedWorkOrders: 0,
+        failures: 0,
+        downtimeHours: 0,
+      },
+      workOrdersByStatus: [],
+      failuresByEquipment: [],
+      recurringProblems: [],
     },
   );
 }

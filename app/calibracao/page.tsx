@@ -1,4 +1,4 @@
-import { FileSpreadsheet, Search } from "lucide-react";
+import { AlertTriangle, CalendarDays, FileSpreadsheet, Search } from "lucide-react";
 
 import { createCalibrationLog, importCalibrationsCsv, updateCalibrationLog } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -9,11 +9,55 @@ import { formatDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 type CalibrationPageProps = {
-  searchParams?: Promise<{ q?: string; approved?: string }>;
+  searchParams?: Promise<{ q?: string; approved?: string; year?: string }>;
 };
+
+const monthNames = [
+  "Janeiro",
+  "Fevereiro",
+  "Marco",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
 
 function normalize(value: unknown) {
   return String(value ?? "").toLowerCase();
+}
+
+function calibrationTone(nextDueDate: Date | null) {
+  if (!nextDueDate) return "border-zinc-800 bg-black/30 text-zinc-100";
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const due = new Date(nextDueDate);
+  due.setHours(0, 0, 0, 0);
+  const days = Math.ceil((due.getTime() - today.getTime()) / 86_400_000);
+
+  if (days < 0) return "border-rose-300/50 bg-rose-950/25 text-rose-100";
+  if (days <= 30) return "border-amber-300/50 bg-amber-950/25 text-amber-100";
+  if (days <= 60) return "border-yellow-300/45 bg-yellow-950/20 text-yellow-100";
+  return "border-emerald-300/35 bg-emerald-950/15 text-emerald-100";
+}
+
+function calibrationStatus(nextDueDate: Date | null) {
+  if (!nextDueDate) return "Sem data";
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const due = new Date(nextDueDate);
+  due.setHours(0, 0, 0, 0);
+  const days = Math.ceil((due.getTime() - today.getTime()) / 86_400_000);
+
+  if (days < 0) return "Vencida";
+  if (days === 0) return "Vence hoje";
+  return `${days} dias`;
 }
 
 export default async function CalibrationPage({ searchParams }: CalibrationPageProps) {
@@ -21,6 +65,19 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
   const { equipment, calibrationLogs } = await getModuleData();
   const q = normalize(params.q);
   const approved = params.approved || "all";
+  const selectedYear = Number(params.year || new Date().getFullYear());
+  const latestCalibrationByEquipment = Object.values(
+    calibrationLogs.reduce<Record<string, (typeof calibrationLogs)[number]>>((acc, log) => {
+      acc[log.equipmentId] ??= log;
+      return acc;
+    }, {}),
+  );
+  const annualCalibrationMap = monthNames.map((month, index) => ({
+    month,
+    items: latestCalibrationByEquipment
+      .filter((log) => log.nextDueDate && log.nextDueDate.getFullYear() === selectedYear && log.nextDueDate.getMonth() === index)
+      .sort((a, b) => (a.nextDueDate?.getTime() ?? 0) - (b.nextDueDate?.getTime() ?? 0)),
+  }));
   const filteredLogs = calibrationLogs.filter((log) => {
     const haystack = [log.title, log.certificateNo, log.result, log.notes, log.equipment.name, log.equipment.code].map(normalize).join(" ");
     return (!q || haystack.includes(q)) && (approved === "all" || String(log.approved) === approved);
@@ -36,6 +93,64 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
         title="Calibracao de equipamentos"
         description="Controla certificados, resultados, aprovacao e proxima validade dos equipamentos calibraveis."
       />
+
+      <Panel>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex items-start gap-3">
+            <CalendarDays size={22} className="mt-1 text-lime-300" />
+            <div>
+              <h2 className="text-xl font-semibold text-zinc-50">Mapa anual de calibracoes</h2>
+              <p className="mt-1 text-sm text-zinc-500">
+                Ultima validade por equipamento, com alerta por tempo restante.
+              </p>
+            </div>
+          </div>
+
+          <form className="grid gap-2 sm:grid-cols-[150px_auto]">
+            <input name="year" className={inputClass} defaultValue={selectedYear} aria-label="Ano do mapa" />
+            <button className={buttonClass}>
+              <Search size={16} />
+              Ver ano
+            </button>
+          </form>
+        </div>
+
+        <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {annualCalibrationMap.map(({ month, items }) => (
+            <div key={month} className="min-h-44 overflow-hidden rounded-lg border border-lime-300/20 bg-zinc-950/60">
+              <div className="border-b border-lime-300/20 bg-lime-300/10 px-4 py-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lime-200">{month}</p>
+              </div>
+              <div className="space-y-2 p-3">
+                {items.length === 0 ? (
+                  <p className="text-xs text-zinc-600">Sem calibracoes</p>
+                ) : (
+                  items.slice(0, 5).map((log) => (
+                    <div key={log.id} className={`rounded-md border px-2 py-2 ${calibrationTone(log.nextDueDate)}`}>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="truncate text-xs font-semibold text-zinc-50">{log.title}</p>
+                          <p className="mt-1 truncate text-[11px] text-zinc-400">{log.equipment.name}</p>
+                        </div>
+                        {calibrationStatus(log.nextDueDate) !== "Sem data" ? (
+                          <AlertTriangle size={14} className="shrink-0" />
+                        ) : null}
+                      </div>
+                      <p className="mt-2 text-[11px] font-semibold">{formatDate(log.nextDueDate)}</p>
+                      <p className="mt-1 text-[11px] text-zinc-400">{calibrationStatus(log.nextDueDate)}</p>
+                    </div>
+                  ))
+                )}
+                {items.length > 5 ? (
+                  <div className="rounded-md border border-lime-300/30 bg-lime-300/10 px-2 py-2 text-center text-xs font-semibold text-lime-200">
+                    + {items.length - 5} calibracoes
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Panel>
 
       <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
         <Panel>

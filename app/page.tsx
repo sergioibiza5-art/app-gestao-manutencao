@@ -76,6 +76,8 @@ const alertStatusLabels: Record<string, string> = {
   VALIDATED: "OP validada",
   CANCELED: "Cancelada",
   NO_OP: "Sem OP criada",
+  CALIBRATION_DUE: "Calibracao a vencer",
+  CALIBRATION_EXPIRED: "Calibracao vencida",
 };
 
 function alertToneClass(tone: string) {
@@ -88,6 +90,12 @@ function alertToneClass(tone: string) {
   }
 
   return "border-teal-300/35 bg-teal-300/10 text-teal-100";
+}
+
+function alertTypeLabel(type: string) {
+  if (type === "TASK") return "Tarefa";
+  if (type === "CALIBRATION") return "Calibracao";
+  return "Manutencao";
 }
 
 type DashboardPageProps = {
@@ -235,7 +243,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] opacity-80">
-                      {alert.type === "TASK" ? "Tarefa" : "Manutenção"}
+                      {alertTypeLabel(alert.type)}
                     </p>
                     <h3 className="mt-2 line-clamp-2 font-semibold text-zinc-50">{alert.title}</h3>
                     <p className="mt-2 truncate text-sm text-zinc-400">{alert.detail}</p>
