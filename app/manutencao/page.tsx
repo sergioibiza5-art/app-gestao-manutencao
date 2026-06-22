@@ -160,17 +160,41 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   const selectedType = filters.type || "ALL";
   const annualCalendar = filters.calendar === "year";
 
+  const dataView = annualCalendar ? "year" : selectedView === "month-weeks" ? "month" : selectedView;
+
   const { equipment, maintenanceLogs, schedules, range } = await getMaintenanceData({
-    view: selectedView,
+    view: dataView,
     date: selectedDate,
     type: selectedType,
   });
 
   const groupedSchedules = groupByDate(schedules);
+
+  const selectedMonthDate = new Date(selectedDate);
+
   const schedulesByMonth = monthNames.map((month, index) => ({
     month,
     items: schedules.filter((schedule) => schedule.scheduledAt.getMonth() === index),
   }));
+
+  const schedulesByWeek = [0, 1, 2, 3].map((weekIndex) => {
+    const startDay = weekIndex * 7 + 1;
+    const endDay = weekIndex === 3 ? 31 : startDay + 6;
+
+    return {
+      title: `Semana ${weekIndex + 1}`,
+      items: schedules.filter((schedule) => {
+        const scheduledAt = new Date(schedule.scheduledAt);
+
+        return (
+          scheduledAt.getFullYear() === selectedMonthDate.getFullYear() &&
+          scheduledAt.getMonth() === selectedMonthDate.getMonth() &&
+          scheduledAt.getDate() >= startDay &&
+          scheduledAt.getDate() <= endDay
+        );
+      }),
+    };
+  });
 
   return (
     <AppShell activeHref="/manutencao">
@@ -227,7 +251,6 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
             </div>
 
             <input name="startDate" type="date" required className={inputClass} />
-
             <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
 
             <select name="costCenter" className={inputClass} defaultValue="">
@@ -251,7 +274,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               <div>
                 <div className="flex items-center gap-3">
                   <Map size={22} className="text-teal-300" />
-                  <h2 className="text-xl font-semibold text-zinc-50">Mapa de agendamentos</h2>
+                  <h2 className="text-xl font-semibold text-zinc-50">
+                    {selectedView === "month-weeks" ? "Manutenções do mês" : "Mapa de agendamentos"}
+                  </h2>
                 </div>
 
                 <p className="mt-2 text-sm text-zinc-500">
@@ -300,36 +325,95 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 Calendário anual
               </h3>
 
-              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
-                {schedulesByMonth.map(({ month, items }) => (
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {schedulesByMonth.map(({ month, items }, monthIndex) => {
+                  const visibleItems = items.slice(0, 5);
+                  const hiddenCount = Math.max(items.length - visibleItems.length, 0);
+                  const monthDate = new Date(new Date(selectedDate).getFullYear(), monthIndex, 1).toISOString().slice(0, 10);
+
+                  return (
+                    <Link
+                      key={month}
+                      href={`/manutencao?view=month-weeks&date=${monthDate}&type=${selectedType}`}
+                      className="min-h-42.5 overflow-hidden rounded-lg border border-teal-300/20 bg-zinc-950/60 transition hover:border-teal-300/60"
+                    >
+                      <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">
+                          {month}
+                        </p>
+                      </div>
+
+                      <div className="space-y-2 p-3">
+                        {items.length === 0 ? (
+                          <p className="text-xs text-zinc-600">Sem agendamentos</p>
+                        ) : (
+                          <>
+                            {visibleItems.map((schedule) => (
+                              <div
+                                key={schedule.id}
+                                className="rounded-md border border-zinc-800 bg-black/30 px-2 py-1.5"
+                              >
+                                <p className="text-[11px] font-semibold text-teal-300">
+                                  {formatDate(schedule.scheduledAt)}
+                                </p>
+                                <p className="truncate text-xs font-semibold text-zinc-100">
+                                  {schedule.title}
+                                </p>
+                                <p className="truncate text-[11px] text-zinc-500">
+                                  {schedule.equipment.name}
+                                </p>
+                              </div>
+                            ))}
+
+                            {hiddenCount > 0 && (
+                              <div className="rounded-md border border-teal-300/30 bg-teal-300/10 px-2 py-2 text-center text-xs font-semibold text-teal-200">
+                                + {hiddenCount} manutenções
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ) : selectedView === "month-weeks" ? (
+            <div className="mt-5">
+              <h3 className="mb-4 text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
+                Manutenções por semana
+              </h3>
+
+              <div className="grid gap-3 xl:grid-cols-4">
+                {schedulesByWeek.map((week) => (
                   <div
-                    key={month}
-                    className="min-h-42.5 overflow-hidden rounded-lg border border-teal-300/20 bg-zinc-950/60"
+                    key={week.title}
+                    className="min-h-130 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/60"
                   >
-                    <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">
-                        {month}
-                      </p>
+                    <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-4">
+                      <h4 className="text-center text-xl font-semibold text-zinc-50">
+                        {week.title}
+                      </h4>
                     </div>
 
                     <div className="space-y-2 p-3">
-                      {items.length === 0 ? (
-                        <p className="text-xs text-zinc-600">Sem agendamentos</p>
+                      {week.items.length === 0 ? (
+                        <p className="text-sm text-zinc-600">Sem tarefas</p>
                       ) : (
-                        items.map((schedule) => (
+                        week.items.map((schedule) => (
                           <a
                             key={schedule.id}
                             href={`/manutencao/${schedule.id}`}
-                            className="block rounded-md border border-zinc-800 bg-black/30 px-2 py-1.5 transition hover:border-teal-300/50"
+                            className="block rounded-lg border border-zinc-800 bg-black/30 p-3 transition hover:border-teal-300/50"
                           >
-                            <p className="text-[11px] font-semibold text-teal-300">
+                            <p className="text-xs font-semibold text-teal-300">
                               {formatDate(schedule.scheduledAt)}
                             </p>
-                            <p className="truncate text-xs font-semibold text-zinc-100">
+                            <p className="mt-1 font-semibold text-zinc-100">
                               {schedule.title}
                             </p>
-                            <p className="truncate text-[11px] text-zinc-500">
-                             {schedule.equipment.name}
+                            <p className="mt-1 text-xs text-zinc-500">
+                              {schedule.equipment.name} · {typeLabel(schedule.type)}
                             </p>
                           </a>
                         ))
