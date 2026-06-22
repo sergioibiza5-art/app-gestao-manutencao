@@ -300,11 +300,11 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 Calendário anual
               </h3>
 
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
                 {schedulesByMonth.map(({ month, items }) => (
                   <div
                     key={month}
-                    className="min-h-52.5 overflow-hidden rounded-xl border border-teal-300/25 bg-zinc-950/60"
+                    className="min-h-42.5 overflow-hidden rounded-lg border border-teal-300/20 bg-zinc-950/60"
                   >
                     <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">
@@ -320,16 +320,16 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                           <a
                             key={schedule.id}
                             href={`/manutencao/${schedule.id}`}
-                            className="block rounded-lg border border-zinc-800 bg-black/30 p-2 transition hover:border-teal-300/50"
+                            className="block rounded-md border border-zinc-800 bg-black/30 px-2 py-1.5 transition hover:border-teal-300/50"
                           >
-                            <p className="text-xs font-semibold text-teal-300">
+                            <p className="text-[11px] font-semibold text-teal-300">
                               {formatDate(schedule.scheduledAt)}
                             </p>
-                            <p className="mt-1 text-sm font-semibold text-zinc-100">
+                            <p className="truncate text-xs font-semibold text-zinc-100">
                               {schedule.title}
                             </p>
-                            <p className="mt-1 text-xs text-zinc-500">
-                              {schedule.equipment.name} · {typeLabel(schedule.type)}
+                            <p className="truncate text-[11px] text-zinc-500">
+                             {schedule.equipment.name}
                             </p>
                           </a>
                         ))
