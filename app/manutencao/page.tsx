@@ -64,6 +64,7 @@ type MaintenancePageProps = {
     date?: string;
     type?: string;
     calendar?: string;
+    equipmentId?: string;
   }>;
 };
 
@@ -204,15 +205,16 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   const selectedDate = filters.date || new Date().toISOString().slice(0, 10);
   const selectedType = filters.type || "ALL";
   const annualCalendar = filters.calendar === "year";
+  const selectedEquipmentId = filters.equipmentId || "ALL";
 
   const dataView = annualCalendar ? "year" : selectedView === "month-weeks" ? "month" : selectedView;
 
   const { equipment, maintenanceLogs, schedules, range } = await getMaintenanceData({
-    view: dataView,
-    date: selectedDate,
-    type: selectedType,
-  });
-
+  view: selectedView,
+  date: selectedDate,
+  type: selectedType,
+  equipmentId: selectedEquipmentId,
+});
   const groupedSchedules = groupByDate(schedules);
   const weekBoardDays = weekDayNames.map((name, index) => {
     const day = new Date(range.start);
@@ -224,7 +226,6 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
       items: schedules.filter((schedule) => sameCalendarDay(new Date(schedule.scheduledAt), day)),
     };
   });
-
   const selectedMonthDate = new Date(selectedDate);
 
   const schedulesByMonth = monthNames.map((month, index) => ({
@@ -237,9 +238,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   const firstMonday = new Date(monthStart);
   firstMonday.setDate(monthStart.getDate() - ((monthStart.getDay() + 6) % 7));
   const schedulesByWeek = Array.from({ length: 6 }, (_, weekIndex) => {
-    const start = new Date(firstMonday);
+  const start = new Date(firstMonday);
     start.setDate(firstMonday.getDate() + weekIndex * 7);
-    const end = new Date(start);
+  const end = new Date(start);
     end.setDate(start.getDate() + 4);
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);

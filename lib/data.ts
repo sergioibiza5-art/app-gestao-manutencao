@@ -521,11 +521,19 @@ function getMaintenanceRange(view: string, dateValue?: string) {
   return { start, end };
 }
 
-export async function getMaintenanceData(filters: { view?: string; date?: string; type?: string }) {
+export async function getMaintenanceData(filters: {
+  view?: string;
+  date?: string;
+  type?: string;
+  equipmentId?: string;
+}) {
   const view = filters.view || "month";
   const { start, end } = getMaintenanceRange(view, filters.date);
   const type = filters.type === "INTERNAL" || filters.type === "EXTERNAL" ? filters.type : undefined;
-
+const equipmentId =
+  filters.equipmentId && filters.equipmentId !== "ALL"
+    ? filters.equipmentId
+    : undefined;
   return readDb(
     async (prisma) => {
       const [equipment, maintenanceLogs, schedules] = await Promise.all([
@@ -541,12 +549,13 @@ export async function getMaintenanceData(filters: { view?: string; date?: string
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.maintenanceSchedule.findMany({
           where: {
-            OR: [
-              { scheduledAt: { gte: start, lte: end } },
-              { scheduledAt: { lt: start }, status: "SCHEDULED" },
-            ],
-            ...(type ? { type } : {}),
-          },
+  OR: [
+    { scheduledAt: { gte: start, lte: end } },
+    { scheduledAt: { lt: start }, status: "SCHEDULED" },
+  ],
+  ...(type ? { type } : {}),
+  ...(equipmentId ? { equipmentId } : {}),
+},
           orderBy: { scheduledAt: "asc" },
           include: { equipment: true, workOrder: true },
           take: 370,
