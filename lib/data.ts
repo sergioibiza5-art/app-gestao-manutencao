@@ -529,7 +529,15 @@ export async function getMaintenanceData(filters: { view?: string; date?: string
   return readDb(
     async (prisma) => {
       const [equipment, maintenanceLogs, schedules] = await Promise.all([
-        prisma.equipment.findMany({ orderBy: { name: "asc" }, take: 100 }),
+        prisma.equipment.findMany({
+  where: {
+    status: { not: "DISCARDED" },
+  },
+  orderBy: [
+    { name: "asc" },
+    { code: "asc" },
+  ],
+}),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.maintenanceSchedule.findMany({
           where: {
