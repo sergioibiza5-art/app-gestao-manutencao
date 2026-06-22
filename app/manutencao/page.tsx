@@ -384,17 +384,17 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 Manutenções por semana
               </h3>
 
-              <div className="grid gap-3 xl:grid-cols-4">
+              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
                 {schedulesByWeek.map((week) => (
                   <div
                     key={week.title}
                     className="min-h-130 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/60"
                   >
-                    <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-4">
-                      <h4 className="text-center text-xl font-semibold text-zinc-50">
-                        {week.title}
-                      </h4>
-                    </div>
+                   <div className="flex h-16 items-center justify-center border-b border-teal-300/20 bg-teal-300/10 px-4">
+                    <h4 className="whitespace-nowrap text-lg font-semibold text-zinc-50">
+                  {week.title}
+                  </h4>
+              </div>
 
                     <div className="space-y-2 p-3">
                       {week.items.length === 0 ? (
