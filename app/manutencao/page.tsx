@@ -141,6 +141,41 @@ function dateStatusInfo(scheduledAt: Date, scheduleStatus: string, workOrderStat
   return { label: "Programada", className: "border-zinc-700 bg-zinc-900/70 text-zinc-400", icon: Clock };
 }
 
+function isInspection(schedule: { title: string; costCenter: string | null }) {
+  return `${schedule.title} ${schedule.costCenter ?? ""}`.toLowerCase().includes("inspe");
+}
+
+function isPreventiveOrCorrective(schedule: { title: string; costCenter: string | null }) {
+  const value = `${schedule.title} ${schedule.costCenter ?? ""}`.toLowerCase();
+  return value.includes("prevent") || value.includes("corret");
+}
+
+function titleTone(schedule: { title: string; type: string; costCenter: string | null }) {
+  if (schedule.type !== "EXTERNAL") return "text-zinc-100";
+  if (isInspection(schedule)) return "text-pink-300";
+  if (isPreventiveOrCorrective(schedule)) return "text-amber-300";
+  return "text-zinc-100";
+}
+
+function scheduleCardTone(schedule: { scheduledAt: Date; status: string; workOrder?: { status: string } | null }) {
+  const today = new Date();
+  const scheduled = new Date(schedule.scheduledAt);
+  today.setHours(0, 0, 0, 0);
+  scheduled.setHours(0, 0, 0, 0);
+
+  const workOrderStatus = schedule.workOrder?.status ?? null;
+  if (scheduled.getTime() < today.getTime() && !["DONE", "VALIDATED", "CANCELED"].includes(workOrderStatus ?? "") && schedule.status !== "DONE") {
+    return "border-rose-300/50 bg-rose-950/20 hover:border-rose-300/70";
+  }
+  if (workOrderStatus === "IN_PROGRESS" || workOrderStatus === "PAUSED") {
+    return "border-yellow-300/50 bg-yellow-950/20 hover:border-yellow-300/70";
+  }
+  if (workOrderStatus === "DONE" || workOrderStatus === "VALIDATED" || schedule.status === "DONE") {
+    return "border-emerald-300/50 bg-emerald-950/20 hover:border-emerald-300/70";
+  }
+  return "border-zinc-800 bg-black/30 hover:border-teal-300/50";
+}
+
 function dateInputValue(date: Date | null | undefined) {
   return date ? date.toISOString().slice(0, 10) : "";
 }
@@ -177,23 +212,43 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
     items: schedules.filter((schedule) => schedule.scheduledAt.getMonth() === index),
   }));
 
-  const schedulesByWeek = [0, 1, 2, 3].map((weekIndex) => {
-    const startDay = weekIndex * 7 + 1;
-    const endDay = weekIndex === 3 ? 31 : startDay + 6;
+  const monthStart = new Date(selectedMonthDate.getFullYear(), selectedMonthDate.getMonth(), 1);
+  const monthEnd = new Date(selectedMonthDate.getFullYear(), selectedMonthDate.getMonth() + 1, 0);
+  const firstMonday = new Date(monthStart);
+  firstMonday.setDate(monthStart.getDate() - ((monthStart.getDay() + 6) % 7));
+  const schedulesByWeek = Array.from({ length: 6 }, (_, weekIndex) => {
+    const start = new Date(firstMonday);
+    start.setDate(firstMonday.getDate() + weekIndex * 7);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 4);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
 
     return {
       title: `Semana ${weekIndex + 1}`,
+      start,
+      end,
+      range: `${formatDate(start)} a ${formatDate(end)}`,
       items: schedules.filter((schedule) => {
         const scheduledAt = new Date(schedule.scheduledAt);
 
         return (
           scheduledAt.getFullYear() === selectedMonthDate.getFullYear() &&
           scheduledAt.getMonth() === selectedMonthDate.getMonth() &&
-          scheduledAt.getDate() >= startDay &&
-          scheduledAt.getDate() <= endDay
+          scheduledAt >= start &&
+          scheduledAt <= end
         );
       }),
     };
+  }).filter((week) => {
+    const day = new Date(week.start);
+
+    while (day <= week.end) {
+      if (day >= monthStart && day <= monthEnd) return true;
+      day.setDate(day.getDate() + 1);
+    }
+
+    return false;
   });
 
   return (
@@ -327,7 +382,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {schedulesByMonth.map(({ month, items }, monthIndex) => {
-                  const visibleItems = items.slice(0, 5);
+                  const visibleItems = items.length > 5 ? items.slice(0, 4) : items.slice(0, 5);
                   const hiddenCount = Math.max(items.length - visibleItems.length, 0);
                   const monthDate = new Date(new Date(selectedDate).getFullYear(), monthIndex, 1).toISOString().slice(0, 10);
 
@@ -351,12 +406,12 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                             {visibleItems.map((schedule) => (
                               <div
                                 key={schedule.id}
-                                className="rounded-md border border-zinc-800 bg-black/30 px-2 py-1.5"
+                                className={`rounded-md border px-2 py-1.5 ${scheduleCardTone(schedule)}`}
                               >
                                 <p className="text-[11px] font-semibold text-teal-300">
                                   {formatDate(schedule.scheduledAt)}
                                 </p>
-                                <p className="truncate text-xs font-semibold text-zinc-100">
+                                <p className={`truncate text-xs font-semibold ${titleTone(schedule)}`}>
                                   {schedule.title}
                                 </p>
                                 <p className="truncate text-[11px] text-zinc-500">
@@ -384,43 +439,62 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 Manutenções por semana
               </h3>
 
-              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
-                {schedulesByWeek.map((week) => (
-                  <div
-                    key={week.title}
-                    className="min-h-130 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/60"
-                  >
-                   <div className="flex h-16 items-center justify-center border-b border-teal-300/20 bg-teal-300/10 px-4">
-                    <h4 className="whitespace-nowrap text-lg font-semibold text-zinc-50">
-                  {week.title}
-                  </h4>
-              </div>
+              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-5">
+                {schedulesByWeek.map((week) => {
+                  const visibleItems = week.items.length > 5 ? week.items.slice(0, 4) : week.items.slice(0, 5);
+                  const hiddenCount = Math.max(week.items.length - visibleItems.length, 0);
 
-                    <div className="space-y-2 p-3">
-                      {week.items.length === 0 ? (
-                        <p className="text-sm text-zinc-600">Sem tarefas</p>
-                      ) : (
-                        week.items.map((schedule) => (
-                          <a
-                            key={schedule.id}
-                            href={`/manutencao/${schedule.id}`}
-                            className="block rounded-lg border border-zinc-800 bg-black/30 p-3 transition hover:border-teal-300/50"
-                          >
-                            <p className="text-xs font-semibold text-teal-300">
-                              {formatDate(schedule.scheduledAt)}
-                            </p>
-                            <p className="mt-1 font-semibold text-zinc-100">
-                              {schedule.title}
-                            </p>
-                            <p className="mt-1 text-xs text-zinc-500">
-                              {schedule.equipment.name} · {typeLabel(schedule.type)}
-                            </p>
-                          </a>
-                        ))
-                      )}
+                  return (
+                    <div
+                      key={week.title}
+                      className="min-h-130 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/60"
+                    >
+                      <div className="flex h-16 items-center justify-center border-b border-teal-300/20 bg-teal-300/10 px-4">
+                        <div className="text-center">
+                          <h4 className="whitespace-nowrap text-lg font-semibold text-zinc-50">
+                            {week.title}
+                          </h4>
+                          <p className="mt-1 text-[11px] text-zinc-500">{week.range}</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2 p-3">
+                        {week.items.length === 0 ? (
+                          <p className="text-sm text-zinc-600">Sem tarefas</p>
+                        ) : (
+                          <>
+                            {visibleItems.map((schedule) => (
+                              <a
+                                key={schedule.id}
+                                href={`/manutencao/${schedule.id}`}
+                                className={`block rounded-lg border p-3 transition ${scheduleCardTone(schedule)}`}
+                              >
+                                <p className="text-xs font-semibold text-teal-300">
+                                  {formatDate(schedule.scheduledAt)}
+                                </p>
+                                <p className={`mt-1 font-semibold ${titleTone(schedule)}`}>
+                                  {schedule.title}
+                                </p>
+                                <p className="mt-1 text-xs text-zinc-500">
+                                  {schedule.equipment.name} · {typeLabel(schedule.type)}
+                                </p>
+                              </a>
+                            ))}
+
+                          {hiddenCount > 0 && (
+                            <Link
+                              href={`/manutencao?view=week&date=${dateInputValue(week.start)}&type=${selectedType}`}
+                              className="block rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-center text-sm font-semibold text-teal-200 transition hover:border-teal-200"
+                            >
+                              + {hiddenCount} manutenções
+                            </Link>
+                          )}
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ) : (
@@ -451,18 +525,12 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                         return (
                           <details
                             key={schedule.id}
-                            className={`group rounded-lg border bg-black/25 p-3 open:border-teal-300/35 ${
-                              dateInfo.label === "Fora da data"
-                                ? "border-rose-300/40"
-                                : workOrderStatus === "IN_PROGRESS"
-                                  ? "border-yellow-300/40"
-                                  : "border-zinc-800"
-                            }`}
+                            className={`group rounded-lg border p-3 open:border-teal-300/35 ${scheduleCardTone(schedule)}`}
                           >
                             <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
                               <div className="min-w-0">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <h4 className="font-medium text-zinc-100">{schedule.title}</h4>
+                                  <h4 className={`font-medium ${titleTone(schedule)}`}>{schedule.title}</h4>
 
                                   {schedule.workOrder ? (
                                     <span className="rounded-md border border-teal-300/30 bg-teal-300/10 px-2 py-1 text-xs font-semibold text-teal-200">
