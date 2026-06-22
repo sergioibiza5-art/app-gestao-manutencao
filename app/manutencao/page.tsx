@@ -300,7 +300,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 Calendário anual
               </h3>
 
-              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
                 {schedulesByMonth.map(({ month, items }) => (
                   <div
                     key={month}
