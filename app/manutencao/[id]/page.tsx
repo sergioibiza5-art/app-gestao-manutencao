@@ -5,8 +5,9 @@ import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, startWorkOrder, validateWorkOrder } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
+import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { getMaintenanceScheduleDetail } from "@/lib/data";
-import { formatDate } from "@/lib/format";
+import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +58,11 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
   const workOrder = schedule.workOrder;
   const template = workOrder?.template ?? schedule.equipment.equipmentType?.checklistTemplates[0];
   const canFillChecklist = workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status) && template;
+  const workOrderConsumables = workOrder?.consumableMovements.filter((movement) => movement.type === "SAIDA_OP") ?? [];
+  const workOrderConsumableCost = workOrderConsumables.reduce(
+    (sum, movement) => sum + Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0),
+    0,
+  );
 
   return (
     <AppShell activeHref="/manutencao">
@@ -87,6 +93,8 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   ["Aberta em", formatDate(workOrder.openedAt)],
                   ["Iniciada em", formatDate(workOrder.startedAt)],
                   ["Tempo registado", durationLabel(workOrder.totalWorkSeconds)],
+                  ["Custo consumiveis", formatCurrency(workOrderConsumableCost)],
+                  ["Custo total", workOrder.maintenanceLog?.cost ? formatCurrency(workOrder.maintenanceLog.cost) : "Sem custo fechado"],
                   ["Fechada em", formatDate(workOrder.closedAt)],
                   ["Validada em", formatDate(workOrder.validatedAt)],
                 ].map(([label, value]) => (
@@ -170,6 +178,27 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   ))}
                 </div>
               )}
+              {workOrderConsumables.length > 0 && (
+                <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+                  <h3 className="font-semibold text-zinc-100">Consumiveis utilizados</h3>
+                  <div className="mt-3 space-y-2">
+                    {workOrderConsumables.map((movement) => (
+                      <div key={movement.id} className="flex flex-col gap-1 rounded-lg border border-zinc-800 bg-black/20 p-3 text-sm sm:flex-row sm:items-start sm:justify-between">
+                        <div>
+                          <p className="font-semibold text-zinc-100">{movement.consumable.name}</p>
+                          <p className="text-xs text-zinc-500">
+                            {String(movement.quantity)} {movement.consumable.unit} · {movement.user?.name ?? "Sem utilizador"}
+                          </p>
+                          {movement.reason ? <p className="mt-1 text-xs text-zinc-500">{movement.reason}</p> : null}
+                        </div>
+                        <p className="font-semibold text-amber-300">
+                          {formatCurrency(Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0))}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : canFillChecklist ? (
             <form action={completeWorkOrder} className="mt-4 space-y-4">
@@ -191,6 +220,10 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
 </div>
 
 <textarea name="actionsDone" className={textareaClass} placeholder="O que foi feito" />
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                <h3 className="mb-3 font-semibold text-zinc-100">Consumiveis utilizados</h3>
+                <TicketConsumables consumables={schedule.consumableOptions} />
+              </div>
               <div className="space-y-2">
                 {template.items.map((item) => (
                   <div key={item.id} className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_150px_1fr]">

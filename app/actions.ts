@@ -1286,6 +1286,54 @@ async function syncTicketConsumables(
   return consumableCost;
 }
 
+async function consumeWorkOrderConsumables(
+  tx: Prisma.TransactionClient,
+  workOrder: { id: string; number: string },
+  formData: FormData,
+  userId: string,
+) {
+  const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
+  const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
+  const usageNotes = formData.getAll("usageNotes").filter((value): value is string => typeof value === "string");
+
+  let consumableCost = 0;
+
+  for (let index = 0; index < consumableIds.length; index += 1) {
+    const consumableId = consumableIds[index]?.trim();
+    const quantityNumber = decimalNumber(quantities[index] ?? "");
+    if (!consumableId || quantityNumber <= 0) continue;
+
+    const consumable = await tx.consumable.findUnique({ where: { id: consumableId } });
+    if (!consumable) continue;
+
+    const unitCost = Number(consumable.unitCost ?? 0);
+    const lineCost = quantityNumber * unitCost;
+    consumableCost += lineCost;
+
+    await tx.consumable.update({
+      where: { id: consumableId },
+      data: { currentStock: { decrement: quantityNumber } },
+    });
+
+    await tx.consumableMovement.create({
+      data: {
+        consumableId,
+        type: "SAIDA_OP",
+        quantity: quantityNumber.toFixed(2),
+        reason: [
+          `OP ${workOrder.number}`,
+          `Custo unitario ${unitCost.toFixed(2)} EUR`,
+          usageNotes[index] || null,
+        ].filter(Boolean).join(" - "),
+        workOrderId: workOrder.id,
+        userId,
+      },
+    });
+  }
+
+  return consumableCost;
+}
+
 function pushConfig() {
   const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
@@ -1838,110 +1886,124 @@ export async function completeWorkOrder(formData: FormData) {
 
   if (!workOrderId || !equipmentId) return;
 
-  const workOrder = await prisma.workOrder.findUnique({ where: { id: workOrderId } });
-  if (!workOrder) return;
-
-  const performedAt = workOrder.startedAt ?? new Date();
-  const completionMoment = new Date();
-  const totalWorkSeconds =
-    workOrder.totalWorkSeconds +
-    (workOrder.status === "IN_PROGRESS" ? elapsedSeconds(workOrder.lastResumedAt ?? workOrder.startedAt, completionMoment) : 0);
-
-  const checklistRecord =
-    templateId && itemIds.length > 0
-      ? await prisma.internalMaintenanceRecord.create({
-          data: {
-            equipmentId,
-            templateId,
-            documentNo: workOrder.number,
-            year: performedAt.getFullYear(),
-            month: performedAt.getMonth() + 1,
-            performedAt,
-            responsible: workOrder.performedBy ?? user.name,
-            result: optionalText(formData, "result"),
-            notes: optionalText(formData, "notes"),
-            responses: {
-              create: itemIds.map((itemId) => ({
-                itemId,
-                status: enumValue(formData, `status_${itemId}`, checklistResponseStatuses, "OK"),
-                obs: optionalText(formData, `obs_${itemId}`),
-                photos: optionalText(formData, `photoUrl_${itemId}`)
-                  ? {
-                      create: {
-                        fileUrl: text(formData, `photoUrl_${itemId}`),
-                        fileName: optionalText(formData, `photoName_${itemId}`),
-                        caption: optionalText(formData, `photoCaption_${itemId}`),
-                      },
-                    }
-                  : undefined,
-              })),
-            },
-          },
-        })
-      : null;
-
-  const maintenanceLog = await prisma.maintenanceLog.create({
-    data: {
-      title: workOrder.title,
-      description: optionalText(formData, "actionsDone") || "Ordem de servico executada.",
-      type: workOrder.type,
-      date: performedAt,
-      supplier: workOrder.performedBy ?? user.name,
-      performedBy: workOrder.performedBy ?? user.name,
-cost: Number(((totalWorkSeconds / 3600) * Number(user.hourlyRate ?? 0)).toFixed(2)),
-      notes: optionalText(formData, "notes"),
-      equipmentId,
-    },
-  });
-
-  await prisma.workOrder.update({
-    where: { id: workOrderId },
-    data: {
-      status: "DONE",
-      closedAt: performedAt,
-      pausedAt: null,
-      lastResumedAt: null,
-      totalWorkSeconds,
-      performedBy: workOrder.performedBy ?? user.name,
-      actionsDone: optionalText(formData, "actionsDone"),
-      result: optionalText(formData, "result"),
-      notes: optionalText(formData, "notes"),
-      checklistRecordId: checklistRecord?.id,
-      maintenanceLogId: maintenanceLog.id,
-    },
-  });
-
-  const documentUrl = optionalText(formData, "documentUrl");
-  if (documentUrl) {
-    await prisma.document.create({
-      data: {
-        title: optionalText(formData, "documentTitle") ?? `Documento ${workOrder.number}`,
-        type: "OTHER",
-        fileUrl: documentUrl,
-        fileName: optionalText(formData, "documentName"),
-        notes: optionalText(formData, "documentNotes"),
-        equipmentId,
-        maintenanceLogId: maintenanceLog.id,
-        workOrderId,
-      },
-    });
-  }
-
-  if (workOrder.scheduleId) {
-    await prisma.maintenanceSchedule.update({
-      where: { id: workOrder.scheduleId },
-      data: { status: "DONE" },
-    });
-  }
+  let scheduleIdForRevalidate: string | null = null;
 
   await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || !["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status)) return;
+
+    scheduleIdForRevalidate = workOrder.scheduleId;
+    const performedAt = workOrder.startedAt ?? new Date();
+    const completionMoment = new Date();
+    const totalWorkSeconds =
+      workOrder.totalWorkSeconds +
+      (workOrder.status === "IN_PROGRESS" ? elapsedSeconds(workOrder.lastResumedAt ?? workOrder.startedAt, completionMoment) : 0);
+    const laborCost = Number(((totalWorkSeconds / 3600) * Number(user.hourlyRate ?? 0)).toFixed(2));
+    const consumableCost = await consumeWorkOrderConsumables(tx, workOrder, formData, user.id);
+    const totalCost = Number((laborCost + consumableCost).toFixed(2));
+    const costNotes = [
+      optionalText(formData, "notes"),
+      `Tempo OP: ${durationNote(totalWorkSeconds)}`,
+      `Mao de obra: ${laborCost.toFixed(2)} EUR`,
+      `Consumiveis: ${consumableCost.toFixed(2)} EUR`,
+      `Total: ${totalCost.toFixed(2)} EUR`,
+    ].filter(Boolean).join("\n");
+
+    const checklistRecord =
+      templateId && itemIds.length > 0
+        ? await tx.internalMaintenanceRecord.create({
+            data: {
+              equipmentId,
+              templateId,
+              documentNo: workOrder.number,
+              year: performedAt.getFullYear(),
+              month: performedAt.getMonth() + 1,
+              performedAt,
+              responsible: workOrder.performedBy ?? user.name,
+              result: optionalText(formData, "result"),
+              notes: costNotes,
+              responses: {
+                create: itemIds.map((itemId) => ({
+                  itemId,
+                  status: enumValue(formData, `status_${itemId}`, checklistResponseStatuses, "OK"),
+                  obs: optionalText(formData, `obs_${itemId}`),
+                  photos: optionalText(formData, `photoUrl_${itemId}`)
+                    ? {
+                        create: {
+                          fileUrl: text(formData, `photoUrl_${itemId}`),
+                          fileName: optionalText(formData, `photoName_${itemId}`),
+                          caption: optionalText(formData, `photoCaption_${itemId}`),
+                        },
+                      }
+                    : undefined,
+                })),
+              },
+            },
+          })
+        : null;
+
+    const maintenanceLog = await tx.maintenanceLog.create({
+      data: {
+        title: workOrder.title,
+        description: optionalText(formData, "actionsDone") || "Ordem de servico executada.",
+        type: workOrder.type,
+        date: performedAt,
+        supplier: workOrder.performedBy ?? user.name,
+        performedBy: workOrder.performedBy ?? user.name,
+        cost: totalCost.toFixed(2),
+        notes: costNotes,
+        equipmentId,
+      },
+    });
+
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "DONE",
+        closedAt: completionMoment,
+        pausedAt: null,
+        lastResumedAt: null,
+        totalWorkSeconds,
+        performedBy: workOrder.performedBy ?? user.name,
+        actionsDone: optionalText(formData, "actionsDone"),
+        result: optionalText(formData, "result"),
+        notes: costNotes,
+        checklistRecordId: checklistRecord?.id,
+        maintenanceLogId: maintenanceLog.id,
+      },
+    });
+
+    const documentUrl = optionalText(formData, "documentUrl");
+    if (documentUrl) {
+      await tx.document.create({
+        data: {
+          title: optionalText(formData, "documentTitle") ?? `Documento ${workOrder.number}`,
+          type: "OTHER",
+          fileUrl: documentUrl,
+          fileName: optionalText(formData, "documentName"),
+          notes: optionalText(formData, "documentNotes"),
+          equipmentId,
+          maintenanceLogId: maintenanceLog.id,
+          workOrderId,
+        },
+      });
+    }
+
+    if (workOrder.scheduleId) {
+      await tx.maintenanceSchedule.update({
+        where: { id: workOrder.scheduleId },
+        data: { status: "DONE" },
+      });
+    }
+
     await refreshEquipmentMaintenanceStatus(tx, equipmentId);
   });
 
   revalidatePath("/");
   revalidatePath("/manutencao");
-  revalidatePath(`/manutencao/${workOrder.scheduleId}`);
+  if (scheduleIdForRevalidate) revalidatePath(`/manutencao/${scheduleIdForRevalidate}`);
   revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath("/inventario");
 }
 
 export async function validateWorkOrder(formData: FormData) {

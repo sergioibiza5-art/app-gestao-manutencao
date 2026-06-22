@@ -561,8 +561,9 @@ export async function getMaintenanceData(filters: { view?: string; date?: string
 
 export async function getMaintenanceScheduleDetail(id: string) {
   return readDb(
-    async (prisma) =>
-      prisma.maintenanceSchedule.findUnique({
+    async (prisma) => {
+      const [schedule, consumableOptions] = await Promise.all([
+        prisma.maintenanceSchedule.findUnique({
         where: { id },
         include: {
           equipment: {
@@ -584,10 +585,19 @@ export async function getMaintenanceScheduleDetail(id: string) {
               documents: { orderBy: { createdAt: "desc" } },
               checklistRecord: { include: { responses: { include: { item: true, photos: true } } } },
               maintenanceLog: true,
+              consumableMovements: {
+                orderBy: { createdAt: "asc" },
+                include: { consumable: true, user: true },
+              },
             },
           },
         },
       }),
+        prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 300 }),
+      ]);
+
+      return schedule ? { ...schedule, consumableOptions } : null;
+    },
     null,
   );
 }
