@@ -372,27 +372,36 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               </Link>
             </div>
 
-            <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_auto]">
-              <select name="view" defaultValue={selectedView} className={inputClass}>
-                <option value="day">Dia</option>
-                <option value="week">Semana</option>
-                <option value="month">Mês</option>
-                <option value="year">Ano</option>
-              </select>
+            <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto]">
+  <select name="view" defaultValue={selectedView} className={inputClass}>
+    <option value="day">Dia</option>
+    <option value="week">Semana</option>
+    <option value="month">Mês</option>
+    <option value="year">Ano</option>
+  </select>
 
-              <input name="date" type="date" defaultValue={selectedDate} className={inputClass} />
+  <input name="date" type="date" defaultValue={selectedDate} className={inputClass} />
 
-              <select name="type" defaultValue={selectedType} className={inputClass}>
-                <option value="ALL">Todas</option>
-                <option value="INTERNAL">Internas</option>
-                <option value="EXTERNAL">Externas</option>
-              </select>
+  <select name="type" defaultValue={selectedType} className={inputClass}>
+    <option value="ALL">Todas</option>
+    <option value="INTERNAL">Internas</option>
+    <option value="EXTERNAL">Externas</option>
+  </select>
 
-              <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
-                <Filter size={17} />
-                Filtrar
-              </button>
-            </form>
+  <select name="equipmentId" defaultValue={selectedEquipmentId} className={inputClass}>
+    <option value="ALL">Todos equipamentos</option>
+    {equipment.map((item) => (
+      <option key={item.id} value={item.id}>
+        {item.name}
+      </option>
+    ))}
+  </select>
+
+  <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+    <Filter size={17} />
+    Filtrar
+  </button>
+</form>
           </div>
 
           {annualCalendar ? (
