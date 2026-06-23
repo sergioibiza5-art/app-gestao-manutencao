@@ -132,7 +132,13 @@ function pageUrl(page: number, params: Record<string, string>) {
 export default async function EquipmentPage({ searchParams }: EquipmentPageProps) {
   const params = (await searchParams) ?? {};
   const { equipment, equipmentTypes } = await getModuleData();
+  type EquipmentItem = (typeof equipment)[number] & {
+    isMeasurementMonitoring: boolean;
+   regulatoryRequirements?: boolean;
+   regulatoryDetails?: string | null;
+  };
 
+  const typedEquipment = equipment as EquipmentItem[];
   const q = normalize(params.q);
   const status = params.status || "all";
   const location = params.location || "all";
@@ -145,15 +151,15 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
     "data:text/csv;charset=utf-8," +
     encodeURIComponent("nome;codigo_interno;data_aquisicao;fornecedor;localizacao;departamento;marca;modelo;numero_serie;medicao_monitorizacao;categoria\nCompressor 1;COMP-01;2026-01-10;Fornecedor;Sala tecnica;Manutencao;Marca;Modelo;SN001;nao;Infraestrutura\n");
 
-  const locations = Array.from(
-    new Set(equipment.map((item) => item.location).filter(Boolean) as string[])
-  ).sort((a, b) => a.localeCompare(b, "pt"));
+ const locations = Array.from(
+  new Set(typedEquipment.map((item) => item.location).filter(Boolean) as string[])
+).sort((a, b) => a.localeCompare(b, "pt"));
 
-  const categories = Array.from(
-    new Set(equipment.map((item) => item.category).filter(Boolean) as string[])
-  ).sort((a, b) => a.localeCompare(b, "pt"));
+const categories = Array.from(
+  new Set(typedEquipment.map((item) => item.category).filter(Boolean) as string[])
+).sort((a, b) => a.localeCompare(b, "pt"));
 
-  const filteredEquipment = equipment.filter((item) => {
+const filteredEquipment = typedEquipment.filter((item) => {
     const haystack = [
       item.name,
       item.code,
@@ -178,8 +184,8 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
       (category === "all" || item.category === category) &&
       (typeId === "all" || item.equipmentTypeId === typeId) &&
       (measurement === "all" ||
-        (measurement === "true" && item.isMeasurementMonitoring) ||
-        (measurement === "false" && !item.isMeasurementMonitoring))
+      (measurement === "true" && item.isMeasurementMonitoring) ||
+      (measurement === "false" && !item.isMeasurementMonitoring))
     );
   });
 
@@ -187,10 +193,10 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
   const safePage = Math.min(currentPage, totalPages);
   const paginatedEquipment = filteredEquipment.slice((safePage - 1) * pageSize, safePage * pageSize);
 
-  const activeCount = equipment.filter((item) => item.status === "ACTIVE").length;
-  const maintenanceCount = equipment.filter((item) => item.status === "MAINTENANCE").length;
-  const inactiveCount = equipment.filter((item) => item.status === "INACTIVE").length;
-  const measurementCount = equipment.filter((item) => item.isMeasurementMonitoring).length;
+  const activeCount = typedEquipment.filter((item) => item.status === "ACTIVE").length;
+  const maintenanceCount = typedEquipment.filter((item) => item.status === "MAINTENANCE").length;
+  const inactiveCount = typedEquipment.filter((item) => item.status === "INACTIVE").length;
+  const measurementCount = typedEquipment.filter((item) => item.isMeasurementMonitoring).length;
 
   const filterParams = {
     q: params.q || "",
@@ -354,11 +360,26 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
                 </select>
 
                 <select name="isMeasurementMonitoring" className={inputClass}>
-                  <option value="false">Não é equipamento de medição/monitorização</option>
-                  <option value="true">É equipamento de medição/monitorização</option>
-                </select>
+  <option value="false">Não é equipamento de medição/monitorização</option>
+  <option value="true">É equipamento de medição/monitorização</option>
+</select>
 
-                <input name="category" className={inputClass} placeholder="Categoria" />
+<select name="regulatoryRequirements" className={inputClass}>
+  <option value="false">Sem requisitos regulamentares</option>
+  <option value="true">Com requisitos regulamentares</option>
+</select>
+
+<textarea
+  name="regulatoryDetails"
+  className={textareaClass}
+  placeholder="Quais os requisitos regulamentares?"
+/>
+
+<input
+  name="category"
+  className={inputClass}
+  placeholder="Categoria"
+/>
 
                 <select name="status" className={inputClass}>
                   <option value="ACTIVE">Ativo</option>
