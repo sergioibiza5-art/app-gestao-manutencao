@@ -32,7 +32,8 @@ export async function readDb<T>(
 ) {
   try {
     return await callback(getPrisma());
-  } catch {
+  } catch (error) {
+    console.error("Erro ao ler dados da base de dados:", error);
     return fallback;
   }
 }

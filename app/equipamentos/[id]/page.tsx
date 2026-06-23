@@ -204,6 +204,8 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
               ["Modelo", equipment.model ?? "Sem modelo"],
               ["N.º de série", equipment.serialNumber ?? "Sem n.º série"],
               ["Medição e monitorização", equipment.isMeasurementMonitoring ? "Sim" : "Não"],
+              ["Requisitos regulamentares", equipment.regulatoryRequirements ? "Sim" : "Não"],
+              ["Se sim, quais", equipment.regulatoryDetails ?? "Sem requisitos definidos"],
               ["Estado", equipment.status],
               ["Faz parte de", equipment.parentEquipment?.name ?? "Sem equipamento-pai"],
             ].map(([label, value]) => (
@@ -374,6 +376,24 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
             <option value="false">Não é equipamento de medição/monitorização</option>
             <option value="true">É equipamento de medição/monitorização</option>
           </select>
+
+          <label className="space-y-2">
+            <span className="text-sm font-medium text-zinc-300">Requisitos regulamentares?</span>
+            <select name="regulatoryRequirements" className={inputClass} defaultValue={equipment.regulatoryRequirements ? "true" : "false"}>
+              <option value="false">Não</option>
+              <option value="true">Sim</option>
+            </select>
+          </label>
+
+          <label className="space-y-2 md:col-span-2">
+            <span className="text-sm font-medium text-zinc-300">Se sim, quais?</span>
+            <textarea
+              name="regulatoryDetails"
+              className={textareaClass}
+              defaultValue={equipment.regulatoryDetails ?? ""}
+              placeholder="Ex.: diretiva, regulamento, requisito legal ou norma aplicável"
+            />
+          </label>
 
           <input name="category" className={inputClass} defaultValue={equipment.category} placeholder="Categoria" />
 

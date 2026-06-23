@@ -149,7 +149,7 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
   const pageSize = 25;
   const templateHref =
     "data:text/csv;charset=utf-8," +
-    encodeURIComponent("nome;codigo_interno;data_aquisicao;fornecedor;localizacao;departamento;marca;modelo;numero_serie;medicao_monitorizacao;categoria\nCompressor 1;COMP-01;2026-01-10;Fornecedor;Sala tecnica;Manutencao;Marca;Modelo;SN001;nao;Infraestrutura\n");
+    encodeURIComponent("nome;codigo_interno;data_aquisicao;fornecedor;localizacao;departamento;marca;modelo;numero_serie;medicao_monitorizacao;requisitos_regulamentares;quais_requisitos;categoria\nCompressor 1;COMP-01;2026-01-10;Fornecedor;Sala tecnica;Manutencao;Marca;Modelo;SN001;nao;sim;Diretiva maquinas;Infraestrutura\n");
 
  const locations = Array.from(
   new Set(typedEquipment.map((item) => item.location).filter(Boolean) as string[])
@@ -364,16 +364,22 @@ const filteredEquipment = typedEquipment.filter((item) => {
   <option value="true">É equipamento de medição/monitorização</option>
 </select>
 
-<select name="regulatoryRequirements" className={inputClass}>
-  <option value="false">Sem requisitos regulamentares</option>
-  <option value="true">Com requisitos regulamentares</option>
-</select>
+                <label className="space-y-2">
+                  <span className="text-sm font-medium text-zinc-300">Requisitos regulamentares?</span>
+                  <select name="regulatoryRequirements" className={inputClass}>
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                  </select>
+                </label>
 
-<textarea
-  name="regulatoryDetails"
-  className={textareaClass}
-  placeholder="Quais os requisitos regulamentares?"
-/>
+                <label className="space-y-2">
+                  <span className="text-sm font-medium text-zinc-300">Se sim, quais?</span>
+                  <textarea
+                    name="regulatoryDetails"
+                    className={textareaClass}
+                    placeholder="Ex.: diretiva, regulamento, requisito legal ou norma aplicável"
+                  />
+                </label>
 
 <input
   name="category"
