@@ -122,10 +122,41 @@ function decimalFromCell(value: unknown) {
 }
 
 function environmentalType(header: string) {
-  const value = header.trim().toUpperCase();
-  if (/^T\d+$/.test(value)) return "TEMPERATURE";
-  if (/^H\d+$/.test(value)) return "HUMIDITY";
-  if (/^P[A-Z]+$/.test(value)) return "PRESSURE";
+  const normalized = header
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[_-]/g, "");
+
+  if (
+    normalized === "t1" ||
+    normalized === "t2" ||
+    normalized.startsWith("temperature") ||
+    normalized.startsWith("temp")
+  ) {
+    return "TEMPERATURE";
+  }
+
+  if (
+    normalized === "h1" ||
+    normalized === "h2" ||
+    normalized.startsWith("humidity") ||
+    normalized.startsWith("humidade") ||
+    normalized.startsWith("hum")
+  ) {
+    return "HUMIDITY";
+  }
+
+  if (
+    normalized === "pa" ||
+    normalized === "pb" ||
+    normalized.startsWith("pressure") ||
+    normalized.startsWith("pressao") ||
+    normalized.startsWith("pressão")
+  ) {
+    return "PRESSURE";
+  }
+
   return null;
 }
 

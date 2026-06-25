@@ -85,8 +85,8 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <button className={buttonClass}>Importar Excel</button>
             </form>
             <p className="mt-3 text-xs leading-5 text-zinc-500">
-              Colunas reconhecidas: T1/T2 para temperatura, H1/H2 para humidade e PA/PB para pressão.
-            </p>
+             Colunas reconhecidas: Temperature1...Temperature7, Humidity1...Humidity7 e PressureA...PressureI.
+          </p>
           </Panel>
 
           <Panel>
@@ -187,7 +187,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <AlertTriangle size={22} className="text-amber-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Sensores</h2>
             </div>
-            <div className="mt-4 max-h-[560px] space-y-2 overflow-y-auto pr-1">
+            <div className="mt-4 max-h-140 space-y-2 overflow-y-auto pr-1">
               {data.bySensor.length === 0 ? (
                 <EmptyState title="Sem sensores tratados" description="Importa o relatório para ver sensores e estados." />
               ) : (
