@@ -2433,6 +2433,7 @@ export async function createVacation(formData: FormData) {
       endDate,
       days: decimal(formData, "days"),
       status: text(formData, "status") || "PLANNED",
+      color: optionalText(formData, "color") ?? "#14b8a6",
       notes: optionalText(formData, "notes"),
     },
   });
@@ -2459,6 +2460,7 @@ export async function updateVacation(formData: FormData) {
       endDate,
       days: decimal(formData, "days"),
       status: text(formData, "status") || "PLANNED",
+      color: optionalText(formData, "color") ?? "#14b8a6",
       notes: optionalText(formData, "notes"),
     },
   });

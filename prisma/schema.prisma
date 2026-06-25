@@ -562,6 +562,8 @@ model Vacation {
   userId String?
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
+  color String? @default("#14b8a6")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
