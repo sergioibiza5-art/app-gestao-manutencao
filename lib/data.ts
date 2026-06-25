@@ -1,3 +1,12 @@
+import {
+  environmentalEventZones,
+  environmentalLimits,
+  environmentalTypeLabel,
+  humidityZones,
+  pressureZones,
+  temperatureZones,
+  type EnvironmentalStatus,
+} from "@/lib/environmental";
 import { readDb } from "@/lib/prisma";
 
 function dashboardRange(view?: string, dateValue?: string) {
@@ -1226,18 +1235,6 @@ function environmentalRange(days?: string) {
   return { start, end, span };
 }
 
-function environmentalTypeLabel(type: string) {
-  if (type === "TEMPERATURE") return "Temperatura";
-  if (type === "HUMIDITY") return "Humidade";
-  return "Pressao";
-}
-
-function environmentalLimits(type: string) {
-  if (type === "TEMPERATURE") return { min: 15, max: 25, actionSeconds: 86_400 };
-  if (type === "HUMIDITY") return { min: 30, max: 70, actionSeconds: 86_400 };
-  return { min: 5, max: Number.POSITIVE_INFINITY, actionSeconds: 2_400 };
-}
-
 function readingValue(reading: { value: unknown }) {
   return Number(reading.value ?? 0);
 }
@@ -1248,14 +1245,14 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
   const min = values.length > 0 ? Math.min(...values) : 0;
   const max = values.length > 0 ? Math.max(...values) : 0;
   const limits = environmentalLimits(type);
-  const ignorePressure = type === "PRESSURE" && average < 1;
   const ordered = [...readings].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   let currentSeconds = 0;
   let maxSeconds = 0;
+  let events = 0;
 
   for (let index = 0; index < ordered.length; index += 1) {
     const value = readingValue(ordered[index]);
-    const outOfRange = !ignorePressure && (value < limits.min || value > limits.max);
+    const outOfRange = value < limits.min || value > limits.max;
     const next = ordered[index + 1];
     const interval = next
       ? Math.max(Math.min(Math.floor((next.timestamp.getTime() - ordered[index].timestamp.getTime()) / 1000), 3600), 0)
@@ -1265,23 +1262,33 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
       currentSeconds += interval;
       maxSeconds = Math.max(maxSeconds, currentSeconds);
     } else {
+      if (currentSeconds >= limits.actionSeconds) events += 1;
       currentSeconds = 0;
     }
   }
 
-  const status = maxSeconds >= limits.actionSeconds ? "ACTION" : maxSeconds > 0 ? "ALERT" : "OK";
+  if (currentSeconds >= limits.actionSeconds) events += 1;
 
-  return { min, max, average, count: values.length, status, outOfRangeSeconds: maxSeconds, ignorePressure };
+  const occurrences = values.filter((value) => value < limits.min || value > limits.max).length;
+  const status: EnvironmentalStatus = maxSeconds >= limits.actionSeconds ? "ACTION" : occurrences > 0 ? "ALERT" : "OK";
+
+  return { min, max, average, count: values.length, status, outOfRangeSeconds: maxSeconds, occurrences, events };
 }
 
-export async function getEnvironmentalData(filters?: { days?: string; type?: string }) {
+export async function getEnvironmentalData(filters?: { days?: string; type?: string; zone?: string; status?: string; importId?: string }) {
   return readDb(
     async (prisma) => {
       const range = environmentalRange(filters?.days);
       const selectedType = filters?.type || "ALL";
+      const selectedZone = filters?.zone || "ALL";
+      const selectedStatus = filters?.status || "ALL";
+      const selectedImportId = filters?.importId || "ALL";
       const where = {
         timestamp: { gte: range.start, lte: range.end },
         ...(selectedType !== "ALL" ? { type: selectedType } : {}),
+        ...(selectedZone !== "ALL" ? { zone: selectedZone } : {}),
+        ...(selectedStatus !== "ALL" ? { status: selectedStatus } : {}),
+        ...(selectedImportId !== "ALL" ? { importId: selectedImportId } : {}),
       };
       const [readings, imports] = await Promise.all([
         prisma.environmentalReading.findMany({
@@ -1295,22 +1302,65 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         }),
       ]);
 
-      const bySensor = Object.values(
-        readings.reduce<Record<string, { sensor: string; type: string; readings: typeof readings }>>((acc, reading) => {
-          const key = `${reading.type}-${reading.sensor}`;
-          acc[key] ??= { sensor: reading.sensor, type: reading.type, readings: [] };
+      type Reading = (typeof readings)[number];
+
+      const groupByZone = (type: string, zones: readonly string[]) => {
+        const byZone = readings
+          .filter((reading) => reading.type === type)
+          .reduce<Record<string, Reading[]>>((acc, reading) => {
+            acc[reading.zone] ??= [];
+            acc[reading.zone].push(reading);
+            return acc;
+          }, {});
+
+        return zones.map((zone) => {
+          const zoneReadings = byZone[zone] ?? [];
+          return {
+            zone,
+            type,
+            label: environmentalTypeLabel(type),
+            ...sensorStats(zoneReadings, type),
+          };
+        });
+      };
+
+      const pressureRows = groupByZone("PRESSURE", pressureZones).map((row) => ({
+        ...row,
+        lowPressureOccurrences: row.occurrences,
+        events40min: row.events,
+      }));
+      const temperatureRows = groupByZone("TEMPERATURE", temperatureZones);
+      const humidityRows = groupByZone("HUMIDITY", humidityZones);
+
+      const eventRows = environmentalEventZones.map((zone) => {
+        const pressure = pressureRows.find((row) => row.zone === zone);
+        const temperature = temperatureRows.find((row) => row.zone === zone);
+        const humidity = humidityRows.find((row) => row.zone === zone);
+
+        return {
+          zone,
+          pressureEvents40min: pressure?.events ?? 0,
+          temperatureEvents24h: temperature?.events ?? 0,
+          humidityEvents24h: humidity?.events ?? 0,
+        };
+      });
+
+      const byZone = Object.values(
+        readings.reduce<Record<string, { zone: string; type: string; readings: Reading[] }>>((acc, reading) => {
+          const key = `${reading.type}-${reading.zone}`;
+          acc[key] ??= { zone: reading.zone, type: reading.type, readings: [] };
           acc[key].readings.push(reading);
           return acc;
         }, {}),
       ).map((item) => ({
-        sensor: item.sensor,
+        zone: item.zone,
         type: item.type,
         label: environmentalTypeLabel(item.type),
         ...sensorStats(item.readings, item.type),
-      })).sort((a, b) => a.type.localeCompare(b.type) || a.sensor.localeCompare(b.sensor));
+      })).sort((a, b) => a.type.localeCompare(b.type) || a.zone.localeCompare(b.zone));
 
       const byType = ["TEMPERATURE", "HUMIDITY", "PRESSURE"].map((type) => {
-        const items = bySensor.filter((item) => item.type === type);
+        const items = byZone.filter((item) => item.type === type);
         const weightedCount = items.reduce((sum, item) => sum + item.count, 0);
         const average = weightedCount > 0
           ? items.reduce((sum, item) => sum + item.average * item.count, 0) / weightedCount
@@ -1339,15 +1389,24 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         average: item.values.reduce((sum, value) => sum + value, 0) / Math.max(item.values.length, 1),
       })).slice(-24);
 
-      const totalAlerts = bySensor.filter((item) => item.status === "ALERT").length;
-      const totalActions = bySensor.filter((item) => item.status === "ACTION").length;
+      const totalAlerts = byZone.filter((item) => item.status === "ALERT").length;
+      const totalActions = byZone.filter((item) => item.status === "ACTION").length;
+      const zones = Array.from(new Set(readings.map((reading) => reading.zone))).sort();
 
       return {
         readingsCount: readings.length,
         range,
         selectedType,
-        bySensor,
+        selectedZone,
+        selectedStatus,
+        selectedImportId,
+        zones,
+        bySensor: byZone,
         byType,
+        pressureRows,
+        temperatureRows,
+        humidityRows,
+        eventRows,
         hourly,
         imports,
         totalAlerts,
@@ -1359,8 +1418,16 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
       readingsCount: 0,
       range: environmentalRange(filters?.days),
       selectedType: filters?.type || "ALL",
+      selectedZone: filters?.zone || "ALL",
+      selectedStatus: filters?.status || "ALL",
+      selectedImportId: filters?.importId || "ALL",
+      zones: [],
       bySensor: [],
       byType: [],
+      pressureRows: [],
+      temperatureRows: [],
+      humidityRows: [],
+      eventRows: [],
       hourly: [],
       imports: [],
       totalAlerts: 0,

@@ -586,9 +586,12 @@ model EnvironmentalImport {
 model EnvironmentalReading {
   id        String   @id @default(cuid())
   timestamp DateTime
+  hour      String?
   sensor    String
+  zone      String   @default("SEM_ZONA")
   type      String
   value     Decimal  @db.Decimal(10, 2)
+  status    String   @default("OK")
 
   importId String?
   import   EnvironmentalImport? @relation(fields: [importId], references: [id], onDelete: Cascade)
@@ -598,6 +601,9 @@ model EnvironmentalReading {
   @@unique([timestamp, sensor, type])
   @@index([timestamp])
   @@index([type, sensor])
+  @@index([type, zone])
+  @@index([zone])
+  @@index([status])
 }
 
 model TicketEquipmentAccess {

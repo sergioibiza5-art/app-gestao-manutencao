@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import type { PushSubscription as WebPushSubscription } from "web-push";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
+import { environmentalType as mappedEnvironmentalType, environmentalZone, simpleEnvironmentalStatus } from "@/lib/environmental";
 import { getPrisma } from "@/lib/prisma";
 
 type PushSubscriptionPayload = {
@@ -119,45 +120,6 @@ function decimalFromCell(value: unknown) {
   const normalized = String(value ?? "").trim().replace(",", ".");
   const parsed = Number(normalized);
   return Number.isFinite(parsed) ? parsed : null;
-}
-
-function environmentalType(header: string) {
-  const normalized = header
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[_-]/g, "");
-
-  if (
-    normalized === "t1" ||
-    normalized === "t2" ||
-    normalized.startsWith("temperature") ||
-    normalized.startsWith("temp")
-  ) {
-    return "TEMPERATURE";
-  }
-
-  if (
-    normalized === "h1" ||
-    normalized === "h2" ||
-    normalized.startsWith("humidity") ||
-    normalized.startsWith("humidade") ||
-    normalized.startsWith("hum")
-  ) {
-    return "HUMIDITY";
-  }
-
-  if (
-    normalized === "pa" ||
-    normalized === "pb" ||
-    normalized.startsWith("pressure") ||
-    normalized.startsWith("pressao") ||
-    normalized.startsWith("pressão")
-  ) {
-    return "PRESSURE";
-  }
-
-  return null;
 }
 
 async function uploadedText(formData: FormData, key: string) {
@@ -2565,7 +2527,7 @@ export async function importEnvironmentalReport(formData: FormData) {
   const rows = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, raw: true, defval: null });
   const headerIndex = rows.findIndex((row) =>
     row.some((cell) => String(cell ?? "").trim().toLowerCase().includes("date")) &&
-    row.some((cell) => environmentalType(String(cell ?? ""))),
+    row.some((cell) => mappedEnvironmentalType(String(cell ?? ""))),
   );
 
   if (headerIndex < 0) return;
@@ -2574,8 +2536,12 @@ export async function importEnvironmentalReport(formData: FormData) {
   const dateIndex = headers.findIndex((header) => header.toLowerCase().includes("date"));
   const timeIndex = headers.findIndex((header) => header.toLowerCase() === "hora" || header.toLowerCase().includes("time"));
   const sensorColumns = headers
-    .map((header, index) => ({ header, index, type: environmentalType(header) }))
-    .filter((column): column is { header: string; index: number; type: string } => Boolean(column.type));
+    .map((header, index) => {
+      const type = mappedEnvironmentalType(header);
+      const zone = environmentalZone(header, type);
+      return { header, index, type, zone };
+    })
+    .filter((column): column is { header: string; index: number; type: "TEMPERATURE" | "HUMIDITY" | "PRESSURE"; zone: string } => Boolean(column.type && column.zone));
 
   const readings = rows.slice(headerIndex + 1).flatMap((row) => {
     const timestamp = parsePortugueseDateTime(row[dateIndex], timeIndex >= 0 ? row[timeIndex] : undefined);
@@ -2586,9 +2552,12 @@ export async function importEnvironmentalReport(formData: FormData) {
       if (value === null) return [];
       return {
         timestamp,
-        sensor: column.header.toUpperCase(),
+        hour: timestamp.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit", hour12: false }),
+        sensor: column.header,
+        zone: column.zone,
         type: column.type,
         value: value.toFixed(2),
+        status: simpleEnvironmentalStatus(column.type, value),
       };
     });
   });
