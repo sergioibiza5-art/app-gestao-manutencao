@@ -18,9 +18,17 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   if (user.role === "TICKET" && activeHref !== "/tickets") {
     redirect("/tickets");
   }
+  const sgqAllowed = ["/calibracao", "/equipamentos", "/analises", "/kpis"];
+  if (user.role === "SGQ" && !sgqAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
+    redirect("/calibracao");
+  }
   const visibleNavigation = user.role === "TICKET"
     ? navigation.filter((item) => item.href === "/tickets")
-    : navigation;
+    : user.role === "SGQ"
+    ? navigation.filter((item) => sgqAllowed.includes(item.href))
+    : ["ADMIN", "MANAGER"].includes(user.role)
+    ? navigation
+    : navigation.filter((item) => item.href !== "/ferias");
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.10),transparent_25%),#070807]">

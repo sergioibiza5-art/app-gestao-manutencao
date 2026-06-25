@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AlertTriangle, CalendarDays, FileSpreadsheet, Search } from "lucide-react";
 
 import { createCalibrationLog, importCalibrationsCsv, updateCalibrationLog } from "@/app/actions";
@@ -9,7 +10,7 @@ import { formatDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 type CalibrationPageProps = {
-  searchParams?: Promise<{ q?: string; approved?: string; year?: string }>;
+  searchParams?: Promise<{ q?: string; approved?: string; year?: string; month?: string }>;
 };
 
 const monthNames = [
@@ -60,12 +61,49 @@ function calibrationStatus(nextDueDate: Date | null) {
   return `${days} dias`;
 }
 
+function dateKey(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function weekDaysForMonth(year: number, monthIndex: number) {
+  const first = new Date(year, monthIndex, 1);
+  const last = new Date(year, monthIndex + 1, 0);
+  const start = new Date(first);
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+
+  const weeks: { label: string; days: { name: string; date: Date; inMonth: boolean }[] }[] = [];
+  const names = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+  const cursor = new Date(start);
+  let week = 1;
+
+  while (cursor <= last || weeks.length < 5) {
+    const monday = new Date(cursor);
+    const days = names.map((name, index) => {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + index);
+      return { name, date, inMonth: date.getMonth() === monthIndex };
+    });
+
+    if (days.some((day) => day.inMonth)) {
+      weeks.push({ label: `Semana ${week}`, days });
+      week += 1;
+    }
+
+    cursor.setDate(cursor.getDate() + 7);
+    if (cursor.getFullYear() > year && cursor.getMonth() > monthIndex) break;
+    if (weeks.length > 6) break;
+  }
+
+  return weeks;
+}
+
 export default async function CalibrationPage({ searchParams }: CalibrationPageProps) {
   const params = (await searchParams) ?? {};
   const { equipment, calibrationLogs } = await getModuleData();
   const q = normalize(params.q);
   const approved = params.approved || "all";
   const selectedYear = Number(params.year || new Date().getFullYear());
+  const selectedMonth = params.month ? Math.min(Math.max(Number(params.month), 1), 12) : null;
   const latestCalibrationByEquipment = Object.values(
     calibrationLogs.reduce<Record<string, (typeof calibrationLogs)[number]>>((acc, log) => {
       acc[log.equipmentId] ??= log;
@@ -85,6 +123,15 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
   const templateHref =
     "data:text/csv;charset=utf-8," +
     encodeURIComponent("codigo_equipamento;equipamento;descricao;numero_certificado;data_calibracao;proxima_validade;resultado;aprovado;link_certificado;nome_ficheiro;notas\nEQ-001;;Calibracao anual;CERT-001;2026-01-10;2027-01-10;Conforme;sim;https://...;certificado.pdf;\n");
+  const selectedMonthItems = selectedMonth ? annualCalibrationMap[selectedMonth - 1]?.items ?? [] : [];
+  const selectedWeeks = selectedMonth ? weekDaysForMonth(selectedYear, selectedMonth - 1) : [];
+  const calibrationsByDay = selectedMonthItems.reduce<Record<string, typeof selectedMonthItems>>((acc, log) => {
+    if (!log.nextDueDate) return acc;
+    const key = dateKey(log.nextDueDate);
+    acc[key] ??= [];
+    acc[key].push(log);
+    return acc;
+  }, {});
 
   return (
     <AppShell activeHref="/calibracao">
@@ -116,16 +163,18 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
         </div>
 
         <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {annualCalibrationMap.map(({ month, items }) => (
+          {annualCalibrationMap.map(({ month, items }, index) => (
             <div key={month} className="min-h-44 overflow-hidden rounded-lg border border-lime-300/20 bg-zinc-950/60">
               <div className="border-b border-lime-300/20 bg-lime-300/10 px-4 py-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lime-200">{month}</p>
+                <Link href={`/calibracao?year=${selectedYear}&month=${index + 1}`} className="block text-xs font-semibold uppercase tracking-[0.18em] text-lime-200 transition hover:text-lime-100">
+                  {month}
+                </Link>
               </div>
               <div className="space-y-2 p-3">
                 {items.length === 0 ? (
                   <p className="text-xs text-zinc-600">Sem calibracoes</p>
                 ) : (
-                  items.slice(0, 5).map((log) => (
+                  items.slice(0, items.length > 5 ? 4 : 5).map((log) => (
                     <div key={log.id} className={`rounded-md border px-2 py-2 ${calibrationTone(log.nextDueDate)}`}>
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
@@ -142,14 +191,59 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                   ))
                 )}
                 {items.length > 5 ? (
-                  <div className="rounded-md border border-lime-300/30 bg-lime-300/10 px-2 py-2 text-center text-xs font-semibold text-lime-200">
-                    + {items.length - 5} calibracoes
-                  </div>
+                  <Link href={`/calibracao?year=${selectedYear}&month=${index + 1}`} className="block rounded-md border border-lime-300/30 bg-lime-300/10 px-2 py-2 text-center text-xs font-semibold text-lime-200 transition hover:border-lime-200/70">
+                    + {items.length - 4} calibracoes
+                  </Link>
                 ) : null}
               </div>
             </div>
           ))}
         </div>
+
+        {selectedMonth ? (
+          <div className="mt-6 rounded-xl border border-lime-300/20 bg-zinc-950/45 p-4">
+            <div className="mb-4 flex flex-col gap-1">
+              <h3 className="text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
+                {monthNames[selectedMonth - 1]} por semanas
+              </h3>
+              <p className="text-sm text-zinc-500">Visualizacao de segunda a sexta para as proximas calibracoes do mes.</p>
+            </div>
+
+            <div className="space-y-4">
+              {selectedWeeks.map((week) => (
+                <div key={week.label} className="overflow-hidden rounded-lg border border-lime-300/20">
+                  <div className="border-b border-lime-300/20 bg-lime-300/10 px-4 py-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-lime-200">{week.label}</p>
+                  </div>
+                  <div className="grid md:grid-cols-5">
+                    {week.days.map((day) => {
+                      const dayItems = calibrationsByDay[dateKey(day.date)] ?? [];
+                      return (
+                        <div key={dateKey(day.date)} className={`min-h-48 border-b border-lime-300/10 p-3 md:border-b-0 md:border-r md:last:border-r-0 ${day.inMonth ? "bg-zinc-950/60" : "bg-zinc-950/20 opacity-45"}`}>
+                          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-lime-200">{day.name}</p>
+                          <p className="mt-1 text-[11px] text-zinc-500">{formatDate(day.date)}</p>
+                          <div className="mt-3 space-y-2">
+                            {dayItems.length === 0 ? (
+                              <p className="text-xs text-zinc-600">Sem calibrações</p>
+                            ) : (
+                              dayItems.map((log) => (
+                                <div key={log.id} className={`rounded-md border px-2 py-2 ${calibrationTone(log.nextDueDate)}`}>
+                                  <p className="text-xs font-semibold text-zinc-50">{log.title}</p>
+                                  <p className="mt-1 text-[11px] text-zinc-400">{log.equipment.name}</p>
+                                  <p className="mt-2 text-[11px] font-semibold">{calibrationStatus(log.nextDueDate)}</p>
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </Panel>
 
       <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">

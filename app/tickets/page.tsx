@@ -87,10 +87,15 @@ function workTime(ticket: {
 }
 
 function downtime(ticket: {
+  machineStopped?: boolean;
   downtimeSeconds: number;
   openedAt: Date;
   completedAt?: Date | null;
 }) {
+  if (ticket.machineStopped === false) {
+    return "00:00";
+  }
+
   if (ticket.downtimeSeconds > 0) {
     return duration(ticket.downtimeSeconds);
   }
@@ -132,11 +137,9 @@ function TicketCreateForm({
 
       <input name="title" className={inputClass} placeholder="Título curto do problema" />
 
-      <select name="priority" className={inputClass} defaultValue="NORMAL">
-        <option value="LOW">Baixa</option>
-        <option value="NORMAL">Normal</option>
-        <option value="HIGH">Alta</option>
-        <option value="CRITICAL">Crítica</option>
+      <select name="machineStopped" className={inputClass} defaultValue="true">
+        <option value="true">Paragem da maquina? Sim</option>
+        <option value="false">Paragem da maquina? Nao</option>
       </select>
 
       <input name="location" className={inputClass} placeholder="Nome do operador" />
@@ -309,6 +312,7 @@ export default async function TicketsPage() {
                     <div className="grid gap-1 text-sm text-zinc-500 xl:text-right">
                       <span>Aberto: {formatDate(ticket.openedAt)}</span>
                       <span>Paragem: {downtime(ticket)}</span>
+                      <span>{ticket.machineStopped ? "Maquina parada" : "Sem paragem da maquina"}</span>
                       <span>Trabalho: {workTime(ticket)}</span>
                       <span>Custo: {formatCurrency(ticket.totalCost)}</span>
                       {ticket.workOrder ? <span className="font-semibold text-teal-300">{ticket.workOrder.number}</span> : null}
@@ -386,6 +390,9 @@ export default async function TicketsPage() {
                       <div className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm text-zinc-400 md:grid-cols-3">
                         <p>
                           Paragem: <strong className="text-amber-100">{downtime(ticket)}</strong>
+                        </p>
+                        <p>
+                          Maquina parada: <strong className="text-zinc-100">{ticket.machineStopped ? "Sim" : "Nao"}</strong>
                         </p>
                         <p>
                           Trabalho: <strong className="text-zinc-100">{workTime(ticket)}</strong>

@@ -88,6 +88,7 @@ export async function requireUser() {
 const roleRank: Record<UserRole, number> = {
   TICKET: -1,
   VIEWER: 0,
+  SGQ: 0,
   USER: 1,
   MANAGER: 2,
   ADMIN: 3,
@@ -111,4 +112,12 @@ export async function requireCanManage() {
 
 export async function requireCanAdmin() {
   return requireRole("ADMIN");
+}
+
+export async function requireCanSgq() {
+  const user = await requireUser();
+  if (!["ADMIN", "MANAGER", "SGQ"].includes(user.role)) {
+    redirect("/");
+  }
+  return user;
 }

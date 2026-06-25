@@ -9,6 +9,7 @@ datasource db {
 enum UserRole {
   ADMIN
   MANAGER
+  SGQ
   USER
   VIEWER
   TICKET
@@ -157,6 +158,7 @@ model User {
   notifications         Notification[]
   pushSubscriptions     PushSubscription[]
   consumableMovements   ConsumableMovement[]
+  vacations             Vacation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -178,28 +180,28 @@ model Session {
 }
 
 model Equipment {
-  id                     String          @id @default(cuid())
-  name                   String
-  code                   String?         @unique
-  category               String
-  brand                  String?
-  model                  String?
-  serialNumber           String?
-  supplier               String?
-  location               String?
-  responsibleDepartment  String?
-  isMeasurementMonitoring Boolean @default(false)
-  regulatoryRequirements Boolean         @default(false)
-  regulatoryDetails      String?
-  parentEquipmentId      String?
-  parentEquipment        Equipment?      @relation("EquipmentHierarchy", fields: [parentEquipmentId], references: [id], onDelete: SetNull)
-  childEquipment         Equipment[]     @relation("EquipmentHierarchy")
-  equipmentTypeId        String?
-  equipmentType          EquipmentType?  @relation(fields: [equipmentTypeId], references: [id], onDelete: SetNull)
-  purchaseDate           DateTime?
-  warrantyUntil          DateTime?
-  status                 EquipmentStatus @default(ACTIVE)
-  notes                  String?
+  id                      String          @id @default(cuid())
+  name                    String
+  code                    String?         @unique
+  category                String
+  brand                   String?
+  model                   String?
+  serialNumber            String?
+  supplier                String?
+  location                String?
+  responsibleDepartment   String?
+  isMeasurementMonitoring Boolean         @default(false)
+  regulatoryRequirements  Boolean         @default(false)
+  regulatoryDetails       String?
+  parentEquipmentId       String?
+  parentEquipment         Equipment?      @relation("EquipmentHierarchy", fields: [parentEquipmentId], references: [id], onDelete: SetNull)
+  childEquipment          Equipment[]     @relation("EquipmentHierarchy")
+  equipmentTypeId         String?
+  equipmentType           EquipmentType?  @relation(fields: [equipmentTypeId], references: [id], onDelete: SetNull)
+  purchaseDate            DateTime?
+  warrantyUntil           DateTime?
+  status                  EquipmentStatus @default(ACTIVE)
+  notes                   String?
 
   tasks                      Task[]
   interventionPlans          EquipmentInterventionPlan[]
@@ -493,15 +495,16 @@ model WorkOrder {
 }
 
 model MaintenanceTicket {
-  id           String                    @id @default(cuid())
-  number       String                    @unique
-  title        String
-  problem      String
-  solution     String?
-  status       MaintenanceTicketStatus   @default(OPEN)
-  priority     MaintenanceTicketPriority @default(NORMAL)
-  location     String?
-  observations String?
+  id             String                    @id @default(cuid())
+  number         String                    @unique
+  title          String
+  problem        String
+  solution       String?
+  status         MaintenanceTicketStatus   @default(OPEN)
+  priority       MaintenanceTicketPriority @default(NORMAL)
+  machineStopped Boolean                   @default(true)
+  location       String?
+  observations   String?
 
   totalWorkSeconds Int     @default(0)
   downtimeSeconds  Int     @default(0)
@@ -545,6 +548,26 @@ model MaintenanceTicket {
   @@index([status])
   @@index([openedAt])
   @@index([equipmentId])
+}
+
+model Vacation {
+  id           String   @id @default(cuid())
+  employeeName String
+  startDate    DateTime
+  endDate      DateTime
+  days         Decimal  @default(0) @db.Decimal(6, 2)
+  status       String   @default("PLANNED")
+  notes        String?
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([startDate])
+  @@index([endDate])
+  @@index([userId])
 }
 
 model TicketEquipmentAccess {

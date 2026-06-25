@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 const roleDescriptions = [
   ["ADMIN", "Acesso total: utilizadores, permissoes, configuracao, apagar registos e gerir SGQ."],
   ["MANAGER", "Planeia e gere: equipamentos, manutencoes, frota, checklists, documentos e aprovacao operacional."],
+  ["SGQ", "SGQ/metrologia: cria e edita equipamentos e calibracoes. Apenas consulta Analises e KPIs. Sem acesso aos restantes modulos."],
   ["USER", "Executa trabalho diario: tarefas, leituras, checklists, despesas, documentos e registos de intervencao."],
   ["VIEWER", "Consulta apenas: dashboard, historicos, calendario, documentos e fichas, sem criar ou editar."],
   ["TICKET", "Posto de trabalho: apenas cria tickets de avaria para a maquina/posto, sem acesso aos restantes modulos."],
@@ -57,6 +58,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
             <select name="role" className={inputClass}>
               <option value="ADMIN">Admin</option>
               <option value="MANAGER">Gestor</option>
+              <option value="SGQ">SGQ</option>
               <option value="USER">Utilizador</option>
               <option value="VIEWER">Leitura</option>
               <option value="TICKET">Posto / Ticket</option>
@@ -152,6 +154,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
                     <select name="role" className={inputClass} defaultValue={user.role}>
                       <option value="ADMIN">Admin</option>
                       <option value="MANAGER">Gestor</option>
+                      <option value="SGQ">SGQ</option>
                       <option value="USER">Utilizador</option>
                       <option value="VIEWER">Leitura</option>
                       <option value="TICKET">Posto / Ticket</option>

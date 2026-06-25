@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import type { PushSubscription as WebPushSubscription } from "web-push";
-import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
+import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 
 type PushSubscriptionPayload = {
@@ -127,7 +127,7 @@ const monthIntervals: Record<TaskFrequency, number> = {
 const taskStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"] as const satisfies readonly TaskStatus[];
 const equipmentStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE", "DISCARDED"] as const satisfies readonly EquipmentStatus[];
 const documentTypes = ["INVOICE", "WARRANTY", "MANUAL", "CERTIFICATE", "CONTRACT", "OTHER"] as const satisfies readonly DocumentType[];
-const userRoles = ["ADMIN", "MANAGER", "USER", "VIEWER", "TICKET"] as const satisfies readonly UserRole[];
+const userRoles = ["ADMIN", "MANAGER", "SGQ", "USER", "VIEWER", "TICKET"] as const satisfies readonly UserRole[];
 const sgqStatuses = ["DRAFT", "ACTIVE", "ARCHIVED"] as const satisfies readonly SGQStatus[];
 const maintenanceTypes = ["INTERNAL", "EXTERNAL"] as const satisfies readonly MaintenanceType[];
 const interventionKinds = ["INSPECTION", "MAINTENANCE"] as const satisfies readonly InterventionKind[];
@@ -496,7 +496,7 @@ export async function deleteTask(formData: FormData) {
 }
 
 export async function createEquipment(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const plans = [
     interventionPlanFromForm(formData, "inspectionInternal", "INSPECTION", "INTERNAL"),
@@ -536,7 +536,7 @@ export async function createEquipment(formData: FormData) {
 }
 
 export async function updateEquipmentBasics(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const equipmentId = text(formData, "equipmentId");
 
@@ -574,7 +574,7 @@ export async function updateEquipmentBasics(formData: FormData) {
 }
 
 export async function createEquipmentTypeWithChecklist(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const typeName = text(formData, "typeName");
   const templateTitle = text(formData, "templateTitle") || `Checklist ${typeName}`;
@@ -1442,7 +1442,7 @@ export async function disablePushSubscription(endpoint: string) {
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
 
-if (user.role === "VIEWER") {
+if (user.role === "VIEWER" || user.role === "SGQ") {
   return;
 }
   const prisma = getPrisma();
@@ -1468,6 +1468,7 @@ if (user.role === "VIEWER") {
         title: text(formData, "title") || `Avaria - ${equipment.name}`,
         problem,
         priority: enumValue(formData, "priority", ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const, "NORMAL"),
+        machineStopped: text(formData, "machineStopped") !== "false",
         location: optionalText(formData, "location") ?? equipment.location,
         equipmentId,
         openedById: user.id,
@@ -1599,9 +1600,11 @@ export async function completeMaintenanceTicket(formData: FormData) {
 
     const completedAt = ticket.completedAt ?? new Date();
 
-    const downtimeSeconds = ticket.downtimeSeconds > 0
-      ? ticket.downtimeSeconds
-      : elapsedSeconds(ticket.openedAt, completedAt);
+    const downtimeSeconds = ticket.machineStopped
+      ? ticket.downtimeSeconds > 0
+        ? ticket.downtimeSeconds
+        : elapsedSeconds(ticket.openedAt, completedAt)
+      : 0;
 
     const totalWorkSeconds =
       ticket.totalWorkSeconds > 0
@@ -1649,9 +1652,11 @@ export async function validateMaintenanceTicket(formData: FormData) {
     if (!currentTicket) return null;
 
     const completedAt = currentTicket.completedAt ?? new Date();
-    const downtimeSeconds = currentTicket.downtimeSeconds > 0
-      ? currentTicket.downtimeSeconds
-      : elapsedSeconds(currentTicket.openedAt, completedAt);
+    const downtimeSeconds = currentTicket.machineStopped
+      ? currentTicket.downtimeSeconds > 0
+        ? currentTicket.downtimeSeconds
+        : elapsedSeconds(currentTicket.openedAt, completedAt)
+      : 0;
     const totalWorkSeconds =
       currentTicket.totalWorkSeconds > 0
         ? currentTicket.totalWorkSeconds
@@ -1698,6 +1703,7 @@ export async function validateMaintenanceTicket(formData: FormData) {
     `Iniciado por: ${ticket.startedBy?.name ?? ticket.assignedToId ?? "Sem registo"}`,
     `Concluido por: ${ticket.completedBy?.name ?? "Sem registo"}`,
     `Validado por: ${user.name}`,
+    `Paragem da maquina: ${ticket.machineStopped ? "Sim" : "Nao"}`,
     `Tempo de paragem da maquina: ${durationNote(ticket.downtimeSeconds)}`,
     `Tempo de trabalho da manutencao: ${durationNote(ticket.totalWorkSeconds)}`,
     `Mao de obra: ${Number(ticket.laborCost).toFixed(2)} EUR`,
@@ -2051,7 +2057,7 @@ export async function validateWorkOrder(formData: FormData) {
 }
 
 export async function createCalibrationLog(formData: FormData) {
-  await requireCanWrite();
+  await requireCanSgq();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
 
@@ -2091,7 +2097,7 @@ export async function createCalibrationLog(formData: FormData) {
 }
 
 export async function updateCalibrationLog(formData: FormData) {
-  await requireCanWrite();
+  await requireCanSgq();
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -2134,7 +2140,7 @@ export async function updateCalibrationLog(formData: FormData) {
 }
 
 export async function importEquipmentCsv(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const rows = csvRows(await uploadedText(formData, "file"));
 
@@ -2216,7 +2222,7 @@ export async function importConsumablesCsv(formData: FormData) {
 }
 
 export async function importCalibrationsCsv(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const rows = csvRows(await uploadedText(formData, "file"));
 
@@ -2407,6 +2413,67 @@ export async function deleteUser(formData: FormData) {
 
   await prisma.user.delete({ where: { id } });
   revalidatePath("/acessos");
+}
+
+export async function createVacation(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const userId = optionalText(formData, "userId");
+  const startDate = optionalDate(formData, "startDate");
+  const endDate = optionalDate(formData, "endDate");
+  const employeeName = text(formData, "employeeName");
+
+  if (!employeeName || !startDate || !endDate) return;
+
+  await prisma.vacation.create({
+    data: {
+      employeeName,
+      userId,
+      startDate,
+      endDate,
+      days: decimal(formData, "days"),
+      status: text(formData, "status") || "PLANNED",
+      notes: optionalText(formData, "notes"),
+    },
+  });
+
+  revalidatePath("/ferias");
+}
+
+export async function updateVacation(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const startDate = optionalDate(formData, "startDate");
+  const endDate = optionalDate(formData, "endDate");
+  const employeeName = text(formData, "employeeName");
+
+  if (!id || !employeeName || !startDate || !endDate) return;
+
+  await prisma.vacation.update({
+    where: { id },
+    data: {
+      employeeName,
+      userId: optionalText(formData, "userId"),
+      startDate,
+      endDate,
+      days: decimal(formData, "days"),
+      status: text(formData, "status") || "PLANNED",
+      notes: optionalText(formData, "notes"),
+    },
+  });
+
+  revalidatePath("/ferias");
+}
+
+export async function deleteVacation(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.vacation.delete({ where: { id } });
+  revalidatePath("/ferias");
 }
 
 export async function createVehicle(formData: FormData) {
@@ -2674,7 +2741,7 @@ export async function createSgqRecord(formData: FormData) {
 }
 
 export async function createEquipmentInterventionPlan(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
 
   const prisma = getPrisma();
   const equipmentId = text(formData, "equipmentId");
@@ -2698,7 +2765,7 @@ export async function createEquipmentInterventionPlan(formData: FormData) {
 }
 
 export async function updateEquipmentInterventionPlan(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
 
   const prisma = getPrisma();
   const id = text(formData, "id");
@@ -2723,7 +2790,7 @@ export async function updateEquipmentInterventionPlan(formData: FormData) {
 }
 
 export async function deleteEquipmentInterventionPlan(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
 
   const prisma = getPrisma();
   const id = text(formData, "id");

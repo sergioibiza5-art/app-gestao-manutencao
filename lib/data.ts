@@ -315,6 +315,7 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
       const periodSeconds = Math.max(secondsBetween(range.start, range.end), 1);
       const failureTickets = tickets.filter((ticket) => ticket.status !== "CANCELED");
       const downtimeSeconds = failureTickets.reduce((sum, ticket) => {
+        if (!ticket.machineStopped) return sum;
         const stored = Number(ticket.downtimeSeconds ?? 0);
         if (stored > 0) return sum + stored;
         return sum + secondsBetween(ticket.openedAt, ticket.completedAt ?? ticket.validatedAt ?? new Date());
@@ -357,6 +358,7 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
           const key = ticket.equipmentId;
           acc[key] ??= { id: key, name: ticket.equipment.name, count: 0, downtimeHours: 0 };
           acc[key].count += 1;
+          if (!ticket.machineStopped) return acc;
           const stored = Number(ticket.downtimeSeconds ?? 0);
           acc[key].downtimeHours += (stored > 0 ? stored : secondsBetween(ticket.openedAt, ticket.completedAt ?? ticket.validatedAt ?? new Date())) / 3600;
           return acc;
@@ -1118,7 +1120,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
       );
 
       const closedTickets = tickets.filter(
-        (ticket) => ticket.downtimeSeconds > 0 || ticket.completedAt,
+        (ticket) => ticket.machineStopped && (ticket.downtimeSeconds > 0 || ticket.completedAt),
       );
 
       const averageRepairSeconds =
@@ -1183,6 +1185,35 @@ export async function getTicketsData(user?: { id: string; role: string }) {
         repeatedProblems: [],
         byEquipment: [],
       },
+    },
+  );
+}
+
+export async function getVacationsData(year: number) {
+  return readDb(
+    async (prisma) => {
+      const start = new Date(year, 0, 1);
+      const end = new Date(year, 11, 31, 23, 59, 59, 999);
+      const [vacations, users] = await Promise.all([
+        prisma.vacation.findMany({
+          where: {
+            startDate: { lte: end },
+            endDate: { gte: start },
+          },
+          orderBy: [{ startDate: "asc" }, { employeeName: "asc" }],
+          include: { user: true },
+        }),
+        prisma.user.findMany({
+          where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER", "SGQ"] } },
+          orderBy: { name: "asc" },
+        }),
+      ]);
+
+      return { vacations, users };
+    },
+    {
+      vacations: [],
+      users: [],
     },
   );
 }

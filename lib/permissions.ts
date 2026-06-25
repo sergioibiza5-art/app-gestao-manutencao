@@ -30,8 +30,8 @@ const permissions: Record<Permission, UserRole[]> = {
   "users:update": ["ADMIN"],
   "users:delete": ["ADMIN"],
 
-  "equipment:create": ["ADMIN", "MANAGER"],
-  "equipment:update": ["ADMIN", "MANAGER"],
+  "equipment:create": ["ADMIN", "MANAGER", "SGQ"],
+  "equipment:update": ["ADMIN", "MANAGER", "SGQ"],
   "equipment:delete": ["ADMIN"],
 
   "maintenance:create": ["ADMIN", "MANAGER", "USER"],
@@ -46,8 +46,8 @@ const permissions: Record<Permission, UserRole[]> = {
   "documents:update": ["ADMIN", "MANAGER"],
   "documents:delete": ["ADMIN"],
 
-  "sgq:create": ["ADMIN", "MANAGER"],
-  "sgq:update": ["ADMIN", "MANAGER"],
+  "sgq:create": ["ADMIN", "MANAGER", "SGQ"],
+  "sgq:update": ["ADMIN", "MANAGER", "SGQ"],
   "sgq:approve": ["ADMIN", "MANAGER"],
   "sgq:delete": ["ADMIN"],
 
