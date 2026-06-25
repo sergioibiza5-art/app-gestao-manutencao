@@ -54,6 +54,25 @@ function StatusSelect({ defaultValue = "PLANNED" }: { defaultValue?: string }) {
   );
 }
 
+function personClass(name: string) {
+  const colors = [
+    "border-teal-300/35 bg-teal-300/10 text-teal-100",
+    "border-sky-300/35 bg-sky-300/10 text-sky-100",
+    "border-violet-300/35 bg-violet-300/10 text-violet-100",
+    "border-amber-300/35 bg-amber-300/10 text-amber-100",
+    "border-rose-300/35 bg-rose-300/10 text-rose-100",
+    "border-lime-300/35 bg-lime-300/10 text-lime-100",
+  ];
+
+  let hash = 0;
+
+  for (let i = 0; i < name.length; i += 1) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  return colors[Math.abs(hash) % colors.length];
+}
+
 export default async function VacationsPage({ searchParams }: VacationsPageProps) {
   await requireCanManage();
   const params = (await searchParams) ?? {};
@@ -149,22 +168,20 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
                 </div>
                 <div className="space-y-2 p-3">
                   {items.length === 0 ? (
-                    <p className="text-xs text-zinc-600">Sem férias</p>
+               <p className="text-xs text-zinc-600">Sem férias</p>
                   ) : (
-                    items.slice(0, 4).map((vacation) => (
-                      <div key={vacation.id} className={`rounded-md border px-2 py-2 ${statusClass(vacation.status)}`}>
+                    items.map((vacation) => (
+                      <div
+                        key={vacation.id}
+                        className={`rounded-md border px-2 py-2 ${personClass(vacation.employeeName)}`}
+                      >
                         <p className="truncate text-xs font-semibold">{vacation.employeeName}</p>
-                        <p className="mt-1 text-[11px] text-zinc-400">
+                        <p className="mt-1 text-[11px] opacity-80">
                           {formatDate(vacation.startDate)} - {formatDate(vacation.endDate)}
                         </p>
                       </div>
-                    ))
-                  )}
-                  {items.length > 4 ? (
-                    <p className="rounded-md border border-emerald-300/30 bg-emerald-300/10 px-2 py-2 text-center text-xs font-semibold text-emerald-200">
-                      + {items.length - 4} marcações
-                    </p>
-                  ) : null}
+                        ))
+                      )}
                 </div>
               </div>
             ))}
