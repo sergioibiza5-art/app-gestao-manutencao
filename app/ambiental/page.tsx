@@ -1,6 +1,6 @@
 import { AlertTriangle, FileSpreadsheet, Leaf, Search, Trash2 } from "lucide-react";
 
-import { deleteEnvironmentalImport, importEnvironmentalReport } from "@/app/actions";
+import { deleteEnvironmentalImport, importEnvironmentalReport, updateEnvironmentalSettings } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
 import { getEnvironmentalData } from "@/lib/data";
@@ -24,6 +24,7 @@ type EnvironmentalRow = {
   events: number;
   status: string;
   count: number;
+  alertReadingsCount?: number;
   lowPressureOccurrences?: number;
   events40min?: number;
   ignoreLowPressure?: boolean;
@@ -35,6 +36,13 @@ type EnvironmentalEventRow = {
   pressureEvents40min: number;
   temperatureEvents24h: number;
   humidityEvents24h: number;
+};
+
+type EnvironmentalSettings = {
+  alertStartTime: string;
+  alertEndTime: string;
+  includeSaturday: boolean;
+  includeSunday: boolean;
 };
 
 function formatNumber(value: number, digits = 1) {
@@ -89,6 +97,7 @@ function ReadingTable({
     events: number;
     status: string;
     count: number;
+    alertReadingsCount?: number;
   }>;
   type: "TEMPERATURE" | "HUMIDITY";
 }) {
@@ -105,6 +114,7 @@ function ReadingTable({
               <th className="px-3 py-2">Maximo</th>
               <th className="px-3 py-2">Alertas</th>
               <th className="px-3 py-2">Acoes</th>
+              <th className="px-3 py-2">Leituras alerta</th>
               <th className="px-3 py-2">Estado</th>
             </tr>
           </thead>
@@ -117,6 +127,7 @@ function ReadingTable({
                 <td className="px-3 py-3">{formatNumber(row.max)} {unit(type)}</td>
                 <td className="px-3 py-3 text-amber-200">{row.occurrences}</td>
                 <td className="px-3 py-3 text-rose-200">{row.events}</td>
+                <td className="px-3 py-3">{row.alertReadingsCount ?? 0}</td>
                 <td className="px-3 py-3">
                   <span className={`inline-flex rounded-md border px-2 py-1 text-xs font-semibold ${statusClass(row.status)}`}>
                     {row.count === 0 ? "Sem dados" : statusLabel(row.status)}
@@ -148,6 +159,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const eventRows = data.eventRows as EnvironmentalEventRow[];
   const sensorRows = data.bySensor as EnvironmentalRow[];
   const hourlyRows = data.hourly as Array<{ hour: string; average: number }>;
+  const settings = data.settings as EnvironmentalSettings;
 
   return (
     <AppShell activeHref="/ambiental">
@@ -240,6 +252,37 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
           </Panel>
 
           <Panel>
+            <div className="flex items-center gap-3">
+              <AlertTriangle size={20} className="text-amber-300" />
+              <h2 className="text-xl font-semibold text-zinc-50">Horario de alertas</h2>
+            </div>
+            <form action={updateEnvironmentalSettings} className="mt-4 space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <label className="space-y-1">
+                  <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Inicio</span>
+                  <input name="alertStartTime" type="time" className={inputClass} defaultValue={settings.alertStartTime} />
+                </label>
+                <label className="space-y-1">
+                  <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Fim</span>
+                  <input name="alertEndTime" type="time" className={inputClass} defaultValue={settings.alertEndTime} />
+                </label>
+              </div>
+              <label className="flex items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-950/65 px-3 py-3 text-sm text-zinc-200">
+                Incluir sabado nos alertas
+                <input name="includeSaturday" type="checkbox" defaultChecked={settings.includeSaturday} className="size-4 accent-teal-300" />
+              </label>
+              <label className="flex items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-950/65 px-3 py-3 text-sm text-zinc-200">
+                Incluir domingo nos alertas
+                <input name="includeSunday" type="checkbox" defaultChecked={settings.includeSunday} className="size-4 accent-teal-300" />
+              </label>
+              <button className={buttonClass}>Guardar horario</button>
+            </form>
+            <p className="mt-3 text-xs leading-5 text-zinc-500">
+              Fora deste horario as leituras continuam no historico, mas nao contam para alertas, acoes ou eventos.
+            </p>
+          </Panel>
+
+          <Panel>
             <h2 className="text-xl font-semibold text-zinc-50">Ultimas importacoes</h2>
             <div className="mt-4 space-y-2">
               {imports.length === 0 ? (
@@ -276,6 +319,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                     <th className="px-3 py-2">Maximo</th>
                     <th className="px-3 py-2">Ocorrencias &lt;5Pa</th>
                     <th className="px-3 py-2">Eventos &gt;40min</th>
+                    <th className="px-3 py-2">Leituras alerta</th>
                     <th className="px-3 py-2">Estado</th>
                   </tr>
                 </thead>
@@ -288,6 +332,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                       <td className="px-3 py-3">{formatNumber(row.max)} Pa</td>
                       <td className="px-3 py-3 text-amber-200">{row.lowPressureOccurrences ?? row.occurrences}</td>
                       <td className="px-3 py-3 text-rose-200">{row.events40min ?? row.events}</td>
+                      <td className="px-3 py-3">{row.alertReadingsCount ?? 0}</td>
                       <td className="px-3 py-3">
                         <span className={`inline-flex rounded-md border px-2 py-1 text-xs font-semibold ${statusClass(row.status)}`}>
                           {row.count === 0 ? "Sem dados" : statusLabel(row.status)}

@@ -2605,6 +2605,32 @@ export async function deleteEnvironmentalImport(formData: FormData) {
   revalidatePath("/ambiental");
 }
 
+export async function updateEnvironmentalSettings(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const alertStartTime = text(formData, "alertStartTime") || "06:00";
+  const alertEndTime = text(formData, "alertEndTime") || "22:00";
+
+  await prisma.environmentalSettings.upsert({
+    where: { id: "default" },
+    create: {
+      id: "default",
+      alertStartTime,
+      alertEndTime,
+      includeSaturday: formData.get("includeSaturday") === "on",
+      includeSunday: formData.get("includeSunday") === "on",
+    },
+    update: {
+      alertStartTime,
+      alertEndTime,
+      includeSaturday: formData.get("includeSaturday") === "on",
+      includeSunday: formData.get("includeSunday") === "on",
+    },
+  });
+
+  revalidatePath("/ambiental");
+}
+
 export async function createVehicle(formData: FormData) {
   await requireCanManage();
   const prisma = getPrisma();

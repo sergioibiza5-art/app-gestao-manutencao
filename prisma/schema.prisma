@@ -606,6 +606,16 @@ model EnvironmentalReading {
   @@index([status])
 }
 
+model EnvironmentalSettings {
+  id              String   @id @default("default")
+  alertStartTime  String   @default("06:00")
+  alertEndTime    String   @default("22:00")
+  includeSaturday Boolean  @default(false)
+  includeSunday   Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 model TicketEquipmentAccess {
   id String @id @default(cuid())
 

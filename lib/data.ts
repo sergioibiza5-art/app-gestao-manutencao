@@ -1239,14 +1239,48 @@ function readingValue(reading: { value: unknown }) {
   return Number(reading.value ?? 0);
 }
 
-function sensorStats(readings: { timestamp: Date; value: unknown }[], type: string) {
+type EnvironmentalSchedule = {
+  alertStartTime: string;
+  alertEndTime: string;
+  includeSaturday: boolean;
+  includeSunday: boolean;
+};
+
+const defaultEnvironmentalSchedule: EnvironmentalSchedule = {
+  alertStartTime: "06:00",
+  alertEndTime: "22:00",
+  includeSaturday: false,
+  includeSunday: false,
+};
+
+function minutesFromTime(value: string) {
+  const [hours = "0", minutes = "0"] = value.split(":");
+  return Number(hours) * 60 + Number(minutes);
+}
+
+function isInsideEnvironmentalSchedule(date: Date, schedule: EnvironmentalSchedule) {
+  const day = date.getDay();
+  if (day === 0 && !schedule.includeSunday) return false;
+  if (day === 6 && !schedule.includeSaturday) return false;
+
+  const start = minutesFromTime(schedule.alertStartTime);
+  const end = minutesFromTime(schedule.alertEndTime);
+  const current = date.getHours() * 60 + date.getMinutes();
+
+  if (start === end) return true;
+  if (start < end) return current >= start && current < end;
+  return current >= start || current < end;
+}
+
+function sensorStats(readings: { timestamp: Date; value: unknown }[], type: string, schedule: EnvironmentalSchedule) {
   const values = readings.map(readingValue).filter((value) => Number.isFinite(value));
   const average = values.length > 0 ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
   const min = values.length > 0 ? Math.min(...values) : 0;
   const max = values.length > 0 ? Math.max(...values) : 0;
   const limits = environmentalLimits(type);
   const ignoreLowPressure = type === "PRESSURE" && average < 1;
-  const ordered = [...readings].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+  const alertReadings = readings.filter((reading) => isInsideEnvironmentalSchedule(reading.timestamp, schedule));
+  const ordered = [...alertReadings].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   let currentSeconds = 0;
   let maxSeconds = 0;
   let events = 0;
@@ -1270,10 +1304,22 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
 
   if (currentSeconds >= limits.actionSeconds) events += 1;
 
-  const occurrences = ignoreLowPressure ? 0 : values.filter((value) => value < limits.min || value > limits.max).length;
+  const alertValues = alertReadings.map(readingValue).filter((value) => Number.isFinite(value));
+  const occurrences = ignoreLowPressure ? 0 : alertValues.filter((value) => value < limits.min || value > limits.max).length;
   const status: EnvironmentalStatus = maxSeconds >= limits.actionSeconds ? "ACTION" : occurrences > 0 ? "ALERT" : "OK";
 
-  return { min, max, average, count: values.length, status, outOfRangeSeconds: maxSeconds, occurrences, events, ignoreLowPressure };
+  return {
+    min,
+    max,
+    average,
+    count: values.length,
+    alertReadingsCount: alertReadings.length,
+    status,
+    outOfRangeSeconds: maxSeconds,
+    occurrences,
+    events,
+    ignoreLowPressure,
+  };
 }
 
 export async function getEnvironmentalData(filters?: { days?: string; type?: string; zone?: string; status?: string; importId?: string }) {
@@ -1288,10 +1334,9 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         timestamp: { gte: range.start, lte: range.end },
         ...(selectedType !== "ALL" ? { type: selectedType } : {}),
         ...(selectedZone !== "ALL" ? { zone: selectedZone } : {}),
-        ...(selectedStatus !== "ALL" ? { status: selectedStatus } : {}),
         ...(selectedImportId !== "ALL" ? { importId: selectedImportId } : {}),
       };
-      const [readings, imports] = await Promise.all([
+      const [readings, imports, settingsRow] = await Promise.all([
         prisma.environmentalReading.findMany({
           where,
           orderBy: { timestamp: "asc" },
@@ -1301,7 +1346,9 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
           orderBy: { importedAt: "desc" },
           take: 8,
         }),
+        prisma.environmentalSettings.findUnique({ where: { id: "default" } }),
       ]);
+      const settings = settingsRow ?? defaultEnvironmentalSchedule;
 
       type Reading = (typeof readings)[number];
 
@@ -1320,7 +1367,7 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
             zone,
             type,
             label: environmentalTypeLabel(type),
-            ...sensorStats(zoneReadings, type),
+            ...sensorStats(zoneReadings, type, settings),
           };
         });
       };
@@ -1357,11 +1404,14 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         zone: item.zone,
         type: item.type,
         label: environmentalTypeLabel(item.type),
-        ...sensorStats(item.readings, item.type),
+        ...sensorStats(item.readings, item.type, settings),
       })).sort((a, b) => a.type.localeCompare(b.type) || a.zone.localeCompare(b.zone));
+      const filteredByZone = selectedStatus === "ALL" ? byZone : byZone.filter((item) => item.status === selectedStatus);
+      const filterRowsByStatus = <T extends { status: string }>(rows: T[]) =>
+        selectedStatus === "ALL" ? rows : rows.filter((item) => item.status === selectedStatus);
 
       const byType = ["TEMPERATURE", "HUMIDITY", "PRESSURE"].map((type) => {
-        const items = byZone.filter((item) => item.type === type);
+        const items = filteredByZone.filter((item) => item.type === type);
         const weightedCount = items.reduce((sum, item) => sum + item.count, 0);
         const average = weightedCount > 0
           ? items.reduce((sum, item) => sum + item.average * item.count, 0) / weightedCount
@@ -1390,8 +1440,8 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         average: item.values.reduce((sum, value) => sum + value, 0) / Math.max(item.values.length, 1),
       })).slice(-24);
 
-      const totalAlerts = byZone.filter((item) => item.status === "ALERT").length;
-      const totalActions = byZone.filter((item) => item.status === "ACTION").length;
+      const totalAlerts = filteredByZone.filter((item) => item.status === "ALERT").length;
+      const totalActions = filteredByZone.filter((item) => item.status === "ACTION").length;
       const zones = Array.from(new Set(readings.map((reading) => reading.zone))).sort();
 
       return {
@@ -1401,12 +1451,13 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         selectedZone,
         selectedStatus,
         selectedImportId,
+        settings,
         zones,
-        bySensor: byZone,
+        bySensor: filteredByZone,
         byType,
-        pressureRows,
-        temperatureRows,
-        humidityRows,
+        pressureRows: filterRowsByStatus(pressureRows),
+        temperatureRows: filterRowsByStatus(temperatureRows),
+        humidityRows: filterRowsByStatus(humidityRows),
         eventRows,
         hourly,
         imports,
@@ -1422,6 +1473,7 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
       selectedZone: filters?.zone || "ALL",
       selectedStatus: filters?.status || "ALL",
       selectedImportId: filters?.importId || "ALL",
+      settings: defaultEnvironmentalSchedule,
       zones: [],
       bySensor: [],
       byType: [],
