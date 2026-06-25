@@ -1,6 +1,6 @@
 import { AlertTriangle, FileSpreadsheet, Leaf, Search, ThermometerSun } from "lucide-react";
 
-import { importEnvironmentalReport } from "@/app/actions";
+import { deleteEnvironmentalImport, importEnvironmentalReport } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
 import { getEnvironmentalData } from "@/lib/data";
@@ -119,9 +119,18 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               ) : (
                 data.imports.map((item) => (
                   <div key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-3">
-                    <p className="truncate text-sm font-semibold text-zinc-100">{item.fileName}</p>
-                    <p className="mt-1 text-xs text-zinc-500">{formatDate(item.importedAt)} · {item.rowsCount} leituras</p>
-                  </div>
+  <p className="truncate text-sm font-semibold text-zinc-100">{item.fileName}</p>
+  <p className="mt-1 text-xs text-zinc-500">
+    {formatDate(item.importedAt)} · {item.rowsCount} leituras
+  </p>
+
+  <form action={deleteEnvironmentalImport} className="mt-3">
+    <input type="hidden" name="id" value={item.id} />
+    <button className="inline-flex h-9 items-center justify-center rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 text-xs font-semibold text-rose-200">
+      Eliminar importação
+    </button>
+  </form>
+</div>
                 ))
               )}
             </div>

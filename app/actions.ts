@@ -2617,6 +2617,25 @@ export async function importEnvironmentalReport(formData: FormData) {
   revalidatePath("/ambiental");
 }
 
+export async function deleteEnvironmentalImport(formData: FormData) {
+  await requireCanManage();
+
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+
+  if (!id) return;
+
+  await prisma.environmentalReading.deleteMany({
+    where: { importId: id },
+  });
+
+  await prisma.environmentalImport.delete({
+    where: { id },
+  });
+
+  revalidatePath("/ambiental");
+}
+
 export async function createVehicle(formData: FormData) {
   await requireCanManage();
   const prisma = getPrisma();
