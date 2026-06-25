@@ -174,7 +174,7 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                 {items.length === 0 ? (
                   <p className="text-xs text-zinc-600">Sem calibracoes</p>
                 ) : (
-                  items.slice(0, items.length > 5 ? 4 : 5).map((log) => (
+                  items.slice(0, 4).map((log) => (
                     <div key={log.id} className={`rounded-md border px-2 py-2 ${calibrationTone(log.nextDueDate)}`}>
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
@@ -190,7 +190,7 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                     </div>
                   ))
                 )}
-                {items.length > 5 ? (
+                {items.length > 4 ? (
                   <Link href={`/calibracao?year=${selectedYear}&month=${index + 1}`} className="block rounded-md border border-lime-300/30 bg-lime-300/10 px-2 py-2 text-center text-xs font-semibold text-lime-200 transition hover:border-lime-200/70">
                     + {items.length - 4} calibracoes
                   </Link>
@@ -202,11 +202,19 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
 
         {selectedMonth ? (
           <div className="mt-6 rounded-xl border border-lime-300/20 bg-zinc-950/45 p-4">
-            <div className="mb-4 flex flex-col gap-1">
-              <h3 className="text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
-                {monthNames[selectedMonth - 1]} por semanas
-              </h3>
-              <p className="text-sm text-zinc-500">Visualizacao de segunda a sexta para as proximas calibracoes do mes.</p>
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <h3 className="text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
+                  {monthNames[selectedMonth - 1]} por semanas
+                </h3>
+                <p className="text-sm text-zinc-500">Visualizacao de segunda a sexta para as proximas calibracoes do mes.</p>
+              </div>
+              <Link
+                href={`/calibracao?year=${selectedYear}`}
+                className="inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950/70 px-3 text-sm font-semibold text-zinc-200 transition hover:border-lime-300/40 hover:text-lime-200"
+              >
+                Fechar semanas
+              </Link>
             </div>
 
             <div className="space-y-4">

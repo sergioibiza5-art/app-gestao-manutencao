@@ -551,13 +551,15 @@ model MaintenanceTicket {
 }
 
 model Vacation {
-  id           String   @id @default(cuid())
-  employeeName String
-  startDate    DateTime
-  endDate      DateTime
-  days         Decimal  @default(0) @db.Decimal(6, 2)
-  status       String   @default("PLANNED")
-  notes        String?
+  id            String   @id @default(cuid())
+  employeeName  String
+  startDate     DateTime
+  endDate       DateTime
+  days          Decimal  @default(0) @db.Decimal(6, 2)
+  absenceHours  Decimal  @default(0) @db.Decimal(6, 2)
+  bankHoursUsed Decimal  @default(0) @db.Decimal(6, 2)
+  status        String   @default("PLANNED")
+  notes         String?
 
   userId String?
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
@@ -570,6 +572,32 @@ model Vacation {
   @@index([startDate])
   @@index([endDate])
   @@index([userId])
+}
+
+model EnvironmentalImport {
+  id         String   @id @default(cuid())
+  fileName   String
+  rowsCount  Int      @default(0)
+  importedAt DateTime @default(now())
+
+  readings EnvironmentalReading[]
+}
+
+model EnvironmentalReading {
+  id        String   @id @default(cuid())
+  timestamp DateTime
+  sensor    String
+  type      String
+  value     Decimal  @db.Decimal(10, 2)
+
+  importId String?
+  import   EnvironmentalImport? @relation(fields: [importId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([timestamp, sensor, type])
+  @@index([timestamp])
+  @@index([type, sensor])
 }
 
 model TicketEquipmentAccess {

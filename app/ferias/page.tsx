@@ -69,6 +69,8 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
 
   const activeVacations = vacations.filter((vacation) => vacation.status !== "CANCELED");
   const totalDays = activeVacations.reduce((sum, vacation) => sum + Number(vacation.days ?? 0), 0);
+  const totalAbsenceHours = activeVacations.reduce((sum, vacation) => sum + Number(vacation.absenceHours ?? 0), 0);
+  const totalBankHours = activeVacations.reduce((sum, vacation) => sum + Number(vacation.bankHoursUsed ?? 0), 0);
   const people = new Set(activeVacations.map((vacation) => vacation.employeeName)).size;
 
   const monthlyMap = monthNames.map((month, index) => ({
@@ -88,7 +90,7 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
         description="Planeia e acompanha as férias do departamento por pessoa, estado, período e ano."
       />
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 md:grid-cols-4">
         <Panel>
           <p className="text-sm text-zinc-500">Ano</p>
           <p className="mt-2 text-3xl font-semibold text-zinc-50">{selectedYear}</p>
@@ -102,6 +104,12 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
         <Panel>
           <p className="text-sm text-zinc-500">Dias planeados</p>
           <p className="mt-2 text-3xl font-semibold text-emerald-200">{totalDays.toFixed(1)}</p>
+        </Panel>
+
+        <Panel>
+          <p className="text-sm text-zinc-500">Horas / banco</p>
+          <p className="mt-2 text-3xl font-semibold text-amber-200">{totalAbsenceHours.toFixed(1)}h</p>
+          <p className="mt-1 text-xs text-zinc-500">{totalBankHours.toFixed(1)}h descontadas</p>
         </Panel>
       </section>
 
@@ -130,7 +138,12 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
                 <input name="endDate" required type="date" className={inputClass} />
               </div>
 
-              <input name="days" className={inputClass} placeholder="Dias úteis" />
+              <input name="days" type="number" step="0.5" min="0" className={inputClass} placeholder="Dias úteis, ex.: 0.5" />
+
+              <div className="grid grid-cols-2 gap-3">
+                <input name="absenceHours" type="number" step="0.25" min="0" className={inputClass} placeholder="Horas de falta" />
+                <input name="bankHoursUsed" type="number" step="0.25" min="0" className={inputClass} placeholder="Horas banco" />
+              </div>
 
               <StatusSelect />
 
@@ -249,7 +262,35 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
                     defaultValue={dateInputValue(vacation.endDate)}
                   />
 
-                  <input name="days" className={inputClass} defaultValue={String(vacation.days ?? 0)} />
+                  <input
+                    name="days"
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    className={inputClass}
+                    defaultValue={String(vacation.days ?? 0)}
+                    aria-label="Dias de férias"
+                  />
+
+                  <input
+                    name="absenceHours"
+                    type="number"
+                    step="0.25"
+                    min="0"
+                    className={inputClass}
+                    defaultValue={String(vacation.absenceHours ?? 0)}
+                    aria-label="Horas de falta"
+                  />
+
+                  <input
+                    name="bankHoursUsed"
+                    type="number"
+                    step="0.25"
+                    min="0"
+                    className={inputClass}
+                    defaultValue={String(vacation.bankHoursUsed ?? 0)}
+                    aria-label="Horas descontadas do banco de horas"
+                  />
 
                   <StatusSelect defaultValue={vacation.status} />
 

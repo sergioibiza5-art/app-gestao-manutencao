@@ -2,6 +2,7 @@
 import { sendTelegramMessage } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import * as XLSX from "xlsx";
 
 import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import type { PushSubscription as WebPushSubscription } from "web-push";
@@ -91,6 +92,41 @@ function csvRows(content: string) {
     const values = split(line);
     return Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ""]));
   });
+}
+
+function parsePortugueseDateTime(value: unknown, fallbackTime?: unknown) {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
+  if (typeof value === "number") {
+    const parsed = XLSX.SSF.parse_date_code(value);
+    if (parsed) return new Date(parsed.y, parsed.m - 1, parsed.d, parsed.H, parsed.M, Math.floor(parsed.S));
+  }
+
+  const raw = String(value ?? "").trim();
+  if (!raw) return null;
+  const [datePart, timePartFromDate] = raw.split(/\s+/);
+  const parts = datePart.split(/[/-]/).map(Number);
+  if (parts.length !== 3 || parts.some((part) => !Number.isFinite(part))) return null;
+
+  const timePart = timePartFromDate || String(fallbackTime ?? "").trim() || "00:00";
+  const [hour = 0, minute = 0, second = 0] = timePart.split(":").map(Number);
+  const [day, month, year] = parts[0] > 1900 ? [parts[2], parts[1], parts[0]] : parts;
+
+  return new Date(year, month - 1, day, hour || 0, minute || 0, second || 0);
+}
+
+function decimalFromCell(value: unknown) {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  const normalized = String(value ?? "").trim().replace(",", ".");
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function environmentalType(header: string) {
+  const value = header.trim().toUpperCase();
+  if (/^T\d+$/.test(value)) return "TEMPERATURE";
+  if (/^H\d+$/.test(value)) return "HUMIDITY";
+  if (/^P[A-Z]+$/.test(value)) return "PRESSURE";
+  return null;
 }
 
 async function uploadedText(formData: FormData, key: string) {
@@ -2432,6 +2468,8 @@ export async function createVacation(formData: FormData) {
       startDate,
       endDate,
       days: decimal(formData, "days"),
+      absenceHours: decimal(formData, "absenceHours"),
+      bankHoursUsed: decimal(formData, "bankHoursUsed"),
       status: text(formData, "status") || "PLANNED",
       color: optionalText(formData, "color") ?? "#14b8a6",
       notes: optionalText(formData, "notes"),
@@ -2459,6 +2497,8 @@ export async function updateVacation(formData: FormData) {
       startDate,
       endDate,
       days: decimal(formData, "days"),
+      absenceHours: decimal(formData, "absenceHours"),
+      bankHoursUsed: decimal(formData, "bankHoursUsed"),
       status: text(formData, "status") || "PLANNED",
       color: optionalText(formData, "color") ?? "#14b8a6",
       notes: optionalText(formData, "notes"),
@@ -2476,6 +2516,74 @@ export async function deleteVacation(formData: FormData) {
 
   await prisma.vacation.delete({ where: { id } });
   revalidatePath("/ferias");
+}
+
+export async function importEnvironmentalReport(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const file = formData.get("file");
+
+  if (!(file instanceof File) || file.size === 0) return;
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const workbook = XLSX.read(buffer, { type: "buffer", cellDates: true });
+  const sheetName = workbook.SheetNames.find((name) => name.toLowerCase().includes("raw")) ?? workbook.SheetNames[0];
+  const sheet = workbook.Sheets[sheetName];
+  if (!sheet) return;
+
+  const rows = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, raw: true, defval: null });
+  const headerIndex = rows.findIndex((row) =>
+    row.some((cell) => String(cell ?? "").trim().toLowerCase().includes("date")) &&
+    row.some((cell) => environmentalType(String(cell ?? ""))),
+  );
+
+  if (headerIndex < 0) return;
+
+  const headers = rows[headerIndex].map((cell) => String(cell ?? "").trim());
+  const dateIndex = headers.findIndex((header) => header.toLowerCase().includes("date"));
+  const timeIndex = headers.findIndex((header) => header.toLowerCase() === "hora" || header.toLowerCase().includes("time"));
+  const sensorColumns = headers
+    .map((header, index) => ({ header, index, type: environmentalType(header) }))
+    .filter((column): column is { header: string; index: number; type: string } => Boolean(column.type));
+
+  const readings = rows.slice(headerIndex + 1).flatMap((row) => {
+    const timestamp = parsePortugueseDateTime(row[dateIndex], timeIndex >= 0 ? row[timeIndex] : undefined);
+    if (!timestamp) return [];
+
+    return sensorColumns.flatMap((column) => {
+      const value = decimalFromCell(row[column.index]);
+      if (value === null) return [];
+      return {
+        timestamp,
+        sensor: column.header.toUpperCase(),
+        type: column.type,
+        value: value.toFixed(2),
+      };
+    });
+  });
+
+  if (readings.length === 0) return;
+
+  await prisma.$transaction(async (tx) => {
+    const importRow = await tx.environmentalImport.create({
+      data: {
+        fileName: file.name,
+        rowsCount: readings.length,
+      },
+    });
+
+    for (let index = 0; index < readings.length; index += 1000) {
+      await tx.environmentalReading.createMany({
+        data: readings.slice(index, index + 1000).map((reading) => ({
+          ...reading,
+          importId: importRow.id,
+        })),
+        skipDuplicates: true,
+      });
+    }
+  });
+
+  revalidatePath("/ambiental");
 }
 
 export async function createVehicle(formData: FormData) {

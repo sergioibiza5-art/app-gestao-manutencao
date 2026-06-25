@@ -1217,3 +1217,155 @@ export async function getVacationsData(year: number) {
     },
   );
 }
+
+function environmentalRange(days?: string) {
+  const span = Math.max(Number(days || 7), 1);
+  const end = new Date();
+  const start = new Date(end);
+  start.setDate(start.getDate() - span);
+  return { start, end, span };
+}
+
+function environmentalTypeLabel(type: string) {
+  if (type === "TEMPERATURE") return "Temperatura";
+  if (type === "HUMIDITY") return "Humidade";
+  return "Pressao";
+}
+
+function environmentalLimits(type: string) {
+  if (type === "TEMPERATURE") return { min: 15, max: 25, actionSeconds: 86_400 };
+  if (type === "HUMIDITY") return { min: 30, max: 70, actionSeconds: 86_400 };
+  return { min: 5, max: Number.POSITIVE_INFINITY, actionSeconds: 2_400 };
+}
+
+function readingValue(reading: { value: unknown }) {
+  return Number(reading.value ?? 0);
+}
+
+function sensorStats(readings: { timestamp: Date; value: unknown }[], type: string) {
+  const values = readings.map(readingValue).filter((value) => Number.isFinite(value));
+  const average = values.length > 0 ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
+  const min = values.length > 0 ? Math.min(...values) : 0;
+  const max = values.length > 0 ? Math.max(...values) : 0;
+  const limits = environmentalLimits(type);
+  const ignorePressure = type === "PRESSURE" && average < 1;
+  const ordered = [...readings].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+  let currentSeconds = 0;
+  let maxSeconds = 0;
+
+  for (let index = 0; index < ordered.length; index += 1) {
+    const value = readingValue(ordered[index]);
+    const outOfRange = !ignorePressure && (value < limits.min || value > limits.max);
+    const next = ordered[index + 1];
+    const interval = next
+      ? Math.max(Math.min(Math.floor((next.timestamp.getTime() - ordered[index].timestamp.getTime()) / 1000), 3600), 0)
+      : 0;
+
+    if (outOfRange) {
+      currentSeconds += interval;
+      maxSeconds = Math.max(maxSeconds, currentSeconds);
+    } else {
+      currentSeconds = 0;
+    }
+  }
+
+  const status = maxSeconds >= limits.actionSeconds ? "ACTION" : maxSeconds > 0 ? "ALERT" : "OK";
+
+  return { min, max, average, count: values.length, status, outOfRangeSeconds: maxSeconds, ignorePressure };
+}
+
+export async function getEnvironmentalData(filters?: { days?: string; type?: string }) {
+  return readDb(
+    async (prisma) => {
+      const range = environmentalRange(filters?.days);
+      const selectedType = filters?.type || "ALL";
+      const where = {
+        timestamp: { gte: range.start, lte: range.end },
+        ...(selectedType !== "ALL" ? { type: selectedType } : {}),
+      };
+      const [readings, imports] = await Promise.all([
+        prisma.environmentalReading.findMany({
+          where,
+          orderBy: { timestamp: "asc" },
+          take: 80_000,
+        }),
+        prisma.environmentalImport.findMany({
+          orderBy: { importedAt: "desc" },
+          take: 8,
+        }),
+      ]);
+
+      const bySensor = Object.values(
+        readings.reduce<Record<string, { sensor: string; type: string; readings: typeof readings }>>((acc, reading) => {
+          const key = `${reading.type}-${reading.sensor}`;
+          acc[key] ??= { sensor: reading.sensor, type: reading.type, readings: [] };
+          acc[key].readings.push(reading);
+          return acc;
+        }, {}),
+      ).map((item) => ({
+        sensor: item.sensor,
+        type: item.type,
+        label: environmentalTypeLabel(item.type),
+        ...sensorStats(item.readings, item.type),
+      })).sort((a, b) => a.type.localeCompare(b.type) || a.sensor.localeCompare(b.sensor));
+
+      const byType = ["TEMPERATURE", "HUMIDITY", "PRESSURE"].map((type) => {
+        const items = bySensor.filter((item) => item.type === type);
+        const weightedCount = items.reduce((sum, item) => sum + item.count, 0);
+        const average = weightedCount > 0
+          ? items.reduce((sum, item) => sum + item.average * item.count, 0) / weightedCount
+          : 0;
+
+        return {
+          type,
+          label: environmentalTypeLabel(type),
+          min: items.length > 0 ? Math.min(...items.map((item) => item.min)) : 0,
+          max: items.length > 0 ? Math.max(...items.map((item) => item.max)) : 0,
+          average,
+          alerts: items.filter((item) => item.status === "ALERT").length,
+          actions: items.filter((item) => item.status === "ACTION").length,
+        };
+      });
+
+      const hourly = Object.values(
+        readings.reduce<Record<string, { hour: string; values: number[] }>>((acc, reading) => {
+          const hour = `${reading.timestamp.getDate().toString().padStart(2, "0")}/${(reading.timestamp.getMonth() + 1).toString().padStart(2, "0")} ${reading.timestamp.getHours().toString().padStart(2, "0")}h`;
+          acc[hour] ??= { hour, values: [] };
+          acc[hour].values.push(readingValue(reading));
+          return acc;
+        }, {}),
+      ).map((item) => ({
+        hour: item.hour,
+        average: item.values.reduce((sum, value) => sum + value, 0) / Math.max(item.values.length, 1),
+      })).slice(-24);
+
+      const totalAlerts = bySensor.filter((item) => item.status === "ALERT").length;
+      const totalActions = bySensor.filter((item) => item.status === "ACTION").length;
+
+      return {
+        readingsCount: readings.length,
+        range,
+        selectedType,
+        bySensor,
+        byType,
+        hourly,
+        imports,
+        totalAlerts,
+        totalActions,
+        state: totalActions > 0 ? "ACAO" : totalAlerts > 0 ? "ATENCAO" : "CONTROLADO",
+      };
+    },
+    {
+      readingsCount: 0,
+      range: environmentalRange(filters?.days),
+      selectedType: filters?.type || "ALL",
+      bySensor: [],
+      byType: [],
+      hourly: [],
+      imports: [],
+      totalAlerts: 0,
+      totalActions: 0,
+      state: "SEM DADOS",
+    },
+  );
+}

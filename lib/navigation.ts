@@ -5,6 +5,7 @@ import {
   Activity,
   FileText,
   Gauge,
+  Leaf,
   TreePalm,
   LayoutDashboard,
   Package,
@@ -24,6 +25,7 @@ export const navigation = [
   { name: "Analises", href: "/analises", meta: "Fornecedores e custos", icon: BarChart3, color: "bg-emerald-400/15 text-emerald-200" },
   { name: "KPIs", href: "/kpis", meta: "Fiabilidade e tempos", icon: Activity, color: "bg-sky-400/15 text-sky-200" },
   { name: "Ferias", href: "/ferias", meta: "Mapa da equipa", icon: TreePalm, color: "bg-emerald-400/15 text-emerald-200" },
+  { name: "Ambiental", href: "/ambiental", meta: "Temperatura e pressao", icon: Leaf, color: "bg-lime-400/15 text-lime-200" },
 
   { name: "Tarefas", href: "/tarefas", meta: "Recorrencias", icon: ClipboardCheck, color: "bg-teal-400/15 text-teal-200" },
   { name: "Manutencao", href: "/manutencao", meta: "Ativos e infraestrutura", icon: Wrench, color: "bg-cyan-400/15 text-cyan-200" },
