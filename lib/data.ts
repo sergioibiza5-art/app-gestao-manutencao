@@ -1245,6 +1245,7 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
   const min = values.length > 0 ? Math.min(...values) : 0;
   const max = values.length > 0 ? Math.max(...values) : 0;
   const limits = environmentalLimits(type);
+  const ignoreLowPressure = type === "PRESSURE" && average < 1;
   const ordered = [...readings].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   let currentSeconds = 0;
   let maxSeconds = 0;
@@ -1252,7 +1253,7 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
 
   for (let index = 0; index < ordered.length; index += 1) {
     const value = readingValue(ordered[index]);
-    const outOfRange = value < limits.min || value > limits.max;
+    const outOfRange = !ignoreLowPressure && (value < limits.min || value > limits.max);
     const next = ordered[index + 1];
     const interval = next
       ? Math.max(Math.min(Math.floor((next.timestamp.getTime() - ordered[index].timestamp.getTime()) / 1000), 3600), 0)
@@ -1269,10 +1270,10 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
 
   if (currentSeconds >= limits.actionSeconds) events += 1;
 
-  const occurrences = values.filter((value) => value < limits.min || value > limits.max).length;
+  const occurrences = ignoreLowPressure ? 0 : values.filter((value) => value < limits.min || value > limits.max).length;
   const status: EnvironmentalStatus = maxSeconds >= limits.actionSeconds ? "ACTION" : occurrences > 0 ? "ALERT" : "OK";
 
-  return { min, max, average, count: values.length, status, outOfRangeSeconds: maxSeconds, occurrences, events };
+  return { min, max, average, count: values.length, status, outOfRangeSeconds: maxSeconds, occurrences, events, ignoreLowPressure };
 }
 
 export async function getEnvironmentalData(filters?: { days?: string; type?: string; zone?: string; status?: string; importId?: string }) {

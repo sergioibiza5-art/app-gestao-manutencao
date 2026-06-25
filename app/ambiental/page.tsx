@@ -26,6 +26,7 @@ type EnvironmentalRow = {
   count: number;
   lowPressureOccurrences?: number;
   events40min?: number;
+  ignoreLowPressure?: boolean;
   label?: string;
 };
 
@@ -291,6 +292,9 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                         <span className={`inline-flex rounded-md border px-2 py-1 text-xs font-semibold ${statusClass(row.status)}`}>
                           {row.count === 0 ? "Sem dados" : statusLabel(row.status)}
                         </span>
+                        {row.ignoreLowPressure ? (
+                          <p className="mt-1 text-[11px] text-zinc-500">Media &lt;1 Pa considerada OK</p>
+                        ) : null}
                       </td>
                     </tr>
                   ))}
