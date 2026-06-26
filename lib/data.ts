@@ -1322,6 +1322,83 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
   };
 }
 
+function environmentalActionEvents(
+  readings: { timestamp: Date; value: unknown }[],
+  type: string,
+  zone: string,
+  schedule: EnvironmentalSchedule,
+  ignoreLowPressure: boolean,
+) {
+  const limits = environmentalLimits(type);
+  const ordered = readings
+    .filter((reading) => isInsideEnvironmentalSchedule(reading.timestamp, schedule))
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+  const events: Array<{
+    zone: string;
+    type: string;
+    label: string;
+    startedAt: Date;
+    endedAt: Date;
+    durationSeconds: number;
+    min: number;
+    max: number;
+    readingsCount: number;
+    limit: string;
+  }> = [];
+  let current: { startedAt: Date; endedAt: Date; seconds: number; values: number[] } | null = null;
+
+  for (let index = 0; index < ordered.length; index += 1) {
+    const reading = ordered[index];
+    const value = readingValue(reading);
+    const next = ordered[index + 1];
+    const interval = next
+      ? Math.max(Math.min(Math.floor((next.timestamp.getTime() - reading.timestamp.getTime()) / 1000), 3600), 0)
+      : 0;
+    const outOfRange = !ignoreLowPressure && (value < limits.min || value > limits.max);
+
+    if (outOfRange) {
+      current ??= { startedAt: reading.timestamp, endedAt: reading.timestamp, seconds: 0, values: [] };
+      current.endedAt = next?.timestamp ?? reading.timestamp;
+      current.seconds += interval;
+      current.values.push(value);
+      continue;
+    }
+
+    if (current && current.seconds >= limits.actionSeconds) {
+      events.push({
+        zone,
+        type,
+        label: environmentalTypeLabel(type),
+        startedAt: current.startedAt,
+        endedAt: current.endedAt,
+        durationSeconds: current.seconds,
+        min: Math.min(...current.values),
+        max: Math.max(...current.values),
+        readingsCount: current.values.length,
+        limit: type === "PRESSURE" ? "< 5 Pa" : type === "TEMPERATURE" ? "< 15 C ou > 25 C" : "< 30% ou > 70%",
+      });
+    }
+    current = null;
+  }
+
+  if (current && current.seconds >= limits.actionSeconds) {
+    events.push({
+      zone,
+      type,
+      label: environmentalTypeLabel(type),
+      startedAt: current.startedAt,
+      endedAt: current.endedAt,
+      durationSeconds: current.seconds,
+      min: Math.min(...current.values),
+      max: Math.max(...current.values),
+      readingsCount: current.values.length,
+      limit: type === "PRESSURE" ? "< 5 Pa" : type === "TEMPERATURE" ? "< 15 C ou > 25 C" : "< 30% ou > 70%",
+    });
+  }
+
+  return events;
+}
+
 export async function getEnvironmentalData(filters?: { days?: string; type?: string; zone?: string; status?: string; importId?: string }) {
   return readDb(
     async (prisma) => {
@@ -1409,6 +1486,17 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
       const filteredByZone = selectedStatus === "ALL" ? byZone : byZone.filter((item) => item.status === selectedStatus);
       const filterRowsByStatus = <T extends { status: string }>(rows: T[]) =>
         selectedStatus === "ALL" ? rows : rows.filter((item) => item.status === selectedStatus);
+      const actionEvents = Object.values(
+        readings.reduce<Record<string, { zone: string; type: string; readings: Reading[] }>>((acc, reading) => {
+          const key = `${reading.type}-${reading.zone}`;
+          acc[key] ??= { zone: reading.zone, type: reading.type, readings: [] };
+          acc[key].readings.push(reading);
+          return acc;
+        }, {}),
+      ).flatMap((item) => {
+        const stats = sensorStats(item.readings, item.type, settings);
+        return environmentalActionEvents(item.readings, item.type, item.zone, settings, stats.ignoreLowPressure);
+      }).sort((a, b) => b.startedAt.getTime() - a.startedAt.getTime());
 
       const byType = ["TEMPERATURE", "HUMIDITY", "PRESSURE"].map((type) => {
         const items = filteredByZone.filter((item) => item.type === type);
@@ -1459,6 +1547,7 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         temperatureRows: filterRowsByStatus(temperatureRows),
         humidityRows: filterRowsByStatus(humidityRows),
         eventRows,
+        actionEvents,
         hourly,
         imports,
         totalAlerts,
@@ -1481,6 +1570,7 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
       temperatureRows: [],
       humidityRows: [],
       eventRows: [],
+      actionEvents: [],
       hourly: [],
       imports: [],
       totalAlerts: 0,

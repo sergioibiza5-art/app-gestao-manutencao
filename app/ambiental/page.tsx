@@ -38,6 +38,19 @@ type EnvironmentalEventRow = {
   humidityEvents24h: number;
 };
 
+type EnvironmentalActionEvent = {
+  zone: string;
+  type: string;
+  label: string;
+  startedAt: Date;
+  endedAt: Date;
+  durationSeconds: number;
+  min: number;
+  max: number;
+  readingsCount: number;
+  limit: string;
+};
+
 type EnvironmentalSettings = {
   alertStartTime: string;
   alertEndTime: string;
@@ -70,6 +83,24 @@ function unit(type: string) {
   if (type === "TEMPERATURE") return "C";
   if (type === "HUMIDITY") return "%";
   return "Pa";
+}
+
+function formatDuration(seconds: number) {
+  const totalMinutes = Math.round(seconds / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours <= 0) return `${minutes} min`;
+  return `${hours}h ${minutes.toString().padStart(2, "0")}min`;
+}
+
+function formatDateTime(date: Date) {
+  return new Intl.DateTimeFormat("pt-PT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
 }
 
 function SectionTitle({ title, description }: { title: string; description: string }) {
@@ -144,45 +175,6 @@ function ReadingTable({
   );
 }
 
-function ZoneBarChart({
-  title,
-  rows,
-  type,
-}: {
-  title: string;
-  rows: EnvironmentalRow[];
-  type: "TEMPERATURE" | "HUMIDITY" | "PRESSURE";
-}) {
-  const max = Math.max(...rows.map((row) => Math.abs(row.average)), 1);
-
-  return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
-      <h3 className="text-base font-semibold text-zinc-50">{title}</h3>
-      <div className="mt-4 space-y-3">
-        {rows.map((row) => (
-          <div key={`${type}-chart-${row.zone}`} className="space-y-1">
-            <div className="flex items-center justify-between gap-3 text-xs">
-              <span className="truncate font-medium text-zinc-300">{row.zone}</span>
-              <span className={row.status === "ACTION" ? "text-rose-200" : row.status === "ALERT" ? "text-amber-200" : "text-teal-200"}>
-                {formatNumber(row.average)} {unit(type)}
-              </span>
-            </div>
-            <div className="h-3 overflow-hidden rounded-full bg-zinc-900">
-              <div
-                className={row.status === "ACTION" ? "h-full rounded-full bg-rose-300" : row.status === "ALERT" ? "h-full rounded-full bg-amber-300" : "h-full rounded-full bg-teal-300"}
-                style={{ width: `${Math.max((Math.abs(row.average) / max) * 100, row.count > 0 ? 5 : 0)}%` }}
-              />
-            </div>
-            <p className="text-[11px] text-zinc-600">
-              {row.occurrences} alertas - {row.events} acoes - {row.alertReadingsCount ?? 0} leituras de alerta
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default async function EnvironmentalPage({ searchParams }: EnvironmentalPageProps) {
   const params = (await searchParams) ?? {};
   const days = params.days || "7";
@@ -198,6 +190,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const temperatureRows = data.temperatureRows as EnvironmentalRow[];
   const humidityRows = data.humidityRows as EnvironmentalRow[];
   const eventRows = data.eventRows as EnvironmentalEventRow[];
+  const actionEvents = data.actionEvents as EnvironmentalActionEvent[];
   const sensorRows = data.bySensor as EnvironmentalRow[];
   const hourlyRows = data.hourly as Array<{ hour: string; average: number }>;
   const settings = data.settings as EnvironmentalSettings;
@@ -237,21 +230,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
       </section>
 
       <section className="grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]">
-        <div className="space-y-4">
-          <Panel>
-            <div className="flex items-center gap-3">
-              <FileSpreadsheet size={22} className="text-lime-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Importar relatorio</h2>
-            </div>
-            <form action={importEnvironmentalReport} encType="multipart/form-data" className="mt-4 space-y-3">
-              <input name="file" required type="file" accept=".xlsx,.xls,.xlsm,.csv" className={inputClass} />
-              <button className={buttonClass}>Importar Excel</button>
-            </form>
-            <p className="mt-3 text-xs leading-5 text-zinc-500">
-              Aceita T1/H1/PA e tambem Temperature1/Humidity1/PressureA, com mapeamento automatico para salas e ligacoes.
-            </p>
-          </Panel>
-
+        <aside className="space-y-4">
           <Panel>
             <div className="flex items-center gap-3">
               <Search size={20} className="text-teal-300" />
@@ -333,6 +312,20 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
           </Panel>
 
           <Panel>
+            <div className="flex items-center gap-3">
+              <FileSpreadsheet size={22} className="text-lime-300" />
+              <h2 className="text-xl font-semibold text-zinc-50">Importar relatorio</h2>
+            </div>
+            <form action={importEnvironmentalReport} encType="multipart/form-data" className="mt-4 space-y-3">
+              <input name="file" required type="file" accept=".xlsx,.xls,.xlsm,.csv" className={inputClass} />
+              <button className={buttonClass}>Importar Excel</button>
+            </form>
+            <p className="mt-3 text-xs leading-5 text-zinc-500">
+              Aceita T1/H1/PA e tambem Temperature1/Humidity1/PressureA, com mapeamento automatico para salas e ligacoes.
+            </p>
+          </Panel>
+
+          <Panel>
             <h2 className="text-xl font-semibold text-zinc-50">Ultimas importacoes</h2>
             <div className="mt-4 space-y-2">
               {imports.length === 0 ? (
@@ -362,19 +355,52 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               )}
             </div>
           </Panel>
-        </div>
+        </aside>
 
-        <div className="space-y-4">
+        <section className="space-y-4">
           <Panel>
             <SectionTitle
-              title="Graficos de controlo por zona"
-              description="Comparacao rapida por sala ou ligacao, ja filtrada pelo periodo, tipo, zona, estado e importacao selecionados."
+              title="Acoes ambientais"
+              description="Registo detalhado dos eventos que ultrapassaram o limite de tempo e devem suportar auditorias e levantamento de nao conformidades."
             />
-            <div className="mt-4 grid gap-4 xl:grid-cols-3">
-              <ZoneBarChart title="Temperatura" rows={temperatureRows} type="TEMPERATURE" />
-              <ZoneBarChart title="Humidade" rows={humidityRows} type="HUMIDITY" />
-              <ZoneBarChart title="Pressao diferencial" rows={pressureRows} type="PRESSURE" />
-            </div>
+            {actionEvents.length === 0 ? (
+              <div className="mt-4">
+                <EmptyState title="Sem acoes ambientais" description="Nao existem eventos fora de limite com duracao suficiente no periodo filtrado." />
+              </div>
+            ) : (
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full min-w-[920px] text-left text-sm">
+                  <thead className="text-xs uppercase tracking-[0.14em] text-zinc-500">
+                    <tr>
+                      <th className="px-3 py-2">Data / hora inicio</th>
+                      <th className="px-3 py-2">Data / hora fim</th>
+                      <th className="px-3 py-2">Tipo</th>
+                      <th className="px-3 py-2">Zona</th>
+                      <th className="px-3 py-2">Limite</th>
+                      <th className="px-3 py-2">Valores fora</th>
+                      <th className="px-3 py-2">Duracao</th>
+                      <th className="px-3 py-2">Leituras</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800">
+                    {actionEvents.map((event) => (
+                      <tr key={`${event.type}-${event.zone}-${event.startedAt.toISOString()}`} className="text-zinc-200">
+                        <td className="px-3 py-3 font-semibold text-zinc-50">{formatDateTime(event.startedAt)}</td>
+                        <td className="px-3 py-3">{formatDateTime(event.endedAt)}</td>
+                        <td className="px-3 py-3">{event.label}</td>
+                        <td className="px-3 py-3 font-semibold text-zinc-50">{event.zone}</td>
+                        <td className="px-3 py-3 text-amber-200">{event.limit}</td>
+                        <td className="px-3 py-3 text-rose-200">
+                          {formatNumber(event.min)} a {formatNumber(event.max)} {unit(event.type)}
+                        </td>
+                        <td className="px-3 py-3 font-semibold text-rose-200">{formatDuration(event.durationSeconds)}</td>
+                        <td className="px-3 py-3">{event.readingsCount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </Panel>
 
           <Panel>
@@ -504,7 +530,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               )}
             </div>
           </Panel>
-        </div>
+        </section>
       </section>
     </AppShell>
   );
