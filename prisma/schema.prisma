@@ -621,6 +621,8 @@ model EnvironmentalSettings {
   includeSaturday     Boolean  @default(false)
   includeSunday       Boolean  @default(false)
   sharePointFolderUrl String?
+  googleDriveFolderId String?
+  googleDriveFolderUrl String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
