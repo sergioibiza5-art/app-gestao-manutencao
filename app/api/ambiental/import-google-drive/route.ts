@@ -9,12 +9,15 @@ export const maxDuration = 60;
 
 function isAuthorized(request: Request) {
   const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
+
+  if (!secret) {
+    return false;
+  }
 
   const url = new URL(request.url);
   const querySecret = url.searchParams.get("secret");
   const authHeader = request.headers.get("authorization");
-  const bearerSecret = authHeader?.replace("Bearer ", "");
+  const bearerSecret = authHeader?.replace("Bearer ", "").trim();
 
   return querySecret === secret || bearerSecret === secret;
 }
@@ -25,31 +28,78 @@ function lisbonHour() {
     hour: "2-digit",
     hour12: false,
   }).formatToParts(new Date());
+
   return Number(parts.find((part) => part.type === "hour")?.value ?? -1);
 }
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const force = url.searchParams.get("force") === "1";
+  const debug = url.searchParams.get("debug") === "1";
+
+  if (debug) {
+    const secret = process.env.CRON_SECRET;
+    const querySecret = url.searchParams.get("secret");
+    const authHeader = request.headers.get("authorization");
+    const bearerSecret = authHeader?.replace("Bearer ", "").trim();
+
+    return Response.json({
+      deployed: "SIM",
+      hasCronSecret: Boolean(secret),
+      cronSecretLength: secret?.length ?? 0,
+      querySecretLength: querySecret?.length ?? 0,
+      bearerSecretLength: bearerSecret?.length ?? 0,
+      queryMatches: querySecret === secret,
+      bearerMatches: bearerSecret === secret,
+    });
+  }
 
   if (!isAuthorized(request)) {
-    return Response.json({ ok: false, error: "Nao autorizado." }, { status: 401 });
+    return Response.json(
+      {
+        ok: false,
+        error: "Nao autorizado.",
+      },
+      { status: 401 },
+    );
   }
 
   if (!force && ![9, 15].includes(lisbonHour())) {
-    return Response.json({ ok: true, skipped: true, reason: "Fora das 09h/15h Europe/Lisbon." });
+    return Response.json({
+      ok: true,
+      skipped: true,
+      reason: "Fora das 09h/15h Europe/Lisbon.",
+    });
   }
 
   const prisma = getPrisma();
-  const settings = await prisma.environmentalSettings.findUnique({ where: { id: "default" } });
-  const folder = settings?.googleDriveFolderId || settings?.googleDriveFolderUrl || process.env.GOOGLE_DRIVE_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_URL;
+
+  const settings = await prisma.environmentalSettings.findUnique({
+    where: { id: "default" },
+  });
+
+  const folder =
+    settings?.googleDriveFolderId ||
+    settings?.googleDriveFolderUrl ||
+    process.env.GOOGLE_DRIVE_FOLDER_ID ||
+    process.env.GOOGLE_DRIVE_FOLDER_URL;
 
   if (!folder) {
-    return Response.json({ ok: false, error: "Pasta Google Drive nao configurada." }, { status: 400 });
+    return Response.json(
+      {
+        ok: false,
+        error: "Pasta Google Drive nao configurada.",
+      },
+      { status: 400 },
+    );
   }
 
   const result = await importGoogleDriveEnvironmentalReports(folder);
+
   revalidatePath("/ambiental");
 
-  return Response.json({ ok: true, ...result });
+  return Response.json({
+    ok: true,
+    ...result,
+  });
 }
