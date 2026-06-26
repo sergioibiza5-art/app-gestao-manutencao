@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/ambiental/import-sharepoint",
+      "path": "/api/ambiental/import-google-drive",
       "schedule": "0 8,9,14,15 * * *"
     }
   ]

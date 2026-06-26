@@ -43,7 +43,8 @@ type EnvironmentalSettings = {
   alertEndTime: string;
   includeSaturday: boolean;
   includeSunday: boolean;
-  sharePointFolderUrl?: string | null;
+  googleDriveFolderId?: string | null;
+  googleDriveFolderUrl?: string | null;
 };
 
 function formatNumber(value: number, digits = 1) {
@@ -316,12 +317,12 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                 <input name="includeSunday" type="checkbox" defaultChecked={settings.includeSunday} className="size-4 accent-teal-300" />
               </label>
               <label className="space-y-1">
-                <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Pasta SharePoint</span>
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Pasta Google Drive</span>
                 <input
-                  name="sharePointFolderUrl"
+                  name="googleDriveFolderUrl"
                   className={inputClass}
-                  defaultValue={settings.sharePointFolderUrl ?? ""}
-                  placeholder="Link da pasta dos relatórios ambientais"
+                  defaultValue={settings.googleDriveFolderUrl ?? settings.googleDriveFolderId ?? ""}
+                  placeholder="Link ou ID da pasta dos relatórios ambientais"
                 />
               </label>
               <button className={buttonClass}>Guardar horario</button>

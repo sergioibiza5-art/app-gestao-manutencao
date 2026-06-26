@@ -2523,6 +2523,8 @@ export async function updateEnvironmentalSettings(formData: FormData) {
   const prisma = getPrisma();
   const alertStartTime = text(formData, "alertStartTime") || "06:00";
   const alertEndTime = text(formData, "alertEndTime") || "22:00";
+  const googleDriveFolder = optionalText(formData, "googleDriveFolderUrl");
+  const googleDriveFolderIsUrl = Boolean(googleDriveFolder?.startsWith("http"));
 
   await prisma.environmentalSettings.upsert({
     where: { id: "default" },
@@ -2532,14 +2534,16 @@ export async function updateEnvironmentalSettings(formData: FormData) {
       alertEndTime,
       includeSaturday: formData.get("includeSaturday") === "on",
       includeSunday: formData.get("includeSunday") === "on",
-      sharePointFolderUrl: optionalText(formData, "sharePointFolderUrl"),
+      googleDriveFolderUrl: googleDriveFolderIsUrl ? googleDriveFolder : null,
+      googleDriveFolderId: googleDriveFolder && !googleDriveFolderIsUrl ? googleDriveFolder : null,
     },
     update: {
       alertStartTime,
       alertEndTime,
       includeSaturday: formData.get("includeSaturday") === "on",
       includeSunday: formData.get("includeSunday") === "on",
-      sharePointFolderUrl: optionalText(formData, "sharePointFolderUrl"),
+      googleDriveFolderUrl: googleDriveFolderIsUrl ? googleDriveFolder : null,
+      googleDriveFolderId: googleDriveFolder && !googleDriveFolderIsUrl ? googleDriveFolder : null,
     },
   });
 

@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 
-import { importSharePointEnvironmentalReports } from "@/lib/environmental-sharepoint";
+import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
 import { getPrisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -36,13 +36,13 @@ export async function GET(request: Request) {
 
   const prisma = getPrisma();
   const settings = await prisma.environmentalSettings.findUnique({ where: { id: "default" } });
-  const folderUrl = settings?.sharePointFolderUrl || process.env.ENVIRONMENTAL_SHAREPOINT_FOLDER_URL;
+  const folder = settings?.googleDriveFolderId || settings?.googleDriveFolderUrl || process.env.GOOGLE_DRIVE_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_URL;
 
-  if (!folderUrl) {
-    return Response.json({ ok: false, error: "Pasta SharePoint nao configurada." }, { status: 400 });
+  if (!folder) {
+    return Response.json({ ok: false, error: "Pasta Google Drive nao configurada." }, { status: 400 });
   }
 
-  const result = await importSharePointEnvironmentalReports(folderUrl);
+  const result = await importGoogleDriveEnvironmentalReports(folder);
   revalidatePath("/ambiental");
 
   return Response.json({ ok: true, ...result });

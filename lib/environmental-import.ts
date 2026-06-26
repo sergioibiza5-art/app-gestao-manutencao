@@ -35,7 +35,7 @@ function fileHash(buffer: Buffer) {
   return createHash("sha256").update(buffer).digest("hex");
 }
 
-export type EnvironmentalImportSource = "MANUAL" | "SHAREPOINT";
+export type EnvironmentalImportSource = "MANUAL" | "GOOGLE_DRIVE";
 
 export type ImportEnvironmentalWorkbookInput = {
   buffer: Buffer;
