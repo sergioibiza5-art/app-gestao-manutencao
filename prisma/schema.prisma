@@ -575,12 +575,20 @@ model Vacation {
 }
 
 model EnvironmentalImport {
-  id         String   @id @default(cuid())
-  fileName   String
-  rowsCount  Int      @default(0)
-  importedAt DateTime @default(now())
+  id               String    @id @default(cuid())
+  fileName         String
+  fileHash         String?
+  source           String    @default("MANUAL")
+  sourceUrl        String?
+  sourceModifiedAt DateTime?
+  rowsCount        Int       @default(0)
+  importedAt       DateTime  @default(now())
 
   readings EnvironmentalReading[]
+
+  @@unique([fileHash])
+  @@index([source])
+  @@index([importedAt])
 }
 
 model EnvironmentalReading {
@@ -607,13 +615,14 @@ model EnvironmentalReading {
 }
 
 model EnvironmentalSettings {
-  id              String   @id @default("default")
-  alertStartTime  String   @default("06:00")
-  alertEndTime    String   @default("22:00")
-  includeSaturday Boolean  @default(false)
-  includeSunday   Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                  String   @id @default("default")
+  alertStartTime      String   @default("06:00")
+  alertEndTime        String   @default("22:00")
+  includeSaturday     Boolean  @default(false)
+  includeSunday       Boolean  @default(false)
+  sharePointFolderUrl String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model TicketEquipmentAccess {

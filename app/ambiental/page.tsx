@@ -43,6 +43,7 @@ type EnvironmentalSettings = {
   alertEndTime: string;
   includeSaturday: boolean;
   includeSunday: boolean;
+  sharePointFolderUrl?: string | null;
 };
 
 function formatNumber(value: number, digits = 1) {
@@ -142,6 +143,45 @@ function ReadingTable({
   );
 }
 
+function ZoneBarChart({
+  title,
+  rows,
+  type,
+}: {
+  title: string;
+  rows: EnvironmentalRow[];
+  type: "TEMPERATURE" | "HUMIDITY" | "PRESSURE";
+}) {
+  const max = Math.max(...rows.map((row) => Math.abs(row.average)), 1);
+
+  return (
+    <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
+      <h3 className="text-base font-semibold text-zinc-50">{title}</h3>
+      <div className="mt-4 space-y-3">
+        {rows.map((row) => (
+          <div key={`${type}-chart-${row.zone}`} className="space-y-1">
+            <div className="flex items-center justify-between gap-3 text-xs">
+              <span className="truncate font-medium text-zinc-300">{row.zone}</span>
+              <span className={row.status === "ACTION" ? "text-rose-200" : row.status === "ALERT" ? "text-amber-200" : "text-teal-200"}>
+                {formatNumber(row.average)} {unit(type)}
+              </span>
+            </div>
+            <div className="h-3 overflow-hidden rounded-full bg-zinc-900">
+              <div
+                className={row.status === "ACTION" ? "h-full rounded-full bg-rose-300" : row.status === "ALERT" ? "h-full rounded-full bg-amber-300" : "h-full rounded-full bg-teal-300"}
+                style={{ width: `${Math.max((Math.abs(row.average) / max) * 100, row.count > 0 ? 5 : 0)}%` }}
+              />
+            </div>
+            <p className="text-[11px] text-zinc-600">
+              {row.occurrences} alertas - {row.events} acoes - {row.alertReadingsCount ?? 0} leituras de alerta
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default async function EnvironmentalPage({ searchParams }: EnvironmentalPageProps) {
   const params = (await searchParams) ?? {};
   const days = params.days || "7";
@@ -150,7 +190,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const status = params.status || "ALL";
   const importId = params.importId || "ALL";
   const data = await getEnvironmentalData({ days, type, zone, status, importId });
-  const imports = data.imports as Array<{ id: string; fileName: string; importedAt: Date; rowsCount: number }>;
+  const imports = data.imports as Array<{ id: string; fileName: string; importedAt: Date; rowsCount: number; source?: string; fileHash?: string | null; sourceUrl?: string | null }>;
   const lastImport = imports[0] ?? null;
   const zones = data.zones as string[];
   const pressureRows = data.pressureRows as EnvironmentalRow[];
@@ -275,6 +315,15 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                 Incluir domingo nos alertas
                 <input name="includeSunday" type="checkbox" defaultChecked={settings.includeSunday} className="size-4 accent-teal-300" />
               </label>
+              <label className="space-y-1">
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Pasta SharePoint</span>
+                <input
+                  name="sharePointFolderUrl"
+                  className={inputClass}
+                  defaultValue={settings.sharePointFolderUrl ?? ""}
+                  placeholder="Link da pasta dos relatórios ambientais"
+                />
+              </label>
               <button className={buttonClass}>Guardar horario</button>
             </form>
             <p className="mt-3 text-xs leading-5 text-zinc-500">
@@ -292,6 +341,14 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                   <div key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-3">
                     <p className="truncate text-sm font-semibold text-zinc-100">{item.fileName}</p>
                     <p className="mt-1 text-xs text-zinc-500">{formatDate(item.importedAt)} - {item.rowsCount} leituras</p>
+                    <p className="mt-1 text-xs text-zinc-600">
+                      {item.source ?? "MANUAL"} {item.fileHash ? `- ${item.fileHash.slice(0, 10)}` : ""}
+                    </p>
+                    {item.sourceUrl ? (
+                      <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex text-xs font-semibold text-teal-200">
+                        Abrir origem
+                      </a>
+                    ) : null}
                     <form action={deleteEnvironmentalImport} className="mt-3">
                       <input type="hidden" name="id" value={item.id} />
                       <button className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 text-xs font-semibold text-rose-200">
@@ -307,6 +364,18 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
         </div>
 
         <div className="space-y-4">
+          <Panel>
+            <SectionTitle
+              title="Graficos de controlo por zona"
+              description="Comparacao rapida por sala ou ligacao, ja filtrada pelo periodo, tipo, zona, estado e importacao selecionados."
+            />
+            <div className="mt-4 grid gap-4 xl:grid-cols-3">
+              <ZoneBarChart title="Temperatura" rows={temperatureRows} type="TEMPERATURE" />
+              <ZoneBarChart title="Humidade" rows={humidityRows} type="HUMIDITY" />
+              <ZoneBarChart title="Pressao diferencial" rows={pressureRows} type="PRESSURE" />
+            </div>
+          </Panel>
+
           <Panel>
             <SectionTitle title="Pressao diferencial" description="Resumo por ligacao, com ocorrencias abaixo de 5 Pa e eventos continuos superiores a 40 minutos." />
             <div className="mt-4 overflow-x-auto">
@@ -338,7 +407,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                           {row.count === 0 ? "Sem dados" : statusLabel(row.status)}
                         </span>
                         {row.ignoreLowPressure ? (
-                          <p className="mt-1 text-[11px] text-zinc-500">Media &lt;1 Pa considerada OK</p>
+                          <p className="mt-1 text-[11px] text-zinc-500">Media &lt;1,5 Pa considerada OK</p>
                         ) : null}
                       </td>
                     </tr>

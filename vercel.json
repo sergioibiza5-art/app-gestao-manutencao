@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/ambiental/import-sharepoint",
+      "schedule": "0 8,9,14,15 * * *"
+    }
+  ]
+}

@@ -1278,7 +1278,7 @@ function sensorStats(readings: { timestamp: Date; value: unknown }[], type: stri
   const min = values.length > 0 ? Math.min(...values) : 0;
   const max = values.length > 0 ? Math.max(...values) : 0;
   const limits = environmentalLimits(type);
-  const ignoreLowPressure = type === "PRESSURE" && average < 1;
+  const ignoreLowPressure = type === "PRESSURE" && average < 1.5;
   const alertReadings = readings.filter((reading) => isInsideEnvironmentalSchedule(reading.timestamp, schedule));
   const ordered = [...alertReadings].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   let currentSeconds = 0;
@@ -1344,7 +1344,7 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
         }),
         prisma.environmentalImport.findMany({
           orderBy: { importedAt: "desc" },
-          take: 8,
+          take: 100,
         }),
         prisma.environmentalSettings.findUnique({ where: { id: "default" } }),
       ]);
