@@ -10,7 +10,13 @@ export const maxDuration = 60;
 function isAuthorized(request: Request) {
   const secret = process.env.CRON_SECRET;
   if (!secret) return false;
-  return request.headers.get("authorization") === `Bearer ${secret}`;
+
+  const url = new URL(request.url);
+  const querySecret = url.searchParams.get("secret");
+  const authHeader = request.headers.get("authorization");
+  const bearerSecret = authHeader?.replace("Bearer ", "");
+
+  return querySecret === secret || bearerSecret === secret;
 }
 
 function lisbonHour() {
