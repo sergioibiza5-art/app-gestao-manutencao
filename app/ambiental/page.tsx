@@ -9,7 +9,18 @@ import { formatDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 type EnvironmentalPageProps = {
-  searchParams?: Promise<{ days?: string; type?: string; zone?: string; status?: string; importId?: string }>;
+  searchParams?: Promise<{
+    days?: string;
+    type?: string;
+    zone?: string;
+    status?: string;
+    importId?: string;
+    importError?: string;
+    imported?: string;
+    duplicates?: string;
+    empty?: string;
+    invalid?: string;
+  }>;
 };
 
 type Status = "OK" | "ALERT" | "ACTION" | string;
@@ -182,6 +193,12 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const zone = params.zone || "ALL";
   const status = params.status || "ALL";
   const importId = params.importId || "ALL";
+  const importMessage =
+    params.importError === "db_limit"
+      ? "A importação parou porque a base de dados atingiu o limite de espaço do Neon. É necessário libertar espaço/apagar importações antigas ou aumentar o plano antes de continuar."
+      : params.imported || params.duplicates || params.empty || params.invalid
+        ? `Importação concluída: ${params.imported ?? 0} novo(s), ${params.duplicates ?? 0} duplicado(s), ${params.empty ?? 0} vazio(s), ${params.invalid ?? 0} inválido(s).`
+        : null;
   const data = await getEnvironmentalData({ days, type, zone, status, importId });
   const imports = data.imports as Array<{ id: string; fileName: string; importedAt: Date; rowsCount: number; source?: string; fileHash?: string | null; sourceUrl?: string | null }>;
   const lastImport = imports[0] ?? null;
@@ -202,6 +219,15 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
         title="Tratamento ambiental"
         description="Importa relatorios diarios Excel e organiza temperatura, humidade, pressao diferencial, alertas, acoes e eventos por zona."
       />
+
+      {importMessage ? (
+        <section className={`rounded-lg border p-4 ${params.importError === "db_limit" ? "border-rose-300/40 bg-rose-300/10 text-rose-100" : "border-teal-300/40 bg-teal-300/10 text-teal-100"}`}>
+          <div className="flex items-start gap-3">
+            <AlertTriangle size={20} className={params.importError === "db_limit" ? "mt-0.5 text-rose-200" : "mt-0.5 text-teal-200"} />
+            <p className="text-sm leading-6">{importMessage}</p>
+          </div>
+        </section>
+      ) : null}
 
       <section className="grid gap-4 md:grid-cols-5">
         <Panel>

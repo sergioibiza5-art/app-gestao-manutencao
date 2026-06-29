@@ -59,6 +59,11 @@ function decimalNumber(rawValue: string) {
   return Number(decimalString(rawValue));
 }
 
+function isDatabaseSizeLimitError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error ?? "");
+  return message.includes("project size limit") || message.includes("53100") || message.includes("could not extend file");
+}
+
 function intValue(formData: FormData, key: string) {
   const value = Number.parseInt(text(formData, key), 10);
   return Number.isFinite(value) ? value : 0;
@@ -2874,16 +2879,38 @@ export async function importEnvironmentalReport(formData: FormData) {
 
   if (files.length === 0) return;
 
+  let imported = 0;
+  let duplicates = 0;
+  let empty = 0;
+  let invalid = 0;
+
   for (const file of files) {
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await importEnvironmentalWorkbook({
-      buffer,
-      fileName: file.name,
-      source: "MANUAL",
-    });
+    try {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const result = await importEnvironmentalWorkbook({
+        buffer,
+        fileName: file.name,
+        source: "MANUAL",
+      });
+
+      if (result.status === "imported") imported += 1;
+      if (result.status === "duplicate") duplicates += 1;
+      if (result.status === "empty") empty += 1;
+      if (result.status === "invalid") invalid += 1;
+    } catch (error) {
+      if (isDatabaseSizeLimitError(error)) {
+        redirect(
+          `/ambiental?importError=db_limit&imported=${imported}&duplicates=${duplicates}&empty=${empty}&invalid=${invalid}`,
+        );
+      }
+
+      invalid += 1;
+      console.error(`Falha ao importar relatorio ambiental manual (${file.name}):`, error);
+    }
   }
 
   revalidatePath("/ambiental");
+  redirect(`/ambiental?imported=${imported}&duplicates=${duplicates}&empty=${empty}&invalid=${invalid}`);
 }
 
 export async function deleteEnvironmentalImport(formData: FormData) {
