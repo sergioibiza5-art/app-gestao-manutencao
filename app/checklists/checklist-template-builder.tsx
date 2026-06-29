@@ -76,14 +76,14 @@ export function ChecklistTemplateBuilder({
       </div>
 
       <div className="space-y-2 rounded-lg border border-zinc-800 bg-zinc-950/45 p-3">
-        <div className="grid grid-cols-[1fr_1fr_72px_42px] gap-2 px-1 text-xs font-medium uppercase tracking-[0.12em] text-zinc-600">
+        <div className="hidden grid-cols-[2fr_2fr_90px_52px] gap-3 px-1 text-xs font-medium uppercase tracking-[0.12em] text-zinc-600 md:grid">
           <span>Verificar</span>
           <span>Condicao esperada</span>
           <span>Foto</span>
           <span />
         </div>
         {rows.map((row, index) => (
-          <div key={index} className="grid grid-cols-[1fr_1fr_72px_42px] gap-2">
+          <div key={index} className="grid gap-2 md:grid-cols-[2fr_2fr_90px_52px] md:gap-3">
             <input type="hidden" name="itemId" value={row.id ?? ""} />
             <input name="itemCheck" className={inputClass} value={row.check} onChange={(event) => updateRow(index, "check", event.target.value)} placeholder="Verificar" />
             <select name="itemExpectedCondition" className={inputClass} value={row.expected} onChange={(event) => updateRow(index, "expected", event.target.value)}>

@@ -19,7 +19,7 @@ export default async function ChecklistsPage() {
         description="Cria modelos por tipo de equipamento com linhas de verificacao, condicao esperada e obrigatoriedade de foto."
       />
 
-      <section className="grid gap-4 xl:grid-cols-[1fr_1fr]">
+      <section className="space-y-6">
         <Panel>
           <div className="flex items-center gap-3">
             <Rows3 size={22} className="text-sky-300" />
