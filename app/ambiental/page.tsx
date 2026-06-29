@@ -317,11 +317,11 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <h2 className="text-xl font-semibold text-zinc-50">Importar relatorio</h2>
             </div>
             <form action={importEnvironmentalReport} encType="multipart/form-data" className="mt-4 space-y-3">
-              <input name="file" required type="file" accept=".xlsx,.xls,.xlsm,.csv" className={inputClass} />
-              <button className={buttonClass}>Importar Excel</button>
+              <input name="files" required multiple type="file" accept=".xlsx,.xls,.xlsm,.csv" className={inputClass} />
+              <button className={buttonClass}>Importar Excel(s)</button>
             </form>
             <p className="mt-3 text-xs leading-5 text-zinc-500">
-              Aceita T1/H1/PA e tambem Temperature1/Humidity1/PressureA, com mapeamento automatico para salas e ligacoes.
+              Podes selecionar varios ficheiros. Aceita T1/H1/PA e tambem Temperature1/Humidity1/PressureA, com mapeamento automatico para salas e ligacoes.
             </p>
           </Panel>
 

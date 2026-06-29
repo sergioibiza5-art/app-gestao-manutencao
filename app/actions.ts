@@ -2867,16 +2867,21 @@ export async function deleteVacation(formData: FormData) {
 
 export async function importEnvironmentalReport(formData: FormData) {
   await requireCanManage();
-  const file = formData.get("file");
+  const files = [
+    ...formData.getAll("files"),
+    ...formData.getAll("file"),
+  ].filter((file): file is File => file instanceof File && file.size > 0);
 
-  if (!(file instanceof File) || file.size === 0) return;
+  if (files.length === 0) return;
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await importEnvironmentalWorkbook({
-    buffer,
-    fileName: file.name,
-    source: "MANUAL",
-  });
+  for (const file of files) {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    await importEnvironmentalWorkbook({
+      buffer,
+      fileName: file.name,
+      source: "MANUAL",
+    });
+  }
 
   revalidatePath("/ambiental");
 }
