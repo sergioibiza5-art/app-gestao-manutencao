@@ -7,9 +7,11 @@ const supportedMimeTypes = new Set([
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   "application/vnd.ms-excel",
   "application/vnd.ms-excel.sheet.macroEnabled.12",
+  "application/octet-stream",
   "text/csv",
   "application/vnd.google-apps.spreadsheet",
 ]);
+const supportedFileExtensions = [".xlsx", ".xls", ".xlsm", ".csv"];
 
 type GoogleDriveFile = {
   id: string;
@@ -17,7 +19,16 @@ type GoogleDriveFile = {
   mimeType: string;
   webViewLink?: string;
   modifiedTime?: string;
+  shortcutDetails?: {
+    targetId?: string;
+    targetMimeType?: string;
+  };
 };
+
+function isSupportedDriveFile(file: GoogleDriveFile) {
+  const lowerName = file.name.toLowerCase();
+  return supportedMimeTypes.has(file.mimeType) || supportedFileExtensions.some((extension) => lowerName.endsWith(extension));
+}
 
 function base64Url(input: string) {
   return Buffer.from(input)
@@ -117,7 +128,7 @@ export async function listGoogleDriveEnvironmentalFiles(folderInput: string) {
 
   do {
     const query = encodeURIComponent(`'${folderId}' in parents and trashed=false`);
-    const fields = encodeURIComponent("nextPageToken,files(id,name,mimeType,webViewLink,modifiedTime)");
+    const fields = encodeURIComponent("nextPageToken,files(id,name,mimeType,webViewLink,modifiedTime,shortcutDetails(targetId,targetMimeType))");
     const page = pageToken ? `&pageToken=${encodeURIComponent(pageToken)}` : "";
     const key = token ? "" : apiKeyQuery();
     const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&pageSize=1000&supportsAllDrives=true&includeItemsFromAllDrives=true${page}${key}`;
@@ -131,7 +142,7 @@ export async function listGoogleDriveEnvironmentalFiles(folderInput: string) {
     }
 
     const payload = await response.json() as { files?: GoogleDriveFile[]; nextPageToken?: string };
-    files.push(...(payload.files ?? []).filter((file) => supportedMimeTypes.has(file.mimeType)));
+    files.push(...(payload.files ?? []).filter((file) => file.mimeType === "application/vnd.google-apps.shortcut" || isSupportedDriveFile(file)));
     pageToken = payload.nextPageToken ?? "";
   } while (pageToken);
 
@@ -140,9 +151,11 @@ export async function listGoogleDriveEnvironmentalFiles(folderInput: string) {
 
 async function downloadGoogleDriveFile(file: GoogleDriveFile, token: string | null) {
   const key = token ? "" : apiKeyQuery();
-  const url = file.mimeType === "application/vnd.google-apps.spreadsheet"
-    ? `https://www.googleapis.com/drive/v3/files/${file.id}/export?mimeType=${encodeURIComponent("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")}${key}`
-    : `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&supportsAllDrives=true${key}`;
+  const fileId = file.shortcutDetails?.targetId ?? file.id;
+  const mimeType = file.shortcutDetails?.targetMimeType ?? file.mimeType;
+  const url = mimeType === "application/vnd.google-apps.spreadsheet"
+    ? `https://www.googleapis.com/drive/v3/files/${fileId}/export?mimeType=${encodeURIComponent("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")}${key}`
+    : `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&supportsAllDrives=true${key}`;
   const response = await googleFetch(url, token);
   return Buffer.from(await response.arrayBuffer());
 }
@@ -162,12 +175,15 @@ export async function importGoogleDriveEnvironmentalReports(folderInput: string)
         sourceUrl: file.webViewLink,
         sourceModifiedAt: file.modifiedTime ? new Date(file.modifiedTime) : null,
       }));
-    } catch {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erro desconhecido ao importar ficheiro.";
+      console.error(`Falha ao importar ficheiro ambiental do Google Drive (${file.name}):`, error);
       results.push({
         status: "invalid",
         fileName: file.name,
         readingsCount: 0,
         fileHash: "",
+        error: message,
       });
     }
   }

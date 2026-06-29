@@ -51,6 +51,7 @@ export type ImportEnvironmentalWorkbookResult = {
   readingsCount: number;
   fileHash: string;
   importId?: string;
+  error?: string;
 };
 
 function parseWorkbookReadings(buffer: Buffer) {

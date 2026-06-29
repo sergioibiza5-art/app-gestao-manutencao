@@ -94,12 +94,25 @@ export async function GET(request: Request) {
     );
   }
 
-  const result = await importGoogleDriveEnvironmentalReports(folder);
+  try {
+    const result = await importGoogleDriveEnvironmentalReports(folder);
 
-  revalidatePath("/ambiental");
+    revalidatePath("/ambiental");
 
-  return Response.json({
-    ok: true,
-    ...result,
-  });
+    return Response.json({
+      ok: true,
+      ...result,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Erro desconhecido na importação Google Drive.";
+    console.error("Falha na importação ambiental Google Drive:", error);
+
+    return Response.json(
+      {
+        ok: false,
+        error: message,
+      },
+      { status: 500 },
+    );
+  }
 }
