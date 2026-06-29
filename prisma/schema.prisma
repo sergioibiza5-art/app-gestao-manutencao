@@ -63,7 +63,21 @@ enum DocumentType {
   MANUAL
   CERTIFICATE
   CONTRACT
+  DL50_ASSESSMENT
   OTHER
+}
+
+enum Dl50Answer {
+  YES
+  NO
+  NA
+}
+
+enum Dl50AssessmentStatus {
+  DRAFT
+  CONFORM
+  NEEDS_ACTION
+  ARCHIVED
 }
 
 enum ExpenseStatus {
@@ -141,24 +155,25 @@ model User {
   role            UserRole @default(USER)
   active          Boolean  @default(true)
 
-  tasksCreated          Task[]                  @relation("TaskCreatedBy")
-  tasksAssigned         Task[]                  @relation("TaskAssignedTo")
-  expenses              Expense[]
-  maintenanceLogs       MaintenanceLog[]
-  calibrationLogs       CalibrationLog[]
-  documents             Document[]
-  sgqRecordsCreated     SGQRecord[]
-  sessions              Session[]
-  ticketsOpened         MaintenanceTicket[]     @relation("TicketOpenedBy")
-  ticketsAssigned       MaintenanceTicket[]     @relation("TicketAssignedTo")
-  ticketsStarted        MaintenanceTicket[]     @relation("TicketStartedBy")
-  ticketsCompleted      MaintenanceTicket[]     @relation("TicketCompletedBy")
-  ticketsValidated      MaintenanceTicket[]     @relation("TicketValidatedBy")
-  ticketEquipmentAccess TicketEquipmentAccess[]
-  notifications         Notification[]
-  pushSubscriptions     PushSubscription[]
-  consumableMovements   ConsumableMovement[]
-  vacations             Vacation[]
+  tasksCreated           Task[]                    @relation("TaskCreatedBy")
+  tasksAssigned          Task[]                    @relation("TaskAssignedTo")
+  expenses               Expense[]
+  maintenanceLogs        MaintenanceLog[]
+  calibrationLogs        CalibrationLog[]
+  documents              Document[]
+  sgqRecordsCreated      SGQRecord[]
+  sessions               Session[]
+  ticketsOpened          MaintenanceTicket[]       @relation("TicketOpenedBy")
+  ticketsAssigned        MaintenanceTicket[]       @relation("TicketAssignedTo")
+  ticketsStarted         MaintenanceTicket[]       @relation("TicketStartedBy")
+  ticketsCompleted       MaintenanceTicket[]       @relation("TicketCompletedBy")
+  ticketsValidated       MaintenanceTicket[]       @relation("TicketValidatedBy")
+  ticketEquipmentAccess  TicketEquipmentAccess[]
+  notifications          Notification[]
+  pushSubscriptions      PushSubscription[]
+  consumableMovements    ConsumableMovement[]
+  vacations              Vacation[]
+  dl50AssessmentsCreated EquipmentDl50Assessment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -216,6 +231,7 @@ model Equipment {
   expenses                   Expense[]
   documents                  Document[]
   consumables                Consumable[]
+  dl50Assessments            EquipmentDl50Assessment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -228,9 +244,141 @@ model EquipmentType {
 
   equipment          Equipment[]
   checklistTemplates ChecklistTemplate[]
+  dl50Templates      Dl50AssessmentTemplate[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Dl50AssessmentTemplate {
+  id     String  @id @default(cuid())
+  name   String
+  active Boolean @default(true)
+  notes  String?
+
+  equipmentTypeId String
+  equipmentType   EquipmentType @relation(fields: [equipmentTypeId], references: [id], onDelete: Cascade)
+
+  ceMark                      Dl50Answer?
+  manufacturerManual          Dl50Answer?
+  suitableForUse              Dl50Answer?
+  maintenancePlan             Dl50Answer?
+  safetyDependsOnInstallation Dl50Answer?
+  subjectToRiskDeterioration  Dl50Answer?
+  needsPeriodicVerification   Dl50Answer?
+  hasDangerZone               Dl50Answer?
+  hasMovingPartsRisk          Dl50Answer?
+  hasIdentifiedControls       Dl50Answer?
+  voluntaryStart              Dl50Answer?
+  safeStop                    Dl50Answer?
+  emergencyStopRequired       Dl50Answer?
+  projectionRisk              Dl50Answer?
+  emissionRisk                Dl50Answer?
+  electricalRisk              Dl50Answer?
+  fireRisk                    Dl50Answer?
+  explosionRisk               Dl50Answer?
+  energyIsolation             Dl50Answer?
+  safetySignage               Dl50Answer?
+  operatorsInformed           Dl50Answer?
+  usedAccordingToManufacturer Dl50Answer?
+
+  article3Notes  String?
+  article4Notes  String?
+  article6Notes  String?
+  article7Notes  String?
+  article8Notes  String?
+  article9Notes  String?
+  article10Notes String?
+  article11Notes String?
+  article12Notes String?
+  article13Notes String?
+  article14Notes String?
+  article15Notes String?
+  article16Notes String?
+  article17Notes String?
+  article18Notes String?
+  article19Notes String?
+  article20Notes String?
+  article21Notes String?
+  article22Notes String?
+  article30Notes String?
+  article31Notes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([equipmentTypeId, name])
+  @@index([active])
+}
+
+model EquipmentDl50Assessment {
+  id String @id @default(cuid())
+
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  version Int @default(1)
+
+  ceMark                      Dl50Answer?
+  manufacturerManual          Dl50Answer?
+  suitableForUse              Dl50Answer?
+  maintenancePlan             Dl50Answer?
+  safetyDependsOnInstallation Dl50Answer?
+  subjectToRiskDeterioration  Dl50Answer?
+  needsPeriodicVerification   Dl50Answer?
+  hasDangerZone               Dl50Answer?
+  hasMovingPartsRisk          Dl50Answer?
+  hasIdentifiedControls       Dl50Answer?
+  voluntaryStart              Dl50Answer?
+  safeStop                    Dl50Answer?
+  emergencyStopRequired       Dl50Answer?
+  projectionRisk              Dl50Answer?
+  emissionRisk                Dl50Answer?
+  electricalRisk              Dl50Answer?
+  fireRisk                    Dl50Answer?
+  explosionRisk               Dl50Answer?
+  energyIsolation             Dl50Answer?
+  safetySignage               Dl50Answer?
+  operatorsInformed           Dl50Answer?
+  usedAccordingToManufacturer Dl50Answer?
+
+  article3Notes  String?
+  article4Notes  String?
+  article6Notes  String?
+  article7Notes  String?
+  article8Notes  String?
+  article9Notes  String?
+  article10Notes String?
+  article11Notes String?
+  article12Notes String?
+  article13Notes String?
+  article14Notes String?
+  article15Notes String?
+  article16Notes String?
+  article17Notes String?
+  article18Notes String?
+  article19Notes String?
+  article20Notes String?
+  article21Notes String?
+  article22Notes String?
+  article30Notes String?
+  article31Notes String?
+
+  conclusion String
+  status     Dl50AssessmentStatus @default(DRAFT)
+
+  documentId String?
+  document   Document? @relation(fields: [documentId], references: [id], onDelete: SetNull)
+
+  createdById String?
+  createdBy   User?   @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([equipmentId, version])
+  @@index([equipmentId])
+  @@index([status])
 }
 
 model ChecklistTemplate {
@@ -845,6 +993,8 @@ model Document {
 
   workOrderId String?
   workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id], onDelete: SetNull)
+
+  dl50Assessments EquipmentDl50Assessment[]
 
   uploadedById String?
   uploadedBy   User?   @relation(fields: [uploadedById], references: [id], onDelete: SetNull)

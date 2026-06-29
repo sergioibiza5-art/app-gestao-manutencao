@@ -3,7 +3,7 @@ import { sendTelegramMessage } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import type { ChecklistResponseStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
+import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import type { PushSubscription as WebPushSubscription } from "web-push";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { importEnvironmentalWorkbook } from "@/lib/environmental-import";
@@ -127,7 +127,7 @@ const monthIntervals: Record<TaskFrequency, number> = {
 };
 const taskStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"] as const satisfies readonly TaskStatus[];
 const equipmentStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE", "DISCARDED"] as const satisfies readonly EquipmentStatus[];
-const documentTypes = ["INVOICE", "WARRANTY", "MANUAL", "CERTIFICATE", "CONTRACT", "OTHER"] as const satisfies readonly DocumentType[];
+const documentTypes = ["INVOICE", "WARRANTY", "MANUAL", "CERTIFICATE", "CONTRACT", "DL50_ASSESSMENT", "OTHER"] as const satisfies readonly DocumentType[];
 const userRoles = ["ADMIN", "MANAGER", "SGQ", "USER", "VIEWER", "TICKET"] as const satisfies readonly UserRole[];
 const sgqStatuses = ["DRAFT", "ACTIVE", "ARCHIVED"] as const satisfies readonly SGQStatus[];
 const maintenanceTypes = ["INTERNAL", "EXTERNAL"] as const satisfies readonly MaintenanceType[];
@@ -136,6 +136,167 @@ const checklistResponseStatuses = ["OK", "NOT_OK", "NA"] as const satisfies read
 const maintenanceScheduleStatuses = ["SCHEDULED", "DONE", "CANCELED"] as const satisfies readonly MaintenanceScheduleStatus[];
 const vehicleFuels = ["GASOLINE", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"] as const satisfies readonly VehicleFuel[];
 const vehicleServiceTypes = ["MAINTENANCE", "REVISION", "INSPECTION", "COST"] as const satisfies readonly VehicleServiceType[];
+const dl50Answers = ["YES", "NO", "NA"] as const satisfies readonly Dl50Answer[];
+const dl50AnswerFields = [
+  "ceMark",
+  "manufacturerManual",
+  "suitableForUse",
+  "maintenancePlan",
+  "safetyDependsOnInstallation",
+  "subjectToRiskDeterioration",
+  "needsPeriodicVerification",
+  "hasDangerZone",
+  "hasMovingPartsRisk",
+  "hasIdentifiedControls",
+  "voluntaryStart",
+  "safeStop",
+  "emergencyStopRequired",
+  "projectionRisk",
+  "emissionRisk",
+  "electricalRisk",
+  "fireRisk",
+  "explosionRisk",
+  "energyIsolation",
+  "safetySignage",
+  "operatorsInformed",
+  "usedAccordingToManufacturer",
+] as const;
+const dl50ArticleFields = [
+  "article3Notes",
+  "article4Notes",
+  "article6Notes",
+  "article7Notes",
+  "article8Notes",
+  "article9Notes",
+  "article10Notes",
+  "article11Notes",
+  "article12Notes",
+  "article13Notes",
+  "article14Notes",
+  "article15Notes",
+  "article16Notes",
+  "article17Notes",
+  "article18Notes",
+  "article19Notes",
+  "article20Notes",
+  "article21Notes",
+  "article22Notes",
+  "article30Notes",
+  "article31Notes",
+] as const;
+
+type Dl50Payload = {
+  [key in (typeof dl50AnswerFields)[number]]?: Dl50Answer | null;
+} & {
+  [key in (typeof dl50ArticleFields)[number]]?: string | null;
+};
+
+function dl50Answer(formData: FormData, key: (typeof dl50AnswerFields)[number]) {
+  const value = text(formData, key);
+  return dl50Answers.includes(value as Dl50Answer) ? (value as Dl50Answer) : null;
+}
+
+function dl50PayloadFromForm(formData: FormData): Dl50Payload {
+  return {
+    ...Object.fromEntries(dl50AnswerFields.map((field) => [field, dl50Answer(formData, field)])),
+    ...Object.fromEntries(dl50ArticleFields.map((field) => [field, optionalText(formData, field)])),
+  } as Dl50Payload;
+}
+
+function dl50PayloadFromTemplate(template: Dl50Payload): Dl50Payload {
+  return {
+    ...Object.fromEntries(dl50AnswerFields.map((field) => [field, template[field] ?? null])),
+    ...Object.fromEntries(dl50ArticleFields.map((field) => [field, template[field] ?? null])),
+  } as Dl50Payload;
+}
+
+function generateDl50ConclusionFromPayload(payload: Dl50Payload): { conclusion: string; status: Dl50AssessmentStatus } {
+  const criticalNoFields: (typeof dl50AnswerFields)[number][] = [
+    "ceMark",
+    "manufacturerManual",
+    "suitableForUse",
+    "maintenancePlan",
+    "hasIdentifiedControls",
+    "voluntaryStart",
+    "safeStop",
+    "energyIsolation",
+    "operatorsInformed",
+    "usedAccordingToManufacturer",
+  ];
+  const uncontrolledRiskFields: (typeof dl50AnswerFields)[number][] = [
+    "safetyDependsOnInstallation",
+    "subjectToRiskDeterioration",
+    "needsPeriodicVerification",
+    "hasDangerZone",
+    "hasMovingPartsRisk",
+    "emergencyStopRequired",
+    "projectionRisk",
+    "emissionRisk",
+    "electricalRisk",
+    "fireRisk",
+    "explosionRisk",
+  ];
+  const hasCriticalNegative = criticalNoFields.some((field) => payload[field] === "NO");
+  const hasRelevantRisk = uncontrolledRiskFields.some((field) => payload[field] === "YES");
+  const hasRequiredBase =
+    payload.maintenancePlan === "YES" &&
+    payload.safetyDependsOnInstallation !== "YES" &&
+    payload.subjectToRiskDeterioration !== "YES" &&
+    payload.needsPeriodicVerification !== "YES";
+
+  if (hasRequiredBase && !hasCriticalNegative && !hasRelevantRisk) {
+    return {
+      conclusion:
+        "O equipamento cumpre os requisitos aplicáveis do Decreto-Lei n.º 50/2005, não se identificando necessidade de verificações periódicas específicas ao abrigo do artigo 6.º, sem prejuízo da manutenção preventiva, utilização segura e avaliação contínua dos riscos.",
+      status: "CONFORM",
+    };
+  }
+
+  return {
+    conclusion:
+      "O equipamento apresenta pontos que requerem análise complementar ou implementação de medidas corretivas antes de ser considerado conforme.",
+    status: "NEEDS_ACTION",
+  };
+}
+
+async function nextDl50Version(prisma: ReturnType<typeof getPrisma>, equipmentId: string) {
+  const latest = await prisma.equipmentDl50Assessment.aggregate({
+    where: { equipmentId },
+    _max: { version: true },
+  });
+  return (latest._max.version ?? 0) + 1;
+}
+
+async function createDl50AssessmentDocument(
+  prisma: ReturnType<typeof getPrisma>,
+  assessment: { id: string; equipmentId: string; version: number; conclusion: string },
+  uploadedById?: string | null,
+) {
+  const equipment = await prisma.equipment.findUnique({
+    where: { id: assessment.equipmentId },
+    select: { name: true, code: true },
+  });
+  if (!equipment) return null;
+
+  const title = `Avaliação de Conformidade DL 50/2005 - ${equipment.name} - v${assessment.version}`;
+  const document = await prisma.document.create({
+    data: {
+      title,
+      type: "DL50_ASSESSMENT",
+      fileName: `${equipment.code ?? equipment.name}-DL50-v${assessment.version}`,
+      notes: assessment.conclusion,
+      equipmentId: assessment.equipmentId,
+      uploadedById,
+    },
+  });
+
+  await prisma.equipmentDl50Assessment.update({
+    where: { id: assessment.id },
+    data: { documentId: document.id },
+  });
+
+  return document;
+}
 
 export async function loginUser(formData: FormData) {
   const prisma = getPrisma();
@@ -572,6 +733,222 @@ export async function updateEquipmentBasics(formData: FormData) {
   revalidatePath("/equipamentos");
   revalidatePath(`/equipamentos/${equipmentId}`);
   revalidatePath(`/inventario/${equipmentId}`);
+}
+
+export async function generateDl50Conclusion(formData: FormData) {
+  await requireCanSgq();
+  return generateDl50ConclusionFromPayload(dl50PayloadFromForm(formData));
+}
+
+export async function createDl50Assessment(formData: FormData) {
+  const user = await requireCanSgq();
+  const prisma = getPrisma();
+  const equipmentId = text(formData, "equipmentId");
+  if (!equipmentId) return;
+
+  const payload = dl50PayloadFromForm(formData);
+  const generated = generateDl50ConclusionFromPayload(payload);
+  const version = await nextDl50Version(prisma, equipmentId);
+
+  const assessment = await prisma.equipmentDl50Assessment.create({
+    data: {
+      equipmentId,
+      version,
+      ...payload,
+      conclusion: generated.conclusion,
+      status: generated.status,
+      createdById: user.id,
+    },
+  });
+
+  await createDl50AssessmentDocument(prisma, assessment, user.id);
+
+  revalidatePath("/documentos");
+  revalidatePath("/equipamentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function updateDl50Assessment(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = text(formData, "equipmentId");
+  if (!id || !equipmentId) return;
+
+  const payload = dl50PayloadFromForm(formData);
+  const generated = generateDl50ConclusionFromPayload(payload);
+  const assessment = await prisma.equipmentDl50Assessment.update({
+    where: { id },
+    data: {
+      ...payload,
+      conclusion: generated.conclusion,
+      status: generated.status,
+    },
+  });
+
+  if (assessment.documentId) {
+    await prisma.document.update({
+      where: { id: assessment.documentId },
+      data: { notes: generated.conclusion },
+    });
+  }
+
+  revalidatePath("/documentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function archiveDl50Assessment(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = text(formData, "equipmentId");
+  if (!id || !equipmentId) return;
+
+  await prisma.equipmentDl50Assessment.update({
+    where: { id },
+    data: { status: "ARCHIVED" },
+  });
+
+  revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function attachDl50AssessmentToDocuments(formData: FormData) {
+  const user = await requireCanSgq();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = text(formData, "equipmentId");
+  if (!id || !equipmentId) return;
+
+  const assessment = await prisma.equipmentDl50Assessment.findUnique({
+    where: { id },
+    select: { id: true, equipmentId: true, version: true, conclusion: true, documentId: true },
+  });
+  if (!assessment || assessment.documentId) return;
+
+  await createDl50AssessmentDocument(prisma, assessment, user.id);
+
+  revalidatePath("/documentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function generateDl50Pdf(formData: FormData) {
+  await requireCanSgq();
+  const id = text(formData, "id");
+  return {
+    assessmentId: id,
+    status: "PREPARED",
+    message: "Estrutura preparada para gerar PDF da avaliação DL 50/2005.",
+  };
+}
+
+export async function createDl50AssessmentTemplate(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const equipmentTypeId = text(formData, "equipmentTypeId");
+  if (!equipmentTypeId) return;
+
+  await prisma.dl50AssessmentTemplate.create({
+    data: {
+      equipmentTypeId,
+      name: text(formData, "name") || "Template DL50",
+      notes: optionalText(formData, "templateNotes"),
+      ...dl50PayloadFromForm(formData),
+    },
+  });
+
+  revalidatePath("/equipamentos");
+}
+
+export async function updateDl50AssessmentTemplate(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const equipmentId = optionalText(formData, "equipmentId");
+  if (!id) return;
+
+  await prisma.dl50AssessmentTemplate.update({
+    where: { id },
+    data: {
+      name: text(formData, "name") || "Template DL50",
+      active: text(formData, "active") !== "false",
+      notes: optionalText(formData, "templateNotes"),
+      ...dl50PayloadFromForm(formData),
+    },
+  });
+
+  revalidatePath("/equipamentos");
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function applyDl50TemplateToEquipment(formData: FormData) {
+  const user = await requireCanSgq();
+  const prisma = getPrisma();
+  const equipmentId = text(formData, "equipmentId");
+  const templateId = text(formData, "templateId");
+  if (!equipmentId || !templateId) return;
+
+  const template = await prisma.dl50AssessmentTemplate.findUnique({ where: { id: templateId } });
+  const equipment = await prisma.equipment.findUnique({ where: { id: equipmentId }, select: { equipmentTypeId: true } });
+  if (!template || !equipment || equipment.equipmentTypeId !== template.equipmentTypeId) return;
+
+  const payload = dl50PayloadFromTemplate(template);
+  const generated = generateDl50ConclusionFromPayload(payload);
+  const version = await nextDl50Version(prisma, equipmentId);
+  const assessment = await prisma.equipmentDl50Assessment.create({
+    data: {
+      equipmentId,
+      version,
+      ...payload,
+      conclusion: generated.conclusion,
+      status: generated.status,
+      createdById: user.id,
+    },
+  });
+
+  await createDl50AssessmentDocument(prisma, assessment, user.id);
+
+  revalidatePath("/documentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function applyDl50TemplateToEquipments(formData: FormData) {
+  const user = await requireCanSgq();
+  const prisma = getPrisma();
+  const templateId = text(formData, "templateId");
+  const equipmentIds = formData
+    .getAll("equipmentId")
+    .filter((value): value is string => typeof value === "string" && value.length > 0);
+  if (!templateId || equipmentIds.length === 0) return;
+
+  const template = await prisma.dl50AssessmentTemplate.findUnique({ where: { id: templateId } });
+  if (!template) return;
+
+  const validEquipment = await prisma.equipment.findMany({
+    where: { id: { in: equipmentIds }, equipmentTypeId: template.equipmentTypeId },
+    select: { id: true },
+  });
+
+  const payload = dl50PayloadFromTemplate(template);
+  const generated = generateDl50ConclusionFromPayload(payload);
+
+  for (const equipment of validEquipment) {
+    const version = await nextDl50Version(prisma, equipment.id);
+    const assessment = await prisma.equipmentDl50Assessment.create({
+      data: {
+        equipmentId: equipment.id,
+        version,
+        ...payload,
+        conclusion: generated.conclusion,
+        status: generated.status,
+        createdById: user.id,
+      },
+    });
+    await createDl50AssessmentDocument(prisma, assessment, user.id);
+    revalidatePath(`/equipamentos/${equipment.id}`);
+  }
+
+  revalidatePath("/documentos");
+  revalidatePath("/equipamentos");
 }
 
 export async function createEquipmentTypeWithChecklist(formData: FormData) {

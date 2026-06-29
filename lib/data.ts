@@ -533,6 +533,10 @@ export async function getEquipmentDetail(id: string) {
           interventionLogs: { orderBy: { performedAt: "desc" }, take: 50 },
           equipmentType: {
             include: {
+              dl50Templates: {
+                where: { active: true },
+                orderBy: { createdAt: "desc" },
+              },
               checklistTemplates: {
                 where: { active: true },
                 orderBy: { createdAt: "desc" },
@@ -582,6 +586,13 @@ calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30, include: { do
 expenses: { orderBy: { date: "desc" }, include: { documents: true } },
 documents: { orderBy: { createdAt: "desc" }, take: 30 },
 consumables: { orderBy: { name: "asc" }, take: 50 },
+dl50Assessments: {
+  orderBy: { version: "desc" },
+  include: {
+    createdBy: { select: { id: true, name: true } },
+    document: true,
+  },
+},
         },
       });
 
@@ -664,7 +675,10 @@ export async function getEquipmentTypes() {
     async (prisma) =>
       prisma.equipmentType.findMany({
         orderBy: { name: "asc" },
-        include: { checklistTemplates: { where: { active: true }, include: { items: true } } },
+        include: {
+          dl50Templates: { where: { active: true }, orderBy: { createdAt: "desc" } },
+          checklistTemplates: { where: { active: true }, include: { items: true } },
+        },
       }),
     [],
   );
@@ -675,7 +689,7 @@ export async function getEquipmentOptions() {
     async (prisma) =>
       prisma.equipment.findMany({
         orderBy: { name: "asc" },
-        select: { id: true, name: true, code: true, isMeasurementMonitoring: true },
+        select: { id: true, name: true, code: true, isMeasurementMonitoring: true, equipmentTypeId: true },
       }),
     [],
   );

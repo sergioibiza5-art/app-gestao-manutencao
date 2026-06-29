@@ -6,6 +6,16 @@ import { formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
+const documentTypeLabels: Record<string, string> = {
+  INVOICE: "Fatura",
+  WARRANTY: "Garantia",
+  MANUAL: "Manual",
+  CERTIFICATE: "Certificado",
+  CONTRACT: "Contrato",
+  DL50_ASSESSMENT: "Avaliação DL 50/2005",
+  OTHER: "Outro",
+};
+
 export default async function DocumentsPage() {
   const { documents, equipment } = await getModuleData();
 
@@ -28,6 +38,7 @@ export default async function DocumentsPage() {
               <option value="MANUAL">Manual</option>
               <option value="CERTIFICATE">Certificado</option>
               <option value="CONTRACT">Contrato</option>
+              <option value="DL50_ASSESSMENT">Avaliação DL 50/2005</option>
               <option value="OTHER">Outro</option>
             </select>
             <select name="equipmentId" className={inputClass}>
@@ -55,7 +66,7 @@ export default async function DocumentsPage() {
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h3 className="font-semibold text-zinc-100">{document.title}</h3>
-                      <p className="mt-1 text-sm text-zinc-500">{document.type} · {document.equipment?.name ?? "sem equipamento"}</p>
+                      <p className="mt-1 text-sm text-zinc-500">{documentTypeLabels[document.type] ?? document.type} · {document.equipment?.name ?? "sem equipamento"}</p>
                     </div>
                     <p className="text-xs text-zinc-500">Val.: {formatDate(document.expiryDate)}</p>
                   </div>

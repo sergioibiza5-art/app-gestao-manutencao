@@ -11,6 +11,14 @@ import {
 } from "lucide-react";
 
 import {
+  applyDl50TemplateToEquipment,
+  applyDl50TemplateToEquipments,
+  archiveDl50Assessment,
+  attachDl50AssessmentToDocuments,
+  createDl50Assessment,
+  createDl50AssessmentTemplate,
+  updateDl50Assessment,
+  updateDl50AssessmentTemplate,
   updateEquipmentBasics,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -59,6 +67,128 @@ function dateInputValue(date: Date | null) {
   return date ? date.toISOString().slice(0, 10) : "";
 }
 
+const dl50Questions = [
+  ["ceMark", "Marcação CE"],
+  ["manufacturerManual", "Manual do fabricante disponível"],
+  ["suitableForUse", "Equipamento adequado à utilização prevista"],
+  ["maintenancePlan", "Plano de manutenção preventiva existente"],
+  ["safetyDependsOnInstallation", "Segurança depende da instalação"],
+  ["subjectToRiskDeterioration", "Equipamento sujeito a deteriorações que possam causar riscos"],
+  ["needsPeriodicVerification", "Necessita de verificações periódicas específicas"],
+  ["hasDangerZone", "Possui zonas perigosas acessíveis"],
+  ["hasMovingPartsRisk", "Possui elementos móveis com risco mecânico"],
+  ["hasIdentifiedControls", "Possui comandos identificados"],
+  ["voluntaryStart", "Arranque apenas por ação voluntária"],
+  ["safeStop", "Paragem segura"],
+  ["emergencyStopRequired", "Paragem de emergência necessária"],
+  ["projectionRisk", "Risco de projeções"],
+  ["emissionRisk", "Risco de emanações, poeiras, vapores ou líquidos"],
+  ["electricalRisk", "Risco elétrico"],
+  ["fireRisk", "Risco de incêndio"],
+  ["explosionRisk", "Risco de explosão"],
+  ["energyIsolation", "Fontes de energia isoláveis"],
+  ["safetySignage", "Sinalização de segurança aplicável"],
+  ["operatorsInformed", "Operadores informados/formados"],
+  ["usedAccordingToManufacturer", "Utilização conforme instruções do fabricante"],
+] as const;
+
+const dl50Articles = [
+  ["article3Notes", "Artigo 3.º"],
+  ["article4Notes", "Artigo 4.º"],
+  ["article6Notes", "Artigo 6.º"],
+  ["article7Notes", "Artigo 7.º"],
+  ["article8Notes", "Artigo 8.º"],
+  ["article9Notes", "Artigo 9.º"],
+  ["article10Notes", "Artigo 10.º"],
+  ["article11Notes", "Artigo 11.º"],
+  ["article12Notes", "Artigo 12.º"],
+  ["article13Notes", "Artigo 13.º"],
+  ["article14Notes", "Artigo 14.º"],
+  ["article15Notes", "Artigo 15.º"],
+  ["article16Notes", "Artigo 16.º"],
+  ["article17Notes", "Artigo 17.º"],
+  ["article18Notes", "Artigo 18.º"],
+  ["article19Notes", "Artigo 19.º"],
+  ["article20Notes", "Artigo 20.º"],
+  ["article21Notes", "Artigo 21.º"],
+  ["article22Notes", "Artigo 22.º"],
+  ["article30Notes", "Artigo 30.º"],
+  ["article31Notes", "Artigo 31.º"],
+] as const;
+
+const documentTypeLabels: Record<string, string> = {
+  INVOICE: "Fatura",
+  WARRANTY: "Garantia",
+  MANUAL: "Manual",
+  CERTIFICATE: "Certificado",
+  CONTRACT: "Contrato",
+  DL50_ASSESSMENT: "Avaliação DL 50/2005",
+  OTHER: "Outro",
+};
+
+function Dl50AnswerSelect({
+  name,
+  defaultValue,
+}: {
+  name: string;
+  defaultValue?: string | null;
+}) {
+  return (
+    <select name={name} className={inputClass} defaultValue={defaultValue ?? ""}>
+      <option value="">Por avaliar</option>
+      <option value="YES">Sim</option>
+      <option value="NO">Não</option>
+      <option value="NA">Não aplicável</option>
+    </select>
+  );
+}
+
+function Dl50Fields({ source }: { source?: Record<string, unknown> | null }) {
+  return (
+    <>
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {dl50Questions.map(([name, label]) => (
+          <label key={name} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+            <span className="block min-h-10 text-sm font-medium leading-5 text-zinc-200">{label}</span>
+            <span className="mt-3 block">
+              <Dl50AnswerSelect name={name} defaultValue={typeof source?.[name] === "string" ? String(source?.[name]) : null} />
+            </span>
+          </label>
+        ))}
+      </div>
+
+      <div className="mt-4 grid gap-3 md:grid-cols-2">
+        {dl50Articles.map(([name, label]) => (
+          <label key={name} className="space-y-2">
+            <span className="text-sm font-medium text-zinc-300">{label}</span>
+            <textarea
+              name={name}
+              className="min-h-20 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-teal-300/60"
+              defaultValue={typeof source?.[name] === "string" ? String(source?.[name]) : ""}
+              placeholder={`Observações do ${label}`}
+            />
+          </label>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function dl50StatusLabel(status?: string | null) {
+  if (status === "CONFORM") return "DL50 Conforme";
+  if (status === "NEEDS_ACTION") return "DL50 Requer ações";
+  if (status === "ARCHIVED") return "DL50 Arquivado";
+  if (status === "DRAFT") return "DL50 Em rascunho";
+  return "DL50 Não avaliado";
+}
+
+function dl50StatusClass(status?: string | null) {
+  if (status === "CONFORM") return "border-emerald-300/40 bg-emerald-300/10 text-emerald-200";
+  if (status === "NEEDS_ACTION") return "border-amber-300/40 bg-amber-300/10 text-amber-200";
+  if (status === "ARCHIVED") return "border-zinc-700 bg-zinc-900 text-zinc-400";
+  return "border-sky-300/40 bg-sky-300/10 text-sky-200";
+}
+
 export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {
   const { id } = await params;
   const [equipment, equipmentTypes, equipmentOptions] = await Promise.all([
@@ -89,6 +219,11 @@ const openTicketsCount = equipment.tickets.filter((ticket) =>
 const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
   ["IN_PROGRESS", "PAUSED"].includes(workOrder.status)
 ).length;
+const latestDl50Assessment = equipment.dl50Assessments.find((assessment) => assessment.status !== "ARCHIVED");
+const dl50Templates = equipment.equipmentType?.dl50Templates ?? [];
+const sameTypeEquipment = equipment.equipmentTypeId
+  ? equipmentOptions.filter((item) => item.equipmentTypeId === equipment.equipmentTypeId)
+  : [];
 
   const historyItems = [
     ...equipment.interventionLogs.map((item) => ({
@@ -152,7 +287,7 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
         }
       />
 
-<section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+<section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
   <Panel>
     <p className="text-sm text-zinc-500">Despesas</p>
     <p className="mt-2 text-3xl font-semibold text-amber-200">
@@ -178,6 +313,13 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
     <p className="text-sm text-zinc-500">Manutenções iniciadas</p>
     <p className="mt-2 text-3xl font-semibold text-teal-300">
       {activeWorkOrdersCount}
+    </p>
+  </Panel>
+
+  <Panel>
+    <p className="text-sm text-zinc-500">Avaliação DL50</p>
+    <p className={`mt-3 inline-flex rounded-lg border px-3 py-2 text-sm font-semibold ${dl50StatusClass(latestDl50Assessment?.status)}`}>
+      {dl50StatusLabel(latestDl50Assessment?.status)}
     </p>
   </Panel>
 </section>
@@ -293,6 +435,212 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
   </div>
 </Panel>
       </section>
+
+      <section className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+        <Panel className="min-w-0">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-center gap-3">
+              <ClipboardCheck size={22} className="text-teal-300" />
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">Avaliação DL 50/2005</h2>
+                <p className="mt-1 text-sm text-zinc-500">Questionário de conformidade, conclusão automática e evidência documental por versão.</p>
+              </div>
+            </div>
+            <span className={`inline-flex rounded-lg border px-3 py-2 text-sm font-semibold ${dl50StatusClass(latestDl50Assessment?.status)}`}>
+              {dl50StatusLabel(latestDl50Assessment?.status)}
+            </span>
+          </div>
+
+          <details className="mt-5 rounded-lg border border-teal-300/25 bg-teal-300/5 p-4" open={equipment.dl50Assessments.length === 0}>
+            <summary className="cursor-pointer text-sm font-semibold text-teal-200">
+              Gerar Avaliação de Conformidade DL 50/2005
+            </summary>
+            <form action={createDl50Assessment} className="mt-4">
+              <input type="hidden" name="equipmentId" value={equipment.id} />
+              <Dl50Fields />
+              <div className="mt-4 flex flex-wrap gap-2">
+                <button className={buttonClass}>Guardar avaliação v{(latestDl50Assessment?.version ?? 0) + 1}</button>
+              </div>
+            </form>
+          </details>
+
+          <div className="mt-5 space-y-3">
+            {equipment.dl50Assessments.length === 0 ? (
+              <EmptyState
+                title="Sem avaliações DL50"
+                description="Gera a primeira avaliação ou aplica um template do tipo de equipamento."
+              />
+            ) : (
+              equipment.dl50Assessments.map((assessment) => (
+                <details key={assessment.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                  <summary className="cursor-pointer list-none">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">v{assessment.version} · {formatDate(assessment.createdAt)}</p>
+                        <h3 className="mt-1 font-semibold text-zinc-100">{dl50StatusLabel(assessment.status)}</h3>
+                        <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">{assessment.conclusion}</p>
+                        <p className="mt-2 text-xs text-zinc-500">Criado por: {assessment.createdBy?.name ?? "Sem utilizador"}</p>
+                      </div>
+                      <span className={`inline-flex rounded-lg border px-3 py-2 text-xs font-semibold ${dl50StatusClass(assessment.status)}`}>
+                        {assessment.status}
+                      </span>
+                    </div>
+                  </summary>
+
+                  <form action={updateDl50Assessment} className="mt-5 border-t border-zinc-800 pt-4">
+                    <input type="hidden" name="id" value={assessment.id} />
+                    <input type="hidden" name="equipmentId" value={equipment.id} />
+                    <Dl50Fields source={assessment} />
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button className={buttonClass}>Guardar alterações</button>
+                    </div>
+                  </form>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {!assessment.documentId && (
+                      <form action={attachDl50AssessmentToDocuments}>
+                        <input type="hidden" name="id" value={assessment.id} />
+                        <input type="hidden" name="equipmentId" value={equipment.id} />
+                        <button className="inline-flex h-10 items-center justify-center rounded-lg border border-sky-300/40 bg-sky-300/10 px-3 text-sm font-semibold text-sky-200 transition hover:border-sky-200">
+                          Criar documento
+                        </button>
+                      </form>
+                    )}
+                    <form action={archiveDl50Assessment}>
+                      <input type="hidden" name="id" value={assessment.id} />
+                      <input type="hidden" name="equipmentId" value={equipment.id} />
+                      <button className="inline-flex h-10 items-center justify-center rounded-lg border border-rose-300/40 bg-rose-300/10 px-3 text-sm font-semibold text-rose-200 transition hover:border-rose-200">
+                        Arquivar avaliação
+                      </button>
+                    </form>
+                  </div>
+                </details>
+              ))
+            )}
+          </div>
+        </Panel>
+
+        <Panel className="min-w-0">
+          <div className="flex items-center gap-3">
+            <Package size={22} className="text-amber-300" />
+            <div>
+              <h2 className="text-xl font-semibold text-zinc-50">Templates DL50</h2>
+              <p className="mt-1 text-sm text-zinc-500">{equipment.equipmentType?.name ?? "Sem tipo de equipamento associado"}</p>
+            </div>
+          </div>
+
+          {equipment.equipmentTypeId ? (
+            <div className="mt-4 space-y-4">
+              {dl50Templates.length > 0 && (
+                <form action={applyDl50TemplateToEquipment} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+                  <input type="hidden" name="equipmentId" value={equipment.id} />
+                  <label className="space-y-2">
+                    <span className="text-sm font-medium text-zinc-300">Aplicar template a este equipamento</span>
+                    <select name="templateId" className={inputClass}>
+                      {dl50Templates.map((template) => (
+                        <option key={template.id} value={template.id}>{template.name}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <button className={`${buttonClass} mt-3`}>Aplicar template DL50</button>
+                </form>
+              )}
+
+              <details className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+                <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Criar novo template DL50</summary>
+                <form action={createDl50AssessmentTemplate} className="mt-4">
+                  <input type="hidden" name="equipmentTypeId" value={equipment.equipmentTypeId} />
+                  <input name="name" className={inputClass} placeholder="Nome do template, ex.: Ar condicionado split" />
+                  <textarea name="templateNotes" className={`${textareaClass} mt-3`} placeholder="Notas do template" />
+                  <div className="mt-4">
+                    <Dl50Fields />
+                  </div>
+                  <button className={`${buttonClass} mt-4`}>Guardar template</button>
+                </form>
+              </details>
+
+              {dl50Templates.map((template) => (
+                <details key={template.id} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+                  <summary className="cursor-pointer text-sm font-semibold text-zinc-100">{template.name}</summary>
+                  <form action={updateDl50AssessmentTemplate} className="mt-4">
+                    <input type="hidden" name="id" value={template.id} />
+                    <input type="hidden" name="equipmentId" value={equipment.id} />
+                    <input name="name" className={inputClass} defaultValue={template.name} />
+                    <select name="active" className={`${inputClass} mt-3`} defaultValue={template.active ? "true" : "false"}>
+                      <option value="true">Ativo</option>
+                      <option value="false">Inativo</option>
+                    </select>
+                    <textarea name="templateNotes" className={`${textareaClass} mt-3`} defaultValue={template.notes ?? ""} placeholder="Notas do template" />
+                    <div className="mt-4">
+                      <Dl50Fields source={template} />
+                    </div>
+                    <button className={`${buttonClass} mt-4`}>Atualizar template</button>
+                  </form>
+
+                  <form action={applyDl50TemplateToEquipments} className="mt-4 border-t border-zinc-800 pt-4">
+                    <input type="hidden" name="templateId" value={template.id} />
+                    <p className="text-sm font-semibold text-zinc-200">Aplicar em massa</p>
+                    <div className="mt-3 max-h-52 space-y-2 overflow-auto pr-1">
+                      {sameTypeEquipment.map((item) => (
+                        <label key={item.id} className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-black/20 px-3 py-2 text-sm text-zinc-300">
+                          <input type="checkbox" name="equipmentId" value={item.id} defaultChecked={item.id === equipment.id} />
+                          <span>{item.name}{item.code ? ` · ${item.code}` : ""}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <button className={`${buttonClass} mt-3`}>Aplicar aos selecionados</button>
+                  </form>
+                </details>
+              ))}
+
+              {dl50Templates.length === 0 && (
+                <EmptyState
+                  title="Sem templates DL50"
+                  description="Cria um template para este tipo e reutiliza-o nos equipamentos semelhantes."
+                />
+              )}
+            </div>
+          ) : (
+            <EmptyState
+              title="Sem tipo de equipamento"
+              description="Associa primeiro um tipo ao equipamento para poderes criar templates DL50 reutilizáveis."
+            />
+          )}
+        </Panel>
+      </section>
+
+      <Panel>
+        <div className="flex items-center gap-3">
+          <Receipt size={22} className="text-sky-300" />
+          <div>
+            <h2 className="text-xl font-semibold text-zinc-50">Documentos do equipamento</h2>
+            <p className="mt-1 text-sm text-zinc-500">Evidências, certificados, faturas e avaliações associadas a este cadastro.</p>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {equipment.documents.length === 0 ? (
+            <div className="md:col-span-2 xl:col-span-3">
+              <EmptyState title="Sem documentos associados" description="Ao gerar a avaliação DL50, a evidência aparece automaticamente aqui." />
+            </div>
+          ) : (
+            equipment.documents.map((document) => (
+              <article key={document.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                <p className="text-xs font-medium uppercase tracking-[0.14em] text-sky-300">
+                  {documentTypeLabels[document.type] ?? document.type}
+                </p>
+                <h3 className="mt-2 font-semibold text-zinc-100">{document.title}</h3>
+                <p className="mt-2 text-sm text-zinc-500">Criado em: {formatDate(document.createdAt)}</p>
+                {document.fileUrl && (
+                  <a href={document.fileUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex text-sm font-semibold text-sky-300">
+                    Abrir documento
+                  </a>
+                )}
+              </article>
+            ))
+          )}
+        </div>
+      </Panel>
 
       <section className="grid gap-4 xl:grid-cols-2">
         <Panel>
