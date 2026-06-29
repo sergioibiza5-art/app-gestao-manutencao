@@ -766,6 +766,7 @@ export async function createDl50Assessment(formData: FormData) {
   revalidatePath("/documentos");
   revalidatePath("/equipamentos");
   revalidatePath(`/equipamentos/${equipmentId}`);
+  redirect(`/equipamentos/${equipmentId}`);
 }
 
 export async function updateDl50Assessment(formData: FormData) {
@@ -777,24 +778,27 @@ export async function updateDl50Assessment(formData: FormData) {
 
   const payload = dl50PayloadFromForm(formData);
   const generated = generateDl50ConclusionFromPayload(payload);
-  const assessment = await prisma.equipmentDl50Assessment.update({
-    where: { id },
-    data: {
-      ...payload,
-      conclusion: generated.conclusion,
-      status: generated.status,
-    },
-  });
-
-  if (assessment.documentId) {
-    await prisma.document.update({
-      where: { id: assessment.documentId },
-      data: { notes: generated.conclusion },
+  await prisma.$transaction(async (tx) => {
+    const assessment = await tx.equipmentDl50Assessment.update({
+      where: { id },
+      data: {
+        ...payload,
+        conclusion: generated.conclusion,
+        status: generated.status,
+      },
     });
-  }
+
+    if (assessment.documentId) {
+      await tx.document.update({
+        where: { id: assessment.documentId },
+        data: { notes: generated.conclusion },
+      });
+    }
+  });
 
   revalidatePath("/documentos");
   revalidatePath(`/equipamentos/${equipmentId}`);
+  redirect(`/equipamentos/${equipmentId}`);
 }
 
 export async function archiveDl50Assessment(formData: FormData) {
@@ -810,6 +814,7 @@ export async function archiveDl50Assessment(formData: FormData) {
   });
 
   revalidatePath(`/equipamentos/${equipmentId}`);
+  redirect(`/equipamentos/${equipmentId}`);
 }
 
 export async function attachDl50AssessmentToDocuments(formData: FormData) {
