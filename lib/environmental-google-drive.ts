@@ -1,6 +1,7 @@
 import { createSign } from "node:crypto";
 
 import { importEnvironmentalWorkbook, type ImportEnvironmentalWorkbookResult } from "@/lib/environmental-import";
+import { getPrisma } from "@/lib/prisma";
 
 const driveScope = "https://www.googleapis.com/auth/drive.readonly";
 const supportedMimeTypes = new Set([
@@ -25,9 +26,23 @@ type GoogleDriveFile = {
   };
 };
 
+type ImportGoogleDriveEnvironmentalReportsOptions = {
+  limit?: number;
+};
+
 function isSupportedDriveFile(file: GoogleDriveFile) {
   const lowerName = file.name.toLowerCase();
   return supportedMimeTypes.has(file.mimeType) || supportedFileExtensions.some((extension) => lowerName.endsWith(extension));
+}
+
+function fileSourceKey(file: GoogleDriveFile) {
+  return file.webViewLink ?? `google-drive:${file.shortcutDetails?.targetId ?? file.id}`;
+}
+
+function sameModifiedTime(left?: Date | string | null, right?: string | null) {
+  if (!left && !right) return true;
+  if (!left || !right) return false;
+  return new Date(left).getTime() === new Date(right).getTime();
 }
 
 function base64Url(input: string) {
@@ -160,19 +175,38 @@ async function downloadGoogleDriveFile(file: GoogleDriveFile, token: string | nu
   return Buffer.from(await response.arrayBuffer());
 }
 
-export async function importGoogleDriveEnvironmentalReports(folderInput: string) {
+export async function importGoogleDriveEnvironmentalReports(folderInput: string, options: ImportGoogleDriveEnvironmentalReportsOptions = {}) {
   const token = await googleAccessToken();
   const files = await listGoogleDriveEnvironmentalFiles(folderInput);
+  const prisma = getPrisma();
+  const limit = Math.max(1, Math.min(options.limit ?? 25, 75));
   const results: ImportEnvironmentalWorkbookResult[] = [];
+  const sourceKeys = files.map(fileSourceKey);
+  const existingImports = await prisma.environmentalImport.findMany({
+    where: {
+      source: "GOOGLE_DRIVE",
+      sourceUrl: { in: sourceKeys },
+    },
+    select: {
+      sourceUrl: true,
+      sourceModifiedAt: true,
+    },
+  });
+  const importedBySource = new Map(existingImports.map((item) => [item.sourceUrl, item]));
+  const pendingFiles = files.filter((file) => {
+    const existing = importedBySource.get(fileSourceKey(file));
+    return !existing || !sameModifiedTime(existing.sourceModifiedAt, file.modifiedTime);
+  });
+  const batchFiles = pendingFiles.slice(0, limit);
 
-  for (const file of files) {
+  for (const file of batchFiles) {
     try {
       const buffer = await downloadGoogleDriveFile(file, token);
       results.push(await importEnvironmentalWorkbook({
         buffer,
         fileName: file.name,
         source: "GOOGLE_DRIVE",
-        sourceUrl: file.webViewLink,
+        sourceUrl: fileSourceKey(file),
         sourceModifiedAt: file.modifiedTime ? new Date(file.modifiedTime) : null,
       }));
     } catch (error) {
@@ -190,6 +224,10 @@ export async function importGoogleDriveEnvironmentalReports(folderInput: string)
 
   return {
     checked: files.length,
+    skippedAlreadyImported: files.length - pendingFiles.length,
+    processed: batchFiles.length,
+    batchLimit: limit,
+    remaining: Math.max(pendingFiles.length - batchFiles.length, 0),
     imported: results.filter((result) => result.status === "imported").length,
     duplicates: results.filter((result) => result.status === "duplicate").length,
     invalid: results.filter((result) => result.status === "invalid" || result.status === "empty").length,

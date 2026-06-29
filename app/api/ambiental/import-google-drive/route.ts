@@ -36,6 +36,8 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const force = url.searchParams.get("force") === "1";
   const debug = url.searchParams.get("debug") === "1";
+  const requestedLimit = Number.parseInt(url.searchParams.get("limit") ?? "", 10);
+  const limit = Number.isFinite(requestedLimit) ? requestedLimit : 25;
 
   if (debug) {
     const secret = process.env.CRON_SECRET;
@@ -95,7 +97,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const result = await importGoogleDriveEnvironmentalReports(folder);
+    const result = await importGoogleDriveEnvironmentalReports(folder, { limit });
 
     revalidatePath("/ambiental");
 
