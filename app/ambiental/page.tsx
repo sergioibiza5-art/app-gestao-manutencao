@@ -1,4 +1,4 @@
-import { AlertTriangle, FileSpreadsheet, Leaf, Search, Trash2 } from "lucide-react";
+import { AlertTriangle, Download, FileSpreadsheet, Leaf, Search, Trash2 } from "lucide-react";
 
 import { deleteEnvironmentalImport, importEnvironmentalReport, updateEnvironmentalSettings } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -211,6 +211,13 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const sensorRows = data.bySensor as EnvironmentalRow[];
   const hourlyRows = data.hourly as Array<{ hour: string; average: number }>;
   const settings = data.settings as EnvironmentalSettings;
+  const pdfQuery = new URLSearchParams({
+    days,
+    type,
+    zone,
+    status,
+    importId,
+  }).toString();
 
   return (
     <AppShell activeHref="/ambiental">
@@ -293,7 +300,16 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                   <option key={item.id} value={item.id}>{item.fileName}</option>
                 ))}
               </select>
-              <button className={buttonClass}>Filtrar</button>
+              <div className="grid gap-2 sm:grid-cols-2">
+                <button className={buttonClass}>Filtrar</button>
+                <a
+                  href={`/api/ambiental/pdf?${pdfQuery}`}
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200"
+                >
+                  <Download size={16} />
+                  Exportar PDF
+                </a>
+              </div>
             </form>
           </Panel>
 

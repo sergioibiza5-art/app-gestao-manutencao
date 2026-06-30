@@ -188,6 +188,13 @@ function dl50StatusClass(status?: string | null) {
   return "border-sky-300/40 bg-sky-300/10 text-sky-200";
 }
 
+function equipmentCodePrefix(code?: string | null) {
+  const normalized = (code ?? "").trim().toUpperCase();
+  if (!normalized) return "";
+  const match = normalized.match(/^(.+?)[\s_-]*\d+$/);
+  return match?.[1] ? match[1] : normalized;
+}
+
 export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {
   const { id } = await params;
   const [equipment, equipmentTypes, equipmentOptions] = await Promise.all([
@@ -220,9 +227,16 @@ const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
 ).length;
 const latestDl50Assessment = equipment.dl50Assessments.find((assessment) => assessment.status !== "ARCHIVED");
 const dl50Templates = equipment.equipmentType?.dl50Templates ?? [];
-const sameTypeEquipment = equipment.equipmentTypeId
-  ? equipmentOptions.filter((item) => item.equipmentTypeId === equipment.equipmentTypeId)
-  : [];
+const currentCodePrefix = equipmentCodePrefix(equipment.code);
+const bulkDl50Equipment = equipmentOptions
+  .filter((item) => {
+    const itemPrefix = equipmentCodePrefix(item.code);
+    if (currentCodePrefix && itemPrefix) {
+      return itemPrefix === currentCodePrefix;
+    }
+    return equipment.equipmentTypeId ? item.equipmentTypeId === equipment.equipmentTypeId : item.id === equipment.id;
+  })
+  .sort((a, b) => (a.code ?? a.name).localeCompare(b.code ?? b.name, "pt-PT", { numeric: true }));
 
   const historyItems = [
     ...equipment.interventionLogs.map((item) => ({
@@ -579,8 +593,13 @@ const sameTypeEquipment = equipment.equipmentTypeId
                   <form action={applyDl50TemplateToEquipments} className="mt-4 border-t border-zinc-800 pt-4">
                     <input type="hidden" name="templateId" value={template.id} />
                     <p className="text-sm font-semibold text-zinc-200">Aplicar em massa</p>
+                    <p className="mt-1 text-xs leading-5 text-zinc-500">
+                      {currentCodePrefix
+                        ? `Mostra equipamentos com código interno iniciado por ${currentCodePrefix}.`
+                        : "Sem prefixo de código detetado; mostra equipamentos do mesmo tipo."}
+                    </p>
                     <div className="mt-3 max-h-52 space-y-2 overflow-auto pr-1">
-                      {sameTypeEquipment.map((item) => (
+                      {bulkDl50Equipment.map((item) => (
                         <label key={item.id} className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-black/20 px-3 py-2 text-sm text-zinc-300">
                           <input type="checkbox" name="equipmentId" value={item.id} defaultChecked={item.id === equipment.id} />
                           <span>{item.name}{item.code ? ` · ${item.code}` : ""}</span>

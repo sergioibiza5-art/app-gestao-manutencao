@@ -934,7 +934,7 @@ export async function applyDl50TemplateToEquipments(formData: FormData) {
   if (!template) return;
 
   const validEquipment = await prisma.equipment.findMany({
-    where: { id: { in: equipmentIds }, equipmentTypeId: template.equipmentTypeId },
+    where: { id: { in: equipmentIds } },
     select: { id: true },
   });
 
