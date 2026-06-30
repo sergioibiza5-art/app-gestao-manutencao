@@ -138,17 +138,23 @@ function ensureSpace(doc: PDFKit.PDFDocument, needed = 60) {
 
 function sectionTitle(doc: PDFKit.PDFDocument, titlePt: string, titleEn: string) {
   ensureSpace(doc, 48);
-  doc.moveDown(0.6);
-  doc.fontSize(13).fillColor("#0f766e").font("Helvetica-Bold").text(titlePt);
-  doc.fontSize(9).fillColor("#64748b").font("Helvetica").text(titleEn);
-  doc.moveDown(0.5);
+  const y = doc.y + 8;
+  doc.fontSize(13).fillColor("#0f766e").font("Helvetica-Bold").text(titlePt, page.margin, y, {
+    width: page.width - page.margin * 2,
+  });
+  doc.fontSize(9).fillColor("#64748b").font("Helvetica").text(titleEn, page.margin, doc.y + 1, {
+    width: page.width - page.margin * 2,
+  });
+  doc.y += 8;
 }
 
 function smallText(doc: PDFKit.PDFDocument, text: string) {
-  doc.fontSize(8).fillColor("#334155").font("Helvetica").text(text, {
+  ensureSpace(doc, 36);
+  doc.fontSize(8).fillColor("#334155").font("Helvetica").text(text, page.margin, doc.y, {
     width: page.width - page.margin * 2,
     lineGap: 2,
   });
+  doc.y += 6;
 }
 
 function summaryCards(doc: PDFKit.PDFDocument, items: { label: string; value: string }[]) {
@@ -214,7 +220,8 @@ function table(
     y += rowHeight;
   });
 
-  doc.y = y + 8;
+  doc.x = page.margin;
+  doc.y = y + 12;
 }
 
 function stateText(state: string) {
@@ -286,10 +293,12 @@ export async function GET(request: Request) {
     [145, 250, 145, 250],
   );
 
-  smallText(
-    doc,
-    "Regras principais / Main rules: Temperatura fora de 15-25 C gera alerta; se mantida por mais de 24h gera acao. Humidade fora de 30-70% gera alerta; se mantida por mais de 24h gera acao. Pressao abaixo de 5 Pa gera alerta; eventos continuos acima de 40 min geram acao. Ligacoes de pressao com media inferior a 1,5 Pa sao tratadas como OK para evitar falsos alertas em sensores de referencia baixa. Leituras fora do horario configurado e fins de semana nao incluidos permanecem no historico, mas nao contam para alertas, acoes ou eventos.",
-  );
+  smallText(doc, "Regras principais / Main rules:");
+  smallText(doc, "- Temperatura / Temperature: fora de 15-25 C gera alerta; se mantida por mais de 24h gera acao. / Outside 15-25 C triggers alert; over 24h triggers action.");
+  smallText(doc, "- Humidade / Humidity: fora de 30-70% gera alerta; se mantida por mais de 24h gera acao. / Outside 30-70% triggers alert; over 24h triggers action.");
+  smallText(doc, "- Pressao / Pressure: abaixo de 5 Pa gera alerta; eventos continuos acima de 40 min geram acao. / Below 5 Pa triggers alert; continuous events over 40 min trigger action.");
+  smallText(doc, "- Excecao / Exception: ligacoes de pressao com media inferior a 1,5 Pa sao tratadas como OK. / Pressure connections with average below 1.5 Pa are treated as OK.");
+  smallText(doc, "- Horario / Schedule: leituras fora do horario configurado e fins de semana nao incluidos ficam no historico, mas nao contam para alertas, acoes ou eventos. / Readings outside configured hours and excluded weekends remain in history but do not count for alerts, actions or events.");
 
   sectionTitle(doc, "Acoes ambientais", "Environmental actions");
   if (actionEvents.length === 0) {
