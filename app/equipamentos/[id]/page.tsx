@@ -79,7 +79,6 @@ const dl50Questions = [
   ["hasMovingPartsRisk", "Possui elementos móveis com risco mecânico"],
   ["hasIdentifiedControls", "Possui comandos identificados"],
   ["voluntaryStart", "Arranque apenas por ação voluntária"],
-  ["safeStop", "Paragem segura"],
   ["emergencyStopRequired", "Paragem de emergência necessária"],
   ["projectionRisk", "Risco de projeções"],
   ["emissionRisk", "Risco de emanações, poeiras, vapores ou líquidos"],
