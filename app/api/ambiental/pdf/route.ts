@@ -1,4 +1,4 @@
-import PDFDocument from "pdfkit";
+import PDFDocument from "pdfkit/js/pdfkit.standalone.js";
 
 import { getEnvironmentalData } from "@/lib/data";
 import { requireCanSgq } from "@/lib/auth";
