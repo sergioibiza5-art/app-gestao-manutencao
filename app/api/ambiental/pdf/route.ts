@@ -148,6 +148,11 @@ function sectionTitle(doc: PDFKit.PDFDocument, titlePt: string, titleEn: string)
   doc.y += 8;
 }
 
+function startSection(doc: PDFKit.PDFDocument, titlePt: string, titleEn: string) {
+  doc.addPage();
+  sectionTitle(doc, titlePt, titleEn);
+}
+
 function smallText(doc: PDFKit.PDFDocument, text: string) {
   ensureSpace(doc, 36);
   doc.fontSize(8).fillColor("#334155").font("Helvetica").text(text, page.margin, doc.y, {
@@ -280,7 +285,7 @@ export async function GET(request: Request) {
     { label: "Gerado / Generated", value: formatDateOnly(generatedAt) },
   ]);
 
-  sectionTitle(doc, "Filtros e regras aplicadas", "Applied filters and rules");
+  startSection(doc, "Filtros e regras aplicadas", "Applied filters and rules");
   table(
     doc,
     ["Campo / Field", "Valor / Value", "Campo / Field", "Valor / Value"],
@@ -300,7 +305,7 @@ export async function GET(request: Request) {
   smallText(doc, "- Excecao / Exception: ligacoes de pressao com media inferior a 1,5 Pa sao tratadas como OK. / Pressure connections with average below 1.5 Pa are treated as OK.");
   smallText(doc, "- Horario / Schedule: leituras fora do horario configurado e fins de semana nao incluidos ficam no historico, mas nao contam para alertas, acoes ou eventos. / Readings outside configured hours and excluded weekends remain in history but do not count for alerts, actions or events.");
 
-  sectionTitle(doc, "Acoes ambientais", "Environmental actions");
+  startSection(doc, "Acoes ambientais", "Environmental actions");
   if (actionEvents.length === 0) {
     smallText(doc, "Sem acoes no periodo filtrado. / No actions in the filtered period.");
   } else {
@@ -321,7 +326,7 @@ export async function GET(request: Request) {
     );
   }
 
-  sectionTitle(doc, "Pressao diferencial por ligacao", "Differential pressure by connection");
+  startSection(doc, "Pressao diferencial por ligacao", "Differential pressure by connection");
   table(
     doc,
     ["Ligacao / Connection", "Media / Avg", "Min", "Max", "Ocorr. <5Pa", "Eventos >40m", "Estado / Status", "Leituras / Read."],
@@ -338,7 +343,7 @@ export async function GET(request: Request) {
     [120, 95, 75, 75, 95, 95, 120, 80],
   );
 
-  sectionTitle(doc, "Temperatura por sala", "Temperature by room");
+  startSection(doc, "Temperatura por sala", "Temperature by room");
   table(
     doc,
     ["Sala / Room", "Media / Avg", "Min", "Max", "Alertas / Alerts", "Acoes / Actions", "Estado / Status", "Leituras / Read."],
@@ -355,7 +360,7 @@ export async function GET(request: Request) {
     [110, 90, 80, 80, 100, 100, 130, 80],
   );
 
-  sectionTitle(doc, "Humidade por sala", "Humidity by room");
+  startSection(doc, "Humidade por sala", "Humidity by room");
   table(
     doc,
     ["Sala / Room", "Media / Avg", "Min", "Max", "Alertas / Alerts", "Acoes / Actions", "Estado / Status", "Leituras / Read."],
@@ -372,7 +377,7 @@ export async function GET(request: Request) {
     [110, 90, 80, 80, 100, 100, 130, 80],
   );
 
-  sectionTitle(doc, "Eventos por zona", "Events by zone");
+  startSection(doc, "Eventos por zona", "Events by zone");
   table(
     doc,
     ["Zona / Zone", "Pressao >40m / Pressure >40m", "Temperatura >24h / Temperature >24h", "Humidade >24h / Humidity >24h"],
@@ -385,7 +390,7 @@ export async function GET(request: Request) {
     [180, 190, 200, 200],
   );
 
-  sectionTitle(doc, "Rastreabilidade", "Traceability");
+  startSection(doc, "Rastreabilidade", "Traceability");
   table(
     doc,
     ["Ficheiro / File", "Importado em / Imported at", "Leituras / Readings"],
