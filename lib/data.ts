@@ -461,7 +461,7 @@ export async function getModuleData() {
            tickets: {
               where: {
                 status: {
-                  in: ["IN_PROGRESS", "PAUSED"],
+                  in: ["IN_PROGRESS", "PAUSED", "SUSPENDED"],
                 },
               },
               select: {
