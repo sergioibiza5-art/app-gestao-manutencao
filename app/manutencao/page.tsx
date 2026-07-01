@@ -91,6 +91,7 @@ function workOrderStatusLabel(status?: string | null) {
     OPEN: "OP criada",
     IN_PROGRESS: "OP iniciada",
     PAUSED: "OP pausada",
+    SUSPENDED: "OP suspensa",
     DONE: "OP concluída",
     VALIDATED: "OP validada",
     CANCELED: "OP cancelada",
@@ -106,6 +107,10 @@ function workOrderStatusInfo(status?: string | null): ScheduleStatusInfo {
 
   if (status === "PAUSED") {
     return { label: "OP pausada", className: "border-amber-300/35 bg-amber-300/10 text-amber-200", icon: PauseCircle };
+  }
+
+  if (status === "SUSPENDED") {
+    return { label: "OP suspensa", className: "border-orange-300/35 bg-orange-300/10 text-orange-200", icon: PauseCircle };
   }
 
   if (status === "DONE" || status === "VALIDATED") {
@@ -170,7 +175,7 @@ function scheduleCardTone(schedule: { scheduledAt: Date; status: string; workOrd
   if (scheduled.getTime() < today.getTime() && !["DONE", "VALIDATED", "CANCELED"].includes(workOrderStatus ?? "") && schedule.status !== "DONE") {
     return "border-rose-300/50 bg-rose-950/20 hover:border-rose-300/70";
   }
-  if (workOrderStatus === "IN_PROGRESS" || workOrderStatus === "PAUSED") {
+  if (workOrderStatus === "IN_PROGRESS" || workOrderStatus === "PAUSED" || workOrderStatus === "SUSPENDED") {
     return "border-yellow-300/50 bg-yellow-950/20 hover:border-yellow-300/70";
   }
   if (workOrderStatus === "DONE" || workOrderStatus === "VALIDATED" || schedule.status === "DONE") {

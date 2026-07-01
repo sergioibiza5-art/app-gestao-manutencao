@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 
-import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, startWorkOrder, validateWorkOrder } from "@/app/actions";
+import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, validateWorkOrder } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
@@ -33,6 +33,7 @@ function workOrderStatusLabel(status: string) {
     OPEN: "Aberta",
     IN_PROGRESS: "Em curso",
     PAUSED: "Pausada",
+    SUSPENDED: "Suspensa",
     DONE: "Concluída",
     VALIDATED: "Validada",
     CANCELED: "Cancelada",
@@ -105,12 +106,12 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                 ))}
               </dl>
               <div className="mt-4 flex flex-wrap gap-2">
-                {(workOrder.status === "OPEN" || workOrder.status === "PAUSED") && (
+                {(workOrder.status === "OPEN" || workOrder.status === "PAUSED" || workOrder.status === "SUSPENDED") && (
                   <form action={startWorkOrder}>
                     <input type="hidden" name="workOrderId" value={workOrder.id} />
                     <input type="hidden" name="scheduleId" value={schedule.id} />
                     <button className="inline-flex h-10 items-center justify-center rounded-lg border border-teal-300/40 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100">
-                      Iniciar
+                      {workOrder.status === "SUSPENDED" || workOrder.status === "PAUSED" ? "Retomar" : "Iniciar"}
                     </button>
                   </form>
                 )}
@@ -123,12 +124,40 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                     </button>
                   </form>
                 )}
+                {["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status) && (
+                  <form action={suspendWorkOrder} className="w-full rounded-lg border border-amber-300/25 bg-amber-300/5 p-3">
+                    <input type="hidden" name="workOrderId" value={workOrder.id} />
+                    <input type="hidden" name="scheduleId" value={schedule.id} />
+                    <textarea
+                      name="suspensionNotes"
+                      className={textareaClass}
+                      placeholder="Observações da suspensão: falta de peças, sem solução definida, aguarda fornecedor..."
+                    />
+                    <button className="mt-2 inline-flex h-10 items-center justify-center rounded-lg border border-amber-300/40 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100">
+                      Suspender OP
+                    </button>
+                  </form>
+                )}
                 {workOrder.status === "DONE" && (
                   <form action={validateWorkOrder}>
                     <input type="hidden" name="workOrderId" value={workOrder.id} />
                     <input type="hidden" name="scheduleId" value={schedule.id} />
                     <button className="inline-flex h-10 items-center justify-center rounded-lg border border-emerald-300/40 bg-emerald-300/10 px-3 text-sm font-semibold text-emerald-100">
                       Validar
+                    </button>
+                  </form>
+                )}
+                {(workOrder.status === "DONE" || workOrder.status === "VALIDATED") && (
+                  <form action={reopenWorkOrder} className="w-full rounded-lg border border-sky-300/25 bg-sky-300/5 p-3">
+                    <input type="hidden" name="workOrderId" value={workOrder.id} />
+                    <input type="hidden" name="scheduleId" value={schedule.id} />
+                    <textarea
+                      name="reopenNotes"
+                      className={textareaClass}
+                      placeholder="Motivo da reabertura da OP"
+                    />
+                    <button className="mt-2 inline-flex h-10 items-center justify-center rounded-lg border border-sky-300/40 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100">
+                      Reabrir OP
                     </button>
                   </form>
                 )}
@@ -199,6 +228,16 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   </div>
                 </div>
               )}
+            </div>
+          ) : workOrder?.status === "SUSPENDED" ? (
+            <div className="mt-4 space-y-4">
+              <div className="rounded-lg border border-amber-300/25 bg-amber-300/10 p-4 text-sm text-amber-100">
+                OP suspensa. Retoma a OP para voltar a contar tempo de trabalho e concluir a execução.
+              </div>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                <p className="text-xs text-zinc-500">Notas e observações</p>
+                <p className="mt-2 whitespace-pre-line text-sm text-zinc-100">{workOrder.notes ?? "Sem notas"}</p>
+              </div>
             </div>
           ) : canFillChecklist ? (
             <form action={completeWorkOrder} className="mt-4 space-y-4">

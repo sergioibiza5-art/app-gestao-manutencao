@@ -223,7 +223,7 @@ const openTicketsCount = equipment.tickets.filter((ticket) =>
 ).length;
 
 const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>
-  ["IN_PROGRESS", "PAUSED"].includes(workOrder.status)
+  ["IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(workOrder.status)
 ).length;
 const latestDl50Assessment = equipment.dl50Assessments.find((assessment) => assessment.status !== "ARCHIVED");
 const dl50Templates = equipment.equipmentType?.dl50Templates ?? [];

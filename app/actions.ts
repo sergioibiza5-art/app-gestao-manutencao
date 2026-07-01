@@ -1548,6 +1548,11 @@ function durationNote(seconds: number) {
   return `${hours}h ${String(minutes).padStart(2, "0")}m`;
 }
 
+function auditNote(title: string, userName: string, note?: string | null) {
+  const timestamp = new Date().toLocaleString("pt-PT", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Lisbon" });
+  return `[${timestamp}] ${title} por ${userName}: ${note?.trim() || "Sem observacoes"}`;
+}
+
 function minutesFromClock(value?: string | null) {
   const [hours, minutes] = String(value || "").split(":").map((part) => Number.parseInt(part, 10));
   if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
@@ -1589,7 +1594,7 @@ async function refreshEquipmentMaintenanceStatus(tx: Prisma.TransactionClient, e
   const activeWorkOrders = await tx.workOrder.count({
     where: {
       equipmentId,
-      status: { in: ["IN_PROGRESS", "PAUSED", "DONE"] },
+      status: { in: ["IN_PROGRESS", "PAUSED", "SUSPENDED", "DONE"] },
     },
   });
   const equipment = await tx.equipment.findUnique({ where: { id: equipmentId }, select: { status: true } });
@@ -2222,7 +2227,7 @@ export async function startWorkOrder(formData: FormData) {
 
   await prisma.$transaction(async (tx) => {
     const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
-    if (!workOrder || !["OPEN", "PAUSED"].includes(workOrder.status)) return;
+    if (!workOrder || !["OPEN", "PAUSED", "SUSPENDED"].includes(workOrder.status)) return;
 
     const now = new Date();
     await tx.workOrder.update({
@@ -2240,6 +2245,83 @@ export async function startWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  const scheduleId = optionalText(formData, "scheduleId");
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
+}
+
+export async function suspendWorkOrder(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || !["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status)) return;
+
+    const now = new Date();
+    const activeSeconds =
+      workOrder.status === "IN_PROGRESS" ? elapsedSeconds(workOrder.lastResumedAt ?? workOrder.startedAt, now) : 0;
+    const suspensionNote = auditNote("OP suspensa", user.name, optionalText(formData, "suspensionNotes"));
+
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "SUSPENDED",
+        pausedAt: now,
+        lastResumedAt: null,
+        totalWorkSeconds: workOrder.totalWorkSeconds + activeSeconds,
+        notes: [workOrder.notes, suspensionNote].filter(Boolean).join("\n"),
+      },
+    });
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  const scheduleId = optionalText(formData, "scheduleId");
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
+}
+
+export async function reopenWorkOrder(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  let equipmentId: string | null = null;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || !["DONE", "VALIDATED"].includes(workOrder.status)) return;
+
+    equipmentId = workOrder.equipmentId;
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "OPEN",
+        closedAt: null,
+        validatedAt: null,
+        pausedAt: null,
+        lastResumedAt: null,
+        notes: [workOrder.notes, auditNote("OP reaberta", user.name, optionalText(formData, "reopenNotes"))].filter(Boolean).join("\n"),
+      },
+    });
+
+    if (workOrder.scheduleId) {
+      await tx.maintenanceSchedule.update({
+        where: { id: workOrder.scheduleId },
+        data: { status: "SCHEDULED" },
+      });
+    }
+
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath("/equipamentos");
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId");
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }

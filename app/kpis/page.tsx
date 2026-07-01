@@ -37,6 +37,7 @@ function statusLabel(status: string) {
     OPEN: "Abertas",
     IN_PROGRESS: "Em curso",
     PAUSED: "Pausadas",
+    SUSPENDED: "Suspensas",
     DONE: "Concluidas",
     VALIDATED: "Validadas",
     CANCELED: "Canceladas",

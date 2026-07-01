@@ -202,7 +202,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
     .filter((schedule) => {
       const isLate = schedule.scheduledAt < todayStart && schedule.status === "SCHEDULED";
       const hasOpenOp =
-        schedule.workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(schedule.workOrder.status);
+        schedule.workOrder && ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(schedule.workOrder.status);
       return isLate || hasOpenOp || !schedule.workOrder;
     })
     .map((schedule) => ({
@@ -472,7 +472,7 @@ export async function getModuleData() {
   where: {
     workOrder: {
       status: {
-        in: ["IN_PROGRESS", "PAUSED"],
+        in: ["IN_PROGRESS", "PAUSED", "SUSPENDED"],
       },
     },
   },

@@ -134,8 +134,9 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
   const { equipment, equipmentTypes } = await getModuleData();
   type EquipmentItem = (typeof equipment)[number] & {
     isMeasurementMonitoring: boolean;
-   regulatoryRequirements?: boolean;
-   regulatoryDetails?: string | null;
+    regulatoryRequirements?: boolean;
+    regulatoryDetails?: string | null;
+    equipmentType?: { name: string } | null;
   };
 
   const typedEquipment = equipment as EquipmentItem[];

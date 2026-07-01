@@ -72,6 +72,7 @@ const alertStatusLabels: Record<string, string> = {
   IN_PROGRESS: "Tarefa em curso",
   OPEN: "OP criada",
   PAUSED: "OP pausada",
+  SUSPENDED: "OP suspensa",
   DONE: "OP concluída",
   VALIDATED: "OP validada",
   CANCELED: "Cancelada",

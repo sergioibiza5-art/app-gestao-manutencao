@@ -134,6 +134,7 @@ enum WorkOrderStatus {
   OPEN
   IN_PROGRESS
   PAUSED
+  SUSPENDED
   DONE
   VALIDATED
   CANCELED
