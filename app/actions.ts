@@ -1941,14 +1941,16 @@ export async function startMaintenanceTicket(formData: FormData) {
 
   await prisma.$transaction(async (tx) => {
     const ticket = await tx.maintenanceTicket.findUnique({ where: { id } });
-    if (!ticket || !["OPEN", "PAUSED"].includes(ticket.status)) return;
+    if (!ticket || !["OPEN", "PAUSED", "SUSPENDED"].includes(ticket.status)) return;
 
+    const now = new Date();
     await tx.maintenanceTicket.update({
       where: { id },
       data: {
         status: "IN_PROGRESS",
-        startedAt: ticket.startedAt ?? new Date(),
+        startedAt: ticket.startedAt ?? now,
         pausedAt: null,
+        lastResumedAt: now,
         assignedToId: user.id,
         startedById: ticket.startedById ?? user.id,
       },
@@ -1965,17 +1967,98 @@ export async function pauseMaintenanceTicket(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
-  const ticket = await prisma.maintenanceTicket.findUnique({ where: { id } });
-  if (!ticket || ticket.status !== "IN_PROGRESS") return;
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.findUnique({ where: { id } });
+    if (!ticket || ticket.status !== "IN_PROGRESS") return;
 
-  await prisma.maintenanceTicket.update({
-    where: { id },
-    data: {
-      status: "PAUSED",
-      pausedAt: new Date(),
-    },
+    const now = new Date();
+    const activeSeconds = elapsedSeconds(ticket.lastResumedAt ?? ticket.startedAt, now);
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "PAUSED",
+        pausedAt: now,
+        lastResumedAt: null,
+        totalWorkSeconds: ticket.totalWorkSeconds + activeSeconds,
+      },
+    });
   });
   revalidatePath("/tickets");
+}
+
+export async function suspendMaintenanceTicket(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.findUnique({ where: { id } });
+    if (!ticket || !["OPEN", "IN_PROGRESS", "PAUSED"].includes(ticket.status)) return;
+
+    const now = new Date();
+    const activeSeconds =
+      ticket.status === "IN_PROGRESS" ? elapsedSeconds(ticket.lastResumedAt ?? ticket.startedAt, now) : 0;
+    const note = auditNote("Ticket suspenso", user.name, optionalText(formData, "suspensionNotes"));
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "SUSPENDED",
+        pausedAt: now,
+        lastResumedAt: null,
+        totalWorkSeconds: ticket.totalWorkSeconds + activeSeconds,
+        observations: [ticket.observations, note].filter(Boolean).join("\n"),
+      },
+    });
+  });
+
+  revalidatePath("/tickets");
+}
+
+export async function reopenMaintenanceTicket(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.findUnique({ where: { id }, include: { workOrder: true } });
+    if (!ticket || !["DONE", "VALIDATED"].includes(ticket.status)) return;
+
+    const note = auditNote("Ticket reaberto", user.name, optionalText(formData, "reopenNotes"));
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "OPEN",
+        completedAt: null,
+        validatedAt: null,
+        pausedAt: null,
+        lastResumedAt: null,
+        observations: [ticket.observations, note].filter(Boolean).join("\n"),
+      },
+    });
+
+    if (ticket.workOrder) {
+      await tx.workOrder.update({
+        where: { id: ticket.workOrder.id },
+        data: {
+          status: "OPEN",
+          closedAt: null,
+          validatedAt: null,
+          pausedAt: null,
+          lastResumedAt: null,
+          notes: [ticket.workOrder.notes, note].filter(Boolean).join("\n"),
+        },
+      });
+      await refreshEquipmentMaintenanceStatus(tx, ticket.equipmentId);
+    }
+  });
+
+  revalidatePath("/tickets");
+  revalidatePath("/manutencao");
+  revalidatePath("/");
 }
 
 export async function completeMaintenanceTicket(formData: FormData) {
@@ -1992,6 +2075,8 @@ export async function completeMaintenanceTicket(formData: FormData) {
     if (!ticket) return;
 
     const completedAt = ticket.completedAt ?? new Date();
+    const activeSeconds =
+      ticket.status === "IN_PROGRESS" ? elapsedSeconds(ticket.lastResumedAt ?? ticket.startedAt, completedAt) : 0;
 
     const downtimeSeconds = ticket.machineStopped
       ? ticket.downtimeSeconds > 0
@@ -2001,7 +2086,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
 
     const totalWorkSeconds =
       ticket.totalWorkSeconds > 0
-        ? ticket.totalWorkSeconds
+        ? ticket.totalWorkSeconds + activeSeconds
         : ticket.startedAt
         ? elapsedSeconds(ticket.startedAt, completedAt)
         : ticket.totalWorkSeconds;
@@ -2015,6 +2100,8 @@ export async function completeMaintenanceTicket(formData: FormData) {
       data: {
         status: "DONE",
         completedAt,
+        pausedAt: null,
+        lastResumedAt: null,
         totalWorkSeconds,
         downtimeSeconds,
         laborCost: laborCost.toFixed(2),
@@ -2045,6 +2132,8 @@ export async function validateMaintenanceTicket(formData: FormData) {
     if (!currentTicket) return null;
 
     const completedAt = currentTicket.completedAt ?? new Date();
+    const activeSeconds =
+      currentTicket.status === "IN_PROGRESS" ? elapsedSeconds(currentTicket.lastResumedAt ?? currentTicket.startedAt, completedAt) : 0;
     const downtimeSeconds = currentTicket.machineStopped
       ? currentTicket.downtimeSeconds > 0
         ? currentTicket.downtimeSeconds
@@ -2052,7 +2141,7 @@ export async function validateMaintenanceTicket(formData: FormData) {
       : 0;
     const totalWorkSeconds =
       currentTicket.totalWorkSeconds > 0
-        ? currentTicket.totalWorkSeconds
+        ? currentTicket.totalWorkSeconds + activeSeconds
         : currentTicket.startedAt
         ? elapsedSeconds(currentTicket.startedAt, completedAt)
         : 0;
@@ -2064,6 +2153,8 @@ export async function validateMaintenanceTicket(formData: FormData) {
       data: {
         status: "DONE",
         completedAt,
+        pausedAt: null,
+        lastResumedAt: null,
         downtimeSeconds,
         totalWorkSeconds,
         laborCost: laborCost.toFixed(2),
@@ -2087,7 +2178,43 @@ export async function validateMaintenanceTicket(formData: FormData) {
     });
   });
   if (!ticket) return;
-  if (ticket.workOrderId) return;
+  if (ticket.workOrderId) {
+    await prisma.$transaction(async (tx) => {
+      await tx.workOrder.update({
+        where: { id: ticket.workOrderId! },
+        data: {
+          status: "VALIDATED",
+          closedAt: ticket.completedAt ?? new Date(),
+          validatedAt: new Date(),
+          totalWorkSeconds: ticket.totalWorkSeconds,
+          actionsDone: ticket.solution ?? "Ticket validado pela manutencao.",
+          result: "VALIDADO",
+          notes: [
+            `Ticket ${ticket.number} revalidado por ${user.name}`,
+            ticket.observations ? `Observacoes: ${ticket.observations}` : null,
+            `Tempo de paragem da maquina: ${durationNote(ticket.downtimeSeconds)}`,
+            `Tempo de trabalho da manutencao: ${durationNote(ticket.totalWorkSeconds)}`,
+            `Custo total: ${Number(ticket.totalCost).toFixed(2)} EUR`,
+          ].filter(Boolean).join("\n"),
+        },
+      });
+      await tx.maintenanceTicket.update({
+        where: { id },
+        data: {
+          status: "VALIDATED",
+          validatedAt: new Date(),
+          validatedById: user.id,
+        },
+      });
+      await refreshEquipmentMaintenanceStatus(tx, ticket.equipmentId);
+    });
+
+    revalidatePath("/tickets");
+    revalidatePath("/manutencao");
+    revalidatePath("/inventario");
+    revalidatePath(`/equipamentos/${ticket.equipmentId}`);
+    return;
+  }
 
   const ticketCostNotes = [
     `Problema: ${ticket.problem}`,

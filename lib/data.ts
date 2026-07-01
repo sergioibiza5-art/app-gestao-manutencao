@@ -1184,7 +1184,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
         unreadNotifications: ticketNotifications.length,
         kpis: {
           open: tickets.filter((ticket) => ticket.status === "OPEN").length,
-          inProgress: tickets.filter((ticket) => ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED").length,
+          inProgress: tickets.filter((ticket) => ["IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(ticket.status)).length,
           waitingValidation: tickets.filter((ticket) => ticket.status === "DONE").length,
           validated: tickets.filter((ticket) => ticket.status === "VALIDATED").length,
           averageRepairHours: averageRepairSeconds / 3600,

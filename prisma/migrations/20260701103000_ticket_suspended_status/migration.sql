@@ -1,0 +1,4 @@
+ALTER TYPE "MaintenanceTicketStatus" ADD VALUE IF NOT EXISTS 'SUSPENDED';
+
+ALTER TABLE "MaintenanceTicket"
+  ADD COLUMN IF NOT EXISTS "lastResumedAt" TIMESTAMP(3);

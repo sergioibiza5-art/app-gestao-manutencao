@@ -19,6 +19,7 @@ enum MaintenanceTicketStatus {
   OPEN
   IN_PROGRESS
   PAUSED
+  SUSPENDED
   DONE
   VALIDATED
   CANCELED
@@ -664,6 +665,7 @@ model MaintenanceTicket {
   openedAt    DateTime  @default(now())
   startedAt   DateTime?
   pausedAt    DateTime?
+  lastResumedAt DateTime?
   completedAt DateTime?
   validatedAt DateTime?
 

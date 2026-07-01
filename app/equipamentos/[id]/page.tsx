@@ -219,7 +219,7 @@ const ticketCostTotal = equipment.tickets.reduce(
 );
 
 const openTicketsCount = equipment.tickets.filter((ticket) =>
-  ["OPEN", "IN_PROGRESS", "PAUSED", "DONE"].includes(ticket.status)
+  ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED", "DONE"].includes(ticket.status)
 ).length;
 
 const activeWorkOrdersCount = equipment.workOrders.filter((workOrder) =>

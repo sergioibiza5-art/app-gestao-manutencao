@@ -5,7 +5,9 @@ import {
   completeMaintenanceTicket,
   createMaintenanceTicket,
   pauseMaintenanceTicket,
+  reopenMaintenanceTicket,
   startMaintenanceTicket,
+  suspendMaintenanceTicket,
   validateMaintenanceTicket,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -22,6 +24,7 @@ function statusLabel(status: string) {
     OPEN: "Aberto",
     IN_PROGRESS: "Em curso",
     PAUSED: "Pausado",
+    SUSPENDED: "Suspenso",
     DONE: "Concluído",
     VALIDATED: "Validado",
     CANCELED: "Cancelado",
@@ -35,6 +38,7 @@ function ticketStatusClass(status: string) {
     OPEN: "border-orange-300/45 bg-orange-300/10",
     IN_PROGRESS: "border-yellow-300/45 bg-yellow-300/10",
     PAUSED: "border-amber-300/45 bg-amber-300/10",
+    SUSPENDED: "border-orange-300/45 bg-orange-300/10",
     DONE: "border-blue-300/45 bg-blue-300/10",
     VALIDATED: "border-green-300/45 bg-green-300/10",
     CANCELED: "border-red-300/45 bg-red-300/10",
@@ -48,6 +52,7 @@ function ticketStatusTextClass(status: string) {
     OPEN: "text-orange-300",
     IN_PROGRESS: "text-yellow-300",
     PAUSED: "text-amber-300",
+    SUSPENDED: "text-orange-300",
     DONE: "text-blue-300",
     VALIDATED: "text-green-300",
     CANCELED: "text-red-300",
@@ -73,8 +78,14 @@ function duration(seconds: number) {
 function workTime(ticket: {
   totalWorkSeconds: number;
   startedAt: Date | null;
+  lastResumedAt?: Date | null;
+  status?: string;
   completedAt?: Date | null;
 }) {
+  if (ticket.status === "IN_PROGRESS" && ticket.lastResumedAt) {
+    return duration(ticket.totalWorkSeconds + Math.max(Math.floor((new Date().getTime() - ticket.lastResumedAt.getTime()) / 1000), 0));
+  }
+
   if (ticket.totalWorkSeconds > 0) {
     return duration(ticket.totalWorkSeconds);
   }
@@ -346,12 +357,12 @@ export default async function TicketsPage() {
                   </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {(ticket.status === "OPEN" || ticket.status === "PAUSED") && (
+                    {(ticket.status === "OPEN" || ticket.status === "PAUSED" || ticket.status === "SUSPENDED") && (
                       <form action={startMaintenanceTicket}>
                         <input type="hidden" name="id" value={ticket.id} />
                         <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-3 text-sm font-semibold text-cyan-100">
                           <Play size={15} />
-                          {ticket.status === "PAUSED" ? "Retomar" : "Iniciar"}
+                          {ticket.status === "PAUSED" || ticket.status === "SUSPENDED" ? "Retomar" : "Iniciar"}
                         </button>
                       </form>
                     )}
@@ -365,7 +376,43 @@ export default async function TicketsPage() {
                         </button>
                       </form>
                     )}
+
+                    {["OPEN", "IN_PROGRESS", "PAUSED"].includes(ticket.status) && (
+                      <form action={suspendMaintenanceTicket} className="w-full rounded-lg border border-orange-300/25 bg-orange-300/5 p-3">
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <textarea
+                          name="suspensionNotes"
+                          className={textareaClass}
+                          placeholder="Observações da suspensão: sem solução, aguarda peça, aguarda fornecedor, precisa de análise..."
+                        />
+                        <button className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-orange-300/35 bg-orange-300/10 px-3 text-sm font-semibold text-orange-100">
+                          <Pause size={15} />
+                          Suspender ticket
+                        </button>
+                      </form>
+                    )}
+
+                    {(ticket.status === "DONE" || ticket.status === "VALIDATED") && (
+                      <form action={reopenMaintenanceTicket} className="w-full rounded-lg border border-sky-300/25 bg-sky-300/5 p-3">
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <textarea
+                          name="reopenNotes"
+                          className={textareaClass}
+                          placeholder="Motivo da reabertura do ticket"
+                        />
+                        <button className="mt-2 inline-flex h-10 items-center justify-center rounded-lg border border-sky-300/40 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100">
+                          Reabrir ticket
+                        </button>
+                      </form>
+                    )}
                   </div>
+
+                  {ticket.status === "SUSPENDED" ? (
+                    <div className="mt-4 rounded-lg border border-orange-300/25 bg-orange-300/10 p-3">
+                      <p className="text-sm font-semibold text-orange-100">Ticket suspenso</p>
+                      <p className="mt-2 whitespace-pre-line text-sm text-zinc-300">{ticket.observations ?? "Sem observações."}</p>
+                    </div>
+                  ) : null}
 
                   {(ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED" || ticket.status === "DONE") && (
                     <form action={completeMaintenanceTicket} className="mt-4 grid gap-3">
