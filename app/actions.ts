@@ -1108,9 +1108,9 @@ export async function duplicateChecklistTemplate(formData: FormData) {
   await requireCanSgq();
   const prisma = getPrisma();
   const templateId = text(formData, "templateId");
-  const targetTypeName = text(formData, "targetTypeName");
+  const requestedTypeName = text(formData, "targetTypeName");
 
-  if (!templateId || !targetTypeName) return;
+  if (!templateId || !requestedTypeName) return;
 
   const source = await prisma.checklistTemplate.findUnique({
     where: { id: templateId },
@@ -1125,12 +1125,16 @@ export async function duplicateChecklistTemplate(formData: FormData) {
 
   if (!source || source.items.length === 0) return;
 
-  const targetType = await prisma.equipmentType.upsert({
-    where: { name: targetTypeName },
-    update: {
-      description: optionalText(formData, "targetTypeDescription") ?? source.equipmentType.description,
-    },
-    create: {
+  let targetTypeName = requestedTypeName;
+  let copyIndex = 1;
+
+  while (await prisma.equipmentType.findUnique({ where: { name: targetTypeName }, select: { id: true } })) {
+    copyIndex += 1;
+    targetTypeName = `${requestedTypeName} - copia ${copyIndex}`;
+  }
+
+  const targetType = await prisma.equipmentType.create({
+    data: {
       name: targetTypeName,
       description: optionalText(formData, "targetTypeDescription") ?? source.equipmentType.description,
     },

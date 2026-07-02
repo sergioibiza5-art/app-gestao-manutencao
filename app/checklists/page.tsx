@@ -60,10 +60,10 @@ export default async function ChecklistsPage() {
                           <input type="hidden" name="templateId" value={template.id} />
                           <div className="mb-3 flex items-center gap-2">
                             <Copy size={16} className="text-sky-300" />
-                            <p className="text-sm font-semibold text-sky-100">Duplicar checklist</p>
+                            <p className="text-sm font-semibold text-sky-100">Duplicar como novo template</p>
                           </div>
                           <div className="grid gap-2 md:grid-cols-2">
-                            <input name="targetTypeName" className={inputClass} defaultValue={type.name} placeholder="Tipo de equipamento destino" />
+                            <input name="targetTypeName" className={inputClass} defaultValue={`${type.name} - copia`} placeholder="Novo tipo/template" />
                             <input name="targetTemplateTitle" className={inputClass} defaultValue={`Copia de ${template.title}`} placeholder="Titulo da nova checklist" />
                             <input name="targetVersion" className={inputClass} defaultValue={template.version} placeholder="Versao" />
                             <input name="targetTypeDescription" className={inputClass} defaultValue={type.description ?? ""} placeholder="Descricao do tipo" />
@@ -76,7 +76,7 @@ export default async function ChecklistsPage() {
                           />
                           <button className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-sky-300/35 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100 transition hover:border-sky-200/70">
                             <Copy size={15} />
-                            Duplicar
+                            Criar novo template
                           </button>
                         </form>
                         <ChecklistTemplateBuilder
