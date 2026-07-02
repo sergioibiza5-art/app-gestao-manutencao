@@ -145,25 +145,47 @@ const dl50Answers = ["YES", "NO", "NA"] as const satisfies readonly Dl50Answer[]
 const dl50AnswerFields = [
   "ceMark",
   "manufacturerManual",
+  "conformityDeclaration",
+  "riskAssessment",
   "suitableForUse",
   "maintenancePlan",
+  "maintenanceRecords",
+  "instructionsAvailableAtWorkplace",
   "safetyDependsOnInstallation",
+  "installationVerification",
+  "inspectionAfterAssembly",
+  "inspectionAfterExceptionalEvents",
   "subjectToRiskDeterioration",
   "needsPeriodicVerification",
+  "periodicInspectionPlan",
+  "stableAndResistant",
+  "safeAccess",
+  "adequateLighting",
+  "warningDevices",
   "hasDangerZone",
   "hasMovingPartsRisk",
+  "guardsAndProtectiveDevices",
   "hasIdentifiedControls",
+  "controlSystemSafe",
   "voluntaryStart",
   "safeStop",
   "emergencyStopRequired",
+  "emergencyStopAccessible",
+  "energyFailureSafe",
+  "residualEnergyControlled",
   "projectionRisk",
   "emissionRisk",
+  "hotColdSurfaceRisk",
+  "noiseVibrationControlled",
   "electricalRisk",
   "fireRisk",
   "explosionRisk",
   "energyIsolation",
   "safetySignage",
+  "signageAndLabelsLegible",
   "operatorsInformed",
+  "ppeDefined",
+  "ergonomicConditions",
   "usedAccordingToManufacturer",
 ] as const;
 const dl50ArticleFields = [
@@ -219,13 +241,34 @@ function generateDl50ConclusionFromPayload(payload: Dl50Payload): { conclusion: 
   const criticalNoFields: (typeof dl50AnswerFields)[number][] = [
     "ceMark",
     "manufacturerManual",
+    "conformityDeclaration",
+    "riskAssessment",
     "suitableForUse",
     "maintenancePlan",
+    "maintenanceRecords",
+    "instructionsAvailableAtWorkplace",
+    "installationVerification",
+    "inspectionAfterAssembly",
+    "inspectionAfterExceptionalEvents",
+    "periodicInspectionPlan",
+    "stableAndResistant",
+    "safeAccess",
+    "adequateLighting",
+    "warningDevices",
+    "guardsAndProtectiveDevices",
     "hasIdentifiedControls",
+    "controlSystemSafe",
     "voluntaryStart",
     "safeStop",
+    "emergencyStopAccessible",
+    "energyFailureSafe",
     "energyIsolation",
+    "residualEnergyControlled",
     "operatorsInformed",
+    "safetySignage",
+    "signageAndLabelsLegible",
+    "ppeDefined",
+    "ergonomicConditions",
     "usedAccordingToManufacturer",
   ];
   const uncontrolledRiskFields: (typeof dl50AnswerFields)[number][] = [
@@ -237,6 +280,8 @@ function generateDl50ConclusionFromPayload(payload: Dl50Payload): { conclusion: 
     "emergencyStopRequired",
     "projectionRisk",
     "emissionRisk",
+    "hotColdSurfaceRisk",
+    "noiseVibrationControlled",
     "electricalRisk",
     "fireRisk",
     "explosionRisk",
@@ -244,7 +289,11 @@ function generateDl50ConclusionFromPayload(payload: Dl50Payload): { conclusion: 
   const hasCriticalNegative = criticalNoFields.some((field) => payload[field] === "NO");
   const hasRelevantRisk = uncontrolledRiskFields.some((field) => payload[field] === "YES");
   const hasRequiredBase =
+    payload.riskAssessment === "YES" &&
+    payload.suitableForUse === "YES" &&
     payload.maintenancePlan === "YES" &&
+    payload.operatorsInformed === "YES" &&
+    payload.usedAccordingToManufacturer === "YES" &&
     payload.safetyDependsOnInstallation !== "YES" &&
     payload.subjectToRiskDeterioration !== "YES" &&
     payload.needsPeriodicVerification !== "YES";

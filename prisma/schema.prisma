@@ -261,28 +261,50 @@ model Dl50AssessmentTemplate {
   equipmentTypeId String
   equipmentType   EquipmentType @relation(fields: [equipmentTypeId], references: [id], onDelete: Cascade)
 
-  ceMark                      Dl50Answer?
-  manufacturerManual          Dl50Answer?
-  suitableForUse              Dl50Answer?
-  maintenancePlan             Dl50Answer?
-  safetyDependsOnInstallation Dl50Answer?
-  subjectToRiskDeterioration  Dl50Answer?
-  needsPeriodicVerification   Dl50Answer?
-  hasDangerZone               Dl50Answer?
-  hasMovingPartsRisk          Dl50Answer?
-  hasIdentifiedControls       Dl50Answer?
-  voluntaryStart              Dl50Answer?
-  safeStop                    Dl50Answer?
-  emergencyStopRequired       Dl50Answer?
-  projectionRisk              Dl50Answer?
-  emissionRisk                Dl50Answer?
-  electricalRisk              Dl50Answer?
-  fireRisk                    Dl50Answer?
-  explosionRisk               Dl50Answer?
-  energyIsolation             Dl50Answer?
-  safetySignage               Dl50Answer?
-  operatorsInformed           Dl50Answer?
-  usedAccordingToManufacturer Dl50Answer?
+  ceMark                           Dl50Answer?
+  manufacturerManual               Dl50Answer?
+  conformityDeclaration            Dl50Answer?
+  riskAssessment                   Dl50Answer?
+  suitableForUse                   Dl50Answer?
+  maintenancePlan                  Dl50Answer?
+  maintenanceRecords               Dl50Answer?
+  instructionsAvailableAtWorkplace Dl50Answer?
+  safetyDependsOnInstallation      Dl50Answer?
+  installationVerification         Dl50Answer?
+  inspectionAfterAssembly          Dl50Answer?
+  inspectionAfterExceptionalEvents Dl50Answer?
+  subjectToRiskDeterioration       Dl50Answer?
+  needsPeriodicVerification        Dl50Answer?
+  periodicInspectionPlan           Dl50Answer?
+  stableAndResistant               Dl50Answer?
+  safeAccess                       Dl50Answer?
+  adequateLighting                 Dl50Answer?
+  warningDevices                   Dl50Answer?
+  hasDangerZone                    Dl50Answer?
+  hasMovingPartsRisk               Dl50Answer?
+  guardsAndProtectiveDevices       Dl50Answer?
+  hasIdentifiedControls            Dl50Answer?
+  controlSystemSafe                Dl50Answer?
+  voluntaryStart                   Dl50Answer?
+  safeStop                         Dl50Answer?
+  emergencyStopRequired            Dl50Answer?
+  emergencyStopAccessible          Dl50Answer?
+  energyFailureSafe                Dl50Answer?
+  residualEnergyControlled         Dl50Answer?
+  projectionRisk                   Dl50Answer?
+  emissionRisk                     Dl50Answer?
+  hotColdSurfaceRisk               Dl50Answer?
+  noiseVibrationControlled         Dl50Answer?
+  electricalRisk                   Dl50Answer?
+  fireRisk                         Dl50Answer?
+  explosionRisk                    Dl50Answer?
+  energyIsolation                  Dl50Answer?
+  safetySignage                    Dl50Answer?
+  signageAndLabelsLegible          Dl50Answer?
+  operatorsInformed                Dl50Answer?
+  ppeDefined                       Dl50Answer?
+  ergonomicConditions              Dl50Answer?
+  usedAccordingToManufacturer      Dl50Answer?
 
   article3Notes  String?
   article4Notes  String?
@@ -321,28 +343,50 @@ model EquipmentDl50Assessment {
 
   version Int @default(1)
 
-  ceMark                      Dl50Answer?
-  manufacturerManual          Dl50Answer?
-  suitableForUse              Dl50Answer?
-  maintenancePlan             Dl50Answer?
-  safetyDependsOnInstallation Dl50Answer?
-  subjectToRiskDeterioration  Dl50Answer?
-  needsPeriodicVerification   Dl50Answer?
-  hasDangerZone               Dl50Answer?
-  hasMovingPartsRisk          Dl50Answer?
-  hasIdentifiedControls       Dl50Answer?
-  voluntaryStart              Dl50Answer?
-  safeStop                    Dl50Answer?
-  emergencyStopRequired       Dl50Answer?
-  projectionRisk              Dl50Answer?
-  emissionRisk                Dl50Answer?
-  electricalRisk              Dl50Answer?
-  fireRisk                    Dl50Answer?
-  explosionRisk               Dl50Answer?
-  energyIsolation             Dl50Answer?
-  safetySignage               Dl50Answer?
-  operatorsInformed           Dl50Answer?
-  usedAccordingToManufacturer Dl50Answer?
+  ceMark                           Dl50Answer?
+  manufacturerManual               Dl50Answer?
+  conformityDeclaration            Dl50Answer?
+  riskAssessment                   Dl50Answer?
+  suitableForUse                   Dl50Answer?
+  maintenancePlan                  Dl50Answer?
+  maintenanceRecords               Dl50Answer?
+  instructionsAvailableAtWorkplace Dl50Answer?
+  safetyDependsOnInstallation      Dl50Answer?
+  installationVerification         Dl50Answer?
+  inspectionAfterAssembly          Dl50Answer?
+  inspectionAfterExceptionalEvents Dl50Answer?
+  subjectToRiskDeterioration       Dl50Answer?
+  needsPeriodicVerification        Dl50Answer?
+  periodicInspectionPlan           Dl50Answer?
+  stableAndResistant               Dl50Answer?
+  safeAccess                       Dl50Answer?
+  adequateLighting                 Dl50Answer?
+  warningDevices                   Dl50Answer?
+  hasDangerZone                    Dl50Answer?
+  hasMovingPartsRisk               Dl50Answer?
+  guardsAndProtectiveDevices       Dl50Answer?
+  hasIdentifiedControls            Dl50Answer?
+  controlSystemSafe                Dl50Answer?
+  voluntaryStart                   Dl50Answer?
+  safeStop                         Dl50Answer?
+  emergencyStopRequired            Dl50Answer?
+  emergencyStopAccessible          Dl50Answer?
+  energyFailureSafe                Dl50Answer?
+  residualEnergyControlled         Dl50Answer?
+  projectionRisk                   Dl50Answer?
+  emissionRisk                     Dl50Answer?
+  hotColdSurfaceRisk               Dl50Answer?
+  noiseVibrationControlled         Dl50Answer?
+  electricalRisk                   Dl50Answer?
+  fireRisk                         Dl50Answer?
+  explosionRisk                    Dl50Answer?
+  energyIsolation                  Dl50Answer?
+  safetySignage                    Dl50Answer?
+  signageAndLabelsLegible          Dl50Answer?
+  operatorsInformed                Dl50Answer?
+  ppeDefined                       Dl50Answer?
+  ergonomicConditions              Dl50Answer?
+  usedAccordingToManufacturer      Dl50Answer?
 
   article3Notes  String?
   article4Notes  String?
@@ -662,12 +706,12 @@ model MaintenanceTicket {
   consumableCost   Decimal @default(0) @db.Decimal(10, 2)
   totalCost        Decimal @default(0) @db.Decimal(10, 2)
 
-  openedAt    DateTime  @default(now())
-  startedAt   DateTime?
-  pausedAt    DateTime?
+  openedAt      DateTime  @default(now())
+  startedAt     DateTime?
+  pausedAt      DateTime?
   lastResumedAt DateTime?
-  completedAt DateTime?
-  validatedAt DateTime?
+  completedAt   DateTime?
+  validatedAt   DateTime?
 
   equipmentId String
   equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)

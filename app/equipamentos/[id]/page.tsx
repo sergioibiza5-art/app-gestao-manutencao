@@ -91,6 +91,95 @@ const dl50Questions = [
   ["usedAccordingToManufacturer", "Utilização conforme instruções do fabricante"],
 ] as const;
 
+const dl50QuestionSections = [
+  {
+    title: "1. Documentacao e enquadramento",
+    description: "Evidencias de conformidade, informacao do fabricante e avaliacao de riscos.",
+    items: [
+      ["ceMark", "Marcacao CE"],
+      ["manufacturerManual", "Manual do fabricante disponivel"],
+      ["conformityDeclaration", "Declaracao de conformidade disponivel"],
+      ["riskAssessment", "Avaliacao de riscos documentada"],
+      ["suitableForUse", "Equipamento adequado a utilizacao prevista"],
+      ["usedAccordingToManufacturer", "Utilizacao conforme instrucoes do fabricante"],
+    ],
+  },
+  {
+    title: "2. Utilizacao, instalacao e verificacoes",
+    description: "Plano preventivo, registos, verificacoes especificas e condicoes de instalacao.",
+    items: [
+      ["maintenancePlan", "Plano de manutencao preventiva existente"],
+      ["maintenanceRecords", "Registos de manutencao/verificacao mantidos"],
+      ["instructionsAvailableAtWorkplace", "Instrucoes disponiveis no local de trabalho"],
+      ["safetyDependsOnInstallation", "Seguranca depende da instalacao"],
+      ["installationVerification", "Instalacao verificada antes da utilizacao"],
+      ["inspectionAfterAssembly", "Verificacao apos montagem ou reinstalacao"],
+      ["subjectToRiskDeterioration", "Sujeito a deterioracoes que possam causar riscos"],
+      ["needsPeriodicVerification", "Necessita de verificacoes periodicas especificas"],
+      ["periodicInspectionPlan", "Plano de verificacoes periodicas definido"],
+      ["inspectionAfterExceptionalEvents", "Verificacao apos eventos excecionais"],
+    ],
+  },
+  {
+    title: "3. Estrutura, acesso e posto de trabalho",
+    description: "Condicoes fisicas, estabilidade, acessos, iluminacao e ergonomia.",
+    items: [
+      ["stableAndResistant", "Equipamento estavel e resistente"],
+      ["safeAccess", "Acessos e zonas de trabalho seguros"],
+      ["adequateLighting", "Iluminacao adequada para utilizacao/manutencao"],
+      ["ergonomicConditions", "Condicoes ergonomicas adequadas"],
+    ],
+  },
+  {
+    title: "4. Protecoes e riscos mecanicos",
+    description: "Zonas perigosas, partes moveis, protecoes e risco de projecoes.",
+    items: [
+      ["hasDangerZone", "Possui zonas perigosas acessiveis"],
+      ["hasMovingPartsRisk", "Possui elementos moveis com risco mecanico"],
+      ["guardsAndProtectiveDevices", "Resguardos/protecao adequados e funcionais"],
+      ["projectionRisk", "Risco de projecoes"],
+    ],
+  },
+  {
+    title: "5. Comandos, paragem e energia",
+    description: "Comandos identificados, arranque voluntario, paragem segura e isolamento de energia.",
+    items: [
+      ["hasIdentifiedControls", "Possui comandos identificados"],
+      ["controlSystemSafe", "Sistema de comando seguro e coerente"],
+      ["voluntaryStart", "Arranque apenas por acao voluntaria"],
+      ["safeStop", "Paragem segura"],
+      ["emergencyStopRequired", "Paragem de emergencia necessaria"],
+      ["emergencyStopAccessible", "Paragem de emergencia acessivel e funcional"],
+      ["energyFailureSafe", "Falha/restabelecimento de energia nao cria perigo"],
+      ["energyIsolation", "Fontes de energia isolaveis"],
+      ["residualEnergyControlled", "Energia residual controlada/descargavel"],
+    ],
+  },
+  {
+    title: "6. Riscos especificos",
+    description: "Riscos eletricos, incendio, explosao, emissoes, superficies e vibracoes.",
+    items: [
+      ["emissionRisk", "Risco de emanacoes, poeiras, vapores ou liquidos"],
+      ["electricalRisk", "Risco eletrico"],
+      ["fireRisk", "Risco de incendio"],
+      ["explosionRisk", "Risco de explosao"],
+      ["hotColdSurfaceRisk", "Risco por superficies quentes ou frias"],
+      ["noiseVibrationControlled", "Ruido/vibracao avaliados e controlados"],
+    ],
+  },
+  {
+    title: "7. Sinalizacao, informacao e EPI",
+    description: "Sinalizacao, avisos, formacao dos operadores e equipamentos de protecao.",
+    items: [
+      ["safetySignage", "Sinalizacao de seguranca aplicavel"],
+      ["signageAndLabelsLegible", "Sinalizacao/rotulagem legivel"],
+      ["warningDevices", "Dispositivos de aviso adequados"],
+      ["operatorsInformed", "Operadores informados/formados"],
+      ["ppeDefined", "EPI necessario definido e comunicado"],
+    ],
+  },
+] as const;
+
 const dl50Articles = [
   ["article3Notes", "Artigo 3.º"],
   ["article4Notes", "Artigo 4.º"],
@@ -168,6 +257,53 @@ function Dl50Fields({ source }: { source?: Record<string, unknown> | null }) {
             />
           </label>
         ))}
+      </div>
+    </>
+  );
+}
+
+void Dl50Fields;
+
+function Dl50FieldsSectioned({ source }: { source?: Record<string, unknown> | null }) {
+  return (
+    <>
+      <div className="space-y-4">
+        {dl50QuestionSections.map((section) => (
+          <section key={section.title} className="rounded-lg border border-zinc-800 bg-zinc-950/45 p-4">
+            <div className="mb-3">
+              <h4 className="text-sm font-semibold uppercase tracking-[0.12em] text-teal-200">{section.title}</h4>
+              <p className="mt-1 text-xs leading-5 text-zinc-500">{section.description}</p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {section.items.map(([name, label]) => (
+                <label key={name} className="rounded-lg border border-zinc-800 bg-black/25 p-3">
+                  <span className="block min-h-10 text-sm font-medium leading-5 text-zinc-200">{label}</span>
+                  <span className="mt-3 block">
+                    <Dl50AnswerSelect name={name} defaultValue={typeof source?.[name] === "string" ? String(source?.[name]) : null} />
+                  </span>
+                </label>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div className="mt-5 rounded-lg border border-zinc-800 bg-zinc-950/45 p-4">
+        <h4 className="text-sm font-semibold uppercase tracking-[0.12em] text-teal-200">Observacoes por artigo</h4>
+        <p className="mt-1 text-xs leading-5 text-zinc-500">Regista evidencias, exclusoes, medidas ou justificacoes por artigo aplicavel do DL 50/2005.</p>
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          {dl50Articles.map(([name, label]) => (
+            <label key={name} className="space-y-2">
+              <span className="text-sm font-medium text-zinc-300">{label}</span>
+              <textarea
+                name={name}
+                className="min-h-20 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-teal-300/60"
+                defaultValue={typeof source?.[name] === "string" ? String(source?.[name]) : ""}
+                placeholder={`Observacoes do ${label}`}
+              />
+            </label>
+          ))}
+        </div>
       </div>
     </>
   );
@@ -470,7 +606,7 @@ const bulkDl50Equipment = equipmentOptions
             </summary>
             <form action={createDl50Assessment} className="mt-4">
               <input type="hidden" name="equipmentId" value={equipment.id} />
-              <Dl50Fields />
+              <Dl50FieldsSectioned />
               <div className="mt-4 flex flex-wrap gap-2">
                 <button className={buttonClass}>Guardar avaliação v{(latestDl50Assessment?.version ?? 0) + 1}</button>
               </div>
@@ -503,7 +639,7 @@ const bulkDl50Equipment = equipmentOptions
                   <form action={updateDl50Assessment} className="mt-5 border-t border-zinc-800 pt-4">
                     <input type="hidden" name="id" value={assessment.id} />
                     <input type="hidden" name="equipmentId" value={equipment.id} />
-                    <Dl50Fields source={assessment} />
+                    <Dl50FieldsSectioned source={assessment} />
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button className={buttonClass}>Guardar alterações</button>
                     </div>
@@ -566,7 +702,7 @@ const bulkDl50Equipment = equipmentOptions
                   <input name="name" className={inputClass} placeholder="Nome do template, ex.: Ar condicionado split" />
                   <textarea name="templateNotes" className={`${textareaClass} mt-3`} placeholder="Notas do template" />
                   <div className="mt-4">
-                    <Dl50Fields />
+                    <Dl50FieldsSectioned />
                   </div>
                   <button className={`${buttonClass} mt-4`}>Guardar template</button>
                 </form>
@@ -585,7 +721,7 @@ const bulkDl50Equipment = equipmentOptions
                     </select>
                     <textarea name="templateNotes" className={`${textareaClass} mt-3`} defaultValue={template.notes ?? ""} placeholder="Notas do template" />
                     <div className="mt-4">
-                      <Dl50Fields source={template} />
+                      <Dl50FieldsSectioned source={template} />
                     </div>
                     <button className={`${buttonClass} mt-4`}>Atualizar template</button>
                   </form>
