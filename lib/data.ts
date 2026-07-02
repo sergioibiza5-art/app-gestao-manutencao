@@ -131,6 +131,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
           vehicle.metrics.estimatedRevisionDate || vehicle.metrics.kmUntilRevision !== null
             ? {
                 id: `${vehicle.id}-revision`,
+                vehicleId: vehicle.id,
                 type: "Revisão",
                 title: `${vehicle.brand} ${vehicle.model}`,
                 plate: vehicle.plate,
@@ -141,6 +142,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
           vehicle.metrics.nextInspectionDate || vehicle.metrics.kmUntilInspection !== null
             ? {
                 id: `${vehicle.id}-inspection`,
+                vehicleId: vehicle.id,
                 type: "Inspeção",
                 title: `${vehicle.brand} ${vehicle.model}`,
                 plate: vehicle.plate,
@@ -179,7 +181,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       detail: task.equipment?.name ?? "Tarefa sem equipamento",
       status: task.status,
       date: task.dueDate ?? task.nextDue,
-      href: `/tarefas?taskId=${task.id}`,
+      href: `/tarefas?taskId=${task.id}#task-${task.id}`,
       tone: "teal",
     })),
 
@@ -193,7 +195,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       detail: `${log.equipment.name}${daysLeft !== null ? ` - ${daysLeft < 0 ? "vencida" : `${daysLeft} dias restantes`}` : ""}`,
       status: daysLeft !== null && daysLeft < 0 ? "CALIBRATION_EXPIRED" : "CALIBRATION_DUE",
       date: log.nextDueDate,
-      href: "/calibracao",
+      href: `/calibracao?calibrationId=${log.id}#calibration-${log.id}`,
       tone: daysLeft !== null && daysLeft < 0 ? "rose" : daysLeft !== null && daysLeft <= 30 ? "amber" : "teal",
     };
   }),
@@ -212,7 +214,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       detail: schedule.equipment.name,
       status: schedule.workOrder?.status ?? "NO_OP",
       date: schedule.scheduledAt,
-      href: `/manutencao?eventId=${schedule.id}`,
+      href: `/manutencao/${schedule.id}`,
       tone: schedule.scheduledAt < todayStart ? "rose" : "amber",
     })),
 ].slice(0, 8);

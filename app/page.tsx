@@ -127,7 +127,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
           date: formatShortDate(event.scheduledAt),
           title: event.title,
           tag: event.equipment?.name ?? event.frequency,
-          href: `/manutencao?eventId=${event.id}`,
+          href: `/manutencao/${event.id}`,
         }))
       : fallbackCalendar;
 
@@ -291,7 +291,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             {dashboard.ticketAlerts.map((ticket) => (
               <Link
                 key={ticket.id}
-                href={`/tickets?ticketId=${ticket.id}`}
+                href={`/tickets?ticketId=${ticket.id}#ticket-${ticket.id}`}
                 className="rounded-lg border border-amber-300/20 bg-zinc-950/70 p-4 transition hover:border-amber-200/50"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -357,7 +357,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
               dashboard.fleetAlerts.slice(0, 8).map((item) => (
                 <Link
                   key={item.id}
-                  href={`/frota?alertId=${item.id}`}
+                  href={`/frota/${item.vehicleId}`}
                   className="block rounded-lg border border-zinc-800 bg-zinc-950/70 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/80"
                 >
                   <p className={item.type === "Inspeção" ? "text-sm font-semibold text-lime-200" : "text-sm font-semibold text-blue-200"}>

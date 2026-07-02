@@ -181,6 +181,7 @@ type TicketsPageProps = {
     created?: string;
     resolved?: string;
     deleted?: string;
+    ticketId?: string;
   }>;
 };
 
@@ -403,7 +404,8 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
               data.tickets.map((ticket) => (
                 <details
                   key={ticket.id}
-                  id={ticket.id}
+                  id={`ticket-${ticket.id}`}
+                  open={params.ticketId === ticket.id}
                   className={`group rounded-lg border p-4 transition open:border-teal-300/60 ${ticketStatusClass(ticket.status)}`}
                 >
                   <summary className="flex cursor-pointer list-none flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">

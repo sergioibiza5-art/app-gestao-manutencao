@@ -10,7 +10,7 @@ import { formatDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 type CalibrationPageProps = {
-  searchParams?: Promise<{ q?: string; approved?: string; year?: string; month?: string }>;
+  searchParams?: Promise<{ q?: string; approved?: string; year?: string; month?: string; calibrationId?: string }>;
 };
 
 const monthNames = [
@@ -321,7 +321,16 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
               filteredLogs.map((log) => {
                 const certificate = log.documents.find((document) => document.type === "CERTIFICATE" && document.fileUrl);
                 return (
-                  <details key={log.id} className="group rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                  <details
+                    key={log.id}
+                    id={`calibration-${log.id}`}
+                    open={params.calibrationId === log.id}
+                    className={`group scroll-mt-24 rounded-lg border bg-zinc-950/65 p-4 ${
+                      params.calibrationId === log.id
+                        ? "border-lime-300/70 shadow-[0_0_0_1px_rgba(190,242,100,0.25),0_0_35px_rgba(190,242,100,0.10)]"
+                        : "border-zinc-800"
+                    }`}
+                  >
                     <summary className="flex cursor-pointer list-none flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h3 className="font-semibold text-zinc-100">{log.title}</h3>
