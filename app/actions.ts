@@ -1891,6 +1891,22 @@ export async function disablePushSubscription(endpoint: string) {
   return { ok: true };
 }
 
+async function runNotificationTask(task: Promise<unknown>, label: string) {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  const guardedTask = task.catch((error) => {
+    console.error(`${label} falhou`, error);
+  });
+
+  await Promise.race([
+    guardedTask,
+    new Promise<void>((resolve) => {
+      timeout = setTimeout(resolve, 3500);
+    }),
+  ]);
+
+  if (timeout) clearTimeout(timeout);
+}
+
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
 
@@ -1982,18 +1998,21 @@ telegramChatIds: timedRecipients
     };
   });
 
-  await sendTicketPushNotifications(notificationData.recipientIds, {
-    title: notificationData.title,
-    body: notificationData.body,
-    url: notificationData.url,
-  });
+  await runNotificationTask(
+    sendTicketPushNotifications(notificationData.recipientIds, {
+      title: notificationData.title,
+      body: notificationData.body,
+      url: notificationData.url,
+    }),
+    "Notificacao push do ticket",
+  );
 
   if (notificationData.recipientIds.length > 0) {
 
 console.log("RECIPIENT IDS:", notificationData.recipientIds);
 console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
 
-    await sendTelegramMessage(
+    await runNotificationTask(sendTelegramMessage(
       [
         "🚨 <b>Novo ticket de manutenção</b>",
         "",
@@ -2004,7 +2023,7 @@ console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
         "<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets",
       ].join("\n"),
       notificationData.telegramChatIds,
-    );
+    ), "Telegram do ticket");
   }
 
   revalidatePath("/tickets");
