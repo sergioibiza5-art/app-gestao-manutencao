@@ -1894,9 +1894,9 @@ export async function disablePushSubscription(endpoint: string) {
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
 
-if (user.role === "VIEWER" || user.role === "SGQ") {
-  return;
-}
+  if (user.role === "VIEWER" || user.role === "SGQ") {
+    return;
+  }
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
   const problem = text(formData, "problem");
@@ -1913,11 +1913,30 @@ if (user.role === "VIEWER" || user.role === "SGQ") {
     if (!canOpen) return;
   }
 
+  const title = text(formData, "title") || `Avaria - ${equipment.name}`;
+  const duplicateSince = new Date(Date.now() - 60_000);
+  const recentDuplicate = await prisma.maintenanceTicket.findFirst({
+    where: {
+      equipmentId,
+      openedById: user.id,
+      title,
+      problem,
+      openedAt: { gte: duplicateSince },
+      status: { in: ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"] },
+    },
+    select: { id: true },
+  });
+
+  if (recentDuplicate) {
+    revalidatePath("/tickets");
+    redirect("/tickets?created=duplicate");
+  }
+
   const notificationData = await prisma.$transaction(async (tx) => {
     const ticket = await tx.maintenanceTicket.create({
       data: {
         number: await nextTicketNumber(),
-        title: text(formData, "title") || `Avaria - ${equipment.name}`,
+        title,
         problem,
         priority: enumValue(formData, "priority", ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const, "NORMAL"),
         machineStopped: text(formData, "machineStopped") !== "false",
@@ -1990,6 +2009,67 @@ console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
 
   revalidatePath("/tickets");
   revalidatePath("/");
+  redirect("/tickets?created=1");
+}
+
+export async function resolveOwnMaintenanceTicket(formData: FormData) {
+  const user = await requireUser();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.findUnique({ where: { id } });
+    if (!ticket || ticket.openedById !== user.id || !["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(ticket.status)) return;
+
+    const completedAt = new Date();
+    const activeSeconds =
+      ticket.status === "IN_PROGRESS" ? elapsedSeconds(ticket.lastResumedAt ?? ticket.startedAt, completedAt) : 0;
+    const totalWorkSeconds =
+      ticket.totalWorkSeconds > 0
+        ? ticket.totalWorkSeconds + activeSeconds
+        : ticket.startedAt
+        ? elapsedSeconds(ticket.startedAt, completedAt)
+        : activeSeconds;
+    const downtimeSeconds = ticket.machineStopped ? elapsedSeconds(ticket.openedAt, completedAt) : 0;
+    const solution = optionalText(formData, "solution") ?? "Resolvido pelo posto de trabalho.";
+    const observations = optionalText(formData, "observations");
+    const note = auditNote("Ticket concluido pelo utilizador do posto", user.name, observations);
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        status: "DONE",
+        completedAt,
+        pausedAt: null,
+        lastResumedAt: null,
+        totalWorkSeconds,
+        downtimeSeconds,
+        solution,
+        observations: [ticket.observations, note].filter(Boolean).join("\n"),
+        completedById: user.id,
+      },
+    });
+    await markTicketNotificationsRead(tx, ticket.number);
+  });
+
+  revalidatePath("/tickets");
+  revalidatePath("/");
+  redirect("/tickets?resolved=1");
+}
+
+export async function deleteMaintenanceTicket(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.maintenanceTicket.deleteMany({ where: { id } });
+
+  revalidatePath("/tickets");
+  revalidatePath("/");
+  revalidatePath("/inventario");
+  redirect("/tickets?deleted=1");
 }
 
 export async function startMaintenanceTicket(formData: FormData) {

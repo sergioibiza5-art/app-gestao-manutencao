@@ -1,11 +1,13 @@
-import { Bell, CheckCircle2, Pause, Play, Siren, Wrench } from "lucide-react";
+import { Bell, CheckCircle2, Pause, Play, Siren, Trash2, Wrench } from "lucide-react";
 import Link from "next/link";
 
 import {
   completeMaintenanceTicket,
   createMaintenanceTicket,
+  deleteMaintenanceTicket,
   pauseMaintenanceTicket,
   reopenMaintenanceTicket,
+  resolveOwnMaintenanceTicket,
   startMaintenanceTicket,
   suspendMaintenanceTicket,
   validateMaintenanceTicket,
@@ -13,6 +15,7 @@ import {
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
+import { TicketSubmitButton } from "@/app/tickets/ticket-submit-button";
 import { requireUser } from "@/lib/auth";
 import { getTicketsData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
@@ -157,23 +160,99 @@ function TicketCreateForm({
 
       <textarea name="problem" required className={textareaClass} placeholder="Descreve o problema da máquina" />
 
-      <button className={buttonClass}>
-        <Siren size={17} />
-        Criar ticket
-      </button>
+      <TicketSubmitButton />
     </form>
   );
 }
 
-export default async function TicketsPage() {
+function TicketSuccessMessage({ type }: { type?: string }) {
+  if (!type) return null;
+
+  const message =
+    type === "duplicate"
+      ? "Esse pedido ja tinha sido enviado. Mantive apenas um ticket em aberto para evitar duplicados."
+      : "Ticket enviado com sucesso. A manutencao foi notificada.";
+
+  return <span>{message}</span>;
+}
+
+type TicketsPageProps = {
+  searchParams?: Promise<{
+    created?: string;
+    resolved?: string;
+    deleted?: string;
+  }>;
+};
+
+export default async function TicketsPage({ searchParams }: TicketsPageProps) {
   const user = await requireUser();
   const data = await getTicketsData({ id: user.id, role: user.role });
   const isTicketOnly = user.role === "TICKET";
+  const params = (await searchParams) ?? {};
 
   if (isTicketOnly) {
+    const ownOpenTickets = data.tickets.filter((ticket) => ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(ticket.status));
+
     return (
       <AppShell activeHref="/tickets">
-        <section className="mx-auto w-full max-w-2xl">
+        <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
+          <Panel>
+            <div className="flex items-center gap-3">
+              <Wrench size={22} className="text-cyan-300" />
+              <div>
+                <p className="text-sm text-zinc-500">Meus pedidos</p>
+                <h2 className="text-xl font-semibold text-zinc-50">Tickets em aberto</h2>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {ownOpenTickets.length === 0 ? (
+                <EmptyState title="Sem tickets em aberto" description="Os pedidos que criares aparecem aqui ate serem validados." />
+              ) : (
+                ownOpenTickets.map((ticket) => (
+                  <details
+                    key={ticket.id}
+                    className={`group rounded-lg border p-4 transition open:border-teal-300/60 ${ticketStatusClass(ticket.status)}`}
+                  >
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${ticketStatusTextClass(ticket.status)}`}>
+                          {ticket.number} - {statusLabel(ticket.status)}
+                        </p>
+                        <h3 className="mt-1 truncate text-base font-semibold text-zinc-100">{ticket.title}</h3>
+                        <p className="mt-1 truncate text-xs text-zinc-500">{ticket.equipment.name}</p>
+                      </div>
+                      <span className="rounded-full border border-zinc-700 px-2 py-1 text-xs text-zinc-400 group-open:hidden">Abrir</span>
+                    </summary>
+
+                    <div className="mt-3 border-t border-zinc-800 pt-3">
+                      <p className="text-sm leading-6 text-zinc-400">{ticket.problem}</p>
+                      <div className="mt-3 grid gap-1 text-xs text-zinc-500">
+                        <span>Aberto: {formatDate(ticket.openedAt)}</span>
+                        <span>Paragem: {downtime(ticket)}</span>
+                        <span>Maquina parada: {ticket.machineStopped ? "Sim" : "Nao"}</span>
+                      </div>
+
+                      <form action={resolveOwnMaintenanceTicket} className="mt-3 grid gap-2">
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <textarea
+                          name="solution"
+                          required
+                          className={textareaClass}
+                          placeholder="Descreve como o problema foi resolvido"
+                        />
+                        <textarea name="observations" className={textareaClass} placeholder="Observacoes opcionais" />
+                        <button className={`${buttonClass} w-fit`}>
+                          <CheckCircle2 size={17} />
+                          Concluir ticket
+                        </button>
+                      </form>
+                    </div>
+                  </details>
+                ))
+              )}
+            </div>
+          </Panel>
           <Panel>
             <div className="flex items-center gap-3">
               <Siren size={24} className="text-red-300" />
@@ -187,12 +266,26 @@ export default async function TicketsPage() {
               Seleciona a máquina, coloca o nome do operador e descreve o problema. A manutenção recebe o ticket para iniciar a reparação.
             </p>
 
+            {params.created ? (
+              <div className="mt-4 rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-sm font-semibold text-teal-100">
+                <TicketSuccessMessage type={params.created} />
+              </div>
+            ) : null}
+
+            {params.resolved ? (
+              <div className="mt-4 rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-sm font-semibold text-teal-100">
+                Ticket concluido com sucesso. A manutencao pode validar o registo.
+              </div>
+            ) : null}
+
             <TicketCreateForm equipment={data.equipment} />
           </Panel>
         </section>
       </AppShell>
     );
   }
+
+  const canManageTickets = user.role === "ADMIN" || user.role === "MANAGER";
 
   return (
     <AppShell activeHref="/tickets">
@@ -201,6 +294,12 @@ export default async function TicketsPage() {
         title="Avarias e chamados de manutenção"
         description="Regista avarias por posto, acompanha tempos de reparação, consumíveis usados, soluções e OP geradas."
       />
+
+      {params.created || params.deleted ? (
+        <div className="rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-sm font-semibold text-teal-100">
+          {params.deleted ? "Ticket eliminado com sucesso." : <TicketSuccessMessage type={params.created} />}
+        </div>
+      ) : null}
 
       <section className="grid gap-4 md:grid-cols-4">
         {[
@@ -405,6 +504,16 @@ export default async function TicketsPage() {
                         </button>
                       </form>
                     )}
+
+                    {canManageTickets ? (
+                      <form action={deleteMaintenanceTicket}>
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-red-300/35 bg-red-300/10 px-3 text-sm font-semibold text-red-100">
+                          <Trash2 size={15} />
+                          Eliminar ticket
+                        </button>
+                      </form>
+                    ) : null}
                   </div>
 
                   {ticket.status === "SUSPENDED" ? (
