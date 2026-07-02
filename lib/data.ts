@@ -119,7 +119,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
           },
         }),
         prisma.calibrationLog.findMany({
-          where: { nextDueDate: { not: null } },
+          where: { nextDueDate: { not: null }, active: true },
           orderBy: { calibrationDate: "desc" },
           take: 400,
           include: { equipment: true },
@@ -491,7 +491,7 @@ export async function getModuleData() {
           },
       }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
-        prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 200, include: { equipment: true, documents: true } }),
+        prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 1000, include: { equipment: true, documents: true } }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100, include: { equipment: true } }),
         prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
         prisma.user.findMany({

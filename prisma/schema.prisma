@@ -853,6 +853,7 @@ model CalibrationLog {
   nextDueDate     DateTime?
   result          String?
   approved        Boolean   @default(true)
+  active          Boolean   @default(true)
   notes           String?
 
   equipmentId String
@@ -865,6 +866,9 @@ model CalibrationLog {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([equipmentId, active])
+  @@index([nextDueDate])
 }
 
 model Consumable {

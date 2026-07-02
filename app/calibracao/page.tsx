@@ -104,8 +104,9 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
   const approved = params.approved || "all";
   const selectedYear = Number(params.year || new Date().getFullYear());
   const selectedMonth = params.month ? Math.min(Math.max(Number(params.month), 1), 12) : null;
+  const activeCalibrationLogs = calibrationLogs.filter((log) => log.active);
   const latestCalibrationByEquipment = Object.values(
-    calibrationLogs.reduce<Record<string, (typeof calibrationLogs)[number]>>((acc, log) => {
+    activeCalibrationLogs.reduce<Record<string, (typeof calibrationLogs)[number]>>((acc, log) => {
       acc[log.equipmentId] ??= log;
       return acc;
     }, {}),
@@ -175,7 +176,11 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                   <p className="text-xs text-zinc-600">Sem calibracoes</p>
                 ) : (
                   items.slice(0, 4).map((log) => (
-                    <div key={log.id} className={`rounded-md border px-2 py-2 ${calibrationTone(log.nextDueDate)}`}>
+                    <Link
+                      key={log.id}
+                      href={`/calibracao?year=${selectedYear}&calibrationId=${log.id}#calibration-${log.id}`}
+                      className={`block rounded-md border px-2 py-2 transition hover:border-lime-200/70 ${calibrationTone(log.nextDueDate)}`}
+                    >
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <p className="truncate text-xs font-semibold text-zinc-50">{log.title}</p>
@@ -187,7 +192,7 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                       </div>
                       <p className="mt-2 text-[11px] font-semibold">{formatDate(log.nextDueDate)}</p>
                       <p className="mt-1 text-[11px] text-zinc-400">{calibrationStatus(log.nextDueDate)}</p>
-                    </div>
+                    </Link>
                   ))
                 )}
                 {items.length > 4 ? (
@@ -235,11 +240,15 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                               <p className="text-xs text-zinc-600">Sem calibrações</p>
                             ) : (
                               dayItems.map((log) => (
-                                <div key={log.id} className={`rounded-md border px-2 py-2 ${calibrationTone(log.nextDueDate)}`}>
+                                <Link
+                                  key={log.id}
+                                  href={`/calibracao?year=${selectedYear}&month=${selectedMonth}&calibrationId=${log.id}#calibration-${log.id}`}
+                                  className={`block rounded-md border px-2 py-2 transition hover:border-lime-200/70 ${calibrationTone(log.nextDueDate)}`}
+                                >
                                   <p className="text-xs font-semibold text-zinc-50">{log.title}</p>
                                   <p className="mt-1 text-[11px] text-zinc-400">{log.equipment.name}</p>
                                   <p className="mt-2 text-[11px] font-semibold">{calibrationStatus(log.nextDueDate)}</p>
-                                </div>
+                                </Link>
                               ))
                             )}
                           </div>
@@ -342,6 +351,9 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                         )}
                       </div>
                       <div className="text-left sm:text-right">
+                        <p className={log.active ? "text-xs font-semibold uppercase tracking-[0.14em] text-lime-300" : "text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500"}>
+                          {log.active ? "Vigente" : "Historico"}
+                        </p>
                         <p className={log.approved ? "text-sm font-medium text-emerald-300" : "text-sm font-medium text-rose-300"}>
                           {log.approved ? "Aprovado" : "Reprovado"}
                         </p>
@@ -358,6 +370,10 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
                       <select name="approved" className={inputClass} defaultValue={log.approved ? "true" : "false"}>
                         <option value="true">Aprovado</option>
                         <option value="false">Reprovado</option>
+                      </select>
+                      <select name="active" className={inputClass} defaultValue={log.active ? "true" : "false"}>
+                        <option value="true">Certificado vigente</option>
+                        <option value="false">Historico / substituido</option>
                       </select>
                       <input name="certificateUrl" className={inputClass} defaultValue={certificate?.fileUrl ?? ""} placeholder="Link/caminho do certificado" />
                       <input name="certificateFileName" className={inputClass} defaultValue={certificate?.fileName ?? ""} placeholder="Nome do ficheiro" />

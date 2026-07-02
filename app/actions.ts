@@ -2834,17 +2834,25 @@ export async function createCalibrationLog(formData: FormData) {
     return;
   }
 
-  const calibration = await prisma.calibrationLog.create({
-    data: {
-      title: text(formData, "title") || "Calibração",
-      certificateNo: optionalText(formData, "certificateNo"),
-      calibrationDate: optionalDate(formData, "calibrationDate") ?? new Date(),
-      nextDueDate: optionalDate(formData, "nextDueDate"),
-      result: optionalText(formData, "result"),
-      approved: text(formData, "approved") !== "false",
-      notes: optionalText(formData, "notes"),
-      equipmentId,
-    },
+  const calibration = await prisma.$transaction(async (tx) => {
+    await tx.calibrationLog.updateMany({
+      where: { equipmentId },
+      data: { active: false },
+    });
+
+    return tx.calibrationLog.create({
+      data: {
+        title: text(formData, "title") || "Calibracao",
+        certificateNo: optionalText(formData, "certificateNo"),
+        calibrationDate: optionalDate(formData, "calibrationDate") ?? new Date(),
+        nextDueDate: optionalDate(formData, "nextDueDate"),
+        result: optionalText(formData, "result"),
+        approved: text(formData, "approved") !== "false",
+        active: true,
+        notes: optionalText(formData, "notes"),
+        equipmentId,
+      },
+    });
   });
 
   const certificateUrl = optionalText(formData, "certificateUrl");
@@ -2863,6 +2871,7 @@ export async function createCalibrationLog(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/calibracao");
+  revalidatePath(`/equipamentos/${equipmentId}`);
 }
 
 export async function updateCalibrationLog(formData: FormData) {
@@ -2871,18 +2880,34 @@ export async function updateCalibrationLog(formData: FormData) {
   const id = text(formData, "id");
   if (!id) return;
 
-  const calibration = await prisma.calibrationLog.update({
-    where: { id },
-    data: {
-      title: text(formData, "title") || "Calibracao",
-      certificateNo: optionalText(formData, "certificateNo"),
-      calibrationDate: optionalDate(formData, "calibrationDate") ?? new Date(),
-      nextDueDate: optionalDate(formData, "nextDueDate"),
-      result: optionalText(formData, "result"),
-      approved: text(formData, "approved") !== "false",
-      notes: optionalText(formData, "notes"),
-    },
+  const active = text(formData, "active") !== "false";
+  const calibration = await prisma.$transaction(async (tx) => {
+    const current = await tx.calibrationLog.findUnique({ where: { id }, select: { equipmentId: true } });
+    if (!current) return null;
+
+    if (active) {
+      await tx.calibrationLog.updateMany({
+        where: { equipmentId: current.equipmentId, id: { not: id } },
+        data: { active: false },
+      });
+    }
+
+    return tx.calibrationLog.update({
+      where: { id },
+      data: {
+        title: text(formData, "title") || "Calibracao",
+        certificateNo: optionalText(formData, "certificateNo"),
+        calibrationDate: optionalDate(formData, "calibrationDate") ?? new Date(),
+        nextDueDate: optionalDate(formData, "nextDueDate"),
+        result: optionalText(formData, "result"),
+        approved: text(formData, "approved") !== "false",
+        active,
+        notes: optionalText(formData, "notes"),
+      },
+    });
   });
+
+  if (!calibration) return;
 
   const certificateUrl = optionalText(formData, "certificateUrl");
   if (certificateUrl) {
@@ -2904,10 +2929,10 @@ export async function updateCalibrationLog(formData: FormData) {
     }
   }
 
+  revalidatePath("/");
   revalidatePath("/calibracao");
   revalidatePath(`/equipamentos/${calibration.equipmentId}`);
 }
-
 export async function importEquipmentCsv(formData: FormData) {
   await requireCanSgq();
   const prisma = getPrisma();
@@ -3006,28 +3031,36 @@ export async function importCalibrationsCsv(formData: FormData) {
     });
     if (!equipment) continue;
 
-    await prisma.calibrationLog.create({
-      data: {
-        equipmentId: equipment.id,
-        title: row.descricao || row.titulo || "Calibracao",
-        certificateNo: row.numero_certificado || null,
-        calibrationDate: row.data_calibracao ? new Date(row.data_calibracao) : new Date(),
-        nextDueDate: row.proxima_validade ? new Date(row.proxima_validade) : null,
-        result: row.resultado || null,
-        approved: !["nao", "false", "0"].includes(String(row.aprovado || "sim").toLowerCase()),
-        notes: row.notas || null,
-        documents: row.link_certificado
-          ? {
-              create: {
-                title: row.nome_ficheiro || `Certificado ${row.numero_certificado || row.descricao || equipment.name}`,
-                type: "CERTIFICATE",
-                fileUrl: row.link_certificado,
-                fileName: row.nome_ficheiro || null,
-                equipmentId: equipment.id,
-              },
-            }
-          : undefined,
-      },
+    await prisma.$transaction(async (tx) => {
+      await tx.calibrationLog.updateMany({
+        where: { equipmentId: equipment.id },
+        data: { active: false },
+      });
+
+      await tx.calibrationLog.create({
+        data: {
+          equipmentId: equipment.id,
+          title: row.descricao || row.titulo || "Calibracao",
+          certificateNo: row.numero_certificado || null,
+          calibrationDate: row.data_calibracao ? new Date(row.data_calibracao) : new Date(),
+          nextDueDate: row.proxima_validade ? new Date(row.proxima_validade) : null,
+          result: row.resultado || null,
+          approved: !["nao", "false", "0"].includes(String(row.aprovado || "sim").toLowerCase()),
+          active: true,
+          notes: row.notas || null,
+          documents: row.link_certificado
+            ? {
+                create: {
+                  title: row.nome_ficheiro || `Certificado ${row.numero_certificado || row.descricao || equipment.name}`,
+                  type: "CERTIFICATE",
+                  fileUrl: row.link_certificado,
+                  fileName: row.nome_ficheiro || null,
+                  equipmentId: equipment.id,
+                },
+              }
+            : undefined,
+        },
+      });
     });
   }
 
