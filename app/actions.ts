@@ -1104,6 +1104,61 @@ export async function updateChecklistTemplate(formData: FormData) {
   revalidatePath("/manutencao");
 }
 
+export async function duplicateChecklistTemplate(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const templateId = text(formData, "templateId");
+  const targetTypeName = text(formData, "targetTypeName");
+
+  if (!templateId || !targetTypeName) return;
+
+  const source = await prisma.checklistTemplate.findUnique({
+    where: { id: templateId },
+    include: {
+      equipmentType: true,
+      items: {
+        where: { active: true },
+        orderBy: { order: "asc" },
+      },
+    },
+  });
+
+  if (!source || source.items.length === 0) return;
+
+  const targetType = await prisma.equipmentType.upsert({
+    where: { name: targetTypeName },
+    update: {
+      description: optionalText(formData, "targetTypeDescription") ?? source.equipmentType.description,
+    },
+    create: {
+      name: targetTypeName,
+      description: optionalText(formData, "targetTypeDescription") ?? source.equipmentType.description,
+    },
+  });
+
+  await prisma.checklistTemplate.create({
+    data: {
+      equipmentTypeId: targetType.id,
+      title: text(formData, "targetTemplateTitle") || `Copia de ${source.title}`,
+      version: text(formData, "targetVersion") || source.version || "1.0",
+      notes: optionalText(formData, "targetNotes") ?? source.notes,
+      items: {
+        create: source.items.map((item, index) => ({
+          order: index + 1,
+          check: item.check,
+          expectedCondition: item.expectedCondition,
+          photoRequired: item.photoRequired,
+          active: true,
+        })),
+      },
+    },
+  });
+
+  revalidatePath("/checklists");
+  revalidatePath("/equipamentos");
+  revalidatePath("/manutencao");
+}
+
 function interventionPlanFromForm(formData: FormData, prefix: string, kind: InterventionKind, type: MaintenanceType) {
   if (text(formData, `${prefix}Enabled`) !== "true") {
     return null;
@@ -2584,10 +2639,24 @@ export async function completeWorkOrder(formData: FormData) {
     if (documentUrl) {
       await tx.document.create({
         data: {
-          title: optionalText(formData, "documentTitle") ?? `Documento ${workOrder.number}`,
+          title: `Documento ${workOrder.number}`,
           type: "OTHER",
           fileUrl: documentUrl,
-          fileName: optionalText(formData, "documentName"),
+          notes: optionalText(formData, "documentNotes"),
+          equipmentId,
+          maintenanceLogId: maintenanceLog.id,
+          workOrderId,
+        },
+      });
+    }
+
+    const extraDocumentUrl = optionalText(formData, "extraDocumentUrl");
+    if (extraDocumentUrl) {
+      await tx.document.create({
+        data: {
+          title: `Anexo ${workOrder.number}`,
+          type: "OTHER",
+          fileUrl: extraDocumentUrl,
           notes: optionalText(formData, "documentNotes"),
           equipmentId,
           maintenanceLogId: maintenanceLog.id,

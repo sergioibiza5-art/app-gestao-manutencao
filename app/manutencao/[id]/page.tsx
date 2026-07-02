@@ -277,17 +277,18 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                       <option value="NA">N/A</option>
                     </select>
                     <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." />
-                    <div className="grid gap-2 rounded-lg border border-zinc-800 bg-black/20 p-2 md:col-span-3 md:grid-cols-[1fr_220px]">
-                      <input name={`photoUrl_${item.id}`} className={inputClass} placeholder={item.photoRequired ? "Foto obrigatoria - link/caminho" : "Foto - link/caminho"} />
-                      <input name={`photoName_${item.id}`} className={inputClass} placeholder="Nome da foto" />
-                    </div>
+                    {item.photoRequired ? (
+                      <div className="rounded-lg border border-zinc-800 bg-black/20 p-2 md:col-span-3">
+                        <input name={`photoUrl_${item.id}`} className={inputClass} placeholder="Foto obrigatoria - link/caminho" />
+                      </div>
+                    ) : null}
                   </div>
                 ))}
               </div>
               <div className="grid gap-3 md:grid-cols-2">
-                <input name="documentTitle" className={inputClass} placeholder="Titulo do documento da OP" />
-                <input name="documentName" className={inputClass} placeholder="Nome do ficheiro" />
-                <input name="documentUrl" className={`${inputClass} md:col-span-2`} placeholder="Link/caminho do documento associado" />
+                <input name="documentUrl" className={inputClass} placeholder="Link/caminho do documento associado" />
+                <input name="extraDocumentUrl" className={inputClass} placeholder="Link/caminho adicional" />
+                <textarea name="documentNotes" className={`${textareaClass} md:col-span-2`} placeholder="Obs." />
               </div>
               <textarea name="notes" className={textareaClass} placeholder="Notas finais" />
               <button className={buttonClass}>Concluído</button>

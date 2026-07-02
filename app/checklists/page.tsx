@@ -1,9 +1,9 @@
-import { Rows3 } from "lucide-react";
+import { Copy, Rows3 } from "lucide-react";
 
-import { createEquipmentTypeWithChecklist, updateChecklistTemplate } from "@/app/actions";
+import { createEquipmentTypeWithChecklist, duplicateChecklistTemplate, updateChecklistTemplate } from "@/app/actions";
 import { ChecklistTemplateBuilder } from "@/app/checklists/checklist-template-builder";
 import { AppShell } from "@/app/components/app-shell";
-import { EmptyState, PageHeader, Panel } from "@/app/components/ui";
+import { EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
 import { getChecklistAdminData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
@@ -56,6 +56,29 @@ export default async function ChecklistsPage() {
                           <p className="text-xs text-zinc-500">v{template.version}</p>
                         </div>
                         <p className="mt-2 text-sm text-zinc-500">{template.items.length} item(ns)</p>
+                        <form action={duplicateChecklistTemplate} className="mt-3 rounded-lg border border-sky-300/20 bg-sky-300/5 p-3">
+                          <input type="hidden" name="templateId" value={template.id} />
+                          <div className="mb-3 flex items-center gap-2">
+                            <Copy size={16} className="text-sky-300" />
+                            <p className="text-sm font-semibold text-sky-100">Duplicar checklist</p>
+                          </div>
+                          <div className="grid gap-2 md:grid-cols-2">
+                            <input name="targetTypeName" className={inputClass} defaultValue={type.name} placeholder="Tipo de equipamento destino" />
+                            <input name="targetTemplateTitle" className={inputClass} defaultValue={`Copia de ${template.title}`} placeholder="Titulo da nova checklist" />
+                            <input name="targetVersion" className={inputClass} defaultValue={template.version} placeholder="Versao" />
+                            <input name="targetTypeDescription" className={inputClass} defaultValue={type.description ?? ""} placeholder="Descricao do tipo" />
+                          </div>
+                          <textarea
+                            name="targetNotes"
+                            className="mt-2 min-h-20 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-sky-300/60"
+                            defaultValue={template.notes ?? ""}
+                            placeholder="Notas da nova checklist"
+                          />
+                          <button className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-sky-300/35 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100 transition hover:border-sky-200/70">
+                            <Copy size={15} />
+                            Duplicar
+                          </button>
+                        </form>
                         <ChecklistTemplateBuilder
                           action={updateChecklistTemplate}
                           templateId={template.id}
