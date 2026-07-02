@@ -59,6 +59,9 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
   const workOrder = schedule.workOrder;
   const template = workOrder?.template ?? schedule.equipment.equipmentType?.checklistTemplates[0];
   const canFillChecklist = workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status) && template;
+  const checklistResponsesByItem = new Map(
+    workOrder?.checklistRecord?.responses.map((response) => [response.itemId, response]) ?? [],
+  );
   const workOrderConsumables = workOrder?.consumableMovements.filter((movement) => movement.type === "SAIDA_OP") ?? [];
   const workOrderConsumableCost = workOrderConsumables.reduce(
     (sum, movement) => sum + Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0),
@@ -264,26 +267,31 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                 <TicketConsumables consumables={schedule.consumableOptions} />
               </div>
               <div className="space-y-2">
-                {template.items.map((item) => (
+                {template.items.map((item) => {
+                  const response = checklistResponsesByItem.get(item.id);
+                  const photo = response?.photos[0];
+
+                  return (
                   <div key={item.id} className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 md:grid-cols-[1fr_150px_1fr]">
                     <input type="hidden" name="itemId" value={item.id} />
                     <div>
                       <p className="font-medium text-zinc-100">{item.order}. {item.check}</p>
                       <p className="mt-1 text-xs text-zinc-500">{item.expectedCondition}{item.photoRequired ? " - foto" : ""}</p>
                     </div>
-                    <select name={`status_${item.id}`} className={inputClass}>
+                    <select name={`status_${item.id}`} className={inputClass} defaultValue={response?.status ?? "OK"}>
                       <option value="OK">OK</option>
                       <option value="NOT_OK">Não OK</option>
                       <option value="NA">N/A</option>
                     </select>
-                    <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." />
+                    <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." defaultValue={response?.obs ?? ""} />
                     {item.photoRequired ? (
                       <div className="rounded-lg border border-zinc-800 bg-black/20 p-2 md:col-span-3">
-                        <input name={`photoUrl_${item.id}`} className={inputClass} placeholder="Foto obrigatoria - link/caminho" />
+                        <input name={`photoUrl_${item.id}`} className={inputClass} placeholder="Foto obrigatoria - link/caminho" defaultValue={photo?.fileUrl ?? ""} />
                       </div>
                     ) : null}
                   </div>
-                ))}
+                  );
+                })}
               </div>
               <div className="grid gap-3 md:grid-cols-2">
                 <input name="documentUrl" className={inputClass} placeholder="Link/caminho do documento associado" />
