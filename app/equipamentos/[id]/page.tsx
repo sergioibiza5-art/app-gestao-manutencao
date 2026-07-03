@@ -181,8 +181,11 @@ const dl50QuestionSections = [
 ] as const;
 
 const dl50Articles = [
+  ["article1Notes", "Artigo 1.º - Objeto e ambito"],
+  ["article2Notes", "Artigo 2.º - Definicoes"],
   ["article3Notes", "Artigo 3.º"],
   ["article4Notes", "Artigo 4.º"],
+  ["article5Notes", "Artigo 5.º - Riscos especificos"],
   ["article6Notes", "Artigo 6.º"],
   ["article7Notes", "Artigo 7.º"],
   ["article8Notes", "Artigo 8.º"],
@@ -200,8 +203,29 @@ const dl50Articles = [
   ["article20Notes", "Artigo 20.º"],
   ["article21Notes", "Artigo 21.º"],
   ["article22Notes", "Artigo 22.º"],
+  ["article23Notes", "Artigo 23.º - Equipamentos moveis / capotamento"],
+  ["article24Notes", "Artigo 24.º - Transmissao de energia"],
+  ["article25Notes", "Artigo 25.º - Risco de contacto e arrastamento"],
+  ["article26Notes", "Artigo 26.º - Equipamentos moveis automotores"],
+  ["article27Notes", "Artigo 27.º - Elevacao de cargas / instalacao"],
+  ["article28Notes", "Artigo 28.º - Elevacao de cargas / sinalizacao"],
+  ["article29Notes", "Artigo 29.º - Elevacao ou transporte de trabalhadores"],
   ["article30Notes", "Artigo 30.º"],
   ["article31Notes", "Artigo 31.º"],
+  ["article32Notes", "Artigo 32.º - Utilizacao de equipamentos moveis"],
+  ["article33Notes", "Artigo 33.º - Equipamentos de elevacao de cargas"],
+  ["article34Notes", "Artigo 34.º - Elevacao de cargas nao guiadas"],
+  ["article35Notes", "Artigo 35.º - Organizacao da elevacao de cargas"],
+  ["article36Notes", "Artigo 36.º - Trabalhos temporarios em altura"],
+  ["article37Notes", "Artigo 37.º - Protecao coletiva em altura"],
+  ["article38Notes", "Artigo 38.º - Utilizacao de escadas"],
+  ["article39Notes", "Artigo 39.º - Tecnicas de acesso por cordas"],
+  ["article40Notes", "Artigo 40.º - Utilizacao de andaime"],
+  ["article41Notes", "Artigo 41.º - Estabilidade do andaime"],
+  ["article42Notes", "Artigo 42.º - Plataformas do andaime"],
+  ["article43Notes", "Artigo 43.º - Contraordenacoes"],
+  ["article44Notes", "Artigo 44.º - Trabalhos em altura / prazo"],
+  ["article45Notes", "Artigo 45.º - Revogacao"],
 ] as const;
 
 const documentTypeLabels: Record<string, string> = {

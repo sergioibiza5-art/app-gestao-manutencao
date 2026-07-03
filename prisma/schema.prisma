@@ -306,8 +306,11 @@ model Dl50AssessmentTemplate {
   ergonomicConditions              Dl50Answer?
   usedAccordingToManufacturer      Dl50Answer?
 
+  article1Notes  String?
+  article2Notes  String?
   article3Notes  String?
   article4Notes  String?
+  article5Notes  String?
   article6Notes  String?
   article7Notes  String?
   article8Notes  String?
@@ -325,8 +328,29 @@ model Dl50AssessmentTemplate {
   article20Notes String?
   article21Notes String?
   article22Notes String?
+  article23Notes String?
+  article24Notes String?
+  article25Notes String?
+  article26Notes String?
+  article27Notes String?
+  article28Notes String?
+  article29Notes String?
   article30Notes String?
   article31Notes String?
+  article32Notes String?
+  article33Notes String?
+  article34Notes String?
+  article35Notes String?
+  article36Notes String?
+  article37Notes String?
+  article38Notes String?
+  article39Notes String?
+  article40Notes String?
+  article41Notes String?
+  article42Notes String?
+  article43Notes String?
+  article44Notes String?
+  article45Notes String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -388,8 +412,11 @@ model EquipmentDl50Assessment {
   ergonomicConditions              Dl50Answer?
   usedAccordingToManufacturer      Dl50Answer?
 
+  article1Notes  String?
+  article2Notes  String?
   article3Notes  String?
   article4Notes  String?
+  article5Notes  String?
   article6Notes  String?
   article7Notes  String?
   article8Notes  String?
@@ -407,8 +434,29 @@ model EquipmentDl50Assessment {
   article20Notes String?
   article21Notes String?
   article22Notes String?
+  article23Notes String?
+  article24Notes String?
+  article25Notes String?
+  article26Notes String?
+  article27Notes String?
+  article28Notes String?
+  article29Notes String?
   article30Notes String?
   article31Notes String?
+  article32Notes String?
+  article33Notes String?
+  article34Notes String?
+  article35Notes String?
+  article36Notes String?
+  article37Notes String?
+  article38Notes String?
+  article39Notes String?
+  article40Notes String?
+  article41Notes String?
+  article42Notes String?
+  article43Notes String?
+  article44Notes String?
+  article45Notes String?
 
   conclusion String
   status     Dl50AssessmentStatus @default(DRAFT)
