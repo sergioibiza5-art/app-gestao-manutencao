@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 
-import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, validateWorkOrder } from "@/app/actions";
+import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, updateWorkOrderTiming, validateWorkOrder } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
@@ -48,6 +48,12 @@ function durationLabel(seconds: number) {
   return `${hours}h ${String(minutes).padStart(2, "0")}m`;
 }
 
+function dateTimeInputValue(date: Date | null) {
+  if (!date) return "";
+  const pad = (value: number) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 export default async function MaintenanceSchedulePage({ params }: MaintenanceSchedulePageProps) {
   const { id } = await params;
   const schedule = await getMaintenanceScheduleDetail(id);
@@ -67,6 +73,8 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
     (sum, movement) => sum + Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0),
     0,
   );
+  const workOrderDurationHours = workOrder ? Math.floor(Math.max(workOrder.totalWorkSeconds, 0) / 3600) : 0;
+  const workOrderDurationMinutes = workOrder ? Math.floor((Math.max(workOrder.totalWorkSeconds, 0) % 3600) / 60) : 0;
 
   return (
     <AppShell activeHref="/manutencao">
@@ -165,6 +173,55 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   </form>
                 )}
               </div>
+              <details className="mt-4 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                <summary className="cursor-pointer text-sm font-semibold text-zinc-100">
+                  Corrigir datas e duracao da OP
+                </summary>
+                <form action={updateWorkOrderTiming} className="mt-4 space-y-3">
+                  <input type="hidden" name="workOrderId" value={workOrder.id} />
+                  <input type="hidden" name="scheduleId" value={schedule.id} />
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className="space-y-2">
+                      <span className="text-xs font-medium text-zinc-400">Aberta em</span>
+                      <input type="datetime-local" name="openedAt" className={inputClass} defaultValue={dateTimeInputValue(workOrder.openedAt)} />
+                    </label>
+                    <label className="space-y-2">
+                      <span className="text-xs font-medium text-zinc-400">Iniciada em</span>
+                      <input type="datetime-local" name="startedAt" className={inputClass} defaultValue={dateTimeInputValue(workOrder.startedAt)} />
+                    </label>
+                    <label className="space-y-2">
+                      <span className="text-xs font-medium text-zinc-400">Pausada em</span>
+                      <input type="datetime-local" name="pausedAt" className={inputClass} defaultValue={dateTimeInputValue(workOrder.pausedAt)} />
+                    </label>
+                    <label className="space-y-2">
+                      <span className="text-xs font-medium text-zinc-400">Fechada em</span>
+                      <input type="datetime-local" name="closedAt" className={inputClass} defaultValue={dateTimeInputValue(workOrder.closedAt)} />
+                    </label>
+                    <label className="space-y-2">
+                      <span className="text-xs font-medium text-zinc-400">Validada em</span>
+                      <input type="datetime-local" name="validatedAt" className={inputClass} defaultValue={dateTimeInputValue(workOrder.validatedAt)} />
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className="space-y-2">
+                        <span className="text-xs font-medium text-zinc-400">Horas</span>
+                        <input type="number" min="0" name="durationHours" className={inputClass} defaultValue={workOrderDurationHours} />
+                      </label>
+                      <label className="space-y-2">
+                        <span className="text-xs font-medium text-zinc-400">Minutos</span>
+                        <input type="number" min="0" max="59" name="durationMinutes" className={inputClass} defaultValue={workOrderDurationMinutes} />
+                      </label>
+                    </div>
+                  </div>
+                  <textarea
+                    name="correctionNotes"
+                    className={textareaClass}
+                    placeholder="Motivo da correcao: OP ficou esquecida aberta, ajuste validado por..."
+                  />
+                  <button className="inline-flex h-10 items-center justify-center rounded-lg border border-sky-300/40 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100">
+                    Guardar correcao
+                  </button>
+                </form>
+              </details>
             </>
           ) : (
             <form action={createWorkOrderFromSchedule} className="mt-4">

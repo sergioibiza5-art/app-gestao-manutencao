@@ -1673,6 +1673,13 @@ function elapsedSeconds(startedAt: Date | null, end = new Date()) {
   return Math.max(Math.floor((end.getTime() - startedAt.getTime()) / 1000), 0);
 }
 
+function optionalDateTime(formData: FormData, key: string) {
+  const value = optionalText(formData, key);
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
 function durationNote(seconds: number) {
   const safeSeconds = Math.max(seconds, 0);
   const hours = Math.floor(safeSeconds / 3600);
@@ -2681,6 +2688,90 @@ export async function reopenWorkOrder(formData: FormData) {
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId");
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
+}
+
+export async function updateWorkOrderTiming(formData: FormData) {
+  const user = await requireCanManage();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  const openedAt = optionalDateTime(formData, "openedAt");
+  const startedAt = optionalDateTime(formData, "startedAt");
+  const pausedAt = optionalDateTime(formData, "pausedAt");
+  const closedAt = optionalDateTime(formData, "closedAt");
+  const validatedAt = optionalDateTime(formData, "validatedAt");
+  const hours = Number.parseInt(optionalText(formData, "durationHours") ?? "0", 10);
+  const minutes = Number.parseInt(optionalText(formData, "durationMinutes") ?? "0", 10);
+  const totalWorkSeconds = Math.max((Number.isFinite(hours) ? hours : 0) * 3600 + (Number.isFinite(minutes) ? minutes : 0) * 60, 0);
+  const correctionNotes = optionalText(formData, "correctionNotes");
+
+  let equipmentId: string | null = null;
+  let scheduleIdForRevalidate: string | null = null;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId }, include: { maintenanceLog: true } });
+    if (!workOrder) return;
+
+    equipmentId = workOrder.equipmentId;
+    scheduleIdForRevalidate = workOrder.scheduleId;
+
+    const previous = [
+      `aberta=${workOrder.openedAt.toISOString()}`,
+      `iniciada=${workOrder.startedAt?.toISOString() ?? "sem data"}`,
+      `pausada=${workOrder.pausedAt?.toISOString() ?? "sem data"}`,
+      `fechada=${workOrder.closedAt?.toISOString() ?? "sem data"}`,
+      `validada=${workOrder.validatedAt?.toISOString() ?? "sem data"}`,
+      `tempo=${durationNote(workOrder.totalWorkSeconds)}`,
+    ].join("; ");
+    const next = [
+      `aberta=${openedAt?.toISOString() ?? "sem data"}`,
+      `iniciada=${startedAt?.toISOString() ?? "sem data"}`,
+      `pausada=${pausedAt?.toISOString() ?? "sem data"}`,
+      `fechada=${closedAt?.toISOString() ?? "sem data"}`,
+      `validada=${validatedAt?.toISOString() ?? "sem data"}`,
+      `tempo=${durationNote(totalWorkSeconds)}`,
+    ].join("; ");
+
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        openedAt: openedAt ?? workOrder.openedAt,
+        startedAt,
+        pausedAt,
+        closedAt,
+        validatedAt,
+        lastResumedAt: workOrder.status === "IN_PROGRESS" ? startedAt ?? workOrder.lastResumedAt : null,
+        totalWorkSeconds,
+        notes: [
+          workOrder.notes,
+          auditNote("Correcao manual de datas/tempo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}`),
+        ].filter(Boolean).join("\n"),
+      },
+    });
+
+    if (workOrder.maintenanceLog) {
+      await tx.maintenanceLog.update({
+        where: { id: workOrder.maintenanceLog.id },
+        data: {
+          date: startedAt ?? openedAt ?? workOrder.maintenanceLog.date,
+          notes: [
+            workOrder.maintenanceLog.notes,
+            auditNote("Correcao manual de datas/tempo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}`),
+          ].filter(Boolean).join("\n"),
+        },
+      });
+    }
+
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath("/equipamentos");
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+  const scheduleId = optionalText(formData, "scheduleId") ?? scheduleIdForRevalidate;
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
