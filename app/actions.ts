@@ -2705,17 +2705,41 @@ export async function updateWorkOrderTiming(formData: FormData) {
   const hours = Number.parseInt(optionalText(formData, "durationHours") ?? "0", 10);
   const minutes = Number.parseInt(optionalText(formData, "durationMinutes") ?? "0", 10);
   const totalWorkSeconds = Math.max((Number.isFinite(hours) ? hours : 0) * 3600 + (Number.isFinite(minutes) ? minutes : 0) * 60, 0);
+  const manualHourlyRate = decimalNumber(optionalText(formData, "hourlyRate") ?? "");
+  const hourlyRate = Number.isFinite(manualHourlyRate) && manualHourlyRate > 0 ? manualHourlyRate : Number(user.hourlyRate ?? 0);
   const correctionNotes = optionalText(formData, "correctionNotes");
 
   let equipmentId: string | null = null;
   let scheduleIdForRevalidate: string | null = null;
 
   await prisma.$transaction(async (tx) => {
-    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId }, include: { maintenanceLog: true } });
+    const workOrder = await tx.workOrder.findUnique({
+      where: { id: workOrderId },
+      include: {
+        maintenanceLog: true,
+        consumableMovements: {
+          where: { type: "SAIDA_OP" },
+          include: { consumable: true },
+        },
+      },
+    });
     if (!workOrder) return;
 
     equipmentId = workOrder.equipmentId;
     scheduleIdForRevalidate = workOrder.scheduleId;
+    const consumableCost = workOrder.consumableMovements.reduce(
+      (sum, movement) => sum + Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0),
+      0,
+    );
+    const laborCost = Number(((totalWorkSeconds / 3600) * hourlyRate).toFixed(2));
+    const totalCost = Number((laborCost + consumableCost).toFixed(2));
+    const costNote = [
+      `Tempo OP corrigido: ${durationNote(totalWorkSeconds)}`,
+      `Custo/hora aplicado: ${hourlyRate.toFixed(2)} EUR`,
+      `Mao de obra corrigida: ${laborCost.toFixed(2)} EUR`,
+      `Consumiveis: ${consumableCost.toFixed(2)} EUR`,
+      `Total corrigido: ${totalCost.toFixed(2)} EUR`,
+    ].join("\n");
 
     const previous = [
       `aberta=${workOrder.openedAt.toISOString()}`,
@@ -2746,7 +2770,7 @@ export async function updateWorkOrderTiming(formData: FormData) {
         totalWorkSeconds,
         notes: [
           workOrder.notes,
-          auditNote("Correcao manual de datas/tempo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}`),
+          auditNote("Correcao manual de datas/tempo/custo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}\n${costNote}`),
         ].filter(Boolean).join("\n"),
       },
     });
@@ -2756,9 +2780,10 @@ export async function updateWorkOrderTiming(formData: FormData) {
         where: { id: workOrder.maintenanceLog.id },
         data: {
           date: startedAt ?? openedAt ?? workOrder.maintenanceLog.date,
+          cost: totalCost.toFixed(2),
           notes: [
             workOrder.maintenanceLog.notes,
-            auditNote("Correcao manual de datas/tempo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}`),
+            auditNote("Correcao manual de datas/tempo/custo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}\n${costNote}`),
           ].filter(Boolean).join("\n"),
         },
       });

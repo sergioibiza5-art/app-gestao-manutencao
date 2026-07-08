@@ -211,6 +211,14 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                         <input type="number" min="0" max="59" name="durationMinutes" className={inputClass} defaultValue={workOrderDurationMinutes} />
                       </label>
                     </div>
+                    <label className="space-y-2 md:col-span-2">
+                      <span className="text-xs font-medium text-zinc-400">Custo mao de obra EUR/h</span>
+                      <input
+                        name="hourlyRate"
+                        className={inputClass}
+                        placeholder="Vazio usa o custo/hora do utilizador que corrige"
+                      />
+                    </label>
                   </div>
                   <textarea
                     name="correctionNotes"
