@@ -637,7 +637,7 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                     </div>
                   ) : null}
 
-                  {(ticket.status === "IN_PROGRESS" || ticket.status === "PAUSED" || ticket.status === "DONE") && (
+                  {(["OPEN", "IN_PROGRESS", "PAUSED", "DONE"].includes(ticket.status)) && (
                     <form action={completeMaintenanceTicket} className="mt-4 grid gap-3">
                       <input type="hidden" name="id" value={ticket.id} />
 
