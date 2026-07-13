@@ -793,10 +793,9 @@ const equipmentId =
   ],
   ...(type ? { type } : {}),
   ...(equipmentId ? { equipmentId } : {}),
-},
+          },
           orderBy: { scheduledAt: "asc" },
           include: { equipment: true, workOrder: true },
-          take: 370,
         }),
       ]);
 

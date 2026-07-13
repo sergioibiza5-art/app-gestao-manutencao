@@ -210,10 +210,11 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   const selectedDate = filters.date || new Date().toISOString().slice(0, 10);
   const selectedType = filters.type || "ALL";
   const annualCalendar = filters.calendar === "year";
+  const dataView = annualCalendar ? "year" : selectedView;
   const selectedEquipmentId = filters.equipmentId || "ALL";
 
   const { equipment, maintenanceLogs, schedules, range } = await getMaintenanceData({
-  view: selectedView,
+  view: dataView,
   date: selectedDate,
   type: selectedType,
   equipmentId: selectedEquipmentId,
@@ -366,8 +367,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               <Link
                 href={
                   annualCalendar
-                    ? `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}`
-                    : `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&calendar=year`
+                    ? `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}`
+                    : `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}&calendar=year`
                 }
                 className="inline-flex h-11 items-center justify-center rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200"
               >
@@ -376,6 +377,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
             </div>
 
             <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto]">
+  {annualCalendar ? <input type="hidden" name="calendar" value="year" /> : null}
+
   <select name="view" defaultValue={selectedView} className={inputClass}>
     <option value="day">Dia</option>
     <option value="week">Semana</option>
@@ -422,7 +425,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   return (
                     <Link
                       key={month}
-                      href={`/manutencao?view=month-weeks&date=${monthDate}&type=${selectedType}`}
+                      href={`/manutencao?view=month-weeks&date=${monthDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
                       className="min-h-42.5 overflow-hidden rounded-lg border border-teal-300/20 bg-zinc-950/60 transition hover:border-teal-300/60"
                     >
                       <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
@@ -516,7 +519,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
                           {hiddenCount > 0 && (
                             <Link
-                              href={`/manutencao?view=week&date=${dateInputValue(week.start)}&type=${selectedType}`}
+                              href={`/manutencao?view=week&date=${dateInputValue(week.start)}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
                               className="block rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-center text-sm font-semibold text-teal-200 transition hover:border-teal-200"
                             >
                               + {hiddenCount} manutenções
@@ -545,7 +548,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 {weekBoardDays.map((day) => (
                   <div key={day.name} className="min-h-120 border-b border-teal-300/20 md:border-b-0 md:border-r md:last:border-r-0">
                     <Link
-                      href={`/manutencao?view=day&date=${dateInputValue(day.date)}&type=${selectedType}`}
+                      href={`/manutencao?view=day&date=${dateInputValue(day.date)}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
                       className="block border-b border-teal-300/25 bg-teal-200/70 px-3 py-3 text-center transition hover:bg-teal-100"
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-950">{day.name}</p>
