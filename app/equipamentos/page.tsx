@@ -323,15 +323,25 @@ const filteredEquipment = typedEquipment.filter((item) => {
             </form>
           </Panel>
 
-          <div id="novo-equipamento">
-            <Panel>
+          <details id="novo-equipamento" className="group">
+            <summary className="flex h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
+              <Plus size={18} />
+              Novo equipamento
+            </summary>
+
+            <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+              <div className="mx-auto max-w-6xl">
+                <Panel>
             <div className="flex items-center gap-3">
               <Settings size={22} className="text-orange-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Novo equipamento</h2>
+              <summary className="ml-auto cursor-pointer list-none rounded-lg border border-zinc-800 px-3 py-2 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+                Fechar
+              </summary>
             </div>
 
             <form action={createEquipment} className="mt-4 space-y-4">
-              <div className="grid gap-3">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 <input name="name" required className={inputClass} placeholder="Nome do equipamento" />
                 <input name="code" className={inputClass} placeholder="Código interno" />
                 <input name="purchaseDate" type="date" className={inputClass} />
@@ -365,7 +375,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
   <option value="true">É equipamento de medição/monitorização</option>
 </select>
 
-                <label className="space-y-2">
+                <label className="space-y-2 xl:col-span-1">
                   <span className="text-sm font-medium text-zinc-300">Requisitos regulamentares?</span>
                   <select name="regulatoryRequirements" className={inputClass}>
                     <option value="false">Não</option>
@@ -373,7 +383,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                   </select>
                 </label>
 
-                <label className="space-y-2">
+                <label className="space-y-2 md:col-span-2">
                   <span className="text-sm font-medium text-zinc-300">Se sim, quais?</span>
                   <textarea
                     name="regulatoryDetails"
@@ -402,7 +412,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                   <h3 className="font-semibold text-zinc-100">Intervenções previstas</h3>
                 </div>
 
-                <div className="grid gap-3">
+                <div className="grid gap-3 lg:grid-cols-2">
                   <InterventionPlanFields
                     prefix="inspectionInternal"
                     title="Inspeção interna"
@@ -426,7 +436,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 </div>
               </div>
 
-              <textarea name="notes" className={textareaClass} placeholder="Notas gerais do equipamento" />
+              <textarea name="notes" className={`${textareaClass} min-h-24`} placeholder="Notas gerais do equipamento" />
               <button className={buttonClass}>Guardar equipamento</button>
             </form>
             <div className="mt-6 rounded-lg border border-zinc-800 bg-black/20 p-4">
@@ -445,6 +455,8 @@ const filteredEquipment = typedEquipment.filter((item) => {
           </Panel>
         </div>
       </div>
+          </details>
+        </div>
 
         <Panel className="min-w-0">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

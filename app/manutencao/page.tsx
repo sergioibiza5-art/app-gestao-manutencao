@@ -482,8 +482,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 Manutenções por semana
               </h3>
 
-              <div className="-mx-2 overflow-x-auto px-2 pb-2">
-                <div className="grid min-w-[980px] grid-cols-5 gap-4">
+              <div className="grid grid-cols-5 gap-3">
                 {schedulesByWeek.map((week) => {
                   const visibleItems = week.items.length > 5 ? week.items.slice(0, 4) : week.items.slice(0, 5);
                   const hiddenCount = Math.max(week.items.length - visibleItems.length, 0);
@@ -491,18 +490,18 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   return (
                     <div
                       key={week.title}
-                      className="min-h-130 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/60"
+                      className="min-h-112 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/60"
                     >
-                      <div className="flex min-h-[4.5rem] items-center justify-center border-b border-teal-300/20 bg-teal-300/10 px-3 py-3">
+                      <div className="flex min-h-16 items-center justify-center border-b border-teal-300/20 bg-teal-300/10 px-2 py-2">
                         <div className="text-center">
-                          <h4 className="text-base font-semibold text-zinc-50">
+                          <h4 className="text-sm font-semibold text-zinc-50">
                             {week.title}
                           </h4>
-                          <p className="mt-1 text-[11px] leading-snug text-zinc-500">{week.range}</p>
+                          <p className="mt-1 text-[10px] leading-snug text-zinc-500">{week.range}</p>
                         </div>
                       </div>
 
-                      <div className="space-y-2 p-3">
+                      <div className="space-y-2 p-2">
                         {week.items.length === 0 ? (
                           <p className="text-sm text-zinc-600">Sem tarefas</p>
                         ) : (
@@ -511,15 +510,15 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                               <a
                                 key={schedule.id}
                                 href={`/manutencao/${schedule.id}`}
-                                className={`block rounded-lg border p-3 transition ${scheduleCardTone(schedule)}`}
+                                  className={`block rounded-lg border p-2 transition ${scheduleCardTone(schedule)}`}
                               >
                                 <p className="text-xs font-semibold text-teal-300">
                                   {formatDate(schedule.scheduledAt)}
                                 </p>
-                                <p className={`mt-1 break-words text-sm font-semibold leading-snug ${titleTone(schedule)}`}>
+                                  <p className={`mt-1 break-words text-xs font-semibold leading-snug ${titleTone(schedule)}`}>
                                   {schedule.title}
                                 </p>
-                                <p className="mt-1 break-words text-xs leading-snug text-zinc-500">
+                                  <p className="mt-1 break-words text-[11px] leading-snug text-zinc-500">
                                   {schedule.equipment.name} · {typeLabel(schedule.type)}
                                 </p>
                               </a>
@@ -539,7 +538,6 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                     </div>
                   );
                 })}
-                </div>
               </div>
             </div>
           ) : selectedView === "week" ? (
