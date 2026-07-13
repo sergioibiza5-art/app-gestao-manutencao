@@ -290,16 +290,25 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         }
       />
 
-      <section className="grid gap-4 2xl:grid-cols-[0.62fr_1.38fr]">
+      <section className="space-y-4">
         <Panel>
-          <div className="flex items-center gap-3">
-            <CalendarDays size={22} className="text-cyan-300" />
-            <h2 id="agendamento-anual" className="text-xl font-semibold text-zinc-50">
-              Agendamento anual
-            </h2>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex items-center gap-3">
+              <CalendarDays size={22} className="text-cyan-300" />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Planeamento</p>
+                <h2 id="agendamento-anual" className="text-xl font-semibold text-zinc-50">
+                  Agendamento anual
+                </h2>
+              </div>
+            </div>
+
+            <p className="max-w-xl text-sm text-zinc-500">
+              Cria recorrências para o ano e consulta tudo no mapa completo abaixo.
+            </p>
           </div>
 
-          <form action={createAnnualMaintenanceSchedule} className="mt-4 space-y-3">
+          <form action={createAnnualMaintenanceSchedule} className="mt-4 grid gap-3 lg:grid-cols-6">
             <select name="equipmentId" required className={inputClass}>
               <option value="">Selecionar equipamento</option>
               {equipment.map((item) => (
@@ -309,26 +318,24 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               ))}
             </select>
 
-            <input name="title" required className={inputClass} placeholder="Manutenção a agendar" />
+            <input name="title" required className={`${inputClass} lg:col-span-2`} placeholder="Manutenção a agendar" />
 
-            <div className="grid grid-cols-2 gap-3">
-              <select name="type" className={inputClass}>
-                <option value="INTERNAL">Interna</option>
-                <option value="EXTERNAL">Externa</option>
-              </select>
+            <select name="type" className={inputClass}>
+              <option value="INTERNAL">Interna</option>
+              <option value="EXTERNAL">Externa</option>
+            </select>
 
-              <select name="frequency" className={inputClass}>
-                <option value="DAILY">Diária</option>
-                <option value="WEEKLY">Semanal</option>
-                <option value="MONTHLY">Mensal</option>
-                <option value="QUARTERLY">Trimestral</option>
-                <option value="FOUR_MONTHLY">Quadrimestral</option>
-                <option value="SEMIANNUAL">Semestral</option>
-                <option value="ANNUAL">Anual</option>
-                <option value="BIENNIAL">Bienal (2 anos)</option>
-                <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
-              </select>
-            </div>
+            <select name="frequency" className={inputClass}>
+              <option value="DAILY">Diária</option>
+              <option value="WEEKLY">Semanal</option>
+              <option value="MONTHLY">Mensal</option>
+              <option value="QUARTERLY">Trimestral</option>
+              <option value="FOUR_MONTHLY">Quadrimestral</option>
+              <option value="SEMIANNUAL">Semestral</option>
+              <option value="ANNUAL">Anual</option>
+              <option value="BIENNIAL">Bienal (2 anos)</option>
+              <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
+            </select>
 
             <input name="startDate" type="date" required className={inputClass} />
             <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
@@ -342,9 +349,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               ))}
             </select>
 
-            <textarea name="description" className={textareaClass} placeholder="Descrição, critério SGQ ou instrução de trabalho" />
+            <textarea name="description" className={`${textareaClass} min-h-11 lg:col-span-4`} placeholder="Descrição, critério SGQ ou instrução de trabalho" />
 
-            <button className={buttonClass}>Criar agendamentos do ano</button>
+            <button className={`${buttonClass} lg:col-span-2`}>Criar agendamentos do ano</button>
           </form>
         </Panel>
 
