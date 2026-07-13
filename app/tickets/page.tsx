@@ -10,6 +10,7 @@ import {
   resolveOwnMaintenanceTicket,
   startMaintenanceTicket,
   suspendMaintenanceTicket,
+  updateMaintenanceTicketTiming,
   validateMaintenanceTicket,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -78,6 +79,20 @@ function duration(seconds: number) {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
+function dateTimeInputValue(date: Date | null | undefined) {
+  if (!date) return "";
+  const pad = (value: number) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function durationParts(seconds: number) {
+  const safeSeconds = Math.max(seconds, 0);
+  return {
+    hours: Math.floor(safeSeconds / 3600),
+    minutes: Math.floor((safeSeconds % 3600) / 60),
+  };
+}
+
 function workTime(ticket: {
   totalWorkSeconds: number;
   startedAt: Date | null;
@@ -100,6 +115,26 @@ function workTime(ticket: {
   return duration(activeSeconds);
 }
 
+function workTimeSeconds(ticket: {
+  totalWorkSeconds: number;
+  startedAt: Date | null;
+  lastResumedAt?: Date | null;
+  status?: string;
+  completedAt?: Date | null;
+}) {
+  if (ticket.status === "IN_PROGRESS" && ticket.lastResumedAt) {
+    return ticket.totalWorkSeconds + Math.max(Math.floor((new Date().getTime() - ticket.lastResumedAt.getTime()) / 1000), 0);
+  }
+
+  if (ticket.totalWorkSeconds > 0) {
+    return ticket.totalWorkSeconds;
+  }
+
+  return ticket.startedAt
+    ? Math.max(Math.floor(((ticket.completedAt ?? new Date()).getTime() - ticket.startedAt.getTime()) / 1000), 0)
+    : 0;
+}
+
 function downtime(ticket: {
   machineStopped?: boolean;
   downtimeSeconds: number;
@@ -117,6 +152,18 @@ function downtime(ticket: {
   const end = ticket.completedAt ?? new Date();
 
   return duration(Math.floor((end.getTime() - ticket.openedAt.getTime()) / 1000));
+}
+
+function downtimeSecondsValue(ticket: {
+  machineStopped?: boolean;
+  downtimeSeconds: number;
+  openedAt: Date;
+  completedAt?: Date | null;
+}) {
+  if (ticket.machineStopped === false) return 0;
+  if (ticket.downtimeSeconds > 0) return ticket.downtimeSeconds;
+  const end = ticket.completedAt ?? new Date();
+  return Math.max(Math.floor((end.getTime() - ticket.openedAt.getTime()) / 1000), 0);
 }
 
 function TicketCreateForm({
@@ -517,6 +564,71 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                       </form>
                     ) : null}
                   </div>
+
+                  {canManageTickets ? (
+                    <details className="mt-4 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                      <summary className="cursor-pointer text-sm font-semibold text-zinc-100">
+                        Corrigir datas, tempos e custos
+                      </summary>
+                      <form action={updateMaintenanceTicketTiming} className="mt-4 space-y-3">
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <div className="grid gap-3 md:grid-cols-2">
+                          <label className="space-y-2">
+                            <span className="text-xs font-medium text-zinc-400">Aberto em</span>
+                            <input type="datetime-local" name="openedAt" className={inputClass} defaultValue={dateTimeInputValue(ticket.openedAt)} />
+                          </label>
+                          <label className="space-y-2">
+                            <span className="text-xs font-medium text-zinc-400">Iniciado em</span>
+                            <input type="datetime-local" name="startedAt" className={inputClass} defaultValue={dateTimeInputValue(ticket.startedAt)} />
+                          </label>
+                          <label className="space-y-2">
+                            <span className="text-xs font-medium text-zinc-400">Pausado em</span>
+                            <input type="datetime-local" name="pausedAt" className={inputClass} defaultValue={dateTimeInputValue(ticket.pausedAt)} />
+                          </label>
+                          <label className="space-y-2">
+                            <span className="text-xs font-medium text-zinc-400">Concluido em</span>
+                            <input type="datetime-local" name="completedAt" className={inputClass} defaultValue={dateTimeInputValue(ticket.completedAt)} />
+                          </label>
+                          <label className="space-y-2">
+                            <span className="text-xs font-medium text-zinc-400">Validado em</span>
+                            <input type="datetime-local" name="validatedAt" className={inputClass} defaultValue={dateTimeInputValue(ticket.validatedAt)} />
+                          </label>
+                          <label className="space-y-2">
+                            <span className="text-xs font-medium text-zinc-400">Custo mao de obra EUR/h</span>
+                            <input name="hourlyRate" className={inputClass} placeholder="Vazio usa responsavel/utilizador atual" />
+                          </label>
+                          <div className="grid grid-cols-2 gap-2">
+                            <label className="space-y-2">
+                              <span className="text-xs font-medium text-zinc-400">Horas trabalho</span>
+                              <input type="number" min="0" name="workHours" className={inputClass} defaultValue={durationParts(workTimeSeconds(ticket)).hours} />
+                            </label>
+                            <label className="space-y-2">
+                              <span className="text-xs font-medium text-zinc-400">Min. trabalho</span>
+                              <input type="number" min="0" max="59" name="workMinutes" className={inputClass} defaultValue={durationParts(workTimeSeconds(ticket)).minutes} />
+                            </label>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <label className="space-y-2">
+                              <span className="text-xs font-medium text-zinc-400">Horas paragem</span>
+                              <input type="number" min="0" name="downtimeHours" className={inputClass} defaultValue={durationParts(downtimeSecondsValue(ticket)).hours} disabled={!ticket.machineStopped} />
+                            </label>
+                            <label className="space-y-2">
+                              <span className="text-xs font-medium text-zinc-400">Min. paragem</span>
+                              <input type="number" min="0" max="59" name="downtimeMinutes" className={inputClass} defaultValue={durationParts(downtimeSecondsValue(ticket)).minutes} disabled={!ticket.machineStopped} />
+                            </label>
+                          </div>
+                        </div>
+                        <textarea
+                          name="correctionNotes"
+                          className={textareaClass}
+                          placeholder="Motivo da correcao: ticket ficou aberto, tempo validado por..."
+                        />
+                        <button className="inline-flex h-10 items-center justify-center rounded-lg border border-sky-300/40 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100">
+                          Guardar correcao
+                        </button>
+                      </form>
+                    </details>
+                  ) : null}
 
                   {ticket.status === "SUSPENDED" ? (
                     <div className="mt-4 rounded-lg border border-orange-300/25 bg-orange-300/10 p-3">

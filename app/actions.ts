@@ -2297,6 +2297,137 @@ export async function reopenMaintenanceTicket(formData: FormData) {
   revalidatePath("/");
 }
 
+export async function updateMaintenanceTicketTiming(formData: FormData) {
+  const user = await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  const openedAt = optionalDateTime(formData, "openedAt");
+  const startedAt = optionalDateTime(formData, "startedAt");
+  const pausedAt = optionalDateTime(formData, "pausedAt");
+  const completedAt = optionalDateTime(formData, "completedAt");
+  const validatedAt = optionalDateTime(formData, "validatedAt");
+  const workHours = Number.parseInt(optionalText(formData, "workHours") ?? "0", 10);
+  const workMinutes = Number.parseInt(optionalText(formData, "workMinutes") ?? "0", 10);
+  const downtimeHours = Number.parseInt(optionalText(formData, "downtimeHours") ?? "0", 10);
+  const downtimeMinutes = Number.parseInt(optionalText(formData, "downtimeMinutes") ?? "0", 10);
+  const totalWorkSeconds = Math.max((Number.isFinite(workHours) ? workHours : 0) * 3600 + (Number.isFinite(workMinutes) ? workMinutes : 0) * 60, 0);
+  const requestedDowntimeSeconds = Math.max((Number.isFinite(downtimeHours) ? downtimeHours : 0) * 3600 + (Number.isFinite(downtimeMinutes) ? downtimeMinutes : 0) * 60, 0);
+  const manualHourlyRate = decimalNumber(optionalText(formData, "hourlyRate") ?? "");
+  const correctionNotes = optionalText(formData, "correctionNotes");
+
+  let equipmentId: string | null = null;
+
+  await prisma.$transaction(async (tx) => {
+    const ticket = await tx.maintenanceTicket.findUnique({
+      where: { id },
+      include: {
+        assignedTo: true,
+        consumables: true,
+        workOrder: { include: { maintenanceLog: true } },
+      },
+    });
+    if (!ticket) return;
+
+    equipmentId = ticket.equipmentId;
+    const hourlyRate =
+      Number.isFinite(manualHourlyRate) && manualHourlyRate > 0
+        ? manualHourlyRate
+        : Number(ticket.assignedTo?.hourlyRate ?? user.hourlyRate ?? 0);
+    const downtimeSeconds = ticket.machineStopped ? requestedDowntimeSeconds : 0;
+    const consumableCost = ticket.consumables.reduce(
+      (sum, usage) => sum + Number(usage.quantity ?? 0) * Number(usage.unitCost ?? 0),
+      0,
+    );
+    const laborCost = Number(((totalWorkSeconds / 3600) * hourlyRate).toFixed(2));
+    const totalCost = Number((laborCost + consumableCost).toFixed(2));
+    const previous = [
+      `aberto=${ticket.openedAt.toISOString()}`,
+      `iniciado=${ticket.startedAt?.toISOString() ?? "sem data"}`,
+      `pausado=${ticket.pausedAt?.toISOString() ?? "sem data"}`,
+      `concluido=${ticket.completedAt?.toISOString() ?? "sem data"}`,
+      `validado=${ticket.validatedAt?.toISOString() ?? "sem data"}`,
+      `trabalho=${durationNote(ticket.totalWorkSeconds)}`,
+      `paragem=${durationNote(ticket.downtimeSeconds)}`,
+      `custo=${Number(ticket.totalCost).toFixed(2)} EUR`,
+    ].join("; ");
+    const next = [
+      `aberto=${openedAt?.toISOString() ?? "sem data"}`,
+      `iniciado=${startedAt?.toISOString() ?? "sem data"}`,
+      `pausado=${pausedAt?.toISOString() ?? "sem data"}`,
+      `concluido=${completedAt?.toISOString() ?? "sem data"}`,
+      `validado=${validatedAt?.toISOString() ?? "sem data"}`,
+      `trabalho=${durationNote(totalWorkSeconds)}`,
+      `paragem=${durationNote(downtimeSeconds)}`,
+      `custo=${totalCost.toFixed(2)} EUR`,
+    ].join("; ");
+    const costNote = [
+      `Tempo de trabalho corrigido: ${durationNote(totalWorkSeconds)}`,
+      `Tempo de paragem corrigido: ${durationNote(downtimeSeconds)}`,
+      `Custo/hora aplicado: ${hourlyRate.toFixed(2)} EUR`,
+      `Mao de obra corrigida: ${laborCost.toFixed(2)} EUR`,
+      `Consumiveis: ${consumableCost.toFixed(2)} EUR`,
+      `Total corrigido: ${totalCost.toFixed(2)} EUR`,
+    ].join("\n");
+    const note = auditNote("Correcao manual de datas/tempos/custo do ticket", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}\n${costNote}`);
+
+    await tx.maintenanceTicket.update({
+      where: { id },
+      data: {
+        openedAt: openedAt ?? ticket.openedAt,
+        startedAt,
+        pausedAt,
+        completedAt,
+        validatedAt,
+        lastResumedAt: ticket.status === "IN_PROGRESS" ? startedAt ?? ticket.lastResumedAt : null,
+        totalWorkSeconds,
+        downtimeSeconds,
+        laborCost: laborCost.toFixed(2),
+        consumableCost: consumableCost.toFixed(2),
+        totalCost: totalCost.toFixed(2),
+        observations: [ticket.observations, note].filter(Boolean).join("\n"),
+      },
+    });
+
+    if (ticket.workOrder) {
+      await tx.workOrder.update({
+        where: { id: ticket.workOrder.id },
+        data: {
+          openedAt: openedAt ?? ticket.workOrder.openedAt,
+          startedAt,
+          pausedAt,
+          closedAt: completedAt,
+          validatedAt,
+          lastResumedAt: ticket.workOrder.status === "IN_PROGRESS" ? startedAt ?? ticket.workOrder.lastResumedAt : null,
+          totalWorkSeconds,
+          notes: [ticket.workOrder.notes, note].filter(Boolean).join("\n"),
+        },
+      });
+
+      if (ticket.workOrder.maintenanceLog) {
+        await tx.maintenanceLog.update({
+          where: { id: ticket.workOrder.maintenanceLog.id },
+          data: {
+            date: completedAt ?? startedAt ?? openedAt ?? ticket.workOrder.maintenanceLog.date,
+            cost: totalCost.toFixed(2),
+            notes: [ticket.workOrder.maintenanceLog.notes, note].filter(Boolean).join("\n"),
+          },
+        });
+      }
+    }
+
+    await refreshEquipmentMaintenanceStatus(tx, ticket.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/tickets");
+  revalidatePath("/manutencao");
+  revalidatePath("/inventario");
+  revalidatePath("/equipamentos");
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
 export async function completeMaintenanceTicket(formData: FormData) {
   const user = await requireCanWrite();
   const prisma = getPrisma();
