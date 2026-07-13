@@ -2474,8 +2474,8 @@ export async function completeMaintenanceTicket(formData: FormData) {
         laborCost: laborCost.toFixed(2),
         consumableCost: consumableCost.toFixed(2),
         totalCost: (laborCost + consumableCost).toFixed(2),
-        solution: optionalText(formData, "solution"),
-        observations: optionalText(formData, "observations"),
+        solution: optionalText(formData, "solution") ?? ticket.solution,
+        observations: optionalText(formData, "observations") ?? ticket.observations,
         completedById: user.id,
       },
     });

@@ -565,6 +565,30 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                     ) : null}
                   </div>
 
+                  {ticket.status === "OPEN" ? (
+                    <form action={completeMaintenanceTicket} className="mt-4 grid gap-3 rounded-lg border border-teal-300/25 bg-teal-300/5 p-3">
+                      <input type="hidden" name="id" value={ticket.id} />
+                      <p className="text-sm font-semibold text-teal-100">Concluir ticket aberto/reaberto</p>
+                      <textarea
+                        name="solution"
+                        className={textareaClass}
+                        defaultValue={ticket.solution ?? ""}
+                        placeholder="Solução aplicada / descrição do trabalho"
+                      />
+                      <textarea
+                        name="observations"
+                        className={textareaClass}
+                        defaultValue={ticket.observations ?? ""}
+                        placeholder="Observações internas da OP"
+                      />
+                      <TicketConsumables consumables={data.consumables} initialUsages={ticket.consumables} />
+                      <button className={`${buttonClass} w-fit`}>
+                        <CheckCircle2 size={17} />
+                        Guardar / concluir trabalho
+                      </button>
+                    </form>
+                  ) : null}
+
                   {canManageTickets ? (
                     <details className="mt-4 rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
                       <summary className="cursor-pointer text-sm font-semibold text-zinc-100">
@@ -637,7 +661,7 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                     </div>
                   ) : null}
 
-                  {(["OPEN", "IN_PROGRESS", "PAUSED", "DONE"].includes(ticket.status)) && (
+                  {(["IN_PROGRESS", "PAUSED", "DONE"].includes(ticket.status)) && (
                     <form action={completeMaintenanceTicket} className="mt-4 grid gap-3">
                       <input type="hidden" name="id" value={ticket.id} />
 
