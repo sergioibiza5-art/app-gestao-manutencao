@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { FileText, Search, X } from "lucide-react";
+import { FileText, Plus, Search, X } from "lucide-react";
 
 import { createExpense } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsModal } from "@/app/components/details-modal";
 import {
   buttonClass,
   EmptyState,
@@ -98,67 +99,82 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
     return `/despesas?${query.toString()}`;
   };
 
+  const newExpenseAction = (
+    <DetailsModal
+      id="nova-despesa"
+      title="nova despesa"
+      maxWidth="max-w-3xl"
+      button={
+        <span className={buttonClass}>
+          <Plus size={18} />
+          Nova despesa
+        </span>
+      }
+    >
+      <Panel>
+        <h2 className="text-xl font-semibold text-zinc-50">Nova despesa</h2>
+
+        <form action={createExpense} className="mt-4 space-y-3">
+          <input name="title" required className={inputClass} placeholder="TÃ­tulo" />
+          <input name="supplier" className={inputClass} placeholder="Fornecedor" />
+
+          <div className="grid grid-cols-2 gap-3">
+            <input name="amount" required className={inputClass} placeholder="Valor" />
+            <input name="costCenter" className={inputClass} placeholder="Centro de custo" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <input name="date" type="date" className={inputClass} />
+            <select name="status" className={inputClass}>
+              <option value="PAID">Pago</option>
+              <option value="PENDING">Pendente</option>
+              <option value="CANCELED">Cancelado</option>
+            </select>
+          </div>
+
+          <input name="category" className={inputClass} placeholder="Categoria" />
+
+          <select name="equipmentId" className={inputClass}>
+            <option value="">Sem equipamento associado</option>
+            {equipment.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+                {item.code ? ` Â· ${item.code}` : ""}
+              </option>
+            ))}
+          </select>
+
+          <select name="vehicleId" className={inputClass}>
+            <option value="">Sem viatura associada</option>
+            {vehicles.map((vehicle) => (
+              <option key={vehicle.id} value={vehicle.id}>
+                {vehicle.brand} {vehicle.model} - {vehicle.plate}
+              </option>
+            ))}
+          </select>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <input name="invoiceUrl" className={inputClass} placeholder="Link/caminho da fatura" />
+            <input name="invoiceName" className={inputClass} placeholder="Nome do ficheiro" />
+          </div>
+
+          <textarea name="notes" className={textareaClass} placeholder="Notas ou referÃªncia documental" />
+          <button className={buttonClass}>Guardar despesa</button>
+        </form>
+      </Panel>
+    </DetailsModal>
+  );
+
   return (
     <AppShell activeHref="/despesas">
       <PageHeader
         eyebrow="Financeiro"
         title="Despesas e faturas"
         description="Regista despesas, associa equipamentos e guarda a cópia da fatura para rastreabilidade."
+              action={newExpenseAction}
       />
 
-      <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
-        <Panel>
-          <h2 className="text-xl font-semibold text-zinc-50">Nova despesa</h2>
-
-          <form action={createExpense} className="mt-4 space-y-3">
-            <input name="title" required className={inputClass} placeholder="Título" />
-            <input name="supplier" className={inputClass} placeholder="Fornecedor" />
-
-            <div className="grid grid-cols-2 gap-3">
-              <input name="amount" required className={inputClass} placeholder="Valor" />
-              <input name="costCenter" className={inputClass} placeholder="Centro de custo" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <input name="date" type="date" className={inputClass} />
-              <select name="status" className={inputClass}>
-                <option value="PAID">Pago</option>
-                <option value="PENDING">Pendente</option>
-                <option value="CANCELED">Cancelado</option>
-              </select>
-            </div>
-
-            <input name="category" className={inputClass} placeholder="Categoria" />
-
-            <select name="equipmentId" className={inputClass}>
-              <option value="">Sem equipamento associado</option>
-              {equipment.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                  {item.code ? ` · ${item.code}` : ""}
-                </option>
-              ))}
-            </select>
-
-            <select name="vehicleId" className={inputClass}>
-              <option value="">Sem viatura associada</option>
-              {vehicles.map((vehicle) => (
-                <option key={vehicle.id} value={vehicle.id}>
-                  {vehicle.brand} {vehicle.model} - {vehicle.plate}
-                </option>
-              ))}
-            </select>
-
-            <div className="grid gap-3 md:grid-cols-2">
-              <input name="invoiceUrl" className={inputClass} placeholder="Link/caminho da fatura" />
-              <input name="invoiceName" className={inputClass} placeholder="Nome do ficheiro" />
-            </div>
-
-            <textarea name="notes" className={textareaClass} placeholder="Notas ou referência documental" />
-            <button className={buttonClass}>Guardar despesa</button>
-          </form>
-        </Panel>
-
+      <section>
         <Panel>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -177,8 +193,8 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
             </Link>
           </div>
 
-          <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-3">
-            <div className="relative md:col-span-2 xl:col-span-3">
+          <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(5,minmax(145px,1fr))_auto]">
+            <div className="relative md:col-span-2 xl:col-span-1">
               <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
               <input
                 name="q"

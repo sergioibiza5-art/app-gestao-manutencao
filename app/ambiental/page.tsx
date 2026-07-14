@@ -1,7 +1,8 @@
-import { AlertTriangle, Download, FileSpreadsheet, Leaf, Search, Trash2 } from "lucide-react";
+﻿import { AlertTriangle, Download, FileSpreadsheet, Leaf, Search, Trash2 } from "lucide-react";
 
 import { deleteEnvironmentalImport, importEnvironmentalReport, updateEnvironmentalSettings } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsModal } from "@/app/components/details-modal";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
 import { getEnvironmentalData } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -262,14 +263,14 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]">
-        <aside className="space-y-4">
-          <Panel>
+      <section className="space-y-4">
+        <aside className="grid gap-4 xl:grid-cols-4">
+          <Panel className="xl:col-span-4">
             <div className="flex items-center gap-3">
               <Search size={20} className="text-teal-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
-            <form className="mt-4 space-y-3">
+            <form className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[repeat(5,minmax(150px,1fr))_auto_auto]">
               <select name="days" className={inputClass} defaultValue={days}>
                 <option value="1">Ultimas 24h</option>
                 <option value="7">Ultimos 7 dias</option>
@@ -300,7 +301,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                   <option key={item.id} value={item.id}>{item.fileName}</option>
                 ))}
               </select>
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-none">
                 <button className={buttonClass}>Filtrar</button>
                 <a
                   href={`/api/ambiental/pdf?${pdfQuery}`}
@@ -313,6 +314,18 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             </form>
           </Panel>
 
+          <div className="grid gap-3 md:grid-cols-3">
+          <DetailsModal
+            id="horario-alertas-ambiental"
+            title="horario de alertas"
+            maxWidth="max-w-3xl"
+            button={
+              <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+                <AlertTriangle size={17} />
+                Editar horario de alertas
+              </span>
+            }
+          >
           <Panel>
             <div className="flex items-center gap-3">
               <AlertTriangle size={20} className="text-amber-300" />
@@ -352,7 +365,18 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               Fora deste horario as leituras continuam no historico, mas nao contam para alertas, acoes ou eventos.
             </p>
           </Panel>
-
+          </DetailsModal>
+          <DetailsModal
+            id="importar-relatorio-ambiental"
+            title="importar relatorio"
+            maxWidth="max-w-3xl"
+            button={
+              <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+                <FileSpreadsheet size={17} />
+                Importar relatorio
+              </span>
+            }
+          >
           <Panel>
             <div className="flex items-center gap-3">
               <FileSpreadsheet size={22} className="text-lime-300" />
@@ -366,7 +390,18 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               Podes selecionar varios ficheiros. Aceita T1/H1/PA e tambem Temperature1/Humidity1/PressureA, com mapeamento automatico para salas e ligacoes.
             </p>
           </Panel>
-
+          </DetailsModal>
+          <DetailsModal
+            id="importacoes-ambientais"
+            title="importacoes"
+            maxWidth="max-w-3xl"
+            button={
+              <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+                <FileSpreadsheet size={17} />
+                Ver importacoes
+              </span>
+            }
+          >
           <Panel>
             <h2 className="text-xl font-semibold text-zinc-50">Ultimas importacoes</h2>
             <div className="mt-4 space-y-2">
@@ -397,6 +432,8 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               )}
             </div>
           </Panel>
+          </DetailsModal>
+          </div>
         </aside>
 
         <section className="space-y-4">

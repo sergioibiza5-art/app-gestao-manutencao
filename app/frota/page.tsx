@@ -3,6 +3,7 @@ import { Car, Gauge, Plus } from "lucide-react";
 
 import { createVehicle } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsModal } from "@/app/components/details-modal";
 import {
   buttonClass,
   EmptyState,
@@ -41,6 +42,50 @@ export default async function FleetPage() {
   const totalVehicles = vehicles.length;
   const totalCost = vehicles.reduce((sum, vehicle) => sum + vehicle.metrics.totalCost, 0);
   const totalLatestKm = vehicles.reduce((sum, vehicle) => sum + vehicle.metrics.latestKm, 0);
+  const newVehicleAction = (
+    <DetailsModal
+      id="novo-veiculo"
+      title="novo veiculo"
+      maxWidth="max-w-2xl"
+      button={
+        <span className={buttonClass}>
+          <Plus size={18} />
+          Novo veÃ­culo
+        </span>
+      }
+    >
+      <Panel className="min-w-0">
+        <div className="flex items-center gap-3">
+          <Car size={22} className="shrink-0 text-blue-300" />
+          <h2 className="text-xl font-semibold text-zinc-50">Cadastrar veÃ­culo</h2>
+        </div>
+
+        <form action={createVehicle} className="mt-4 space-y-3">
+          <input name="brand" required className={`${inputClass} w-full min-w-0`} placeholder="Marca" />
+          <input name="model" required className={`${inputClass} w-full min-w-0`} placeholder="Modelo" />
+          <input name="plate" required className={`${inputClass} w-full min-w-0`} placeholder="MatrÃ­cula" />
+
+          <div className="grid grid-cols-2 gap-3">
+            <select name="fuel" className={`${inputClass} w-full min-w-0`}>
+              <option value="DIESEL">GasÃ³leo</option>
+              <option value="GASOLINE">Gasolina</option>
+              <option value="HYBRID">HÃ­brido</option>
+              <option value="ELECTRIC">ElÃ©trico</option>
+              <option value="LPG">GPL</option>
+              <option value="OTHER">Outro</option>
+            </select>
+
+            <input name="year" className={`${inputClass} w-full min-w-0`} placeholder="Ano" />
+          </div>
+
+          <input name="driver" className={`${inputClass} w-full min-w-0`} placeholder="Pessoa que conduz" />
+          <textarea name="notes" className={`${textareaClass} w-full min-w-0`} placeholder="Notas" />
+
+          <button className={`${buttonClass} w-full justify-center`}>Guardar veÃ­culo</button>
+        </form>
+      </Panel>
+    </DetailsModal>
+  );
 
   return (
     <AppShell activeHref="/frota">
@@ -48,12 +93,7 @@ export default async function FleetPage() {
         eyebrow="Frota"
         title="Gestão de veículos"
         description="Lista compacta para consulta diária. Abre uma viatura para gerir km, revisões, custos e inspeções."
-        action={
-          <a href="#novo-veiculo" className={buttonClass}>
-            <Plus size={18} />
-            Novo veículo
-          </a>
-        }
+        action={newVehicleAction}
       />
 
       <section className="grid gap-4 md:grid-cols-3">
@@ -73,43 +113,7 @@ export default async function FleetPage() {
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)]">
-        <Panel className="min-w-0">
-          <div className="flex items-center gap-3">
-            <Car size={22} className="shrink-0 text-blue-300" />
-            <h2 id="novo-veiculo" className="text-xl font-semibold text-zinc-50">
-              Cadastrar veículo
-            </h2>
-          </div>
-
-          <form action={createVehicle} className="mt-4 space-y-3">
-            <div className="grid grid-cols-1 gap-3">
-              <input name="brand" required className={`${inputClass} w-full min-w-0`} placeholder="Marca" />
-              <input name="model" required className={`${inputClass} w-full min-w-0`} placeholder="Modelo" />
-            </div>
-
-            <input name="plate" required className={`${inputClass} w-full min-w-0`} placeholder="Matrícula" />
-
-            <div className="grid grid-cols-1 gap-3">
-              <select name="fuel" className={`${inputClass} w-full min-w-0`}>
-                <option value="DIESEL">Gasóleo</option>
-                <option value="GASOLINE">Gasolina</option>
-                <option value="HYBRID">Híbrido</option>
-                <option value="ELECTRIC">Elétrico</option>
-                <option value="LPG">GPL</option>
-                <option value="OTHER">Outro</option>
-              </select>
-
-              <input name="year" className={`${inputClass} w-full min-w-0`} placeholder="Ano" />
-            </div>
-
-            <input name="driver" className={`${inputClass} w-full min-w-0`} placeholder="Pessoa que conduz" />
-            <textarea name="notes" className={`${textareaClass} w-full min-w-0`} placeholder="Notas" />
-
-            <button className={`${buttonClass} w-full justify-center`}>Guardar veículo</button>
-          </form>
-        </Panel>
-
+      <section>
         <Panel className="min-w-0">
           <div className="flex items-center gap-3">
             <Gauge size={22} className="shrink-0 text-teal-300" />

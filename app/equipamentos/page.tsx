@@ -14,6 +14,7 @@ import {
 import { createEquipment, importEquipmentCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsCloseButton } from "@/app/components/details-close-button";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import {
   buttonClass,
   EmptyState,
@@ -216,10 +217,10 @@ const filteredEquipment = typedEquipment.filter((item) => {
         title="Equipamentos"
         description="Gestão rápida de equipamentos com pesquisa, filtros e tabela compacta para grandes volumes."
         action={
-          <a href="#novo-equipamento" className={buttonClass}>
+          <DetailsOpenButton targetId="novo-equipamento" className={buttonClass}>
             <Plus size={18} />
             Novo equipamento
-          </a>
+          </DetailsOpenButton>
         }
       />
 
@@ -250,16 +251,15 @@ const filteredEquipment = typedEquipment.filter((item) => {
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]">
-        <div className="space-y-4">
-          <Panel>
+      <section className="space-y-4">
+        <Panel>
             <div className="flex items-center gap-3">
               <Filter size={21} className="text-teal-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
 
-            <form className="mt-4 space-y-3">
-              <div className="relative">
+            <form className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(5,minmax(145px,1fr))_auto]">
+              <div className="relative md:col-span-2 xl:col-span-1">
                 <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input
                   name="q"
@@ -310,7 +310,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 <option value="false">Sem medição/monitorização</option>
               </select>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 xl:grid-cols-none">
                 <button className={buttonClass}>Aplicar</button>
 
                 <Link
@@ -325,7 +325,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
           </Panel>
 
           <details id="novo-equipamento" className="group">
-            <summary className="flex h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
+            <summary className="hidden">
               <Plus size={18} />
               Novo equipamento
             </summary>
@@ -455,7 +455,6 @@ const filteredEquipment = typedEquipment.filter((item) => {
         </div>
       </div>
           </details>
-        </div>
 
         <Panel className="min-w-0">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

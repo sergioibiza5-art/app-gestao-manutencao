@@ -22,6 +22,8 @@ import {
   updateMaintenanceSchedule,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsCloseButton } from "@/app/components/details-close-button";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
@@ -283,77 +285,85 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         title="Manutenção"
         description="Cria manutenções internas ou externas, agenda o ano completo e consulta o mapa por dia, semana, mês ou ano."
         action={
-          <a href="#agendamento-anual" className={buttonClass}>
+          <DetailsOpenButton targetId="agendamento-anual" className={buttonClass}>
             <Plus size={18} />
             Agendar ano
-          </a>
+          </DetailsOpenButton>
         }
       />
 
       <section className="space-y-4">
-        <Panel>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex items-center gap-3">
-              <CalendarDays size={22} className="text-cyan-300" />
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Planeamento</p>
-                <h2 id="agendamento-anual" className="text-xl font-semibold text-zinc-50">
-                  Agendamento anual
-                </h2>
-              </div>
+        <details id="agendamento-anual" className="group">
+          <summary className="hidden">Agendamento anual</summary>
+          <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+            <div className="mx-auto max-w-6xl">
+              <Panel>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <CalendarDays size={22} className="text-cyan-300" />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Planeamento</p>
+                      <h2 className="text-xl font-semibold text-zinc-50">
+                        Agendamento anual
+                      </h2>
+                    </div>
+                  </div>
+
+                  <p className="max-w-xl text-sm text-zinc-500">
+                    Cria recorrências para o ano e consulta tudo no mapa completo abaixo.
+                  </p>
+                </div>
+
+                <DetailsCloseButton targetId="agendamento-anual" />
+                <form action={createAnnualMaintenanceSchedule} className="mt-4 grid gap-3 lg:grid-cols-6">
+                  <select name="equipmentId" required className={inputClass}>
+                    <option value="">Selecionar equipamento</option>
+                    {equipment.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input name="title" required className={`${inputClass} lg:col-span-2`} placeholder="Manutenção a agendar" />
+
+                  <select name="type" className={inputClass}>
+                    <option value="INTERNAL">Interna</option>
+                    <option value="EXTERNAL">Externa</option>
+                  </select>
+
+                  <select name="frequency" className={inputClass}>
+                    <option value="DAILY">Diária</option>
+                    <option value="WEEKLY">Semanal</option>
+                    <option value="MONTHLY">Mensal</option>
+                    <option value="QUARTERLY">Trimestral</option>
+                    <option value="FOUR_MONTHLY">Quadrimestral</option>
+                    <option value="SEMIANNUAL">Semestral</option>
+                    <option value="ANNUAL">Anual</option>
+                    <option value="BIENNIAL">Bienal (2 anos)</option>
+                    <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
+                  </select>
+
+                  <input name="startDate" type="date" required className={inputClass} />
+                  <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
+
+                  <select name="costCenter" className={inputClass} defaultValue="">
+                    <option value="">Tipo de manutenção</option>
+                    {maintenanceTypeOptions.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+
+                  <textarea name="description" className={`${textareaClass} min-h-11 lg:col-span-4`} placeholder="Descrição, critério SGQ ou instrução de trabalho" />
+
+                  <button className={`${buttonClass} lg:col-span-2`}>Criar agendamentos do ano</button>
+                </form>
+              </Panel>
             </div>
-
-            <p className="max-w-xl text-sm text-zinc-500">
-              Cria recorrências para o ano e consulta tudo no mapa completo abaixo.
-            </p>
           </div>
-
-          <form action={createAnnualMaintenanceSchedule} className="mt-4 grid gap-3 lg:grid-cols-6">
-            <select name="equipmentId" required className={inputClass}>
-              <option value="">Selecionar equipamento</option>
-              {equipment.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-
-            <input name="title" required className={`${inputClass} lg:col-span-2`} placeholder="Manutenção a agendar" />
-
-            <select name="type" className={inputClass}>
-              <option value="INTERNAL">Interna</option>
-              <option value="EXTERNAL">Externa</option>
-            </select>
-
-            <select name="frequency" className={inputClass}>
-              <option value="DAILY">Diária</option>
-              <option value="WEEKLY">Semanal</option>
-              <option value="MONTHLY">Mensal</option>
-              <option value="QUARTERLY">Trimestral</option>
-              <option value="FOUR_MONTHLY">Quadrimestral</option>
-              <option value="SEMIANNUAL">Semestral</option>
-              <option value="ANNUAL">Anual</option>
-              <option value="BIENNIAL">Bienal (2 anos)</option>
-              <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
-            </select>
-
-            <input name="startDate" type="date" required className={inputClass} />
-            <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
-
-            <select name="costCenter" className={inputClass} defaultValue="">
-              <option value="">Tipo de manutenção</option>
-              {maintenanceTypeOptions.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-
-            <textarea name="description" className={`${textareaClass} min-h-11 lg:col-span-4`} placeholder="Descrição, critério SGQ ou instrução de trabalho" />
-
-            <button className={`${buttonClass} lg:col-span-2`}>Criar agendamentos do ano</button>
-          </form>
-        </Panel>
+        </details>
 
         <Panel>
           <div className="flex flex-col gap-4">

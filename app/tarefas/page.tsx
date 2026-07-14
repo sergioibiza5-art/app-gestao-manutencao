@@ -1,5 +1,8 @@
+import { Plus } from "lucide-react";
+
 import { createTask, deleteTask, updateTask } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsModal } from "@/app/components/details-modal";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -23,6 +26,60 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const selectedTaskId = params.taskId ?? "";
 
   const { tasks, equipment } = await getModuleData();
+  const newTaskAction = (
+    <DetailsModal
+      id="nova-tarefa"
+      title="nova tarefa"
+      maxWidth="max-w-3xl"
+      button={
+        <span className={buttonClass}>
+          <Plus size={18} />
+          Nova tarefa
+        </span>
+      }
+    >
+      <Panel>
+        <h2 className="text-xl font-semibold text-zinc-50">Nova tarefa</h2>
+
+        <form action={createTask} className="mt-4 space-y-3">
+          <input name="title" required className={inputClass} placeholder="Titulo" />
+
+          <select name="isRecurring" className={inputClass} defaultValue="false">
+            <option value="false">Tarefa pontual</option>
+            <option value="true">Tarefa recorrente</option>
+          </select>
+
+          <select name="frequency" className={inputClass}>
+            <option value="MONTHLY">Mensal, se recorrente</option>
+            <option value="DAILY">Diaria</option>
+            <option value="WEEKLY">Semanal</option>
+            <option value="QUARTERLY">Trimestral</option>
+            <option value="FOUR_MONTHLY">Quadrimestral</option>
+            <option value="SEMIANNUAL">Semestral</option>
+            <option value="ANNUAL">Anual</option>
+          </select>
+
+          <select name="equipmentId" className={inputClass}>
+            <option value="">Sem equipamento</option>
+            {equipment.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+
+          <div className="grid grid-cols-2 gap-3">
+            <input name="dueDate" type="date" className={inputClass} />
+            <input name="dueTime" type="time" className={inputClass} />
+          </div>
+
+          <textarea name="description" className={textareaClass} placeholder="Descricao, criterio ou instrucao" />
+
+          <button className={buttonClass}>Guardar tarefa</button>
+        </form>
+      </Panel>
+    </DetailsModal>
+  );
 
   return (
     <AppShell activeHref="/tarefas">
@@ -30,50 +87,10 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         eyebrow="Rotina"
         title="Tarefas"
         description="Cria tarefas pontuais com data e hora ou tarefas recorrentes para a rotina diaria."
+        action={newTaskAction}
       />
 
-      <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
-        <Panel>
-          <h2 className="text-xl font-semibold text-zinc-50">Nova tarefa</h2>
-
-          <form action={createTask} className="mt-4 space-y-3">
-            <input name="title" required className={inputClass} placeholder="Titulo" />
-
-            <select name="isRecurring" className={inputClass} defaultValue="false">
-              <option value="false">Tarefa pontual</option>
-              <option value="true">Tarefa recorrente</option>
-            </select>
-
-            <select name="frequency" className={inputClass}>
-              <option value="MONTHLY">Mensal, se recorrente</option>
-              <option value="DAILY">Diaria</option>
-              <option value="WEEKLY">Semanal</option>
-              <option value="QUARTERLY">Trimestral</option>
-              <option value="FOUR_MONTHLY">Quadrimestral</option>
-              <option value="SEMIANNUAL">Semestral</option>
-              <option value="ANNUAL">Anual</option>
-            </select>
-
-            <select name="equipmentId" className={inputClass}>
-              <option value="">Sem equipamento</option>
-              {equipment.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-
-            <div className="grid grid-cols-2 gap-3">
-              <input name="dueDate" type="date" className={inputClass} />
-              <input name="dueTime" type="time" className={inputClass} />
-            </div>
-
-            <textarea name="description" className={textareaClass} placeholder="Descricao, criterio ou instrucao" />
-
-            <button className={buttonClass}>Guardar tarefa</button>
-          </form>
-        </Panel>
-
+      <section>
         <Panel>
           <h2 className="text-xl font-semibold text-zinc-50">Plano de tarefas</h2>
 

@@ -1,7 +1,8 @@
-import { CalendarDays, Search, Trash2, TreePalm } from "lucide-react";
+import { CalendarDays, Plus, Trash2, TreePalm } from "lucide-react";
 
 import { createVacation, deleteVacation, updateVacation } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsModal } from "@/app/components/details-modal";
 import {
   buttonClass,
   EmptyState,
@@ -81,6 +82,67 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
       return vacation.startDate <= monthEnd && vacation.endDate >= monthStart;
     }),
   }));
+  const newVacationAction = (
+    <DetailsModal
+      id="nova-marcacao-ferias"
+      title="nova marcacao"
+      maxWidth="max-w-2xl"
+      button={
+        <span className={buttonClass}>
+          <Plus size={18} />
+          Nova marcaÃ§Ã£o
+        </span>
+      }
+    >
+      <Panel>
+        <div className="flex items-center gap-3">
+          <TreePalm size={22} className="text-emerald-300" />
+          <h2 className="text-xl font-semibold text-zinc-50">Nova marcaÃ§Ã£o</h2>
+        </div>
+
+        <form action={createVacation} className="mt-4 space-y-3">
+          <select name="userId" className={inputClass}>
+            <option value="">Sem utilizador associado</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+
+          <input name="employeeName" required className={inputClass} placeholder="Nome da pessoa" />
+
+          <div className="grid grid-cols-2 gap-3">
+            <input name="startDate" required type="date" className={inputClass} />
+            <input name="endDate" required type="date" className={inputClass} />
+          </div>
+
+          <input name="days" type="number" step="0.5" min="0" className={inputClass} placeholder="Dias Ãºteis, ex.: 0.5" />
+
+          <div className="grid grid-cols-2 gap-3">
+            <input name="absenceHours" type="number" step="0.25" min="0" className={inputClass} placeholder="Horas de falta" />
+            <input name="bankHoursUsed" type="number" step="0.25" min="0" className={inputClass} placeholder="Horas banco" />
+          </div>
+
+          <StatusSelect />
+
+          <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3">
+            <label className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Cor da pessoa</label>
+            <input
+              type="color"
+              name="color"
+              defaultValue="#14b8a6"
+              className="mt-2 h-11 w-full cursor-pointer rounded-lg border border-zinc-800 bg-zinc-950 px-2"
+            />
+          </div>
+
+          <textarea name="notes" className={textareaClass} placeholder="ObservaÃ§Ãµes" />
+
+          <button className={buttonClass}>Guardar fÃ©rias</button>
+        </form>
+      </Panel>
+    </DetailsModal>
+  );
 
   return (
     <AppShell activeHref="/ferias">
@@ -88,6 +150,7 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
         eyebrow="Departamento"
         title="Férias da equipa"
         description="Planeia e acompanha as férias do departamento por pessoa, estado, período e ano."
+        action={newVacationAction}
       />
 
       <section className="grid gap-4 md:grid-cols-4">
@@ -113,70 +176,16 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]">
-        <div className="space-y-4">
-          <Panel>
-            <div className="flex items-center gap-3">
-              <TreePalm size={22} className="text-emerald-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Nova marcação</h2>
-            </div>
-
-            <form action={createVacation} className="mt-4 space-y-3">
-              <select name="userId" className={inputClass}>
-                <option value="">Sem utilizador associado</option>
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
-
-              <input name="employeeName" required className={inputClass} placeholder="Nome da pessoa" />
-
-              <div className="grid grid-cols-2 gap-3">
-                <input name="startDate" required type="date" className={inputClass} />
-                <input name="endDate" required type="date" className={inputClass} />
-              </div>
-
-              <input name="days" type="number" step="0.5" min="0" className={inputClass} placeholder="Dias úteis, ex.: 0.5" />
-
-              <div className="grid grid-cols-2 gap-3">
-                <input name="absenceHours" type="number" step="0.25" min="0" className={inputClass} placeholder="Horas de falta" />
-                <input name="bankHoursUsed" type="number" step="0.25" min="0" className={inputClass} placeholder="Horas banco" />
-              </div>
-
-              <StatusSelect />
-
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3">
-                <label className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">
-                  Cor da pessoa
-                </label>
-                <input
-                  type="color"
-                  name="color"
-                  defaultValue="#14b8a6"
-                  className="mt-2 h-11 w-full cursor-pointer rounded-lg border border-zinc-800 bg-zinc-950 px-2"
-                />
-              </div>
-
-              <textarea name="notes" className={textareaClass} placeholder="Observações" />
-
-              <button className={buttonClass}>Guardar férias</button>
-            </form>
-          </Panel>
-
-          <Panel>
-            <div className="flex items-center gap-3">
-              <Search size={20} className="text-teal-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Ano</h2>
-            </div>
-
-            <form className="mt-4 grid gap-3">
+      <section className="space-y-4">
+        <Panel>
+          <form className="grid gap-3 md:grid-cols-[minmax(180px,1fr)_auto] md:items-end">
+            <label className="space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">Ano</span>
               <input name="year" className={inputClass} defaultValue={selectedYear} />
-              <button className={buttonClass}>Ver ano</button>
-            </form>
-          </Panel>
-        </div>
+            </label>
+            <button className={buttonClass}>Ver ano</button>
+          </form>
+        </Panel>
 
         <Panel>
           <div className="flex items-center gap-3">
