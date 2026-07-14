@@ -270,42 +270,42 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <Search size={20} className="text-teal-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
-            <form className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[repeat(5,minmax(150px,1fr))_auto_auto]">
-              <select name="days" className={inputClass} defaultValue={days}>
+            <form className="mt-4 grid gap-3 text-sm md:grid-cols-2 2xl:grid-cols-[repeat(5,minmax(130px,1fr))_minmax(110px,auto)_minmax(145px,auto)]">
+              <select name="days" className={`${inputClass} min-w-0 text-sm`} defaultValue={days}>
                 <option value="1">Ultimas 24h</option>
                 <option value="7">Ultimos 7 dias</option>
                 <option value="30">Ultimos 30 dias</option>
                 <option value="90">Ultimos 90 dias</option>
               </select>
-              <select name="type" className={inputClass} defaultValue={type}>
+              <select name="type" className={`${inputClass} min-w-0 text-sm`} defaultValue={type}>
                 <option value="ALL">Todos os tipos</option>
                 <option value="TEMPERATURE">Temperatura</option>
                 <option value="HUMIDITY">Humidade</option>
                 <option value="PRESSURE">Pressao</option>
               </select>
-              <select name="zone" className={inputClass} defaultValue={zone}>
+              <select name="zone" className={`${inputClass} min-w-0 text-sm`} defaultValue={zone}>
                 <option value="ALL">Todas as zonas</option>
                 {zones.map((item) => (
                   <option key={item} value={item}>{item}</option>
                 ))}
               </select>
-              <select name="status" className={inputClass} defaultValue={status}>
+              <select name="status" className={`${inputClass} min-w-0 text-sm`} defaultValue={status}>
                 <option value="ALL">Todos os estados</option>
                 <option value="OK">OK</option>
                 <option value="ALERT">Alerta</option>
                 <option value="ACTION">Acao</option>
               </select>
-              <select name="importId" className={inputClass} defaultValue={importId}>
+              <select name="importId" className={`${inputClass} min-w-0 text-sm`} defaultValue={importId}>
                 <option value="ALL">Todas as importacoes</option>
                 {imports.map((item) => (
                   <option key={item.id} value={item.id}>{item.fileName}</option>
                 ))}
               </select>
-              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-none">
-                <button className={buttonClass}>Filtrar</button>
+              <div className="grid gap-2 sm:grid-cols-2 2xl:contents">
+                <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Filtrar</button>
                 <a
                   href={`/api/ambiental/pdf?${pdfQuery}`}
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200"
                 >
                   <Download size={16} />
                   Exportar PDF
@@ -314,13 +314,13 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             </form>
           </Panel>
 
-          <div className="grid gap-3 md:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-3 xl:col-span-4">
           <DetailsModal
             id="horario-alertas-ambiental"
             title="horario de alertas"
             maxWidth="max-w-3xl"
             button={
-              <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+              <span className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
                 <AlertTriangle size={17} />
                 Editar horario de alertas
               </span>
@@ -371,7 +371,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             title="importar relatorio"
             maxWidth="max-w-3xl"
             button={
-              <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+              <span className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
                 <FileSpreadsheet size={17} />
                 Importar relatorio
               </span>
@@ -396,7 +396,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             title="importacoes"
             maxWidth="max-w-3xl"
             button={
-              <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+              <span className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
                 <FileSpreadsheet size={17} />
                 Ver importacoes
               </span>

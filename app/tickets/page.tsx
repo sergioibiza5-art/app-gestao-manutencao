@@ -1,4 +1,4 @@
-import { Bell, CheckCircle2, Pause, Play, Siren, Trash2, Wrench } from "lucide-react";
+import { Bell, CheckCircle2, Pause, Play, Plus, Siren, Trash2, Wrench } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -14,6 +14,7 @@ import {
   validateMaintenanceTicket,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsModal } from "@/app/components/details-modal";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { TicketSubmitButton } from "@/app/tickets/ticket-submit-button";
@@ -334,6 +335,28 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
   }
 
   const canManageTickets = user.role === "ADMIN" || user.role === "MANAGER";
+  const newTicketAction = (
+    <DetailsModal
+      id="novo-ticket-manual"
+      title="novo ticket"
+      maxWidth="max-w-3xl"
+      button={
+        <span className={buttonClass}>
+          <Plus size={18} />
+          Novo ticket
+        </span>
+      }
+    >
+      <Panel>
+        <div className="flex items-center gap-3">
+          <Siren size={22} className="text-red-300" />
+          <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
+        </div>
+
+        <TicketCreateForm equipment={data.equipment} />
+      </Panel>
+    </DetailsModal>
+  );
 
   return (
     <AppShell activeHref="/tickets">
@@ -341,6 +364,7 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
         eyebrow="Tickets"
         title="Avarias e chamados de manutenção"
         description="Regista avarias por posto, acompanha tempos de reparação, consumíveis usados, soluções e OP geradas."
+        action={newTicketAction}
       />
 
       {params.created || params.deleted ? (
@@ -363,7 +387,7 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
         ))}
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-2">
+      <section>
         <Panel>
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -391,15 +415,6 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                 ))
               )}
             </div>
-        </Panel>
-
-        <Panel>
-            <div className="flex items-center gap-3">
-              <Siren size={22} className="text-red-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
-            </div>
-
-            <TicketCreateForm equipment={data.equipment} />
         </Panel>
       </section>
 

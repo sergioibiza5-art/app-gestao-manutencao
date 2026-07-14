@@ -258,18 +258,18 @@ const filteredEquipment = typedEquipment.filter((item) => {
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
 
-            <form className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(5,minmax(145px,1fr))_auto]">
-              <div className="relative md:col-span-2 xl:col-span-1">
+            <form className="mt-4 grid gap-3 text-sm md:grid-cols-2 2xl:grid-cols-[minmax(260px,1.5fr)_repeat(5,minmax(120px,1fr))_minmax(110px,auto)]">
+              <div className="relative md:col-span-2 2xl:col-span-1">
                 <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input
                   name="q"
                   defaultValue={params.q ?? ""}
-                  className={`${inputClass} pl-9`}
+                  className={`${inputClass} min-w-0 pl-9 text-sm`}
                   placeholder="Pesquisar por código, nome, modelo..."
                 />
               </div>
 
-              <select name="status" defaultValue={status} className={inputClass}>
+              <select name="status" defaultValue={status} className={`${inputClass} min-w-0 text-sm`}>
                 <option value="all">Todos os estados</option>
                 <option value="ACTIVE">Ativo</option>
                 <option value="MAINTENANCE">Em manutenção</option>
@@ -277,7 +277,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 <option value="DISCARDED">Abatido</option>
               </select>
 
-              <select name="location" defaultValue={location} className={inputClass}>
+              <select name="location" defaultValue={location} className={`${inputClass} min-w-0 text-sm`}>
                 <option value="all">Todas as localizações</option>
                 {locations.map((item) => (
                   <option key={item} value={item}>
@@ -286,7 +286,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 ))}
               </select>
 
-              <select name="category" defaultValue={category} className={inputClass}>
+              <select name="category" defaultValue={category} className={`${inputClass} min-w-0 text-sm`}>
                 <option value="all">Todas as categorias</option>
                 {categories.map((item) => (
                   <option key={item} value={item}>
@@ -295,7 +295,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 ))}
               </select>
 
-              <select name="typeId" defaultValue={typeId} className={inputClass}>
+              <select name="typeId" defaultValue={typeId} className={`${inputClass} min-w-0 text-sm`}>
                 <option value="all">Todos os tipos/checklists</option>
                 {equipmentTypes.map((type) => (
                   <option key={type.id} value={type.id}>
@@ -304,18 +304,18 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 ))}
               </select>
 
-              <select name="measurement" defaultValue={measurement} className={inputClass}>
+              <select name="measurement" defaultValue={measurement} className={`${inputClass} min-w-0 text-sm`}>
                 <option value="all">Todos</option>
                 <option value="true">Só medição/monitorização</option>
                 <option value="false">Sem medição/monitorização</option>
               </select>
 
-              <div className="grid grid-cols-2 gap-3 xl:grid-cols-none">
-                <button className={buttonClass}>Aplicar</button>
+              <div className="grid grid-cols-2 gap-3 2xl:grid-cols-none">
+                <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Aplicar</button>
 
                 <Link
                   href="/equipamentos"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50"
                 >
                   <X size={16} />
                   Limpar
@@ -330,8 +330,9 @@ const filteredEquipment = typedEquipment.filter((item) => {
               Novo equipamento
             </summary>
 
-            <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
-              <div className="mx-auto max-w-6xl">
+            <div className="fixed inset-0 z-[100] hidden overflow-y-auto bg-black/80 p-3 backdrop-blur-sm group-open:block sm:p-6">
+              <div className="mx-auto flex min-h-full w-full max-w-6xl items-start justify-center py-4">
+                <div className="max-h-[calc(100vh-7rem)] w-full overflow-y-auto rounded-xl">
                 <Panel>
             <div className="flex items-center gap-3">
               <Settings size={22} className="text-orange-300" />
@@ -452,6 +453,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
               </form>
             </div>
           </Panel>
+          </div>
         </div>
       </div>
           </details>

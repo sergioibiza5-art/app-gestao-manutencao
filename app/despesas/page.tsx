@@ -139,7 +139,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
             {equipment.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
-                {item.code ? ` Â· ${item.code}` : ""}
+                {item.code ? ` - ${item.code}` : ""}
               </option>
             ))}
           </select>
@@ -193,25 +193,25 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
             </Link>
           </div>
 
-          <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(5,minmax(145px,1fr))_auto]">
-            <div className="relative md:col-span-2 xl:col-span-1">
+          <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 text-sm md:grid-cols-2 2xl:grid-cols-[minmax(260px,1.4fr)_repeat(5,minmax(118px,1fr))_minmax(130px,auto)]">
+            <div className="relative md:col-span-2 2xl:col-span-1">
               <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
               <input
                 name="q"
                 defaultValue={params.q ?? ""}
-                className={`${inputClass} pl-9`}
+                className={`${inputClass} min-w-0 pl-9 text-sm`}
                 placeholder="Pesquisar por título, fornecedor, equipamento, viatura, matrícula..."
               />
             </div>
 
-            <select name="status" defaultValue={status} className={inputClass}>
+            <select name="status" defaultValue={status} className={`${inputClass} min-w-0 text-sm`}>
               <option value="">Todos os estados</option>
               <option value="PAID">Pago</option>
               <option value="PENDING">Pendente</option>
               <option value="CANCELED">Cancelado</option>
             </select>
 
-            <select name="supplier" defaultValue={supplier} className={inputClass}>
+            <select name="supplier" defaultValue={supplier} className={`${inputClass} min-w-0 text-sm`}>
               <option value="">Todos os fornecedores</option>
               {suppliers.map((item) => (
                 <option key={item} value={item}>
@@ -220,7 +220,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
               ))}
             </select>
 
-            <select name="costCenter" defaultValue={costCenter} className={inputClass}>
+            <select name="costCenter" defaultValue={costCenter} className={`${inputClass} min-w-0 text-sm`}>
               <option value="">Todos os centros</option>
               {costCenters.map((item) => (
                 <option key={item} value={item}>
@@ -229,17 +229,17 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
               ))}
             </select>
 
-            <select name="equipmentId" defaultValue={equipmentId} className={inputClass}>
+            <select name="equipmentId" defaultValue={equipmentId} className={`${inputClass} min-w-0 text-sm`}>
               <option value="">Todos os equipamentos</option>
               {equipment.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
-                  {item.code ? ` · ${item.code}` : ""}
+                  {item.code ? ` - ${item.code}` : ""}
                 </option>
               ))}
             </select>
 
-            <select name="vehicleId" defaultValue={vehicleId} className={inputClass}>
+            <select name="vehicleId" defaultValue={vehicleId} className={`${inputClass} min-w-0 text-sm`}>
               <option value="">Todas as viaturas</option>
               {vehicles.map((vehicle) => (
                 <option key={vehicle.id} value={vehicle.id}>
@@ -248,7 +248,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
               ))}
             </select>
 
-            <button className={buttonClass}>Aplicar filtros</button>
+            <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Aplicar filtros</button>
           </form>
 
           <div className="mt-4 space-y-3">

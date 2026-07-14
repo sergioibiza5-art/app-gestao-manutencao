@@ -21,12 +21,16 @@ export function DetailsModal({
     <details id={id} className="group">
       <summary className="list-none">{button}</summary>
 
-      <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
-        <div className={`mx-auto ${maxWidth}`}>
-          <div className="mb-3 flex justify-end">
-            <DetailsCloseButton targetId={id} label={`Fechar ${title}`} />
+      <div className="fixed inset-0 z-[100] hidden overflow-y-auto bg-black/80 p-3 backdrop-blur-sm group-open:block sm:p-6">
+        <div className={`mx-auto flex min-h-full w-full items-start justify-center py-4 ${maxWidth}`}>
+          <div className="w-full">
+            <div className="mb-3 flex justify-end">
+              <DetailsCloseButton targetId={id} label={`Fechar ${title}`} />
+            </div>
+            <div className="max-h-[calc(100vh-7rem)] overflow-y-auto rounded-xl">
+              {children}
+            </div>
           </div>
-          {children}
         </div>
       </div>
     </details>
