@@ -512,7 +512,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                           )}
                         </div>
                         <p className="mt-1 truncate text-sm text-zinc-500">
-                          {item.equipmentType?.name ?? "sem tipo"} · {item.model ?? "sem modelo"}
+                          {item.equipmentType?.name ?? "sem tipo"} - {item.model ?? "sem modelo"}
                         </p>
                       </div>
 

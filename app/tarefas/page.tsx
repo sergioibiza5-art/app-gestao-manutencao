@@ -73,7 +73,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
             <input name="dueTime" type="time" className={inputClass} />
           </div>
 
-          <textarea name="description" className={textareaClass} placeholder="Descricao, criterio ou instrucao" />
+          <textarea name="description" className={textareaClass} placeholder="Descrição, critério ou instrução" />
 
           <button className={buttonClass}>Guardar tarefa</button>
         </form>
@@ -86,7 +86,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
       <PageHeader
         eyebrow="Rotina"
         title="Tarefas"
-        description="Cria tarefas pontuais com data e hora ou tarefas recorrentes para a rotina diaria."
+        description="Cria tarefas pontuais com data e hora ou tarefas recorrentes para a rotina diária."
         action={newTaskAction}
       />
 
@@ -98,7 +98,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
             {tasks.length === 0 ? (
               <EmptyState
                 title="Sem tarefas registadas"
-                description="Cria tarefas pontuais ou recorrentes para construir o calendario operacional."
+                description="Cria tarefas pontuais ou recorrentes para construir o calendário operacional."
               />
             ) : (
               tasks.map((task) => {
@@ -146,7 +146,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
                       <select name="status" className={inputClass} defaultValue={task.status}>
                         <option value="PENDING">Pendente</option>
                         <option value="IN_PROGRESS">Em curso</option>
-                        <option value="COMPLETED">Concluida</option>
+                        <option value="COMPLETED">Concluída</option>
                         <option value="CANCELED">Cancelada</option>
                       </select>
 
