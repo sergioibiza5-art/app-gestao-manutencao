@@ -214,7 +214,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       detail: schedule.equipment.name,
       status: schedule.workOrder?.status ?? "NO_OP",
       date: schedule.scheduledAt,
-      href: `/manutencao/${schedule.id}`,
+      href: `/manutenção/${schedule.id}`,
       tone: schedule.scheduledAt < todayStart ? "rose" : "amber",
     })),
 ].slice(0, 8);

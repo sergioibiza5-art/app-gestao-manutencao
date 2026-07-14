@@ -44,8 +44,8 @@ const fallbackTasks = [
 ];
 
 const fallbackCalendar = [
-  { date: "07 Jun", title: "Calibração balança", tag: "Semestral", href: "/manutencao" },
-  { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual", href: "/manutencao" },
+  { date: "07 Jun", title: "Calibração balança", tag: "Semestral", href: "/manutenção" },
+  { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual", href: "/manutenção" },
 ];
 
 const taskStatusLabels: Record<string, string> = {
@@ -127,7 +127,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
           date: formatShortDate(event.scheduledAt),
           title: event.title,
           tag: event.equipment?.name ?? event.frequency,
-          href: `/manutencao/${event.id}`,
+          href: `/manutenção/${event.id}`,
         }))
       : fallbackCalendar;
 
