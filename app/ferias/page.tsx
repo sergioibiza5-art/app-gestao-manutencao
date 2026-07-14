@@ -2,7 +2,8 @@ import { CalendarDays, Plus, Trash2, TreePalm } from "lucide-react";
 
 import { createVacation, deleteVacation, updateVacation } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
-import { DetailsModal } from "@/app/components/details-modal";
+import { DetailsPopup } from "@/app/components/details-modal";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import {
   buttonClass,
   EmptyState,
@@ -83,21 +84,18 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
     }),
   }));
   const newVacationAction = (
-    <DetailsModal
-      id="nova-marcacao-ferias"
-      title="nova marcação"
-      maxWidth="max-w-2xl"
-      button={
-        <span className={buttonClass}>
-          <Plus size={18} />
-          Nova marcação
-        </span>
-      }
-    >
+    <DetailsOpenButton targetId="nova-marcacao-ferias" className={buttonClass}>
+      <Plus size={18} />
+      Nova marca??o
+    </DetailsOpenButton>
+  );
+
+  const newVacationPopup = (
+    <DetailsPopup id="nova-marcacao-ferias" title="nova marca??o" maxWidth="max-w-2xl">
       <Panel>
         <div className="flex items-center gap-3">
           <TreePalm size={22} className="text-emerald-300" />
-          <h2 className="text-xl font-semibold text-zinc-50">Nova marcação</h2>
+          <h2 className="text-xl font-semibold text-zinc-50">Nova marca??o</h2>
         </div>
 
         <form action={createVacation} className="mt-4 space-y-3">
@@ -141,7 +139,7 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
           <button className={buttonClass}>Guardar fÃ©rias</button>
         </form>
       </Panel>
-    </DetailsModal>
+    </DetailsPopup>
   );
 
   return (
@@ -152,6 +150,7 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
         description="Planeia e acompanha as férias do departamento por pessoa, estado, período e ano."
         action={newVacationAction}
       />
+      {newVacationPopup}
 
       <section className="grid gap-4 md:grid-cols-4">
         <Panel>

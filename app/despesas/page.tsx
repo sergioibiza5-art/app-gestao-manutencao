@@ -3,7 +3,8 @@ import { FileText, Plus, Search, X } from "lucide-react";
 
 import { createExpense } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
-import { DetailsModal } from "@/app/components/details-modal";
+import { DetailsPopup } from "@/app/components/details-modal";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import {
   buttonClass,
   EmptyState,
@@ -100,17 +101,14 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
   };
 
   const newExpenseAction = (
-    <DetailsModal
-      id="nova-despesa"
-      title="nova despesa"
-      maxWidth="max-w-3xl"
-      button={
-        <span className={buttonClass}>
-          <Plus size={18} />
-          Nova despesa
-        </span>
-      }
-    >
+    <DetailsOpenButton targetId="nova-despesa" className={buttonClass}>
+      <Plus size={18} />
+      Nova despesa
+    </DetailsOpenButton>
+  );
+
+  const newExpensePopup = (
+    <DetailsPopup id="nova-despesa" title="nova despesa" maxWidth="max-w-3xl">
       <Panel>
         <h2 className="text-xl font-semibold text-zinc-50">Nova despesa</h2>
 
@@ -162,7 +160,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
           <button className={buttonClass}>Guardar despesa</button>
         </form>
       </Panel>
-    </DetailsModal>
+    </DetailsPopup>
   );
 
   return (
@@ -173,6 +171,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
         description="Regista despesas, associa equipamentos e guarda a cópia da fatura para rastreabilidade."
               action={newExpenseAction}
       />
+      {newExpensePopup}
 
       <section>
         <Panel>

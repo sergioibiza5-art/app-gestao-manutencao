@@ -3,7 +3,8 @@ import { Car, Gauge, Plus } from "lucide-react";
 
 import { createVehicle } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
-import { DetailsModal } from "@/app/components/details-modal";
+import { DetailsPopup } from "@/app/components/details-modal";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import {
   buttonClass,
   EmptyState,
@@ -43,17 +44,14 @@ export default async function FleetPage() {
   const totalCost = vehicles.reduce((sum, vehicle) => sum + vehicle.metrics.totalCost, 0);
   const totalLatestKm = vehicles.reduce((sum, vehicle) => sum + vehicle.metrics.latestKm, 0);
   const newVehicleAction = (
-    <DetailsModal
-      id="novo-veiculo"
-      title="novo veículo"
-      maxWidth="max-w-2xl"
-      button={
-        <span className={buttonClass}>
-          <Plus size={18} />
-          Novo veículo
-        </span>
-      }
-    >
+    <DetailsOpenButton targetId="novo-veiculo" className={buttonClass}>
+      <Plus size={18} />
+      Novo ve?culo
+    </DetailsOpenButton>
+  );
+
+  const newVehiclePopup = (
+    <DetailsPopup id="novo-veiculo" title="novo ve?culo" maxWidth="max-w-2xl">
       <Panel className="min-w-0">
         <div className="flex items-center gap-3">
           <Car size={22} className="shrink-0 text-blue-300" />
@@ -84,7 +82,7 @@ export default async function FleetPage() {
           <button className={`${buttonClass} w-full justify-center`}>Guardar veículo</button>
         </form>
       </Panel>
-    </DetailsModal>
+    </DetailsPopup>
   );
 
   return (
@@ -95,6 +93,7 @@ export default async function FleetPage() {
         description="Lista compacta para consulta diária. Abre uma viatura para gerir km, revisões, custos e inspeções."
         action={newVehicleAction}
       />
+      {newVehiclePopup}
 
       <section className="grid gap-4 md:grid-cols-3">
         <Panel>

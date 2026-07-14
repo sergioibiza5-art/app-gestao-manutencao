@@ -2,7 +2,8 @@ import { Plus } from "lucide-react";
 
 import { createTask, deleteTask, updateTask } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
-import { DetailsModal } from "@/app/components/details-modal";
+import { DetailsPopup } from "@/app/components/details-modal";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -27,17 +28,14 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
 
   const { tasks, equipment } = await getModuleData();
   const newTaskAction = (
-    <DetailsModal
-      id="nova-tarefa"
-      title="nova tarefa"
-      maxWidth="max-w-3xl"
-      button={
-        <span className={buttonClass}>
-          <Plus size={18} />
-          Nova tarefa
-        </span>
-      }
-    >
+    <DetailsOpenButton targetId="nova-tarefa" className={buttonClass}>
+      <Plus size={18} />
+      Nova tarefa
+    </DetailsOpenButton>
+  );
+
+  const newTaskPopup = (
+    <DetailsPopup id="nova-tarefa" title="nova tarefa" maxWidth="max-w-3xl">
       <Panel>
         <h2 className="text-xl font-semibold text-zinc-50">Nova tarefa</h2>
 
@@ -78,7 +76,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
           <button className={buttonClass}>Guardar tarefa</button>
         </form>
       </Panel>
-    </DetailsModal>
+    </DetailsPopup>
   );
 
   return (
@@ -89,6 +87,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         description="Cria tarefas pontuais com data e hora ou tarefas recorrentes para a rotina diária."
         action={newTaskAction}
       />
+      {newTaskPopup}
 
       <section>
         <Panel>

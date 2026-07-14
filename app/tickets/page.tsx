@@ -14,7 +14,8 @@ import {
   validateMaintenanceTicket,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
-import { DetailsModal } from "@/app/components/details-modal";
+import { DetailsPopup } from "@/app/components/details-modal";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { TicketSubmitButton } from "@/app/tickets/ticket-submit-button";
@@ -336,26 +337,10 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
 
   const canManageTickets = user.role === "ADMIN" || user.role === "MANAGER";
   const newTicketAction = (
-    <DetailsModal
-      id="novo-ticket-manual"
-      title="novo ticket"
-      maxWidth="max-w-3xl"
-      button={
-        <span className={buttonClass}>
-          <Plus size={18} />
-          Novo ticket
-        </span>
-      }
-    >
-      <Panel>
-        <div className="flex items-center gap-3">
-          <Siren size={22} className="text-red-300" />
-          <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
-        </div>
-
-        <TicketCreateForm equipment={data.equipment} />
-      </Panel>
-    </DetailsModal>
+    <DetailsOpenButton targetId="novo-ticket-manual" className={buttonClass}>
+      <Plus size={18} />
+      Novo ticket
+    </DetailsOpenButton>
   );
 
   return (
@@ -366,6 +351,17 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
         description="Regista avarias por posto, acompanha tempos de reparação, consumíveis usados, soluções e OP geradas."
         action={newTicketAction}
       />
+
+      <DetailsPopup id="novo-ticket-manual" title="novo ticket" maxWidth="max-w-3xl">
+        <Panel>
+          <div className="flex items-center gap-3">
+            <Siren size={22} className="text-red-300" />
+            <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
+          </div>
+
+          <TicketCreateForm equipment={data.equipment} />
+        </Panel>
+      </DetailsPopup>
 
       {params.created || params.deleted ? (
         <div className="rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-sm font-semibold text-teal-100">
