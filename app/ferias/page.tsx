@@ -86,16 +86,16 @@ export default async function VacationsPage({ searchParams }: VacationsPageProps
   const newVacationAction = (
     <DetailsOpenButton targetId="nova-marcacao-ferias" className={buttonClass}>
       <Plus size={18} />
-      Nova marca??o
+      Nova marcação
     </DetailsOpenButton>
   );
 
   const newVacationPopup = (
-    <DetailsPopup id="nova-marcacao-ferias" title="nova marca??o" maxWidth="max-w-2xl">
+    <DetailsPopup id="nova-marcacao-ferias" title="nova marcação" maxWidth="max-w-2xl">
       <Panel>
         <div className="flex items-center gap-3">
           <TreePalm size={22} className="text-emerald-300" />
-          <h2 className="text-xl font-semibold text-zinc-50">Nova marca??o</h2>
+          <h2 className="text-xl font-semibold text-zinc-50">Nova marcação</h2>
         </div>
 
         <form action={createVacation} className="mt-4 space-y-3">

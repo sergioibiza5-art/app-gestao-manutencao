@@ -46,12 +46,12 @@ export default async function FleetPage() {
   const newVehicleAction = (
     <DetailsOpenButton targetId="novo-veiculo" className={buttonClass}>
       <Plus size={18} />
-      Novo ve?culo
+      Novo veículo
     </DetailsOpenButton>
   );
 
   const newVehiclePopup = (
-    <DetailsPopup id="novo-veiculo" title="novo ve?culo" maxWidth="max-w-2xl">
+    <DetailsPopup id="novo-veiculo" title="novo veículo" maxWidth="max-w-2xl">
       <Panel className="min-w-0">
         <div className="flex items-center gap-3">
           <Car size={22} className="shrink-0 text-blue-300" />
@@ -61,14 +61,14 @@ export default async function FleetPage() {
         <form action={createVehicle} className="mt-4 space-y-3">
           <input name="brand" required className={`${inputClass} w-full min-w-0`} placeholder="Marca" />
           <input name="model" required className={`${inputClass} w-full min-w-0`} placeholder="Modelo" />
-          <input name="plate" required className={`${inputClass} w-full min-w-0`} placeholder="MatrÃ­cula" />
+          <input name="plate" required className={`${inputClass} w-full min-w-0`} placeholder="Matrí­cula" />
 
           <div className="grid grid-cols-2 gap-3">
             <select name="fuel" className={`${inputClass} w-full min-w-0`}>
-              <option value="DIESEL">GasÃ³leo</option>
+              <option value="DIESEL">Gasóleo</option>
               <option value="GASOLINE">Gasolina</option>
-              <option value="HYBRID">HÃ­brido</option>
-              <option value="ELECTRIC">ElÃ©trico</option>
+              <option value="HYBRID">Híbrido</option>
+              <option value="ELECTRIC">Elétrico</option>
               <option value="LPG">GPL</option>
               <option value="OTHER">Outro</option>
             </select>
@@ -127,7 +127,7 @@ export default async function FleetPage() {
               />
             ) : (
               <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950/40">
-                <div className="hidden min-w-[1120px] grid-cols-[115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] gap-0 border-b border-zinc-800 bg-black/30 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 xl:grid">
+                <div className="hidden min-w-280 grid-cols-[115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] gap-0 border-b border-zinc-800 bg-black/30 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 xl:grid">
                   <div>Matrícula</div>
                   <div>Veículo</div>
                   <div>Condutor</div>
@@ -143,7 +143,7 @@ export default async function FleetPage() {
                     <Link
                       key={vehicle.id}
                       href={`/frota/${vehicle.id}`}
-                      className="block min-w-[1120px] transition hover:bg-zinc-900/70 xl:grid xl:grid-cols-[115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] xl:items-center xl:px-4 xl:py-3"
+                      className="block min-w-280 transition hover:bg-zinc-900/70 xl:grid xl:grid-cols-[115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] xl:items-center xl:px-4 xl:py-3"
                     >
                       <div className="grid gap-3 p-4 xl:contents">
                         <div className="min-w-0">

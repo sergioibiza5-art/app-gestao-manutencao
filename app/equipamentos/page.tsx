@@ -330,7 +330,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
               Novo equipamento
             </summary>
 
-            <div className="fixed inset-0 z-[100] hidden overflow-y-auto bg-black/80 p-3 backdrop-blur-sm group-open:block sm:p-6">
+            <div className="fixed inset-0 z-100 hidden overflow-y-auto bg-black/80 p-3 backdrop-blur-sm group-open:block sm:p-6">
               <div className="mx-auto flex min-h-full w-full max-w-6xl items-start justify-center py-4">
                 <div className="max-h-[calc(100vh-7rem)] w-full overflow-y-auto rounded-xl">
                 <Panel>
