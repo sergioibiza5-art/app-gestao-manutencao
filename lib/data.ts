@@ -214,7 +214,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       detail: schedule.equipment.name,
       status: schedule.workOrder?.status ?? "NO_OP",
       date: schedule.scheduledAt,
-      href: `/manutenção/${schedule.id}`,
+      href: `/manutencao/${schedule.id}`,
       tone: schedule.scheduledAt < todayStart ? "rose" : "amber",
     })),
 ].slice(0, 8);
@@ -1594,3 +1594,4 @@ export async function getEnvironmentalData(filters?: { days?: string; type?: str
     },
   );
 }
+

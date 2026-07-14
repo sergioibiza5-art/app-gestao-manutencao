@@ -20,7 +20,7 @@ import {
 export const navigation = [
   { name: "Dashboard", href: "/", meta: "Visão diária", icon: LayoutDashboard, color: "bg-teal-400/15 text-teal-200" },
   { name: "Tickets", href: "/tickets", meta: "Avarias e tempos", icon: Siren, color: "bg-red-400/15 text-red-200" },
-  { name: "Manutenção", href: "/manutenção", meta: "Ativos e infraestrutura", icon: Wrench, color: "bg-cyan-400/15 text-cyan-200" },
+  { name: "Manutenção", href: "/manutencao", meta: "Ativos e infraestrutura", icon: Wrench, color: "bg-cyan-400/15 text-cyan-200" },
   { name: "Tarefas", href: "/tarefas", meta: "Recorrencias", icon: ClipboardCheck, color: "bg-teal-400/15 text-teal-200" },
   { name: "Equipamentos", href: "/equipamentos", meta: "Cadastro e planos", icon: Settings, color: "bg-orange-400/15 text-orange-200" }, 
   { name: "Frota", href: "/frota", meta: "Veiculos e quilometros", icon: Car, color: "bg-blue-400/15 text-blue-200" },  
@@ -35,3 +35,4 @@ export const navigation = [
   { name: "Documentos", href: "/documentos", meta: "Garantias e contratos", icon: FileText, color: "bg-rose-400/15 text-rose-200" },
   { name: "Acessos", href: "/acessos", meta: "Perfis e permissões", icon: UserCog, color: "bg-violet-400/15 text-violet-200" },
 ];
+

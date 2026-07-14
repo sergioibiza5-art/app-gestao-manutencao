@@ -769,8 +769,8 @@ export async function createEquipment(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/equipamentos");
-  revalidatePath("/manutenção");
-  revalidatePath("/calibração");
+  revalidatePath("/manutencao");
+  revalidatePath("/calibracao");
 }
 
 export async function updateEquipmentBasics(formData: FormData) {
@@ -1172,7 +1172,7 @@ export async function updateChecklistTemplate(formData: FormData) {
 
   revalidatePath("/checklists");
   revalidatePath("/equipamentos");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 export async function duplicateChecklistTemplate(formData: FormData) {
@@ -1231,7 +1231,7 @@ export async function duplicateChecklistTemplate(formData: FormData) {
 
   revalidatePath("/checklists");
   revalidatePath("/equipamentos");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 function interventionPlanFromForm(formData: FormData, prefix: string, kind: InterventionKind, type: MaintenanceType) {
@@ -1467,7 +1467,7 @@ export async function createMaintenanceLog(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 export async function updateMaintenanceLog(formData: FormData) {
@@ -1497,7 +1497,7 @@ export async function updateMaintenanceLog(formData: FormData) {
     },
   });
 
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath(`/equipamentos/${equipmentId}`);
 }
 
@@ -1512,7 +1512,7 @@ export async function deleteMaintenanceLog(formData: FormData) {
 
   await prisma.maintenanceLog.delete({ where: { id } });
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 function addMonthsClamped(date: Date, months: number, targetDay: number) {
@@ -1596,7 +1596,7 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 export async function updateMaintenanceSchedule(formData: FormData) {
@@ -1626,7 +1626,7 @@ export async function updateMaintenanceSchedule(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 export async function deleteMaintenanceSchedule(formData: FormData) {
@@ -1640,7 +1640,7 @@ export async function deleteMaintenanceSchedule(formData: FormData) {
 
   await prisma.maintenanceSchedule.delete({ where: { id } });
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
 }
 
 async function nextWorkOrderNumber() {
@@ -2293,7 +2293,7 @@ export async function reopenMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath("/");
 }
 
@@ -2422,7 +2422,7 @@ export async function updateMaintenanceTicketTiming(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/tickets");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath("/inventario");
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
@@ -2655,7 +2655,7 @@ export async function validateMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath("/inventario");
   revalidatePath(`/equipamentos/${ticket.equipmentId}`);
 }
@@ -2688,7 +2688,7 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
   });
 
   if (!schedule) return;
-  if (schedule.workOrder) redirect(`/manutenção/${schedule.id}`);
+  if (schedule.workOrder) redirect(`/manutencao/${schedule.id}`);
 
   const workOrder = await prisma.workOrder.create({
     data: {
@@ -2708,9 +2708,9 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
-  revalidatePath(`/manutenção/${schedule.id}`);
-  redirect(`/manutenção/${schedule.id}?op=${workOrder.id}`);
+  revalidatePath("/manutencao");
+  revalidatePath(`/manutencao/${schedule.id}`);
+  redirect(`/manutencao/${schedule.id}?op=${workOrder.id}`);
 }
 
 export async function startWorkOrder(formData: FormData) {
@@ -2738,9 +2738,9 @@ export async function startWorkOrder(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   const scheduleId = optionalText(formData, "scheduleId");
-  if (scheduleId) revalidatePath(`/manutenção/${scheduleId}`);
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function suspendWorkOrder(formData: FormData) {
@@ -2772,9 +2772,9 @@ export async function suspendWorkOrder(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   const scheduleId = optionalText(formData, "scheduleId");
-  if (scheduleId) revalidatePath(`/manutenção/${scheduleId}`);
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function reopenWorkOrder(formData: FormData) {
@@ -2813,11 +2813,11 @@ export async function reopenWorkOrder(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId");
-  if (scheduleId) revalidatePath(`/manutenção/${scheduleId}`);
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function updateWorkOrderTiming(formData: FormData) {
@@ -2922,11 +2922,11 @@ export async function updateWorkOrderTiming(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId") ?? scheduleIdForRevalidate;
-  if (scheduleId) revalidatePath(`/manutenção/${scheduleId}`);
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function pauseWorkOrder(formData: FormData) {
@@ -2954,9 +2954,9 @@ export async function pauseWorkOrder(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   const scheduleId = optionalText(formData, "scheduleId");
-  if (scheduleId) revalidatePath(`/manutenção/${scheduleId}`);
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function completeWorkOrder(formData: FormData) {
@@ -3097,8 +3097,8 @@ export async function completeWorkOrder(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
-  if (scheduleIdForRevalidate) revalidatePath(`/manutenção/${scheduleIdForRevalidate}`);
+  revalidatePath("/manutencao");
+  if (scheduleIdForRevalidate) revalidatePath(`/manutencao/${scheduleIdForRevalidate}`);
   revalidatePath(`/equipamentos/${equipmentId}`);
   revalidatePath("/inventario");
 }
@@ -3134,13 +3134,13 @@ export async function validateWorkOrder(formData: FormData) {
   });
 
   revalidatePath("/");
-  revalidatePath("/manutenção");
+  revalidatePath("/manutencao");
   revalidatePath("/equipamentos");
 
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
 
   const scheduleId = optionalText(formData, "scheduleId");
-  if (scheduleId) revalidatePath(`/manutenção/${scheduleId}`);
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
 export async function createCalibrationLog(formData: FormData) {
@@ -4025,3 +4025,4 @@ export async function deleteEquipmentInterventionPlan(formData: FormData) {
   revalidatePath(`/equipamentos/${equipmentId}`);
   revalidatePath(`/inventario/${equipmentId}`);
 }
+
