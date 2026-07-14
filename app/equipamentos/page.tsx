@@ -258,8 +258,8 @@ const filteredEquipment = typedEquipment.filter((item) => {
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
 
-            <form className="mt-4 grid gap-3 text-sm md:grid-cols-2 2xl:grid-cols-[minmax(260px,1.5fr)_repeat(5,minmax(120px,1fr))_minmax(110px,auto)]">
-              <div className="relative md:col-span-2 2xl:col-span-1">
+            <form className="mt-4 grid gap-3 text-sm md:grid-cols-2 xl:grid-cols-6">
+              <div className="relative md:col-span-2 xl:col-span-2">
                 <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input
                   name="q"
@@ -310,7 +310,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 <option value="false">Sem medição/monitorização</option>
               </select>
 
-              <div className="grid grid-cols-2 gap-3 2xl:grid-cols-none">
+              <div className="grid grid-cols-2 gap-3 md:col-span-2 xl:col-span-2">
                 <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Aplicar</button>
 
                 <Link

@@ -309,12 +309,14 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                     </div>
                   </div>
 
-                  <p className="max-w-xl text-sm text-zinc-500">
-                    Cria recorrências para o ano e consulta tudo no mapa completo abaixo.
-                  </p>
+                  <div className="flex flex-col gap-2 sm:items-end">
+                    <p className="max-w-xl text-sm text-zinc-500">
+                      Cria recorrências para o ano e consulta tudo no mapa completo abaixo.
+                    </p>
+                    <DetailsCloseButton targetId="agendamento-anual" />
+                  </div>
                 </div>
 
-                <DetailsCloseButton targetId="agendamento-anual" />
                 <form action={createAnnualMaintenanceSchedule} className="mt-4 grid gap-3 lg:grid-cols-6">
                   <select name="equipmentId" required className={inputClass}>
                     <option value="">Selecionar equipamento</option>

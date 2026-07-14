@@ -192,8 +192,8 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
             </Link>
           </div>
 
-          <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 text-sm md:grid-cols-2 2xl:grid-cols-[minmax(260px,1.4fr)_repeat(5,minmax(118px,1fr))_minmax(130px,auto)]">
-            <div className="relative md:col-span-2 2xl:col-span-1">
+          <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 text-sm md:grid-cols-2 xl:grid-cols-6">
+            <div className="relative md:col-span-2 xl:col-span-2">
               <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
               <input
                 name="q"
@@ -202,13 +202,6 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
                 placeholder="Pesquisar por título, fornecedor, equipamento, viatura, matrícula..."
               />
             </div>
-
-            <select name="status" defaultValue={status} className={`${inputClass} min-w-0 text-sm`}>
-              <option value="">Todos os estados</option>
-              <option value="PAID">Pago</option>
-              <option value="PENDING">Pendente</option>
-              <option value="CANCELED">Cancelado</option>
-            </select>
 
             <select name="supplier" defaultValue={supplier} className={`${inputClass} min-w-0 text-sm`}>
               <option value="">Todos os fornecedores</option>
@@ -247,7 +240,9 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
               ))}
             </select>
 
-            <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Aplicar filtros</button>
+            <div className="md:col-span-2 xl:col-span-1 xl:col-start-6">
+              <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Aplicar filtros</button>
+            </div>
           </form>
 
           <div className="mt-4 space-y-3">
