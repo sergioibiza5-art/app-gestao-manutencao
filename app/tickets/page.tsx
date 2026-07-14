@@ -363,9 +363,8 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
         ))}
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[0.65fr_1.35fr]">
-        <div className="space-y-4">
-          <Panel>
+      <section className="grid gap-4 xl:grid-cols-2">
+        <Panel>
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Bell size={21} className="text-amber-300" />
@@ -392,52 +391,19 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                 ))
               )}
             </div>
-          </Panel>
+        </Panel>
 
-          <Panel>
+        <Panel>
             <div className="flex items-center gap-3">
               <Siren size={22} className="text-red-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
             </div>
 
             <TicketCreateForm equipment={data.equipment} />
-          </Panel>
+        </Panel>
+      </section>
 
-          <Panel>
-            <h2 className="text-xl font-semibold text-zinc-50">Problemas recorrentes</h2>
-
-            <div className="mt-4 space-y-2">
-              {data.kpis.repeatedProblems.length === 0 ? (
-                <EmptyState title="Sem dados" description="Ainda não existem tickets suficientes." />
-              ) : (
-                data.kpis.repeatedProblems.map((item) => (
-                  <div key={item.name} className="flex justify-between rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm">
-                    <span className="text-zinc-300">{item.name}</span>
-                    <strong className="text-red-200">{item.count}</strong>
-                  </div>
-                ))
-              )}
-            </div>
-          </Panel>
-
-          <Panel>
-            <h2 className="text-xl font-semibold text-zinc-50">Equipamentos com mais tickets</h2>
-
-            <div className="mt-4 space-y-2">
-              {data.kpis.byEquipment.length === 0 ? (
-                <EmptyState title="Sem dados" description="A contagem aparece quando existirem tickets." />
-              ) : (
-                data.kpis.byEquipment.map((item) => (
-                  <div key={item.name} className="flex justify-between rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm">
-                    <span className="text-zinc-300">{item.name}</span>
-                    <strong className="text-cyan-200">{item.count}</strong>
-                  </div>
-                ))
-              )}
-            </div>
-          </Panel>
-        </div>
-
+      <section>
         <Panel>
           <div className="flex items-center gap-3">
             <Wrench size={22} className="text-cyan-300" />

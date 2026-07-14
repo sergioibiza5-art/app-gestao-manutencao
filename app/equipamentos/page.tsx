@@ -13,6 +13,7 @@ import {
 
 import { createEquipment, importEquipmentCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsCloseButton } from "@/app/components/details-close-button";
 import {
   buttonClass,
   EmptyState,
@@ -335,9 +336,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
             <div className="flex items-center gap-3">
               <Settings size={22} className="text-orange-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Novo equipamento</h2>
-              <summary className="ml-auto cursor-pointer list-none rounded-lg border border-zinc-800 px-3 py-2 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
-                Fechar
-              </summary>
+              <DetailsCloseButton targetId="novo-equipamento" />
             </div>
 
             <form action={createEquipment} className="mt-4 space-y-4">
