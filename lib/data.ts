@@ -740,10 +740,14 @@ export async function getChecklistAdminData() {
           },
         },
       });
+      const expectedConditions = await prisma.checklistExpectedCondition.findMany({
+        where: { active: true },
+        orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+      });
 
-      return { equipmentTypes };
+      return { equipmentTypes, expectedConditions };
     },
-    { equipmentTypes: [] },
+    { equipmentTypes: [], expectedConditions: [] },
   );
 }
 

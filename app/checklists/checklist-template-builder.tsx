@@ -14,6 +14,7 @@ type ChecklistBuilderRow = {
 
 type ChecklistTemplateBuilderProps = {
   action: (formData: FormData) => void | Promise<void>;
+  expectedConditions: string[];
   templateId?: string;
   typeName?: string;
   templateTitle?: string;
@@ -24,15 +25,7 @@ type ChecklistTemplateBuilderProps = {
   submitLabel?: string;
 };
 
-const expectedOptions = [
-  "Dentro dos parametros corretos",
-  "Sem fugas",
-  "Funcionamento correto",
-  "Sem desgaste irregular",
-  "Limpo e em bom estado",
-  "Sem folgas ou ruidos anormais",
-  "Condicao conforme criterio definido",
-];
+const fallbackExpectedOptions = ["Condicao conforme criterio definido"];
 
 const initialRows: ChecklistBuilderRow[] = [
   { check: "Nivel de combustivel/bateria", expected: "Dentro dos parametros corretos", photo: true },
@@ -42,6 +35,7 @@ const initialRows: ChecklistBuilderRow[] = [
 
 export function ChecklistTemplateBuilder({
   action,
+  expectedConditions,
   templateId,
   typeName = "",
   templateTitle = "",
@@ -51,6 +45,7 @@ export function ChecklistTemplateBuilder({
   rows: initialTemplateRows,
   submitLabel = "Guardar template",
 }: ChecklistTemplateBuilderProps) {
+  const expectedOptions = expectedConditions.length > 0 ? expectedConditions : fallbackExpectedOptions;
   const [rows, setRows] = useState(initialTemplateRows && initialTemplateRows.length > 0 ? initialTemplateRows : initialRows);
 
   function updateRow(index: number, field: "check" | "expected" | "photo", value: string | boolean) {
@@ -58,7 +53,7 @@ export function ChecklistTemplateBuilder({
   }
 
   function addRow() {
-    setRows((current) => [...current, { check: "", expected: "Condicao conforme criterio definido", photo: false }]);
+    setRows((current) => [...current, { check: "", expected: expectedOptions[0] ?? "Condicao conforme criterio definido", photo: false }]);
   }
 
   function removeRow(index: number) {
@@ -86,11 +81,25 @@ export function ChecklistTemplateBuilder({
           <div key={index} className="grid gap-2 md:grid-cols-[2fr_2fr_90px_52px] md:gap-3">
             <input type="hidden" name="itemId" value={row.id ?? ""} />
             <input name="itemCheck" className={inputClass} value={row.check} onChange={(event) => updateRow(index, "check", event.target.value)} placeholder="Verificar" />
-            <select name="itemExpectedCondition" className={inputClass} value={row.expected} onChange={(event) => updateRow(index, "expected", event.target.value)}>
-              {expectedOptions.map((option) => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
+            <div className="grid gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <select
+                className={inputClass}
+                value={expectedOptions.includes(row.expected) ? row.expected : "__custom"}
+                onChange={(event) => updateRow(index, "expected", event.target.value === "__custom" ? "" : event.target.value)}
+              >
+                {expectedOptions.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+                <option value="__custom">Outra condicao...</option>
+              </select>
+              <input
+                name="itemExpectedCondition"
+                className={inputClass}
+                value={row.expected}
+                onChange={(event) => updateRow(index, "expected", event.target.value)}
+                placeholder="Condicao esperada"
+              />
+            </div>
             <label className="grid h-11 place-items-center rounded-lg border border-zinc-800 bg-zinc-950">
               <input name="itemPhotoRequired" value={String(index)} type="checkbox" checked={row.photo} onChange={(event) => updateRow(index, "photo", event.target.checked)} className="size-4 accent-teal-300" />
             </label>

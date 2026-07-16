@@ -1,6 +1,13 @@
-import { Copy, Rows3 } from "lucide-react";
+import { Copy, Plus, Rows3, Save, Trash2 } from "lucide-react";
 
-import { createEquipmentTypeWithChecklist, duplicateChecklistTemplate, updateChecklistTemplate } from "@/app/actions";
+import {
+  createChecklistExpectedCondition,
+  createEquipmentTypeWithChecklist,
+  deleteChecklistExpectedCondition,
+  duplicateChecklistTemplate,
+  updateChecklistExpectedCondition,
+  updateChecklistTemplate,
+} from "@/app/actions";
 import { ChecklistTemplateBuilder } from "@/app/checklists/checklist-template-builder";
 import { AppShell } from "@/app/components/app-shell";
 import { EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
@@ -9,7 +16,8 @@ import { getChecklistAdminData } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export default async function ChecklistsPage() {
-  const { equipmentTypes } = await getChecklistAdminData();
+  const { equipmentTypes, expectedConditions } = await getChecklistAdminData();
+  const expectedConditionNames = expectedConditions.map((condition) => condition.name);
 
   return (
     <AppShell activeHref="/checklists">
@@ -25,7 +33,53 @@ export default async function ChecklistsPage() {
             <Rows3 size={22} className="text-sky-300" />
             <h2 className="text-xl font-semibold text-zinc-50">Novo template</h2>
           </div>
-          <ChecklistTemplateBuilder action={createEquipmentTypeWithChecklist} />
+          <ChecklistTemplateBuilder action={createEquipmentTypeWithChecklist} expectedConditions={expectedConditionNames} />
+        </Panel>
+
+        <Panel>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-zinc-50">Condições esperadas</h2>
+              <p className="mt-1 text-sm leading-6 text-zinc-500">
+                Gere as opções que aparecem nas linhas das checklists. As condições antigas ficam preservadas nos registos já criados.
+              </p>
+            </div>
+          </div>
+
+          <form action={createChecklistExpectedCondition} className="mt-4 grid gap-3 md:grid-cols-[minmax(0,1fr)_180px]">
+            <input name="name" className={inputClass} placeholder="Nova condição esperada, ex.: Sem corrosão visível" />
+            <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
+              <Plus size={16} />
+              Adicionar
+            </button>
+          </form>
+
+          <div className="mt-4 space-y-2">
+            {expectedConditions.length === 0 ? (
+              <EmptyState title="Sem condições configuradas" description="Adiciona condições para aparecerem na criação das checklists." />
+            ) : (
+              expectedConditions.map((condition) => (
+                <div key={condition.id} className="grid gap-2 rounded-lg border border-zinc-800 bg-zinc-950/45 p-2 md:grid-cols-[96px_minmax(0,1fr)_auto_auto]">
+                  <form id={`condition-${condition.id}`} action={updateChecklistExpectedCondition} className="contents">
+                    <input type="hidden" name="id" value={condition.id} />
+                    <input name="sortOrder" type="number" className={inputClass} defaultValue={condition.sortOrder} aria-label="Ordem" />
+                    <input name="name" className={inputClass} defaultValue={condition.name} aria-label="Condição esperada" />
+                    <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-200/70">
+                      <Save size={15} />
+                      Guardar
+                    </button>
+                  </form>
+                  <form action={deleteChecklistExpectedCondition}>
+                    <input type="hidden" name="id" value={condition.id} />
+                    <button className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-rose-300/35 bg-rose-300/10 px-3 text-sm font-semibold text-rose-100 transition hover:border-rose-200/70">
+                      <Trash2 size={15} />
+                      Apagar
+                    </button>
+                  </form>
+                </div>
+              ))
+            )}
+          </div>
         </Panel>
 
         <Panel>
@@ -81,6 +135,7 @@ export default async function ChecklistsPage() {
                         </form>
                         <ChecklistTemplateBuilder
                           action={updateChecklistTemplate}
+                          expectedConditions={expectedConditionNames}
                           templateId={template.id}
                           typeName={type.name}
                           templateTitle={template.title}

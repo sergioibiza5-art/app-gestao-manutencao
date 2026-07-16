@@ -515,6 +515,17 @@ model ChecklistItem {
   @@index([active])
 }
 
+model ChecklistExpectedCondition {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active, sortOrder])
+}
+
 model InternalMaintenanceRecord {
   id          String   @id @default(cuid())
   documentNo  String?

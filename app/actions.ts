@@ -1234,6 +1234,65 @@ export async function duplicateChecklistTemplate(formData: FormData) {
   revalidatePath("/manutencao");
 }
 
+export async function createChecklistExpectedCondition(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const name = text(formData, "name");
+  if (!name) return;
+
+  const nextCondition = await prisma.checklistExpectedCondition.findFirst({
+    orderBy: { sortOrder: "desc" },
+    select: { sortOrder: true },
+  });
+
+  await prisma.checklistExpectedCondition.upsert({
+    where: { name },
+    update: {
+      active: true,
+    },
+    create: {
+      name,
+      sortOrder: (nextCondition?.sortOrder ?? 0) + 1,
+    },
+  });
+
+  revalidatePath("/checklists");
+}
+
+export async function updateChecklistExpectedCondition(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const name = text(formData, "name");
+  const sortOrder = intValue(formData, "sortOrder");
+  if (!id || !name) return;
+
+  await prisma.checklistExpectedCondition.update({
+    where: { id },
+    data: {
+      name,
+      sortOrder,
+      active: true,
+    },
+  });
+
+  revalidatePath("/checklists");
+}
+
+export async function deleteChecklistExpectedCondition(formData: FormData) {
+  await requireCanSgq();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.checklistExpectedCondition.update({
+    where: { id },
+    data: { active: false },
+  });
+
+  revalidatePath("/checklists");
+}
+
 function interventionPlanFromForm(formData: FormData, prefix: string, kind: InterventionKind, type: MaintenanceType) {
   if (text(formData, `${prefix}Enabled`) !== "true") {
     return null;
