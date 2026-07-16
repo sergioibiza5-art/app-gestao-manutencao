@@ -258,7 +258,6 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   ["Feito por", workOrder.performedBy ?? "Sem responsável"],
                   ["Resultado", workOrder.result ?? "Sem resultado"],
                   ["O que foi feito", workOrder.actionsDone ?? "Sem descrição"],
-                  ["Notas", workOrder.notes ?? "Sem notas"],
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
                     <dt className="text-xs text-zinc-500">{label}</dt>
@@ -266,6 +265,24 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                   </div>
                 ))}
               </dl>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+                <h3 className="font-semibold text-zinc-100">Documentos e evidências da OP</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {workOrder.checklistRecord ? (
+                    <Link
+                      href={`/equipamentos/${schedule.equipmentId}/checklist-interna/${workOrder.checklistRecord.id}`}
+                      className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-200"
+                    >
+                      <ClipboardCheck size={16} />
+                      Ver checklist preenchida
+                    </Link>
+                  ) : (
+                    <span className="rounded-lg border border-dashed border-zinc-800 px-3 py-2 text-sm text-zinc-500">
+                      Sem checklist preenchida associada a esta OP.
+                    </span>
+                  )}
+                </div>
+              </div>
               {workOrder.documents.length > 0 && (
                 <div className="space-y-2">
                   {workOrder.documents.map((document) => (
