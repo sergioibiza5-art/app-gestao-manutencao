@@ -385,6 +385,59 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
         }, {}),
       ).sort((a, b) => b.count - a.count);
 
+      const kpiTickets = failureTickets.map((ticket) => {
+        const fallbackDowntimeSeconds = ticket.machineStopped
+          ? secondsBetween(ticket.openedAt, ticket.completedAt ?? ticket.validatedAt ?? new Date())
+          : 0;
+        const downtimeForKpiSeconds = ticket.machineStopped
+          ? Number(ticket.downtimeSeconds ?? 0) || fallbackDowntimeSeconds
+          : 0;
+        const fallbackRepairSeconds = secondsBetween(ticket.startedAt ?? ticket.openedAt, ticket.completedAt ?? ticket.validatedAt);
+        const repairForKpiSeconds = Number(ticket.totalWorkSeconds ?? 0) || fallbackRepairSeconds;
+
+        return {
+          id: ticket.id,
+          number: ticket.number,
+          title: ticket.title,
+          equipment: ticket.equipment.name,
+          status: ticket.status,
+          machineStopped: ticket.machineStopped,
+          openedAt: ticket.openedAt,
+          startedAt: ticket.startedAt,
+          completedAt: ticket.completedAt,
+          validatedAt: ticket.validatedAt,
+          downtimeHours: downtimeForKpiSeconds / 3600,
+          repairHours: repairForKpiSeconds / 3600,
+          countsForMtbf: true,
+          countsForMttr: Boolean(ticket.completedAt || ticket.validatedAt),
+          countsForAvailability: ticket.machineStopped,
+        };
+      });
+
+      const kpiWorkOrders = workOrders.map((workOrder) => {
+        const isPreventive = preventiveWorkOrders.some((item) => item.id === workOrder.id);
+        const isCompleted = ["DONE", "VALIDATED"].includes(workOrder.status);
+        const hasScheduleDueDate = Boolean(workOrder.schedule?.scheduledAt && workOrder.closedAt);
+        const isOnTime = hasScheduleDueDate ? workOrder.closedAt! <= endOfDay(workOrder.schedule!.scheduledAt) : false;
+
+        return {
+          id: workOrder.id,
+          number: workOrder.number,
+          title: workOrder.title,
+          equipment: workOrder.equipment.name,
+          status: workOrder.status,
+          openedAt: workOrder.openedAt,
+          closedAt: workOrder.closedAt,
+          scheduledAt: workOrder.schedule?.scheduledAt ?? null,
+          typeSource: `${workOrder.title} ${workOrder.schedule?.costCenter ?? ""}`.trim(),
+          isPreventive,
+          isCompleted,
+          countsForOnTime: hasScheduleDueDate,
+          isOnTime,
+          workHours: Number(workOrder.totalWorkSeconds ?? 0) / 3600,
+        };
+      });
+
       return {
         selectedYear: range.selectedYear,
         selectedMonth: range.selectedMonth,
@@ -407,6 +460,17 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
         workOrdersByStatus,
         failuresByEquipment,
         recurringProblems,
+        sources: {
+          formulas: {
+            mtbf: "(equipamentos ativos * segundos do periodo - paragem de tickets com maquina parada) / tickets nao cancelados / 3600",
+            preventive: "OPs cujo titulo ou centro de custo contem 'prevent' / total de OPs",
+            onTime: "OPs DONE/VALIDATED com data agendada e fechadas ate ao fim do dia agendado / OPs DONE/VALIDATED com data agendada",
+            mttr: "tempo medio de trabalho dos tickets concluidos ou validados",
+            availability: "(equipamentos ativos * segundos do periodo - paragem de tickets com maquina parada) / (equipamentos ativos * segundos do periodo)",
+          },
+          tickets: kpiTickets,
+          workOrders: kpiWorkOrders,
+        },
       };
     },
     {
@@ -431,6 +495,17 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
       workOrdersByStatus: [],
       failuresByEquipment: [],
       recurringProblems: [],
+      sources: {
+        formulas: {
+          mtbf: "",
+          preventive: "",
+          onTime: "",
+          mttr: "",
+          availability: "",
+        },
+        tickets: [],
+        workOrders: [],
+      },
     },
   );
 }

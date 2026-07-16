@@ -27,6 +27,24 @@ function percent(value: number) {
   return `${Number(value || 0).toLocaleString("pt-PT", { maximumFractionDigits: 1 })}%`;
 }
 
+function yesNo(value: boolean) {
+  return value ? "Sim" : "Não";
+}
+
+function dateTime(value: Date | string | null | undefined) {
+  if (!value) return "Sem data";
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "Sem data";
+
+  return new Intl.DateTimeFormat("pt-PT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
 function barWidth(value: number, max: number) {
   if (max <= 0) return 0;
   return Math.max(8, Math.round((value / max) * 100));
@@ -249,6 +267,134 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
       <p className="text-xs text-zinc-600">
         Periodo analisado: {formatDate(data.period.start)} ate {formatDate(data.period.end)}. MTBF e disponibilidade usam tickets de avaria; prazo usa OPs com agendamento associado.
       </p>
+
+      <section className="space-y-4">
+        <Panel>
+          <div className="flex items-center gap-3">
+            <Activity size={20} className="text-sky-300" />
+            <h2 className="text-lg font-semibold text-zinc-50">Dados concretos usados nos KPIs</h2>
+          </div>
+
+          <div className="mt-4 grid gap-3 text-sm lg:grid-cols-2">
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+              <p className="font-semibold text-zinc-100">MTBF</p>
+              <p className="mt-1 text-zinc-500">{data.sources.formulas.mtbf}</p>
+              <p className="mt-2 text-xs text-zinc-500">
+                Equipamentos considerados: {data.totals.equipmentCount}. Avarias consideradas: {data.totals.failures}. Paragem total: {hours(data.totals.downtimeHours)}.
+              </p>
+            </div>
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+              <p className="font-semibold text-zinc-100">Preventiva, prazo, MTTR e disponibilidade</p>
+              <p className="mt-1 text-zinc-500">Preventiva: {data.sources.formulas.preventive}</p>
+              <p className="mt-1 text-zinc-500">Prazo: {data.sources.formulas.onTime}</p>
+              <p className="mt-1 text-zinc-500">MTTR: {data.sources.formulas.mttr}</p>
+              <p className="mt-1 text-zinc-500">Disponibilidade: {data.sources.formulas.availability}</p>
+            </div>
+          </div>
+        </Panel>
+
+        <Panel>
+          <h2 className="text-lg font-semibold text-zinc-50">Tickets usados em MTBF, MTTR e disponibilidade</h2>
+          <div className="mt-4 overflow-x-auto">
+            <table className="min-w-full text-left text-sm">
+              <thead className="border-b border-zinc-800 text-xs uppercase tracking-[0.12em] text-zinc-500">
+                <tr>
+                  <th className="px-3 py-3">Ticket</th>
+                  <th className="px-3 py-3">Equipamento</th>
+                  <th className="px-3 py-3">Estado</th>
+                  <th className="px-3 py-3">Aberto</th>
+                  <th className="px-3 py-3">Concluido/validado</th>
+                  <th className="px-3 py-3">Maquina parada</th>
+                  <th className="px-3 py-3">Paragem</th>
+                  <th className="px-3 py-3">Reparacao</th>
+                  <th className="px-3 py-3">MTBF</th>
+                  <th className="px-3 py-3">MTTR</th>
+                  <th className="px-3 py-3">Disponib.</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-900">
+                {data.sources.tickets.length === 0 ? (
+                  <tr>
+                    <td colSpan={11} className="px-3 py-6 text-center text-zinc-500">
+                      Sem tickets de avaria no periodo.
+                    </td>
+                  </tr>
+                ) : (
+                  data.sources.tickets.map((ticket) => (
+                    <tr key={ticket.id} className="align-top text-zinc-300">
+                      <td className="px-3 py-3">
+                        <p className="font-semibold text-zinc-100">{ticket.number}</p>
+                        <p className="mt-1 max-w-52 text-xs text-zinc-500">{ticket.title}</p>
+                      </td>
+                      <td className="px-3 py-3">{ticket.equipment}</td>
+                      <td className="px-3 py-3">{statusLabel(ticket.status)}</td>
+                      <td className="px-3 py-3">{dateTime(ticket.openedAt)}</td>
+                      <td className="px-3 py-3">{dateTime(ticket.completedAt ?? ticket.validatedAt)}</td>
+                      <td className="px-3 py-3">{yesNo(ticket.machineStopped)}</td>
+                      <td className="px-3 py-3">{hours(ticket.downtimeHours)}</td>
+                      <td className="px-3 py-3">{hours(ticket.repairHours)}</td>
+                      <td className="px-3 py-3">{yesNo(ticket.countsForMtbf)}</td>
+                      <td className="px-3 py-3">{yesNo(ticket.countsForMttr)}</td>
+                      <td className="px-3 py-3">{yesNo(ticket.countsForAvailability)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+
+        <Panel>
+          <h2 className="text-lg font-semibold text-zinc-50">OPs usadas em preventiva e cumprimento de prazo</h2>
+          <div className="mt-4 overflow-x-auto">
+            <table className="min-w-full text-left text-sm">
+              <thead className="border-b border-zinc-800 text-xs uppercase tracking-[0.12em] text-zinc-500">
+                <tr>
+                  <th className="px-3 py-3">OP</th>
+                  <th className="px-3 py-3">Equipamento</th>
+                  <th className="px-3 py-3">Estado</th>
+                  <th className="px-3 py-3">Aberta</th>
+                  <th className="px-3 py-3">Agendada</th>
+                  <th className="px-3 py-3">Fechada</th>
+                  <th className="px-3 py-3">Origem tipo</th>
+                  <th className="px-3 py-3">Preventiva</th>
+                  <th className="px-3 py-3">Conta prazo</th>
+                  <th className="px-3 py-3">No prazo</th>
+                  <th className="px-3 py-3">Tempo</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-900">
+                {data.sources.workOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan={11} className="px-3 py-6 text-center text-zinc-500">
+                      Sem OPs abertas no periodo.
+                    </td>
+                  </tr>
+                ) : (
+                  data.sources.workOrders.map((workOrder) => (
+                    <tr key={workOrder.id} className="align-top text-zinc-300">
+                      <td className="px-3 py-3">
+                        <p className="font-semibold text-zinc-100">{workOrder.number}</p>
+                        <p className="mt-1 max-w-52 text-xs text-zinc-500">{workOrder.title}</p>
+                      </td>
+                      <td className="px-3 py-3">{workOrder.equipment}</td>
+                      <td className="px-3 py-3">{statusLabel(workOrder.status)}</td>
+                      <td className="px-3 py-3">{dateTime(workOrder.openedAt)}</td>
+                      <td className="px-3 py-3">{dateTime(workOrder.scheduledAt)}</td>
+                      <td className="px-3 py-3">{dateTime(workOrder.closedAt)}</td>
+                      <td className="px-3 py-3">{workOrder.typeSource || "Sem tipo"}</td>
+                      <td className="px-3 py-3">{yesNo(workOrder.isPreventive)}</td>
+                      <td className="px-3 py-3">{yesNo(workOrder.countsForOnTime)}</td>
+                      <td className="px-3 py-3">{workOrder.countsForOnTime ? yesNo(workOrder.isOnTime) : "-"}</td>
+                      <td className="px-3 py-3">{hours(workOrder.workHours)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+      </section>
     </AppShell>
   );
 }
