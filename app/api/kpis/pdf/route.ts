@@ -235,10 +235,8 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const data = await getKpiData({
     year: url.searchParams.get("year") ?? undefined,
-    period: url.searchParams.get("period") ?? undefined,
-    month: url.searchParams.get("month") ?? undefined,
-    quarter: url.searchParams.get("quarter") ?? undefined,
-    semester: url.searchParams.get("semester") ?? undefined,
+    startMonth: url.searchParams.get("startMonth") ?? undefined,
+    endMonth: url.searchParams.get("endMonth") ?? undefined,
   });
 
   const tickets = data.sources.tickets as KpiTicketRow[];

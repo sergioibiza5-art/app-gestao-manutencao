@@ -14,6 +14,8 @@ type KpiPageProps = {
     period?: string;
     quarter?: string;
     semester?: string;
+    startMonth?: string;
+    endMonth?: string;
   }>;
 };
 
@@ -108,10 +110,8 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
   const data = await getKpiData(params);
   const exportParams = new URLSearchParams({
     year: data.selectedYear,
-    period: data.selectedPeriod,
-    month: data.selectedMonth,
-    quarter: data.selectedQuarter,
-    semester: data.selectedSemester,
+    startMonth: data.selectedStartMonth,
+    endMonth: data.selectedEndMonth,
   });
 
   const cards = [
@@ -160,35 +160,23 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
         description="Acompanha fiabilidade, tempos de reparacao, preventivas, cumprimento de prazo e disponibilidade dos equipamentos."
       />
 
-      <form className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/45 p-4 xl:grid-cols-[170px_130px_130px_150px_150px_auto_auto]">
-        <select name="period" defaultValue={data.selectedPeriod} className={inputClass}>
-          <option value="month">Mensal</option>
-          <option value="quarter">Trimestral</option>
-          <option value="semester">Semestral</option>
-          <option value="year">Anual</option>
-        </select>
+      <form className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/45 p-4 md:grid-cols-[140px_170px_170px_auto_auto]">
         <select name="year" defaultValue={data.selectedYear} className={inputClass}>
           {data.years.length === 0 ? <option value={data.selectedYear}>{data.selectedYear}</option> : null}
           {data.years.map((year) => (
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
-        <select name="month" defaultValue={data.selectedMonth} className={inputClass}>
-          <option value="all">Mês</option>
+        <select name="startMonth" defaultValue={data.selectedStartMonth} className={inputClass}>
+          <option value="1">Mês inicial</option>
           {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
-            <option key={month} value={month}>{month.toString().padStart(2, "0")}</option>
+            <option key={month} value={month}>Início: {month.toString().padStart(2, "0")}</option>
           ))}
         </select>
-        <select name="quarter" defaultValue={data.selectedQuarter} className={inputClass}>
-          <option value="all">Trimestre</option>
-          {Array.from({ length: 4 }, (_, index) => index + 1).map((quarter) => (
-            <option key={quarter} value={quarter}>{quarter}. trimestre</option>
-          ))}
-        </select>
-        <select name="semester" defaultValue={data.selectedSemester} className={inputClass}>
-          <option value="all">Semestre</option>
-          {Array.from({ length: 2 }, (_, index) => index + 1).map((semester) => (
-            <option key={semester} value={semester}>{semester}. semestre</option>
+        <select name="endMonth" defaultValue={data.selectedEndMonth} className={inputClass}>
+          <option value="12">Mês final</option>
+          {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
+            <option key={month} value={month}>Fim: {month.toString().padStart(2, "0")}</option>
           ))}
         </select>
         <button className={buttonClass}>Filtrar</button>
