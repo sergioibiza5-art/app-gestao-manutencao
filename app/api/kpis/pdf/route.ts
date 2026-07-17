@@ -110,15 +110,17 @@ function docToBuffer(doc: PDFKit.PDFDocument) {
 
 function addFooter(doc: PDFKit.PDFDocument) {
   const range = doc.bufferedPageRange();
+  const footerY = page.height - page.margin - 8;
   for (let index = range.start; index < range.start + range.count; index += 1) {
     doc.switchToPage(index);
     doc
       .fontSize(7)
       .fillColor("#64748b")
       .font("Helvetica")
-      .text(`Relatorio KPI manutencao - Pagina ${index + 1}`, page.margin, page.height - 24, {
+      .text(`Relatorio KPI manutencao - Pagina ${index + 1}`, page.margin, footerY, {
         width: page.width - page.margin * 2,
         align: "center",
+        lineBreak: false,
       });
   }
 }

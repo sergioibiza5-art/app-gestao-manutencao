@@ -116,6 +116,7 @@ function docToBuffer(doc: PDFKit.PDFDocument) {
 
 function addFooter(doc: PDFKit.PDFDocument) {
   const range = doc.bufferedPageRange();
+  const footerY = page.height - page.margin - 8;
   for (let index = range.start; index < range.start + range.count; index += 1) {
     doc.switchToPage(index);
     doc
@@ -124,8 +125,8 @@ function addFooter(doc: PDFKit.PDFDocument) {
       .text(
         `Relatorio ambiental / Environmental report - Pagina ${index + 1} / Page ${index + 1}`,
         page.margin,
-        page.height - 24,
-        { width: page.width - page.margin * 2, align: "center" },
+        footerY,
+        { width: page.width - page.margin * 2, align: "center", lineBreak: false },
       );
   }
 }
