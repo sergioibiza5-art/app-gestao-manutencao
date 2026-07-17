@@ -1,4 +1,4 @@
-import { Activity, BarChart3, CheckCircle2, Clock3, Gauge, ShieldCheck, TimerReset, Wrench } from "lucide-react";
+import { Activity, BarChart3, CheckCircle2, Clock3, Download, Gauge, ShieldCheck, TimerReset, Wrench } from "lucide-react";
 
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
@@ -11,6 +11,9 @@ type KpiPageProps = {
   searchParams?: Promise<{
     year?: string;
     month?: string;
+    period?: string;
+    quarter?: string;
+    semester?: string;
   }>;
 };
 
@@ -103,6 +106,13 @@ function CountChart({ title, rows }: { title: string; rows: CountRow[] }) {
 export default async function KpisPage({ searchParams }: KpiPageProps) {
   const params = (await searchParams) ?? {};
   const data = await getKpiData(params);
+  const exportParams = new URLSearchParams({
+    year: data.selectedYear,
+    period: data.selectedPeriod,
+    month: data.selectedMonth,
+    quarter: data.selectedQuarter,
+    semester: data.selectedSemester,
+  });
 
   const cards = [
     {
@@ -150,7 +160,13 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
         description="Acompanha fiabilidade, tempos de reparacao, preventivas, cumprimento de prazo e disponibilidade dos equipamentos."
       />
 
-      <form className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/45 p-4 md:grid-cols-[180px_180px_auto]">
+      <form className="grid gap-3 rounded-lg border border-zinc-800 bg-zinc-950/45 p-4 xl:grid-cols-[170px_130px_130px_150px_150px_auto_auto]">
+        <select name="period" defaultValue={data.selectedPeriod} className={inputClass}>
+          <option value="month">Mensal</option>
+          <option value="quarter">Trimestral</option>
+          <option value="semester">Semestral</option>
+          <option value="year">Anual</option>
+        </select>
         <select name="year" defaultValue={data.selectedYear} className={inputClass}>
           {data.years.length === 0 ? <option value={data.selectedYear}>{data.selectedYear}</option> : null}
           {data.years.map((year) => (
@@ -158,12 +174,28 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
           ))}
         </select>
         <select name="month" defaultValue={data.selectedMonth} className={inputClass}>
-          <option value="all">Ano completo</option>
+          <option value="all">Mês</option>
           {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
-            <option key={month} value={month}>{month}</option>
+            <option key={month} value={month}>{month.toString().padStart(2, "0")}</option>
+          ))}
+        </select>
+        <select name="quarter" defaultValue={data.selectedQuarter} className={inputClass}>
+          <option value="all">Trimestre</option>
+          {Array.from({ length: 4 }, (_, index) => index + 1).map((quarter) => (
+            <option key={quarter} value={quarter}>{quarter}. trimestre</option>
+          ))}
+        </select>
+        <select name="semester" defaultValue={data.selectedSemester} className={inputClass}>
+          <option value="all">Semestre</option>
+          {Array.from({ length: 2 }, (_, index) => index + 1).map((semester) => (
+            <option key={semester} value={semester}>{semester}. semestre</option>
           ))}
         </select>
         <button className={buttonClass}>Filtrar</button>
+        <a href={`/api/kpis/pdf?${exportParams.toString()}`} className="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-teal-300/35 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200/70">
+          <Download size={16} />
+          Exportar PDF
+        </a>
       </form>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
@@ -265,7 +297,7 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
       </section>
 
       <p className="text-xs text-zinc-600">
-        Periodo analisado: {formatDate(data.period.start)} ate {formatDate(data.period.end)}. MTBF e disponibilidade usam tickets de avaria; prazo usa OPs com agendamento associado.
+        Periodo analisado: {data.periodLabel} ({formatDate(data.period.start)} ate {formatDate(data.period.end)}). MTBF e disponibilidade usam tickets de avaria; prazo usa OPs com agendamento associado.
       </p>
 
       <section className="space-y-4">

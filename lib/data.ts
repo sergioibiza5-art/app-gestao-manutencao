@@ -263,23 +263,64 @@ function endOfDay(date: Date) {
   return value;
 }
 
-function kpiRange(yearValue?: string, monthValue?: string) {
+function kpiRange(filters?: { year?: string; month?: string; period?: string; quarter?: string; semester?: string }) {
   const now = new Date();
-  const year = yearValue && yearValue !== "all" ? Number(yearValue) : now.getFullYear();
-  const month = monthValue && monthValue !== "all" ? Number(monthValue) : null;
+  const year = filters?.year && filters.year !== "all" ? Number(filters.year) : now.getFullYear();
+  const period = filters?.period && ["month", "quarter", "semester", "year"].includes(filters.period) ? filters.period : "year";
+  const month = filters?.month && filters.month !== "all" ? Number(filters.month) : null;
+  const quarter = filters?.quarter && filters.quarter !== "all" ? Number(filters.quarter) : null;
+  const semester = filters?.semester && filters.semester !== "all" ? Number(filters.semester) : null;
 
-  if (month !== null && Number.isFinite(month)) {
+  if (period === "month" && month !== null && Number.isFinite(month)) {
     return {
       selectedYear: String(year),
+      selectedPeriod: "month",
       selectedMonth: String(month),
+      selectedQuarter: "1",
+      selectedSemester: "1",
+      periodLabel: `${month.toString().padStart(2, "0")}/${year}`,
       start: new Date(year, month - 1, 1),
       end: new Date(year, month, 0, 23, 59, 59, 999),
     };
   }
 
+  if (period === "quarter" && quarter !== null && Number.isFinite(quarter)) {
+    const safeQuarter = Math.min(Math.max(quarter, 1), 4);
+    const startMonth = (safeQuarter - 1) * 3;
+    return {
+      selectedYear: String(year),
+      selectedPeriod: "quarter",
+      selectedMonth: String(startMonth + 1),
+      selectedQuarter: String(safeQuarter),
+      selectedSemester: safeQuarter <= 2 ? "1" : "2",
+      periodLabel: `${safeQuarter}. trimestre ${year}`,
+      start: new Date(year, startMonth, 1),
+      end: new Date(year, startMonth + 3, 0, 23, 59, 59, 999),
+    };
+  }
+
+  if (period === "semester" && semester !== null && Number.isFinite(semester)) {
+    const safeSemester = Math.min(Math.max(semester, 1), 2);
+    const startMonth = safeSemester === 1 ? 0 : 6;
+    return {
+      selectedYear: String(year),
+      selectedPeriod: "semester",
+      selectedMonth: String(startMonth + 1),
+      selectedQuarter: safeSemester === 1 ? "1" : "3",
+      selectedSemester: String(safeSemester),
+      periodLabel: `${safeSemester}. semestre ${year}`,
+      start: new Date(year, startMonth, 1),
+      end: new Date(year, startMonth + 6, 0, 23, 59, 59, 999),
+    };
+  }
+
   return {
     selectedYear: String(year),
+    selectedPeriod: "year",
     selectedMonth: "all",
+    selectedQuarter: "all",
+    selectedSemester: "all",
+    periodLabel: `Ano ${year}`,
     start: new Date(year, 0, 1),
     end: new Date(year, 11, 31, 23, 59, 59, 999),
   };
@@ -300,10 +341,10 @@ function percentage(value: number, total: number) {
   return Number(((value / total) * 100).toFixed(1));
 }
 
-export async function getKpiData(filters?: { year?: string; month?: string }) {
+export async function getKpiData(filters?: { year?: string; month?: string; period?: string; quarter?: string; semester?: string }) {
   return readDb(
     async (prisma) => {
-      const range = kpiRange(filters?.year, filters?.month);
+      const range = kpiRange(filters);
       const [equipmentCount, workOrders, tickets, years] = await Promise.all([
         prisma.equipment.count({ where: { status: { not: "DISCARDED" } } }),
         prisma.workOrder.findMany({
@@ -440,7 +481,11 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
 
       return {
         selectedYear: range.selectedYear,
+        selectedPeriod: range.selectedPeriod,
         selectedMonth: range.selectedMonth,
+        selectedQuarter: range.selectedQuarter,
+        selectedSemester: range.selectedSemester,
+        periodLabel: range.periodLabel,
         years: Array.from(new Set(years.map((item) => item.openedAt.getFullYear()))).sort((a, b) => b - a),
         period: { start: range.start, end: range.end },
         cards: {
@@ -475,7 +520,11 @@ export async function getKpiData(filters?: { year?: string; month?: string }) {
     },
     {
       selectedYear: String(new Date().getFullYear()),
+      selectedPeriod: "year",
       selectedMonth: "all",
+      selectedQuarter: "all",
+      selectedSemester: "all",
+      periodLabel: `Ano ${new Date().getFullYear()}`,
       years: [new Date().getFullYear()],
       period: kpiRange().start ? { start: kpiRange().start, end: kpiRange().end } : { start: new Date(), end: new Date() },
       cards: {
