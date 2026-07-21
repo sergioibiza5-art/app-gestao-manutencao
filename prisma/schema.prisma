@@ -1134,6 +1134,7 @@ model Vehicle {
   id     String      @id @default(cuid())
   brand  String
   model  String
+  code   String?     @unique
   plate  String      @unique
   fuel   VehicleFuel
   year   Int?

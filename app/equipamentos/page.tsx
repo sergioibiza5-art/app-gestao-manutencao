@@ -37,6 +37,7 @@ type EquipmentPageProps = {
     typeId?: string;
     measurement?: string;
     page?: string;
+    erro?: string;
   }>;
 };
 
@@ -223,6 +224,12 @@ const filteredEquipment = typedEquipment.filter((item) => {
           </DetailsOpenButton>
         }
       />
+
+      {params.erro && (
+        <div className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-100">
+          {params.erro}
+        </div>
+      )}
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         <Panel>

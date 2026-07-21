@@ -21,6 +21,7 @@ export const dynamic = "force-dynamic";
 
 type VehicleDetailPageProps = {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<{ erro?: string }>;
 };
 
 function dateInputValue(date: Date | string | null | undefined) {
@@ -65,8 +66,9 @@ function serviceTone(type: string) {
   return "border-teal-300/30 bg-teal-300/10 text-teal-200";
 }
 
-export default async function VehicleDetailPage({ params }: VehicleDetailPageProps) {
+export default async function VehicleDetailPage({ params, searchParams }: VehicleDetailPageProps) {
   const { id } = await params;
+  const query = (await searchParams) ?? {};
   const vehicle = await getVehicleDetail(id);
 
   if (!vehicle) {
@@ -79,7 +81,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
   return (
     <AppShell activeHref="/frota">
       <PageHeader
-        eyebrow={vehicle.plate}
+        eyebrow={vehicle.code ? `${vehicle.code} · ${vehicle.plate}` : vehicle.plate}
         title={`${vehicle.brand} ${vehicle.model}`}
         description={`${fuelLabel(vehicle.fuel)} · ${vehicle.year ?? "sem ano"} · ${vehicle.driver ?? "sem condutor"}`}
         action={
@@ -89,6 +91,12 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
           </Link>
         }
       />
+
+      {query.erro && (
+        <div className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-100">
+          {query.erro}
+        </div>
+      )}
 
       <section className="grid gap-4 md:grid-cols-4">
         <Panel>
@@ -122,6 +130,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
                 <input name="brand" required className={inputClass} defaultValue={vehicle.brand} />
                 <input name="model" required className={inputClass} defaultValue={vehicle.model} />
               </div>
+              <input name="code" className={inputClass} defaultValue={vehicle.code ?? ""} placeholder="Código interno" />
               <input name="plate" required className={inputClass} defaultValue={vehicle.plate} />
               <div className="grid grid-cols-2 gap-3">
                 <select name="fuel" className={inputClass} defaultValue={vehicle.fuel}>

@@ -37,7 +37,12 @@ function rounded(value: number) {
   }).format(Number.isFinite(value) ? value : 0);
 }
 
-export default async function FleetPage() {
+type FleetPageProps = {
+  searchParams?: Promise<{ erro?: string }>;
+};
+
+export default async function FleetPage({ searchParams }: FleetPageProps) {
+  const params = (await searchParams) ?? {};
   const { vehicles } = await getFleetData();
 
   const totalVehicles = vehicles.length;
@@ -61,6 +66,7 @@ export default async function FleetPage() {
         <form action={createVehicle} className="mt-4 space-y-3">
           <input name="brand" required className={`${inputClass} w-full min-w-0`} placeholder="Marca" />
           <input name="model" required className={`${inputClass} w-full min-w-0`} placeholder="Modelo" />
+          <input name="code" className={`${inputClass} w-full min-w-0`} placeholder="Codigo interno" />
           <input name="plate" required className={`${inputClass} w-full min-w-0`} placeholder="Matrí­cula" />
 
           <div className="grid grid-cols-2 gap-3">
@@ -95,6 +101,12 @@ export default async function FleetPage() {
       />
       {newVehiclePopup}
 
+      {params.erro && (
+        <div className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-100">
+          {params.erro}
+        </div>
+      )}
+
       <section className="grid gap-4 md:grid-cols-3">
         <Panel>
           <p className="text-sm text-zinc-500">Veículos</p>
@@ -127,7 +139,8 @@ export default async function FleetPage() {
               />
             ) : (
               <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950/40">
-                <div className="hidden min-w-280 grid-cols-[115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] gap-0 border-b border-zinc-800 bg-black/30 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 xl:grid">
+                <div className="hidden min-w-320 grid-cols-[105px_115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] gap-0 border-b border-zinc-800 bg-black/30 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 xl:grid">
+                  <div>Código</div>
                   <div>Matrícula</div>
                   <div>Veículo</div>
                   <div>Condutor</div>
@@ -143,9 +156,15 @@ export default async function FleetPage() {
                     <Link
                       key={vehicle.id}
                       href={`/frota/${vehicle.id}`}
-                      className="block min-w-280 transition hover:bg-zinc-900/70 xl:grid xl:grid-cols-[115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] xl:items-center xl:px-4 xl:py-3"
+                      className="block min-w-320 transition hover:bg-zinc-900/70 xl:grid xl:grid-cols-[105px_115px_minmax(210px,1.3fr)_minmax(150px,1fr)_105px_95px_125px_155px_60px] xl:items-center xl:px-4 xl:py-3"
                     >
                       <div className="grid gap-3 p-4 xl:contents">
+                        <div className="min-w-0">
+                          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 xl:text-sm xl:tracking-normal">
+                            {vehicle.code ?? "—"}
+                          </p>
+                        </div>
+
                         <div className="min-w-0">
                           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 xl:text-sm xl:tracking-normal">
                             {vehicle.plate}

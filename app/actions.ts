@@ -28,6 +28,82 @@ function optionalText(formData: FormData, key: string) {
   return value.length > 0 ? value : null;
 }
 
+function normalizedIdentifier(formData: FormData, key: string) {
+  const value = optionalText(formData, key);
+  return value ? value.toUpperCase() : null;
+}
+
+function redirectWithError(path: string, message: string): never {
+  redirect(`${path}?erro=${encodeURIComponent(message)}`);
+}
+
+function isUniqueConstraintError(error: unknown) {
+  return typeof error === "object" && error !== null && "code" in error && (error as { code?: unknown }).code === "P2002";
+}
+
+async function ensureUniqueEquipmentCode(
+  prisma: ReturnType<typeof getPrisma>,
+  code: string | null,
+  currentId: string | null,
+  returnPath: string,
+) {
+  if (!code) return;
+
+  const duplicate = await prisma.equipment.findFirst({
+    where: {
+      code,
+      ...(currentId ? { id: { not: currentId } } : {}),
+    },
+    select: { id: true, name: true, status: true },
+  });
+
+  if (duplicate) {
+    redirectWithError(
+      returnPath,
+      `Código interno já registado no equipamento "${duplicate.name}". O código não pode ser duplicado, mesmo que o equipamento esteja inativo.`,
+    );
+  }
+}
+
+async function ensureUniqueVehicleIdentifiers(
+  prisma: ReturnType<typeof getPrisma>,
+  identifiers: { code: string | null; plate: string },
+  currentId: string | null,
+  returnPath: string,
+) {
+  if (identifiers.code) {
+    const duplicateCode = await prisma.vehicle.findFirst({
+      where: {
+        code: identifiers.code,
+        ...(currentId ? { id: { not: currentId } } : {}),
+      },
+      select: { brand: true, model: true, plate: true },
+    });
+
+    if (duplicateCode) {
+      redirectWithError(
+        returnPath,
+        `Código de viatura já registado em "${duplicateCode.brand} ${duplicateCode.model} - ${duplicateCode.plate}".`,
+      );
+    }
+  }
+
+  const duplicatePlate = await prisma.vehicle.findFirst({
+    where: {
+      plate: identifiers.plate,
+      ...(currentId ? { id: { not: currentId } } : {}),
+    },
+    select: { brand: true, model: true, plate: true },
+  });
+
+  if (duplicatePlate) {
+    redirectWithError(
+      returnPath,
+      `Matrícula já registada em "${duplicatePlate.brand} ${duplicatePlate.model} - ${duplicatePlate.plate}".`,
+    );
+  }
+}
+
 function loginName(formData: FormData) {
   return (text(formData, "username") || text(formData, "email")).toLowerCase().replace(/\s+/g, ".");
 }
@@ -736,6 +812,9 @@ export async function deleteTask(formData: FormData) {
 export async function createEquipment(formData: FormData) {
   await requireCanSgq();
   const prisma = getPrisma();
+  const code = normalizedIdentifier(formData, "code");
+  await ensureUniqueEquipmentCode(prisma, code, null, "/equipamentos");
+
   const plans = [
     interventionPlanFromForm(formData, "inspectionInternal", "INSPECTION", "INTERNAL"),
     interventionPlanFromForm(formData, "inspectionExternal", "INSPECTION", "EXTERNAL"),
@@ -743,29 +822,36 @@ export async function createEquipment(formData: FormData) {
     interventionPlanFromForm(formData, "maintenanceExternal", "MAINTENANCE", "EXTERNAL"),
   ].filter((plan) => plan !== null);
 
-  await prisma.equipment.create({
-    data: {
-      name: text(formData, "name"),
-      code: optionalText(formData, "code"),
-      category: text(formData, "category") || "Geral",
-      brand: optionalText(formData, "brand"),
-      model: optionalText(formData, "model"),
-      serialNumber: optionalText(formData, "serialNumber"),
-      supplier: optionalText(formData, "supplier"),
-      location: optionalText(formData, "location"),
-      responsibleDepartment: optionalText(formData, "responsibleDepartment"),
-      isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
-      regulatoryRequirements: text(formData, "regulatoryRequirements") === "true",
-      regulatoryDetails:  optionalText(formData, "regulatoryDetails"),
-      parentEquipmentId: optionalText(formData, "parentEquipmentId"),
-      equipmentTypeId: optionalText(formData, "equipmentTypeId"),
-      purchaseDate: optionalDate(formData, "purchaseDate"),
-      warrantyUntil: optionalDate(formData, "warrantyUntil"),
-      status: enumValue(formData, "status", equipmentStatuses, "ACTIVE"),
-      notes: optionalText(formData, "notes"),
-      ...(plans.length > 0 ? { interventionPlans: { create: plans } } : {}),
-    },
-  });
+  try {
+    await prisma.equipment.create({
+      data: {
+        name: text(formData, "name"),
+        code,
+        category: text(formData, "category") || "Geral",
+        brand: optionalText(formData, "brand"),
+        model: optionalText(formData, "model"),
+        serialNumber: optionalText(formData, "serialNumber"),
+        supplier: optionalText(formData, "supplier"),
+        location: optionalText(formData, "location"),
+        responsibleDepartment: optionalText(formData, "responsibleDepartment"),
+        isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
+        regulatoryRequirements: text(formData, "regulatoryRequirements") === "true",
+        regulatoryDetails: optionalText(formData, "regulatoryDetails"),
+        parentEquipmentId: optionalText(formData, "parentEquipmentId"),
+        equipmentTypeId: optionalText(formData, "equipmentTypeId"),
+        purchaseDate: optionalDate(formData, "purchaseDate"),
+        warrantyUntil: optionalDate(formData, "warrantyUntil"),
+        status: enumValue(formData, "status", equipmentStatuses, "ACTIVE"),
+        notes: optionalText(formData, "notes"),
+        ...(plans.length > 0 ? { interventionPlans: { create: plans } } : {}),
+      },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      redirectWithError("/equipamentos", "Código interno já registado. O código não pode ser duplicado.");
+    }
+    throw error;
+  }
 
   revalidatePath("/");
   revalidatePath("/equipamentos");
@@ -782,29 +868,39 @@ export async function updateEquipmentBasics(formData: FormData) {
     return;
   }
 
-  await prisma.equipment.update({
-    where: { id: equipmentId },
-    data: {
-      name: text(formData, "name"),
-      code: optionalText(formData, "code"),
-      category: text(formData, "category") || "Geral",
-      brand: optionalText(formData, "brand"),
-      model: optionalText(formData, "model"),
-      serialNumber: optionalText(formData, "serialNumber"),
-      supplier: optionalText(formData, "supplier"),
-      location: optionalText(formData, "location"),
-      responsibleDepartment: optionalText(formData, "responsibleDepartment"),
-      regulatoryRequirements: text(formData, "regulatoryRequirements") === "true",
-      regulatoryDetails: optionalText(formData, "regulatoryDetails"),
-      isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
-      parentEquipmentId: optionalText(formData, "parentEquipmentId") === equipmentId ? null : optionalText(formData, "parentEquipmentId"),
-      equipmentTypeId: optionalText(formData, "equipmentTypeId"),
-      purchaseDate: optionalDate(formData, "purchaseDate"),
-      warrantyUntil: optionalDate(formData, "warrantyUntil"),
-      status: enumValue(formData, "status", equipmentStatuses, "ACTIVE"),
-      notes: optionalText(formData, "notes"),
-    },
-  });
+  const code = normalizedIdentifier(formData, "code");
+  await ensureUniqueEquipmentCode(prisma, code, equipmentId, `/equipamentos/${equipmentId}`);
+
+  try {
+    await prisma.equipment.update({
+      where: { id: equipmentId },
+      data: {
+        name: text(formData, "name"),
+        code,
+        category: text(formData, "category") || "Geral",
+        brand: optionalText(formData, "brand"),
+        model: optionalText(formData, "model"),
+        serialNumber: optionalText(formData, "serialNumber"),
+        supplier: optionalText(formData, "supplier"),
+        location: optionalText(formData, "location"),
+        responsibleDepartment: optionalText(formData, "responsibleDepartment"),
+        regulatoryRequirements: text(formData, "regulatoryRequirements") === "true",
+        regulatoryDetails: optionalText(formData, "regulatoryDetails"),
+        isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
+        parentEquipmentId: optionalText(formData, "parentEquipmentId") === equipmentId ? null : optionalText(formData, "parentEquipmentId"),
+        equipmentTypeId: optionalText(formData, "equipmentTypeId"),
+        purchaseDate: optionalDate(formData, "purchaseDate"),
+        warrantyUntil: optionalDate(formData, "warrantyUntil"),
+        status: enumValue(formData, "status", equipmentStatuses, "ACTIVE"),
+        notes: optionalText(formData, "notes"),
+      },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      redirectWithError(`/equipamentos/${equipmentId}`, "Código interno já registado. O código não pode ser duplicado.");
+    }
+    throw error;
+  }
 
   revalidatePath("/equipamentos");
   revalidatePath(`/equipamentos/${equipmentId}`);
@@ -3318,9 +3414,10 @@ export async function importEquipmentCsv(formData: FormData) {
   for (const row of rows) {
     const name = row.nome || row.name;
     if (!name) continue;
+    const code = String(row.codigo_interno || row.code || `IMPORT-${name}`).trim().toUpperCase();
 
     await prisma.equipment.upsert({
-      where: { code: row.codigo_interno || row.code || `IMPORT-${name}` },
+      where: { code },
       update: {
         name,
         category: row.categoria || "Geral",
@@ -3338,7 +3435,7 @@ export async function importEquipmentCsv(formData: FormData) {
       },
       create: {
         name,
-        code: row.codigo_interno || row.code || `IMPORT-${name}`,
+        code,
         category: row.categoria || "Geral",
         brand: row.marca || row.brand || null,
         model: row.modelo || row.model || null,
@@ -3758,18 +3855,32 @@ export async function updateEnvironmentalSettings(formData: FormData) {
 export async function createVehicle(formData: FormData) {
   await requireCanManage();
   const prisma = getPrisma();
+  const identifiers = {
+    code: normalizedIdentifier(formData, "code"),
+    plate: text(formData, "plate").toUpperCase(),
+  };
 
-  await prisma.vehicle.create({
-    data: {
-      brand: text(formData, "brand"),
-      model: text(formData, "model"),
-      plate: text(formData, "plate").toUpperCase(),
-      fuel: enumValue(formData, "fuel", vehicleFuels, "DIESEL"),
-      year: intValue(formData, "year") || null,
-      driver: optionalText(formData, "driver"),
-      notes: optionalText(formData, "notes"),
-    },
-  });
+  await ensureUniqueVehicleIdentifiers(prisma, identifiers, null, "/frota");
+
+  try {
+    await prisma.vehicle.create({
+      data: {
+        brand: text(formData, "brand"),
+        model: text(formData, "model"),
+        code: identifiers.code,
+        plate: identifiers.plate,
+        fuel: enumValue(formData, "fuel", vehicleFuels, "DIESEL"),
+        year: intValue(formData, "year") || null,
+        driver: optionalText(formData, "driver"),
+        notes: optionalText(formData, "notes"),
+      },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      redirectWithError("/frota", "Código ou matrícula já registados. Não é permitido duplicar viaturas.");
+    }
+    throw error;
+  }
 
   revalidatePath("/frota");
 }
@@ -3783,18 +3894,33 @@ export async function updateVehicle(formData: FormData) {
     return;
   }
 
-  await prisma.vehicle.update({
-    where: { id },
-    data: {
-      brand: text(formData, "brand"),
-      model: text(formData, "model"),
-      plate: text(formData, "plate").toUpperCase(),
-      fuel: enumValue(formData, "fuel", vehicleFuels, "DIESEL"),
-      year: intValue(formData, "year") || null,
-      driver: optionalText(formData, "driver"),
-      notes: optionalText(formData, "notes"),
-    },
-  });
+  const identifiers = {
+    code: normalizedIdentifier(formData, "code"),
+    plate: text(formData, "plate").toUpperCase(),
+  };
+
+  await ensureUniqueVehicleIdentifiers(prisma, identifiers, id, `/frota/${id}`);
+
+  try {
+    await prisma.vehicle.update({
+      where: { id },
+      data: {
+        brand: text(formData, "brand"),
+        model: text(formData, "model"),
+        code: identifiers.code,
+        plate: identifiers.plate,
+        fuel: enumValue(formData, "fuel", vehicleFuels, "DIESEL"),
+        year: intValue(formData, "year") || null,
+        driver: optionalText(formData, "driver"),
+        notes: optionalText(formData, "notes"),
+      },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      redirectWithError(`/frota/${id}`, "Código ou matrícula já registados. Não é permitido duplicar viaturas.");
+    }
+    throw error;
+  }
 
   revalidatePath("/frota");
   revalidatePath(`/frota/${id}`);

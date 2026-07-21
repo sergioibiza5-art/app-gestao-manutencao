@@ -37,6 +37,7 @@ export const dynamic = "force-dynamic";
 
 type EquipmentDetailPageProps = {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<{ erro?: string }>;
 };
 
 function kindLabel(kind: string) {
@@ -355,8 +356,9 @@ function equipmentCodePrefix(code?: string | null) {
   return match?.[1] ? match[1] : normalized;
 }
 
-export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {
+export default async function EquipmentDetailPage({ params, searchParams }: EquipmentDetailPageProps) {
   const { id } = await params;
+  const query = (await searchParams) ?? {};
   const [equipment, equipmentTypes, equipmentOptions] = await Promise.all([
     getEquipmentDetail(id),
     getEquipmentTypes(),
@@ -459,6 +461,12 @@ const bulkDl50Equipment = equipmentOptions
           </div>
         }
       />
+
+      {query.erro && (
+        <div className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-100">
+          {query.erro}
+        </div>
+      )}
 
 <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
   <Panel>
