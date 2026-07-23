@@ -1,4 +1,4 @@
-import { Hash, Save } from "lucide-react";
+import { Save } from "lucide-react";
 
 import { updateModuleCodification } from "@/app/actions";
 import { inputClass } from "@/app/components/ui";
@@ -26,15 +26,11 @@ export async function ModuleCodificationField({
         Codificacao
       </label>
       <div className="grid grid-cols-[minmax(150px,220px)_44px] gap-2">
-        <div className="relative min-w-0">
-          <Hash
-            size={16}
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-teal-300/80"
-          />
+        <div className="min-w-0">
           <input
             name="code"
             defaultValue={code}
-            className={`${inputClass} min-w-0 pl-9 uppercase`}
+            className={`${inputClass} min-w-0 uppercase`}
             placeholder="CODIGO"
             aria-label="Codificacao do modulo"
           />
