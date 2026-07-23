@@ -14,6 +14,7 @@ export async function ModuleCodificationField({
   className?: string;
 }) {
   const code = await getModuleCodification(moduleKey);
+  const displayCode = code.replace(/^#+\s*/, "");
 
   return (
     <form
@@ -29,7 +30,7 @@ export async function ModuleCodificationField({
         <div className="min-w-0">
           <input
             name="code"
-            defaultValue={code}
+            defaultValue={displayCode}
             className={`${inputClass} min-w-0 uppercase`}
             placeholder="CODIGO"
             aria-label="Codificacao do modulo"

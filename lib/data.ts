@@ -17,7 +17,7 @@ export async function getModuleCodification(moduleKey: string) {
         select: { code: true },
       });
 
-      return codification?.code ?? "";
+      return codification?.code?.replace(/^#+\s*/, "") ?? "";
     },
     "",
   );

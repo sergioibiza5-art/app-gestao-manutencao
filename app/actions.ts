@@ -33,6 +33,11 @@ function normalizedIdentifier(formData: FormData, key: string) {
   return value ? value.toUpperCase() : null;
 }
 
+function normalizedCodification(formData: FormData, key: string) {
+  const value = optionalText(formData, key);
+  return value ? value.replace(/^#+\s*/, "").toUpperCase() : null;
+}
+
 function redirectWithError(path: string, message: string): never {
   redirect(`${path}?erro=${encodeURIComponent(message)}`);
 }
@@ -135,7 +140,7 @@ export async function updateModuleCodification(formData: FormData) {
   await requireCanSgq();
 
   const moduleKey = text(formData, "moduleKey");
-  const code = normalizedIdentifier(formData, "code");
+  const code = normalizedCodification(formData, "code");
   const returnPath = text(formData, "returnPath") || "/";
   const safeReturnPath = returnPath.startsWith("/") ? returnPath : "/";
 
