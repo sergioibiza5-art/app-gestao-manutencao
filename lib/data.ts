@@ -9,6 +9,20 @@ import {
 } from "@/lib/environmental";
 import { readDb } from "@/lib/prisma";
 
+export async function getModuleCodification(moduleKey: string) {
+  return readDb(
+    async (prisma) => {
+      const codification = await prisma.moduleCodification.findUnique({
+        where: { moduleKey },
+        select: { code: true },
+      });
+
+      return codification?.code ?? "";
+    },
+    "",
+  );
+}
+
 function dashboardRange(view?: string, dateValue?: string) {
   const today = new Date();
   const base = dateValue ? new Date(dateValue) : today;

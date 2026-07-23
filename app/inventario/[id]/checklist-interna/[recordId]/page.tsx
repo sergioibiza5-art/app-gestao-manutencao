@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Camera, CheckCircle2, FileText, XCircle } from "lucide-react";
 
 import { AppShell } from "@/app/components/app-shell";
+import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { PageHeader, Panel } from "@/app/components/ui";
 import { getInternalMaintenanceRecord } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -37,6 +38,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
   const notOkCount = record.responses.filter((response) => response.status === "NOT_OK").length;
   const okCount = record.responses.filter((response) => response.status === "OK").length;
   const photoCount = record.responses.reduce((total, response) => total + response.photos.length, 0);
+  const returnPath = `/inventario/${equipment.id}/checklist-interna/${record.id}`;
 
   return (
     <AppShell activeHref="/inventario">
@@ -45,7 +47,8 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
         title={record.documentNo || `Checklist ${formatDate(record.performedAt)}`}
         description={`${record.template.title} · ${equipment.name} · ${equipment.code ?? "sem código"} · ${equipment.equipmentType?.name ?? "sem tipo"}`}
         action={
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-end gap-3">
+            <ModuleCodificationField moduleKey="documento-manutencao-interna" returnPath={returnPath} />
             <Link href={`/inventario/${equipment.id}/checklist-interna`} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200">
               <FileText size={17} />
               Nova checklist

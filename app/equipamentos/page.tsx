@@ -15,6 +15,7 @@ import { createEquipment, importEquipmentCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsCloseButton } from "@/app/components/details-close-button";
 import { DetailsOpenButton } from "@/app/components/details-open-button";
+import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import {
   buttonClass,
   EmptyState,
@@ -210,6 +211,13 @@ const filteredEquipment = typedEquipment.filter((item) => {
     typeId,
     measurement,
   };
+  const equipmentReturnParams = new URLSearchParams();
+  Object.entries({ ...filterParams, page: params.page || "" }).forEach(([key, value]) => {
+    if (value && value !== "all") equipmentReturnParams.set(key, value);
+  });
+  const equipmentReturnPath = equipmentReturnParams.toString()
+    ? `/equipamentos?${equipmentReturnParams}`
+    : "/equipamentos";
 
   return (
     <AppShell activeHref="/equipamentos">
@@ -473,8 +481,8 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 {filteredEquipment.length} resultado(s) · página {safePage} de {totalPages}
               </p>
             </div>
+            <ModuleCodificationField moduleKey="equipamentos" returnPath={equipmentReturnPath} />
           </div>
-
           <div className="mt-4 overflow-hidden rounded-xl border border-zinc-800">
             {paginatedEquipment.length === 0 ? (
               <div className="p-4">

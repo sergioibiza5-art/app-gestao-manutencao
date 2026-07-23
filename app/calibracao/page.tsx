@@ -3,6 +3,7 @@ import { AlertTriangle, CalendarDays, FileSpreadsheet, Search } from "lucide-rea
 
 import { createCalibrationLog, importCalibrationsCsv, updateCalibrationLog } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -133,6 +134,13 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
     acc[key].push(log);
     return acc;
   }, {});
+  const returnParams = new URLSearchParams();
+  if (params.year) returnParams.set("year", params.year);
+  if (params.month) returnParams.set("month", params.month);
+  if (params.q) returnParams.set("q", params.q);
+  if (params.approved) returnParams.set("approved", params.approved);
+  if (params.calibrationId) returnParams.set("calibrationId", params.calibrationId);
+  const calibrationReturnPath = returnParams.toString() ? `/calibracao?${returnParams}` : "/calibracao";
 
   return (
     <AppShell activeHref="/calibracao">
@@ -154,13 +162,16 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
             </div>
           </div>
 
-          <form className="grid gap-2 sm:grid-cols-[150px_auto]">
-            <input name="year" className={inputClass} defaultValue={selectedYear} aria-label="Ano do mapa" />
-            <button className={buttonClass}>
-              <Search size={16} />
-              Ver ano
-            </button>
-          </form>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <ModuleCodificationField moduleKey="calibracao" returnPath={calibrationReturnPath} />
+            <form className="grid gap-2 sm:grid-cols-[150px_auto]">
+              <input name="year" className={inputClass} defaultValue={selectedYear} aria-label="Ano do mapa" />
+              <button className={buttonClass}>
+                <Search size={16} />
+                Ver ano
+              </button>
+            </form>
+          </div>
         </div>
 
         <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

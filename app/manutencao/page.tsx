@@ -24,6 +24,7 @@ import {
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsCloseButton } from "@/app/components/details-close-button";
 import { DetailsOpenButton } from "@/app/components/details-open-button";
+import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
@@ -214,6 +215,13 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   const annualCalendar = filters.calendar === "year";
   const dataView = annualCalendar ? "year" : selectedView;
   const selectedEquipmentId = filters.equipmentId || "ALL";
+  const returnParams = new URLSearchParams();
+  returnParams.set("view", selectedView);
+  returnParams.set("date", selectedDate);
+  returnParams.set("type", selectedType);
+  returnParams.set("equipmentId", selectedEquipmentId);
+  if (annualCalendar) returnParams.set("calendar", "year");
+  const maintenanceReturnPath = `/manutencao?${returnParams}`;
 
   const { equipment, maintenanceLogs, schedules, range } = await getMaintenanceData({
   view: dataView,
@@ -382,6 +390,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   {formatDate(range.start)} até {formatDate(range.end)}
                 </p>
               </div>
+
+              <ModuleCodificationField moduleKey="manutencao" returnPath={maintenanceReturnPath} />
 
               <Link
                 href={

@@ -131,6 +131,29 @@ function decimalString(rawValue: string) {
   return Number.isFinite(parsed) ? parsed.toFixed(2) : "0";
 }
 
+export async function updateModuleCodification(formData: FormData) {
+  await requireCanSgq();
+
+  const moduleKey = text(formData, "moduleKey");
+  const code = normalizedIdentifier(formData, "code");
+  const returnPath = text(formData, "returnPath") || "/";
+  const safeReturnPath = returnPath.startsWith("/") ? returnPath : "/";
+
+  if (!moduleKey) {
+    redirect(safeReturnPath);
+  }
+
+  const prisma = getPrisma();
+  await prisma.moduleCodification.upsert({
+    where: { moduleKey },
+    create: { moduleKey, code },
+    update: { code },
+  });
+
+  revalidatePath(safeReturnPath.split("?")[0] || "/");
+  redirect(safeReturnPath);
+}
+
 function decimalNumber(rawValue: string) {
   return Number(decimalString(rawValue));
 }

@@ -3,6 +3,7 @@
 import { deleteEnvironmentalImport, importEnvironmentalReport, updateEnvironmentalSettings } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsModal } from "@/app/components/details-modal";
+import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
 import { getEnvironmentalData } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -219,6 +220,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
     status,
     importId,
   }).toString();
+  const environmentalReturnPath = `/ambiental?${pdfQuery}`;
 
   return (
     <AppShell activeHref="/ambiental">
@@ -438,10 +440,13 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
 
         <section className="space-y-4">
           <Panel>
-            <SectionTitle
-              title="Ações ambientais"
-              description="Registo detalhado dos eventos que ultrapassaram o limite de tempo e devem suportar auditorias e levantamento de nao conformidades."
-            />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <SectionTitle
+                title="Ações ambientais"
+                description="Registo detalhado dos eventos que ultrapassaram o limite de tempo e devem suportar auditorias e levantamento de nao conformidades."
+              />
+              <ModuleCodificationField moduleKey="ambiental" returnPath={environmentalReturnPath} />
+            </div>
             {actionEvents.length === 0 ? (
               <div className="mt-4">
                 <EmptyState title="Sem ações ambientais" description="não existem eventos fora de limite com duração suficiente no período filtrado." />
