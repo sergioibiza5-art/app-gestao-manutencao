@@ -207,6 +207,28 @@ function sameCalendarDay(left: Date, right: Date) {
   );
 }
 
+function isClosedSchedule(schedule: { status: string; workOrder?: { status: string } | null }) {
+  const workOrderStatus = schedule.workOrder?.status ?? null;
+
+  return (
+    schedule.status === "DONE" ||
+    schedule.status === "CANCELED" ||
+    workOrderStatus === "DONE" ||
+    workOrderStatus === "VALIDATED" ||
+    workOrderStatus === "CANCELED"
+  );
+}
+
+function isOverdueOrTodaySchedule(schedule: { scheduledAt: Date; status: string; workOrder?: { status: string } | null }) {
+  const today = new Date();
+  const scheduled = new Date(schedule.scheduledAt);
+
+  today.setHours(0, 0, 0, 0);
+  scheduled.setHours(0, 0, 0, 0);
+
+  return !isClosedSchedule(schedule) && scheduled.getTime() <= today.getTime();
+}
+
 export default async function MaintenancePage({ searchParams }: MaintenancePageProps) {
   const filters = await searchParams;
   const selectedView = filters.view || "month";
@@ -229,7 +251,10 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   type: selectedType,
   equipmentId: selectedEquipmentId,
 });
-  const groupedSchedules = groupByDate(schedules);
+  const prioritySchedules = selectedView === "month" ? schedules.filter(isOverdueOrTodaySchedule) : [];
+  const priorityScheduleIds = new Set(prioritySchedules.map((schedule) => schedule.id));
+  const regularSchedules = selectedView === "month" ? schedules.filter((schedule) => !priorityScheduleIds.has(schedule.id)) : schedules;
+  const groupedSchedules = groupByDate([...prioritySchedules, ...regularSchedules]);
   const weekBoardDays = weekDayNames.map((name, index) => {
     const day = new Date(range.start);
     day.setDate(range.start.getDate() + index);
@@ -619,8 +644,20 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   description="Cria um agendamento anual ou altera o filtro para veres outros períodos."
                 />
               ) : (
-                Object.entries(groupedSchedules).map(([date, items]) => (
-                  <div key={date} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                <>
+                  {prioritySchedules.length > 0 ? (
+                    <div className="rounded-lg border border-rose-300/25 bg-rose-950/10 px-4 py-3">
+                      <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-rose-100">
+                        Prioridade operacional
+                      </h3>
+                      <p className="mt-1 text-sm text-zinc-400">
+                        As manutenções atrasadas e as marcadas para hoje aparecem primeiro.
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {Object.entries(groupedSchedules).map(([date, items]) => (
+                    <div key={date} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <h3 className="font-semibold text-zinc-100">{date}</h3>
                       <span className="rounded-md bg-zinc-900 px-2 py-1 text-xs text-zinc-400">
@@ -792,8 +829,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                         );
                       })}
                     </div>
-                  </div>
-                ))
+                    </div>
+                  ))}
+                </>
               )}
             </div>
           )}
