@@ -22,6 +22,45 @@ function timeValue(task: { dueTime: string | null; dueDate: Date | null }) {
   return task.dueTime ?? task.dueDate?.toISOString().slice(11, 16) ?? "";
 }
 
+function taskStatusTone(status: string) {
+  const tones: Record<
+    string,
+    {
+      card: string;
+      badge: string;
+      button: string;
+      label: string;
+    }
+  > = {
+    PENDING: {
+      card: "border-amber-300/40 bg-amber-950/10",
+      badge: "border-amber-300/35 bg-amber-300/10 text-amber-200",
+      button: "border-amber-300/30 bg-amber-300/10 text-amber-100 hover:border-amber-200/60",
+      label: "Pendente",
+    },
+    IN_PROGRESS: {
+      card: "border-sky-300/45 bg-sky-950/12",
+      badge: "border-sky-300/35 bg-sky-300/10 text-sky-200",
+      button: "border-sky-300/30 bg-sky-300/10 text-sky-100 hover:border-sky-200/60",
+      label: "Em curso",
+    },
+    COMPLETED: {
+      card: "border-emerald-300/45 bg-emerald-950/12",
+      badge: "border-emerald-300/35 bg-emerald-300/10 text-emerald-200",
+      button: "border-emerald-300/30 bg-emerald-300/10 text-emerald-100 hover:border-emerald-200/60",
+      label: "Concluida",
+    },
+    CANCELED: {
+      card: "border-rose-300/40 bg-rose-950/10 opacity-80",
+      badge: "border-rose-300/35 bg-rose-300/10 text-rose-200",
+      button: "border-rose-300/30 bg-rose-300/10 text-rose-100 hover:border-rose-200/60",
+      label: "Cancelada",
+    },
+  };
+
+  return tones[status] ?? tones.PENDING;
+}
+
 export default async function TasksPage({ searchParams }: TasksPageProps) {
   const params = (await searchParams) ?? {};
   const selectedTaskId = params.taskId ?? "";
@@ -102,6 +141,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
             ) : (
               tasks.map((task) => {
                 const isSelected = selectedTaskId === task.id;
+                const statusTone = taskStatusTone(task.status);
 
                 return (
                   <article
@@ -110,7 +150,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
                     className={`scroll-mt-24 rounded-lg border bg-zinc-950/65 p-4 transition ${
                       isSelected
                         ? "border-teal-300/70 shadow-[0_0_0_1px_rgba(45,212,191,0.35),0_0_35px_rgba(45,212,191,0.12)]"
-                        : "border-zinc-800"
+                        : statusTone.card
                     }`}
                   >
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -122,8 +162,8 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
                       </div>
 
                       <div className="text-left sm:text-right">
-                        <p className={isSelected ? "text-sm font-medium text-teal-200" : "text-sm font-medium text-teal-300"}>
-                          {task.status}
+                        <p className={`inline-flex rounded-md border px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${statusTone.badge}`}>
+                          {statusTone.label}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">
                           {formatDate(task.dueDate ?? task.nextDue)} {timeValue(task)}
@@ -182,7 +222,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
                         defaultValue={task.description ?? ""}
                       />
 
-                      <button className="inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">
+                      <button className={`inline-flex h-10 items-center justify-center rounded-lg border px-3 text-sm font-semibold transition ${statusTone.button}`}>
                         Atualizar
                       </button>
                     </form>
