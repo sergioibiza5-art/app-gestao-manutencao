@@ -6,7 +6,7 @@ import { AppShell } from "@/app/components/app-shell";
 import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { PageHeader, Panel } from "@/app/components/ui";
 import { getInternalMaintenanceRecord } from "@/lib/data";
-import { formatDate } from "@/lib/format";
+import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +26,14 @@ function statusClass(status: string) {
   return "border-teal-300/40 bg-teal-300/10 text-teal-200";
 }
 
+function durationLabel(seconds: number | null | undefined) {
+  const safeSeconds = Math.max(seconds ?? 0, 0);
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+
+  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
+}
+
 export default async function ChecklistDocumentPage({ params }: ChecklistDocumentPageProps) {
   const { id, recordId } = await params;
   const record = await getInternalMaintenanceRecord(id, recordId);
@@ -40,6 +48,13 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
   const photoCount = record.responses.reduce((total, response) => total + response.photos.length, 0);
   const opDocument = record.workOrder?.documents.find((document) => document.fileUrl);
   const returnPath = `/equipamentos/${equipment.id}/checklist-interna/${record.id}`;
+  const workOrderConsumableCost =
+    record.workOrder?.consumableMovements.reduce(
+      (total, movement) => total + Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0),
+      0,
+    ) ?? 0;
+  const workOrderTotalCost = Number(record.workOrder?.maintenanceLog?.cost ?? 0);
+  const workOrderLaborCost = Math.max(workOrderTotalCost - workOrderConsumableCost, 0);
   
   return (
     <AppShell activeHref="/equipamentos">
@@ -175,6 +190,21 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
             <FileText size={22} className="text-sky-300" />
             <h2 className="text-xl font-semibold text-zinc-50">Notas gerais</h2>
           </div>
+          {record.workOrder ? (
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {[
+                ["Tempo OP", durationLabel(record.workOrder.totalWorkSeconds)],
+                ["Mao de obra", formatCurrency(workOrderLaborCost)],
+                ["Consumiveis", formatCurrency(workOrderConsumableCost)],
+                ["Total OP", workOrderTotalCost > 0 ? formatCurrency(workOrderTotalCost) : "Sem custo fechado"],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">
+                  <p className="text-xs text-zinc-500">{label}</p>
+                  <p className="mt-1 text-sm font-semibold text-zinc-100">{value}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
           <p className="mt-4 min-h-20 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4 text-sm leading-6 text-zinc-400">
             {record.notes || "Sem notas gerais."}
           </p>

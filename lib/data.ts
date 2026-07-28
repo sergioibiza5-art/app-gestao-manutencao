@@ -841,10 +841,16 @@ export async function getInternalMaintenanceRecord(equipmentId: string, recordId
           equipment: { include: { equipmentType: true } },
           template: true,
           workOrder: {
-  include: {
-    documents: true,
-  },
-},
+            include: {
+              documents: true,
+              maintenanceLog: true,
+              consumableMovements: {
+                where: { type: "SAIDA_OP" },
+                orderBy: { createdAt: "asc" },
+                include: { consumable: true },
+              },
+            },
+          },
           responses: {
             orderBy: { item: { order: "asc" } },
             include: {
