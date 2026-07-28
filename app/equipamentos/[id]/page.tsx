@@ -380,6 +380,8 @@ const ticketCostTotal = equipment.tickets.reduce(
   0
 );
 
+const maintenanceCostTotal = Number(equipment.maintenanceCostTotal ?? 0);
+
 const openTicketsCount = equipment.tickets.filter((ticket) =>
   ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED", "DONE"].includes(ticket.status)
 ).length;
@@ -498,9 +500,9 @@ const bulkDl50Equipment = equipmentOptions
   </Panel>
 
   <Panel>
-    <p className="text-sm text-zinc-500">Avaliação DL50</p>
-    <p className={`mt-3 inline-flex rounded-lg border px-3 py-2 text-sm font-semibold ${dl50StatusClass(latestDl50Assessment?.status)}`}>
-      {dl50StatusLabel(latestDl50Assessment?.status)}
+    <p className="text-sm text-zinc-500">Gasto em manutenções</p>
+    <p className="mt-2 text-3xl font-semibold text-lime-200">
+      {formatCurrency(maintenanceCostTotal)}
     </p>
   </Panel>
 </section>

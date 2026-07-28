@@ -657,9 +657,10 @@ export async function getModuleData() {
 export async function getEquipmentDetail(id: string) {
   return readDb(
     async (prisma) => {
-      const equipment = await prisma.equipment.findUnique({
-        where: { id },
-        include: {
+      const [equipment, maintenanceCost] = await Promise.all([
+        prisma.equipment.findUnique({
+          where: { id },
+          include: {
           interventionPlans: { orderBy: [{ kind: "asc" }, { type: "asc" }] },
           parentEquipment: true,
           childEquipment: { orderBy: { name: "asc" } },
@@ -719,17 +720,27 @@ calibrationLogs: { orderBy: { calibrationDate: "desc" }, take: 30, include: { do
 expenses: { orderBy: { date: "desc" }, include: { documents: true } },
 documents: { orderBy: { createdAt: "desc" }, take: 30 },
 consumables: { orderBy: { name: "asc" }, take: 50 },
-dl50Assessments: {
-  orderBy: { version: "desc" },
-  include: {
-    createdBy: { select: { id: true, name: true } },
-    document: true,
+  dl50Assessments: {
+    orderBy: { version: "desc" },
+    include: {
+      createdBy: { select: { id: true, name: true } },
+      document: true,
+    },
   },
-},
-        },
-      });
+          },
+        }),
+        prisma.maintenanceLog.aggregate({
+          where: { equipmentId: id },
+          _sum: { cost: true },
+        }),
+      ]);
 
-      return equipment;
+      return equipment
+        ? {
+            ...equipment,
+            maintenanceCostTotal: maintenanceCost._sum.cost ?? 0,
+          }
+        : null;
     },
     null,
   );
