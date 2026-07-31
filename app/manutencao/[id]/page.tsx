@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 
@@ -22,7 +22,7 @@ function typeLabel(type: string) {
 function scheduleStatusLabel(status: string) {
   const labels: Record<string, string> = {
     SCHEDULED: "Agendada",
-    DONE: "Concluída",
+    DONE: "ConcluÃ­da",
     CANCELED: "Cancelada",
   };
   return labels[status] ?? status;
@@ -34,7 +34,7 @@ function workOrderStatusLabel(status: string) {
     IN_PROGRESS: "Em curso",
     PAUSED: "Pausada",
     SUSPENDED: "Suspensa",
-    DONE: "Concluída",
+    DONE: "ConcluÃ­da",
     VALIDATED: "Validada",
     CANCELED: "Cancelada",
   };
@@ -65,6 +65,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
   const workOrder = schedule.workOrder;
   const template = workOrder?.template ?? schedule.equipment.equipmentType?.checklistTemplates[0];
   const canFillChecklist = workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status) && template;
+  const canCompleteWorkOrder = workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status);
   const checklistResponsesByItem = new Map(
     workOrder?.checklistRecord?.responses.map((response) => [response.itemId, response]) ?? [],
   );
@@ -100,7 +101,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
             <>
               <dl className="mt-4 grid gap-3">
                 {[
-                  ["Número", workOrder.number],
+                  ["NÃºmero", workOrder.number],
                   ["Estado", workOrderStatusLabel(workOrder.status)],
                   ["Aberta em", formatDate(workOrder.openedAt)],
                   ["Iniciada em", formatDate(workOrder.startedAt)],
@@ -142,7 +143,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                     <textarea
                       name="suspensionNotes"
                       className={textareaClass}
-                      placeholder="Observações da suspensão: falta de peças, sem solução definida, aguarda fornecedor..."
+                      placeholder="ObservaÃ§Ãµes da suspensÃ£o: falta de peÃ§as, sem soluÃ§Ã£o definida, aguarda fornecedor..."
                     />
                     <button className="mt-2 inline-flex h-10 items-center justify-center rounded-lg border border-amber-300/40 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100">
                       Suspender OP
@@ -250,14 +251,14 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
           {workOrder?.status === "DONE" || workOrder?.status === "VALIDATED" ? (
             <div className="mt-4 space-y-4">
               <div className="rounded-lg border border-teal-300/25 bg-teal-300/10 p-4 text-sm text-teal-100">
-                OP {workOrder.status === "VALIDATED" ? "validada" : "concluída"}. O histórico, os documentos e a checklist ficaram associados ao equipamento.
+                OP {workOrder.status === "VALIDATED" ? "validada" : "concluÃ­da"}. O histÃ³rico, os documentos e a checklist ficaram associados ao equipamento.
               </div>
               <dl className="grid gap-3 md:grid-cols-2">
                 {[
-                  ["Tempo do serviço", durationLabel(workOrder.totalWorkSeconds)],
-                  ["Feito por", workOrder.performedBy ?? "Sem responsável"],
+                  ["Tempo do serviÃ§o", durationLabel(workOrder.totalWorkSeconds)],
+                  ["Feito por", workOrder.performedBy ?? "Sem responsÃ¡vel"],
                   ["Resultado", workOrder.result ?? "Sem resultado"],
-                  ["O que foi feito", workOrder.actionsDone ?? "Sem descrição"],
+                  ["O que foi feito", workOrder.actionsDone ?? "Sem descriÃ§Ã£o"],
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
                     <dt className="text-xs text-zinc-500">{label}</dt>
@@ -266,7 +267,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                 ))}
               </dl>
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
-                <h3 className="font-semibold text-zinc-100">Documentos e evidências da OP</h3>
+                <h3 className="font-semibold text-zinc-100">Documentos e evidÃªncias da OP</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {workOrder.checklistRecord ? (
                     <Link
@@ -301,7 +302,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                         <div>
                           <p className="font-semibold text-zinc-100">{movement.consumable.name}</p>
                           <p className="text-xs text-zinc-500">
-                            {String(movement.quantity)} {movement.consumable.unit} · {movement.user?.name ?? "Sem utilizador"}
+                            {String(movement.quantity)} {movement.consumable.unit} Â· {movement.user?.name ?? "Sem utilizador"}
                           </p>
                           {movement.reason ? <p className="mt-1 text-xs text-zinc-500">{movement.reason}</p> : null}
                         </div>
@@ -317,10 +318,10 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
           ) : workOrder?.status === "SUSPENDED" ? (
             <div className="mt-4 space-y-4">
               <div className="rounded-lg border border-amber-300/25 bg-amber-300/10 p-4 text-sm text-amber-100">
-                OP suspensa. Retoma a OP para voltar a contar tempo de trabalho e concluir a execução.
+                OP suspensa. Retoma a OP para voltar a contar tempo de trabalho e concluir a execuÃ§Ã£o.
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
-                <p className="text-xs text-zinc-500">Notas e observações</p>
+                <p className="text-xs text-zinc-500">Notas e observaÃ§Ãµes</p>
                 <p className="mt-2 whitespace-pre-line text-sm text-zinc-100">{workOrder.notes ?? "Sem notas"}</p>
               </div>
             </div>
@@ -339,7 +340,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
   <select name="result" className={inputClass} defaultValue="Aprovado">
     <option value="Aprovado">Aprovado</option>
     <option value="Reprovado">Reprovado</option>
-    <option value="Em observações">Em observações</option>
+    <option value="Em observaÃ§Ãµes">Em observaÃ§Ãµes</option>
   </select>
 </div>
 
@@ -362,7 +363,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                     </div>
                     <select name={`status_${item.id}`} className={inputClass} defaultValue={response?.status ?? "OK"}>
                       <option value="OK">OK</option>
-                      <option value="NOT_OK">Não OK</option>
+                      <option value="NOT_OK">NÃ£o OK</option>
                       <option value="NA">N/A</option>
                     </select>
                     <input name={`obs_${item.id}`} className={inputClass} placeholder="Obs." defaultValue={response?.obs ?? ""} />
@@ -381,7 +382,35 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                 <textarea name="documentNotes" className={`${textareaClass} md:col-span-2`} placeholder="Obs." />
               </div>
               <textarea name="notes" className={textareaClass} placeholder="Notas finais" />
-              <button className={buttonClass}>Concluído</button>
+              <button className={buttonClass}>ConcluÃ­do</button>
+            </form>
+          ) : canCompleteWorkOrder ? (
+            <form action={completeWorkOrder} className="mt-4 space-y-4">
+              <input type="hidden" name="workOrderId" value={workOrder.id} />
+              <input type="hidden" name="equipmentId" value={schedule.equipmentId} />
+              <input type="hidden" name="scheduleId" value={schedule.id} />
+              {workOrder.status !== "IN_PROGRESS" && (
+                <div className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-3 text-sm text-amber-100">
+                  A OP nao esta em curso. Podes concluir, mas se houve trabalho adicional retoma primeiro para o tempo ficar contado.
+                </div>
+              )}
+              <div className="grid gap-3 md:grid-cols-2">
+                <select name="result" className={inputClass} defaultValue="Aprovado">
+                  <option value="Aprovado">Aprovado</option>
+                  <option value="Reprovado">Reprovado</option>
+                  <option value="Em observacoes">Em observacoes</option>
+                </select>
+                <input name="documentUrl" className={inputClass} placeholder="Link/caminho do documento associado" />
+              </div>
+              <textarea name="actionsDone" className={textareaClass} placeholder="O que foi feito" />
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
+                <h3 className="mb-3 font-semibold text-zinc-100">Consumiveis utilizados</h3>
+                <TicketConsumables consumables={schedule.consumableOptions} />
+              </div>
+              <input name="extraDocumentUrl" className={inputClass} placeholder="Link/caminho adicional" />
+              <textarea name="documentNotes" className={textareaClass} placeholder="Obs. dos documentos" />
+              <textarea name="notes" className={textareaClass} placeholder="Notas finais" />
+              <button className={buttonClass}>Concluir OP</button>
             </form>
           ) : (
             <p className="mt-4 rounded-lg border border-dashed border-zinc-800 bg-zinc-950/45 p-4 text-sm text-zinc-500">
