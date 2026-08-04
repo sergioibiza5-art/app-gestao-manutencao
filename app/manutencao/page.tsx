@@ -14,7 +14,8 @@ import {
 
 import {
   createAnnualMaintenanceSchedule,
-  createMaintenanceLog,
+  createExecutedMaintenanceWorkOrder,
+  createManualWorkOrder,
   createWorkOrderFromSchedule,
   deleteMaintenanceLog,
   deleteMaintenanceSchedule,
@@ -26,6 +27,7 @@ import { DetailsCloseButton } from "@/app/components/details-close-button";
 import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
+import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 
@@ -245,12 +247,12 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   if (annualCalendar) returnParams.set("calendar", "year");
   const maintenanceReturnPath = `/manutencao?${returnParams}`;
 
-  const { equipment, maintenanceLogs, schedules, range } = await getMaintenanceData({
-  view: dataView,
-  date: selectedDate,
-  type: selectedType,
-  equipmentId: selectedEquipmentId,
-});
+  const { equipment, maintenanceLogs, schedules, consumables, range } = await getMaintenanceData({
+    view: dataView,
+    date: selectedDate,
+    type: selectedType,
+    equipmentId: selectedEquipmentId,
+  });
   const prioritySchedules = selectedView === "month" ? schedules.filter(isOverdueOrTodaySchedule) : [];
   const priorityScheduleIds = new Set(prioritySchedules.map((schedule) => schedule.id));
   const regularSchedules = selectedView === "month" ? schedules.filter((schedule) => !priorityScheduleIds.has(schedule.id)) : schedules;
@@ -319,6 +321,10 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         description="Cria manutenções internas ou externas, agenda o ano completo e consulta o mapa por dia, semana, mês ou ano."
         action={
           <div className="flex flex-wrap gap-2">
+            <DetailsOpenButton targetId="op-manual" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-4 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200">
+              <PlayCircle size={18} />
+              OP manual
+            </DetailsOpenButton>
             <DetailsOpenButton targetId="registo-executado" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200">
               <Plus size={18} />
               Registo executado
@@ -332,6 +338,68 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
       />
 
       <section className="space-y-4">
+        <details id="op-manual" className="group">
+          <summary className="hidden">OP manual</summary>
+          <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+            <div className="mx-auto max-w-6xl">
+              <Panel>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <PlayCircle size={22} className="text-cyan-300" />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Ordem de serviço</p>
+                      <h2 className="text-xl font-semibold text-zinc-50">Criar OP manual</h2>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 sm:items-end">
+                    <p className="max-w-xl text-sm text-zinc-500">
+                      Cria uma OP já iniciada para trabalhos não programados, como alterações de setup, afinações ou intervenções pontuais.
+                    </p>
+                    <DetailsCloseButton targetId="op-manual" />
+                  </div>
+                </div>
+
+                <form action={createManualWorkOrder} className="mt-4 grid gap-3 lg:grid-cols-6">
+                  <select name="equipmentId" required className={`${inputClass} lg:col-span-2`}>
+                    <option value="">Selecionar equipamento</option>
+                    {equipment.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input name="title" required className={`${inputClass} lg:col-span-2`} placeholder="Título da OP, ex.: Alteração de setup" />
+
+                  <select name="type" className={inputClass}>
+                    <option value="INTERNAL">Interna</option>
+                    <option value="EXTERNAL">Externa</option>
+                  </select>
+
+                  <select name="costCenter" className={inputClass} defaultValue="">
+                    <option value="">Tipo de manutenção</option>
+                    {maintenanceTypeOptions.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input name="supplier" className={`${inputClass} lg:col-span-2`} placeholder="Fornecedor / equipa" />
+                  <textarea name="description" className={`${textareaClass} lg:col-span-4`} placeholder="Descrição do trabalho a iniciar" />
+                  <textarea name="notes" className={`${textareaClass} lg:col-span-6`} placeholder="Observações internas da OP" />
+
+                  <button className={`${buttonClass} lg:col-span-2`}>
+                    <PlayCircle size={18} />
+                    Iniciar OP manual
+                  </button>
+                </form>
+              </Panel>
+            </div>
+          </div>
+        </details>
+
         <details id="registo-executado" className="group">
           <summary className="hidden">Registo executado</summary>
           <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
@@ -354,7 +422,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   </div>
                 </div>
 
-                <form action={createMaintenanceLog} className="mt-4 grid gap-3 lg:grid-cols-6">
+                <form action={createExecutedMaintenanceWorkOrder} className="mt-4 grid gap-3 lg:grid-cols-6">
                   <select name="equipmentId" required className={`${inputClass} lg:col-span-2`}>
                     <option value="">Selecionar equipamento</option>
                     {equipment.map((item) => (
@@ -383,12 +451,23 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   <input name="supplier" className={`${inputClass} lg:col-span-2`} placeholder="Fornecedor / técnico" />
                   <input name="performedBy" className={`${inputClass} lg:col-span-2`} placeholder="Feito por" />
                   <input name="amount" className={inputClass} placeholder="Custo" />
-                  <input name="date" type="date" className={inputClass} />
+                  <input name="startedAt" type="datetime-local" className={inputClass} />
+                  <input name="closedAt" type="datetime-local" className={inputClass} />
+                  <select name="machineStopped" className={inputClass} defaultValue="NO">
+                    <option value="NO">Máquina sem paragem</option>
+                    <option value="YES">Máquina parada</option>
+                  </select>
                   <input name="nextDate" type="date" className={inputClass} />
 
                   <textarea name="description" className={`${textareaClass} lg:col-span-6`} placeholder="Descrição do trabalho executado" />
 
-                  <button className={`${buttonClass} lg:col-span-2`}>Guardar manutenção</button>
+                  <div className="rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 lg:col-span-6">
+                    <p className="mb-3 text-sm font-semibold text-zinc-100">Consumíveis utilizados</p>
+                    <TicketConsumables consumables={consumables} />
+                  </div>
+                  <textarea name="notes" className={`${textareaClass} lg:col-span-6`} placeholder="Observações gerais, evidências ou notas de rastreabilidade" />
+
+                  <button className={`${buttonClass} lg:col-span-2`}>Guardar manutenção e criar OP</button>
                 </form>
               </Panel>
             </div>

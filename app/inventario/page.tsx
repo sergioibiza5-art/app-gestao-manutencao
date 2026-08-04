@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { AlertTriangle, ArrowRight, Download, FileSpreadsheet, Filter, PackagePlus, Search, ShoppingCart, X } from "lucide-react";
+import { AlertTriangle, ArrowRight, Download, FileSpreadsheet, Filter, History, PackageMinus, PackagePlus, Search, ShoppingCart, X } from "lucide-react";
 
-import { createConsumable, importConsumablesCsv } from "@/app/actions";
+import { createConsumable, createConsumableStockOut, importConsumablesCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsCloseButton } from "@/app/components/details-close-button";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getInventoryData } from "@/lib/data";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -104,7 +106,7 @@ function stockVisualStatus(item: { currentStock?: unknown; minimumStock?: unknow
 
 export default async function InventoryPage({ searchParams }: InventoryPageProps) {
   const params = (await searchParams) ?? {};
-  const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, lowStockConsumables, totalStockValue } = await getInventoryData(params);
+  const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, lowStockConsumables, totalStockValue, stockMovements } = await getInventoryData(params);
   const exportParams = new URLSearchParams(
     Object.entries(params).filter(([, value]) => typeof value === "string" && value.length > 0) as string[][],
   );
@@ -228,6 +230,20 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
+            <DetailsOpenButton
+              targetId="baixa-stock"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-rose-300/35 bg-rose-300/10 px-3 text-sm font-semibold text-rose-100 transition hover:border-rose-200/70"
+            >
+              <PackageMinus size={16} />
+              Dar baixa
+            </DetailsOpenButton>
+            <DetailsOpenButton
+              targetId="movimentos-stock"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-3 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200/70"
+            >
+              <History size={16} />
+              Movimentos
+            </DetailsOpenButton>
             <Link
               href="/inventario?stock=LOW"
               className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-300/35 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100 transition hover:border-amber-200/70"
@@ -274,6 +290,101 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           </div>
         )}
       </Panel>
+
+      <details id="baixa-stock" className="group">
+        <summary className="hidden">Dar baixa de stock</summary>
+        <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+          <div className="mx-auto max-w-3xl">
+            <Panel>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <PackageMinus size={22} className="text-rose-300" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-rose-300">Stock</p>
+                    <h2 className="text-xl font-semibold text-zinc-50">Dar baixa direta</h2>
+                    <p className="mt-1 text-sm text-zinc-500">Regista uma saída manual e desconta automaticamente ao stock atual.</p>
+                  </div>
+                </div>
+                <DetailsCloseButton targetId="baixa-stock" />
+              </div>
+              <form action={createConsumableStockOut} className="mt-5 grid gap-3 md:grid-cols-2">
+                <Field label="Produto">
+                  <select name="consumableId" required className={inputClass}>
+                    <option value="">Selecionar produto</option>
+                    {consumables.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name} - stock {String(item.currentStock)} {item.unit}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Quantidade a descontar">
+                  <input name="quantity" required className={inputClass} placeholder="Ex.: 1" />
+                </Field>
+                <Field label="Motivo">
+                  <textarea name="reason" className={`${textareaClass} md:col-span-2`} placeholder="Ex.: consumo direto, desperdício, ajuste por contagem..." />
+                </Field>
+                <button className={`${buttonClass} md:col-span-2`}>Guardar baixa de stock</button>
+              </form>
+            </Panel>
+          </div>
+        </div>
+      </details>
+
+      <details id="movimentos-stock" className="group">
+        <summary className="hidden">Movimentos de stock</summary>
+        <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+          <div className="mx-auto max-w-6xl">
+            <Panel>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <History size={22} className="text-cyan-300" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Rastreabilidade</p>
+                    <h2 className="text-xl font-semibold text-zinc-50">Movimentos de stock</h2>
+                    <p className="mt-1 text-sm text-zinc-500">Últimos movimentos registados, com produto, origem e utilizador.</p>
+                  </div>
+                </div>
+                <DetailsCloseButton targetId="movimentos-stock" />
+              </div>
+              <div className="mt-5 overflow-x-auto rounded-lg border border-zinc-800">
+                <table className="min-w-full text-left text-sm">
+                  <thead className="bg-zinc-950/70 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                    <tr>
+                      <th className="px-4 py-3">Data</th>
+                      <th className="px-4 py-3">Produto</th>
+                      <th className="px-4 py-3">Tipo</th>
+                      <th className="px-4 py-3">Qtd.</th>
+                      <th className="px-4 py-3">Origem</th>
+                      <th className="px-4 py-3">Utilizador</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800">
+                    {stockMovements.length === 0 ? (
+                      <tr>
+                        <td className="px-4 py-6 text-zinc-500" colSpan={6}>Sem movimentos registados.</td>
+                      </tr>
+                    ) : (
+                      stockMovements.map((movement) => (
+                        <tr key={movement.id}>
+                          <td className="px-4 py-3 text-zinc-400">{formatDate(movement.date)}</td>
+                          <td className="px-4 py-3 font-medium text-zinc-100">{movement.consumable.name}</td>
+                          <td className="px-4 py-3 text-zinc-300">{movement.type.replaceAll("_", " ")}</td>
+                          <td className="px-4 py-3 text-cyan-200">{String(movement.quantity)} {movement.consumable.unit}</td>
+                          <td className="px-4 py-3 text-zinc-400">
+                            {movement.workOrder ? `OP ${movement.workOrder.number}` : movement.ticket ? `Ticket ${movement.ticket.number}` : movement.reason ?? "Movimento manual"}
+                          </td>
+                          <td className="px-4 py-3 text-zinc-400">{movement.user?.name ?? "Sistema"}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </Panel>
+          </div>
+        </div>
+      </details>
 
       <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
         <Panel>

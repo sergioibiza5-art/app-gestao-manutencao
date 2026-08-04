@@ -1628,6 +1628,36 @@ export async function deleteConsumable(formData: FormData) {
   redirect("/inventario");
 }
 
+export async function createConsumableStockOut(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const consumableId = text(formData, "consumableId");
+  const quantity = decimalNumber(text(formData, "quantity"));
+  const reason = optionalText(formData, "reason") || "Baixa direta de stock";
+
+  if (!consumableId || quantity <= 0) return;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.consumable.update({
+      where: { id: consumableId },
+      data: { currentStock: { decrement: quantity } },
+    });
+
+    await tx.consumableMovement.create({
+      data: {
+        consumableId,
+        type: "SAIDA_DIRETA",
+        quantity: quantity.toFixed(2),
+        reason,
+        userId: user.id,
+      },
+    });
+  });
+
+  revalidatePath("/inventario");
+  revalidatePath(`/inventario/consumiveis/${consumableId}`);
+}
+
 export async function createMaintenanceLog(formData: FormData) {
   await requireCanWrite();
   const prisma = getPrisma();
@@ -1655,6 +1685,83 @@ export async function createMaintenanceLog(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+}
+
+export async function createExecutedMaintenanceWorkOrder(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const equipmentId = optionalText(formData, "equipmentId");
+
+  if (!equipmentId) return;
+
+  await prisma.$transaction(async (tx) => {
+    const title = text(formData, "title") || "Manutencao";
+    const type = enumValue(formData, "type", maintenanceTypes, "INTERNAL");
+    const startedAt = optionalDateTime(formData, "startedAt") ?? optionalDate(formData, "date") ?? new Date();
+    const closedAt = optionalDateTime(formData, "closedAt") ?? startedAt;
+    const totalWorkSeconds = Math.max(Math.floor((closedAt.getTime() - startedAt.getTime()) / 1000), 0);
+    const extraCost = decimalNumber(text(formData, "amount"));
+    const laborCost = Number(((totalWorkSeconds / 3600) * Number(user.hourlyRate ?? 0)).toFixed(2));
+    const machineStopped = text(formData, "machineStopped") === "YES";
+
+    const workOrder = await tx.workOrder.create({
+      data: {
+        number: await nextWorkOrderNumber(),
+        title,
+        type,
+        status: "VALIDATED",
+        openedAt: startedAt,
+        startedAt,
+        closedAt,
+        validatedAt: closedAt,
+        totalWorkSeconds,
+        performedBy: optionalText(formData, "performedBy") ?? user.name,
+        actionsDone: optionalText(formData, "description"),
+        result: "Aprovado",
+        notes: optionalText(formData, "notes"),
+        equipmentId,
+      },
+    });
+
+    const consumableCost = await consumeWorkOrderConsumables(tx, workOrder, formData, user.id);
+    const totalCost = Number((extraCost + laborCost + consumableCost).toFixed(2));
+    const costNotes = [
+      optionalText(formData, "notes"),
+      `OP: ${workOrder.number}`,
+      `Tempo OP: ${durationNote(totalWorkSeconds)}`,
+      `Maquina parada: ${machineStopped ? "Sim" : "Nao"}`,
+      `Mao de obra: ${laborCost.toFixed(2)} EUR`,
+      `Consumiveis: ${consumableCost.toFixed(2)} EUR`,
+      extraCost > 0 ? `Outros custos: ${extraCost.toFixed(2)} EUR` : null,
+      `Total: ${totalCost.toFixed(2)} EUR`,
+    ].filter(Boolean).join("\n");
+
+    const maintenanceLog = await tx.maintenanceLog.create({
+      data: {
+        title,
+        description: optionalText(formData, "description"),
+        type,
+        date: startedAt,
+        cost: totalCost.toFixed(2),
+        supplier: optionalText(formData, "supplier"),
+        costCenter: optionalText(formData, "costCenter"),
+        performedBy: optionalText(formData, "performedBy") ?? user.name,
+        nextDate: optionalDate(formData, "nextDate"),
+        notes: costNotes,
+        equipmentId,
+      },
+    });
+
+    await tx.workOrder.update({
+      where: { id: workOrder.id },
+      data: { maintenanceLogId: maintenanceLog.id, notes: costNotes },
+    });
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath("/inventario");
 }
 
 export async function updateMaintenanceLog(formData: FormData) {
@@ -2898,6 +3005,78 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
   revalidatePath("/manutencao");
   revalidatePath(`/manutencao/${schedule.id}`);
   redirect(`/manutencao/${schedule.id}?op=${workOrder.id}`);
+}
+
+export async function createManualWorkOrder(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const equipmentId = optionalText(formData, "equipmentId");
+
+  if (!equipmentId) return;
+
+  const now = new Date();
+  const title = text(formData, "title") || "OP manual";
+  const type = enumValue(formData, "type", maintenanceTypes, "INTERNAL");
+
+  const schedule = await prisma.$transaction(async (tx) => {
+    const equipment = await tx.equipment.findUnique({
+      where: { id: equipmentId },
+      include: {
+        equipmentType: {
+          include: {
+            checklistTemplates: {
+              where: { active: true },
+              orderBy: { createdAt: "desc" },
+              take: 1,
+            },
+          },
+        },
+      },
+    });
+
+    if (!equipment) return null;
+
+    const manualSchedule = await tx.maintenanceSchedule.create({
+      data: {
+        title,
+        description: optionalText(formData, "description"),
+        type,
+        status: "SCHEDULED",
+        scheduledAt: now,
+        frequency: "DAILY",
+        supplier: optionalText(formData, "supplier"),
+        costCenter: optionalText(formData, "costCenter"),
+        notes: "OP manual criada para intervenção não programada.",
+        equipmentId,
+      },
+    });
+
+    await tx.workOrder.create({
+      data: {
+        number: await nextWorkOrderNumber(),
+        title,
+        type,
+        status: "IN_PROGRESS",
+        openedAt: now,
+        startedAt: now,
+        lastResumedAt: now,
+        performedBy: user.name,
+        actionsDone: optionalText(formData, "description"),
+        equipmentId,
+        scheduleId: manualSchedule.id,
+        templateId: equipment.equipmentType?.checklistTemplates[0]?.id,
+        notes: optionalText(formData, "notes"),
+      },
+    });
+
+    await refreshEquipmentMaintenanceStatus(tx, equipmentId);
+    return manualSchedule;
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  if (schedule) redirect(`/manutencao/${schedule.id}`);
 }
 
 export async function startWorkOrder(formData: FormData) {

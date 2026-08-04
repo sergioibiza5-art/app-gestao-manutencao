@@ -674,7 +674,7 @@ function matchesText(value: unknown, query: string) {
 export async function getInventoryData(filters: InventoryFilters = {}) {
   return readDb(
     async (prisma) => {
-      const [consumables, equipment] = await Promise.all([
+      const [consumables, equipment, stockMovements] = await Promise.all([
         prisma.consumable.findMany({
           orderBy: { name: "asc" },
           include: { equipment: true },
@@ -682,6 +682,16 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
         prisma.equipment.findMany({
           orderBy: { name: "asc" },
           select: { id: true, name: true, code: true },
+        }),
+        prisma.consumableMovement.findMany({
+          orderBy: { date: "desc" },
+          take: 120,
+          include: {
+            consumable: true,
+            user: true,
+            ticket: { select: { id: true, number: true, title: true } },
+            workOrder: { select: { id: true, number: true, title: true } },
+          },
         }),
       ]);
 
@@ -746,6 +756,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
         suppliers,
         locations,
         equipment,
+        stockMovements,
       };
     },
     {
@@ -758,6 +769,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
       suppliers: [],
       locations: [],
       equipment: [],
+      stockMovements: [],
     },
   );
 }
@@ -1034,7 +1046,7 @@ const equipmentId =
     : undefined;
   return readDb(
     async (prisma) => {
-      const [equipment, maintenanceLogs, schedules] = await Promise.all([
+      const [equipment, maintenanceLogs, schedules, consumables] = await Promise.all([
         prisma.equipment.findMany({
   where: {
     status: { not: "DISCARDED" },
@@ -1057,11 +1069,12 @@ const equipmentId =
           orderBy: { scheduledAt: "asc" },
           include: { equipment: true, workOrder: true },
         }),
+        prisma.consumable.findMany({ orderBy: { name: "asc" } }),
       ]);
 
-      return { equipment, maintenanceLogs, schedules, range: { start, end }, view, type };
+      return { equipment, maintenanceLogs, schedules, consumables, range: { start, end }, view, type };
     },
-    { equipment: [], maintenanceLogs: [], schedules: [], range: { start, end }, view, type },
+    { equipment: [], maintenanceLogs: [], schedules: [], consumables: [], range: { start, end }, view, type },
   );
 }
 
