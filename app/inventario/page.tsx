@@ -1,13 +1,25 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight, FileSpreadsheet, PackagePlus } from "lucide-react";
+import { ArrowRight, Download, FileSpreadsheet, Filter, PackagePlus, Search, X } from "lucide-react";
 
 import { createConsumable, importConsumablesCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
-import { getModuleData } from "@/lib/data";
+import { getInventoryData } from "@/lib/data";
+import { formatCurrency } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
+
+type InventoryPageProps = {
+  searchParams?: Promise<{
+    q?: string;
+    category?: string;
+    supplier?: string;
+    location?: string;
+    equipmentId?: string;
+    stock?: string;
+  }>;
+};
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -24,18 +36,24 @@ function packageDescription(item: { unit: string; packageQuantity?: unknown; pac
   return `1 ${item.unit} = ${String(item.packageQuantity)} ${item.packageUnit}`;
 }
 
-export default async function InventoryPage() {
-  const { consumables, equipment } = await getModuleData();
+export default async function InventoryPage({ searchParams }: InventoryPageProps) {
+  const params = (await searchParams) ?? {};
+  const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, totalStockValue } = await getInventoryData(params);
+  const exportParams = new URLSearchParams(
+    Object.entries(params).filter(([, value]) => typeof value === "string" && value.length > 0) as string[][],
+  );
   const templateHref =
     "data:text/csv;charset=utf-8," +
-    encodeURIComponent("nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;fornecedor;codigo_equipamento;notas\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Fornecedor;COMP-01;\n");
+    encodeURIComponent(
+      "nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;fornecedor;codigo_equipamento;notas\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Fornecedor;COMP-01;\n",
+    );
 
   return (
     <AppShell activeHref="/inventario">
       <PageHeader
         eyebrow="Stock"
-        title="Inventario de pecas e consumiveis"
-        description="Controla stock, localizacao, fornecedor e associacao a equipamentos quando a peca ou consumivel e dedicado."
+        title="Inventário de peças e consumíveis"
+        description="Controla stock, localização, fornecedor e associação a equipamentos quando a peça ou consumível é dedicado."
       />
 
       <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
@@ -110,47 +128,151 @@ export default async function InventoryPage() {
             </a>
             <form action={importConsumablesCsv} encType="multipart/form-data" className="mt-3 grid gap-3">
               <input name="file" type="file" accept=".csv,text/csv" className={inputClass} />
-              <button className={buttonClass}>Importar inventario</button>
+              <button className={buttonClass}>Importar inventário</button>
             </form>
           </div>
         </Panel>
 
-        <Panel>
-          <h2 className="text-xl font-semibold text-zinc-50">Stock atual</h2>
-          <div className="mt-4 space-y-3">
-            {consumables.length === 0 ? (
-              <EmptyState title="Sem itens de stock" description="Adiciona pecas e consumiveis para controlar stock minimo e reposicoes." />
-            ) : (
-              consumables.map((item) => (
-                <article key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <Link href={`/inventario/consumiveis/${item.id}`} className="inline-flex items-center gap-2 font-semibold text-zinc-100 transition hover:text-teal-200">
-                        {item.name}
-                        <ArrowRight size={15} />
-                      </Link>
-                      <p className="mt-1 text-sm text-zinc-500">
-                        {item.category} - {item.location ?? "sem localizacao"} - {item.supplier ?? "sem fornecedor"}
-                      </p>
-                      {item.equipment && (
-                        <Link href={`/equipamentos/${item.equipment.id}`} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-teal-300 hover:text-teal-200">
-                          Associado a {item.equipment.name}
-                          <ArrowRight size={13} />
+        <div className="grid gap-4">
+          <Panel>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <div className="flex items-center gap-3">
+                  <Filter size={22} className="text-teal-300" />
+                  <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
+                </div>
+                <p className="mt-1 text-sm text-zinc-500">
+                  {consumables.length} produto(s) filtrado(s) de {allCount}. Valor em stock: {formatCurrency(totalStockValue)}.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={`/api/inventario/pdf?${exportParams.toString()}`}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-200/70"
+                >
+                  <Download size={16} />
+                  Exportar PDF
+                </a>
+                <Link
+                  href="/inventario"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50"
+                >
+                  <X size={16} />
+                  Limpar
+                </Link>
+              </div>
+            </div>
+
+            <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-6">
+              <div className="relative md:col-span-2 xl:col-span-2">
+                <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+                <input
+                  name="q"
+                  defaultValue={params.q ?? ""}
+                  className={`${inputClass} min-w-0 pl-9 text-sm`}
+                  placeholder="Pesquisar por produto, fornecedor, local, equipamento..."
+                />
+              </div>
+
+              <select name="category" defaultValue={params.category ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+                <option value="">Todas as categorias</option>
+                {categories.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+
+              <select name="supplier" defaultValue={params.supplier ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+                <option value="">Todos os fornecedores</option>
+                {suppliers.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+
+              <select name="location" defaultValue={params.location ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+                <option value="">Todas as localizações</option>
+                {locations.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+
+              <select name="stock" defaultValue={params.stock ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+                <option value="">Todos os estados</option>
+                <option value="LOW">Abaixo do mínimo</option>
+                <option value="OK">Stock OK</option>
+                <option value="ASSOCIATED">Com equipamento</option>
+                <option value="UNASSOCIATED">Sem equipamento</option>
+              </select>
+
+              <select name="equipmentId" defaultValue={params.equipmentId ?? ""} className={`${inputClass} min-w-0 text-sm md:col-span-2 xl:col-span-3`}>
+                <option value="">Todos os equipamentos</option>
+                {equipment.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                    {item.code ? ` - ${item.code}` : ""}
+                  </option>
+                ))}
+              </select>
+
+              <button className={`${buttonClass} md:col-span-2 xl:col-span-3`}>Aplicar filtros</button>
+            </form>
+          </Panel>
+
+          <Panel>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">Stock atual</h2>
+                <p className="mt-1 text-sm text-zinc-500">
+                  {lowStockCount > 0 ? `${lowStockCount} produto(s) abaixo do stock mínimo.` : "Sem alertas de stock mínimo no filtro atual."}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 space-y-3">
+              {consumables.length === 0 ? (
+                <EmptyState title="Sem itens de stock" description="Ajusta os filtros ou adiciona peças e consumíveis para controlar stock mínimo e reposições." />
+              ) : (
+                consumables.map((item) => (
+                  <article key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <Link href={`/inventario/consumiveis/${item.id}`} className="inline-flex items-center gap-2 font-semibold text-zinc-100 transition hover:text-teal-200">
+                          {item.name}
+                          <ArrowRight size={15} />
                         </Link>
-                      )}
+                        <p className="mt-1 text-sm text-zinc-500">
+                          {item.category} - {item.location ?? "sem localização"} - {item.supplier ?? "sem fornecedor"}
+                        </p>
+                        {item.equipment && (
+                          <Link href={`/equipamentos/${item.equipment.id}`} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-teal-300 hover:text-teal-200">
+                            Associado a {item.equipment.name}
+                            <ArrowRight size={13} />
+                          </Link>
+                        )}
+                      </div>
+                      <div className="text-left sm:text-right">
+                        <p className="font-semibold text-amber-300">
+                          {String(item.currentStock)} {item.unit}
+                        </p>
+                        <p className="mt-1 text-xs text-zinc-500">
+                          Mínimo: {String(item.minimumStock)} {item.unit}
+                        </p>
+                        {packageDescription(item) && <p className="mt-1 text-xs text-cyan-200">{packageDescription(item)}</p>}
+                        <p className="mt-1 text-xs text-zinc-500">
+                          Custo: {String(item.unitCost)} EUR/{item.unit}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-left sm:text-right">
-                      <p className="font-semibold text-amber-300">{String(item.currentStock)} {item.unit}</p>
-                      <p className="mt-1 text-xs text-zinc-500">Minimo: {String(item.minimumStock)} {item.unit}</p>
-                      {packageDescription(item) && <p className="mt-1 text-xs text-cyan-200">{packageDescription(item)}</p>}
-                      <p className="mt-1 text-xs text-zinc-500">Custo: {String(item.unitCost)} EUR/{item.unit}</p>
-                    </div>
-                  </div>
-                </article>
-              ))
-            )}
-          </div>
-        </Panel>
+                  </article>
+                ))
+              )}
+            </div>
+          </Panel>
+        </div>
       </section>
     </AppShell>
   );

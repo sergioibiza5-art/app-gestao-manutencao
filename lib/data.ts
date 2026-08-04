@@ -654,6 +654,111 @@ export async function getModuleData() {
   );
 }
 
+export type InventoryFilters = {
+  q?: string;
+  category?: string;
+  supplier?: string;
+  location?: string;
+  equipmentId?: string;
+  stock?: string;
+};
+
+function normalizeFilter(value: unknown) {
+  return String(value ?? "").trim().toLowerCase();
+}
+
+function matchesText(value: unknown, query: string) {
+  return normalizeFilter(value).includes(query);
+}
+
+export async function getInventoryData(filters: InventoryFilters = {}) {
+  return readDb(
+    async (prisma) => {
+      const [consumables, equipment] = await Promise.all([
+        prisma.consumable.findMany({
+          orderBy: { name: "asc" },
+          include: { equipment: true },
+        }),
+        prisma.equipment.findMany({
+          orderBy: { name: "asc" },
+          select: { id: true, name: true, code: true },
+        }),
+      ]);
+
+      const categories = Array.from(new Set(consumables.map((item) => item.category).filter(Boolean))).sort((a, b) =>
+        a.localeCompare(b, "pt"),
+      );
+      const suppliers = Array.from(new Set(consumables.map((item) => item.supplier).filter(Boolean) as string[])).sort((a, b) =>
+        a.localeCompare(b, "pt"),
+      );
+      const locations = Array.from(new Set(consumables.map((item) => item.location).filter(Boolean) as string[])).sort((a, b) =>
+        a.localeCompare(b, "pt"),
+      );
+
+      const q = normalizeFilter(filters.q);
+      const category = String(filters.category ?? "");
+      const supplier = String(filters.supplier ?? "");
+      const location = String(filters.location ?? "");
+      const equipmentId = String(filters.equipmentId ?? "");
+      const stock = String(filters.stock ?? "");
+
+      const filteredConsumables = consumables.filter((item) => {
+        const currentStock = Number(item.currentStock ?? 0);
+        const minimumStock = Number(item.minimumStock ?? 0);
+        const hasEquipment = Boolean(item.equipmentId);
+        const isLowStock = currentStock <= minimumStock;
+
+        const haystackMatches =
+          !q ||
+          [
+            item.name,
+            item.category,
+            item.unit,
+            item.packageUnit,
+            item.location,
+            item.supplier,
+            item.notes,
+            item.equipment?.name,
+            item.equipment?.code,
+          ].some((value) => matchesText(value, q));
+
+        return (
+          haystackMatches &&
+          (!category || item.category === category) &&
+          (!supplier || item.supplier === supplier) &&
+          (!location || item.location === location) &&
+          (!equipmentId || item.equipmentId === equipmentId) &&
+          (stock === "LOW" ? isLowStock : stock === "OK" ? !isLowStock : stock === "ASSOCIATED" ? hasEquipment : stock === "UNASSOCIATED" ? !hasEquipment : true)
+        );
+      });
+
+      const totalStockValue = filteredConsumables.reduce((sum, item) => sum + Number(item.currentStock ?? 0) * Number(item.unitCost ?? 0), 0);
+      const lowStockCount = filteredConsumables.filter((item) => Number(item.currentStock ?? 0) <= Number(item.minimumStock ?? 0)).length;
+
+      return {
+        consumables: filteredConsumables,
+        allCount: consumables.length,
+        totalStockValue,
+        lowStockCount,
+        categories,
+        suppliers,
+        locations,
+        equipment,
+      };
+    },
+    {
+      consumables: [],
+      allCount: 0,
+      totalStockValue: 0,
+      lowStockCount: 0,
+      categories: [],
+      suppliers: [],
+      locations: [],
+      equipment: [],
+    },
+  );
+}
+
 export async function getEquipmentDetail(id: string) {
   return readDb(
     async (prisma) => {
