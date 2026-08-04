@@ -1,0 +1,3 @@
+ALTER TABLE "Consumable"
+  ADD COLUMN IF NOT EXISTS "packageQuantity" DECIMAL(10, 2),
+  ADD COLUMN IF NOT EXISTS "packageUnit" TEXT;

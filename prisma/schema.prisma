@@ -990,6 +990,8 @@ model Consumable {
   currentStock Decimal @default(0) @db.Decimal(10, 2)
   minimumStock Decimal @default(0) @db.Decimal(10, 2)
   unitCost     Decimal @default(0) @db.Decimal(10, 2)
+  packageQuantity Decimal? @db.Decimal(10, 2)
+  packageUnit     String?
   folderUrl    String?
   location     String?
   supplier     String?

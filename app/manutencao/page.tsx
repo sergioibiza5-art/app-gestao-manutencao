@@ -318,14 +318,83 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         title="Manutenção"
         description="Cria manutenções internas ou externas, agenda o ano completo e consulta o mapa por dia, semana, mês ou ano."
         action={
-          <DetailsOpenButton targetId="agendamento-anual" className={buttonClass}>
-            <Plus size={18} />
-            Agendar ano
-          </DetailsOpenButton>
+          <div className="flex flex-wrap gap-2">
+            <DetailsOpenButton targetId="registo-executado" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200">
+              <Plus size={18} />
+              Registo executado
+            </DetailsOpenButton>
+            <DetailsOpenButton targetId="agendamento-anual" className={buttonClass}>
+              <Plus size={18} />
+              Agendar ano
+            </DetailsOpenButton>
+          </div>
         }
       />
 
       <section className="space-y-4">
+        <details id="registo-executado" className="group">
+          <summary className="hidden">Registo executado</summary>
+          <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+            <div className="mx-auto max-w-6xl">
+              <Panel>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 size={22} className="text-teal-300" />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-300">Cadastro</p>
+                      <h2 className="text-xl font-semibold text-zinc-50">Registo executado</h2>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 sm:items-end">
+                    <p className="max-w-xl text-sm text-zinc-500">
+                      Regista uma intervenção já executada, com tipo, custo, fornecedor e próxima data prevista.
+                    </p>
+                    <DetailsCloseButton targetId="registo-executado" />
+                  </div>
+                </div>
+
+                <form action={createMaintenanceLog} className="mt-4 grid gap-3 lg:grid-cols-6">
+                  <select name="equipmentId" required className={`${inputClass} lg:col-span-2`}>
+                    <option value="">Selecionar equipamento</option>
+                    {equipment.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input name="title" required className={`${inputClass} lg:col-span-2`} placeholder="Intervenção executada" />
+
+                  <select name="type" className={inputClass}>
+                    <option value="INTERNAL">Interna</option>
+                    <option value="EXTERNAL">Externa</option>
+                  </select>
+
+                  <select name="costCenter" className={inputClass} defaultValue="">
+                    <option value="">Tipo de manutenção</option>
+                    {maintenanceTypeOptions.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input name="supplier" className={`${inputClass} lg:col-span-2`} placeholder="Fornecedor / técnico" />
+                  <input name="performedBy" className={`${inputClass} lg:col-span-2`} placeholder="Feito por" />
+                  <input name="amount" className={inputClass} placeholder="Custo" />
+                  <input name="date" type="date" className={inputClass} />
+                  <input name="nextDate" type="date" className={inputClass} />
+
+                  <textarea name="description" className={`${textareaClass} lg:col-span-6`} placeholder="Descrição do trabalho executado" />
+
+                  <button className={`${buttonClass} lg:col-span-2`}>Guardar manutenção</button>
+                </form>
+              </Panel>
+            </div>
+          </div>
+        </details>
+
         <details id="agendamento-anual" className="group">
           <summary className="hidden">Agendamento anual</summary>
           <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
@@ -838,45 +907,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[0.72fr_1.28fr]">
-        <Panel>
-          <h2 className="text-xl font-semibold text-zinc-50">Registo executado</h2>
-
-          <form action={createMaintenanceLog} className="mt-4 space-y-3">
-            <select name="equipmentId" required className={inputClass}>
-              <option value="">Selecionar equipamento</option>
-              {equipment.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-
-            <input name="title" required className={inputClass} placeholder="Intervenção executada" />
-
-            <div className="grid grid-cols-2 gap-3">
-              <select name="type" className={inputClass}>
-                <option value="INTERNAL">Interna</option>
-                <option value="EXTERNAL">Externa</option>
-              </select>
-              <input name="costCenter" className={inputClass} placeholder="Centro de custos" />
-            </div>
-
-            <input name="supplier" className={inputClass} placeholder="Fornecedor / técnico" />
-            <input name="performedBy" className={inputClass} placeholder="Feito por" />
-
-            <div className="grid grid-cols-2 gap-3">
-              <input name="amount" className={inputClass} placeholder="Custo" />
-              <input name="date" type="date" className={inputClass} />
-            </div>
-
-            <input name="nextDate" type="date" className={inputClass} />
-            <textarea name="description" className={textareaClass} placeholder="Descrição do trabalho executado" />
-
-            <button className={buttonClass}>Guardar manutenção</button>
-          </form>
-        </Panel>
-
+      <section>
         <Panel>
           <h2 className="text-xl font-semibold text-zinc-50">Histórico</h2>
 
@@ -922,7 +953,14 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                       <option value="EXTERNAL">Externa</option>
                     </select>
 
-                    <input name="costCenter" className={inputClass} defaultValue={log.costCenter ?? ""} placeholder="Centro de custos" />
+                    <select name="costCenter" className={inputClass} defaultValue={log.costCenter ?? ""}>
+                      <option value="">Tipo de manutenção</option>
+                      {maintenanceTypeOptions.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
                     <input name="supplier" className={inputClass} defaultValue={log.supplier ?? ""} placeholder="Fornecedor" />
                     <input name="performedBy" className={inputClass} defaultValue={log.performedBy ?? ""} placeholder="Feito por" />
                     <input name="amount" className={inputClass} defaultValue={log.cost ? String(log.cost) : ""} placeholder="Custo" />

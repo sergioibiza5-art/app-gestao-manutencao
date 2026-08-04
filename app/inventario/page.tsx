@@ -8,11 +8,17 @@ import { getModuleData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
+function packageDescription(item: { unit: string; packageQuantity?: unknown; packageUnit?: string | null }) {
+  const quantity = Number(item.packageQuantity ?? 0);
+  if (!quantity || !item.packageUnit) return null;
+  return `1 ${item.unit} = ${String(item.packageQuantity)} ${item.packageUnit}`;
+}
+
 export default async function InventoryPage() {
   const { consumables, equipment } = await getModuleData();
   const templateHref =
     "data:text/csv;charset=utf-8," +
-    encodeURIComponent("nome;categoria;unidade;stock_atual;stock_minimo;custo_unitario;link_pasta;localizacao;fornecedor;codigo_equipamento;notas\nFiltro oleo;Peca;un;4;1;12,50;https://onedrive/pasta;Armazem;Fornecedor;COMP-01;\n");
+    encodeURIComponent("nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;fornecedor;codigo_equipamento;notas\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Fornecedor;COMP-01;\n");
 
   return (
     <AppShell activeHref="/inventario">
@@ -32,13 +38,17 @@ export default async function InventoryPage() {
             <input name="name" required className={inputClass} placeholder="Nome da peca ou consumivel" />
             <div className="grid grid-cols-2 gap-3">
               <input name="category" className={inputClass} placeholder="Categoria" />
-              <input name="unit" className={inputClass} placeholder="Unidade" />
+              <input name="unit" className={inputClass} placeholder="Unidade de stock, ex.: bidao" />
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <input name="currentStock" className={inputClass} placeholder="Stock atual" />
-              <input name="minimumStock" className={inputClass} placeholder="Stock minimo" />
+              <input name="currentStock" className={inputClass} placeholder="Stock atual nessa unidade" />
+              <input name="minimumStock" className={inputClass} placeholder="Stock minimo nessa unidade" />
             </div>
-            <input name="unitCost" className={inputClass} placeholder="Custo unitario" />
+            <div className="grid grid-cols-2 gap-3">
+              <input name="packageQuantity" className={inputClass} placeholder="Qtd. por embalagem, ex.: 5" />
+              <input name="packageUnit" className={inputClass} placeholder="Unidade tecnica, ex.: L" />
+            </div>
+            <input name="unitCost" className={inputClass} placeholder="Custo por unidade de stock" />
             <select name="equipmentId" className={inputClass}>
               <option value="">Sem equipamento associado</option>
               {equipment.map((item) => (
@@ -96,6 +106,7 @@ export default async function InventoryPage() {
                     <div className="text-left sm:text-right">
                       <p className="font-semibold text-amber-300">{String(item.currentStock)} {item.unit}</p>
                       <p className="mt-1 text-xs text-zinc-500">Minimo: {String(item.minimumStock)} {item.unit}</p>
+                      {packageDescription(item) && <p className="mt-1 text-xs text-cyan-200">{packageDescription(item)}</p>}
                       <p className="mt-1 text-xs text-zinc-500">Custo: {String(item.unitCost)} EUR/{item.unit}</p>
                     </div>
                   </div>
