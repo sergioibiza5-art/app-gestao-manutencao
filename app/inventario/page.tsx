@@ -36,6 +36,72 @@ function packageDescription(item: { unit: string; packageQuantity?: unknown; pac
   return `1 ${item.unit} = ${String(item.packageQuantity)} ${item.packageUnit}`;
 }
 
+function stockVisualStatus(item: { currentStock?: unknown; minimumStock?: unknown }) {
+  const current = Number(item.currentStock ?? 0);
+  const minimum = Number(item.minimumStock ?? 0);
+
+  if (!minimum || minimum <= 0) {
+    return {
+      label: "Sem mínimo",
+      helper: "Define um stock mínimo para ativar a escala.",
+      cardClass: "border-zinc-800 bg-zinc-950/65",
+      valueClass: "text-zinc-100",
+      badgeClass: "border-zinc-700 bg-zinc-900 text-zinc-300",
+      barClass: "bg-zinc-500",
+      progress: 100,
+    };
+  }
+
+  const ratio = current / minimum;
+  const progress = Math.min(Math.max((ratio / 2) * 100, 5), 100);
+
+  if (current <= minimum) {
+    return {
+      label: "Encomendar",
+      helper: "Stock no mínimo ou abaixo.",
+      cardClass: "border-rose-300/45 bg-rose-950/20 shadow-[0_0_0_1px_rgba(253,164,175,0.08)]",
+      valueClass: "text-rose-200",
+      badgeClass: "border-rose-300/40 bg-rose-300/10 text-rose-100",
+      barClass: "bg-rose-300",
+      progress,
+    };
+  }
+
+  if (ratio <= 1.25) {
+    return {
+      label: "Perto do mínimo",
+      helper: "Preparar reposição.",
+      cardClass: "border-amber-300/40 bg-amber-950/15 shadow-[0_0_0_1px_rgba(252,211,77,0.06)]",
+      valueClass: "text-amber-200",
+      badgeClass: "border-amber-300/40 bg-amber-300/10 text-amber-100",
+      barClass: "bg-amber-300",
+      progress,
+    };
+  }
+
+  if (ratio <= 2) {
+    return {
+      label: "Confortável",
+      helper: "Stock acima do mínimo.",
+      cardClass: "border-teal-300/35 bg-teal-950/15",
+      valueClass: "text-teal-200",
+      badgeClass: "border-teal-300/35 bg-teal-300/10 text-teal-100",
+      barClass: "bg-teal-300",
+      progress,
+    };
+  }
+
+  return {
+    label: "Stock alto",
+    helper: "Margem confortável.",
+    cardClass: "border-sky-300/35 bg-sky-950/15",
+    valueClass: "text-sky-200",
+    badgeClass: "border-sky-300/35 bg-sky-300/10 text-sky-100",
+    barClass: "bg-sky-300",
+    progress,
+  };
+}
+
 export default async function InventoryPage({ searchParams }: InventoryPageProps) {
   const params = (await searchParams) ?? {};
   const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, lowStockConsumables, totalStockValue } = await getInventoryData(params);
@@ -300,14 +366,27 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
               {consumables.length === 0 ? (
                 <EmptyState title="Sem itens de stock" description="Ajusta os filtros ou adiciona peças e consumíveis para controlar stock mínimo e reposições." />
               ) : (
-                consumables.map((item) => (
-                  <article key={item.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <Link href={`/inventario/consumiveis/${item.id}`} className="inline-flex items-center gap-2 font-semibold text-zinc-100 transition hover:text-teal-200">
-                          {item.name}
-                          <ArrowRight size={15} />
-                        </Link>
+                <>
+                  <div className="grid gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] sm:grid-cols-4">
+                    <span className="rounded-full border border-rose-300/35 bg-rose-300/10 px-3 py-1 text-rose-100">Encomendar</span>
+                    <span className="rounded-full border border-amber-300/35 bg-amber-300/10 px-3 py-1 text-amber-100">Perto do mínimo</span>
+                    <span className="rounded-full border border-teal-300/35 bg-teal-300/10 px-3 py-1 text-teal-100">Confortável</span>
+                    <span className="rounded-full border border-sky-300/35 bg-sky-300/10 px-3 py-1 text-sky-100">Stock alto</span>
+                  </div>
+                  {consumables.map((item) => {
+                    const status = stockVisualStatus(item);
+
+                    return (
+                  <article key={item.id} className={`rounded-lg border p-4 transition ${status.cardClass}`}>
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Link href={`/inventario/consumiveis/${item.id}`} className="inline-flex min-w-0 items-center gap-2 font-semibold text-zinc-100 transition hover:text-teal-200">
+                            <span className="truncate">{item.name}</span>
+                            <ArrowRight size={15} className="shrink-0" />
+                          </Link>
+                          <span className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold ${status.badgeClass}`}>{status.label}</span>
+                        </div>
                         <p className="mt-1 text-sm text-zinc-500">
                           {item.category} - {item.location ?? "sem localização"} - {item.supplier ?? "sem fornecedor"}
                         </p>
@@ -318,8 +397,8 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                           </Link>
                         )}
                       </div>
-                      <div className="text-left sm:text-right">
-                        <p className="font-semibold text-amber-300">
+                      <div className="min-w-[150px] text-left sm:text-right">
+                        <p className={`font-semibold ${status.valueClass}`}>
                           {String(item.currentStock)} {item.unit}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">
@@ -331,8 +410,16 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                         </p>
                       </div>
                     </div>
+                    <div className="mt-4">
+                      <div className="h-2 overflow-hidden rounded-full bg-zinc-950 ring-1 ring-zinc-800">
+                        <div className={`h-full rounded-full ${status.barClass}`} style={{ width: `${status.progress}%` }} />
+                      </div>
+                      <p className="mt-1 text-[11px] text-zinc-500">{status.helper}</p>
+                    </div>
                   </article>
-                ))
+                    );
+                  })}
+                </>
               )}
             </div>
           </Panel>
