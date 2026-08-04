@@ -122,6 +122,12 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
         eyebrow="Stock"
         title="Inventário de peças e consumíveis"
         description="Controla stock, localização, fornecedor e associação a equipamentos quando a peça ou consumível é dedicado."
+        action={
+          <DetailsOpenButton targetId="novo-item-stock" className={buttonClass}>
+            <PackagePlus size={18} />
+            Novo item
+          </DetailsOpenButton>
+        }
       />
 
       <Panel>
@@ -386,83 +392,97 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
         </div>
       </details>
 
-      <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
-        <Panel>
-          <div className="flex items-center gap-3">
-            <PackagePlus size={22} className="text-amber-300" />
-            <h2 className="text-xl font-semibold text-zinc-50">Novo item de stock</h2>
+      <details id="novo-item-stock" className="group">
+        <summary className="hidden">Novo item de stock</summary>
+        <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+          <div className="mx-auto max-w-5xl">
+            <Panel>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <PackagePlus size={22} className="text-amber-300" />
+                  <h2 className="text-xl font-semibold text-zinc-50">Novo item de stock</h2>
+                </div>
+                <DetailsCloseButton targetId="novo-item-stock" />
+              </div>
+              <form action={createConsumable} className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="md:col-span-2">
+                  <Field label="Nome">
+                    <input name="name" required className={inputClass} placeholder="Nome da peça ou consumível" />
+                  </Field>
+                </div>
+                <Field label="Categoria">
+                  <input name="category" className={inputClass} placeholder="Categoria" />
+                </Field>
+                <Field label="Unidade de stock">
+                  <input name="unit" className={inputClass} placeholder="Ex.: bidão" />
+                </Field>
+                <Field label="Stock atual">
+                  <input name="currentStock" className={inputClass} placeholder="Ex.: 10" />
+                </Field>
+                <Field label="Stock mínimo">
+                  <input name="minimumStock" className={inputClass} placeholder="Ex.: 2" />
+                </Field>
+                <Field label="Quantidade por embalagem">
+                  <input name="packageQuantity" className={inputClass} placeholder="Ex.: 5" />
+                </Field>
+                <Field label="Unidade técnica">
+                  <input name="packageUnit" className={inputClass} placeholder="Ex.: L" />
+                </Field>
+                <div className="md:col-span-2">
+                  <Field label="Custo por unidade de stock">
+                    <input name="unitCost" className={inputClass} placeholder="Ex.: 10,54" />
+                  </Field>
+                </div>
+                <div className="md:col-span-2">
+                  <Field label="Equipamento associado">
+                    <select name="equipmentId" className={inputClass}>
+                      <option value="">Sem equipamento associado</option>
+                      {equipment.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                          {item.code ? ` - ${item.code}` : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                </div>
+                <div className="md:col-span-2">
+                  <Field label="Pasta do produto">
+                    <input name="folderUrl" className={inputClass} placeholder="Link" />
+                  </Field>
+                </div>
+                <Field label="Localização">
+                  <input name="location" className={inputClass} placeholder="Localização" />
+                </Field>
+                <Field label="Fornecedor">
+                  <input name="supplier" className={inputClass} placeholder="Fornecedor" />
+                </Field>
+                <div className="md:col-span-2">
+                  <Field label="Notas">
+                    <textarea name="notes" className={textareaClass} placeholder="Referência, compatibilidade ou centro de custo" />
+                  </Field>
+                </div>
+                <button className={`${buttonClass} md:col-span-2`}>Guardar item</button>
+              </form>
+              <div className="mt-6 rounded-lg border border-zinc-800 bg-black/20 p-4">
+                <div className="flex items-center gap-3">
+                  <FileSpreadsheet size={20} className="text-lime-300" />
+                  <h3 className="font-semibold text-zinc-100">Importar por Excel/CSV</h3>
+                </div>
+                <a href={templateHref} download="modelo_inventario.csv" className="mt-3 inline-flex text-sm font-semibold text-lime-200">
+                  Descarregar modelo
+                </a>
+                <form action={importConsumablesCsv} encType="multipart/form-data" className="mt-3 grid gap-3 md:grid-cols-[1fr_auto]">
+                  <input name="file" type="file" accept=".csv,text/csv" className={inputClass} />
+                  <button className={buttonClass}>Importar inventário</button>
+                </form>
+              </div>
+            </Panel>
           </div>
-          <form action={createConsumable} className="mt-4 space-y-3">
-            <Field label="Nome">
-              <input name="name" required className={inputClass} placeholder="Nome da peça ou consumível" />
-            </Field>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Categoria">
-                <input name="category" className={inputClass} placeholder="Categoria" />
-              </Field>
-              <Field label="Unidade de stock">
-                <input name="unit" className={inputClass} placeholder="Ex.: bidão" />
-              </Field>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Stock atual">
-                <input name="currentStock" className={inputClass} placeholder="Ex.: 10" />
-              </Field>
-              <Field label="Stock mínimo">
-                <input name="minimumStock" className={inputClass} placeholder="Ex.: 2" />
-              </Field>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Quantidade por embalagem">
-                <input name="packageQuantity" className={inputClass} placeholder="Ex.: 5" />
-              </Field>
-              <Field label="Unidade técnica">
-                <input name="packageUnit" className={inputClass} placeholder="Ex.: L" />
-              </Field>
-            </div>
-            <Field label="Custo por unidade de stock">
-              <input name="unitCost" className={inputClass} placeholder="Ex.: 10,54" />
-            </Field>
-            <Field label="Equipamento associado">
-              <select name="equipmentId" className={inputClass}>
-                <option value="">Sem equipamento associado</option>
-                {equipment.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                    {item.code ? ` - ${item.code}` : ""}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Pasta do produto">
-              <input name="folderUrl" className={inputClass} placeholder="Link" />
-            </Field>
-            <Field label="Localização">
-              <input name="location" className={inputClass} placeholder="Localização" />
-            </Field>
-            <Field label="Fornecedor">
-              <input name="supplier" className={inputClass} placeholder="Fornecedor" />
-            </Field>
-            <Field label="Notas">
-              <textarea name="notes" className={textareaClass} placeholder="Referência, compatibilidade ou centro de custo" />
-            </Field>
-            <button className={buttonClass}>Guardar item</button>
-          </form>
-          <div className="mt-6 rounded-lg border border-zinc-800 bg-black/20 p-4">
-            <div className="flex items-center gap-3">
-              <FileSpreadsheet size={20} className="text-lime-300" />
-              <h3 className="font-semibold text-zinc-100">Importar por Excel/CSV</h3>
-            </div>
-            <a href={templateHref} download="modelo_inventario.csv" className="mt-3 inline-flex text-sm font-semibold text-lime-200">
-              Descarregar modelo
-            </a>
-            <form action={importConsumablesCsv} encType="multipart/form-data" className="mt-3 grid gap-3">
-              <input name="file" type="file" accept=".csv,text/csv" className={inputClass} />
-              <button className={buttonClass}>Importar inventário</button>
-            </form>
-          </div>
-        </Panel>
+        </div>
+      </details>
 
+      <section className="grid gap-4">
         <div className="grid gap-4">
           <Panel>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
