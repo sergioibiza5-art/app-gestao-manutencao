@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, FolderOpen, History, Package, ReceiptText, Trash2 } from "lucide-react";
 
@@ -13,6 +14,15 @@ export const dynamic = "force-dynamic";
 type ConsumablePageProps = {
   params: Promise<{ id: string }>;
 };
+
+function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <label className="grid gap-1.5">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-500">{label}</span>
+      {children}
+    </label>
+  );
+}
 
 function packageDescription(item: { unit: string; packageQuantity?: unknown; packageUnit?: string | null }) {
   const quantity = Number(item.packageQuantity ?? 0);
@@ -53,32 +63,58 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
           </div>
           <form action={updateConsumable} className="mt-4 grid gap-3">
             <input type="hidden" name="id" value={item.id} />
-            <input name="name" required className={inputClass} defaultValue={item.name} placeholder="Nome da peca ou consumivel" />
+            <Field label="Nome">
+              <input name="name" required className={inputClass} defaultValue={item.name} placeholder="Nome da peça ou consumível" />
+            </Field>
             <div className="grid grid-cols-2 gap-3">
-              <input name="category" className={inputClass} defaultValue={item.category} placeholder="Categoria" />
-              <input name="unit" className={inputClass} defaultValue={item.unit} placeholder="Unidade de stock, ex.: bidao" />
+              <Field label="Categoria">
+                <input name="category" className={inputClass} defaultValue={item.category} placeholder="Categoria" />
+              </Field>
+              <Field label="Unidade de stock">
+                <input name="unit" className={inputClass} defaultValue={item.unit} placeholder="Ex.: bidão" />
+              </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <input name="currentStock" className={inputClass} defaultValue={String(item.currentStock)} placeholder="Stock atual nessa unidade" />
-              <input name="minimumStock" className={inputClass} defaultValue={String(item.minimumStock)} placeholder="Stock minimo nessa unidade" />
+              <Field label="Stock atual">
+                <input name="currentStock" className={inputClass} defaultValue={String(item.currentStock)} placeholder="Ex.: 10" />
+              </Field>
+              <Field label="Stock mínimo">
+                <input name="minimumStock" className={inputClass} defaultValue={String(item.minimumStock)} placeholder="Ex.: 2" />
+              </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <input name="packageQuantity" className={inputClass} defaultValue={item.packageQuantity ? String(item.packageQuantity) : ""} placeholder="Qtd. por embalagem, ex.: 5" />
-              <input name="packageUnit" className={inputClass} defaultValue={item.packageUnit ?? ""} placeholder="Unidade tecnica, ex.: L" />
+              <Field label="Quantidade por embalagem">
+                <input name="packageQuantity" className={inputClass} defaultValue={item.packageQuantity ? String(item.packageQuantity) : ""} placeholder="Ex.: 5" />
+              </Field>
+              <Field label="Unidade técnica">
+                <input name="packageUnit" className={inputClass} defaultValue={item.packageUnit ?? ""} placeholder="Ex.: L" />
+              </Field>
             </div>
-            <input name="unitCost" className={inputClass} defaultValue={String(item.unitCost)} placeholder="Custo por unidade de stock" />
-            <input name="folderUrl" className={inputClass} defaultValue={item.folderUrl ?? ""} placeholder="Link da pasta do produto" />
-            <select name="equipmentId" className={inputClass} defaultValue={item.equipmentId ?? ""}>
-              <option value="">Sem equipamento associado</option>
-              {moduleData.equipment.map((equipment) => (
-                <option key={equipment.id} value={equipment.id}>
-                  {equipment.name}{equipment.code ? ` - ${equipment.code}` : ""}
-                </option>
-              ))}
-            </select>
-            <input name="location" className={inputClass} defaultValue={item.location ?? ""} placeholder="Localizacao" />
-            <input name="supplier" className={inputClass} defaultValue={item.supplier ?? ""} placeholder="Fornecedor" />
-            <textarea name="notes" className={textareaClass} defaultValue={item.notes ?? ""} placeholder="Notas, referencia, compatibilidade ou centro de custo" />
+            <Field label="Custo por unidade de stock">
+              <input name="unitCost" className={inputClass} defaultValue={String(item.unitCost)} placeholder="Ex.: 10,54" />
+            </Field>
+            <Field label="Pasta do produto">
+              <input name="folderUrl" className={inputClass} defaultValue={item.folderUrl ?? ""} placeholder="Link" />
+            </Field>
+            <Field label="Equipamento associado">
+              <select name="equipmentId" className={inputClass} defaultValue={item.equipmentId ?? ""}>
+                <option value="">Sem equipamento associado</option>
+                {moduleData.equipment.map((equipment) => (
+                  <option key={equipment.id} value={equipment.id}>
+                    {equipment.name}{equipment.code ? ` - ${equipment.code}` : ""}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Localização">
+              <input name="location" className={inputClass} defaultValue={item.location ?? ""} placeholder="Localização" />
+            </Field>
+            <Field label="Fornecedor">
+              <input name="supplier" className={inputClass} defaultValue={item.supplier ?? ""} placeholder="Fornecedor" />
+            </Field>
+            <Field label="Notas">
+              <textarea name="notes" className={textareaClass} defaultValue={item.notes ?? ""} placeholder="Referência, compatibilidade ou centro de custo" />
+            </Field>
             <div className="flex flex-wrap gap-2">
               <button className={buttonClass}>Guardar alteracoes</button>
             </div>

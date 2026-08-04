@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { ArrowRight, FileSpreadsheet, PackagePlus } from "lucide-react";
 
 import { createConsumable, importConsumablesCsv } from "@/app/actions";
@@ -7,6 +8,15 @@ import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass }
 import { getModuleData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
+
+function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <label className="grid gap-1.5">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-500">{label}</span>
+      {children}
+    </label>
+  );
+}
 
 function packageDescription(item: { unit: string; packageQuantity?: unknown; packageUnit?: string | null }) {
   const quantity = Number(item.packageQuantity ?? 0);
@@ -35,33 +45,59 @@ export default async function InventoryPage() {
             <h2 className="text-xl font-semibold text-zinc-50">Novo item de stock</h2>
           </div>
           <form action={createConsumable} className="mt-4 space-y-3">
-            <input name="name" required className={inputClass} placeholder="Nome da peca ou consumivel" />
+            <Field label="Nome">
+              <input name="name" required className={inputClass} placeholder="Nome da peça ou consumível" />
+            </Field>
             <div className="grid grid-cols-2 gap-3">
-              <input name="category" className={inputClass} placeholder="Categoria" />
-              <input name="unit" className={inputClass} placeholder="Unidade de stock, ex.: bidao" />
+              <Field label="Categoria">
+                <input name="category" className={inputClass} placeholder="Categoria" />
+              </Field>
+              <Field label="Unidade de stock">
+                <input name="unit" className={inputClass} placeholder="Ex.: bidão" />
+              </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <input name="currentStock" className={inputClass} placeholder="Stock atual nessa unidade" />
-              <input name="minimumStock" className={inputClass} placeholder="Stock minimo nessa unidade" />
+              <Field label="Stock atual">
+                <input name="currentStock" className={inputClass} placeholder="Ex.: 10" />
+              </Field>
+              <Field label="Stock mínimo">
+                <input name="minimumStock" className={inputClass} placeholder="Ex.: 2" />
+              </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <input name="packageQuantity" className={inputClass} placeholder="Qtd. por embalagem, ex.: 5" />
-              <input name="packageUnit" className={inputClass} placeholder="Unidade tecnica, ex.: L" />
+              <Field label="Quantidade por embalagem">
+                <input name="packageQuantity" className={inputClass} placeholder="Ex.: 5" />
+              </Field>
+              <Field label="Unidade técnica">
+                <input name="packageUnit" className={inputClass} placeholder="Ex.: L" />
+              </Field>
             </div>
-            <input name="unitCost" className={inputClass} placeholder="Custo por unidade de stock" />
-            <select name="equipmentId" className={inputClass}>
-              <option value="">Sem equipamento associado</option>
-              {equipment.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                  {item.code ? ` - ${item.code}` : ""}
-                </option>
-              ))}
-            </select>
-            <input name="folderUrl" className={inputClass} placeholder="Link da pasta do produto" />
-            <input name="location" className={inputClass} placeholder="Localizacao" />
-            <input name="supplier" className={inputClass} placeholder="Fornecedor" />
-            <textarea name="notes" className={textareaClass} placeholder="Notas, referencia, compatibilidade ou centro de custo" />
+            <Field label="Custo por unidade de stock">
+              <input name="unitCost" className={inputClass} placeholder="Ex.: 10,54" />
+            </Field>
+            <Field label="Equipamento associado">
+              <select name="equipmentId" className={inputClass}>
+                <option value="">Sem equipamento associado</option>
+                {equipment.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                    {item.code ? ` - ${item.code}` : ""}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Pasta do produto">
+              <input name="folderUrl" className={inputClass} placeholder="Link" />
+            </Field>
+            <Field label="Localização">
+              <input name="location" className={inputClass} placeholder="Localização" />
+            </Field>
+            <Field label="Fornecedor">
+              <input name="supplier" className={inputClass} placeholder="Fornecedor" />
+            </Field>
+            <Field label="Notas">
+              <textarea name="notes" className={textareaClass} placeholder="Referência, compatibilidade ou centro de custo" />
+            </Field>
             <button className={buttonClass}>Guardar item</button>
           </form>
           <div className="mt-6 rounded-lg border border-zinc-800 bg-black/20 p-4">
