@@ -732,6 +732,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
         );
       });
 
+      const lowStockConsumables = consumables.filter((item) => Number(item.currentStock ?? 0) <= Number(item.minimumStock ?? 0));
       const totalStockValue = filteredConsumables.reduce((sum, item) => sum + Number(item.currentStock ?? 0) * Number(item.unitCost ?? 0), 0);
       const lowStockCount = filteredConsumables.filter((item) => Number(item.currentStock ?? 0) <= Number(item.minimumStock ?? 0)).length;
 
@@ -740,6 +741,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
         allCount: consumables.length,
         totalStockValue,
         lowStockCount,
+        lowStockConsumables,
         categories,
         suppliers,
         locations,
@@ -751,6 +753,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
       allCount: 0,
       totalStockValue: 0,
       lowStockCount: 0,
+      lowStockConsumables: [],
       categories: [],
       suppliers: [],
       locations: [],

@@ -178,20 +178,93 @@ function drawTable(
   doc.y = y + 12;
 }
 
+function drawShoppingTable(
+  doc: PDFKit.PDFDocument,
+  rows: {
+    name: string;
+    category: string;
+    current: string;
+    minimum: string;
+    buy: string;
+    supplier: string;
+    location: string;
+    equipment: string;
+  }[],
+) {
+  const headers = ["Produto", "Categoria", "Atual", "Minimo", "Comprar", "Fornecedor", "Local", "Equipamento"];
+  const widths = [152, 82, 58, 58, 76, 112, 88, 112];
+  const rowHeight = 30;
+  const headerHeight = 24;
+  const tableWidth = widths.reduce((sum, width) => sum + width, 0);
+  let y = doc.y;
+
+  const drawHeader = () => {
+    doc.roundedRect(page.margin, y, tableWidth, headerHeight, 4).fillColor("#fef3c7").fill();
+    let x = page.margin;
+    headers.forEach((header, index) => {
+      doc.font("Helvetica-Bold").fontSize(7).fillColor("#0f172a").text(header, x + 4, y + 8, {
+        width: widths[index] - 8,
+        ellipsis: true,
+      });
+      x += widths[index];
+    });
+    y += headerHeight;
+  };
+
+  drawHeader();
+
+  if (rows.length === 0) {
+    doc.rect(page.margin, y, tableWidth, rowHeight).strokeColor("#e2e8f0").lineWidth(0.5).stroke();
+    doc.font("Helvetica").fontSize(8).fillColor("#64748b").text("Sem produtos abaixo do stock minimo.", page.margin + 6, y + 10, {
+      width: tableWidth - 12,
+    });
+    doc.y = y + rowHeight + 12;
+    return;
+  }
+
+  rows.forEach((row) => {
+    if (y + rowHeight > page.height - page.margin - 22) {
+      doc.addPage();
+      y = page.margin;
+      drawHeader();
+    }
+
+    doc.rect(page.margin, y, tableWidth, rowHeight).strokeColor("#e2e8f0").lineWidth(0.5).stroke();
+    const cells = [row.name, row.category, row.current, row.minimum, row.buy, row.supplier, row.location, row.equipment];
+    let x = page.margin;
+    cells.forEach((cell, index) => {
+      doc
+        .font(index === 4 ? "Helvetica-Bold" : "Helvetica")
+        .fontSize(7)
+        .fillColor(index === 4 ? "#92400e" : "#1f2937")
+        .text(cell, x + 4, y + 8, {
+          width: widths[index] - 8,
+          ellipsis: true,
+        });
+      x += widths[index];
+    });
+    y += rowHeight;
+  });
+
+  doc.y = y + 12;
+}
+
 export async function GET(request: Request) {
   await requireUser();
 
   const url = new URL(request.url);
+  const mode = url.searchParams.get("mode") === "shopping" ? "shopping" : "inventory";
   const filters: InventoryFilters = {
     q: url.searchParams.get("q") ?? undefined,
     category: url.searchParams.get("category") ?? undefined,
     supplier: url.searchParams.get("supplier") ?? undefined,
     location: url.searchParams.get("location") ?? undefined,
     equipmentId: url.searchParams.get("equipmentId") ?? undefined,
-    stock: url.searchParams.get("stock") ?? undefined,
+    stock: mode === "shopping" ? "LOW" : url.searchParams.get("stock") ?? undefined,
   };
   const data = await getInventoryData(filters);
   const generatedAt = new Date();
+  const title = mode === "shopping" ? "Lista de Compras de Stock" : "Relatorio de Inventario";
 
   const doc = new PDFDocument({
     size: "A4",
@@ -199,14 +272,14 @@ export async function GET(request: Request) {
     margin: page.margin,
     bufferPages: true,
     info: {
-      Title: "Relatorio de Inventario",
+      Title: title,
       Author: "Gestao de manutencao",
       Subject: "Produtos de inventario filtrados",
     },
   });
 
-  doc.font("Helvetica-Bold").fontSize(20).fillColor("#0f172a").text("Relatorio de Inventario", page.margin, page.margin);
-  doc.font("Helvetica").fontSize(9).fillColor("#475569").text("Produtos de stock filtrados na aplicacao.", page.margin, doc.y + 4, {
+  doc.font("Helvetica-Bold").fontSize(20).fillColor("#0f172a").text(title, page.margin, page.margin);
+  doc.font("Helvetica").fontSize(9).fillColor("#475569").text(mode === "shopping" ? "Produtos abaixo do stock minimo para reposicao." : "Produtos de stock filtrados na aplicacao.", page.margin, doc.y + 4, {
     width: page.width - page.margin * 2,
   });
   doc.moveDown(1.2);
@@ -220,28 +293,50 @@ export async function GET(request: Request) {
 
   drawFilters(doc, filters);
 
-  doc.font("Helvetica-Bold").fontSize(12).fillColor("#0f766e").text("Produtos", page.margin, doc.y);
+  doc.font("Helvetica-Bold").fontSize(12).fillColor("#0f766e").text(mode === "shopping" ? "Produtos a repor" : "Produtos", page.margin, doc.y);
   doc.moveDown(0.6);
-  drawTable(
-    doc,
-    data.consumables.map((item) => {
-      const stock = `${formatNumber(item.currentStock)} ${item.unit}`;
-      const minimum = `${formatNumber(item.minimumStock)} ${item.unit}`;
-      const value = Number(item.currentStock ?? 0) * Number(item.unitCost ?? 0);
-      const packageInfo = packageDescription(item);
+  if (mode === "shopping") {
+    drawShoppingTable(
+      doc,
+      data.consumables.map((item) => {
+        const current = Number(item.currentStock ?? 0);
+        const minimum = Number(item.minimumStock ?? 0);
+        const missing = Math.max(minimum - current, 0);
 
-      return {
-        name: packageInfo ? `${item.name} (${packageInfo})` : item.name,
-        category: item.category || "Sem categoria",
-        stock,
-        minimum,
-        supplier: item.supplier || "Sem fornecedor",
-        location: item.location || "Sem local",
-        equipment: item.equipment ? `${item.equipment.name}${item.equipment.code ? ` - ${item.equipment.code}` : ""}` : "Sem equipamento",
-        value: formatCurrency(value),
-      };
-    }),
-  );
+        return {
+          name: item.name,
+          category: item.category || "Sem categoria",
+          current: `${formatNumber(item.currentStock)} ${item.unit}`,
+          minimum: `${formatNumber(item.minimumStock)} ${item.unit}`,
+          buy: missing > 0 ? `${formatNumber(missing)} ${item.unit}` : "Avaliar reposicao",
+          supplier: item.supplier || "Sem fornecedor",
+          location: item.location || "Sem local",
+          equipment: item.equipment ? `${item.equipment.name}${item.equipment.code ? ` - ${item.equipment.code}` : ""}` : "Sem equipamento",
+        };
+      }),
+    );
+  } else {
+    drawTable(
+      doc,
+      data.consumables.map((item) => {
+        const stock = `${formatNumber(item.currentStock)} ${item.unit}`;
+        const minimum = `${formatNumber(item.minimumStock)} ${item.unit}`;
+        const value = Number(item.currentStock ?? 0) * Number(item.unitCost ?? 0);
+        const packageInfo = packageDescription(item);
+
+        return {
+          name: packageInfo ? `${item.name} (${packageInfo})` : item.name,
+          category: item.category || "Sem categoria",
+          stock,
+          minimum,
+          supplier: item.supplier || "Sem fornecedor",
+          location: item.location || "Sem local",
+          equipment: item.equipment ? `${item.equipment.name}${item.equipment.code ? ` - ${item.equipment.code}` : ""}` : "Sem equipamento",
+          value: formatCurrency(value),
+        };
+      }),
+    );
+  }
 
   doc.font("Helvetica").fontSize(7).fillColor("#64748b").text(
     `Gerado em ${new Intl.DateTimeFormat("pt-PT", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Lisbon" }).format(generatedAt)}.`,
@@ -256,7 +351,7 @@ export async function GET(request: Request) {
   return new Response(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="relatorio-inventario-${generatedAt.toISOString().slice(0, 10)}.pdf"`,
+      "Content-Disposition": `attachment; filename="${mode === "shopping" ? "lista-compras-stock" : "relatorio-inventario"}-${generatedAt.toISOString().slice(0, 10)}.pdf"`,
       "Cache-Control": "no-store",
     },
   });

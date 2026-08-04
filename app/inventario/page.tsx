@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight, Download, FileSpreadsheet, Filter, PackagePlus, Search, X } from "lucide-react";
+import { AlertTriangle, ArrowRight, Download, FileSpreadsheet, Filter, PackagePlus, Search, ShoppingCart, X } from "lucide-react";
 
 import { createConsumable, importConsumablesCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -38,7 +38,7 @@ function packageDescription(item: { unit: string; packageQuantity?: unknown; pac
 
 export default async function InventoryPage({ searchParams }: InventoryPageProps) {
   const params = (await searchParams) ?? {};
-  const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, totalStockValue } = await getInventoryData(params);
+  const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, lowStockConsumables, totalStockValue } = await getInventoryData(params);
   const exportParams = new URLSearchParams(
     Object.entries(params).filter(([, value]) => typeof value === "string" && value.length > 0) as string[][],
   );
@@ -55,6 +55,159 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
         title="Inventário de peças e consumíveis"
         description="Controla stock, localização, fornecedor e associação a equipamentos quando a peça ou consumível é dedicado."
       />
+
+      <Panel>
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <div className="flex items-center gap-3">
+              <Filter size={22} className="text-teal-300" />
+              <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
+            </div>
+            <p className="mt-1 text-sm text-zinc-500">
+              {consumables.length} produto(s) filtrado(s) de {allCount}. Valor em stock: {formatCurrency(totalStockValue)}.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={`/api/inventario/pdf?${exportParams.toString()}`}
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-200/70"
+            >
+              <Download size={16} />
+              Exportar PDF
+            </a>
+            <Link
+              href="/inventario"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50"
+            >
+              <X size={16} />
+              Limpar
+            </Link>
+          </div>
+        </div>
+
+        <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-6">
+          <div className="relative md:col-span-2 xl:col-span-2">
+            <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+            <input
+              name="q"
+              defaultValue={params.q ?? ""}
+              className={`${inputClass} min-w-0 pl-9 text-sm`}
+              placeholder="Pesquisar por produto, fornecedor, local, equipamento..."
+            />
+          </div>
+
+          <select name="category" defaultValue={params.category ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+            <option value="">Todas as categorias</option>
+            {categories.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+
+          <select name="supplier" defaultValue={params.supplier ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+            <option value="">Todos os fornecedores</option>
+            {suppliers.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+
+          <select name="location" defaultValue={params.location ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+            <option value="">Todas as localizações</option>
+            {locations.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+
+          <select name="stock" defaultValue={params.stock ?? ""} className={`${inputClass} min-w-0 text-sm`}>
+            <option value="">Todos os estados</option>
+            <option value="LOW">Abaixo do mínimo</option>
+            <option value="OK">Stock OK</option>
+            <option value="ASSOCIATED">Com equipamento</option>
+            <option value="UNASSOCIATED">Sem equipamento</option>
+          </select>
+
+          <select name="equipmentId" defaultValue={params.equipmentId ?? ""} className={`${inputClass} min-w-0 text-sm md:col-span-2 xl:col-span-3`}>
+            <option value="">Todos os equipamentos</option>
+            {equipment.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+                {item.code ? ` - ${item.code}` : ""}
+              </option>
+            ))}
+          </select>
+
+          <button className={`${buttonClass} md:col-span-2 xl:col-span-3`}>Aplicar filtros</button>
+        </form>
+      </Panel>
+
+      <Panel>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex items-start gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-amber-300/35 bg-amber-300/10 text-amber-200">
+              <AlertTriangle size={21} />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-200">Reposição</p>
+              <h2 className="mt-1 text-xl font-semibold text-zinc-50">Produtos com stock baixo</h2>
+              <p className="mt-1 text-sm text-zinc-500">
+                {lowStockConsumables.length > 0
+                  ? `${lowStockConsumables.length} produto(s) atingiram ou estão abaixo do stock mínimo.`
+                  : "Não existem produtos abaixo do stock mínimo."}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/inventario?stock=LOW"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-300/35 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100 transition hover:border-amber-200/70"
+            >
+              Ver stock baixo
+            </Link>
+            <a
+              href="/api/inventario/pdf?stock=LOW&mode=shopping"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-teal-300 px-3 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200"
+            >
+              <ShoppingCart size={16} />
+              Lista de compras
+            </a>
+          </div>
+        </div>
+
+        {lowStockConsumables.length > 0 && (
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {lowStockConsumables.slice(0, 6).map((item) => {
+              const missing = Math.max(Number(item.minimumStock ?? 0) - Number(item.currentStock ?? 0), 0);
+
+              return (
+                <Link
+                  key={item.id}
+                  href={`/inventario/consumiveis/${item.id}`}
+                  className="rounded-lg border border-amber-300/25 bg-amber-300/5 p-3 transition hover:border-amber-200/60"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-zinc-100">{item.name}</p>
+                      <p className="mt-1 text-xs text-zinc-500">{item.supplier ?? "Sem fornecedor"}</p>
+                    </div>
+                    <ArrowRight size={15} className="mt-1 shrink-0 text-amber-200" />
+                  </div>
+                  <p className="mt-3 text-sm text-amber-200">
+                    Stock: {String(item.currentStock)} {item.unit} · mínimo {String(item.minimumStock)} {item.unit}
+                  </p>
+                  <p className="mt-1 text-xs text-zinc-500">
+                    {missing > 0 ? `Faltam ${missing} ${item.unit} para o mínimo.` : "Está no limite mínimo. Avaliar reposição."}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </Panel>
 
       <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
         <Panel>
@@ -134,95 +287,6 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
         </Panel>
 
         <div className="grid gap-4">
-          <Panel>
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-              <div>
-                <div className="flex items-center gap-3">
-                  <Filter size={22} className="text-teal-300" />
-                  <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
-                </div>
-                <p className="mt-1 text-sm text-zinc-500">
-                  {consumables.length} produto(s) filtrado(s) de {allCount}. Valor em stock: {formatCurrency(totalStockValue)}.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <a
-                  href={`/api/inventario/pdf?${exportParams.toString()}`}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-200/70"
-                >
-                  <Download size={16} />
-                  Exportar PDF
-                </a>
-                <Link
-                  href="/inventario"
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50"
-                >
-                  <X size={16} />
-                  Limpar
-                </Link>
-              </div>
-            </div>
-
-            <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-6">
-              <div className="relative md:col-span-2 xl:col-span-2">
-                <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-                <input
-                  name="q"
-                  defaultValue={params.q ?? ""}
-                  className={`${inputClass} min-w-0 pl-9 text-sm`}
-                  placeholder="Pesquisar por produto, fornecedor, local, equipamento..."
-                />
-              </div>
-
-              <select name="category" defaultValue={params.category ?? ""} className={`${inputClass} min-w-0 text-sm`}>
-                <option value="">Todas as categorias</option>
-                {categories.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-
-              <select name="supplier" defaultValue={params.supplier ?? ""} className={`${inputClass} min-w-0 text-sm`}>
-                <option value="">Todos os fornecedores</option>
-                {suppliers.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-
-              <select name="location" defaultValue={params.location ?? ""} className={`${inputClass} min-w-0 text-sm`}>
-                <option value="">Todas as localizações</option>
-                {locations.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-
-              <select name="stock" defaultValue={params.stock ?? ""} className={`${inputClass} min-w-0 text-sm`}>
-                <option value="">Todos os estados</option>
-                <option value="LOW">Abaixo do mínimo</option>
-                <option value="OK">Stock OK</option>
-                <option value="ASSOCIATED">Com equipamento</option>
-                <option value="UNASSOCIATED">Sem equipamento</option>
-              </select>
-
-              <select name="equipmentId" defaultValue={params.equipmentId ?? ""} className={`${inputClass} min-w-0 text-sm md:col-span-2 xl:col-span-3`}>
-                <option value="">Todos os equipamentos</option>
-                {equipment.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                    {item.code ? ` - ${item.code}` : ""}
-                  </option>
-                ))}
-              </select>
-
-              <button className={`${buttonClass} md:col-span-2 xl:col-span-3`}>Aplicar filtros</button>
-            </form>
-          </Panel>
-
           <Panel>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
