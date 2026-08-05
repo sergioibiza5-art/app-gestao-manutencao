@@ -7,6 +7,7 @@ import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, Documen
 import type { PushSubscription as WebPushSubscription } from "web-push";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { importEnvironmentalWorkbook } from "@/lib/environmental-import";
+import { parseLisbonDateTimeInput } from "@/lib/lisbon-time";
 import { getPrisma } from "@/lib/prisma";
 
 type PushSubscriptionPayload = {
@@ -182,7 +183,7 @@ function dateWithTime(formData: FormData, dateKey: string, timeKey: string) {
   const dateValue = text(formData, dateKey);
   const timeValue = text(formData, timeKey);
   if (!dateValue) return null;
-  return new Date(`${dateValue}T${timeValue || "00:00"}`);
+  return parseLisbonDateTimeInput(`${dateValue}T${timeValue || "00:00"}`);
 }
 
 function enumValue<T extends string>(formData: FormData, key: string, allowed: readonly T[], fallback: T) {
@@ -1967,9 +1968,7 @@ function elapsedSeconds(startedAt: Date | null, end = new Date()) {
 
 function optionalDateTime(formData: FormData, key: string) {
   const value = optionalText(formData, key);
-  if (!value) return null;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
+  return parseLisbonDateTimeInput(value);
 }
 
 function durationNote(seconds: number) {

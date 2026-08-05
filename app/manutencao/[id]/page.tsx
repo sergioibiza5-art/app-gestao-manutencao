@@ -8,6 +8,7 @@ import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { getMaintenanceScheduleDetail } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
+import { formatLisbonDateTimeInput } from "@/lib/lisbon-time";
 
 export const dynamic = "force-dynamic";
 
@@ -49,9 +50,7 @@ function durationLabel(seconds: number) {
 }
 
 function dateTimeInputValue(date: Date | null) {
-  if (!date) return "";
-  const pad = (value: number) => String(value).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return formatLisbonDateTimeInput(date);
 }
 
 export default async function MaintenanceSchedulePage({ params }: MaintenanceSchedulePageProps) {

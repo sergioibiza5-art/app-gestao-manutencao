@@ -22,6 +22,7 @@ import { TicketSubmitButton } from "@/app/tickets/ticket-submit-button";
 import { requireUser } from "@/lib/auth";
 import { getTicketsData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
+import { formatLisbonDateTimeInput } from "@/lib/lisbon-time";
 
 export const dynamic = "force-dynamic";
 
@@ -82,9 +83,7 @@ function duration(seconds: number) {
 }
 
 function dateTimeInputValue(date: Date | null | undefined) {
-  if (!date) return "";
-  const pad = (value: number) => String(value).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return formatLisbonDateTimeInput(date);
 }
 
 function durationParts(seconds: number) {
