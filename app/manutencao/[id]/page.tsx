@@ -287,8 +287,9 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
               {workOrder.documents.length > 0 && (
                 <div className="space-y-2">
                   {workOrder.documents.map((document) => (
-                    <a key={document.id} href={document.fileUrl ?? "#"} target="_blank" rel="noreferrer" className="block rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 text-sm font-semibold text-sky-200">
-                      {document.title}
+                    <a key={document.id} href={document.fileUrl ?? "#"} target="_blank" rel="noreferrer" className="block rounded-lg border border-zinc-800 bg-zinc-950/55 p-3 transition hover:border-sky-300/45">
+                      <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">Pasta do equipamento</span>
+                      <span className="mt-1 block text-sm font-semibold text-sky-200">{document.title}</span>
                     </a>
                   ))}
                 </div>
