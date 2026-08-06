@@ -104,6 +104,14 @@ function stockVisualStatus(item: { currentStock?: unknown; minimumStock?: unknow
   };
 }
 
+function purchaseQuantity(item: { currentStock?: unknown; minimumStock?: unknown }) {
+  const current = Number(item.currentStock ?? 0);
+  const minimum = Number(item.minimumStock ?? 0);
+
+  if (!minimum || current > minimum) return 0;
+  return Math.max(minimum * 2 - current, 0);
+}
+
 export default async function InventoryPage({ searchParams }: InventoryPageProps) {
   const params = (await searchParams) ?? {};
   const { consumables, equipment, categories, suppliers, locations, allCount, lowStockCount, lowStockConsumables, totalStockValue, stockMovements } = await getInventoryData(params);
@@ -269,7 +277,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
         {lowStockConsumables.length > 0 && (
           <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {lowStockConsumables.slice(0, 6).map((item) => {
-              const missing = Math.max(Number(item.minimumStock ?? 0) - Number(item.currentStock ?? 0), 0);
+              const quantityToBuy = purchaseQuantity(item);
 
               return (
                 <Link
@@ -288,7 +296,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                     Stock: {String(item.currentStock)} {item.unit} · mínimo {String(item.minimumStock)} {item.unit}
                   </p>
                   <p className="mt-1 text-xs text-zinc-500">
-                    {missing > 0 ? `Faltam ${missing} ${item.unit} para o mínimo.` : "Está no limite mínimo. Avaliar reposição."}
+                    {quantityToBuy > 0 ? `Comprar ${quantityToBuy} ${item.unit} para repor até ao dobro do mínimo.` : "Avaliar reposição."}
                   </p>
                 </Link>
               );

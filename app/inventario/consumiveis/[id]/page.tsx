@@ -1,10 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, FolderOpen, History, Package, ReceiptText, Trash2 } from "lucide-react";
+import { ArrowLeft, ExternalLink, FolderOpen, History, Package, Pencil, ReceiptText, Trash2 } from "lucide-react";
 
 import { deleteConsumable, updateConsumable } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsCloseButton } from "@/app/components/details-close-button";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getConsumableDetail, getModuleData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
@@ -48,20 +50,32 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
         title={item.name}
         description={`${item.category} - ${String(item.currentStock)} ${item.unit} em stock - minimo ${String(item.minimumStock)} ${item.unit}`}
         action={
-          <Link href="/inventario" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
-            <ArrowLeft size={17} />
-            Inventario
-          </Link>
+          <div className="flex flex-wrap items-center gap-2">
+            <DetailsOpenButton targetId="editar-produto" className={buttonClass}>
+              <Pencil size={17} />
+              Editar produto
+            </DetailsOpenButton>
+            <Link href="/inventario" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+              <ArrowLeft size={17} />
+              Inventario
+            </Link>
+          </div>
         }
       />
 
-      <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
+      <details id="editar-produto" className="group">
+        <summary className="hidden">Editar produto</summary>
+        <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+          <div className="mx-auto max-w-5xl py-6">
         <Panel>
-          <div className="flex items-center gap-3">
-            <Package size={22} className="text-amber-300" />
-            <h2 className="text-xl font-semibold text-zinc-50">Editar produto</h2>
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-center gap-3">
+              <Package size={22} className="text-amber-300" />
+              <h2 className="text-xl font-semibold text-zinc-50">Editar produto</h2>
+            </div>
+            <DetailsCloseButton targetId="editar-produto" />
           </div>
-          <form action={updateConsumable} className="mt-4 grid gap-3">
+          <form action={updateConsumable} className="grid gap-3 lg:grid-cols-2">
             <input type="hidden" name="id" value={item.id} />
             <Field label="Nome">
               <input name="name" required className={inputClass} defaultValue={item.name} placeholder="Nome da peça ou consumível" />
@@ -127,7 +141,11 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
             </button>
           </form>
         </Panel>
+          </div>
+        </div>
+      </details>
 
+      <section className="grid gap-4">
         <div className="grid gap-4">
           <Panel>
             <div className="grid gap-3 md:grid-cols-3">

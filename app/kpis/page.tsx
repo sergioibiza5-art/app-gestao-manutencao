@@ -132,7 +132,7 @@ export default async function KpisPage({ searchParams }: KpiPageProps) {
     {
       label: "OPs no prazo",
       value: percent(data.cards.onTimePercentage),
-      detail: "Concluidas ate ao dia agendado",
+      detail: "Concluidas dentro da tolerancia",
       icon: CheckCircle2,
       tone: "border-teal-300/35 bg-teal-300/10 text-teal-200",
     },

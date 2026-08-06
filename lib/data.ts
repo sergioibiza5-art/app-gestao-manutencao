@@ -7,6 +7,7 @@ import {
   temperatureZones,
   type EnvironmentalStatus,
 } from "@/lib/environmental";
+import { isMaintenanceOutsideTolerance, maintenanceToleranceEnd } from "@/lib/maintenance-tolerance";
 import { readDb } from "@/lib/prisma";
 
 export async function getModuleCodification(moduleKey: string) {
@@ -216,7 +217,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
 
   ...calendar
     .filter((schedule) => {
-      const isLate = schedule.scheduledAt < todayStart && schedule.status === "SCHEDULED";
+      const isLate = schedule.status === "SCHEDULED" && isMaintenanceOutsideTolerance(schedule.scheduledAt, schedule.frequency, todayStart);
       const hasOpenOp =
         schedule.workOrder && ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(schedule.workOrder.status);
       return isLate || hasOpenOp || !schedule.workOrder;
@@ -229,7 +230,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       status: schedule.workOrder?.status ?? "NO_OP",
       date: schedule.scheduledAt,
       href: `/manutencao/${schedule.id}`,
-      tone: schedule.scheduledAt < todayStart ? "rose" : "amber",
+      tone: isMaintenanceOutsideTolerance(schedule.scheduledAt, schedule.frequency, todayStart) ? "rose" : "amber",
     })),
 ].slice(0, 8);
 
@@ -269,12 +270,6 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
       range: dashboardRange(),
     },
   );
-}
-
-function endOfDay(date: Date) {
-  const value = new Date(date);
-  value.setHours(23, 59, 59, 999);
-  return value;
 }
 
 function kpiRange(filters?: { year?: string; month?: string; period?: string; quarter?: string; semester?: string; startMonth?: string; endMonth?: string }) {
@@ -397,7 +392,7 @@ export async function getKpiData(filters?: { year?: string; month?: string; peri
 
       const completedWorkOrders = workOrders.filter((workOrder) => ["DONE", "VALIDATED"].includes(workOrder.status));
       const scheduledCompleted = completedWorkOrders.filter((workOrder) => workOrder.schedule?.scheduledAt && workOrder.closedAt);
-      const onTimeCompleted = scheduledCompleted.filter((workOrder) => workOrder.closedAt! <= endOfDay(workOrder.schedule!.scheduledAt));
+      const onTimeCompleted = scheduledCompleted.filter((workOrder) => workOrder.closedAt! <= maintenanceToleranceEnd(workOrder.schedule!.scheduledAt, workOrder.schedule!.frequency));
       const onTimePercentage = percentage(onTimeCompleted.length, scheduledCompleted.length);
 
       const workOrdersByStatus = Object.values(
@@ -462,7 +457,7 @@ export async function getKpiData(filters?: { year?: string; month?: string; peri
         const isPreventive = preventiveWorkOrders.some((item) => item.id === workOrder.id);
         const isCompleted = ["DONE", "VALIDATED"].includes(workOrder.status);
         const hasScheduleDueDate = Boolean(workOrder.schedule?.scheduledAt && workOrder.closedAt);
-        const isOnTime = hasScheduleDueDate ? workOrder.closedAt! <= endOfDay(workOrder.schedule!.scheduledAt) : false;
+        const isOnTime = hasScheduleDueDate ? workOrder.closedAt! <= maintenanceToleranceEnd(workOrder.schedule!.scheduledAt, workOrder.schedule!.frequency) : false;
 
         return {
           id: workOrder.id,
@@ -514,7 +509,7 @@ export async function getKpiData(filters?: { year?: string; month?: string; peri
           formulas: {
             mtbf: "(equipamentos ativos * segundos do periodo - paragem de tickets com maquina parada) / tickets nao cancelados / 3600",
             preventive: "OPs cujo titulo ou centro de custo contem 'prevent' / total de OPs",
-            onTime: "OPs DONE/VALIDATED com data agendada e fechadas ate ao fim do dia agendado / OPs DONE/VALIDATED com data agendada",
+            onTime: "OPs DONE/VALIDATED com data agendada e fechadas dentro da tolerancia definida / OPs DONE/VALIDATED com data agendada",
             mttr: "tempo medio de trabalho dos tickets concluidos ou validados",
             availability: "(equipamentos ativos * segundos do periodo - paragem de tickets com maquina parada) / (equipamentos ativos * segundos do periodo)",
           },

@@ -271,7 +271,7 @@ export async function GET(request: Request) {
   summaryCards(doc, [
     { label: "MTBF", value: formatHours(data.cards.mtbfHours), detail: "Tempo medio entre avarias" },
     { label: "Preventiva", value: formatPercent(data.cards.preventivePercentage), detail: "Peso das OPs preventivas" },
-    { label: "OPs no prazo", value: formatPercent(data.cards.onTimePercentage), detail: "Fechadas ate ao dia agendado" },
+    { label: "OPs no prazo", value: formatPercent(data.cards.onTimePercentage), detail: "Fechadas dentro da tolerancia" },
     { label: "MTTR", value: formatHours(data.cards.mttrHours), detail: "Tempo medio de reparacao" },
     { label: "Disponibilidade", value: formatPercent(data.cards.availability), detail: "Disponibilidade no periodo" },
   ]);

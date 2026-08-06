@@ -30,6 +30,7 @@ import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass }
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
+import { isMaintenanceOutsideTolerance, isMaintenanceWithinTolerance } from "@/lib/maintenance-tolerance";
 
 export const dynamic = "force-dynamic";
 
@@ -133,7 +134,7 @@ function workOrderStatusInfo(status?: string | null): ScheduleStatusInfo {
   return { label: "OP não iniciada", className: "border-zinc-700 bg-zinc-900/70 text-zinc-400", icon: Clock };
 }
 
-function dateStatusInfo(scheduledAt: Date, scheduleStatus: string, workOrderStatus?: string | null): ScheduleStatusInfo {
+function dateStatusInfo(scheduledAt: Date, frequency: string, scheduleStatus: string, workOrderStatus?: string | null): ScheduleStatusInfo {
   const today = new Date();
   const scheduled = new Date(scheduledAt);
 
@@ -148,8 +149,8 @@ function dateStatusInfo(scheduledAt: Date, scheduleStatus: string, workOrderStat
     workOrderStatus === "CANCELED";
 
   if (isClosed) return { label: "Fechada", className: "border-emerald-300/35 bg-emerald-300/10 text-emerald-200", icon: CheckCircle2 };
-  if (scheduled.getTime() < today.getTime()) return { label: "Fora da data", className: "border-rose-300/35 bg-rose-300/10 text-rose-200", icon: AlertTriangle };
-  if (scheduled.getTime() === today.getTime()) return { label: "Dentro da data", className: "border-teal-300/35 bg-teal-300/10 text-teal-200", icon: CheckCircle2 };
+  if (isMaintenanceOutsideTolerance(scheduled, frequency, today)) return { label: "Fora da data", className: "border-rose-300/35 bg-rose-300/10 text-rose-200", icon: AlertTriangle };
+  if (isMaintenanceWithinTolerance(scheduled, frequency, today)) return { label: "Dentro da tolerância", className: "border-teal-300/35 bg-teal-300/10 text-teal-200", icon: CheckCircle2 };
 
   return { label: "Programada", className: "border-zinc-700 bg-zinc-900/70 text-zinc-400", icon: Clock };
 }
@@ -170,14 +171,11 @@ function titleTone(schedule: { title: string; type: string; costCenter: string |
   return "text-zinc-100";
 }
 
-function scheduleCardTone(schedule: { scheduledAt: Date; status: string; workOrder?: { status: string } | null }) {
+function scheduleCardTone(schedule: { scheduledAt: Date; frequency: string; status: string; workOrder?: { status: string } | null }) {
   const today = new Date();
-  const scheduled = new Date(schedule.scheduledAt);
-  today.setHours(0, 0, 0, 0);
-  scheduled.setHours(0, 0, 0, 0);
 
   const workOrderStatus = schedule.workOrder?.status ?? null;
-  if (scheduled.getTime() < today.getTime() && !["DONE", "VALIDATED", "CANCELED"].includes(workOrderStatus ?? "") && schedule.status !== "DONE") {
+  if (isMaintenanceOutsideTolerance(schedule.scheduledAt, schedule.frequency, today) && !["DONE", "VALIDATED", "CANCELED"].includes(workOrderStatus ?? "") && schedule.status !== "DONE") {
     return "border-rose-300/50 bg-rose-950/20 hover:border-rose-300/70";
   }
   if (workOrderStatus === "IN_PROGRESS" || workOrderStatus === "PAUSED" || workOrderStatus === "SUSPENDED") {
@@ -221,14 +219,14 @@ function isClosedSchedule(schedule: { status: string; workOrder?: { status: stri
   );
 }
 
-function isOverdueOrTodaySchedule(schedule: { scheduledAt: Date; status: string; workOrder?: { status: string } | null }) {
+function isOverdueOrTodaySchedule(schedule: { scheduledAt: Date; frequency: string; status: string; workOrder?: { status: string } | null }) {
   const today = new Date();
   const scheduled = new Date(schedule.scheduledAt);
 
   today.setHours(0, 0, 0, 0);
   scheduled.setHours(0, 0, 0, 0);
 
-  return !isClosedSchedule(schedule) && scheduled.getTime() <= today.getTime();
+  return !isClosedSchedule(schedule) && (scheduled.getTime() <= today.getTime() || isMaintenanceOutsideTolerance(schedule.scheduledAt, schedule.frequency, today));
 }
 
 export default async function MaintenancePage({ searchParams }: MaintenancePageProps) {
@@ -817,7 +815,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                       {items.map((schedule) => {
                         const workOrderStatus = schedule.workOrder?.status ?? null;
                         const opInfo = workOrderStatusInfo(workOrderStatus);
-                        const dateInfo = dateStatusInfo(schedule.scheduledAt, schedule.status, workOrderStatus);
+                        const dateInfo = dateStatusInfo(schedule.scheduledAt, schedule.frequency, schedule.status, workOrderStatus);
                         const OpIcon = opInfo.icon;
                         const DateIcon = dateInfo.icon;
 

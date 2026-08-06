@@ -54,6 +54,14 @@ function packageDescription(item: { unit: string; packageQuantity?: unknown; pac
   return `1 ${item.unit} = ${formatNumber(item.packageQuantity)} ${item.packageUnit}`;
 }
 
+function purchaseQuantity(currentStock: unknown, minimumStock: unknown) {
+  const current = Number(currentStock ?? 0);
+  const minimum = Number(minimumStock ?? 0);
+
+  if (!minimum || current > minimum) return 0;
+  return Math.max(minimum * 2 - current, 0);
+}
+
 function stockLabel(value?: string) {
   const labels: Record<string, string> = {
     LOW: "Abaixo do minimo",
@@ -188,12 +196,12 @@ function drawShoppingTable(
     buy: string;
     supplier: string;
     location: string;
-    equipment: string;
+    notes: string;
   }[],
 ) {
-  const headers = ["Produto", "Categoria", "Atual", "Minimo", "Comprar", "Fornecedor", "Local", "Equipamento"];
-  const widths = [152, 82, 58, 58, 76, 112, 88, 112];
-  const rowHeight = 30;
+  const headers = ["Produto", "Categoria", "Atual", "Minimo", "Comprar", "Fornecedor", "Local", "Notas / Ref."];
+  const widths = [142, 72, 56, 56, 72, 104, 78, 158];
+  const rowHeight = 34;
   const headerHeight = 24;
   const tableWidth = widths.reduce((sum, width) => sum + width, 0);
   let y = doc.y;
@@ -230,7 +238,7 @@ function drawShoppingTable(
     }
 
     doc.rect(page.margin, y, tableWidth, rowHeight).strokeColor("#e2e8f0").lineWidth(0.5).stroke();
-    const cells = [row.name, row.category, row.current, row.minimum, row.buy, row.supplier, row.location, row.equipment];
+    const cells = [row.name, row.category, row.current, row.minimum, row.buy, row.supplier, row.location, row.notes];
     let x = page.margin;
     cells.forEach((cell, index) => {
       doc
@@ -299,19 +307,17 @@ export async function GET(request: Request) {
     drawShoppingTable(
       doc,
       data.consumables.map((item) => {
-        const current = Number(item.currentStock ?? 0);
-        const minimum = Number(item.minimumStock ?? 0);
-        const missing = Math.max(minimum - current, 0);
+        const quantityToBuy = purchaseQuantity(item.currentStock, item.minimumStock);
 
         return {
           name: item.name,
           category: item.category || "Sem categoria",
           current: `${formatNumber(item.currentStock)} ${item.unit}`,
           minimum: `${formatNumber(item.minimumStock)} ${item.unit}`,
-          buy: missing > 0 ? `${formatNumber(missing)} ${item.unit}` : "Avaliar reposicao",
+          buy: quantityToBuy > 0 ? `${formatNumber(quantityToBuy)} ${item.unit}` : "Avaliar reposicao",
           supplier: item.supplier || "Sem fornecedor",
           location: item.location || "Sem local",
-          equipment: item.equipment ? `${item.equipment.name}${item.equipment.code ? ` - ${item.equipment.code}` : ""}` : "Sem equipamento",
+          notes: item.notes || "Sem notas",
         };
       }),
     );
