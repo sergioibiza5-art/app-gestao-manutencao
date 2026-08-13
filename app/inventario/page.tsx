@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { AlertTriangle, ArrowRight, Download, FileSpreadsheet, Filter, History, PackageMinus, PackagePlus, Search, ShoppingCart, X } from "lucide-react";
 
-import { createConsumable, createConsumableStockOut, importConsumablesCsv } from "@/app/actions";
+import { createConsumable, createConsumableStockIn, createConsumableStockOut, importConsumablesCsv } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsCloseButton } from "@/app/components/details-close-button";
 import { DetailsOpenButton } from "@/app/components/details-open-button";
@@ -245,6 +245,13 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           </div>
           <div className="flex flex-wrap gap-2">
             <DetailsOpenButton
+              targetId="entrada-stock"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-200/70"
+            >
+              <PackagePlus size={16} />
+              Dar entrada
+            </DetailsOpenButton>
+            <DetailsOpenButton
               targetId="baixa-stock"
               className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-rose-300/35 bg-rose-300/10 px-3 text-sm font-semibold text-rose-100 transition hover:border-rose-200/70"
             >
@@ -258,12 +265,6 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
               <History size={16} />
               Movimentos
             </DetailsOpenButton>
-            <Link
-              href="/inventario?stock=LOW"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-300/35 bg-amber-300/10 px-3 text-sm font-semibold text-amber-100 transition hover:border-amber-200/70"
-            >
-              Ver stock baixo
-            </Link>
             <a
               href="/api/inventario/pdf?stock=LOW&mode=shopping"
               className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-teal-300 px-3 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200"
@@ -304,6 +305,46 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           </div>
         )}
       </Panel>
+
+      <details id="entrada-stock" className="group">
+        <summary className="hidden">Dar entrada de stock</summary>
+        <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
+          <div className="mx-auto max-w-3xl">
+            <Panel>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <PackagePlus size={22} className="text-teal-300" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-300">Stock</p>
+                    <h2 className="text-xl font-semibold text-zinc-50">Dar entrada direta</h2>
+                    <p className="mt-1 text-sm text-zinc-500">Regista uma entrada manual e soma automaticamente ao stock atual.</p>
+                  </div>
+                </div>
+                <DetailsCloseButton targetId="entrada-stock" />
+              </div>
+              <form action={createConsumableStockIn} className="mt-5 grid gap-3 md:grid-cols-2">
+                <Field label="Produto">
+                  <select name="consumableId" required className={inputClass}>
+                    <option value="">Selecionar produto</option>
+                    {consumables.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name} - stock {String(item.currentStock)} {item.unit}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Quantidade a adicionar">
+                  <input name="quantity" required className={inputClass} placeholder="Ex.: 1" />
+                </Field>
+                <Field label="Motivo">
+                  <textarea name="reason" className={`${textareaClass} md:col-span-2`} placeholder="Ex.: compra, reposição de stock, ajuste por contagem..." />
+                </Field>
+                <button className={`${buttonClass} md:col-span-2`}>Guardar entrada de stock</button>
+              </form>
+            </Panel>
+          </div>
+        </div>
+      </details>
 
       <details id="baixa-stock" className="group">
         <summary className="hidden">Dar baixa de stock</summary>

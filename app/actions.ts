@@ -1659,6 +1659,36 @@ export async function createConsumableStockOut(formData: FormData) {
   revalidatePath(`/inventario/consumiveis/${consumableId}`);
 }
 
+export async function createConsumableStockIn(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const consumableId = text(formData, "consumableId");
+  const quantity = decimalNumber(text(formData, "quantity"));
+  const reason = optionalText(formData, "reason") || "Entrada direta de stock";
+
+  if (!consumableId || quantity <= 0) return;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.consumable.update({
+      where: { id: consumableId },
+      data: { currentStock: { increment: quantity } },
+    });
+
+    await tx.consumableMovement.create({
+      data: {
+        consumableId,
+        type: "ENTRADA_DIRETA",
+        quantity: quantity.toFixed(2),
+        reason,
+        userId: user.id,
+      },
+    });
+  });
+
+  revalidatePath("/inventario");
+  revalidatePath(`/inventario/consumiveis/${consumableId}`);
+}
+
 export async function createMaintenanceLog(formData: FormData) {
   await requireCanWrite();
   const prisma = getPrisma();
