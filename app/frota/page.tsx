@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Car, Gauge, Plus } from "lucide-react";
+import { CalendarDays, Car, Gauge, Plus } from "lucide-react";
 
 import { createVehicle } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -48,6 +48,35 @@ export default async function FleetPage({ searchParams }: FleetPageProps) {
   const totalVehicles = vehicles.length;
   const totalCost = vehicles.reduce((sum, vehicle) => sum + vehicle.metrics.totalCost, 0);
   const totalLatestKm = vehicles.reduce((sum, vehicle) => sum + vehicle.metrics.latestKm, 0);
+  const fleetSchedule = vehicles
+    .flatMap((vehicle) => [
+      vehicle.metrics.estimatedRevisionDate || vehicle.metrics.kmUntilRevision !== null
+        ? {
+            id: `${vehicle.id}-revision`,
+            vehicleId: vehicle.id,
+            type: "Revisão",
+            vehicle: `${vehicle.brand} ${vehicle.model}`,
+            plate: vehicle.plate,
+            driver: vehicle.driver,
+            dueDate: vehicle.metrics.estimatedRevisionDate,
+            kmRemaining: vehicle.metrics.kmUntilRevision,
+          }
+        : null,
+      vehicle.metrics.nextInspectionDate || vehicle.metrics.kmUntilInspection !== null
+        ? {
+            id: `${vehicle.id}-inspection`,
+            vehicleId: vehicle.id,
+            type: "Inspeção",
+            vehicle: `${vehicle.brand} ${vehicle.model}`,
+            plate: vehicle.plate,
+            driver: vehicle.driver,
+            dueDate: vehicle.metrics.nextInspectionDate,
+            kmRemaining: vehicle.metrics.kmUntilInspection,
+          }
+        : null,
+    ])
+    .filter((item): item is NonNullable<typeof item> => item !== null)
+    .sort((a, b) => (a.dueDate?.getTime() ?? 0) - (b.dueDate?.getTime() ?? 0));
   const newVehicleAction = (
     <DetailsOpenButton targetId="novo-veiculo" className={buttonClass}>
       <Plus size={18} />
@@ -123,6 +152,56 @@ export default async function FleetPage({ searchParams }: FleetPageProps) {
           <p className="mt-2 text-3xl font-semibold text-amber-200">{formatCurrency(totalCost)}</p>
         </Panel>
       </section>
+
+      <Panel>
+        <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex items-center gap-3">
+            <CalendarDays size={22} className="shrink-0 text-blue-300" />
+            <div>
+              <h2 className="text-xl font-semibold text-zinc-50">Agendado na frota</h2>
+              <p className="mt-1 text-sm text-zinc-500">Próximas revisões e inspeções previstas para todas as viaturas.</p>
+            </div>
+          </div>
+          <span className="rounded-lg border border-zinc-800 bg-zinc-950/70 px-3 py-2 text-sm font-semibold text-zinc-300">
+            {fleetSchedule.length} evento(s)
+          </span>
+        </div>
+
+        {fleetSchedule.length === 0 ? (
+          <EmptyState title="Sem agendamentos" description="Quando existirem revisões ou inspeções previstas, aparecem aqui." />
+        ) : (
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {fleetSchedule.map((item) => (
+              <Link
+                key={item.id}
+                href={`/frota/${item.vehicleId}`}
+                className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4 transition hover:border-blue-300/50 hover:bg-zinc-900/80"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className={item.type === "Inspeção" ? "text-sm font-semibold text-lime-200" : "text-sm font-semibold text-blue-200"}>
+                      {item.type}
+                    </p>
+                    <h3 className="mt-2 font-semibold text-zinc-100">{item.vehicle}</h3>
+                    <p className="mt-1 text-sm text-zinc-500">{item.plate}</p>
+                  </div>
+                  <span className="rounded-md border border-zinc-800 bg-black/30 px-2 py-1 text-xs text-zinc-300">
+                    {formatDate(item.dueDate)}
+                  </span>
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+                  {item.driver && <span className="rounded-md bg-zinc-900 px-2 py-1 text-zinc-400">{item.driver}</span>}
+                  {item.kmRemaining !== null && (
+                    <span className={item.kmRemaining <= 1000 ? "rounded-md border border-amber-300/35 bg-amber-300/10 px-2 py-1 font-semibold text-amber-100" : "rounded-md bg-zinc-900 px-2 py-1 text-zinc-400"}>
+                      {item.kmRemaining <= 0 ? "Km ultrapassados" : `${item.kmRemaining.toLocaleString("pt-PT")} km restantes`}
+                    </span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </Panel>
 
       <section>
         <Panel className="min-w-0">
