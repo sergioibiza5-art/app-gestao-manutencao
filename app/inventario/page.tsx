@@ -121,7 +121,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
   const templateHref =
     "data:text/csv;charset=utf-8," +
     encodeURIComponent(
-      "nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;fornecedor;codigo_equipamento;notas\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Fornecedor;COMP-01;\n",
+      "nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;zona_estante;fornecedor;codigo_equipamento;notas\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Estante A - Prateleira 2;Fornecedor;COMP-01;\n",
     );
 
   return (
@@ -503,6 +503,9 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                 <Field label="Localização">
                   <input name="location" className={inputClass} placeholder="Localização" />
                 </Field>
+                <Field label="Zona nas estantes">
+                  <input name="shelfZone" className={inputClass} placeholder="Ex.: Estante A - Prateleira 2" />
+                </Field>
                 <Field label="Fornecedor">
                   <input name="supplier" className={inputClass} placeholder="Fornecedor" />
                 </Field>
@@ -568,7 +571,8 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                           <span className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold ${status.badgeClass}`}>{status.label}</span>
                         </div>
                         <p className="mt-1 text-sm text-zinc-500">
-                          {item.category} - {item.location ?? "sem localização"} - {item.supplier ?? "sem fornecedor"}
+                          {item.category} - {item.location ?? "sem localização"}
+                          {item.shelfZone ? ` - ${item.shelfZone}` : ""} - {item.supplier ?? "sem fornecedor"}
                         </p>
                         {item.equipment && (
                           <Link href={`/equipamentos/${item.equipment.id}`} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-teal-300 hover:text-teal-200">

@@ -994,6 +994,7 @@ model Consumable {
   packageUnit     String?
   folderUrl    String?
   location     String?
+  shelfZone    String?
   supplier     String?
   notes        String?
 
@@ -1031,6 +1032,29 @@ model ConsumableMovement {
   @@index([userId])
   @@index([ticketId])
   @@index([workOrderId])
+}
+
+model StoragePosition {
+  id       String @id @default(cuid())
+  code     String @unique
+  room     String?
+  shelf    String
+  level    String
+  title    String?
+  contents String
+  notes    String?
+  photoUrl String?
+  status   String @default("ORGANIZED")
+
+  createdById String?
+  updatedById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([shelf, level])
+  @@index([room])
+  @@index([status])
 }
 
 model Expense {

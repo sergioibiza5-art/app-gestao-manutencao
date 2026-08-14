@@ -1547,6 +1547,7 @@ export async function createConsumable(formData: FormData) {
       packageUnit: optionalText(formData, "packageUnit"),
       folderUrl: optionalText(formData, "folderUrl"),
       location: optionalText(formData, "location"),
+      shelfZone: optionalText(formData, "shelfZone"),
       supplier: optionalText(formData, "supplier"),
       notes: optionalText(formData, "notes"),
       equipmentId,
@@ -1594,6 +1595,7 @@ export async function updateConsumable(formData: FormData) {
       packageUnit: optionalText(formData, "packageUnit"),
       folderUrl: optionalText(formData, "folderUrl"),
       location: optionalText(formData, "location"),
+      shelfZone: optionalText(formData, "shelfZone"),
       supplier: optionalText(formData, "supplier"),
       notes: optionalText(formData, "notes"),
       equipmentId,
@@ -1627,6 +1629,117 @@ export async function deleteConsumable(formData: FormData) {
   await prisma.consumable.delete({ where: { id } });
   revalidatePath("/inventario");
   redirect("/inventario");
+}
+
+function storagePositionCode(formData: FormData) {
+  const code = normalizedCodification(formData, "code");
+  if (code) return code;
+
+  const shelf = text(formData, "shelf").toUpperCase();
+  const level = text(formData, "level").toUpperCase();
+  return shelf && level ? `${shelf}.${level}` : "";
+}
+
+function storageStatus(formData: FormData) {
+  const status = text(formData, "status").toUpperCase();
+  return ["ORGANIZED", "REVIEW", "EMPTY"].includes(status) ? status : "ORGANIZED";
+}
+
+async function ensureUniqueStorageCode(
+  prisma: ReturnType<typeof getPrisma>,
+  code: string,
+  currentId: string | null,
+) {
+  const duplicate = await prisma.storagePosition.findFirst({
+    where: {
+      code,
+      ...(currentId ? { id: { not: currentId } } : {}),
+    },
+    select: { code: true, title: true },
+  });
+
+  if (duplicate) {
+    redirectWithError(
+      "/localizacoes",
+      `A posição "${duplicate.code}" já está registada. Usa outro código ou edita a posição existente.`,
+    );
+  }
+}
+
+export async function createStoragePosition(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const code = storagePositionCode(formData);
+  const shelf = text(formData, "shelf").toUpperCase();
+  const level = text(formData, "level").toUpperCase();
+
+  if (!code || !shelf || !level || !text(formData, "contents")) {
+    redirectWithError("/localizacoes", "Preenche pelo menos estante, nível e conteúdo da posição.");
+  }
+
+  await ensureUniqueStorageCode(prisma, code, null);
+
+  await prisma.storagePosition.create({
+    data: {
+      code,
+      room: optionalText(formData, "room"),
+      shelf,
+      level,
+      title: optionalText(formData, "title"),
+      contents: text(formData, "contents"),
+      notes: optionalText(formData, "notes"),
+      photoUrl: optionalText(formData, "photoUrl"),
+      status: storageStatus(formData),
+      createdById: user.id,
+      updatedById: user.id,
+    },
+  });
+
+  revalidatePath("/localizacoes");
+}
+
+export async function updateStoragePosition(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const code = storagePositionCode(formData);
+  const shelf = text(formData, "shelf").toUpperCase();
+  const level = text(formData, "level").toUpperCase();
+
+  if (!id) return;
+  if (!code || !shelf || !level || !text(formData, "contents")) {
+    redirectWithError("/localizacoes", "Preenche pelo menos estante, nível e conteúdo da posição.");
+  }
+
+  await ensureUniqueStorageCode(prisma, code, id);
+
+  await prisma.storagePosition.update({
+    where: { id },
+    data: {
+      code,
+      room: optionalText(formData, "room"),
+      shelf,
+      level,
+      title: optionalText(formData, "title"),
+      contents: text(formData, "contents"),
+      notes: optionalText(formData, "notes"),
+      photoUrl: optionalText(formData, "photoUrl"),
+      status: storageStatus(formData),
+      updatedById: user.id,
+    },
+  });
+
+  revalidatePath("/localizacoes");
+}
+
+export async function deleteStoragePosition(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  if (!id) return;
+
+  await prisma.storagePosition.delete({ where: { id } });
+  revalidatePath("/localizacoes");
 }
 
 export async function createConsumableStockOut(formData: FormData) {
@@ -3721,6 +3834,7 @@ export async function importConsumablesCsv(formData: FormData) {
         packageUnit: row.unidade_tecnica || row.unidade_conteudo || null,
         folderUrl: row.link_pasta || row.pasta || null,
         location: row.localizacao || null,
+        shelfZone: row.zona_estante || row.zona || row.estante || null,
         supplier: row.fornecedor || null,
         notes: row.notas || null,
         equipmentId: equipment?.id,

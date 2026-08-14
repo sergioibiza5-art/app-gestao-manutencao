@@ -123,6 +123,9 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
             <Field label="Localização">
               <input name="location" className={inputClass} defaultValue={item.location ?? ""} placeholder="Localização" />
             </Field>
+            <Field label="Zona nas estantes">
+              <input name="shelfZone" className={inputClass} defaultValue={item.shelfZone ?? ""} placeholder="Ex.: Estante A - Prateleira 2" />
+            </Field>
             <Field label="Fornecedor">
               <input name="supplier" className={inputClass} defaultValue={item.supplier ?? ""} placeholder="Fornecedor" />
             </Field>
@@ -164,7 +167,14 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
                 <p className="mt-2 text-2xl font-semibold text-cyan-300">{ticketUsageTotal} {item.unit}</p>
               </div>
             </div>
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <div className="mt-4 grid gap-3 md:grid-cols-3">
+              {item.shelfZone ? (
+                <div className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-3 text-sm font-semibold text-amber-100">
+                  Zona nas estantes: {item.shelfZone}
+                </div>
+              ) : (
+                <div className="rounded-lg border border-dashed border-zinc-800 bg-zinc-950/45 p-3 text-sm text-zinc-500">Sem zona de estante definida</div>
+              )}
               {item.folderUrl ? (
                 <a href={item.folderUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-sky-300/30 bg-sky-300/10 px-4 text-sm font-semibold text-sky-100 transition hover:border-sky-200">
                   <FolderOpen size={17} />

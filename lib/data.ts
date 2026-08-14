@@ -721,6 +721,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
             item.unit,
             item.packageUnit,
             item.location,
+            item.shelfZone,
             item.supplier,
             item.notes,
             item.equipment?.name,
@@ -765,6 +766,84 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
       locations: [],
       equipment: [],
       stockMovements: [],
+    },
+  );
+}
+
+export type StorageLocationFilters = {
+  q?: string;
+  room?: string;
+  shelf?: string;
+  status?: string;
+};
+
+export async function getStorageLocationsData(filters: StorageLocationFilters = {}) {
+  return readDb(
+    async (prisma) => {
+      const positions = await prisma.storagePosition.findMany({
+        orderBy: [{ shelf: "asc" }, { level: "desc" }, { code: "asc" }],
+      });
+
+      const rooms = Array.from(new Set(positions.map((item) => item.room).filter(Boolean) as string[])).sort((a, b) =>
+        a.localeCompare(b, "pt"),
+      );
+      const shelves = Array.from(new Set(positions.map((item) => item.shelf).filter(Boolean))).sort((a, b) =>
+        a.localeCompare(b, "pt", { numeric: true }),
+      );
+
+      const q = normalizeFilter(filters.q);
+      const room = String(filters.room ?? "");
+      const shelf = String(filters.shelf ?? "");
+      const status = String(filters.status ?? "");
+
+      const filteredPositions = positions.filter((item) => {
+        const haystackMatches =
+          !q ||
+          [
+            item.code,
+            item.room,
+            item.shelf,
+            item.level,
+            item.title,
+            item.contents,
+            item.notes,
+          ].some((value) => matchesText(value, q));
+
+        return (
+          haystackMatches &&
+          (!room || item.room === room) &&
+          (!shelf || item.shelf === shelf) &&
+          (!status || item.status === status)
+        );
+      });
+
+      const groupedByShelf = filteredPositions.reduce<Record<string, typeof filteredPositions>>((groups, item) => {
+        const key = item.shelf || "Sem estante";
+        groups[key] = groups[key] ?? [];
+        groups[key].push(item);
+        return groups;
+      }, {});
+
+      return {
+        positions: filteredPositions,
+        groupedByShelf,
+        rooms,
+        shelves,
+        totalCount: positions.length,
+        filteredCount: filteredPositions.length,
+        reviewCount: positions.filter((item) => item.status === "REVIEW").length,
+        emptyCount: positions.filter((item) => item.status === "EMPTY").length,
+      };
+    },
+    {
+      positions: [],
+      groupedByShelf: {},
+      rooms: [],
+      shelves: [],
+      totalCount: 0,
+      filteredCount: 0,
+      reviewCount: 0,
+      emptyCount: 0,
     },
   );
 }
