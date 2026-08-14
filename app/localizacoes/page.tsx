@@ -263,16 +263,11 @@ export default async function StorageLocationsPage({ searchParams }: StorageLoca
                         </div>
 
                         <div className="mt-4 flex flex-wrap gap-2">
-                          {lines.slice(0, 6).map((line) => (
+                          {lines.map((line) => (
                             <span key={line} className="rounded-md border border-zinc-800 bg-zinc-950/70 px-2 py-1 text-xs font-semibold text-zinc-200">
                               {line}
                             </span>
                           ))}
-                          {lines.length > 6 ? (
-                            <span className="rounded-md border border-teal-300/25 bg-teal-300/10 px-2 py-1 text-xs font-semibold text-teal-100">
-                              + {lines.length - 6}
-                            </span>
-                          ) : null}
                         </div>
 
                         {position.notes ? <p className="mt-3 line-clamp-2 text-sm text-zinc-500">{position.notes}</p> : null}
