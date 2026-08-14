@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { AlertTriangle, Archive, Camera, Edit3, Map, PackageSearch, Plus, Search, Trash2 } from "lucide-react";
+import { AlertTriangle, Archive, Camera, ChevronDown, Edit3, Map, PackageSearch, Plus, Search, Trash2 } from "lucide-react";
 
 import { createStoragePosition, deleteStoragePosition, updateStoragePosition } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -217,7 +217,7 @@ export default async function StorageLocationsPage({ searchParams }: StorageLoca
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold text-zinc-50">Mapa por estante</h2>
-            <p className="mt-1 text-sm text-zinc-500">Clica em editar para atualizar rapidamente o conteúdo de uma prateleira.</p>
+            <p className="mt-1 text-sm text-zinc-500">Clica numa estante para veres as prateleiras e o conteúdo registado.</p>
           </div>
         </div>
 
@@ -229,24 +229,54 @@ export default async function StorageLocationsPage({ searchParams }: StorageLoca
             />
           </Panel>
         ) : (
-          <div className="grid gap-4 xl:grid-cols-2">
-            {Object.entries(data.groupedByShelf).map(([shelf, positions]) => (
-              <Panel key={shelf}>
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <Archive size={21} className="text-fuchsia-200" />
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-fuchsia-200">Estante</p>
-                      <h3 className="text-2xl font-semibold text-zinc-50">{shelf}</h3>
-                    </div>
-                  </div>
-                  <span className="rounded-full border border-zinc-800 bg-zinc-950 px-3 py-1 text-xs font-semibold text-zinc-300">
-                    {positions.length} posição(ões)
-                  </span>
-                </div>
+          <div className="grid gap-4">
+            {Object.entries(data.groupedByShelf).map(([shelf, positions]) => {
+              const totalItems = positions.reduce((total, position) => total + contentLines(position.contents).length, 0);
+              const previewItems = positions.flatMap((position) => contentLines(position.contents)).slice(0, 8);
 
-                <div className="grid gap-3 md:grid-cols-2">
-                  {positions.map((position) => {
+              return (
+                <details key={shelf} className="group glass-panel rounded-lg border border-zinc-800/80 bg-zinc-950/20">
+                  <summary className="list-none cursor-pointer p-4 sm:p-5">
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                      <div className="flex items-start gap-3">
+                        <span className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-fuchsia-300/20 bg-fuchsia-300/10 text-fuchsia-100">
+                          <Archive size={20} />
+                        </span>
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-fuchsia-200">Estante</p>
+                          <h3 className="mt-1 text-3xl font-semibold text-zinc-50">{shelf}</h3>
+                          <p className="mt-1 text-sm text-zinc-500">
+                            {positions.length} posição(ões) registada(s) · {totalItems} item(ns)
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-1 flex-wrap items-center gap-2 lg:justify-end">
+                        {previewItems.map((item) => (
+                          <span
+                            key={`${shelf}-${item}`}
+                            className="max-w-[220px] truncate rounded-md border border-zinc-800 bg-zinc-950/70 px-2 py-1 text-xs font-semibold text-zinc-300"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                        {totalItems > previewItems.length ? (
+                          <span className="rounded-md border border-teal-300/25 bg-teal-300/10 px-2 py-1 text-xs font-semibold text-teal-100">
+                            + {totalItems - previewItems.length}
+                          </span>
+                        ) : null}
+                        <span className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-teal-300/30 px-3 text-xs font-semibold text-teal-100">
+                          <span className="group-open:hidden">Abrir estante</span>
+                          <span className="hidden group-open:inline">Fechar estante</span>
+                          <ChevronDown size={15} className="transition group-open:rotate-180" />
+                        </span>
+                      </div>
+                    </div>
+                  </summary>
+
+                  <div className="border-t border-zinc-800/80 p-4 pt-0 sm:p-5 sm:pt-0">
+                    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                      {positions.map((position) => {
                     const tone = statusTone(position.status);
                     const lines = contentLines(position.contents);
                     const modalId = `editar-posicao-${position.id}`;
@@ -316,10 +346,12 @@ export default async function StorageLocationsPage({ searchParams }: StorageLoca
                         </DetailsPopup>
                       </article>
                     );
-                  })}
-                </div>
-              </Panel>
-            ))}
+                      })}
+                    </div>
+                  </div>
+                </details>
+              );
+            })}
           </div>
         )}
       </section>
