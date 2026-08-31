@@ -3285,6 +3285,56 @@ export async function suspendWorkOrder(formData: FormData) {
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
+export async function cancelWorkOrderOpening(formData: FormData) {
+  const user = await requireCanWrite();
+  const prisma = getPrisma();
+  const workOrderId = text(formData, "workOrderId");
+  if (!workOrderId) return;
+
+  let equipmentId: string | null = null;
+  let scheduleIdForRevalidate: string | null = null;
+
+  await prisma.$transaction(async (tx) => {
+    const workOrder = await tx.workOrder.findUnique({ where: { id: workOrderId } });
+    if (!workOrder || !["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(workOrder.status)) return;
+
+    equipmentId = workOrder.equipmentId;
+    scheduleIdForRevalidate = workOrder.scheduleId;
+    const note = auditNote("Abertura da OP cancelada", user.name, optionalText(formData, "cancelNotes"));
+
+    await tx.workOrder.update({
+      where: { id: workOrderId },
+      data: {
+        status: "CANCELED",
+        scheduleId: null,
+        startedAt: null,
+        pausedAt: null,
+        closedAt: null,
+        validatedAt: null,
+        lastResumedAt: null,
+        totalWorkSeconds: 0,
+        notes: [workOrder.notes, note].filter(Boolean).join("\n"),
+      },
+    });
+
+    if (workOrder.scheduleId) {
+      await tx.maintenanceSchedule.update({
+        where: { id: workOrder.scheduleId },
+        data: { status: "SCHEDULED" },
+      });
+    }
+
+    await refreshEquipmentMaintenanceStatus(tx, workOrder.equipmentId);
+  });
+
+  revalidatePath("/");
+  revalidatePath("/manutencao");
+  revalidatePath("/equipamentos");
+  if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+  const scheduleId = optionalText(formData, "scheduleId") ?? scheduleIdForRevalidate;
+  if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
+}
+
 export async function reopenWorkOrder(formData: FormData) {
   const user = await requireCanWrite();
   const prisma = getPrisma();

@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 
-import { completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, updateWorkOrderTiming, validateWorkOrder } from "@/app/actions";
+import { cancelWorkOrderOpening, completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, updateWorkOrderTiming, validateWorkOrder } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
@@ -169,6 +169,24 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                     />
                     <button className="mt-2 inline-flex h-10 items-center justify-center rounded-lg border border-sky-300/40 bg-sky-300/10 px-3 text-sm font-semibold text-sky-100">
                       Reabrir OP
+                    </button>
+                  </form>
+                )}
+                {["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(workOrder.status) && (
+                  <form action={cancelWorkOrderOpening} className="w-full rounded-lg border border-rose-300/25 bg-rose-300/5 p-3">
+                    <p className="text-sm font-semibold text-rose-100">OP aberta por engano?</p>
+                    <p className="mt-1 text-xs text-zinc-400">
+                      Cancela esta abertura e volta a deixar a manutenção disponível para criar uma OP correta.
+                    </p>
+                    <input type="hidden" name="workOrderId" value={workOrder.id} />
+                    <input type="hidden" name="scheduleId" value={schedule.id} />
+                    <textarea
+                      name="cancelNotes"
+                      className={`${textareaClass} mt-3`}
+                      placeholder="Motivo do cancelamento da abertura"
+                    />
+                    <button className="mt-2 inline-flex h-10 items-center justify-center rounded-lg border border-rose-300/40 bg-rose-300/10 px-3 text-sm font-semibold text-rose-100">
+                      Cancelar abertura da OP
                     </button>
                   </form>
                 )}
