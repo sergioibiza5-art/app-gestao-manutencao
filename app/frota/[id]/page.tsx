@@ -13,6 +13,8 @@ import {
   updateVehicleService,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
+import { DetailsPopup } from "@/app/components/details-modal";
+import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getVehicleDetail } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
@@ -117,115 +119,154 @@ export default async function VehicleDetailPage({ params, searchParams }: Vehicl
         </Panel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[0.72fr_1.28fr]">
-        <div className="space-y-4">
-          <Panel>
-            <div className="flex items-center gap-3">
-              <Pencil size={22} className="text-blue-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Editar veiculo</h2>
+      <section className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
+        <Panel>
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-300">Ações rápidas</p>
+              <h2 className="mt-1 text-xl font-semibold text-zinc-50">Gestão da viatura</h2>
             </div>
-            <form action={updateVehicle} className="mt-4 space-y-3">
-              <input type="hidden" name="id" value={vehicle.id} />
-              <div className="grid grid-cols-2 gap-3">
-                <input name="brand" required className={inputClass} defaultValue={vehicle.brand} />
-                <input name="model" required className={inputClass} defaultValue={vehicle.model} />
-              </div>
-              <input name="code" className={inputClass} defaultValue={vehicle.code ?? ""} placeholder="Código interno" />
-              <input name="plate" required className={inputClass} defaultValue={vehicle.plate} />
-              <div className="grid grid-cols-2 gap-3">
-                <select name="fuel" className={inputClass} defaultValue={vehicle.fuel}>
-                  <option value="DIESEL">Gasoleo</option>
-                  <option value="GASOLINE">Gasolina</option>
-                  <option value="HYBRID">Hibrido</option>
-                  <option value="ELECTRIC">Eletrico</option>
-                  <option value="LPG">GPL</option>
-                  <option value="OTHER">Outro</option>
-                </select>
-                <input name="year" className={inputClass} defaultValue={vehicle.year ?? ""} />
-              </div>
-              <input name="driver" className={inputClass} defaultValue={vehicle.driver ?? ""} />
-              <textarea name="notes" className={textareaClass} defaultValue={vehicle.notes ?? ""} />
-              <button className={buttonClass}>Atualizar</button>
-            </form>
-            <form action={deleteVehicle} className="mt-2">
-              <input type="hidden" name="id" value={vehicle.id} />
-              <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 text-sm font-semibold text-rose-200 transition hover:bg-rose-400/15">
-                <Trash2 size={16} />
-                Eliminar veiculo
-              </button>
-            </form>
-          </Panel>
-
-          <Panel>
-            <div className="flex items-center gap-3">
-              <Calculator size={22} className="text-teal-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Estimativa de revisao</h2>
+            <div className="flex flex-wrap gap-2">
+              <DetailsOpenButton
+                targetId="registar-km"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-blue-300/40 bg-blue-300/10 px-4 text-sm font-semibold text-blue-100 transition hover:border-blue-200"
+              >
+                <Gauge size={17} />
+                Registar km
+              </DetailsOpenButton>
+              <DetailsOpenButton
+                targetId="registar-servico"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-amber-300/40 bg-amber-300/10 px-4 text-sm font-semibold text-amber-100 transition hover:border-amber-200"
+              >
+                <Wrench size={17} />
+                Registar serviço
+              </DetailsOpenButton>
+              <DetailsOpenButton
+                targetId="editar-veiculo"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-blue-300/50"
+              >
+                <Pencil size={17} />
+                Editar veículo
+              </DetailsOpenButton>
             </div>
-            <dl className="mt-4 space-y-3 text-sm">
-              <div className="flex justify-between gap-3">
-                <dt className="text-zinc-500">Km/ano</dt>
-                <dd className="font-medium text-zinc-100">{rounded(vehicle.metrics.averageKmYear)}</dd>
-              </div>
-              <div className="flex justify-between gap-3">
-                <dt className="text-zinc-500">Faltam km</dt>
-                <dd className="font-medium text-zinc-100">{vehicle.metrics.kmUntilRevision === null ? "Sem limite" : rounded(vehicle.metrics.kmUntilRevision)}</dd>
-              </div>
-              <div className="flex justify-between gap-3">
-                <dt className="text-zinc-500">Proxima revisao</dt>
-                <dd className="font-medium text-blue-200">{formatDate(vehicle.metrics.estimatedRevisionDate)}</dd>
-              </div>
-              <div className="flex justify-between gap-3">
-                <dt className="text-zinc-500">Proxima inspecao</dt>
-                <dd className="font-medium text-lime-200">{formatDate(vehicle.metrics.nextInspectionDate)}</dd>
-              </div>
-            </dl>
-          </Panel>
-        </div>
+          </div>
+        </Panel>
 
-        <div className="space-y-4">
-          <Panel>
-            <div className="flex items-center gap-3">
-              <Gauge size={22} className="text-blue-300" />
+        <Panel>
+          <div className="flex items-center gap-3">
+            <Calculator size={22} className="text-teal-300" />
+            <h2 className="text-xl font-semibold text-zinc-50">Estimativa de revisão</h2>
+          </div>
+          <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+            <div className="flex justify-between gap-3">
+              <dt className="text-zinc-500">Km/ano</dt>
+              <dd className="font-medium text-zinc-100">{rounded(vehicle.metrics.averageKmYear)}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="text-zinc-500">Faltam km</dt>
+              <dd className="font-medium text-zinc-100">{vehicle.metrics.kmUntilRevision === null ? "Sem limite" : rounded(vehicle.metrics.kmUntilRevision)}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="text-zinc-500">Próxima revisão</dt>
+              <dd className="font-medium text-blue-200">{formatDate(vehicle.metrics.estimatedRevisionDate)}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="text-zinc-500">Próxima inspeção</dt>
+              <dd className="font-medium text-lime-200">{formatDate(vehicle.metrics.nextInspectionDate)}</dd>
+            </div>
+          </dl>
+        </Panel>
+      </section>
+
+      <DetailsPopup id="registar-km" title="Registar km" maxWidth="max-w-3xl">
+        <Panel>
+          <div className="flex items-center gap-3 pr-28">
+            <Gauge size={22} className="text-blue-300" />
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-300">Frota</p>
               <h2 className="text-xl font-semibold text-zinc-50">Registar km</h2>
             </div>
-            <form action={createVehicleKmLog} className="mt-4 grid gap-3 md:grid-cols-[1fr_1fr_auto]">
-              <input type="hidden" name="vehicleId" value={vehicle.id} />
-              <input name="date" type="date" className={inputClass} />
-              <input name="odometer" required className={inputClass} placeholder="Quilometros" />
-              <button className={buttonClass}>Registar km</button>
-              <input name="notes" className={`${inputClass} md:col-span-3`} placeholder="Notas do registo" />
-            </form>
-          </Panel>
+          </div>
+          <form action={createVehicleKmLog} className="mt-5 grid gap-3 md:grid-cols-2">
+            <input type="hidden" name="vehicleId" value={vehicle.id} />
+            <input name="date" type="date" className={inputClass} />
+            <input name="odometer" required className={inputClass} placeholder="Quilómetros" />
+            <input name="notes" className={`${inputClass} md:col-span-2`} placeholder="Notas do registo" />
+            <button className={`${buttonClass} md:col-span-2`}>Registar km</button>
+          </form>
+        </Panel>
+      </DetailsPopup>
 
-          <Panel>
-            <div className="flex items-center gap-3">
-              <Wrench size={22} className="text-amber-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Registar servico, revisao, custo ou inspecao</h2>
+      <DetailsPopup id="registar-servico" title="Registar serviço" maxWidth="max-w-6xl">
+        <Panel>
+          <div className="flex items-center gap-3 pr-28">
+            <Wrench size={22} className="text-amber-300" />
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-300">Frota</p>
+              <h2 className="text-xl font-semibold text-zinc-50">Registar serviço, revisão, custo ou inspeção</h2>
             </div>
-            <form action={createVehicleService} className="mt-4 grid gap-3 md:grid-cols-2 2xl:grid-cols-[170px_minmax(260px,1.4fr)_190px_150px]">
-              <input type="hidden" name="vehicleId" value={vehicle.id} />
-              <select name="type" className={inputClass}>
-                <option value="MAINTENANCE">Manutencao</option>
-                <option value="REVISION">Revisao</option>
-                <option value="INSPECTION">Inspecao</option>
-                <option value="COST">Custo</option>
-              </select>
-              <input name="title" required className={inputClass} placeholder="Titulo" />
-              <input name="date" type="date" className={inputClass} />
-              <input name="odometer" className={inputClass} placeholder="Km no servico" />
-              <input name="cost" className={inputClass} placeholder="Custo" />
-              <input name="supplier" className={inputClass} placeholder="Fornecedor / oficina" />
-              <input name="nextDueKm" className={inputClass} placeholder="Proxima revisao aos km" />
-              <div className="space-y-1">
-                <input name="nextDueDate" type="date" className={inputClass} />
-                <p className="px-1 text-xs leading-5 text-zinc-500">Data manual apenas se ainda nao houver historico de km suficiente.</p>
-              </div>
-              <textarea name="notes" className={`${textareaClass} md:col-span-2 2xl:col-span-3`} placeholder="Notas" />
-              <button className={`${buttonClass} self-start`}>Guardar servico</button>
-            </form>
-          </Panel>
-        </div>
-      </section>
+          </div>
+          <form action={createVehicleService} className="mt-5 grid gap-3 md:grid-cols-2 2xl:grid-cols-[170px_minmax(260px,1.4fr)_190px_150px]">
+            <input type="hidden" name="vehicleId" value={vehicle.id} />
+            <select name="type" className={inputClass}>
+              <option value="MAINTENANCE">Manutenção</option>
+              <option value="REVISION">Revisão</option>
+              <option value="INSPECTION">Inspeção</option>
+              <option value="COST">Custo</option>
+            </select>
+            <input name="title" required className={inputClass} placeholder="Título" />
+            <input name="date" type="date" className={inputClass} />
+            <input name="odometer" className={inputClass} placeholder="Km no serviço" />
+            <input name="cost" className={inputClass} placeholder="Custo" />
+            <input name="supplier" className={inputClass} placeholder="Fornecedor / oficina" />
+            <input name="nextDueKm" className={inputClass} placeholder="Próxima revisão aos km" />
+            <div className="space-y-1">
+              <input name="nextDueDate" type="date" className={inputClass} />
+              <p className="px-1 text-xs leading-5 text-zinc-500">Data manual apenas se ainda não houver histórico de km suficiente.</p>
+            </div>
+            <textarea name="notes" className={`${textareaClass} md:col-span-2 2xl:col-span-3`} placeholder="Notas" />
+            <button className={`${buttonClass} self-start`}>Guardar serviço</button>
+          </form>
+        </Panel>
+      </DetailsPopup>
+
+      <DetailsPopup id="editar-veiculo" title="Editar veículo" maxWidth="max-w-4xl">
+        <Panel>
+          <div className="flex items-center gap-3 pr-28">
+            <Pencil size={22} className="text-blue-300" />
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-300">Frota</p>
+              <h2 className="text-xl font-semibold text-zinc-50">Editar veículo</h2>
+            </div>
+          </div>
+          <form action={updateVehicle} className="mt-5 grid gap-3 md:grid-cols-2">
+            <input type="hidden" name="id" value={vehicle.id} />
+            <input name="brand" required className={inputClass} defaultValue={vehicle.brand} placeholder="Marca" />
+            <input name="model" required className={inputClass} defaultValue={vehicle.model} placeholder="Modelo" />
+            <input name="code" className={inputClass} defaultValue={vehicle.code ?? ""} placeholder="Código interno" />
+            <input name="plate" required className={inputClass} defaultValue={vehicle.plate} placeholder="Matrícula" />
+            <select name="fuel" className={inputClass} defaultValue={vehicle.fuel}>
+              <option value="DIESEL">Gasóleo</option>
+              <option value="GASOLINE">Gasolina</option>
+              <option value="HYBRID">Híbrido</option>
+              <option value="ELECTRIC">Elétrico</option>
+              <option value="LPG">GPL</option>
+              <option value="OTHER">Outro</option>
+            </select>
+            <input name="year" className={inputClass} defaultValue={vehicle.year ?? ""} placeholder="Ano" />
+            <input name="driver" className={`${inputClass} md:col-span-2`} defaultValue={vehicle.driver ?? ""} placeholder="Condutor" />
+            <textarea name="notes" className={`${textareaClass} md:col-span-2`} defaultValue={vehicle.notes ?? ""} placeholder="Notas" />
+            <button className={buttonClass}>Atualizar</button>
+          </form>
+          <form action={deleteVehicle} className="mt-3">
+            <input type="hidden" name="id" value={vehicle.id} />
+            <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 text-sm font-semibold text-rose-200 transition hover:bg-rose-400/15">
+              <Trash2 size={16} />
+              Eliminar veículo
+            </button>
+          </form>
+        </Panel>
+      </DetailsPopup>
 
       <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
         <Panel>
