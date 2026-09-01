@@ -280,13 +280,13 @@ export default async function VehicleDetailPage({ params, searchParams }: Vehicl
             ) : (
               [...vehicle.kmLogs].reverse().slice(0, 8).map((log) => (
                 <div key={log.id} className="rounded-lg border border-zinc-800 p-3">
-                  <form action={updateVehicleKmLog} className="grid gap-2 md:grid-cols-[1fr_1fr_auto]">
+                  <form action={updateVehicleKmLog} className="grid gap-2 md:grid-cols-[155px_minmax(180px,1fr)]">
                     <input type="hidden" name="id" value={log.id} />
                     <input type="hidden" name="vehicleId" value={vehicle.id} />
                     <input name="date" type="date" className={inputClass} defaultValue={dateInputValue(log.date)} />
                     <input name="odometer" className={inputClass} defaultValue={log.odometer} />
-                    <button className="inline-flex h-11 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">Editar</button>
-                    <input name="notes" className={`${inputClass} md:col-span-3`} defaultValue={log.notes ?? ""} />
+                    <input name="notes" className={`${inputClass} md:col-span-2`} defaultValue={log.notes ?? ""} />
+                    <button className="inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100 md:w-fit">Editar</button>
                   </form>
                   <form action={deleteVehicleKmLog} className="mt-2">
                     <input type="hidden" name="id" value={log.id} />
