@@ -888,9 +888,19 @@ export async function getEquipmentDetail(id: string) {
           maintenanceLogs: { orderBy: { date: "desc" }, take: 50, include: { user: true } },
 maintenanceSchedules: {
   orderBy: { scheduledAt: "asc" },
-  take: 50,
+  take: 100,
   include: {
-    workOrder: true,
+    workOrder: {
+      select: {
+        id: true,
+        number: true,
+        status: true,
+        openedAt: true,
+        startedAt: true,
+        closedAt: true,
+        validatedAt: true,
+      },
+    },
   },
 },
 
@@ -904,9 +914,33 @@ tickets: {
 },
 workOrders: {
   orderBy: { openedAt: "desc" },
+  take: 100,
   select: {
     id: true,
+    number: true,
+    title: true,
+    type: true,
     status: true,
+    openedAt: true,
+    closedAt: true,
+    validatedAt: true,
+    totalWorkSeconds: true,
+    performedBy: true,
+    actionsDone: true,
+    result: true,
+    scheduleId: true,
+    schedule: {
+      select: {
+        id: true,
+        scheduledAt: true,
+        frequency: true,
+      },
+    },
+    maintenanceLog: {
+      select: {
+        cost: true,
+      },
+    },
   },
 },
 

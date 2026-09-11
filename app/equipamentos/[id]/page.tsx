@@ -64,6 +64,47 @@ function frequencyLabel(frequency: string) {
   return labels[frequency] ?? frequency;
 }
 
+function scheduleStatusLabel(status: string) {
+  const labels: Record<string, string> = {
+    SCHEDULED: "Agendada",
+    DONE: "Concluída",
+    CANCELED: "Cancelada",
+  };
+
+  return labels[status] ?? status;
+}
+
+function workOrderStatusLabel(status: string) {
+  const labels: Record<string, string> = {
+    OPEN: "Aberta",
+    IN_PROGRESS: "Em curso",
+    PAUSED: "Pausada",
+    SUSPENDED: "Suspensa",
+    DONE: "Concluída",
+    VALIDATED: "Validada",
+    CANCELED: "Cancelada",
+  };
+
+  return labels[status] ?? status;
+}
+
+function workOrderStatusClass(status: string) {
+  if (status === "VALIDATED") return "border-emerald-300/35 bg-emerald-300/10 text-emerald-200";
+  if (status === "DONE") return "border-teal-300/35 bg-teal-300/10 text-teal-200";
+  if (status === "IN_PROGRESS") return "border-blue-300/35 bg-blue-300/10 text-blue-200";
+  if (status === "PAUSED" || status === "SUSPENDED") return "border-amber-300/35 bg-amber-300/10 text-amber-200";
+  if (status === "CANCELED") return "border-rose-300/35 bg-rose-300/10 text-rose-200";
+  return "border-zinc-700 bg-zinc-900 text-zinc-300";
+}
+
+function durationLabel(seconds?: number | null) {
+  const safeSeconds = Math.max(Number(seconds ?? 0), 0);
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+
+  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
+}
+
 function dateInputValue(date: Date | null) {
   return date ? date.toISOString().slice(0, 10) : "";
 }
@@ -402,6 +443,17 @@ const bulkDl50Equipment = equipmentOptions
   })
   .sort((a, b) => (a.code ?? a.name).localeCompare(b.code ?? b.name, "pt-PT", { numeric: true }));
 
+  const programmedSchedules = equipment.maintenanceSchedules.filter(
+    (schedule) => schedule.status === "SCHEDULED" && !["DONE", "VALIDATED", "CANCELED"].includes(schedule.workOrder?.status ?? ""),
+  );
+  const completedWorkOrders = equipment.workOrders
+    .filter((workOrder) => ["DONE", "VALIDATED"].includes(workOrder.status))
+    .sort(
+      (a, b) =>
+        (b.validatedAt ?? b.closedAt ?? b.openedAt).getTime() -
+        (a.validatedAt ?? a.closedAt ?? a.openedAt).getTime(),
+    );
+
   const historyItems = [
     ...equipment.interventionLogs.map((item) => ({
       id: item.id,
@@ -506,6 +558,129 @@ const bulkDl50Equipment = equipmentOptions
     </p>
   </Panel>
 </section>
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <Panel>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-center gap-3">
+              <ClipboardCheck size={22} className="text-amber-300" />
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">OPs programadas</h2>
+                <p className="mt-1 text-sm text-zinc-500">Agendamentos ainda por executar neste equipamento.</p>
+              </div>
+            </div>
+            <span className="rounded-lg border border-amber-300/25 bg-amber-300/10 px-3 py-2 text-sm font-semibold text-amber-100">
+              {programmedSchedules.length}
+            </span>
+          </div>
+
+          <div className="mt-4 space-y-3">
+            {programmedSchedules.length === 0 ? (
+              <EmptyState title="Sem OPs programadas" description="Não há manutenções programadas por executar neste equipamento." />
+            ) : (
+              programmedSchedules.map((schedule) => (
+                <article key={schedule.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-300">
+                        {formatDate(schedule.scheduledAt)} · {frequencyLabel(schedule.frequency)}
+                      </p>
+                      <h3 className="mt-2 font-semibold text-zinc-100">{schedule.title}</h3>
+                      <p className="mt-1 text-sm text-zinc-500">
+                        {typeLabel(schedule.type)} · {scheduleStatusLabel(schedule.status)}
+                      </p>
+                    </div>
+                    <span className={`inline-flex w-fit rounded-lg border px-3 py-2 text-xs font-semibold ${workOrderStatusClass(schedule.workOrder?.status ?? "OPEN")}`}>
+                      {schedule.workOrder ? `${schedule.workOrder.number} · ${workOrderStatusLabel(schedule.workOrder.status)}` : "OP por abrir"}
+                    </span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <Link
+                      href={`/manutencao/${schedule.id}`}
+                      className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs font-semibold text-zinc-100 transition hover:border-amber-300/60"
+                    >
+                      <ExternalLink size={14} />
+                      Abrir
+                    </Link>
+                    {schedule.description && <p className="text-sm text-zinc-500">{schedule.description}</p>}
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        </Panel>
+
+        <Panel>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-center gap-3">
+              <History size={22} className="text-teal-300" />
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">OPs efetuadas</h2>
+                <p className="mt-1 text-sm text-zinc-500">Ordens de serviço concluídas ou validadas neste equipamento.</p>
+              </div>
+            </div>
+            <span className="rounded-lg border border-teal-300/25 bg-teal-300/10 px-3 py-2 text-sm font-semibold text-teal-100">
+              {completedWorkOrders.length}
+            </span>
+          </div>
+
+          <div className="mt-4 space-y-3">
+            {completedWorkOrders.length === 0 ? (
+              <EmptyState title="Sem OPs efetuadas" description="Quando forem concluídas ou validadas, as OPs deste equipamento aparecem aqui." />
+            ) : (
+              completedWorkOrders.map((workOrder) => (
+                <article key={workOrder.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-300">
+                        {workOrder.number} · {typeLabel(workOrder.type)}
+                      </p>
+                      <h3 className="mt-2 font-semibold text-zinc-100">{workOrder.title}</h3>
+                      <p className="mt-1 text-sm text-zinc-500">
+                        Fechada: {formatDate(workOrder.closedAt)} · Validada: {formatDate(workOrder.validatedAt)}
+                      </p>
+                    </div>
+                    <span className={`inline-flex w-fit rounded-lg border px-3 py-2 text-xs font-semibold ${workOrderStatusClass(workOrder.status)}`}>
+                      {workOrderStatusLabel(workOrder.status)}
+                    </span>
+                  </div>
+
+                  <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+                    <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
+                      <dt className="text-xs text-zinc-500">Tempo</dt>
+                      <dd className="mt-1 font-semibold text-zinc-100">{durationLabel(workOrder.totalWorkSeconds)}</dd>
+                    </div>
+                    <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
+                      <dt className="text-xs text-zinc-500">Custo</dt>
+                      <dd className="mt-1 font-semibold text-cyan-200">{formatCurrency(workOrder.maintenanceLog?.cost)}</dd>
+                    </div>
+                    <div className="rounded-lg border border-zinc-800 bg-black/20 p-3">
+                      <dt className="text-xs text-zinc-500">Resultado</dt>
+                      <dd className="mt-1 font-semibold text-zinc-100">{workOrder.result ?? "Sem resultado"}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    {workOrder.scheduleId && (
+                      <Link
+                        href={`/manutencao/${workOrder.scheduleId}`}
+                        className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs font-semibold text-zinc-100 transition hover:border-teal-300/60"
+                      >
+                        <ExternalLink size={14} />
+                        Abrir OP
+                      </Link>
+                    )}
+                    <p className="text-sm text-zinc-500">
+                      {workOrder.performedBy ? `Feito por ${workOrder.performedBy}` : "Sem responsável registado"}
+                      {workOrder.schedule?.scheduledAt ? ` · Agendada para ${formatDate(workOrder.schedule.scheduledAt)}` : ""}
+                    </p>
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        </Panel>
+      </section>
 
       <section className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
         <Panel>
