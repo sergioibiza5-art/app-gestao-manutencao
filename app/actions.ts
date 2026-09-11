@@ -1961,48 +1961,113 @@ function addMonthsClamped(date: Date, months: number, targetDay: number) {
   return next;
 }
 
-function generateMaintenanceDates(year: number, startDate: Date, frequency: TaskFrequency) {
-  const dates: Date[] = [];
-  const yearStart = new Date(year, 0, 1);
-  const yearEnd = new Date(year, 11, 31, 23, 59, 59);
-  const targetDay = startDate.getDate();
-  let cursor = startDate < yearStart ? yearStart : new Date(startDate);
-
+function nextMaintenanceDate(date: Date, frequency: TaskFrequency, targetDay = date.getDate()) {
   if (frequency === "DAILY") {
-    while (cursor <= yearEnd) {
-      dates.push(new Date(cursor));
-      cursor.setDate(cursor.getDate() + 1);
-    }
-    return dates;
+    const next = new Date(date);
+    next.setDate(next.getDate() + 1);
+    return next;
   }
 
   if (frequency === "WEEKLY") {
-    while (cursor <= yearEnd) {
-      dates.push(new Date(cursor));
-      cursor.setDate(cursor.getDate() + 7);
-    }
-    return dates;
+    const next = new Date(date);
+    next.setDate(next.getDate() + 7);
+    return next;
   }
 
-  const monthIntervals: Record<TaskFrequency, number> = {
-  DAILY: 0,
-  WEEKLY: 0,
-  MONTHLY: 1,
-  QUARTERLY: 3,
-  FOUR_MONTHLY: 4,
-  SEMIANNUAL: 6,
-  ANNUAL: 12,
-  BIENNIAL: 24,
-  FIVE_YEAR: 60,
-};
+  return addMonthsClamped(date, monthIntervals[frequency] || 1, targetDay);
+}
 
-  const interval = monthIntervals[frequency] || 1;
+function dateKey(date: Date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
+function dayBounds(date: Date) {
+  const start = new Date(date);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(date);
+  end.setHours(23, 59, 59, 999);
+
+  return { start, end };
+}
+
+function yearBounds(year: number) {
+  return {
+    start: new Date(year, 0, 1),
+    end: new Date(year, 11, 31, 23, 59, 59, 999),
+  };
+}
+
+function generateMaintenanceDates(year: number, startDate: Date, frequency: TaskFrequency) {
+  const dates: Date[] = [];
+  const { start: yearStart, end: yearEnd } = yearBounds(year);
+  const targetDay = startDate.getDate();
+  let cursor = new Date(startDate);
+
+  if (cursor > yearEnd) return dates;
+
+  while (cursor < yearStart) {
+    cursor = nextMaintenanceDate(cursor, frequency, targetDay);
+  }
+
   while (cursor <= yearEnd) {
     dates.push(new Date(cursor));
-    cursor = addMonthsClamped(cursor, interval, targetDay);
+    cursor = nextMaintenanceDate(cursor, frequency, targetDay);
   }
 
   return dates;
+}
+
+async function createNextMaintenanceSchedule(tx: Prisma.TransactionClient, scheduleId: string | null) {
+  if (!scheduleId) return;
+
+  const schedule = await tx.maintenanceSchedule.findUnique({ where: { id: scheduleId } });
+  if (!schedule || schedule.status === "CANCELED") return;
+
+  const recurringFrequencies: readonly TaskFrequency[] = [
+    "MONTHLY",
+    "QUARTERLY",
+    "FOUR_MONTHLY",
+    "SEMIANNUAL",
+    "ANNUAL",
+    "BIENNIAL",
+    "FIVE_YEAR",
+  ];
+  if (!recurringFrequencies.includes(schedule.frequency)) return;
+
+  const nextScheduledAt = nextMaintenanceDate(schedule.scheduledAt, schedule.frequency);
+  const { start, end } = dayBounds(nextScheduledAt);
+  const existing = await tx.maintenanceSchedule.findFirst({
+    where: {
+      equipmentId: schedule.equipmentId,
+      title: schedule.title,
+      type: schedule.type,
+      frequency: schedule.frequency,
+      status: { not: "CANCELED" },
+      scheduledAt: { gte: start, lte: end },
+    },
+    select: { id: true },
+  });
+
+  if (existing) return;
+
+  await tx.maintenanceSchedule.create({
+    data: {
+      title: schedule.title,
+      description: schedule.description,
+      type: schedule.type,
+      status: "SCHEDULED",
+      scheduledAt: nextScheduledAt,
+      frequency: schedule.frequency,
+      supplier: schedule.supplier,
+      costCenter: schedule.costCenter,
+      notes: schedule.notes,
+      equipmentId: schedule.equipmentId,
+    },
+  });
 }
 
 export async function createAnnualMaintenanceSchedule(formData: FormData) {
@@ -2015,15 +2080,39 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
   }
 
   const startDate = optionalDate(formData, "startDate") ?? new Date();
-  const year = startDate.getFullYear();
+  const requestedYear = intValue(formData, "targetYear");
+  const year = requestedYear >= 2000 && requestedYear <= 2100 ? requestedYear : startDate.getFullYear();
   const frequency = enumValue(formData, "frequency", taskFrequencies, "MONTHLY");
+  const title = text(formData, "title") || "Manutenção programada";
+  const type = enumValue(formData, "type", maintenanceTypes, "INTERNAL");
   const dates = generateMaintenanceDates(year, startDate, frequency);
+  const { start: yearStart, end: yearEnd } = yearBounds(year);
+  const existingSchedules = await prisma.maintenanceSchedule.findMany({
+    where: {
+      equipmentId,
+      title,
+      type,
+      frequency,
+      status: { not: "CANCELED" },
+      scheduledAt: { gte: yearStart, lte: yearEnd },
+    },
+    select: { scheduledAt: true },
+  });
+  const existingDates = new Set(existingSchedules.map((schedule) => dateKey(schedule.scheduledAt)));
+  const newDates = dates.filter((scheduledAt) => !existingDates.has(dateKey(scheduledAt)));
+
+  if (newDates.length === 0) {
+    revalidatePath("/");
+    revalidatePath("/manutencao");
+    revalidatePath(`/equipamentos/${equipmentId}`);
+    return;
+  }
 
   await prisma.maintenanceSchedule.createMany({
-    data: dates.map((scheduledAt) => ({
-      title: text(formData, "title") || "Manutenção programada",
+    data: newDates.map((scheduledAt) => ({
+      title,
       description: optionalText(formData, "description"),
-      type: enumValue(formData, "type", maintenanceTypes, "INTERNAL"),
+      type,
       scheduledAt,
       frequency,
       supplier: optionalText(formData, "supplier"),
@@ -2035,6 +2124,7 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath(`/equipamentos/${equipmentId}`);
 }
 
 export async function updateMaintenanceSchedule(formData: FormData) {
@@ -3649,6 +3739,7 @@ export async function completeWorkOrder(formData: FormData) {
         where: { id: workOrder.scheduleId },
         data: { status: "DONE" },
       });
+      await createNextMaintenanceSchedule(tx, workOrder.scheduleId);
     }
 
     await refreshEquipmentMaintenanceStatus(tx, equipmentId);
@@ -3682,6 +3773,8 @@ export async function validateWorkOrder(formData: FormData) {
         validatedAt: new Date(),
       },
     });
+
+    await createNextMaintenanceSchedule(tx, workOrder.scheduleId);
 
     await tx.equipment.update({
       where: { id: workOrder.equipmentId },

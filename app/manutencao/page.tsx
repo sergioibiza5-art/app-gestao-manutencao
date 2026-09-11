@@ -526,6 +526,15 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   </select>
 
                   <input name="startDate" type="date" required className={inputClass} />
+                  <input
+                    name="targetYear"
+                    type="number"
+                    min="2000"
+                    max="2100"
+                    className={inputClass}
+                    defaultValue={selectedMonthDate.getFullYear()}
+                    placeholder="Ano a agendar"
+                  />
                   <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
 
                   <select name="costCenter" className={inputClass} defaultValue="">
@@ -536,6 +545,10 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                       </option>
                     ))}
                   </select>
+
+                  <p className="rounded-lg border border-cyan-300/20 bg-cyan-300/5 px-3 py-2 text-xs leading-5 text-cyan-100 lg:col-span-2">
+                    A data inicial serve de referência. Ex.: 19/08/2026 semestral para 2027 cria fevereiro e agosto de 2027.
+                  </p>
 
                   <textarea name="description" className={`${textareaClass} min-h-11 lg:col-span-4`} placeholder="Descrição, critério SGQ ou instrução de trabalho" />
 
