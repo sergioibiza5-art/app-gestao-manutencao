@@ -247,6 +247,7 @@ const maintenanceScheduleStatuses = ["SCHEDULED", "DONE", "CANCELED"] as const s
 const vehicleFuels = ["GASOLINE", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"] as const satisfies readonly VehicleFuel[];
 const vehicleServiceTypes = ["MAINTENANCE", "REVISION", "INSPECTION", "COST"] as const satisfies readonly VehicleServiceType[];
 const dl50Answers = ["YES", "NO", "NA"] as const satisfies readonly Dl50Answer[];
+const dl50SummaryStatuses = ["DRAFT", "CONFORM", "NEEDS_ACTION"] as const satisfies readonly Dl50AssessmentStatus[];
 const dl50AnswerFields = [
   "ceMark",
   "manufacturerManual",
@@ -866,6 +867,7 @@ export async function createEquipment(formData: FormData) {
         isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
         regulatoryRequirements: text(formData, "regulatoryRequirements") === "true",
         regulatoryDetails: optionalText(formData, "regulatoryDetails"),
+        requiresDl50: text(formData, "requiresDl50") === "true",
         parentEquipmentId: optionalText(formData, "parentEquipmentId"),
         equipmentTypeId: optionalText(formData, "equipmentTypeId"),
         purchaseDate: optionalDate(formData, "purchaseDate"),
@@ -915,6 +917,7 @@ export async function updateEquipmentBasics(formData: FormData) {
         responsibleDepartment: optionalText(formData, "responsibleDepartment"),
         regulatoryRequirements: text(formData, "regulatoryRequirements") === "true",
         regulatoryDetails: optionalText(formData, "regulatoryDetails"),
+        requiresDl50: text(formData, "requiresDl50") === "true",
         isMeasurementMonitoring: text(formData, "isMeasurementMonitoring") === "true",
         parentEquipmentId: optionalText(formData, "parentEquipmentId") === equipmentId ? null : optionalText(formData, "parentEquipmentId"),
         equipmentTypeId: optionalText(formData, "equipmentTypeId"),
@@ -1035,6 +1038,126 @@ export async function attachDl50AssessmentToDocuments(formData: FormData) {
 
   revalidatePath("/documentos");
   revalidatePath(`/equipamentos/${equipmentId}`);
+}
+
+export async function saveEquipmentDl50Summary(formData: FormData) {
+  const user = await requireCanSgq();
+  const prisma = getPrisma();
+  const equipmentId = text(formData, "equipmentId");
+  if (!equipmentId) return;
+
+  const status = enumValue(formData, "status", dl50SummaryStatuses, "DRAFT");
+  const conclusion =
+    optionalText(formData, "conclusion") ??
+    (status === "CONFORM"
+      ? "Equipamento considerado conforme para DL50."
+      : status === "NEEDS_ACTION"
+        ? "Equipamento não conforme. Requer análise ou ação corretiva."
+        : "Equipamento em avaliação DL50.");
+  const generalComments = optionalText(formData, "generalComments");
+  const actionComments = optionalText(formData, "actionComments");
+  const evidenceComments = optionalText(formData, "evidenceComments");
+  const documentUrl = optionalText(formData, "documentUrl");
+  const documentTitle = optionalText(formData, "documentTitle");
+
+  await prisma.$transaction(async (tx) => {
+    const equipment = await tx.equipment.findUnique({
+      where: { id: equipmentId },
+      select: { id: true, name: true, code: true },
+    });
+    if (!equipment) return;
+
+    await tx.equipment.update({
+      where: { id: equipmentId },
+      data: { requiresDl50: true },
+    });
+
+    const current = await tx.equipmentDl50Assessment.findFirst({
+      where: { equipmentId, status: { not: "ARCHIVED" } },
+      orderBy: { version: "desc" },
+      select: { id: true, version: true, documentId: true },
+    });
+    const latestVersion = current
+      ? null
+      : await tx.equipmentDl50Assessment.aggregate({
+          where: { equipmentId },
+          _max: { version: true },
+        });
+
+    const assessment = current
+      ? await tx.equipmentDl50Assessment.update({
+          where: { id: current.id },
+          data: {
+            conclusion,
+            status,
+            article1Notes: generalComments,
+            article2Notes: actionComments,
+            article3Notes: evidenceComments,
+          },
+          select: { id: true, version: true, documentId: true },
+        })
+      : await tx.equipmentDl50Assessment.create({
+          data: {
+            equipmentId,
+            version: (latestVersion?._max.version ?? 0) + 1,
+            conclusion,
+            status,
+            article1Notes: generalComments,
+            article2Notes: actionComments,
+            article3Notes: evidenceComments,
+            createdById: user.id,
+          },
+          select: { id: true, version: true, documentId: true },
+        });
+
+    if (documentUrl) {
+      const title = documentTitle ?? `Documento DL50 - ${equipment.code ?? equipment.name}`;
+      const notes = [
+        conclusion,
+        generalComments ? `Comentários: ${generalComments}` : null,
+        actionComments ? `Ações / pendências: ${actionComments}` : null,
+        evidenceComments ? `Notas do documento: ${evidenceComments}` : null,
+      ].filter(Boolean).join("\n\n");
+
+      if (assessment.documentId) {
+        await tx.document.update({
+          where: { id: assessment.documentId },
+          data: {
+            title,
+            type: "DL50_ASSESSMENT",
+            fileUrl: documentUrl,
+            fileName: title,
+            notes,
+            equipmentId,
+            uploadedById: user.id,
+          },
+        });
+      } else {
+        const document = await tx.document.create({
+          data: {
+            title,
+            type: "DL50_ASSESSMENT",
+            fileUrl: documentUrl,
+            fileName: title,
+            notes,
+            equipmentId,
+            uploadedById: user.id,
+          },
+          select: { id: true },
+        });
+
+        await tx.equipmentDl50Assessment.update({
+          where: { id: assessment.id },
+          data: { documentId: document.id },
+        });
+      }
+    }
+  });
+
+  revalidatePath("/documentos");
+  revalidatePath("/equipamentos");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  redirect(`/equipamentos/${equipmentId}`);
 }
 
 export async function generateDl50Pdf(formData: FormData) {

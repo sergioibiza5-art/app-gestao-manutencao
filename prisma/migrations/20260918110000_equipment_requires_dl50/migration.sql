@@ -1,0 +1,1 @@
+ALTER TABLE "Equipment" ADD COLUMN "requiresDl50" BOOLEAN NOT NULL DEFAULT false;

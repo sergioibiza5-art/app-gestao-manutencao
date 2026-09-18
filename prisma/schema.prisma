@@ -210,6 +210,7 @@ model Equipment {
   isMeasurementMonitoring Boolean         @default(false)
   regulatoryRequirements  Boolean         @default(false)
   regulatoryDetails       String?
+  requiresDl50            Boolean         @default(false)
   parentEquipmentId       String?
   parentEquipment         Equipment?      @relation("EquipmentHierarchy", fields: [parentEquipmentId], references: [id], onDelete: SetNull)
   childEquipment          Equipment[]     @relation("EquipmentHierarchy")

@@ -391,6 +391,14 @@ const filteredEquipment = typedEquipment.filter((item) => {
 </select>
 
                 <label className="space-y-2 xl:col-span-1">
+                  <span className="text-sm font-medium text-zinc-300">DL50 aplicável?</span>
+                  <select name="requiresDl50" className={inputClass} defaultValue="false">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                  </select>
+                </label>
+
+                <label className="space-y-2 xl:col-span-1">
                   <span className="text-sm font-medium text-zinc-300">Requisitos regulamentares?</span>
                   <select name="regulatoryRequirements" className={inputClass}>
                     <option value="false">Não</option>
