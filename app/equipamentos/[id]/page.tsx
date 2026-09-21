@@ -431,10 +431,12 @@ const latestDl50Assessment = equipment.dl50Assessments.find((assessment) => asse
 const latestDl50Document =
   latestDl50Assessment?.document ??
   equipment.documents.find((document) => document.type === "DL50_ASSESSMENT" && document.fileUrl);
+  const isEquipmentOperational = !["INACTIVE", "DISCARDED"].includes(equipment.status);
 
-  const programmedSchedules = equipment.maintenanceSchedules.filter(
+  const programmedSchedules = isEquipmentOperational ? equipment.maintenanceSchedules.filter(
     (schedule) => schedule.status === "SCHEDULED" && !["DONE", "VALIDATED", "CANCELED"].includes(schedule.workOrder?.status ?? ""),
-  );
+  ) : [];
+  const visibleMaintenanceSchedules = isEquipmentOperational ? equipment.maintenanceSchedules : [];
   const completedWorkOrders = equipment.workOrders
     .filter((workOrder) => ["DONE", "VALIDATED"].includes(workOrder.status))
     .sort(
@@ -714,9 +716,9 @@ const latestDl50Document =
   </div>
 
   <div className="mt-4 space-y-4">
-    {equipment.maintenanceSchedules.length > 0 && (
+    {visibleMaintenanceSchedules.length > 0 && (
   <div className="grid gap-3 md:grid-cols-2">
-    {equipment.maintenanceSchedules.map((schedule) => (
+    {visibleMaintenanceSchedules.map((schedule) => (
           <article key={schedule.id} className="rounded-lg border border-zinc-800 bg-zinc-950/65 p-4">
   <div className="flex items-start justify-between gap-3">
     <div>
@@ -773,7 +775,7 @@ const latestDl50Document =
       </div>
     )}
 
-    {equipment.maintenanceSchedules.length === 0 &&
+    {visibleMaintenanceSchedules.length === 0 &&
  (!activeTemplate || activeTemplate.items.length === 0) && (
       <EmptyState
         title="Sem planos definidos"

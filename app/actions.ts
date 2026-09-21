@@ -2152,8 +2152,12 @@ function generateMaintenanceDates(year: number, startDate: Date, frequency: Task
 async function createNextMaintenanceSchedule(tx: Prisma.TransactionClient, scheduleId: string | null) {
   if (!scheduleId) return;
 
-  const schedule = await tx.maintenanceSchedule.findUnique({ where: { id: scheduleId } });
+  const schedule = await tx.maintenanceSchedule.findUnique({
+    where: { id: scheduleId },
+    include: { equipment: { select: { status: true } } },
+  });
   if (!schedule || schedule.status === "CANCELED") return;
+  if (["INACTIVE", "DISCARDED"].includes(schedule.equipment.status)) return;
 
   const recurringFrequencies: readonly TaskFrequency[] = [
     "MONTHLY",
@@ -2205,6 +2209,17 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
   const equipmentId = optionalText(formData, "equipmentId");
 
   if (!equipmentId) {
+    return;
+  }
+
+  const equipment = await prisma.equipment.findUnique({
+    where: { id: equipmentId },
+    select: { status: true },
+  });
+  if (!equipment || ["INACTIVE", "DISCARDED"].includes(equipment.status)) {
+    revalidatePath("/plano");
+    revalidatePath("/manutencao");
+    revalidatePath(`/equipamentos/${equipmentId}`);
     return;
   }
 
@@ -3356,6 +3371,9 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
   });
 
   if (!schedule) return;
+  if (["INACTIVE", "DISCARDED"].includes(schedule.equipment.status)) {
+    redirect(`/manutencao/${schedule.id}`);
+  }
   if (schedule.workOrder) redirect(`/manutencao/${schedule.id}`);
 
   const workOrder = await prisma.workOrder.create({

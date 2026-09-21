@@ -100,6 +100,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
           where: {
             status: "SCHEDULED",
             scheduledAt: { gte: todayStart, lte: todayEnd },
+            equipment: { status: { notIn: ["INACTIVE", "DISCARDED"] } },
           },
         }),
         prisma.maintenanceTicket.findMany({
@@ -117,6 +118,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         prisma.maintenanceSchedule.findMany({
           where: {
             status: "SCHEDULED",
+            equipment: { status: { notIn: ["INACTIVE", "DISCARDED"] } },
             OR: [
               { scheduledAt: { gte: range.start, lte: range.end } },
               { scheduledAt: { lt: range.start } },
@@ -1157,7 +1159,7 @@ const equipmentId =
       const [equipment, maintenanceLogs, schedules, consumables, users] = await Promise.all([
         prisma.equipment.findMany({
   where: {
-    status: { not: "DISCARDED" },
+    status: { notIn: ["INACTIVE", "DISCARDED"] },
   },
   orderBy: [
     { name: "asc" },
@@ -1167,6 +1169,7 @@ const equipmentId =
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
         prisma.maintenanceSchedule.findMany({
           where: {
+  equipment: { status: { notIn: ["INACTIVE", "DISCARDED"] } },
   OR: [
     { scheduledAt: { gte: start, lte: end } },
     { scheduledAt: { lt: start }, status: "SCHEDULED" },

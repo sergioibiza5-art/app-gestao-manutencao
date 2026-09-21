@@ -115,6 +115,7 @@ export async function buildDailyPlanData(
       where: {
         status: "SCHEDULED",
         scheduledAt: { lte: end },
+        equipment: { status: { notIn: ["INACTIVE", "DISCARDED"] } },
         OR: [
           { workOrder: { is: null } },
           { workOrder: { is: { status: { in: [...activeWorkOrderStatuses] } } } },
