@@ -23,6 +23,9 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
     redirect("/calibracao");
   }
   const userAllowedNavigation = ["/plano", "/tickets", "/equipamentos", "/localizacoes", "/checklists"];
+  if (user.role === "USER" && !userAllowedNavigation.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
+    redirect("/plano");
+  }
   const visibleNavigation = user.role === "TICKET"
     ? navigation.filter((item) => item.href === "/tickets")
     : user.role === "SGQ"
@@ -32,12 +35,13 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
     : ["ADMIN", "MANAGER"].includes(user.role)
     ? navigation
     : navigation.filter((item) => item.href !== "/ferias");
+  const homeHref = user.role === "USER" ? "/plano" : "/";
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.10),transparent_25%),#070807]">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <header className="glass-panel sticky top-3 z-30 flex items-center justify-between gap-3 rounded-lg px-3 py-3">
-          <Link href="/" className="flex min-w-0 items-center gap-3">
+          <Link href={homeHref} className="flex min-w-0 items-center gap-3">
             <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-teal-400 text-zinc-950">
               <HomeIcon size={22} strokeWidth={2.4} />
             </span>
