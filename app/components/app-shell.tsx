@@ -22,10 +22,13 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   if (user.role === "SGQ" && !sgqAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/calibracao");
   }
+  const userAllowedNavigation = ["/plano", "/tickets", "/equipamentos", "/localizacoes", "/checklists"];
   const visibleNavigation = user.role === "TICKET"
     ? navigation.filter((item) => item.href === "/tickets")
     : user.role === "SGQ"
     ? navigation.filter((item) => sgqAllowed.includes(item.href))
+    : user.role === "USER"
+    ? navigation.filter((item) => userAllowedNavigation.includes(item.href))
     : ["ADMIN", "MANAGER"].includes(user.role)
     ? navigation
     : navigation.filter((item) => item.href !== "/ferias");
