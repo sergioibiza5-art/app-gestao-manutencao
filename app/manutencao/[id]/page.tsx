@@ -1,11 +1,12 @@
 ﻿import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
 
 import { cancelWorkOrderOpening, completeWorkOrder, createWorkOrderFromSchedule, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, updateWorkOrderTiming, validateWorkOrder } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
+import { requireUser } from "@/lib/auth";
 import { getMaintenanceScheduleDetail } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { formatLisbonDateTimeInput } from "@/lib/lisbon-time";
@@ -55,12 +56,23 @@ function dateTimeInputValue(date: Date | null) {
 
 export default async function MaintenanceSchedulePage({ params }: MaintenanceSchedulePageProps) {
   const { id } = await params;
-  const schedule = await getMaintenanceScheduleDetail(id);
+  const [user, schedule] = await Promise.all([
+    requireUser(),
+    getMaintenanceScheduleDetail(id),
+  ]);
 
   if (!schedule) {
     notFound();
   }
 
+  const isUser = user.role === "USER";
+  if (isUser && schedule.assignedToId !== user.id) {
+    redirect("/plano");
+  }
+
+  const shellHref = isUser ? "/plano" : "/manutencao";
+  const backHref = isUser ? "/plano" : "/manutencao";
+  const backLabel = isUser ? "Plano do dia" : "Manutenção";
   const workOrder = schedule.workOrder;
   const template = workOrder?.template ?? schedule.equipment.equipmentType?.checklistTemplates[0];
   const canFillChecklist = workOrder && ["OPEN", "IN_PROGRESS", "PAUSED"].includes(workOrder.status) && template;
@@ -77,15 +89,15 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
   const workOrderDurationMinutes = workOrder ? Math.floor((Math.max(workOrder.totalWorkSeconds, 0) % 3600) / 60) : 0;
 
   return (
-    <AppShell activeHref="/manutencao">
+    <AppShell activeHref={shellHref}>
       <PageHeader
         eyebrow="Agendamento"
         title={schedule.title}
         description={`${schedule.equipment.name} - ${typeLabel(schedule.type)} - ${formatDate(schedule.scheduledAt)} - ${scheduleStatusLabel(schedule.status)}`}
         action={
-          <Link href="/manutencao" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+          <Link href={backHref} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
             <ArrowLeft size={17} />
-            Manutenção
+            {backLabel}
           </Link>
         }
       />
