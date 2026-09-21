@@ -793,10 +793,12 @@ export async function createTask(formData: FormData) {
       nextDue: optionalDate(formData, "nextDue"),
       createdById: user.id,
       equipmentId,
+      assignedToId: optionalText(formData, "assignedToId"),
     },
   });
 
   revalidatePath("/");
+  revalidatePath("/plano");
   revalidatePath("/tarefas");
 }
 
@@ -821,10 +823,12 @@ export async function updateTask(formData: FormData) {
       dueDate,
       dueTime: optionalText(formData, "dueTime"),
       equipmentId: optionalText(formData, "equipmentId"),
+      assignedToId: optionalText(formData, "assignedToId"),
     },
   });
 
   revalidatePath("/");
+  revalidatePath("/plano");
   revalidatePath("/tarefas");
 }
 
@@ -836,6 +840,7 @@ export async function deleteTask(formData: FormData) {
 
   await prisma.task.delete({ where: { id } });
   revalidatePath("/");
+  revalidatePath("/plano");
   revalidatePath("/tarefas");
 }
 
@@ -2189,6 +2194,7 @@ async function createNextMaintenanceSchedule(tx: Prisma.TransactionClient, sched
       costCenter: schedule.costCenter,
       notes: schedule.notes,
       equipmentId: schedule.equipmentId,
+      assignedToId: schedule.assignedToId,
     },
   });
 }
@@ -2242,10 +2248,12 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
       costCenter: optionalText(formData, "costCenter"),
       notes: optionalText(formData, "notes"),
       equipmentId,
+      assignedToId: optionalText(formData, "assignedToId"),
     })),
   });
 
   revalidatePath("/");
+  revalidatePath("/plano");
   revalidatePath("/manutencao");
   revalidatePath(`/equipamentos/${equipmentId}`);
 }
@@ -2273,10 +2281,12 @@ export async function updateMaintenanceSchedule(formData: FormData) {
       supplier: optionalText(formData, "supplier"),
       costCenter: optionalText(formData, "costCenter"),
       notes: optionalText(formData, "notes"),
+      assignedToId: optionalText(formData, "assignedToId"),
     },
   });
 
   revalidatePath("/");
+  revalidatePath("/plano");
   revalidatePath("/manutencao");
 }
 
@@ -2291,6 +2301,7 @@ export async function deleteMaintenanceSchedule(formData: FormData) {
 
   await prisma.maintenanceSchedule.delete({ where: { id } });
   revalidatePath("/");
+  revalidatePath("/plano");
   revalidatePath("/manutencao");
 }
 
@@ -2672,6 +2683,7 @@ export async function createMaintenanceTicket(formData: FormData) {
 
   if (recentDuplicate) {
     revalidatePath("/tickets");
+    revalidatePath("/plano");
     redirect("/tickets?created=duplicate");
   }
 
@@ -2735,10 +2747,6 @@ telegramChatIds: timedRecipients
   );
 
   if (notificationData.recipientIds.length > 0) {
-
-console.log("RECIPIENT IDS:", notificationData.recipientIds);
-console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
-
     await runNotificationTask(sendTelegramMessage(
       [
         "🚨 <b>Novo ticket de manutenção</b>",
@@ -2754,6 +2762,7 @@ console.log("TELEGRAM IDS:", notificationData.telegramChatIds);
   }
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/");
   redirect("/tickets?created=1");
 }
@@ -2800,6 +2809,7 @@ export async function resolveOwnMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/");
   redirect("/tickets?resolved=1");
 }
@@ -2813,6 +2823,7 @@ export async function deleteMaintenanceTicket(formData: FormData) {
   await prisma.maintenanceTicket.deleteMany({ where: { id } });
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/");
   revalidatePath("/inventario");
   redirect("/tickets?deleted=1");
@@ -2843,6 +2854,7 @@ export async function startMaintenanceTicket(formData: FormData) {
     await markTicketNotificationsRead(tx, ticket.number);
   });
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/inventario");
 }
 
@@ -2869,6 +2881,7 @@ export async function pauseMaintenanceTicket(formData: FormData) {
     });
   });
   revalidatePath("/tickets");
+  revalidatePath("/plano");
 }
 
 export async function suspendMaintenanceTicket(formData: FormData) {
@@ -2899,6 +2912,7 @@ export async function suspendMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
 }
 
 export async function reopenMaintenanceTicket(formData: FormData) {
@@ -2942,6 +2956,7 @@ export async function reopenMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/manutencao");
   revalidatePath("/");
 }
@@ -3071,6 +3086,7 @@ export async function updateMaintenanceTicketTiming(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/manutencao");
   revalidatePath("/inventario");
   revalidatePath("/equipamentos");
@@ -3132,6 +3148,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
 }
 
 export async function validateMaintenanceTicket(formData: FormData) {
@@ -3226,6 +3243,7 @@ export async function validateMaintenanceTicket(formData: FormData) {
     });
 
     revalidatePath("/tickets");
+    revalidatePath("/plano");
     revalidatePath("/manutencao");
     revalidatePath("/inventario");
     revalidatePath(`/equipamentos/${ticket.equipmentId}`);
@@ -3304,6 +3322,7 @@ export async function validateMaintenanceTicket(formData: FormData) {
   });
 
   revalidatePath("/tickets");
+  revalidatePath("/plano");
   revalidatePath("/manutencao");
   revalidatePath("/inventario");
   revalidatePath(`/equipamentos/${ticket.equipmentId}`);

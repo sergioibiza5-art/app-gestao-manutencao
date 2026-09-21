@@ -245,12 +245,13 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
   if (annualCalendar) returnParams.set("calendar", "year");
   const maintenanceReturnPath = `/manutencao?${returnParams}`;
 
-  const { equipment, maintenanceLogs, schedules, consumables, range } = await getMaintenanceData({
+  const { equipment, maintenanceLogs, schedules, consumables, users, range } = await getMaintenanceData({
     view: dataView,
     date: selectedDate,
     type: selectedType,
     equipmentId: selectedEquipmentId,
   });
+  const assignableUsers = users.filter((item) => ["ADMIN", "MANAGER", "USER"].includes(item.role));
   const prioritySchedules = selectedView === "month" ? schedules.filter(isOverdueOrTodaySchedule) : [];
   const priorityScheduleIds = new Set(prioritySchedules.map((schedule) => schedule.id));
   const regularSchedules = selectedView === "month" ? schedules.filter((schedule) => !priorityScheduleIds.has(schedule.id)) : schedules;
@@ -536,6 +537,15 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                     placeholder="Ano a agendar"
                   />
                   <input name="supplier" className={inputClass} placeholder="Fornecedor / equipa" />
+
+                  <select name="assignedToId" className={inputClass} defaultValue="">
+                    <option value="">Sem responsável definido</option>
+                    {assignableUsers.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
 
                   <select name="costCenter" className={inputClass} defaultValue="">
                     <option value="">Tipo de manutenção</option>
@@ -899,6 +909,10 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                               ) : (
                                 <span className="rounded-md border border-zinc-800 px-2 py-1">Sem OP criada</span>
                               )}
+
+                              <span className="rounded-md border border-zinc-800 px-2 py-1">
+                                Responsável: {schedule.assignedTo?.name ?? "sem responsável"}
+                              </span>
                             </div>
 
                             <div className="mt-3 flex flex-wrap gap-2">
@@ -956,6 +970,16 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                               </select>
 
                               <input name="supplier" className={inputClass} defaultValue={schedule.supplier ?? ""} placeholder="Fornecedor" />
+
+                              <select name="assignedToId" className={inputClass} defaultValue={schedule.assignedToId ?? ""}>
+                                <option value="">Sem responsável</option>
+                                {assignableUsers.map((item) => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                ))}
+                              </select>
+
                               <input name="costCenter" className={inputClass} defaultValue={schedule.costCenter ?? ""} placeholder="Centro de custos" />
 
                               <textarea

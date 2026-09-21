@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  CalendarCheck,
   Car,
   ClipboardCheck,
   Activity,
@@ -20,6 +21,7 @@ import {
 
 export const navigation = [
   { name: "Dashboard", href: "/", meta: "Visão diária", icon: LayoutDashboard, color: "bg-teal-400/15 text-teal-200" },
+  { name: "Plano do dia", href: "/plano", meta: "Fila por pessoa", icon: CalendarCheck, color: "bg-cyan-400/15 text-cyan-200" },
   { name: "Tickets", href: "/tickets", meta: "Avarias e tempos", icon: Siren, color: "bg-red-400/15 text-red-200" },
   { name: "Manutenção", href: "/manutencao", meta: "Ativos e infraestrutura", icon: Wrench, color: "bg-cyan-400/15 text-cyan-200" },
   { name: "Tarefas", href: "/tarefas", meta: "Recorrencias", icon: ClipboardCheck, color: "bg-teal-400/15 text-teal-200" },

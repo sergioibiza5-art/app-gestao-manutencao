@@ -580,7 +580,7 @@ export async function getModuleData() {
       ] = await Promise.all([
         prisma.expense.findMany({ orderBy: { date: "desc" }, include: { equipment: true, vehicle: true, documents: true } }),
         prisma.monthlyBill.findMany({ orderBy: { name: "asc" }, take: 50 }),
-        prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true } }),
+        prisma.task.findMany({ orderBy: [{ status: "asc" }, { dueDate: "asc" }], take: 80, include: { equipment: true, assignedTo: true } }),
         prisma.equipment.findMany({
           orderBy: { name: "asc" },
           include: {
@@ -1154,7 +1154,7 @@ const equipmentId =
     : undefined;
   return readDb(
     async (prisma) => {
-      const [equipment, maintenanceLogs, schedules, consumables] = await Promise.all([
+      const [equipment, maintenanceLogs, schedules, consumables, users] = await Promise.all([
         prisma.equipment.findMany({
   where: {
     status: { not: "DISCARDED" },
@@ -1175,14 +1175,18 @@ const equipmentId =
   ...(equipmentId ? { equipmentId } : {}),
           },
           orderBy: { scheduledAt: "asc" },
-          include: { equipment: true, workOrder: true },
+          include: { equipment: true, workOrder: true, assignedTo: true },
         }),
         prisma.consumable.findMany({ orderBy: { name: "asc" } }),
+        prisma.user.findMany({
+          where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
+          orderBy: { name: "asc" },
+        }),
       ]);
 
-      return { equipment, maintenanceLogs, schedules, consumables, range: { start, end }, view, type };
+      return { equipment, maintenanceLogs, schedules, consumables, users, range: { start, end }, view, type };
     },
-    { equipment: [], maintenanceLogs: [], schedules: [], consumables: [], range: { start, end }, view, type },
+    { equipment: [], maintenanceLogs: [], schedules: [], consumables: [], users: [], range: { start, end }, view, type },
   );
 }
 
@@ -1206,6 +1210,7 @@ export async function getMaintenanceScheduleDetail(id: string) {
               },
             },
           },
+          assignedTo: true,
           workOrder: {
             include: {
               template: { include: { items: { where: { active: true }, orderBy: { order: "asc" } } } },

@@ -173,6 +173,8 @@ model User {
   ticketEquipmentAccess  TicketEquipmentAccess[]
   notifications          Notification[]
   pushSubscriptions      PushSubscription[]
+  assignedSchedules      MaintenanceSchedule[]     @relation("MaintenanceScheduleAssignedTo")
+  alertDigestDeliveries  AlertDigestDelivery[]
   consumableMovements    ConsumableMovement[]
   vacations              Vacation[]
   dl50AssessmentsCreated EquipmentDl50Assessment[]
@@ -701,6 +703,9 @@ model MaintenanceSchedule {
   equipmentId String
   equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
 
+  assignedToId String?
+  assignedTo   User?   @relation("MaintenanceScheduleAssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+
   workOrder WorkOrder?
 
   createdAt DateTime @default(now())
@@ -709,6 +714,7 @@ model MaintenanceSchedule {
   @@index([scheduledAt])
   @@index([type])
   @@index([status])
+  @@index([assignedToId])
 }
 
 model WorkOrder {
@@ -937,6 +943,22 @@ model Notification {
 
   @@index([userId, readAt])
   @@index([createdAt])
+}
+
+model AlertDigestDelivery {
+  id         String   @id @default(cuid())
+  digestDate String
+  channel    String
+  subject    String?
+  sentAt     DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, digestDate, channel])
+  @@index([sentAt])
 }
 
 model PushSubscription {

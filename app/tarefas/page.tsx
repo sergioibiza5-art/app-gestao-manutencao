@@ -65,7 +65,8 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const params = (await searchParams) ?? {};
   const selectedTaskId = params.taskId ?? "";
 
-  const { tasks, equipment } = await getModuleData();
+  const { tasks, equipment, users } = await getModuleData();
+  const assignableUsers = users.filter((item) => ["ADMIN", "MANAGER", "USER"].includes(item.role));
   const newTaskAction = (
     <DetailsOpenButton targetId="nova-tarefa" className={buttonClass}>
       <Plus size={18} />
@@ -99,6 +100,15 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
           <select name="equipmentId" className={inputClass}>
             <option value="">Sem equipamento</option>
             {equipment.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+
+          <select name="assignedToId" className={inputClass} defaultValue="">
+            <option value="">Sem responsável definido</option>
+            {assignableUsers.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
@@ -159,6 +169,9 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
                         <p className="mt-1 text-sm text-zinc-500">
                           {task.equipment?.name ?? (task.isRecurring ? task.frequency : "Pontual")}
                         </p>
+                        <p className="mt-1 text-xs text-zinc-600">
+                          Responsável: {task.assignedTo?.name ?? "sem responsável"}
+                        </p>
                       </div>
 
                       <div className="text-left sm:text-right">
@@ -207,6 +220,15 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
                       <select name="equipmentId" className={inputClass} defaultValue={task.equipmentId ?? ""}>
                         <option value="">Sem equipamento</option>
                         {equipment.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+
+                      <select name="assignedToId" className={inputClass} defaultValue={task.assignedToId ?? ""}>
+                        <option value="">Sem responsável</option>
+                        {assignableUsers.map((item) => (
                           <option key={item.id} value={item.id}>
                             {item.name}
                           </option>
