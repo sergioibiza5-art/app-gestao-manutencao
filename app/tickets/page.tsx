@@ -10,6 +10,7 @@ import {
   resolveOwnMaintenanceTicket,
   startMaintenanceTicket,
   suspendMaintenanceTicket,
+  updateMaintenanceTicketAssignee,
   updateMaintenanceTicketTiming,
   validateMaintenanceTicket,
 } from "@/app/actions";
@@ -491,10 +492,23 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
                         Aberto por:{" "}
                         <strong className="text-zinc-100">{ticket.openedBy?.name ?? "Sistema"}</strong>
                       </p>
-                      <p>
-                        Responsável:{" "}
-                        <strong className="text-zinc-100">{ticket.assignedTo?.name ?? "Sem registo"}</strong>
-                      </p>
+                      <form action={updateMaintenanceTicketAssignee} className="grid gap-2 md:grid-cols-[1fr_auto] md:items-end">
+                        <input type="hidden" name="id" value={ticket.id} />
+                        <label className="grid gap-1">
+                          <span>Responsável</span>
+                          <select name="assignedToId" className={inputClass} defaultValue={ticket.assignedToId ?? ""}>
+                            <option value="">Sem responsável definido</option>
+                            {data.users.map((item) => (
+                              <option key={item.id} value={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                        <button className="inline-flex h-11 items-center justify-center rounded-lg border border-teal-300/40 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100">
+                          Atribuir
+                        </button>
+                      </form>
                     </div>
 
                     {ticket.workOrder ? (

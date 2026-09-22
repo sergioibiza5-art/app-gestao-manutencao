@@ -18,7 +18,7 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   if (user.role === "TICKET" && activeHref !== "/tickets") {
     redirect("/tickets");
   }
-  const sgqAllowed = ["/calibracao", "/equipamentos", "/analises", "/kpis"];
+  const sgqAllowed = ["/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis"];
   if (user.role === "SGQ" && !sgqAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/calibracao");
   }

@@ -2830,6 +2830,85 @@ export async function deleteMaintenanceTicket(formData: FormData) {
   redirect("/tickets?deleted=1");
 }
 
+export async function updateMaintenanceTicketAssignee(formData: FormData) {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const id = text(formData, "id");
+  const assignedToId = optionalText(formData, "assignedToId");
+  if (!id) return;
+
+  const ticket = await prisma.maintenanceTicket.findUnique({
+    where: { id },
+    include: { equipment: true },
+  });
+  if (!ticket) return;
+
+  const assignedUser = assignedToId
+    ? await prisma.user.findFirst({
+        where: { id: assignedToId, active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
+        select: {
+          id: true,
+          name: true,
+          notifyStartTime: true,
+          notifyEndTime: true,
+          notifyDays: true,
+          telegramChatId: true,
+          telegramEnabled: true,
+        },
+      })
+    : null;
+
+  await prisma.maintenanceTicket.update({
+    where: { id },
+    data: { assignedToId: assignedUser?.id ?? null },
+  });
+
+  if (assignedUser && isImmediateTicketPriority(ticket.priority)) {
+    const title = `Ticket atribuído ${ticket.number}`;
+    const body = `${ticketPriorityLabel(ticket.priority)} - ${ticket.equipment.name}: ${ticket.title}`;
+
+    await prisma.notification.create({
+      data: {
+        userId: assignedUser.id,
+        title,
+        body,
+        href: "/tickets",
+      },
+    });
+
+    if (canReceiveTimedAlerts(assignedUser)) {
+      await runNotificationTask(
+        sendPushNotifications([assignedUser.id], {
+          title,
+          body,
+          url: "/tickets",
+          tag: `ticket-${ticket.number}-assigned`,
+        }),
+        "Notificacao push da atribuicao do ticket",
+      );
+
+      if (assignedUser.telegramEnabled !== false && assignedUser.telegramChatId) {
+        await runNotificationTask(sendTelegramMessage(
+          [
+            "🚨 <b>Ticket atribuído</b>",
+            "",
+            `<b>Urgência:</b> ${ticketPriorityLabel(ticket.priority)}`,
+            `<b>Título:</b> ${ticket.number} - ${ticket.title}`,
+            `<b>Equipamento:</b> ${ticket.equipment.name}`,
+            `<b>Responsável:</b> ${assignedUser.name}`,
+            "",
+            "<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets",
+          ].join("\n"),
+          [assignedUser.telegramChatId],
+        ), "Telegram da atribuicao do ticket");
+      }
+    }
+  }
+
+  revalidatePath("/tickets");
+  revalidatePath("/plano");
+}
+
 export async function startMaintenanceTicket(formData: FormData) {
   const user = await requireCanWrite();
   const prisma = getPrisma();
@@ -4404,7 +4483,7 @@ export async function deleteVacation(formData: FormData) {
 }
 
 export async function importEnvironmentalReport(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const files = [
     ...formData.getAll("files"),
     ...formData.getAll("file"),
@@ -4479,7 +4558,7 @@ function validParsedEnvironmentalReading(reading: ParsedEnvironmentalReadingPayl
 }
 
 export async function importEnvironmentalParsedReports(reports: ParsedEnvironmentalReportPayload[]) {
-  await requireCanManage();
+  await requireCanSgq();
 
   let imported = 0;
   let duplicates = 0;
@@ -4546,7 +4625,7 @@ export async function importEnvironmentalParsedReports(reports: ParsedEnvironmen
 }
 
 export async function syncEnvironmentalFolder() {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const settings = await prisma.environmentalSettings.findUnique({ where: { id: "default" } });
   const sharePointFolder = settings?.sharePointFolderUrl || process.env.SHAREPOINT_FOLDER_URL || process.env.ONEDRIVE_FOLDER_URL;
@@ -4577,7 +4656,7 @@ export async function syncEnvironmentalFolder() {
 }
 
 export async function deleteEnvironmentalImport(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
 
   const prisma = getPrisma();
   const id = text(formData, "id");
@@ -4596,7 +4675,7 @@ export async function deleteEnvironmentalImport(formData: FormData) {
 }
 
 export async function updateEnvironmentalSettings(formData: FormData) {
-  await requireCanManage();
+  await requireCanSgq();
   const prisma = getPrisma();
   const existing = await prisma.environmentalSettings.findUnique({ where: { id: "default" } });
   const alertStartTime = text(formData, "alertStartTime") || existing?.alertStartTime || "06:00";
