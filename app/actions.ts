@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
+import { absoluteUrl, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
 import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
 import { importEnvironmentalWorkbook, saveEnvironmentalImport } from "@/lib/environmental-import";
 import { importMicrosoftEnvironmentalReports } from "@/lib/environmental-microsoft-drive";
@@ -2414,6 +2415,66 @@ function isImmediateTicketPriority(priority: string) {
   return priority === "HIGH" || priority === "CRITICAL";
 }
 
+function escapeEmailHtml(value: unknown) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function renderTicketAlertEmail(input: {
+  heading: string;
+  intro: string;
+  ticketNumber: string;
+  priorityLabel: string;
+  title: string;
+  equipmentName: string;
+  problem: string;
+  location?: string | null;
+  openedByName?: string | null;
+  assignedToName?: string | null;
+  machineStopped?: boolean | null;
+}) {
+  const rows = [
+    ["Ticket", input.ticketNumber],
+    ["Urgência", input.priorityLabel],
+    ["Equipamento", input.equipmentName],
+    ["Localização", input.location || "Sem localização"],
+    ["Aberto por", input.openedByName || "Sistema"],
+    ["Responsável", input.assignedToName || "Sem responsável"],
+    ["Paragem da máquina", input.machineStopped ? "Sim" : "Não"],
+  ];
+
+  return `
+    <div style="margin:0;background:#f6f8fb;padding:28px;font-family:Arial,Helvetica,sans-serif;color:#111827">
+      <div style="max-width:720px;margin:0 auto;background:#ffffff;border:1px solid #dbe4ea;border-radius:12px;padding:28px">
+        <p style="margin:0 0 8px;color:#b91c1c;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">Gestão de manutenção</p>
+        <h1 style="margin:0 0 10px;font-size:26px;line-height:1.2;color:#111827">${escapeEmailHtml(input.heading)}</h1>
+        <p style="margin:0 0 22px;color:#475569;line-height:1.6">${escapeEmailHtml(input.intro)}</p>
+        <h2 style="margin:0 0 8px;font-size:18px;color:#111827">${escapeEmailHtml(input.title)}</h2>
+        <p style="margin:0 0 22px;color:#475569;line-height:1.6">${escapeEmailHtml(input.problem)}</p>
+        <table style="width:100%;border-collapse:collapse;border:1px solid #dbe4ea;margin-bottom:24px">
+          <tbody>
+            ${rows.map(([label, value]) => `
+              <tr>
+                <td style="padding:10px 12px;border-bottom:1px solid #e5edf2;color:#64748b;width:170px">${escapeEmailHtml(label)}</td>
+                <td style="padding:10px 12px;border-bottom:1px solid #e5edf2;font-weight:700;color:#111827">${escapeEmailHtml(value)}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        <a href="${escapeEmailHtml(absoluteUrl("/tickets"))}" style="display:inline-block;background:#0f766e;color:#ffffff;text-decoration:none;font-weight:700;border-radius:8px;padding:12px 18px">Abrir tickets</a>
+      </div>
+    </div>
+  `;
+}
+
+async function sendTicketAlertEmails(recipients: string[], subject: string, html: string) {
+  const uniqueRecipients = [...new Set(recipients.map((email) => email.trim().toLowerCase()).filter(isDeliverableEmail))];
+  await Promise.all(uniqueRecipients.map((email) => sendResendEmail(email, subject, html)));
+}
+
 async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketNumber: string) {
   await tx.notification.updateMany({
     where: { title: `Novo ticket ${ticketNumber}`, readAt: null },
@@ -2669,7 +2730,7 @@ export async function createMaintenanceTicket(formData: FormData) {
     const assignedUser = requestedAssignedToId
       ? await tx.user.findFirst({
           where: { id: requestedAssignedToId, active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
-          select: { id: true },
+          select: { id: true, name: true, email: true },
         })
       : null;
     const ticket = await tx.maintenanceTicket.create({
@@ -2690,6 +2751,8 @@ export async function createMaintenanceTicket(formData: FormData) {
       where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
       select: {
         id: true,
+        name: true,
+        email: true,
         role: true,
         notifyStartTime: true,
         notifyEndTime: true,
@@ -2731,6 +2794,21 @@ export async function createMaintenanceTicket(formData: FormData) {
       url: "/tickets",
       tag: `ticket-${ticket.number}`,
       priorityLabel: ticketPriorityLabel(ticket.priority),
+      emailRecipients: (ticket.priority === "CRITICAL" ? immediateRecipients : timedRecipients).map((recipient) => recipient.email),
+      emailSubject: `${ticket.priority === "CRITICAL" ? "Ticket crítico" : "Ticket urgente"} ${ticket.number} - ${ticket.title}`,
+      emailHtml: renderTicketAlertEmail({
+        heading: ticket.priority === "CRITICAL" ? `Ticket crítico ${ticket.number}` : `Ticket urgente ${ticket.number}`,
+        intro: "Foi aberto um ticket que requer atenção imediata.",
+        ticketNumber: ticket.number,
+        priorityLabel: ticketPriorityLabel(ticket.priority),
+        title: ticket.title,
+        equipmentName: equipment.name,
+        problem: ticket.problem,
+        location: ticket.location,
+        openedByName: user.name,
+        assignedToName: assignedUser?.name,
+        machineStopped: ticket.machineStopped,
+      }),
     };
   });
 
@@ -2743,6 +2821,11 @@ export async function createMaintenanceTicket(formData: FormData) {
         tag: notificationData.tag,
       }),
       "Notificacao push do ticket",
+    );
+
+    await runNotificationTask(
+      sendTicketAlertEmails(notificationData.emailRecipients, notificationData.emailSubject, notificationData.emailHtml),
+      "Email do ticket",
     );
   }
 
@@ -2839,7 +2922,7 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
 
   const ticket = await prisma.maintenanceTicket.findUnique({
     where: { id },
-    include: { equipment: true },
+    include: { equipment: true, openedBy: { select: { name: true } } },
   });
   if (!ticket) return;
 
@@ -2849,6 +2932,7 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
         select: {
           id: true,
           name: true,
+          email: true,
           notifyStartTime: true,
           notifyEndTime: true,
           notifyDays: true,
@@ -2866,6 +2950,7 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
   if (assignedUser && isImmediateTicketPriority(ticket.priority)) {
     const title = `Ticket atribuído ${ticket.number}`;
     const body = `${ticketPriorityLabel(ticket.priority)} - ${ticket.equipment.name}: ${ticket.title}`;
+    const canReceiveNow = canReceiveTimedAlerts(assignedUser);
 
     await prisma.notification.create({
       data: {
@@ -2876,7 +2961,30 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
       },
     });
 
-    if (canReceiveTimedAlerts(assignedUser)) {
+    if (ticket.priority === "CRITICAL" || canReceiveNow) {
+      await runNotificationTask(
+        sendTicketAlertEmails(
+          [assignedUser.email],
+          `${ticket.priority === "CRITICAL" ? "Ticket crítico atribuído" : "Ticket urgente atribuído"} ${ticket.number} - ${ticket.title}`,
+          renderTicketAlertEmail({
+            heading: ticket.priority === "CRITICAL" ? `Ticket crítico atribuído ${ticket.number}` : `Ticket urgente atribuído ${ticket.number}`,
+            intro: `Este ticket foi atribuído a ${assignedUser.name}.`,
+            ticketNumber: ticket.number,
+            priorityLabel: ticketPriorityLabel(ticket.priority),
+            title: ticket.title,
+            equipmentName: ticket.equipment.name,
+            problem: ticket.problem,
+            location: ticket.location,
+            openedByName: ticket.openedBy?.name,
+            assignedToName: assignedUser.name,
+            machineStopped: ticket.machineStopped,
+          }),
+        ),
+        "Email da atribuicao do ticket",
+      );
+    }
+
+    if (canReceiveNow) {
       await runNotificationTask(
         sendPushNotifications([assignedUser.id], {
           title,

@@ -1,6 +1,7 @@
 import type { PrismaClient, User } from "@prisma/client";
 
 import { buildDailyPlanData, dailyPlanCount, lisbonDateValue } from "@/lib/daily-plan";
+import { absoluteUrl, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
 import { formatDate, formatShortDate } from "@/lib/format";
 import { getPrisma } from "@/lib/prisma";
 import { sendPushNotifications } from "@/lib/push-notifications";
@@ -18,19 +19,6 @@ function escapeHtml(value: unknown) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
-}
-
-function isDeliverableEmail(email: string) {
-  const value = email.trim().toLowerCase();
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && !value.endsWith(".local");
-}
-
-function appBaseUrl() {
-  return (process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || "https://app-gestao-manutencao.vercel.app").replace(/\/$/, "");
-}
-
-function absoluteUrl(path: string) {
-  return `${appBaseUrl()}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 function statusLabel(status: string) {
@@ -174,31 +162,6 @@ async function markDelivered(prisma: PrismaClient, userId: string, date: string,
       subject,
     },
   });
-}
-
-async function sendResendEmail(to: string, subject: string, html: string) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.ALERT_EMAIL_FROM || "Gestão de manutenção <onboarding@resend.dev>";
-
-  if (!apiKey) {
-    return { sent: false, reason: "RESEND_API_KEY em falta." };
-  }
-
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ from, to, subject, html }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text().catch(() => "Erro desconhecido.");
-    throw new Error(`Falha no envio de email: ${response.status} ${errorText}`);
-  }
-
-  return { sent: true };
 }
 
 export async function sendDailyPlanDigests(options: DigestOptions = {}) {
