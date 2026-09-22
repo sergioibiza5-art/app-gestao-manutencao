@@ -5,6 +5,7 @@ import {
   ClipboardCheck,
   ExternalLink,
   FileText,
+  GitBranch,
   History,
   Package,
   Receipt,
@@ -432,6 +433,7 @@ const latestDl50Document =
   latestDl50Assessment?.document ??
   equipment.documents.find((document) => document.type === "DL50_ASSESSMENT" && document.fileUrl);
   const isEquipmentOperational = !["INACTIVE", "DISCARDED"].includes(equipment.status);
+  const hasEquipmentFamily = Boolean(equipment.parentEquipment) || equipment.childEquipment.length > 0;
 
   const programmedSchedules = isEquipmentOperational ? equipment.maintenanceSchedules.filter(
     (schedule) => schedule.status === "SCHEDULED" && !["DONE", "VALIDATED", "CANCELED"].includes(schedule.workOrder?.status ?? ""),
@@ -549,6 +551,64 @@ const latestDl50Document =
     </p>
   </Panel>
 </section>
+
+      {hasEquipmentFamily ? (
+        <Panel>
+          <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+            <div className="flex items-center gap-3">
+              <GitBranch size={22} className="text-orange-300" />
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">Família do equipamento</h2>
+                <p className="mt-1 text-sm text-zinc-500">
+                  Relação entre equipamento principal e subconjuntos associados.
+                </p>
+              </div>
+            </div>
+            <span className="rounded-lg border border-orange-300/25 bg-orange-300/10 px-3 py-2 text-sm font-semibold text-orange-100">
+              {equipment.childEquipment.length} associado{equipment.childEquipment.length === 1 ? "" : "s"}
+            </span>
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-2">
+            {equipment.parentEquipment ? (
+              <Link
+                href={`/equipamentos/${equipment.parentEquipment.id}`}
+                className="rounded-lg border border-cyan-300/25 bg-cyan-300/10 p-4 transition hover:border-cyan-200/60"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200">Equipamento principal</p>
+                <h3 className="mt-2 font-semibold text-zinc-50">{equipment.parentEquipment.name}</h3>
+                <p className="mt-1 text-sm text-zinc-400">{equipment.parentEquipment.code ?? "Sem código"}</p>
+              </Link>
+            ) : (
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">Equipamento principal</p>
+                <h3 className="mt-2 font-semibold text-zinc-100">Este é o equipamento principal</h3>
+                <p className="mt-1 text-sm text-zinc-500">Os subconjuntos aparecem ao lado.</p>
+              </div>
+            )}
+
+            <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-orange-200">Subconjuntos associados</p>
+              {equipment.childEquipment.length === 0 ? (
+                <p className="mt-2 text-sm text-zinc-500">Sem equipamentos associados.</p>
+              ) : (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {equipment.childEquipment.map((child) => (
+                    <Link
+                      key={child.id}
+                      href={`/equipamentos/${child.id}`}
+                      className="inline-flex max-w-full items-center gap-2 rounded-lg border border-zinc-800 bg-black/25 px-3 py-2 text-sm font-semibold text-zinc-100 transition hover:border-orange-300/60"
+                    >
+                      <span className="truncate">{child.name}</span>
+                      <span className="text-xs font-medium text-zinc-500">{child.code ?? "s/código"}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </Panel>
+      ) : null}
 
       <section className="grid gap-4 xl:grid-cols-2">
         <Panel>

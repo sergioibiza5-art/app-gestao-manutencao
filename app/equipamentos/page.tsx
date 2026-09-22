@@ -4,6 +4,7 @@ import {
   ClipboardList,
   FileSpreadsheet,
   Filter,
+  GitBranch,
   Plus,
   Ruler,
   Search,
@@ -141,6 +142,16 @@ export default async function EquipmentPage({ searchParams }: EquipmentPageProps
     regulatoryRequirements?: boolean;
     regulatoryDetails?: string | null;
     equipmentType?: { name: string } | null;
+    parentEquipment?: { id: string; name: string; code: string | null; status: string } | null;
+    childEquipment?: Array<{
+      id: string;
+      name: string;
+      code: string | null;
+      status: string;
+      category: string;
+      location: string | null;
+      isMeasurementMonitoring: boolean;
+    }>;
   };
 
   const typedEquipment = equipment as EquipmentItem[];
@@ -177,6 +188,9 @@ const filteredEquipment = typedEquipment.filter((item) => {
       item.responsibleDepartment,
       item.status,
       item.equipmentType?.name,
+      item.parentEquipment?.name,
+      item.parentEquipment?.code,
+      ...(item.childEquipment ?? []).flatMap((child) => [child.name, child.code, child.category, child.location]),
       item.notes,
     ]
       .map(normalize)
@@ -537,6 +551,22 @@ const filteredEquipment = typedEquipment.filter((item) => {
                         <p className="mt-1 truncate text-sm text-zinc-500">
                           {item.equipmentType?.name ?? "sem tipo"} - {item.model ?? "sem modelo"}
                         </p>
+                        {item.parentEquipment ? (
+                          <p className="mt-2 inline-flex max-w-full items-center gap-1 rounded-md border border-cyan-300/25 bg-cyan-300/10 px-2 py-1 text-xs font-semibold text-cyan-100">
+                            <GitBranch size={13} />
+                            <span className="truncate">Faz parte de {item.parentEquipment.name}</span>
+                          </p>
+                        ) : null}
+                        {(item.childEquipment?.length ?? 0) > 0 ? (
+                          <p className="mt-2 inline-flex max-w-full items-center gap-1 rounded-md border border-orange-300/25 bg-orange-300/10 px-2 py-1 text-xs font-semibold text-orange-100">
+                            <GitBranch size={13} />
+                            <span className="truncate">
+                              {item.childEquipment!.length} associado{item.childEquipment!.length === 1 ? "" : "s"}:{" "}
+                              {item.childEquipment!.slice(0, 2).map((child) => child.name).join(", ")}
+                              {item.childEquipment!.length > 2 ? "..." : ""}
+                            </span>
+                          </p>
+                        ) : null}
                       </div>
 
                       <div className="mt-3 text-sm text-zinc-400 xl:mt-0">

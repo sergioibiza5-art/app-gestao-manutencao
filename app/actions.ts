@@ -6,7 +6,10 @@ import { redirect } from "next/navigation";
 import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import type { PushSubscription as WebPushSubscription } from "web-push";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
-import { importEnvironmentalWorkbook } from "@/lib/environmental-import";
+import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
+import { importEnvironmentalWorkbook, saveEnvironmentalImport } from "@/lib/environmental-import";
+import { importMicrosoftEnvironmentalReports } from "@/lib/environmental-microsoft-drive";
+import type { ParsedEnvironmentalReading } from "@/lib/environmental-workbook";
 import { parseLisbonDateTimeInput } from "@/lib/lisbon-time";
 import { getPrisma } from "@/lib/prisma";
 
@@ -4460,6 +4463,136 @@ export async function importEnvironmentalReport(formData: FormData) {
   redirect(`/ambiental?imported=${imported}&duplicates=${duplicates}&empty=${empty}&invalid=${invalid}`);
 }
 
+type ParsedEnvironmentalReportPayload = {
+  fileName?: string;
+  relativePath?: string;
+  fileHash?: string;
+  sourceModifiedAt?: string | null;
+  readings?: ParsedEnvironmentalReadingPayload[];
+};
+
+type ParsedEnvironmentalReadingPayload = Omit<ParsedEnvironmentalReading, "timestamp"> & { timestamp: string };
+
+function parsedEnvironmentalDate(value?: string | null) {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function validParsedEnvironmentalReading(reading: ParsedEnvironmentalReadingPayload): reading is ParsedEnvironmentalReadingPayload {
+  const timestamp = new Date(reading.timestamp);
+
+  return (
+    !Number.isNaN(timestamp.getTime()) &&
+    ["TEMPERATURE", "HUMIDITY", "PRESSURE"].includes(reading.type) &&
+    ["OK", "ALERT", "ACTION"].includes(reading.status) &&
+    typeof reading.sensor === "string" &&
+    reading.sensor.trim().length > 0 &&
+    typeof reading.zone === "string" &&
+    reading.zone.trim().length > 0 &&
+    typeof reading.value === "string" &&
+    Number.isFinite(Number(reading.value))
+  );
+}
+
+export async function importEnvironmentalParsedReports(reports: ParsedEnvironmentalReportPayload[]) {
+  await requireCanManage();
+
+  let imported = 0;
+  let duplicates = 0;
+  let empty = 0;
+  let invalid = 0;
+  let readings = 0;
+  const results: Array<{ fileName: string; status: string; readingsCount: number; error?: string }> = [];
+
+  for (const report of reports.slice(0, 25)) {
+    const fileName = report.fileName?.trim() || "Relatório ambiental";
+    const hash = report.fileHash?.trim();
+
+    if (!hash) {
+      invalid += 1;
+      results.push({ fileName, status: "invalid", readingsCount: 0, error: "Ficheiro sem assinatura." });
+      continue;
+    }
+
+    const parsedReadings = (report.readings ?? [])
+      .filter(validParsedEnvironmentalReading)
+      .map((reading) => ({
+        ...reading,
+        timestamp: new Date(reading.timestamp),
+        hour: reading.hour || new Date(reading.timestamp).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit", hour12: false }),
+        sensor: reading.sensor.trim(),
+        zone: reading.zone.trim(),
+        value: Number(reading.value).toFixed(2),
+      }));
+
+    try {
+      const result = await saveEnvironmentalImport({
+        fileName,
+        fileHash: hash,
+        source: "LOCAL_FOLDER",
+        sourceUrl: report.relativePath ? `local-folder:${report.relativePath}` : null,
+        sourceModifiedAt: parsedEnvironmentalDate(report.sourceModifiedAt),
+        readings: parsedReadings,
+      });
+
+      if (result.status === "imported") imported += 1;
+      if (result.status === "duplicate") duplicates += 1;
+      if (result.status === "empty") empty += 1;
+      if (result.status === "invalid") invalid += 1;
+      readings += result.status === "imported" ? result.readingsCount : 0;
+      results.push({ fileName, status: result.status, readingsCount: result.readingsCount, error: result.error });
+    } catch (error) {
+      invalid += 1;
+      const message = error instanceof Error ? error.message : "Erro desconhecido.";
+      console.error(`Falha ao importar relatorio ambiental da pasta (${fileName}):`, error);
+      results.push({ fileName, status: "invalid", readingsCount: 0, error: message });
+    }
+  }
+
+  revalidatePath("/ambiental");
+
+  return {
+    imported,
+    duplicates,
+    empty,
+    invalid,
+    readings,
+    results,
+  };
+}
+
+export async function syncEnvironmentalFolder() {
+  await requireCanManage();
+  const prisma = getPrisma();
+  const settings = await prisma.environmentalSettings.findUnique({ where: { id: "default" } });
+  const sharePointFolder = settings?.sharePointFolderUrl || process.env.SHAREPOINT_FOLDER_URL || process.env.ONEDRIVE_FOLDER_URL;
+  const googleFolder = settings?.googleDriveFolderId || settings?.googleDriveFolderUrl || process.env.GOOGLE_DRIVE_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_URL;
+  const folder = sharePointFolder || googleFolder;
+
+  if (!folder) {
+    redirect("/ambiental?folderError=missing");
+  }
+
+  try {
+    const result = sharePointFolder
+      ? await importMicrosoftEnvironmentalReports(sharePointFolder, { limit: 25 })
+      : await importGoogleDriveEnvironmentalReports(googleFolder ?? folder, { limit: 25 });
+    revalidatePath("/ambiental");
+    redirect(
+      `/ambiental?folderSync=1&checked=${result.checked}&processed=${result.processed}&imported=${result.imported}&duplicates=${result.duplicates}&invalid=${result.invalid}&skipped=${result.skippedAlreadyImported}&remaining=${result.remaining}`,
+    );
+  } catch (error) {
+    if (isDatabaseSizeLimitError(error)) {
+      redirect("/ambiental?importError=db_limit");
+    }
+
+    const message = error instanceof Error ? error.message : "Erro desconhecido.";
+    console.error("Falha ao sincronizar pasta ambiental:", error);
+    redirect(`/ambiental?folderError=${encodeURIComponent(message)}`);
+  }
+}
+
 export async function deleteEnvironmentalImport(formData: FormData) {
   await requireCanManage();
 
@@ -4482,10 +4615,21 @@ export async function deleteEnvironmentalImport(formData: FormData) {
 export async function updateEnvironmentalSettings(formData: FormData) {
   await requireCanManage();
   const prisma = getPrisma();
-  const alertStartTime = text(formData, "alertStartTime") || "06:00";
-  const alertEndTime = text(formData, "alertEndTime") || "22:00";
-  const googleDriveFolder = optionalText(formData, "googleDriveFolderUrl");
-  const googleDriveFolderIsUrl = Boolean(googleDriveFolder?.startsWith("http"));
+  const existing = await prisma.environmentalSettings.findUnique({ where: { id: "default" } });
+  const alertStartTime = text(formData, "alertStartTime") || existing?.alertStartTime || "06:00";
+  const alertEndTime = text(formData, "alertEndTime") || existing?.alertEndTime || "22:00";
+  const includeSaturday = formData.has("includeSaturday")
+    ? formData.get("includeSaturday") === "on"
+    : existing?.includeSaturday ?? false;
+  const includeSunday = formData.has("includeSunday")
+    ? formData.get("includeSunday") === "on"
+    : existing?.includeSunday ?? false;
+  const folderWasProvided = formData.has("environmentalFolderUrl");
+  const folderInput = folderWasProvided ? optionalText(formData, "environmentalFolderUrl") : null;
+  const lowerFolderInput = folderInput?.toLowerCase() ?? "";
+  const isSharePointFolder = Boolean(folderInput && (lowerFolderInput.includes("sharepoint.com") || lowerFolderInput.includes("onedrive")));
+  const isGoogleDriveFolder = Boolean(folderInput && (lowerFolderInput.includes("drive.google.com") || !folderInput.startsWith("http")));
+  const googleDriveFolderIsUrl = Boolean(folderInput?.startsWith("http"));
 
   await prisma.environmentalSettings.upsert({
     where: { id: "default" },
@@ -4493,18 +4637,24 @@ export async function updateEnvironmentalSettings(formData: FormData) {
       id: "default",
       alertStartTime,
       alertEndTime,
-      includeSaturday: formData.get("includeSaturday") === "on",
-      includeSunday: formData.get("includeSunday") === "on",
-      googleDriveFolderUrl: googleDriveFolderIsUrl ? googleDriveFolder : null,
-      googleDriveFolderId: googleDriveFolder && !googleDriveFolderIsUrl ? googleDriveFolder : null,
+      includeSaturday,
+      includeSunday,
+      sharePointFolderUrl: isSharePointFolder ? folderInput : null,
+      googleDriveFolderUrl: isGoogleDriveFolder && googleDriveFolderIsUrl ? folderInput : null,
+      googleDriveFolderId: isGoogleDriveFolder && !googleDriveFolderIsUrl ? folderInput : null,
     },
     update: {
       alertStartTime,
       alertEndTime,
-      includeSaturday: formData.get("includeSaturday") === "on",
-      includeSunday: formData.get("includeSunday") === "on",
-      googleDriveFolderUrl: googleDriveFolderIsUrl ? googleDriveFolder : null,
-      googleDriveFolderId: googleDriveFolder && !googleDriveFolderIsUrl ? googleDriveFolder : null,
+      includeSaturday,
+      includeSunday,
+      ...(folderWasProvided
+        ? {
+            sharePointFolderUrl: isSharePointFolder ? folderInput : null,
+            googleDriveFolderUrl: isGoogleDriveFolder && googleDriveFolderIsUrl ? folderInput : null,
+            googleDriveFolderId: isGoogleDriveFolder && !googleDriveFolderIsUrl ? folderInput : null,
+          }
+        : {}),
     },
   });
 

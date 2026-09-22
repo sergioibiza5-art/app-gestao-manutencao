@@ -1,10 +1,12 @@
 ﻿import { AlertTriangle, Download, FileSpreadsheet, Leaf, Search, Trash2 } from "lucide-react";
 
-import { deleteEnvironmentalImport, importEnvironmentalReport, updateEnvironmentalSettings } from "@/app/actions";
+import { deleteEnvironmentalImport, importEnvironmentalReport, syncEnvironmentalFolder, updateEnvironmentalSettings } from "@/app/actions";
+import { Cloud, FolderSync } from "lucide-react";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsModal } from "@/app/components/details-modal";
 import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel } from "@/app/components/ui";
+import { EnvironmentalFolderImporter } from "@/app/ambiental/environmental-folder-importer";
 import { getEnvironmentalData } from "@/lib/data";
 import { formatDate } from "@/lib/format";
 
@@ -22,6 +24,12 @@ type EnvironmentalPageProps = {
     duplicates?: string;
     empty?: string;
     invalid?: string;
+    folderSync?: string;
+    folderError?: string;
+    checked?: string;
+    processed?: string;
+    skipped?: string;
+    remaining?: string;
   }>;
 };
 
@@ -69,6 +77,7 @@ type EnvironmentalSettings = {
   alertEndTime: string;
   includeSaturday: boolean;
   includeSunday: boolean;
+  sharePointFolderUrl?: string | null;
   googleDriveFolderId?: string | null;
   googleDriveFolderUrl?: string | null;
 };
@@ -198,6 +207,12 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const importMessage =
     params.importError === "db_limit"
       ? "A importação parou porque a base de dados atingiu o limite de espaço do Neon. É necessário libertar espaço/apagar importações antigas ou aumentar o plano antes de continuar."
+      : params.folderError === "missing"
+        ? "Ainda não existe uma pasta cloud configurada para sincronização automática."
+        : params.folderError
+          ? `Não foi possível sincronizar a pasta: ${params.folderError}`
+          : params.folderSync
+            ? `Sincronização concluída: ${params.checked ?? 0} ficheiro(s) encontrados, ${params.processed ?? 0} processado(s), ${params.imported ?? 0} novo(s), ${params.duplicates ?? 0} duplicado(s), ${params.invalid ?? 0} inválido(s), ${params.skipped ?? 0} já tratados, ${params.remaining ?? 0} por processar.`
       : params.imported || params.duplicates || params.empty || params.invalid
         ? `Importação concluída: ${params.imported ?? 0} novo(s), ${params.duplicates ?? 0} duplicado(s), ${params.empty ?? 0} vazio(s), ${params.invalid ?? 0} inválido(s).`
         : null;
@@ -213,6 +228,16 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
   const sensorRows = data.bySensor as EnvironmentalRow[];
   const hourlyRows = data.hourly as Array<{ hour: string; average: number }>;
   const settings = data.settings as EnvironmentalSettings;
+  const configuredFolder =
+    settings.sharePointFolderUrl ||
+    settings.googleDriveFolderUrl ||
+    settings.googleDriveFolderId ||
+    "";
+  const configuredFolderLabel = configuredFolder
+    ? configuredFolder.includes("sharepoint.com") || configuredFolder.includes("onedrive")
+      ? "SharePoint / OneDrive"
+      : "Google Drive"
+    : "Sem pasta cloud definida";
   const pdfQuery = new URLSearchParams({
     days,
     type,
@@ -227,13 +252,13 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
       <PageHeader
         eyebrow="Monitorização ambiental"
         title="Tratamento ambiental"
-        description="Importa relatórios diários Excel e organiza temperatura, humidade, pressão diferencial, alertas, ações e eventos por zona."
+        description="Lê relatórios diários Excel a partir de ficheiros ou de uma pasta e organiza temperatura, humidade, pressão diferencial, alertas, ações e eventos por zona."
       />
 
       {importMessage ? (
-        <section className={`rounded-lg border p-4 ${params.importError === "db_limit" ? "border-rose-300/40 bg-rose-300/10 text-rose-100" : "border-teal-300/40 bg-teal-300/10 text-teal-100"}`}>
+        <section className={`rounded-lg border p-4 ${params.importError === "db_limit" || params.folderError ? "border-rose-300/40 bg-rose-300/10 text-rose-100" : "border-teal-300/40 bg-teal-300/10 text-teal-100"}`}>
           <div className="flex items-start gap-3">
-            <AlertTriangle size={20} className={params.importError === "db_limit" ? "mt-0.5 text-rose-200" : "mt-0.5 text-teal-200"} />
+            <AlertTriangle size={20} className={params.importError === "db_limit" || params.folderError ? "mt-0.5 text-rose-200" : "mt-0.5 text-teal-200"} />
             <p className="text-sm leading-6">{importMessage}</p>
           </div>
         </section>
@@ -316,6 +341,71 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             </form>
           </Panel>
 
+          <Panel className="xl:col-span-4">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex items-start gap-3">
+                <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg border border-teal-300/30 bg-teal-300/10 text-teal-200">
+                  <Cloud size={20} />
+                </span>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-300">Fonte dos relatórios</p>
+                  <h2 className="mt-1 text-xl font-semibold text-zinc-50">{configuredFolderLabel}</h2>
+                  <p className="mt-1 max-w-3xl truncate text-sm text-zinc-500">
+                    {configuredFolder || "Seleciona uma pasta para a app ler os documentos sem guardar os ficheiros originais."}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <DetailsModal
+                  id="fonte-relatorios-ambiental"
+                  title="fonte dos relatórios"
+                  maxWidth="max-w-4xl"
+                  button={
+                    <span className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200">
+                      <FolderSync size={17} />
+                      Definir pasta
+                    </span>
+                  }
+                >
+                  <Panel>
+                    <div className="flex items-center gap-3">
+                      <FolderSync size={22} className="text-teal-300" />
+                      <h2 className="text-xl font-semibold text-zinc-50">Fonte dos relatórios ambientais</h2>
+                    </div>
+
+                    <form action={updateEnvironmentalSettings} className="mt-4 space-y-3">
+                      <label className="space-y-1">
+                        <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Pasta SharePoint, OneDrive ou Google Drive</span>
+                        <input
+                          name="environmentalFolderUrl"
+                          className={inputClass}
+                          defaultValue={configuredFolder}
+                          placeholder="Link da pasta onde estão os relatórios"
+                        />
+                      </label>
+                      <button className={buttonClass}>Guardar pasta</button>
+                    </form>
+
+                    <div className="mt-5">
+                      <EnvironmentalFolderImporter />
+                    </div>
+
+                    <p className="mt-4 text-xs leading-5 text-zinc-500">
+                      A sincronização cloud usa a pasta configurada. A leitura local pede para escolher a pasta no browser e não guarda os ficheiros originais na app.
+                    </p>
+                  </Panel>
+                </DetailsModal>
+
+                <form action={syncEnvironmentalFolder}>
+                  <button className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+                    <FolderSync size={17} />
+                    Sincronizar agora
+                  </button>
+                </form>
+              </div>
+            </div>
+          </Panel>
+
           <div className="grid gap-3 md:grid-cols-3 xl:col-span-4">
           <DetailsModal
             id="horario-alertas-ambiental"
@@ -351,15 +441,6 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <label className="flex items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-950/65 px-3 py-3 text-sm text-zinc-200">
                 Incluir domingo nos alertas
                 <input name="includeSunday" type="checkbox" defaultChecked={settings.includeSunday} className="size-4 accent-teal-300" />
-              </label>
-              <label className="space-y-1">
-                <span className="text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">Pasta Google Drive</span>
-                <input
-                  name="googleDriveFolderUrl"
-                  className={inputClass}
-                  defaultValue={settings.googleDriveFolderUrl ?? settings.googleDriveFolderId ?? ""}
-                  placeholder="Link ou ID da pasta dos relatórios ambientais"
-                />
               </label>
               <button className={buttonClass}>Guardar horario</button>
             </form>

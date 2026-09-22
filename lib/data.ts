@@ -588,6 +588,26 @@ export async function getModuleData() {
           include: {
            interventionPlans: true,
             equipmentType: true,
+            parentEquipment: {
+              select: {
+                id: true,
+                name: true,
+                code: true,
+                status: true,
+              },
+            },
+            childEquipment: {
+              orderBy: { name: "asc" },
+              select: {
+                id: true,
+                name: true,
+                code: true,
+                status: true,
+                category: true,
+                location: true,
+                isMeasurementMonitoring: true,
+              },
+            },
            tickets: {
               where: {
                 status: {

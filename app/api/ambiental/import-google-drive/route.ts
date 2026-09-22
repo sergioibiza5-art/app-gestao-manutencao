@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 
 import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
+import { importMicrosoftEnvironmentalReports } from "@/lib/environmental-microsoft-drive";
 import { getPrisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -80,24 +81,31 @@ export async function GET(request: Request) {
     where: { id: "default" },
   });
 
-  const folder =
+  const sharePointFolder =
+    settings?.sharePointFolderUrl ||
+    process.env.SHAREPOINT_FOLDER_URL ||
+    process.env.ONEDRIVE_FOLDER_URL;
+  const googleFolder =
     settings?.googleDriveFolderId ||
     settings?.googleDriveFolderUrl ||
     process.env.GOOGLE_DRIVE_FOLDER_ID ||
     process.env.GOOGLE_DRIVE_FOLDER_URL;
+  const folder = sharePointFolder || googleFolder;
 
   if (!folder) {
     return Response.json(
       {
         ok: false,
-        error: "Pasta Google Drive nao configurada.",
+        error: "Pasta ambiental nao configurada.",
       },
       { status: 400 },
     );
   }
 
   try {
-    const result = await importGoogleDriveEnvironmentalReports(folder, { limit });
+    const result = sharePointFolder
+      ? await importMicrosoftEnvironmentalReports(sharePointFolder, { limit })
+      : await importGoogleDriveEnvironmentalReports(googleFolder ?? folder, { limit });
 
     revalidatePath("/ambiental");
 
