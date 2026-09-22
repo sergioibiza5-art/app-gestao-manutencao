@@ -297,7 +297,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <Search size={20} className="text-teal-300" />
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
-            <form className="mt-4 grid gap-3 text-sm md:grid-cols-2 2xl:grid-cols-[repeat(5,minmax(130px,1fr))_minmax(110px,auto)_minmax(145px,auto)]">
+            <form className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               <select name="days" className={`${inputClass} min-w-0 text-sm`} defaultValue={days}>
                 <option value="1">24h</option>
                 <option value="7">7 dias</option>
@@ -328,34 +328,32 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                   <option key={item.id} value={item.id}>{item.fileName}</option>
                 ))}
               </select>
-              <div className="grid gap-2 sm:grid-cols-2 2xl:contents">
-                <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Filtrar</button>
-                <a
-                  href={`/api/ambiental/pdf?${pdfQuery}`}
-                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200"
-                >
-                  <Download size={16} />
-                  Exportar PDF
-                </a>
-              </div>
+              <button className={`${buttonClass} w-full whitespace-nowrap text-sm`}>Filtrar</button>
+              <a
+                href={`/api/ambiental/pdf?${pdfQuery}`}
+                className="inline-flex h-11 w-full min-w-0 items-center justify-center gap-2 rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-center text-sm font-semibold leading-tight text-teal-100 transition hover:border-teal-200"
+              >
+                <Download size={16} className="shrink-0" />
+                <span className="min-w-0">Exportar PDF</span>
+              </a>
             </form>
           </Panel>
 
           <Panel className="xl:col-span-4">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-              <div className="flex items-start gap-3">
+            <div className="flex min-w-0 flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+              <div className="flex min-w-0 flex-1 items-start gap-3">
                 <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg border border-teal-300/30 bg-teal-300/10 text-teal-200">
                   <Cloud size={20} />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-300">Fonte dos relatórios</p>
                   <h2 className="mt-1 text-xl font-semibold text-zinc-50">{configuredFolderLabel}</h2>
-                  <p className="mt-1 max-w-3xl truncate text-sm text-zinc-500">
+                  <p className="mt-1 max-w-full truncate text-sm text-zinc-500">
                     {configuredFolder || "Seleciona uma pasta para a app ler os documentos sem guardar os ficheiros originais."}
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="grid w-full min-w-0 gap-2 sm:grid-cols-2 xl:w-auto xl:min-w-80">
                 <DetailsModal
                   id="fonte-relatorios-ambiental"
                   title="fonte dos relatórios"
@@ -397,9 +395,9 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                 </DetailsModal>
 
                 <form action={syncEnvironmentalFolder}>
-                  <button className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
-                    <FolderSync size={17} />
-                    Sincronizar agora
+                  <button className="inline-flex h-11 w-full min-w-0 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-center text-sm font-semibold leading-tight text-zinc-100 transition hover:border-teal-300/50">
+                    <FolderSync size={17} className="shrink-0" />
+                    <span className="min-w-0">Sincronizar agora</span>
                   </button>
                 </form>
               </div>
