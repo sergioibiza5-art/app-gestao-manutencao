@@ -3,7 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { Bell, BellRing } from "lucide-react";
 
-import { savePushSubscription } from "@/app/actions";
+import { savePushSubscription, sendTestPushNotification } from "@/app/actions";
 
 type PushNotificationToggleProps = {
   vapidPublicKey?: string;
@@ -35,7 +35,9 @@ function browserSupportsPush() {
 
 export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggleProps) {
   const [status, setStatus] = useState<PushStatus>("idle");
+  const [testMessage, setTestMessage] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [isTesting, startTestTransition] = useTransition();
 
   useEffect(() => {
     async function checkCurrentSubscription() {
@@ -110,6 +112,15 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
       });
 
       setStatus(result.ok ? "active" : "unsupported");
+      setTestMessage(result.ok ? "Alertas ativos neste dispositivo." : "");
+    });
+  }
+
+  function sendTest() {
+    setTestMessage("");
+    startTestTransition(async () => {
+      const result = await sendTestPushNotification();
+      setTestMessage(result.message);
     });
   }
 
@@ -129,20 +140,38 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
   const Icon = active ? BellRing : Bell;
 
   return (
-    <button
-      type="button"
-      onClick={enablePush}
-      disabled={isPending || active}
-      title={title}
-      aria-label={title}
-      className={`hidden h-11 items-center gap-2 rounded-lg border px-3 text-sm font-semibold transition md:inline-flex ${
-        active
-          ? "border-teal-300/45 bg-teal-300/10 text-teal-200"
-          : "border-zinc-800 bg-zinc-950/70 text-zinc-200 hover:border-teal-300/50 hover:text-teal-200"
-      }`}
-    >
-      <Icon size={18} />
-      <span>{isPending ? "A ativar" : active ? "Alertas ativos" : "Alertas"}</span>
-    </button>
+    <span className="relative inline-flex items-center gap-2">
+      <button
+        type="button"
+        onClick={enablePush}
+        disabled={isPending || active}
+        title={title}
+        aria-label={title}
+        className={`inline-flex h-11 items-center gap-2 rounded-lg border px-3 text-sm font-semibold transition ${
+          active
+            ? "border-teal-300/45 bg-teal-300/10 text-teal-200"
+            : "border-zinc-800 bg-zinc-950/70 text-zinc-200 hover:border-teal-300/50 hover:text-teal-200"
+        }`}
+      >
+        <Icon size={18} />
+        <span className="hidden sm:inline">{isPending ? "A ativar" : active ? "Alertas ativos" : "Alertas"}</span>
+      </button>
+      {active ? (
+        <button
+          type="button"
+          onClick={sendTest}
+          disabled={isTesting}
+          title="Enviar alerta de teste para este utilizador"
+          className="hidden h-11 items-center rounded-lg border border-zinc-800 bg-zinc-950/70 px-3 text-sm font-semibold text-zinc-200 transition hover:border-teal-300/50 hover:text-teal-200 md:inline-flex"
+        >
+          {isTesting ? "A enviar" : "Testar"}
+        </button>
+      ) : null}
+      {testMessage ? (
+        <span className="absolute right-0 top-12 z-40 w-64 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs font-medium text-zinc-200 shadow-xl">
+          {testMessage}
+        </span>
+      ) : null}
+    </span>
   );
 }

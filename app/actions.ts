@@ -2624,7 +2624,9 @@ async function consumeWorkOrderConsumables(
 }
 
 export async function savePushSubscription(subscription: PushSubscriptionPayload) {
-  const user = await requireCanWrite();
+  const user = await requireUser();
+  if (user.role === "TICKET") return { ok: false };
+
   const prisma = getPrisma();
   const endpoint = subscription.endpoint?.trim();
   const p256dh = subscription.keys?.p256dh?.trim();
@@ -2654,7 +2656,9 @@ export async function savePushSubscription(subscription: PushSubscriptionPayload
 }
 
 export async function disablePushSubscription(endpoint: string) {
-  await requireCanWrite();
+  const user = await requireUser();
+  if (user.role === "TICKET") return { ok: false };
+
   const value = endpoint.trim();
   if (!value) return { ok: false };
 
@@ -2664,6 +2668,29 @@ export async function disablePushSubscription(endpoint: string) {
   });
 
   return { ok: true };
+}
+
+export async function sendTestPushNotification() {
+  const user = await requireUser();
+  if (user.role === "TICKET") {
+    return { ok: false, message: "Este perfil não recebe alertas." };
+  }
+
+  const result = await sendPushNotifications([user.id], {
+    title: "Teste de alerta",
+    body: "Esta é uma simulação. Não alterou tickets, tarefas nem o plano do dia.",
+    url: "/plano",
+    tag: `teste-alerta-${user.id}-${Date.now()}`,
+  });
+
+  if (result.sent > 0) {
+    return { ok: true, message: "Teste enviado para este dispositivo." };
+  }
+
+  return {
+    ok: false,
+    message: "Não encontrei alertas ativos neste utilizador/dispositivo.",
+  };
 }
 
 async function runNotificationTask(task: Promise<unknown>, label: string) {
@@ -2947,7 +2974,7 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
     data: { assignedToId: assignedUser?.id ?? null },
   });
 
-  if (assignedUser && isImmediateTicketPriority(ticket.priority)) {
+  if (assignedUser) {
     const title = `Ticket atribuído ${ticket.number}`;
     const body = `${ticketPriorityLabel(ticket.priority)} - ${ticket.equipment.name}: ${ticket.title}`;
     const canReceiveNow = canReceiveTimedAlerts(assignedUser);
@@ -2961,30 +2988,28 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
       },
     });
 
-    if (ticket.priority === "CRITICAL" || canReceiveNow) {
-      await runNotificationTask(
-        sendTicketAlertEmails(
-          [assignedUser.email],
-          `${ticket.priority === "CRITICAL" ? "Ticket crítico atribuído" : "Ticket urgente atribuído"} ${ticket.number} - ${ticket.title}`,
-          renderTicketAlertEmail({
-            heading: ticket.priority === "CRITICAL" ? `Ticket crítico atribuído ${ticket.number}` : `Ticket urgente atribuído ${ticket.number}`,
-            intro: `Este ticket foi atribuído a ${assignedUser.name}.`,
-            ticketNumber: ticket.number,
-            priorityLabel: ticketPriorityLabel(ticket.priority),
-            title: ticket.title,
-            equipmentName: ticket.equipment.name,
-            problem: ticket.problem,
-            location: ticket.location,
-            openedByName: ticket.openedBy?.name,
-            assignedToName: assignedUser.name,
-            machineStopped: ticket.machineStopped,
-          }),
-        ),
-        "Email da atribuicao do ticket",
-      );
-    }
+    await runNotificationTask(
+      sendTicketAlertEmails(
+        [assignedUser.email],
+        `${ticket.priority === "CRITICAL" ? "Ticket crítico atribuído" : "Ticket atribuído"} ${ticket.number} - ${ticket.title}`,
+        renderTicketAlertEmail({
+          heading: ticket.priority === "CRITICAL" ? `Ticket crítico atribuído ${ticket.number}` : `Ticket atribuído ${ticket.number}`,
+          intro: `Este ticket foi atribuído a ${assignedUser.name}.`,
+          ticketNumber: ticket.number,
+          priorityLabel: ticketPriorityLabel(ticket.priority),
+          title: ticket.title,
+          equipmentName: ticket.equipment.name,
+          problem: ticket.problem,
+          location: ticket.location,
+          openedByName: ticket.openedBy?.name,
+          assignedToName: assignedUser.name,
+          machineStopped: ticket.machineStopped,
+        }),
+      ),
+      "Email da atribuicao do ticket",
+    );
 
-    if (canReceiveNow) {
+    if (ticket.priority === "CRITICAL" || canReceiveNow) {
       await runNotificationTask(
         sendPushNotifications([assignedUser.id], {
           title,
