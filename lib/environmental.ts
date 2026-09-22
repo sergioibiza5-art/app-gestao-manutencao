@@ -158,7 +158,7 @@ export function environmentalZone(header: string, type = environmentalType(heade
 export function environmentalTypeLabel(type: string) {
   if (type === "TEMPERATURE") return "Temperatura";
   if (type === "HUMIDITY") return "Humidade";
-  return "Pressao";
+  return "Pressão";
 }
 
 export function environmentalLimits(type: string) {

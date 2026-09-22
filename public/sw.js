@@ -9,12 +9,12 @@ self.addEventListener("push", (event) => {
     }
   }
 
-  const title = data.title || "Novo ticket de manutencao";
+  const title = data.title || "Alerta de manutenção";
   const options = {
-    body: data.body || "Existe um novo chamado para analisar.",
-    tag: "novo-ticket",
+    body: data.body || "Existe um novo alerta para consultar.",
+    tag: data.tag || "alerta-manutencao",
     data: {
-      url: data.url || "/tickets",
+      url: data.url || "/plano",
     },
   };
 
@@ -23,7 +23,7 @@ self.addEventListener("push", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const url = event.notification.data?.url || "/tickets";
+  const url = event.notification.data?.url || "/plano";
 
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {

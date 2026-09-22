@@ -117,14 +117,14 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
 
   const title =
     status === "missing"
-      ? "Configura as chaves VAPID para ativar push"
+      ? "Configura as chaves VAPID para ativar alertas"
       : status === "blocked"
         ? "Permissão de notificações bloqueada"
         : status === "unsupported"
           ? "Este browser não suporta notificações push"
           : active
             ? "Alertas ativos neste dispositivo"
-            : "Ativar alertas de tickets";
+            : "Ativar alertas neste dispositivo";
 
   const Icon = active ? BellRing : Bell;
 

@@ -164,11 +164,11 @@ function ReadingTable({
           <thead className="text-xs uppercase tracking-[0.14em] text-zinc-500">
             <tr>
               <th className="px-3 py-2">Sala</th>
-              <th className="px-3 py-2">Media</th>
-              <th className="px-3 py-2">Minimo</th>
-              <th className="px-3 py-2">Maximo</th>
+              <th className="px-3 py-2">Média</th>
+              <th className="px-3 py-2">Mínimo</th>
+              <th className="px-3 py-2">Máximo</th>
               <th className="px-3 py-2">Alertas</th>
-              <th className="px-3 py-2">Acoes</th>
+              <th className="px-3 py-2">Ações</th>
               <th className="px-3 py-2">Leituras alerta</th>
               <th className="px-3 py-2">Estado</th>
             </tr>
@@ -284,7 +284,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
           <p className="mt-2 text-3xl font-semibold text-teal-200">{data.readingsCount}</p>
         </Panel>
         <Panel>
-          <p className="text-sm text-zinc-500">Ultima importação</p>
+          <p className="text-sm text-zinc-500">Última importação</p>
           <p className="mt-2 text-base font-semibold text-zinc-50">{lastImport ? formatDate(lastImport.importedAt) : "Sem dados"}</p>
           <p className="mt-1 truncate text-xs text-zinc-500">{lastImport?.fileName ?? "Sem ficheiro"}</p>
         </Panel>
@@ -407,19 +407,19 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
           <div className="grid gap-3 md:grid-cols-3 xl:col-span-4">
           <DetailsModal
             id="horario-alertas-ambiental"
-            title="horario de alertas"
+            title="horário de alertas"
             maxWidth="max-w-3xl"
             button={
               <span className="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
                 <AlertTriangle size={17} />
-                Editar horario de alertas
+                Editar horário de alertas
               </span>
             }
           >
           <Panel>
             <div className="flex items-center gap-3">
               <AlertTriangle size={20} className="text-amber-300" />
-              <h2 className="text-xl font-semibold text-zinc-50">Horario de alertas</h2>
+              <h2 className="text-xl font-semibold text-zinc-50">Horário de alertas</h2>
             </div>
             <form action={updateEnvironmentalSettings} className="mt-4 space-y-3">
               <div className="grid grid-cols-2 gap-3">
@@ -433,17 +433,17 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                 </label>
               </div>
               <label className="flex items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-950/65 px-3 py-3 text-sm text-zinc-200">
-                Incluir sabado nos alertas
+                Incluir sábado nos alertas
                 <input name="includeSaturday" type="checkbox" defaultChecked={settings.includeSaturday} className="size-4 accent-teal-300" />
               </label>
               <label className="flex items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-950/65 px-3 py-3 text-sm text-zinc-200">
                 Incluir domingo nos alertas
                 <input name="includeSunday" type="checkbox" defaultChecked={settings.includeSunday} className="size-4 accent-teal-300" />
               </label>
-              <button className={buttonClass}>Guardar horario</button>
+              <button className={buttonClass}>Guardar horário</button>
             </form>
             <p className="mt-3 text-xs leading-5 text-zinc-500">
-              Fora deste horario as leituras continuam no histórico, mas nao contam para alertas, ações ou eventos.
+              Fora deste horário as leituras continuam no histórico, mas não contam para alertas, ações ou eventos.
             </p>
           </Panel>
           </DetailsModal>
@@ -468,7 +468,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
               <button className={buttonClass}>Importar Excel(s)</button>
             </form>
             <p className="mt-3 text-xs leading-5 text-zinc-500">
-              Podes selecionar varios ficheiros. Aceita T1/H1/PA e tambem Temperature1/Humidity1/PressureA, com mapeamento automatico para salas e ligacoes.
+              Podes selecionar vários ficheiros. Aceita T1/H1/PA e também Temperature1/Humidity1/PressureA, com mapeamento automático para salas e ligações.
             </p>
           </Panel>
           </DetailsModal>
@@ -484,7 +484,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             }
           >
           <Panel>
-            <h2 className="text-xl font-semibold text-zinc-50">Ultimas importações</h2>
+            <h2 className="text-xl font-semibold text-zinc-50">Últimas importações</h2>
             <div className="mt-4 space-y-2">
               {imports.length === 0 ? (
                 <EmptyState title="Sem importações" description="Importa o primeiro relatório para iniciar o histórico." />
@@ -522,7 +522,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <SectionTitle
                 title="Ações ambientais"
-                description="Registo detalhado dos eventos que ultrapassaram o limite de tempo e devem suportar auditorias e levantamento de nao conformidades."
+                description="Registo detalhado dos eventos que ultrapassaram o limite de tempo e devem suportar auditorias e levantamento de não conformidades."
               />
               <ModuleCodificationField moduleKey="ambiental" returnPath={environmentalReturnPath} />
             </div>
@@ -597,7 +597,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
                           {row.count === 0 ? "Sem dados" : statusLabel(row.status)}
                         </span>
                         {row.ignoreLowPressure ? (
-                          <p className="mt-1 text-[11px] text-zinc-500">Media &lt;1,5 Pa considerada OK</p>
+                          <p className="mt-1 text-[11px] text-zinc-500">Média &lt;1,5 Pa considerada OK</p>
                         ) : null}
                       </td>
                     </tr>
@@ -609,14 +609,14 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
 
           <ReadingTable
             title="Temperatura por sala"
-            description="Media, minimo, maximo, alertas e acoes por sala."
+            description="Média, mínimo, máximo, alertas e ações por sala."
             rows={temperatureRows}
             type="TEMPERATURE"
           />
 
           <ReadingTable
             title="Humidade por sala"
-            description="Media, minimo, maximo, alertas e ações por sala."
+            description="Média, mínimo, máximo, alertas e ações por sala."
             rows={humidityRows}
             type="HUMIDITY"
           />
@@ -643,7 +643,7 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
           <Panel>
             <div className="flex items-center gap-3">
               <AlertTriangle size={22} className="text-amber-300" />
-              <SectionTitle title="Sensores / leituras recentes" description="Lista detalhada ja normalizada por zona, tipo e estado." />
+              <SectionTitle title="Sensores / leituras recentes" description="Lista detalhada já normalizada por zona, tipo e estado." />
             </div>
             <div className="mt-4 max-h-140 space-y-2 overflow-y-auto pr-1">
               {sensorRows.length === 0 ? (
@@ -672,11 +672,11 @@ export default async function EnvironmentalPage({ searchParams }: EnvironmentalP
           <Panel>
             <div className="flex items-center gap-3">
               <Leaf size={22} className="text-lime-300" />
-              <SectionTitle title="Histórico horário" description="édia horária das leituras filtradas para perceber tendência recente." />
+              <SectionTitle title="Histórico horário" description="Média horária das leituras filtradas para perceber tendência recente." />
             </div>
             <div className="mt-4 space-y-2">
               {hourlyRows.length === 0 ? (
-                <EmptyState title="Sem dados para gráfico" description="As medias horárias aparecem depois da importação." />
+                <EmptyState title="Sem dados para gráfico" description="As médias horárias aparecem depois da importação." />
               ) : (
                 hourlyRows.map((item) => {
                   const maxBar = Math.max(...hourlyRows.map((hour) => Math.abs(hour.average)), 1);

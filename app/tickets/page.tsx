@@ -169,6 +169,8 @@ function downtimeSecondsValue(ticket: {
 
 function TicketCreateForm({
   equipment,
+  users = [],
+  showResponsible = false,
   compact = false,
 }: {
   equipment: Array<{
@@ -177,6 +179,12 @@ function TicketCreateForm({
     code: string | null;
     location: string | null;
   }>;
+  users?: Array<{
+    id: string;
+    name: string;
+    role: string;
+  }>;
+  showResponsible?: boolean;
   compact?: boolean;
 }) {
   return (
@@ -199,10 +207,30 @@ function TicketCreateForm({
 
       <input name="title" className={inputClass} placeholder="Título curto do problema" />
 
-      <select name="machineStopped" className={inputClass} defaultValue="true">
-        <option value="true">Paragem da maquina? Sim</option>
-        <option value="false">Paragem da maquina? Nao</option>
-      </select>
+      <div className="grid gap-3 md:grid-cols-2">
+        <select name="priority" className={inputClass} defaultValue="NORMAL">
+          <option value="LOW">Urgência baixa</option>
+          <option value="NORMAL">Urgência normal</option>
+          <option value="HIGH">Urgência alta</option>
+          <option value="CRITICAL">Urgência crítica</option>
+        </select>
+
+        <select name="machineStopped" className={inputClass} defaultValue="true">
+          <option value="true">Paragem da máquina? Sim</option>
+          <option value="false">Paragem da máquina? Não</option>
+        </select>
+      </div>
+
+      {showResponsible ? (
+        <select name="assignedToId" className={inputClass} defaultValue="">
+          <option value="">Sem responsável definido</option>
+          {users.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      ) : null}
 
       <input name="location" className={inputClass} placeholder="Nome do operador" />
 
@@ -218,8 +246,8 @@ function TicketSuccessMessage({ type }: { type?: string }) {
 
   const message =
     type === "duplicate"
-      ? "Esse pedido ja tinha sido enviado. Mantive apenas um ticket em aberto para evitar duplicados."
-      : "Ticket enviado com sucesso. A manutencao foi notificada.";
+      ? "Esse pedido já tinha sido enviado. Mantive apenas um ticket em aberto para evitar duplicados."
+      : "Ticket registado com sucesso.";
 
   return <span>{message}</span>;
 }
@@ -358,7 +386,7 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
             <h2 className="text-xl font-semibold text-zinc-50">Novo ticket manual</h2>
           </div>
 
-          <TicketCreateForm equipment={data.equipment} />
+          <TicketCreateForm equipment={data.equipment} users={data.users} showResponsible={canManageTickets} />
         </Panel>
       </DetailsPopup>
 

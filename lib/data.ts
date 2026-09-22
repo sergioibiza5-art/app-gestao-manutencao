@@ -1492,7 +1492,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
     async (prisma) => {
       const isTicketOnly = user?.role === "TICKET";
 
-      const [tickets, equipmentAccess, allEquipment, consumables, notifications] = await Promise.all([
+      const [tickets, equipmentAccess, allEquipment, consumables, notifications, assignableUsers] = await Promise.all([
         prisma.maintenanceTicket.findMany({
           where: isTicketOnly ? { openedById: user.id } : undefined,
           orderBy: { openedAt: "desc" },
@@ -1530,6 +1530,14 @@ export async function getTicketsData(user?: { id: string; role: string }) {
               where: { userId: user.id, readAt: null },
               orderBy: { createdAt: "desc" },
               take: 8,
+            })
+          : Promise.resolve([]),
+
+        !isTicketOnly
+          ? prisma.user.findMany({
+              where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
+              orderBy: { name: "asc" },
+              select: { id: true, name: true, role: true },
             })
           : Promise.resolve([]),
       ]);
@@ -1589,6 +1597,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
       return {
         tickets,
         equipment,
+        users: assignableUsers,
         consumables,
         notifications: ticketNotifications,
         unreadNotifications: ticketNotifications.length,
@@ -1606,6 +1615,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
     {
       tickets: [],
       equipment: [],
+      users: [],
       consumables: [],
       notifications: [],
       unreadNotifications: 0,

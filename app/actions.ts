@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
-import type { PushSubscription as WebPushSubscription } from "web-push";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
 import { importEnvironmentalWorkbook, saveEnvironmentalImport } from "@/lib/environmental-import";
@@ -12,6 +11,7 @@ import { importMicrosoftEnvironmentalReports } from "@/lib/environmental-microso
 import type { ParsedEnvironmentalReading } from "@/lib/environmental-workbook";
 import { parseLisbonDateTimeInput } from "@/lib/lisbon-time";
 import { getPrisma } from "@/lib/prisma";
+import { sendPushNotifications } from "@/lib/push-notifications";
 
 type PushSubscriptionPayload = {
   endpoint?: string | null;
@@ -249,6 +249,7 @@ const checklistResponseStatuses = ["OK", "NOT_OK", "NA"] as const satisfies read
 const maintenanceScheduleStatuses = ["SCHEDULED", "DONE", "CANCELED"] as const satisfies readonly MaintenanceScheduleStatus[];
 const vehicleFuels = ["GASOLINE", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"] as const satisfies readonly VehicleFuel[];
 const vehicleServiceTypes = ["MAINTENANCE", "REVISION", "INSPECTION", "COST"] as const satisfies readonly VehicleServiceType[];
+const ticketPriorities = ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const;
 const dl50Answers = ["YES", "NO", "NA"] as const satisfies readonly Dl50Answer[];
 const dl50SummaryStatuses = ["DRAFT", "CONFORM", "NEEDS_ACTION"] as const satisfies readonly Dl50AssessmentStatus[];
 const dl50AnswerFields = [
@@ -2398,6 +2399,21 @@ function canReceiveTimedAlerts(user: {
   return current >= start || current <= end;
 }
 
+function ticketPriorityLabel(priority: string) {
+  const labels: Record<string, string> = {
+    LOW: "Baixa",
+    NORMAL: "Normal",
+    HIGH: "Alta",
+    CRITICAL: "Crítica",
+  };
+
+  return labels[priority] ?? priority;
+}
+
+function isImmediateTicketPriority(priority: string) {
+  return priority === "HIGH" || priority === "CRITICAL";
+}
+
 async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketNumber: string) {
   await tx.notification.updateMany({
     where: { title: `Novo ticket ${ticketNumber}`, readAt: null },
@@ -2546,64 +2562,6 @@ async function consumeWorkOrderConsumables(
   return consumableCost;
 }
 
-function pushConfig() {
-  const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-  const privateKey = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT || "mailto:manutencao@localhost";
-
-  if (!publicKey || !privateKey) {
-    return null;
-  }
-
-  return { publicKey, privateKey, subject };
-}
-
-async function sendTicketPushNotifications(
-  recipientIds: string[],
-  payload: { title: string; body: string; url: string },
-) {
-  const config = pushConfig();
-  if (!config || recipientIds.length === 0) return;
-
-  const prisma = getPrisma();
-  const subscriptions = await prisma.pushSubscription.findMany({
-    where: { active: true, userId: { in: recipientIds } },
-  });
-
-  if (subscriptions.length === 0) return;
-
-  const webPushModule = await import("web-push");
-  const webPush = webPushModule.default ?? webPushModule;
-  webPush.setVapidDetails(config.subject, config.publicKey, config.privateKey);
-
-  await Promise.all(
-    subscriptions.map(async (subscription) => {
-      const webPushSubscription: WebPushSubscription = {
-        endpoint: subscription.endpoint,
-        keys: {
-          p256dh: subscription.p256dh,
-          auth: subscription.auth,
-        },
-      };
-
-      try {
-        await webPush.sendNotification(webPushSubscription, JSON.stringify(payload));
-      } catch (error) {
-        const statusCode = typeof error === "object" && error !== null && "statusCode" in error
-          ? Number((error as { statusCode?: unknown }).statusCode)
-          : 0;
-
-        if (statusCode === 404 || statusCode === 410) {
-          await prisma.pushSubscription.updateMany({
-            where: { endpoint: subscription.endpoint },
-            data: { active: false },
-          });
-        }
-      }
-    }),
-  );
-}
-
 export async function savePushSubscription(subscription: PushSubscriptionPayload) {
   const user = await requireCanWrite();
   const prisma = getPrisma();
@@ -2686,6 +2644,8 @@ export async function createMaintenanceTicket(formData: FormData) {
   }
 
   const title = text(formData, "title") || `Avaria - ${equipment.name}`;
+  const priority = enumValue(formData, "priority", ticketPriorities, "NORMAL");
+  const requestedAssignedToId = user.role === "TICKET" ? null : optionalText(formData, "assignedToId");
   const duplicateSince = new Date(Date.now() - 60_000);
   const recentDuplicate = await prisma.maintenanceTicket.findFirst({
     where: {
@@ -2706,16 +2666,23 @@ export async function createMaintenanceTicket(formData: FormData) {
   }
 
   const notificationData = await prisma.$transaction(async (tx) => {
+    const assignedUser = requestedAssignedToId
+      ? await tx.user.findFirst({
+          where: { id: requestedAssignedToId, active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
+          select: { id: true },
+        })
+      : null;
     const ticket = await tx.maintenanceTicket.create({
       data: {
         number: await nextTicketNumber(),
         title,
         problem,
-        priority: enumValue(formData, "priority", ["LOW", "NORMAL", "HIGH", "CRITICAL"] as const, "NORMAL"),
+        priority,
         machineStopped: text(formData, "machineStopped") !== "false",
         location: optionalText(formData, "location") ?? equipment.location,
         equipmentId,
         openedById: user.id,
+        assignedToId: assignedUser?.id ?? null,
       },
     });
 
@@ -2723,6 +2690,7 @@ export async function createMaintenanceTicket(formData: FormData) {
       where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
       select: {
         id: true,
+        role: true,
         notifyStartTime: true,
         notifyEndTime: true,
         notifyDays: true,
@@ -2730,11 +2698,19 @@ export async function createMaintenanceTicket(formData: FormData) {
         telegramEnabled: true,
       },
     });
-    const timedRecipients = recipients.filter(canReceiveTimedAlerts);
+    const immediatePriority = isImmediateTicketPriority(ticket.priority);
+    const immediateRecipients = immediatePriority
+      ? recipients.filter((recipient) =>
+          recipient.role === "ADMIN" ||
+          recipient.role === "MANAGER" ||
+          (assignedUser ? recipient.id === assignedUser.id : false),
+        )
+      : [];
+    const timedRecipients = immediateRecipients.filter(canReceiveTimedAlerts);
 
-    if (recipients.length > 0) {
+    if (immediateRecipients.length > 0) {
       await tx.notification.createMany({
-        data: recipients.map((recipient) => ({
+        data: immediateRecipients.map((recipient) => ({
           userId: recipient.id,
           title: `Novo ticket ${ticket.number}`,
           body: `${equipment.name}: ${ticket.title}`,
@@ -2744,31 +2720,38 @@ export async function createMaintenanceTicket(formData: FormData) {
     }
 
     return {
+      immediatePriority,
       recipientIds: timedRecipients.map((recipient) => recipient.id),
-telegramChatIds: timedRecipients
-  .filter((recipient) => recipient.telegramEnabled !== false)
-  .map((recipient) => recipient.telegramChatId)
-  .filter((chatId): chatId is string => Boolean(chatId)),
+      telegramChatIds: timedRecipients
+        .filter((recipient) => recipient.telegramEnabled !== false)
+        .map((recipient) => recipient.telegramChatId)
+        .filter((chatId): chatId is string => Boolean(chatId)),
       title: `Novo ticket ${ticket.number}`,
-      body: `${equipment.name}: ${ticket.title}`,
+      body: `${ticketPriorityLabel(ticket.priority)} - ${equipment.name}: ${ticket.title}`,
       url: "/tickets",
+      tag: `ticket-${ticket.number}`,
+      priorityLabel: ticketPriorityLabel(ticket.priority),
     };
   });
 
-  await runNotificationTask(
-    sendTicketPushNotifications(notificationData.recipientIds, {
-      title: notificationData.title,
-      body: notificationData.body,
-      url: notificationData.url,
-    }),
-    "Notificacao push do ticket",
-  );
+  if (notificationData.immediatePriority) {
+    await runNotificationTask(
+      sendPushNotifications(notificationData.recipientIds, {
+        title: notificationData.title,
+        body: notificationData.body,
+        url: notificationData.url,
+        tag: notificationData.tag,
+      }),
+      "Notificacao push do ticket",
+    );
+  }
 
-  if (notificationData.recipientIds.length > 0) {
+  if (notificationData.immediatePriority && notificationData.telegramChatIds.length > 0) {
     await runNotificationTask(sendTelegramMessage(
       [
         "🚨 <b>Novo ticket de manutenção</b>",
         "",
+        `<b>Urgência:</b> ${notificationData.priorityLabel}`,
         `<b>Título:</b> ${notificationData.title}`,
         `<b>Descrição:</b> ${notificationData.body}`,
         "",

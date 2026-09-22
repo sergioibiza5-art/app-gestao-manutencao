@@ -3,6 +3,7 @@ import type { PrismaClient, User } from "@prisma/client";
 import { buildDailyPlanData, dailyPlanCount, lisbonDateValue } from "@/lib/daily-plan";
 import { formatDate, formatShortDate } from "@/lib/format";
 import { getPrisma } from "@/lib/prisma";
+import { sendPushNotifications } from "@/lib/push-notifications";
 
 type DigestOptions = {
   date?: string;
@@ -211,6 +212,8 @@ export async function sendDailyPlanDigests(options: DigestOptions = {}) {
     date: dateValue,
     users: users.length,
     notificationsCreated: 0,
+    pushSent: 0,
+    pushSkipped: 0,
     emailsSent: 0,
     emailsSkipped: 0,
     emptyPlans: 0,
@@ -241,6 +244,29 @@ export async function sendDailyPlanDigests(options: DigestOptions = {}) {
       });
       await markDelivered(prisma, user.id, dateValue, "IN_APP", subject);
       result.notificationsCreated += 1;
+    }
+
+    const pushDone = !options.force && (await alreadyDelivered(prisma, user.id, dateValue, "PUSH"));
+    if (!pushDone && total > 0) {
+      try {
+        const pushResult = await sendPushNotifications([user.id], {
+          title: subject,
+          body: `${total} item(ns) no plano.`,
+          url: `/plano?date=${dateValue}`,
+          tag: `plano-${dateValue}-${user.id}`,
+        });
+
+        if (pushResult.sent > 0) {
+          await markDelivered(prisma, user.id, dateValue, "PUSH", subject);
+          result.pushSent += pushResult.sent;
+        } else {
+          result.pushSkipped += 1;
+        }
+      } catch (error) {
+        result.errors.push(error instanceof Error ? error.message : "Erro desconhecido no envio push.");
+      }
+    } else if (pushDone || total === 0) {
+      result.pushSkipped += 1;
     }
 
     if (!isDeliverableEmail(user.email)) {
