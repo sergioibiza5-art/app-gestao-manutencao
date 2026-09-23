@@ -1166,36 +1166,57 @@ export async function getMaintenanceData(filters: {
   date?: string;
   type?: string;
   equipmentId?: string;
+  user?: { id: string; role: string };
 }) {
   const view = filters.view || "month";
   const { start, end } = getMaintenanceRange(view, filters.date);
   const type = filters.type === "INTERNAL" || filters.type === "EXTERNAL" ? filters.type : undefined;
-const equipmentId =
-  filters.equipmentId && filters.equipmentId !== "ALL"
-    ? filters.equipmentId
-    : undefined;
   return readDb(
     async (prisma) => {
+      const usesEquipmentPermissions = filters.user?.role === "USER" || filters.user?.role === "TICKET";
+      const allowedEquipmentIds = usesEquipmentPermissions && filters.user
+        ? (
+            await prisma.ticketEquipmentAccess.findMany({
+              where: { userId: filters.user.id },
+              select: { equipmentId: true },
+            })
+          ).map((access) => access.equipmentId)
+        : [];
+      const restrictEquipment = filters.user?.role === "TICKET" || allowedEquipmentIds.length > 0;
+      const selectedEquipmentId =
+        filters.equipmentId &&
+        filters.equipmentId !== "ALL" &&
+        (!restrictEquipment || allowedEquipmentIds.includes(filters.equipmentId))
+          ? filters.equipmentId
+          : undefined;
+      const equipmentRestriction = restrictEquipment ? { id: { in: allowedEquipmentIds } } : {};
+      const equipmentIdRestriction = restrictEquipment ? { equipmentId: { in: allowedEquipmentIds } } : {};
       const [equipment, maintenanceLogs, schedules, consumables, users] = await Promise.all([
         prisma.equipment.findMany({
   where: {
     status: { notIn: ["INACTIVE", "DISCARDED"] },
+    ...equipmentRestriction,
   },
   orderBy: [
     { name: "asc" },
     { code: "asc" },
   ],
 }),
-        prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
+        prisma.maintenanceLog.findMany({
+          where: restrictEquipment ? equipmentIdRestriction : undefined,
+          orderBy: { date: "desc" },
+          take: 40,
+          include: { equipment: true },
+        }),
         prisma.maintenanceSchedule.findMany({
           where: {
-  equipment: { status: { notIn: ["INACTIVE", "DISCARDED"] } },
+  equipment: { status: { notIn: ["INACTIVE", "DISCARDED"] }, ...equipmentRestriction },
   OR: [
     { scheduledAt: { gte: start, lte: end } },
     { scheduledAt: { lt: start }, status: "SCHEDULED" },
   ],
   ...(type ? { type } : {}),
-  ...(equipmentId ? { equipmentId } : {}),
+  ...(selectedEquipmentId ? { equipmentId: selectedEquipmentId } : {}),
           },
           orderBy: { scheduledAt: "asc" },
           include: { equipment: true, workOrder: true, assignedTo: true },
@@ -1491,6 +1512,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
   return readDb(
     async (prisma) => {
       const isTicketOnly = user?.role === "TICKET";
+      const usesEquipmentPermissions = user?.role === "TICKET" || user?.role === "USER";
 
       const [tickets, equipmentAccess, allEquipment, consumables, notifications, assignableUsers] = await Promise.all([
         prisma.maintenanceTicket.findMany({
@@ -1508,7 +1530,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
           },
         }),
 
-        isTicketOnly
+        usesEquipmentPermissions && user
           ? prisma.ticketEquipmentAccess.findMany({
               where: { userId: user.id },
               orderBy: { equipment: { name: "asc" } },
@@ -1542,7 +1564,7 @@ export async function getTicketsData(user?: { id: string; role: string }) {
           : Promise.resolve([]),
       ]);
 
-      const equipment = isTicketOnly
+      const equipment = isTicketOnly || equipmentAccess.length > 0
         ? equipmentAccess.map((access) => access.equipment)
         : allEquipment;
 

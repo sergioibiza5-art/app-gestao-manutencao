@@ -252,6 +252,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
     date: selectedDate,
     type: selectedType,
     equipmentId: selectedEquipmentId,
+    user: { id: user.id, role: user.role },
   });
   const isStandardUser = user.role === "USER";
   const assignableUsers = users.filter((item) => ["ADMIN", "MANAGER", "USER"].includes(item.role));

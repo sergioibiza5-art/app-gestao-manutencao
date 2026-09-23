@@ -2839,11 +2839,15 @@ export async function createMaintenanceTicket(formData: FormData) {
   const equipment = await prisma.equipment.findUnique({ where: { id: equipmentId } });
   if (!equipment) return;
 
-  if (user.role === "TICKET") {
-    const canOpen = await prisma.ticketEquipmentAccess.findUnique({
-      where: { userId_equipmentId: { userId: user.id, equipmentId } },
+  if (user.role === "TICKET" || user.role === "USER") {
+    const allowedEquipment = await prisma.ticketEquipmentAccess.findMany({
+      where: { userId: user.id },
+      select: { equipmentId: true },
     });
-    if (!canOpen) return;
+    const hasAccess = allowedEquipment.some((access) => access.equipmentId === equipmentId);
+    if (user.role === "TICKET" ? !hasAccess : allowedEquipment.length > 0 && !hasAccess) {
+      return;
+    }
   }
 
   const title = text(formData, "title") || `Avaria - ${equipment.name}`;
@@ -3713,6 +3717,17 @@ export async function createManualWorkOrder(formData: FormData) {
   const equipmentId = optionalText(formData, "equipmentId");
 
   if (!equipmentId) return;
+
+  if (user.role === "USER") {
+    const allowedEquipment = await prisma.ticketEquipmentAccess.findMany({
+      where: { userId: user.id },
+      select: { equipmentId: true },
+    });
+    if (allowedEquipment.length > 0 && !allowedEquipment.some((access) => access.equipmentId === equipmentId)) {
+      revalidatePath("/manutencao");
+      return;
+    }
+  }
 
   const now = new Date();
   const title = text(formData, "title") || "OP manual";
