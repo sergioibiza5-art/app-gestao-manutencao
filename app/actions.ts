@@ -3734,7 +3734,7 @@ export async function createManualWorkOrder(formData: FormData) {
       },
     });
 
-    if (!equipment) return null;
+    if (!equipment || ["INACTIVE", "DISCARDED"].includes(equipment.status)) return null;
 
     const manualSchedule = await tx.maintenanceSchedule.create({
       data: {
@@ -3748,6 +3748,7 @@ export async function createManualWorkOrder(formData: FormData) {
         costCenter: optionalText(formData, "costCenter"),
         notes: "OP manual criada para intervenção não programada.",
         equipmentId,
+        assignedToId: user.id,
       },
     });
 

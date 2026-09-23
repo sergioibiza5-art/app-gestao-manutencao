@@ -28,6 +28,7 @@ import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
+import { requireUser } from "@/lib/auth";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { isMaintenanceOutsideTolerance, isMaintenanceWithinTolerance } from "@/lib/maintenance-tolerance";
@@ -230,6 +231,7 @@ function isOverdueOrTodaySchedule(schedule: { scheduledAt: Date; frequency: stri
 }
 
 export default async function MaintenancePage({ searchParams }: MaintenancePageProps) {
+  const user = await requireUser();
   const filters = await searchParams;
   const selectedView = filters.view || "month";
   const selectedDate = filters.date || new Date().toISOString().slice(0, 10);
@@ -251,6 +253,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
     type: selectedType,
     equipmentId: selectedEquipmentId,
   });
+  const isStandardUser = user.role === "USER";
   const assignableUsers = users.filter((item) => ["ADMIN", "MANAGER", "USER"].includes(item.role));
   const prioritySchedules = selectedView === "month" ? schedules.filter(isOverdueOrTodaySchedule) : [];
   const priorityScheduleIds = new Set(prioritySchedules.map((schedule) => schedule.id));
@@ -317,21 +320,29 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
       <PageHeader
         eyebrow="Ativos"
         title="Manutenção"
-        description="Cria manutenções internas ou externas, agenda o ano completo e consulta o mapa por dia, semana, mês ou ano."
+        description={
+          isStandardUser
+            ? "Cria uma OP manual para trabalhos não programados e começa a contar o tempo da intervenção."
+            : "Cria manutenções internas ou externas, agenda o ano completo e consulta o mapa por dia, semana, mês ou ano."
+        }
         action={
           <div className="flex flex-wrap gap-2">
             <DetailsOpenButton targetId="op-manual" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-4 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200">
               <PlayCircle size={18} />
               OP manual
             </DetailsOpenButton>
-            <DetailsOpenButton targetId="registo-executado" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200">
-              <Plus size={18} />
-              Registo executado
-            </DetailsOpenButton>
-            <DetailsOpenButton targetId="agendamento-anual" className={buttonClass}>
-              <Plus size={18} />
-              Agendar ano
-            </DetailsOpenButton>
+            {!isStandardUser ? (
+              <>
+                <DetailsOpenButton targetId="registo-executado" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200">
+                  <Plus size={18} />
+                  Registo executado
+                </DetailsOpenButton>
+                <DetailsOpenButton targetId="agendamento-anual" className={buttonClass}>
+                  <Plus size={18} />
+                  Agendar ano
+                </DetailsOpenButton>
+              </>
+            ) : null}
           </div>
         }
       />
@@ -399,6 +410,24 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
           </div>
         </details>
 
+        {isStandardUser ? (
+          <Panel>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Tempo de intervenção</p>
+                <h2 className="mt-2 text-2xl font-semibold text-zinc-50">OP manual</h2>
+                <p className="mt-2 max-w-2xl text-sm text-zinc-500">
+                  Usa esta opção para mudanças de setup, afinações e trabalhos pontuais que precisam de contar tempo.
+                </p>
+              </div>
+              <DetailsOpenButton targetId="op-manual" className={buttonClass}>
+                <PlayCircle size={18} />
+                Iniciar OP manual
+              </DetailsOpenButton>
+            </div>
+          </Panel>
+        ) : (
+          <>
         <details id="registo-executado" className="group">
           <summary className="hidden">Registo executado</summary>
           <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
@@ -1019,8 +1048,11 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
             </div>
           )}
         </Panel>
+          </>
+        )}
       </section>
 
+      {!isStandardUser ? (
       <section>
         <Panel>
           <h2 className="text-xl font-semibold text-zinc-50">Histórico</h2>
@@ -1113,6 +1145,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
           </div>
         </Panel>
       </section>
+      ) : null}
     </AppShell>
   );
 }
