@@ -33,16 +33,56 @@ function browserSupportsPush() {
   );
 }
 
+function isAppleTabletOrPhone() {
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+}
+
+function isStandaloneApp() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (navigator as Navigator & { standalone?: boolean }).standalone === true
+  );
+}
+
+function unsupportedPushMessage() {
+  if (isAppleTabletOrPhone() && !isStandaloneApp()) {
+    return "No iPad, abre esta app pelo ícone no ecrã principal. Se ainda não existir, abre no Safari, Partilhar, Adicionar ao ecrã principal.";
+  }
+
+  return "Este navegador não suporta alertas push neste modo.";
+}
+
 export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggleProps) {
   const [status, setStatus] = useState<PushStatus>("idle");
   const [testMessage, setTestMessage] = useState("");
   const [isPending, startTransition] = useTransition();
   const [isTesting, startTestTransition] = useTransition();
 
+  async function saveBrowserSubscription(subscription: PushSubscription) {
+    const payload = subscription.toJSON();
+
+    return savePushSubscription({
+      endpoint: payload.endpoint,
+      keys: {
+        p256dh: payload.keys?.p256dh,
+        auth: payload.keys?.auth,
+      },
+      userAgent: navigator.userAgent,
+    });
+  }
+
   useEffect(() => {
     async function checkCurrentSubscription() {
       if (!vapidPublicKey) {
         setStatus("missing");
+        return;
+      }
+
+      if (isAppleTabletOrPhone() && !isStandaloneApp()) {
+        setStatus("unsupported");
         return;
       }
 
@@ -61,7 +101,8 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
         const subscription = await registration.pushManager.getSubscription();
 
         if (subscription) {
-          setStatus("active");
+          const result = await saveBrowserSubscription(subscription);
+          setStatus(result.ok ? "active" : "idle");
         }
       } catch {
         setStatus("idle");
@@ -74,11 +115,25 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
   async function enablePush() {
     if (!vapidPublicKey) {
       setStatus("missing");
+      setTestMessage("Faltam chaves de alertas na configuração da app.");
+      return;
+    }
+
+    if (isAppleTabletOrPhone() && !isStandaloneApp()) {
+      setStatus("unsupported");
+      setTestMessage(unsupportedPushMessage());
       return;
     }
 
     if (!browserSupportsPush()) {
       setStatus("unsupported");
+      setTestMessage(unsupportedPushMessage());
+      return;
+    }
+
+    if (Notification.permission === "denied") {
+      setStatus("blocked");
+      setTestMessage("As notificações estão bloqueadas no navegador. Tens de permitir nas definições do site.");
       return;
     }
 
@@ -86,6 +141,7 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
 
     if (permission !== "granted") {
       setStatus("blocked");
+      setTestMessage("Não foi dada permissão para enviar alertas neste dispositivo.");
       return;
     }
 
@@ -99,17 +155,8 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
         applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
       }));
 
-    const payload = subscription.toJSON();
-
     startTransition(async () => {
-      const result = await savePushSubscription({
-        endpoint: payload.endpoint,
-        keys: {
-          p256dh: payload.keys?.p256dh,
-          auth: payload.keys?.auth,
-        },
-        userAgent: navigator.userAgent,
-      });
+      const result = await saveBrowserSubscription(subscription);
 
       setStatus(result.ok ? "active" : "unsupported");
       setTestMessage(result.ok ? "Alertas ativos neste dispositivo." : "");
@@ -119,6 +166,24 @@ export function PushNotificationToggle({ vapidPublicKey }: PushNotificationToggl
   function sendTest() {
     setTestMessage("");
     startTestTransition(async () => {
+      try {
+        const registration = await navigator.serviceWorker.register("/sw.js");
+        const subscription = await registration.pushManager.getSubscription();
+
+        if (subscription) {
+          const saveResult = await saveBrowserSubscription(subscription);
+          if (!saveResult.ok) {
+            setStatus("idle");
+            setTestMessage("Carrega primeiro em Alertas para ativar este dispositivo.");
+            return;
+          }
+          setStatus("active");
+        }
+      } catch {
+        setTestMessage("Não consegui confirmar os alertas neste dispositivo.");
+        return;
+      }
+
       const result = await sendTestPushNotification();
       setTestMessage(result.message);
     });

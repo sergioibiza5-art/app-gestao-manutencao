@@ -782,10 +782,11 @@ export async function createTask(formData: FormData) {
   const prisma = getPrisma();
   const user = await requireCanWrite();
   const equipmentId = optionalText(formData, "equipmentId");
+  const assignedUser = await findAssignableAlertUser(prisma, optionalText(formData, "assignedToId"));
   const isRecurring = text(formData, "isRecurring") === "true";
   const dueDate = dateWithTime(formData, "dueDate", "dueTime");
 
-  await prisma.task.create({
+  const task = await prisma.task.create({
     data: {
       title: text(formData, "title"),
       description: optionalText(formData, "description"),
@@ -798,9 +799,20 @@ export async function createTask(formData: FormData) {
       nextDue: optionalDate(formData, "nextDue"),
       createdById: user.id,
       equipmentId,
-      assignedToId: optionalText(formData, "assignedToId"),
+      assignedToId: assignedUser?.id ?? null,
     },
+    include: { equipment: { select: { name: true } } },
   });
+
+  if (assignedUser) {
+    await notifyAssignedUser(prisma, assignedUser, {
+      title: "Tarefa atribuída",
+      body: [task.title, task.equipment?.name].filter(Boolean).join(" - "),
+      href: "/plano",
+      tag: `task-${task.id}-assigned`,
+      label: "Notificacao push da atribuicao da tarefa",
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/plano");
@@ -816,7 +828,14 @@ export async function updateTask(formData: FormData) {
 
   if (!id) return;
 
-  await prisma.task.update({
+  const existingTask = await prisma.task.findUnique({
+    where: { id },
+    select: { assignedToId: true },
+  });
+  if (!existingTask) return;
+
+  const assignedUser = await findAssignableAlertUser(prisma, optionalText(formData, "assignedToId"));
+  const task = await prisma.task.update({
     where: { id },
     data: {
       title: text(formData, "title"),
@@ -828,9 +847,20 @@ export async function updateTask(formData: FormData) {
       dueDate,
       dueTime: optionalText(formData, "dueTime"),
       equipmentId: optionalText(formData, "equipmentId"),
-      assignedToId: optionalText(formData, "assignedToId"),
+      assignedToId: assignedUser?.id ?? null,
     },
+    include: { equipment: { select: { name: true } } },
   });
+
+  if (assignedUser && assignedUser.id !== existingTask.assignedToId) {
+    await notifyAssignedUser(prisma, assignedUser, {
+      title: "Tarefa atribuída",
+      body: [task.title, task.equipment?.name].filter(Boolean).join(" - "),
+      href: "/plano",
+      tag: `task-${task.id}-assigned`,
+      label: "Notificacao push da atribuicao da tarefa",
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/plano");
@@ -2219,7 +2249,7 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
 
   const equipment = await prisma.equipment.findUnique({
     where: { id: equipmentId },
-    select: { status: true },
+    select: { name: true, status: true },
   });
   if (!equipment || ["INACTIVE", "DISCARDED"].includes(equipment.status)) {
     revalidatePath("/plano");
@@ -2235,6 +2265,7 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
   const title = text(formData, "title") || "Manutenção programada";
   const type = enumValue(formData, "type", maintenanceTypes, "INTERNAL");
   const dates = generateMaintenanceDates(year, startDate, frequency);
+  const assignedUser = await findAssignableAlertUser(prisma, optionalText(formData, "assignedToId"));
   const { start: yearStart, end: yearEnd } = yearBounds(year);
   const existingSchedules = await prisma.maintenanceSchedule.findMany({
     where: {
@@ -2268,9 +2299,19 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
       costCenter: optionalText(formData, "costCenter"),
       notes: optionalText(formData, "notes"),
       equipmentId,
-      assignedToId: optionalText(formData, "assignedToId"),
+      assignedToId: assignedUser?.id ?? null,
     })),
   });
+
+  if (assignedUser) {
+    await notifyAssignedUser(prisma, assignedUser, {
+      title: "Manutenção atribuída",
+      body: `${title} - ${equipment.name} - ${newDates.length} agendamento(s)`,
+      href: "/plano",
+      tag: `maintenance-${equipmentId}-${year}-${title}-assigned`,
+      label: "Notificacao push da atribuicao da manutencao",
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/plano");
@@ -2288,7 +2329,14 @@ export async function updateMaintenanceSchedule(formData: FormData) {
     return;
   }
 
-  await prisma.maintenanceSchedule.update({
+  const existingSchedule = await prisma.maintenanceSchedule.findUnique({
+    where: { id },
+    select: { assignedToId: true },
+  });
+  if (!existingSchedule) return;
+
+  const assignedUser = await findAssignableAlertUser(prisma, optionalText(formData, "assignedToId"));
+  const schedule = await prisma.maintenanceSchedule.update({
     where: { id },
     data: {
       equipmentId,
@@ -2301,9 +2349,20 @@ export async function updateMaintenanceSchedule(formData: FormData) {
       supplier: optionalText(formData, "supplier"),
       costCenter: optionalText(formData, "costCenter"),
       notes: optionalText(formData, "notes"),
-      assignedToId: optionalText(formData, "assignedToId"),
+      assignedToId: assignedUser?.id ?? null,
     },
+    include: { equipment: { select: { name: true } } },
   });
+
+  if (assignedUser && assignedUser.id !== existingSchedule.assignedToId) {
+    await notifyAssignedUser(prisma, assignedUser, {
+      title: "Manutenção atribuída",
+      body: `${schedule.title} - ${schedule.equipment.name} - ${schedule.scheduledAt.toLocaleDateString("pt-PT", { timeZone: "Europe/Lisbon" })}`,
+      href: "/plano",
+      tag: `maintenance-${schedule.id}-assigned`,
+      label: "Notificacao push da atribuicao da manutencao",
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/plano");
@@ -2709,6 +2768,62 @@ async function runNotificationTask(task: Promise<unknown>, label: string) {
   if (timeout) clearTimeout(timeout);
 }
 
+type AssignmentAlertRecipient = {
+  id: string;
+  name: string;
+  email: string;
+  notifyStartTime: string | null;
+  notifyEndTime: string | null;
+  notifyDays: string | null;
+  telegramChatId: string | null;
+  telegramEnabled: boolean;
+};
+
+const assignmentAlertUserSelect = {
+  id: true,
+  name: true,
+  email: true,
+  notifyStartTime: true,
+  notifyEndTime: true,
+  notifyDays: true,
+  telegramChatId: true,
+  telegramEnabled: true,
+} satisfies Prisma.UserSelect;
+
+async function findAssignableAlertUser(prisma: ReturnType<typeof getPrisma>, userId: string | null) {
+  if (!userId) return null;
+
+  return prisma.user.findFirst({
+    where: { id: userId, active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
+    select: assignmentAlertUserSelect,
+  });
+}
+
+async function notifyAssignedUser(
+  prisma: ReturnType<typeof getPrisma>,
+  user: AssignmentAlertRecipient,
+  alert: { title: string; body: string; href: string; tag: string; label: string },
+) {
+  await prisma.notification.create({
+    data: {
+      userId: user.id,
+      title: alert.title,
+      body: alert.body,
+      href: alert.href,
+    },
+  });
+
+  await runNotificationTask(
+    sendPushNotifications([user.id], {
+      title: alert.title,
+      body: alert.body,
+      url: alert.href,
+      tag: alert.tag,
+    }),
+    alert.label,
+  );
+}
+
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
 
@@ -2757,7 +2872,7 @@ export async function createMaintenanceTicket(formData: FormData) {
     const assignedUser = requestedAssignedToId
       ? await tx.user.findFirst({
           where: { id: requestedAssignedToId, active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
-          select: { id: true, name: true, email: true },
+          select: assignmentAlertUserSelect,
         })
       : null;
     const ticket = await tx.maintenanceTicket.create({
@@ -2790,10 +2905,8 @@ export async function createMaintenanceTicket(formData: FormData) {
     });
     const immediatePriority = isImmediateTicketPriority(ticket.priority);
     const immediateRecipients = immediatePriority
-      ? recipients.filter((recipient) =>
-          recipient.role === "ADMIN" ||
-          recipient.role === "MANAGER" ||
-          (assignedUser ? recipient.id === assignedUser.id : false),
+      ? recipients.filter(
+          (recipient) => (recipient.role === "ADMIN" || recipient.role === "MANAGER") && recipient.id !== assignedUser?.id,
         )
       : [];
     const timedRecipients = immediateRecipients.filter(canReceiveTimedAlerts);
@@ -2820,6 +2933,10 @@ export async function createMaintenanceTicket(formData: FormData) {
       body: `${ticketPriorityLabel(ticket.priority)} - ${equipment.name}: ${ticket.title}`,
       url: "/tickets",
       tag: `ticket-${ticket.number}`,
+      assignedUser,
+      assignedTitle: `Ticket atribuído ${ticket.number}`,
+      assignedBody: `${ticketPriorityLabel(ticket.priority)} - ${equipment.name}: ${ticket.title}`,
+      assignedTag: `ticket-${ticket.number}-assigned`,
       priorityLabel: ticketPriorityLabel(ticket.priority),
       emailRecipients: (ticket.priority === "CRITICAL" ? immediateRecipients : timedRecipients).map((recipient) => recipient.email),
       emailSubject: `${ticket.priority === "CRITICAL" ? "Ticket crítico" : "Ticket urgente"} ${ticket.number} - ${ticket.title}`,
@@ -2838,6 +2955,16 @@ export async function createMaintenanceTicket(formData: FormData) {
       }),
     };
   });
+
+  if (notificationData.assignedUser) {
+    await notifyAssignedUser(prisma, notificationData.assignedUser, {
+      title: notificationData.assignedTitle,
+      body: notificationData.assignedBody,
+      href: "/tickets",
+      tag: notificationData.assignedTag,
+      label: "Notificacao push da atribuicao do ticket",
+    });
+  }
 
   if (notificationData.immediatePriority) {
     await runNotificationTask(
@@ -2953,31 +3080,16 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
   });
   if (!ticket) return;
 
-  const assignedUser = assignedToId
-    ? await prisma.user.findFirst({
-        where: { id: assignedToId, active: true, role: { in: ["ADMIN", "MANAGER", "USER"] } },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          notifyStartTime: true,
-          notifyEndTime: true,
-          notifyDays: true,
-          telegramChatId: true,
-          telegramEnabled: true,
-        },
-      })
-    : null;
+  const assignedUser = await findAssignableAlertUser(prisma, assignedToId);
 
   await prisma.maintenanceTicket.update({
     where: { id },
     data: { assignedToId: assignedUser?.id ?? null },
   });
 
-  if (assignedUser) {
+  if (assignedUser && assignedUser.id !== ticket.assignedToId) {
     const title = `Ticket atribuído ${ticket.number}`;
     const body = `${ticketPriorityLabel(ticket.priority)} - ${ticket.equipment.name}: ${ticket.title}`;
-    const canReceiveNow = canReceiveTimedAlerts(assignedUser);
 
     await prisma.notification.create({
       data: {
@@ -3009,32 +3121,30 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
       "Email da atribuicao do ticket",
     );
 
-    if (ticket.priority === "CRITICAL" || canReceiveNow) {
-      await runNotificationTask(
-        sendPushNotifications([assignedUser.id], {
-          title,
-          body,
-          url: "/tickets",
-          tag: `ticket-${ticket.number}-assigned`,
-        }),
-        "Notificacao push da atribuicao do ticket",
-      );
+    await runNotificationTask(
+      sendPushNotifications([assignedUser.id], {
+        title,
+        body,
+        url: "/tickets",
+        tag: `ticket-${ticket.number}-assigned`,
+      }),
+      "Notificacao push da atribuicao do ticket",
+    );
 
-      if (assignedUser.telegramEnabled !== false && assignedUser.telegramChatId) {
-        await runNotificationTask(sendTelegramMessage(
-          [
-            "🚨 <b>Ticket atribuído</b>",
-            "",
-            `<b>Urgência:</b> ${ticketPriorityLabel(ticket.priority)}`,
-            `<b>Título:</b> ${ticket.number} - ${ticket.title}`,
-            `<b>Equipamento:</b> ${ticket.equipment.name}`,
-            `<b>Responsável:</b> ${assignedUser.name}`,
-            "",
-            "<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets",
-          ].join("\n"),
-          [assignedUser.telegramChatId],
-        ), "Telegram da atribuicao do ticket");
-      }
+    if (ticket.priority === "CRITICAL" && assignedUser.telegramEnabled !== false && assignedUser.telegramChatId) {
+      await runNotificationTask(sendTelegramMessage(
+        [
+          "🚨 <b>Ticket atribuído</b>",
+          "",
+          `<b>Urgência:</b> ${ticketPriorityLabel(ticket.priority)}`,
+          `<b>Título:</b> ${ticket.number} - ${ticket.title}`,
+          `<b>Equipamento:</b> ${ticket.equipment.name}`,
+          `<b>Responsável:</b> ${assignedUser.name}`,
+          "",
+          "<b>Link:</b> https://app-gestao-manutencao.vercel.app/tickets",
+        ].join("\n"),
+        [assignedUser.telegramChatId],
+      ), "Telegram da atribuicao do ticket");
     }
   }
 
