@@ -175,7 +175,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           </div>
         </div>
 
-        <form className="mt-4 grid gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-6">
+        <form className="mt-4 grid items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/45 p-3 md:grid-cols-2 xl:grid-cols-4">
           <div className="relative md:col-span-2 xl:col-span-2">
             <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
             <input
@@ -222,7 +222,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
             <option value="UNASSOCIATED">Sem equipamento</option>
           </select>
 
-          <select name="equipmentId" defaultValue={params.equipmentId ?? ""} className={`${inputClass} min-w-0 text-sm md:col-span-2 xl:col-span-3`}>
+          <select name="equipmentId" defaultValue={params.equipmentId ?? ""} className={`${inputClass} min-w-0 text-sm`}>
             <option value="">Todos os equipamentos</option>
             {equipment.map((item) => (
               <option key={item.id} value={item.id}>
@@ -232,7 +232,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
             ))}
           </select>
 
-          <button className={`${buttonClass} md:col-span-2 xl:col-span-3`}>Aplicar filtros</button>
+          <button className={`${buttonClass} md:col-span-2 xl:col-span-4`}>Aplicar filtros</button>
         </form>
       </Panel>
 

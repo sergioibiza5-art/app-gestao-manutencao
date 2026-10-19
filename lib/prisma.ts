@@ -28,12 +28,14 @@ export function getPrisma() {
 
 export async function readDb<T>(
   callback: (prisma: PrismaClient) => Promise<T>,
-  fallback: T
+  fallback: T,
+  throwOnError = false,
 ) {
   try {
     return await callback(getPrisma());
   } catch (error) {
     console.error("Erro ao ler dados da base de dados:", error);
+    if (throwOnError) throw error;
     return fallback;
   }
 }

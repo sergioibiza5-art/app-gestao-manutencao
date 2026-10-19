@@ -791,6 +791,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
       equipment: [],
       stockMovements: [],
     },
+    true,
   );
 }
 
