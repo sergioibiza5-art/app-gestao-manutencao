@@ -913,7 +913,7 @@ model TicketEquipmentAccess {
 
 model TicketConsumableUsage {
   id       String  @id @default(cuid())
-  quantity Decimal @default(0) @db.Decimal(10, 2)
+  quantity Decimal @default(0) @db.Decimal(18, 8)
   unitCost Decimal @default(0) @db.Decimal(10, 2)
   notes    String?
 
@@ -1011,7 +1011,7 @@ model Consumable {
   name         String
   category     String
   unit         String
-  currentStock Decimal @default(0) @db.Decimal(10, 2)
+  currentStock Decimal @default(0) @db.Decimal(18, 8)
   minimumStock Decimal @default(0) @db.Decimal(10, 2)
   unitCost     Decimal @default(0) @db.Decimal(10, 2)
   packageQuantity Decimal? @db.Decimal(10, 2)
@@ -1035,7 +1035,7 @@ model Consumable {
 model ConsumableMovement {
   id       String   @id @default(cuid())
   type     String
-  quantity Decimal  @db.Decimal(10, 2)
+  quantity Decimal  @db.Decimal(18, 8)
   reason   String?
   date     DateTime @default(now())
 

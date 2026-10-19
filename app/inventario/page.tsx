@@ -1,3 +1,4 @@
+import { stockDescription } from "@/lib/stock-units";
 import { ProductTypeField } from "@/app/components/product-type-field";
 import { productTypeLabel } from "@/lib/product-types";
 import Link from "next/link";
@@ -303,7 +304,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                     <ArrowRight size={15} className="mt-1 shrink-0 text-amber-200" />
                   </div>
                   <p className="mt-3 text-sm text-amber-200">
-                    Stock: {String(item.currentStock)} {item.unit} · mínimo {String(item.minimumStock)} {item.unit}
+                    Stock: {stockDescription(item)} · mínimo {String(item.minimumStock)} {item.unit}
                   </p>
                   <p className="mt-1 text-xs text-zinc-500">
                     {quantityToBuy > 0 ? `Comprar ${quantityToBuy} ${item.unit} para repor até ao dobro do mínimo.` : "Avaliar reposição."}
@@ -337,12 +338,12 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                     <option value="">Selecionar produto</option>
                     {consumables.map((item) => (
                       <option key={item.id} value={item.id}>
-                        {item.name} - stock {String(item.currentStock)} {item.unit}
+                        {item.name} - stock {stockDescription(item)}
                       </option>
                     ))}
                   </select>
                 </Field>
-                <Field label="Quantidade a adicionar">
+                <Field label="Embalagens a adicionar">
                   <input name="quantity" required className={inputClass} placeholder="Ex.: 1" />
                 </Field>
                 <Field label="Motivo">
@@ -377,12 +378,12 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                     <option value="">Selecionar produto</option>
                     {consumables.map((item) => (
                       <option key={item.id} value={item.id}>
-                        {item.name} - stock {String(item.currentStock)} {item.unit}
+                        {item.name} - stock {stockDescription(item)}
                       </option>
                     ))}
                   </select>
                 </Field>
-                <Field label="Quantidade a descontar">
+                <Field label="Embalagens a descontar">
                   <input name="quantity" required className={inputClass} placeholder="Ex.: 1" />
                 </Field>
                 <Field label="Motivo">
@@ -475,10 +476,10 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                 <Field label="Unidade de stock">
                   <input name="unit" className={inputClass} placeholder="Ex.: bidão" />
                 </Field>
-                <Field label="Stock atual">
+                <Field label="Stock atual (embalagens)">
                   <input name="currentStock" className={inputClass} placeholder="Ex.: 10" />
                 </Field>
-                <Field label="Stock mínimo">
+                <Field label="Stock mínimo (embalagens)">
                   <input name="minimumStock" className={inputClass} placeholder="Ex.: 2" />
                 </Field>
                 <Field label="Quantidade por embalagem">
@@ -593,7 +594,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                       </div>
                       <div className="min-w-[150px] text-left sm:text-right">
                         <p className={`font-semibold ${status.valueClass}`}>
-                          {String(item.currentStock)} {item.unit}
+                          {stockDescription(item)}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">
                           Mínimo: {String(item.minimumStock)} {item.unit}

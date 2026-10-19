@@ -1,5 +1,7 @@
 "use server";
 
+import { decrementStock } from "@/lib/consume-stock";
+import { toStockQuantity } from "@/lib/stock-units";
 import { parseProductType } from "@/lib/product-types";
 import { sendTelegramMessage } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
@@ -121,10 +123,10 @@ function loginName(formData: FormData) {
 }
 
 function decimal(formData: FormData, key: string) {
-  return decimalString(text(formData, key));
+  return decimalString(text(formData, key), key === "currentStock" ? 8 : 2);
 }
 
-function decimalString(rawValue: string) {
+function decimalString(rawValue: string, precision = 2) {
   if (!rawValue) {
     return "0";
   }
@@ -140,7 +142,7 @@ function decimalString(rawValue: string) {
     : unsigned.replace(/[,.]/g, "");
   const parsed = Number(`${negative ? "-" : ""}${normalized}`);
 
-  return Number.isFinite(parsed) ? parsed.toFixed(2) : "0";
+  return Number.isFinite(parsed) ? parsed.toFixed(precision) : "0";
 }
 
 export async function updateModuleCodification(formData: FormData) {
@@ -1699,6 +1701,7 @@ export async function createConsumable(formData: FormData) {
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
   const initialStock = decimal(formData, "currentStock") || decimal(formData, "amount");
+  if (Number(initialStock) < 0) throw new Error("O stock não pode ser negativo.");
 
   const consumable = await prisma.consumable.create({
     data: {
@@ -1745,8 +1748,16 @@ export async function updateConsumable(formData: FormData) {
 
   if (!id) return;
 
-  const current = await prisma.consumable.findUnique({ where: { id }, select: { currentStock: true } });
+  const current = await prisma.consumable.findUnique({ where: { id }, select: { currentStock: true, packageQuantity: true, packageUnit: true } });
   const newStock = decimal(formData, "currentStock");
+  if (Number(newStock) < 0) throw new Error("O stock não pode ser negativo.");
+  const packageQuantity = optionalText(formData, "packageQuantity") ? decimal(formData, "packageQuantity") : null;
+  const packageUnit = optionalText(formData, "packageUnit");
+  if (Boolean(packageQuantity && Number(packageQuantity) > 0) !== Boolean(packageUnit)) throw new Error("Preenche o conteúdo por embalagem e a unidade técnica em conjunto.");
+  if (current?.packageQuantity && (Number(current.packageQuantity) !== Number(packageQuantity) || current.packageUnit?.toLowerCase() !== packageUnit?.toLowerCase())) {
+    const history = await prisma.consumableMovement.count({ where: { consumableId: id } });
+    if (history > 0) throw new Error("Este produto já tem movimentos. Para uma embalagem de tamanho diferente, cria uma ficha separada para preservar o histórico.");
+  }
 
   await prisma.consumable.update({
     where: { id },
@@ -1775,7 +1786,7 @@ export async function updateConsumable(formData: FormData) {
       data: {
         consumableId: id,
         type: delta > 0 ? "ENTRADA_MANUAL" : "SAIDA_MANUAL",
-        quantity: Math.abs(delta).toFixed(2),
+        quantity: Math.abs(delta).toFixed(8),
         reason: "Ajuste manual de stock",
         userId: user.id,
       },
@@ -1919,10 +1930,7 @@ export async function createConsumableStockOut(formData: FormData) {
   if (!consumableId || quantity <= 0) return;
 
   await prisma.$transaction(async (tx) => {
-    await tx.consumable.update({
-      where: { id: consumableId },
-      data: { currentStock: { decrement: quantity } },
-    });
+    await decrementStock(tx, consumableId, quantity);
 
     await tx.consumableMovement.create({
       data: {
@@ -2572,6 +2580,7 @@ async function syncTicketConsumables(
 ) {
   const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
   const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
+  const quantityUnits = formData.getAll("quantityUnit").map(String);
   const usageNotes = formData.getAll("usageNotes").filter((value): value is string => typeof value === "string");
   const hasConsumableFields = consumableIds.some((value) => value.trim().length > 0) || quantities.some((value) => value.trim().length > 0);
 
@@ -2593,11 +2602,13 @@ async function syncTicketConsumables(
 
   for (let index = 0; index < consumableIds.length; index += 1) {
     const consumableId = consumableIds[index]?.trim();
-    const quantityNumber = decimalNumber(quantities[index] ?? "");
-    if (!consumableId || quantityNumber <= 0) continue;
+    let quantityNumber = Number(decimalString(quantities[index] ?? "", 8));
+    if (!consumableId && !quantityNumber) continue;
+    if (!consumableId || quantityNumber <= 0) throw new Error("Seleciona o consumível e indica uma quantidade positiva.");
 
     const consumable = await tx.consumable.findUnique({ where: { id: consumableId } });
-    if (!consumable) continue;
+    if (!consumable) throw new Error("Produto não encontrado.");
+    quantityNumber = toStockQuantity(consumable, quantityNumber, quantityUnits[index] || "STOCK");
 
     const unitCost = Number(consumable.unitCost ?? 0);
     newQuantities[consumableId] = (newQuantities[consumableId] ?? 0) + quantityNumber;
@@ -2607,7 +2618,7 @@ async function syncTicketConsumables(
       data: {
         ticketId: ticket.id,
         consumableId,
-        quantity: quantityNumber.toFixed(2),
+        quantity: quantityNumber.toFixed(8),
         unitCost: unitCost.toFixed(2),
         notes: usageNotes[index] || null,
       },
@@ -2619,15 +2630,12 @@ async function syncTicketConsumables(
     const delta = (newQuantities[consumableId] ?? 0) - (oldQuantities[consumableId] ?? 0);
     if (delta === 0) continue;
 
-    await tx.consumable.update({
-      where: { id: consumableId },
-      data: { currentStock: { decrement: delta } },
-    });
+    await decrementStock(tx, consumableId, delta);
     await tx.consumableMovement.create({
       data: {
         consumableId,
         type: delta > 0 ? "SAIDA_TICKET" : "AJUSTE_TICKET",
-        quantity: Math.abs(delta).toFixed(2),
+        quantity: Math.abs(delta).toFixed(8),
         reason: `Ticket ${ticket.number}`,
         ticketId: ticket.id,
         userId,
@@ -2646,32 +2654,32 @@ async function consumeWorkOrderConsumables(
 ) {
   const consumableIds = formData.getAll("consumableId").filter((value): value is string => typeof value === "string");
   const quantities = formData.getAll("quantity").filter((value): value is string => typeof value === "string");
+  const quantityUnits = formData.getAll("quantityUnit").map(String);
   const usageNotes = formData.getAll("usageNotes").filter((value): value is string => typeof value === "string");
 
   let consumableCost = 0;
 
   for (let index = 0; index < consumableIds.length; index += 1) {
     const consumableId = consumableIds[index]?.trim();
-    const quantityNumber = decimalNumber(quantities[index] ?? "");
-    if (!consumableId || quantityNumber <= 0) continue;
+    let quantityNumber = Number(decimalString(quantities[index] ?? "", 8));
+    if (!consumableId && !quantityNumber) continue;
+    if (!consumableId || quantityNumber <= 0) throw new Error("Seleciona o consumível e indica uma quantidade positiva.");
 
     const consumable = await tx.consumable.findUnique({ where: { id: consumableId } });
-    if (!consumable) continue;
+    if (!consumable) throw new Error("Produto não encontrado.");
+    quantityNumber = toStockQuantity(consumable, quantityNumber, quantityUnits[index] || "STOCK");
 
     const unitCost = Number(consumable.unitCost ?? 0);
     const lineCost = quantityNumber * unitCost;
     consumableCost += lineCost;
 
-    await tx.consumable.update({
-      where: { id: consumableId },
-      data: { currentStock: { decrement: quantityNumber } },
-    });
+    await decrementStock(tx, consumableId, quantityNumber);
 
     await tx.consumableMovement.create({
       data: {
         consumableId,
         type: "SAIDA_OP",
-        quantity: quantityNumber.toFixed(2),
+        quantity: quantityNumber.toFixed(8),
         reason: [
           `OP ${workOrder.number}`,
           `Custo unitario ${unitCost.toFixed(2)} EUR`,

@@ -1,3 +1,4 @@
+import { stockDescription } from "@/lib/stock-units";
 import { ProductTypeField } from "@/app/components/product-type-field";
 import { productTypeLabel } from "@/lib/product-types";
 import Link from "next/link";
@@ -92,10 +93,10 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Stock atual">
+              <Field label="Stock atual (embalagens)">
                 <input name="currentStock" className={inputClass} defaultValue={String(item.currentStock)} placeholder="Ex.: 10" />
               </Field>
-              <Field label="Stock mínimo">
+              <Field label="Stock mínimo (embalagens)">
                 <input name="minimumStock" className={inputClass} defaultValue={String(item.minimumStock)} placeholder="Ex.: 2" />
               </Field>
             </div>
@@ -157,7 +158,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
             <div className="grid gap-3 md:grid-cols-3">
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
                 <p className="text-xs text-zinc-500">Stock atual</p>
-                <p className="mt-2 text-2xl font-semibold text-amber-300">{String(item.currentStock)} {item.unit}</p>
+                <p className="mt-2 text-2xl font-semibold text-amber-300">{stockDescription(item)}</p>
                 {packageDescription(item) && <p className="mt-1 text-xs text-cyan-200">{packageDescription(item)}</p>}
                 <p className="mt-1 text-xs text-zinc-500">Minimo: {String(item.minimumStock)} {item.unit}</p>
               </div>

@@ -1,3 +1,4 @@
+import { contentPerPack, consumptionLabel, consumptionUnit } from "@/lib/stock-units";
 ﻿import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ClipboardCheck, FileCheck2, Wrench } from "lucide-react";
@@ -332,7 +333,7 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
                         <div>
                           <p className="font-semibold text-zinc-100">{movement.consumable.name}</p>
                           <p className="text-xs text-zinc-500">
-                            {String(movement.quantity)} {movement.consumable.unit} - {movement.user?.name ?? "Sem utilizador"}
+                            {consumptionUnit(movement.consumable) === "STOCK" ? `${String(movement.quantity)} ${movement.consumable.unit}` : `${Number((Number(movement.quantity) * contentPerPack(movement.consumable)).toFixed(4))} ${consumptionLabel(movement.consumable)}`} - {movement.user?.name ?? "Sem utilizador"}
                           </p>
                           {movement.reason ? <p className="mt-1 text-xs text-zinc-500">{movement.reason}</p> : null}
                         </div>
