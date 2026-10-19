@@ -1006,6 +1006,7 @@ model CalibrationLog {
 }
 
 model Consumable {
+  productType String @default("UNCLASSIFIED")
   id           String  @id @default(cuid())
   name         String
   category     String

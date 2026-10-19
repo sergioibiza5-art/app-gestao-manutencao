@@ -1,3 +1,5 @@
+import { ProductTypeField } from "@/app/components/product-type-field";
+import { productTypeLabel } from "@/lib/product-types";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { AlertTriangle, ArrowRight, Download, FileSpreadsheet, Filter, History, PackageMinus, PackagePlus, Search, ShoppingCart, X } from "lucide-react";
@@ -16,6 +18,7 @@ type InventoryPageProps = {
   searchParams?: Promise<{
     q?: string;
     category?: string;
+    productType?: string;
     supplier?: string;
     location?: string;
     equipmentId?: string;
@@ -121,7 +124,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
   const templateHref =
     "data:text/csv;charset=utf-8," +
     encodeURIComponent(
-      "nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;zona_estante;fornecedor;codigo_equipamento;notas\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Estante A - Prateleira 2;Fornecedor;COMP-01;\n",
+      "nome;categoria;unidade_stock;stock_atual;stock_minimo;custo_unitario;quantidade_por_embalagem;unidade_tecnica;link_pasta;localizacao;zona_estante;fornecedor;codigo_equipamento;notas;tipo_produto\nDetergente tecnico;Limpeza;bidao;10;2;18,50;5;L;https://onedrive/pasta;Armazem;Estante A - Prateleira 2;Fornecedor;COMP-01;;CHEMICAL_LIQUID\n",
     );
 
   return (
@@ -137,6 +140,11 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           </DetailsOpenButton>
         }
       />
+
+      <Panel>
+        <Link href="/inventario/quimicos" className={buttonClass}>Relatório de entradas de químicos</Link>
+        <p className="mt-2 text-sm text-zinc-400">Consulta as entradas por período e exporta para Excel. Classifica primeiro os produtos existentes.</p>
+      </Panel>
 
       <Panel>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
@@ -178,6 +186,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
             />
           </div>
 
+          <ProductTypeField defaultValue={params.productType ?? ""} filter />
           <select name="category" defaultValue={params.category ?? ""} className={`${inputClass} min-w-0 text-sm`}>
             <option value="">Todas as categorias</option>
             {categories.map((item) => (
@@ -459,7 +468,8 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                     <input name="name" required className={inputClass} placeholder="Nome da peça ou consumível" />
                   </Field>
                 </div>
-                <Field label="Categoria">
+                <ProductTypeField />
+              <Field label="Categoria">
                   <input name="category" className={inputClass} placeholder="Categoria" />
                 </Field>
                 <Field label="Unidade de stock">
@@ -571,7 +581,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                           <span className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold ${status.badgeClass}`}>{status.label}</span>
                         </div>
                         <p className="mt-1 text-sm text-zinc-500">
-                          {item.category} - {item.location ?? "sem localização"}
+                          {item.category} · {productTypeLabel(item.productType)} - {item.location ?? "sem localização"}
                           {item.shelfZone ? ` - ${item.shelfZone}` : ""} - {item.supplier ?? "sem fornecedor"}
                         </p>
                         {item.equipment && (

@@ -1,3 +1,4 @@
+import { productTypeLabel } from "@/lib/product-types";
 import PDFDocument from "pdfkit/js/pdfkit.standalone.js";
 
 import { requireUser } from "@/lib/auth";
@@ -95,6 +96,7 @@ function drawFilters(doc: PDFKit.PDFDocument, filters: InventoryFilters) {
   const colWidth = tableWidth / 4;
   const rows = [
     ["Pesquisa", filters.q || "Todas", "Categoria", filters.category || "Todas"],
+    ["Tipo de produto", filters.productType ? productTypeLabel(filters.productType) : "Todos", "", ""],
     ["Fornecedor", filters.supplier || "Todos", "Localizacao", filters.location || "Todas"],
     ["Equipamento", filters.equipmentId || "Todos", "Estado", stockLabel(filters.stock)],
   ];
@@ -263,6 +265,7 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const mode = url.searchParams.get("mode") === "shopping" ? "shopping" : "inventory";
   const filters: InventoryFilters = {
+    productType: url.searchParams.get("productType") ?? undefined,
     q: url.searchParams.get("q") ?? undefined,
     category: url.searchParams.get("category") ?? undefined,
     supplier: url.searchParams.get("supplier") ?? undefined,

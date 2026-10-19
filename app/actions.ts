@@ -1,4 +1,6 @@
 "use server";
+
+import { parseProductType } from "@/lib/product-types";
 import { sendTelegramMessage } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -1702,6 +1704,7 @@ export async function createConsumable(formData: FormData) {
     data: {
       name: text(formData, "title") || text(formData, "name"),
       category: text(formData, "category") || "Consumível",
+      productType: parseProductType(formData.get("productType")),
       unit: text(formData, "unit") || "un",
       currentStock: initialStock,
       minimumStock: decimal(formData, "minimumStock"),
@@ -1750,6 +1753,7 @@ export async function updateConsumable(formData: FormData) {
     data: {
       name: text(formData, "name"),
       category: text(formData, "category") || "Consumivel",
+      productType: parseProductType(formData.get("productType")),
       unit: text(formData, "unit") || "un",
       currentStock: newStock,
       minimumStock: decimal(formData, "minimumStock"),
@@ -4437,7 +4441,7 @@ export async function importEquipmentCsv(formData: FormData) {
 }
 
 export async function importConsumablesCsv(formData: FormData) {
-  await requireCanManage();
+  const user = await requireCanManage();
   const prisma = getPrisma();
   const rows = csvRows(await uploadedText(formData, "file"));
 
@@ -4453,8 +4457,10 @@ export async function importConsumablesCsv(formData: FormData) {
       data: {
         name,
         category: row.categoria || "Consumivel",
+        productType: parseProductType(row.tipo_produto),
         unit: row.unidade_stock || row.unidade || "un",
-        currentStock: row.stock_atual || "0",
+        currentStock: (row.stock_atual || "0").replace(",", "."),
+        movements: Number((row.stock_atual || "0").replace(",", ".")) > 0 ? { create: { type: "ENTRADA_INICIAL", quantity: row.stock_atual.replace(",", "."), reason: "Stock inicial importado por CSV", userId: user.id } } : undefined,
         minimumStock: row.stock_minimo || "0",
         unitCost: (row.custo_unitario || row.unit_cost || "0").replace(",", "."),
         packageQuantity: row.quantidade_por_embalagem ? row.quantidade_por_embalagem.replace(",", ".") : null,

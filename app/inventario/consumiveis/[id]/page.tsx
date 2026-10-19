@@ -1,3 +1,5 @@
+import { ProductTypeField } from "@/app/components/product-type-field";
+import { productTypeLabel } from "@/lib/product-types";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
@@ -48,7 +50,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
       <PageHeader
         eyebrow="Ficha de stock"
         title={item.name}
-        description={`${item.category} - ${String(item.currentStock)} ${item.unit} em stock - minimo ${String(item.minimumStock)} ${item.unit}`}
+        description={`${item.category} · ${productTypeLabel(item.productType)} - ${String(item.currentStock)} ${item.unit} em stock - minimo ${String(item.minimumStock)} ${item.unit}`}
         action={
           <div className="flex flex-wrap items-center gap-2">
             <DetailsOpenButton targetId="editar-produto" className={buttonClass}>
@@ -81,6 +83,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
               <input name="name" required className={inputClass} defaultValue={item.name} placeholder="Nome da peça ou consumível" />
             </Field>
             <div className="grid grid-cols-2 gap-3">
+              <ProductTypeField defaultValue={item.productType} />
               <Field label="Categoria">
                 <input name="category" className={inputClass} defaultValue={item.category} placeholder="Categoria" />
               </Field>

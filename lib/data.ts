@@ -672,6 +672,7 @@ export async function getModuleData() {
 }
 
 export type InventoryFilters = {
+  productType?: string;
   q?: string;
   category?: string;
   supplier?: string;
@@ -753,6 +754,7 @@ export async function getInventoryData(filters: InventoryFilters = {}) {
         return (
           haystackMatches &&
           (!category || item.category === category) &&
+          (!filters.productType || item.productType === filters.productType) &&
           (!supplier || item.supplier === supplier) &&
           (!location || item.location === location) &&
           (!equipmentId || item.equipmentId === equipmentId) &&
