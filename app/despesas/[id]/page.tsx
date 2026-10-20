@@ -62,8 +62,8 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
           <h2 className="text-xl font-semibold text-zinc-50">Editar despesa</h2>
           <form action={updateExpense} className="mt-4 space-y-3">
             <input type="hidden" name="id" value={expense.id} />
-            <FieldLabel label="Titulo">
-              <input name="title" required className={inputClass} defaultValue={expense.title} placeholder="Titulo" />
+            <FieldLabel label="Título">
+              <input name="title" required className={inputClass} defaultValue={expense.title} placeholder="Título" />
             </FieldLabel>
             <FieldLabel label="Fornecedor">
               <input name="supplier" className={inputClass} defaultValue={expense.supplier ?? ""} placeholder="Fornecedor" />
@@ -120,7 +120,7 @@ export default async function ExpenseDetailPage({ params }: ExpenseDetailPagePro
             <FieldLabel label="Notas">
               <textarea name="notes" className={textareaClass} defaultValue={expense.notes ?? ""} placeholder="Notas" />
             </FieldLabel>
-            <button className={buttonClass}>Guardar alteracoes</button>
+            <button className={buttonClass}>Guardar alterações</button>
           </form>
           <form action={deleteExpense} className="mt-3">
             <input type="hidden" name="id" value={expense.id} />

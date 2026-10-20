@@ -113,7 +113,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
         <h2 className="text-xl font-semibold text-zinc-50">Nova despesa</h2>
 
         <form action={createExpense} className="mt-4 space-y-3">
-          <input name="title" required className={inputClass} placeholder="TÃ­tulo" />
+          <input name="title" required className={inputClass} placeholder="Título" />
           <input name="supplier" className={inputClass} placeholder="Fornecedor" />
 
           <div className="grid grid-cols-2 gap-3">
@@ -156,7 +156,7 @@ export default async function ExpensesPage({ searchParams }: ExpensesPageProps) 
             <input name="invoiceName" className={inputClass} placeholder="Nome do ficheiro" />
           </div>
 
-          <textarea name="notes" className={textareaClass} placeholder="Notas ou referÃªncia documental" />
+          <textarea name="notes" className={textareaClass} placeholder="Notas ou referência documental" />
           <button className={buttonClass}>Guardar despesa</button>
         </form>
       </Panel>
