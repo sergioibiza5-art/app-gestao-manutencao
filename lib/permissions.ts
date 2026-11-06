@@ -67,6 +67,8 @@ export async function requirePermission(permission: Permission) {
     throw new Error("Precisas de iniciar sessão.");
   }
 
+  if (user.mustChangePassword) throw new Error("Define primeiro a tua palavra-passe pessoal.");
+
   if (!hasPermission(user.role, permission)) {
     throw new Error("Sem permissões para executar esta ação.");
   }

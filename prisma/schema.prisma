@@ -146,6 +146,7 @@ model User {
   name            String
   username        String?  @unique
   email           String
+  mustChangePassword Boolean @default(false)
   password        String?
   pin             String?
   hourlyRate      Decimal  @default(0) @db.Decimal(10, 2)

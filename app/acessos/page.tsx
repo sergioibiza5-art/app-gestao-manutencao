@@ -1,4 +1,4 @@
-import { createSgqRecord, createUser, deleteUser, updateUser } from "@/app/actions";
+import { resetUserPassword, createSgqRecord, createUser, deleteUser, updateUser } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { getModuleData } from "@/lib/data";
@@ -53,7 +53,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
             <input name="name" required className={inputClass} placeholder="Nome" />
             <input name="username" className={inputClass} placeholder="Utilizador do posto (sem email)" />
             <input name="email" type="email" className={inputClass} placeholder="Email (perfis normais)" />
-            <input name="password" type="password" className={inputClass} placeholder="Palavra-passe inicial" />
+            <p className="text-sm text-zinc-400">Palavra-passe temporária: <strong>Manutencao-Temporaria1!</strong>. É obrigatório alterá-la no primeiro acesso.</p>
             <input name="hourlyRate" className={inputClass} placeholder="Custo hora mao de obra" />
             <select name="role" className={inputClass}>
               <option value="ADMIN">Admin</option>
@@ -149,7 +149,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
                     <input name="name" className={inputClass} defaultValue={user.name} />
                     <input name="username" className={inputClass} defaultValue={user.username ?? ""} placeholder="Utilizador do posto" />
                     <input name="email" type="email" className={inputClass} defaultValue={user.email.endsWith("@ticket.local") ? "" : user.email} placeholder="Email" />
-                    <input name="password" type="password" className={inputClass} placeholder="Nova palavra-passe" />
+                    <p className="text-sm text-zinc-400">{user.mustChangePassword ? "Alteração de palavra-passe pendente" : "Palavra-passe definida pelo utilizador"}</p>
                     <input name="hourlyRate" className={inputClass} defaultValue={String(user.hourlyRate ?? 0)} placeholder="Custo hora" />
                     <select name="role" className={inputClass} defaultValue={user.role}>
                       <option value="ADMIN">Admin</option>
@@ -203,6 +203,11 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
                       </div>
                     </div>
                     <button className="inline-flex h-11 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">Atualizar</button>
+                  </form>
+                  <form action={resetUserPassword} className="mt-2">
+                    <input type="hidden" name="id" value={user.id} />
+                    <button className={buttonClass}>Repor palavra-passe temporária</button>
+                    <p className="mt-1 text-xs text-zinc-400">Repõe para Manutencao-Temporaria1! e obriga a definir uma nova no próximo acesso.</p>
                   </form>
                   <form action={deleteUser} className="mt-2">
                     <input type="hidden" name="id" value={user.id} />

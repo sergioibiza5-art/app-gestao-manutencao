@@ -489,6 +489,35 @@ async function createDl50AssessmentDocument(
   return document;
 }
 
+const temporaryPassword = "Manutencao-Temporaria1!";
+
+export async function resetUserPassword(formData: FormData) {
+  const admin = await requireCanAdmin();
+  const id = text(formData, "id");
+  if (!id || id === admin.id) throw new Error("Não podes repor a tua própria palavra-passe neste menu.");
+  await getPrisma().$transaction(async (tx) => {
+    await tx.user.update({ where: { id }, data: { password: hashPassword(temporaryPassword), pin: null, mustChangePassword: true } });
+    await tx.session.deleteMany({ where: { userId: id } });
+  });
+  revalidatePath("/acessos");
+}
+
+export async function setOwnPassword(formData: FormData) {
+  const { getCurrentUser } = await import("@/lib/auth");
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+  if (!user.mustChangePassword) redirect("/");
+  const password = String(formData.get("password") ?? "");
+  if (password.length < 10 || password.length > 128 || password !== formData.get("confirmation") || verifyPassword(password, user.password)) redirect("/alterar-password?erro=validacao");
+  await getPrisma().$transaction(async (tx) => {
+    const updated = await tx.user.updateMany({ where: { id: user.id, password: user.password, mustChangePassword: true }, data: { password: hashPassword(password), pin: null, mustChangePassword: false } });
+    if (updated.count !== 1) throw new Error("O acesso foi alterado. Inicia sessão novamente.");
+    await tx.session.deleteMany({ where: { userId: user.id } });
+  });
+  await createSession(user.id);
+  redirect(user.role === "TICKET" ? "/tickets" : "/");
+}
+
 export async function loginUser(formData: FormData) {
   const prisma = getPrisma();
   const credential = (text(formData, "credential") || text(formData, "email")).toLowerCase();
@@ -529,7 +558,7 @@ export async function loginUser(formData: FormData) {
   }
 
   await createSession(user.id);
-  redirect(user.role === "TICKET" ? "/tickets" : "/");
+  redirect(user.mustChangePassword ? "/alterar-password" : user.role === "TICKET" ? "/tickets" : "/");
 }
 
 export async function logoutUser() {
@@ -4585,7 +4614,7 @@ export async function createDocument(formData: FormData) {
 export async function createUser(formData: FormData) {
   await requireCanAdmin();
   const prisma = getPrisma();
-  const password = optionalText(formData, "password");
+  const password = temporaryPassword;
   const role = enumValue(formData, "role", userRoles, "USER");
   const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
   const email = role === "TICKET"
@@ -4610,7 +4639,8 @@ export async function createUser(formData: FormData) {
         name: text(formData, "name"),
         username,
         email,
-        password: password ? hashPassword(password) : null,
+        password: hashPassword(password),
+        mustChangePassword: true,
         pin: null,
         hourlyRate: decimal(formData, "hourlyRate"),
         notifyStartTime: text(formData, "notifyStartTime") || "08:00",
@@ -4638,7 +4668,7 @@ export async function updateUser(formData: FormData) {
   await requireCanAdmin();
   const prisma = getPrisma();
   const id = text(formData, "id");
-  const password = optionalText(formData, "password");
+
   const role = enumValue(formData, "role", userRoles, "USER");
   const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
   const email = role === "TICKET" ? `${username || id}@ticket.local` : text(formData, "email").toLowerCase();
@@ -4677,7 +4707,7 @@ export async function updateUser(formData: FormData) {
         name: text(formData, "name"),
         username: finalUsername,
         email,
-        ...(password ? { password: hashPassword(password) } : {}),
+
         ...(role === "TICKET" ? { pin: null } : {}),
         hourlyRate: decimal(formData, "hourlyRate"),
         notifyStartTime: text(formData, "notifyStartTime") || "08:00",
