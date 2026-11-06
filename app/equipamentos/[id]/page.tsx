@@ -1,3 +1,4 @@
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -16,6 +17,7 @@ import {
 import {
   saveEquipmentDl50Summary,
   updateEquipmentBasics,
+  updateEquipmentMaintenanceInterval,
 } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsOpenButton } from "@/app/components/details-open-button";
@@ -438,6 +440,8 @@ const latestDl50Document =
   const programmedSchedules = isEquipmentOperational ? equipment.maintenanceSchedules.filter(
     (schedule) => schedule.status === "SCHEDULED" && !["DONE", "VALIDATED", "CANCELED"].includes(schedule.workOrder?.status ?? ""),
   ) : [];
+  const intervalEditorUser = await requireUser();
+  const canEditIntervals = ["ADMIN", "MANAGER"].includes(intervalEditorUser.role);
   const visibleMaintenanceSchedules = isEquipmentOperational ? equipment.maintenanceSchedules : [];
   const completedWorkOrders = equipment.workOrders
     .filter((workOrder) => ["DONE", "VALIDATED"].includes(workOrder.status))
@@ -808,6 +812,27 @@ const latestDl50Document =
   <p className="mt-2 text-xs text-zinc-500">
     Próxima data: {formatDate(schedule.scheduledAt)}
   </p>
+  {canEditIntervals && !schedule.workOrder && schedule.status === "SCHEDULED" && (
+    <details className="mt-3">
+      <summary className="cursor-pointer text-sm font-semibold text-teal-300">Alterar periodicidade / data</summary>
+      <form action={updateEquipmentMaintenanceInterval} className="mt-3 grid gap-3">
+        <input type="hidden" name="id" value={schedule.id} />
+        <input type="hidden" name="equipmentId" value={equipment.id} />
+        <label className="grid gap-1 text-sm">Periodicidade
+          <select name="frequency" defaultValue={schedule.frequency} className={inputClass}>
+            {["DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "FOUR_MONTHLY", "SEMIANNUAL", "ANNUAL", "BIENNIAL", "FIVE_YEAR"].map((frequency) => <option key={frequency} value={frequency}>{frequencyLabel(frequency)}</option>)}
+          </select>
+        </label>
+        <label className="grid gap-1 text-sm">Próxima data
+          <input type="date" name="scheduledAt" required defaultValue={new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Lisbon", year: "numeric", month: "2-digit", day: "2-digit" }).format(schedule.scheduledAt)} className={inputClass} />
+        </label>
+        <p className="text-xs text-zinc-400">Altera apenas este agendamento. Os outros agendamentos e as OPs existentes mantêm-se.</p>
+        <button className={buttonClass}>Guardar periodicidade</button>
+      </form>
+    </details>
+  )}
+  {schedule.workOrder && <p className="mt-3 text-xs text-zinc-500">Já existe uma OP. Altera a periodicidade num próximo agendamento sem OP.</p>}
+
 </article>
         ))}
       </div>

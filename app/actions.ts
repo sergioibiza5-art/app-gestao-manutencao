@@ -2331,6 +2331,30 @@ export async function createAnnualMaintenanceSchedule(formData: FormData) {
   revalidatePath(`/equipamentos/${equipmentId}`);
 }
 
+export async function updateEquipmentMaintenanceInterval(formData: FormData) {
+  await requireCanManage();
+  const id = text(formData, "id");
+  const equipmentId = text(formData, "equipmentId");
+  const frequency = text(formData, "frequency") as TaskFrequency;
+  const dateText = text(formData, "scheduledAt");
+  const scheduledAt = new Date(`${dateText}T12:00:00Z`);
+  if (!id || !equipmentId || !taskFrequencies.includes(frequency) ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(dateText) || !Number.isFinite(scheduledAt.getTime()) ||
+      scheduledAt.toISOString().slice(0, 10) !== dateText) {
+    throw new Error("Indica uma periodicidade e uma data válidas.");
+  }
+  const result = await getPrisma().maintenanceSchedule.updateMany({
+    where: { id, equipmentId, status: "SCHEDULED", workOrder: { is: null } },
+    data: { frequency, scheduledAt },
+  });
+  if (result.count !== 1) throw new Error("Este agendamento já tem uma OP ou não está disponível para edição.");
+  revalidatePath(`/equipamentos/${equipmentId}`);
+  revalidatePath(`/manutencao/${id}`);
+  revalidatePath("/manutencao");
+  revalidatePath("/plano");
+  revalidatePath("/");
+}
+
 export async function updateMaintenanceSchedule(formData: FormData) {
   await requireCanManage();
   const prisma = getPrisma();
