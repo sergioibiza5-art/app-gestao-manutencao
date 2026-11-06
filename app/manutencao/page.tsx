@@ -71,6 +71,7 @@ type MaintenancePageProps = {
     date?: string;
     type?: string;
     calendar?: string;
+    agendar?: string;
     equipmentId?: string;
   }>;
 };
@@ -503,7 +504,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
           </div>
         </details>
 
-        <details id="agendamento-anual" className="group">
+        <details id="agendamento-anual" className="group" open={filters.agendar === "1"}>
           <summary className="hidden">Agendamento anual</summary>
           <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
             <div className="mx-auto max-w-6xl">
@@ -528,7 +529,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 </div>
 
                 <form action={createAnnualMaintenanceSchedule} className="mt-4 grid gap-3 lg:grid-cols-6">
-                  <select name="equipmentId" required className={inputClass}>
+                  <select name="equipmentId" required defaultValue={selectedEquipmentId === "ALL" ? "" : selectedEquipmentId} className={inputClass}>
                     <option value="">Selecionar equipamento</option>
                     {equipment.map((item) => (
                       <option key={item.id} value={item.id}>

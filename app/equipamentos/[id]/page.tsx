@@ -492,6 +492,11 @@ const latestDl50Document =
         description="Consulta o cadastro, as checklists internas e o histórico das intervenções efetuadas."
         action={
           <div className="flex flex-wrap gap-2">
+            {canEditIntervals && isEquipmentOperational && (
+              <Link href={`/manutencao?equipmentId=${encodeURIComponent(equipment.id)}&agendar=1`} className={buttonClass}>
+                <ClipboardCheck size={17} /> Agendar manutenção
+              </Link>
+            )}
             {activeTemplate && (
               <Link
                 href={`/equipamentos/${equipment.id}/checklist-interna`}
