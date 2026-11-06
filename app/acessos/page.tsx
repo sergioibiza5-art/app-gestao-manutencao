@@ -1,3 +1,4 @@
+import { requireCanAdmin } from "@/lib/auth";
 import { resetUserPassword, createSgqRecord, createUser, deleteUser, updateUser } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
@@ -25,10 +26,11 @@ const notifyDays = [
 ];
 
 type AccessPageProps = {
-  searchParams?: Promise<{ erro?: string }>;
+  searchParams?: Promise<{ erro?: string; sucesso?: string }>;
 };
 
 export default async function AccessPage({ searchParams }: AccessPageProps) {
+  const admin = await requireCanAdmin();
   const params = (await searchParams) ?? {};
   const { users, sgqRecords, equipment } = await getModuleData();
 
@@ -46,6 +48,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
         </div>
       ) : null}
 
+      {params.sucesso === "reset" && <p role="status" className="rounded-lg border border-teal-300/30 p-4 text-teal-200">Palavra-passe temporária reposta. O utilizador terá de definir uma nova no próximo acesso.</p>}
       <section className="grid gap-4 xl:grid-cols-2">
         <Panel>
           <h2 className="text-xl font-semibold text-zinc-50">Novo utilizador</h2>
@@ -206,7 +209,8 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
                   </form>
                   <form action={resetUserPassword} className="mt-2">
                     <input type="hidden" name="id" value={user.id} />
-                    <button className={buttonClass}>Repor palavra-passe temporária</button>
+                    <button disabled={user.id === admin.id} className={`${buttonClass} disabled:opacity-40 disabled:cursor-not-allowed`}>Repor palavra-passe temporária</button>
+                    {user.id === admin.id && <p className="text-xs text-zinc-400">A reposição do teu acesso deve ser feita por outro administrador.</p>}
                     <p className="mt-1 text-xs text-zinc-400">Repõe para Manutencao-Temporaria1! e obriga a definir uma nova no próximo acesso.</p>
                   </form>
                   <form action={deleteUser} className="mt-2">

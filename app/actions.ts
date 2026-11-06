@@ -494,12 +494,19 @@ const temporaryPassword = "Manutencao-Temporaria1!";
 export async function resetUserPassword(formData: FormData) {
   const admin = await requireCanAdmin();
   const id = text(formData, "id");
-  if (!id || id === admin.id) throw new Error("Não podes repor a tua própria palavra-passe neste menu.");
+  if (!id) redirect("/acessos?erro=Seleciona%20um%20utilizador.");
+  if (id === admin.id) redirect("/acessos?erro=" + encodeURIComponent("Não podes repor a tua própria palavra-passe neste menu. Usa outro administrador para repor o teu acesso."));
+  try {
   await getPrisma().$transaction(async (tx) => {
     await tx.user.update({ where: { id }, data: { password: hashPassword(temporaryPassword), pin: null, mustChangePassword: true } });
     await tx.session.deleteMany({ where: { userId: id } });
   });
+  } catch (error) {
+    console.error("Falha ao repor palavra-passe", error);
+    redirect("/acessos?erro=" + encodeURIComponent("Não foi possível repor a palavra-passe. Tenta novamente."));
+  }
   revalidatePath("/acessos");
+  redirect("/acessos?sucesso=reset");
 }
 
 export async function setOwnPassword(formData: FormData) {
