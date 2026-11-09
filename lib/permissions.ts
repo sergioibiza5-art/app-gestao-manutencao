@@ -57,7 +57,7 @@ const permissions: Record<Permission, UserRole[]> = {
 };
 
 export function hasPermission(role: UserRole, permission: Permission) {
-  return permissions[permission].includes(role);
+  return permissions[permission].includes(role === "HSA" ? "SGQ" : role);
 }
 
 export async function requirePermission(permission: Permission) {

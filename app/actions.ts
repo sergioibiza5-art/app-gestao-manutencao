@@ -1,5 +1,8 @@
 "use server";
 
+import { isQualityRole } from "@/lib/quality-roles";
+
+
 import { decrementStock } from "@/lib/consume-stock";
 import { toStockQuantity } from "@/lib/stock-units";
 import { parseProductType } from "@/lib/product-types";
@@ -8,7 +11,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
-import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
+import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireInventoryWrite, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
 import { absoluteUrl, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
 import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
 import { importEnvironmentalWorkbook, saveEnvironmentalImport } from "@/lib/environmental-import";
@@ -246,7 +249,7 @@ const monthIntervals: Record<TaskFrequency, number> = {
 const taskStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"] as const satisfies readonly TaskStatus[];
 const equipmentStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE", "DISCARDED"] as const satisfies readonly EquipmentStatus[];
 const documentTypes = ["INVOICE", "WARRANTY", "MANUAL", "CERTIFICATE", "CONTRACT", "DL50_ASSESSMENT", "OTHER"] as const satisfies readonly DocumentType[];
-const userRoles = ["ADMIN", "MANAGER", "SGQ", "USER", "VIEWER", "TICKET"] as const satisfies readonly UserRole[];
+const userRoles = ["ADMIN", "MANAGER", "SGQ", "HSA", "USER", "VIEWER", "TICKET"] as const satisfies readonly UserRole[];
 const sgqStatuses = ["DRAFT", "ACTIVE", "ARCHIVED"] as const satisfies readonly SGQStatus[];
 const maintenanceTypes = ["INTERNAL", "EXTERNAL"] as const satisfies readonly MaintenanceType[];
 const interventionKinds = ["INSPECTION", "MAINTENANCE"] as const satisfies readonly InterventionKind[];
@@ -1733,7 +1736,7 @@ export async function createInternalMaintenanceChecklistRecord(formData: FormDat
 }
 
 export async function createConsumable(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireInventoryWrite();
   const prisma = getPrisma();
   const equipmentId = optionalText(formData, "equipmentId");
   const initialStock = decimal(formData, "currentStock") || decimal(formData, "amount");
@@ -1777,7 +1780,7 @@ export async function createConsumable(formData: FormData) {
 }
 
 export async function updateConsumable(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireInventoryWrite();
   const prisma = getPrisma();
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
@@ -1957,7 +1960,7 @@ export async function deleteStoragePosition(formData: FormData) {
 }
 
 export async function createConsumableStockOut(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireInventoryWrite();
   const prisma = getPrisma();
   const consumableId = text(formData, "consumableId");
   const quantity = decimalNumber(text(formData, "quantity"));
@@ -1984,7 +1987,7 @@ export async function createConsumableStockOut(formData: FormData) {
 }
 
 export async function createConsumableStockIn(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireInventoryWrite();
   const prisma = getPrisma();
   const consumableId = text(formData, "consumableId");
   const quantity = decimalNumber(text(formData, "quantity"));
@@ -2899,7 +2902,7 @@ async function notifyAssignedUser(
 export async function createMaintenanceTicket(formData: FormData) {
   const user = await requireUser();
 
-  if (user.role === "VIEWER" || user.role === "SGQ") {
+  if (user.role === "VIEWER" || isQualityRole(user.role)) {
     return;
   }
   const prisma = getPrisma();

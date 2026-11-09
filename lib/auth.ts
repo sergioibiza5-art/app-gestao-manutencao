@@ -1,3 +1,4 @@
+import { isQualityRole } from "@/lib/quality-roles";
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -90,6 +91,7 @@ const roleRank: Record<UserRole, number> = {
   TICKET: -1,
   VIEWER: 0,
   SGQ: 0,
+  HSA: 0,
   USER: 1,
   MANAGER: 2,
   ADMIN: 3,
@@ -107,6 +109,12 @@ export async function requireCanWrite() {
   return requireRole("USER");
 }
 
+export async function requireInventoryWrite() {
+  const user = await requireUser();
+  if (user.role !== "HSA" && roleRank[user.role] < roleRank.USER) redirect("/");
+  return user;
+}
+
 export async function requireCanManage() {
   return requireRole("MANAGER");
 }
@@ -117,7 +125,7 @@ export async function requireCanAdmin() {
 
 export async function requireCanSgq() {
   const user = await requireUser();
-  if (!["ADMIN", "MANAGER", "SGQ"].includes(user.role)) {
+  if (!["ADMIN", "MANAGER"].includes(user.role) && !isQualityRole(user.role)) {
     redirect("/");
   }
   return user;

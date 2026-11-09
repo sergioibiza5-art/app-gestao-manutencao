@@ -1673,7 +1673,7 @@ export async function getVacationsData(year: number) {
           include: { user: true },
         }),
         prisma.user.findMany({
-          where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER", "SGQ"] } },
+          where: { active: true, role: { in: ["ADMIN", "MANAGER", "USER", "SGQ", "HSA"] } },
           orderBy: { name: "asc" },
         }),
       ]);

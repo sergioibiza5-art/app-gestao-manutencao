@@ -7,7 +7,7 @@ export { csvCell, entryTypes, lisbonDate, reportRange } from "@/lib/chemical-rep
 
 export async function getChemicalReport(from?: string, to?: string) {
   const user = await requireUser();
-  if (!["ADMIN", "MANAGER", "VIEWER"].includes(user.role)) throw new Error("Sem permissão para consultar o inventário.");
+  if (!["ADMIN", "MANAGER", "VIEWER", "HSA"].includes(user.role)) throw new Error("Sem permissão para consultar o inventário.");
   const range = reportRange(from, to);
   const prisma = getPrisma();
   // Fetch a padded UTC interval, then apply exact Lisbon calendar dates (including DST).

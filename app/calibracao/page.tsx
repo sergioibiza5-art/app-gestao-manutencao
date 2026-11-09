@@ -1,3 +1,4 @@
+import { isQualityRole } from "@/lib/quality-roles";
 import { CalibrationSummary } from "./calibration-summary";
 import { daysToCalibration } from "@/lib/calibration-alerts";
 import { requireUser } from "@/lib/auth";
@@ -177,7 +178,7 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
           </div>
         </div>
 
-        <CalibrationSummary key={calibrationReturnPath + (params.alertas ?? "")} entries={alerts} manual={params.alertas === "verificar"} automatic={user.role === "SGQ"} />
+        <CalibrationSummary key={calibrationReturnPath + (params.alertas ?? "")} entries={alerts} manual={params.alertas === "verificar"} automatic={isQualityRole(user.role)} />
 
         <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {annualCalibrationMap.map(({ month, items }, index) => (

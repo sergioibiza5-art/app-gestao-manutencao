@@ -1,3 +1,4 @@
+import { isQualityRole } from "@/lib/quality-roles";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
@@ -18,8 +19,9 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   if (user.role === "TICKET" && activeHref !== "/tickets") {
     redirect("/tickets");
   }
-  const sgqAllowed = ["/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis"];
-  if (user.role === "SGQ" && !sgqAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
+  const qualityAllowed = ["/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis"];
+  if (user.role === "HSA") qualityAllowed.push("/inventario");
+  if (isQualityRole(user.role) && !qualityAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/calibracao");
   }
   const userAllowedNavigation = ["/plano", "/tickets", "/manutencao", "/equipamentos", "/localizacoes", "/checklists"];
@@ -28,8 +30,8 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   }
   const visibleNavigation = user.role === "TICKET"
     ? navigation.filter((item) => item.href === "/tickets")
-    : user.role === "SGQ"
-    ? navigation.filter((item) => sgqAllowed.includes(item.href))
+    : isQualityRole(user.role)
+    ? navigation.filter((item) => qualityAllowed.includes(item.href))
     : user.role === "USER"
     ? navigation.filter((item) => userAllowedNavigation.includes(item.href))
     : ["ADMIN", "MANAGER"].includes(user.role)
