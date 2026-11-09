@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { calibrationDay, calibrationGroup, calibrationGroups, daysToCalibration } from "@/lib/calibration-alerts";
-import { absoluteUrl, escapeHtml, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
+import { absoluteUrl, escapeHtml, isDeliverableEmail } from "@/lib/email-alerts";
+import { sendCalibrationGmail } from "@/lib/calibration-gmail";
 import { getPrisma } from "@/lib/prisma";
 
 const channel = "calibration-email";
@@ -64,8 +65,7 @@ export async function sendCalibrationEmails(pilotToken?: string) {
         }).join("");
         const html = `<h1>${subject}</h1>${rows ? "<ul>" + rows + "</ul>" : "<p>Sem calibrações em alerta.</p>"}<p><a href="${escapeHtml(absoluteUrl("/calibracao?alertas=verificar"))}">Abrir mapa de calibrações</a></p>`;
         const key = createHash("sha256").update(JSON.stringify([user.id, user.email, pilotMarker, html])).digest("hex");
-        const result = await sendResendEmail(user.email, subject, html, key);
-        if (!result.sent) throw new Error("Envio de e-mail indisponível.");
+        await sendCalibrationGmail(user.email, subject, html, key);
         const keys = pending.map(e => e.key);
         if (pilotMarker) keys.push(pilotMarker);
         await tx.alertDigestDelivery.createMany({ data: keys.map(digestDate => ({ digestDate, channel, userId: user.id, subject })) });
