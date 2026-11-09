@@ -35,8 +35,12 @@ export async function sendCalibrationEmails(pilotToken?: string) {
     const group = calibrationGroup(daysToCalibration(log.nextDueDate, now));
     if (group < 0) return [];
     const date = calibrationDay(log.nextDueDate);
-    return [{ key: [log.id, date, group].join("/"), group, date, id: log.id, title: log.title, equipment: log.equipment.name }];
+    return [{ group, date, id: log.id, title: log.title, equipment: log.equipment.name }];
   }).sort((a, b) => a.group - b.group || a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
+
+  const today = calibrationDay(now);
+  const digestDate = pilot ? "test/" + pilot.digestDate : today;
+  const subject = (pilot ? "[Teste] " : "") + "Plano de calibrações · " + today.split("-").reverse().join("/");
 
   let sent = 0;
   let failed = 0;
@@ -47,28 +51,20 @@ export async function sendCalibrationEmails(pilotToken?: string) {
       const delivered = await prisma.$transaction(async tx => {
         // Serialize cron retries and individual tests for the same recipient.
         await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${channel}), hashtext(${user.id}))`;
-        const recorded = await tx.alertDigestDelivery.findMany({
-          where: { userId: user.id, channel, digestDate: { in: events.map(e => e.key) } },
-          select: { digestDate: true },
+        const previous = await tx.alertDigestDelivery.findUnique({
+          where: { userId_digestDate_channel: { userId: user.id, digestDate, channel } },
+          select: { id: true },
         });
-        const seen = new Set(recorded.map(row => row.digestDate));
-        const pending = events.filter(e => !seen.has(e.key));
-        const pilotMarker = pilot ? "test/" + pilot.digestDate : undefined;
-        if (pilotMarker && await tx.alertDigestDelivery.findFirst({ where: { userId: user.id, channel, digestDate: pilotMarker } })) return false;
-        if (!pilot && !pending.length) return false;
+        if (previous) return false;
 
-        const items = pilot ? events : pending;
-        const subject = (pilot ? "[Teste] " : "") + "Alertas de calibração";
-        const rows = items.map(e => {
+        const rows = events.map(e => {
           const url = absoluteUrl("/calibracao?calibrationId=" + encodeURIComponent(e.id) + "#calibration-" + encodeURIComponent(e.id));
           return `<li><strong>${calibrationGroups[e.group]}</strong> · <a href="${escapeHtml(url)}">${escapeHtml(e.title)}</a> · ${escapeHtml(e.equipment)} · ${e.date.split("-").reverse().join("/")}</li>`;
         }).join("");
-        const html = `<h1>${subject}</h1>${rows ? "<ul>" + rows + "</ul>" : "<p>Sem calibrações em alerta.</p>"}<p><a href="${escapeHtml(absoluteUrl("/calibracao?alertas=verificar"))}">Abrir mapa de calibrações</a></p>`;
-        const key = createHash("sha256").update(JSON.stringify([user.id, user.email, pilotMarker, html])).digest("hex");
+        const html = `<h1>${subject}</h1>${rows ? "<ul>" + rows + "</ul>" : "<p>Sem calibrações vencidas ou previstas para os próximos 30 dias.</p>"}<p><a href="${escapeHtml(absoluteUrl("/calibracao?alertas=verificar"))}">Abrir mapa de calibrações</a></p>`;
+        const key = createHash("sha256").update(JSON.stringify([channel, user.id, digestDate])).digest("hex");
         await sendGmail(user.email, subject, html, key);
-        const keys = pending.map(e => e.key);
-        if (pilotMarker) keys.push(pilotMarker);
-        await tx.alertDigestDelivery.createMany({ data: keys.map(digestDate => ({ digestDate, channel, userId: user.id, subject })) });
+        await tx.alertDigestDelivery.create({ data: { digestDate, channel, userId: user.id, subject } });
         return true;
       }, { timeout: 30_000 });
       if (delivered) sent++;
