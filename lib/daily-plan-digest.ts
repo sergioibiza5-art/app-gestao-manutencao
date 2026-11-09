@@ -1,7 +1,7 @@
 import type { PrismaClient, User } from "@prisma/client";
 
 import { buildDailyPlanData, dailyPlanCount, lisbonDateValue } from "@/lib/daily-plan";
-import { absoluteUrl, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
+import { absoluteUrl, escapeHtml, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
 import { formatDate, formatShortDate } from "@/lib/format";
 import { getPrisma } from "@/lib/prisma";
 import { sendPushNotifications } from "@/lib/push-notifications";
@@ -13,13 +13,7 @@ type DigestOptions = {
 
 type DigestUser = User;
 
-function escapeHtml(value: unknown) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
+
 
 function statusLabel(status: string) {
   const labels: Record<string, string> = {

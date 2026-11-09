@@ -1,5 +1,6 @@
 {
   "crons": [
+    { "path": "/api/cron/calibracoes", "schedule": "15 7 * * *" },
     {
       "path": "/api/ambiental/import-google-drive",
       "schedule": "0 12 * * *"

@@ -1,3 +1,11 @@
+export function escapeHtml(value: unknown) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
 export function isDeliverableEmail(email: string) {
   const value = email.trim().toLowerCase();
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && !value.endsWith(".local");
@@ -11,7 +19,7 @@ export function absoluteUrl(path: string) {
   return `${appBaseUrl()}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export async function sendResendEmail(to: string, subject: string, html: string) {
+export async function sendResendEmail(to: string, subject: string, html: string, idempotencyKey?: string) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.ALERT_EMAIL_FROM || "Gestão de manutenção <onboarding@resend.dev>";
 
@@ -24,7 +32,9 @@ export async function sendResendEmail(to: string, subject: string, html: string)
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
+      ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
     },
+    signal: AbortSignal.timeout(10_000),
     body: JSON.stringify({ from, to, subject, html }),
   });
 
