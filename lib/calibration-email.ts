@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
-import { calibrationDay, calibrationGroup, calibrationGroups, daysToCalibration } from "@/lib/calibration-alerts";
-import { absoluteUrl, escapeHtml, isDeliverableEmail } from "@/lib/email-alerts";
+import { calibrationDay, calibrationGroup, daysToCalibration } from "@/lib/calibration-alerts";
+import { isDeliverableEmail } from "@/lib/email-alerts";
+import { renderCalibrationEmail } from "@/lib/calibration-email-template";
 import { sendGmail } from "@/lib/gmail";
 import { getPrisma } from "@/lib/prisma";
 
@@ -42,6 +43,7 @@ export async function sendCalibrationEmails(pilotToken?: string) {
   const digestDate = pilot ? "test/" + pilot.digestDate : today;
   const subject = (pilot ? "[Teste] " : "") + "Plano de calibrações · " + today.split("-").reverse().join("/");
 
+  const html = renderCalibrationEmail(events, today);
   let sent = 0;
   let failed = 0;
   let testError: string | undefined;
@@ -57,11 +59,6 @@ export async function sendCalibrationEmails(pilotToken?: string) {
         });
         if (previous) return false;
 
-        const rows = events.map(e => {
-          const url = absoluteUrl("/calibracao?calibrationId=" + encodeURIComponent(e.id) + "#calibration-" + encodeURIComponent(e.id));
-          return `<li><strong>${calibrationGroups[e.group]}</strong> · <a href="${escapeHtml(url)}">${escapeHtml(e.title)}</a> · ${escapeHtml(e.equipment)} · ${e.date.split("-").reverse().join("/")}</li>`;
-        }).join("");
-        const html = `<h1>${subject}</h1>${rows ? "<ul>" + rows + "</ul>" : "<p>Sem calibrações vencidas ou previstas para os próximos 30 dias.</p>"}<p><a href="${escapeHtml(absoluteUrl("/calibracao?alertas=verificar"))}">Abrir mapa de calibrações</a></p>`;
         const key = createHash("sha256").update(JSON.stringify([channel, user.id, digestDate])).digest("hex");
         await sendGmail(user.email, subject, html, key);
         await tx.alertDigestDelivery.create({ data: { digestDate, channel, userId: user.id, subject } });
