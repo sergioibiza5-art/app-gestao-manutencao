@@ -39,6 +39,7 @@ export async function sendCalibrationEmails(pilotToken?: string) {
 
   let sent = 0;
   let failed = 0;
+  let testError: string | undefined;
   for (const user of users) {
     try {
       if (!isDeliverableEmail(user.email)) throw new Error("Endereço inválido.");
@@ -73,8 +74,12 @@ export async function sendCalibrationEmails(pilotToken?: string) {
       if (delivered) sent++;
     } catch (error) {
       failed++;
+      if (pilot && error instanceof Error) {
+        testError = /^(Falha no envio de email:|Envio de e-mail indisponível|Endereço inválido)/.test(error.message)
+          ? error.message.slice(0, 700) : "Falha no registo da entrega.";
+      }
       console.error("Falha no resumo de calibrações", user.id, error instanceof Error ? error.message : "Erro desconhecido");
     }
   }
-  return { sent, failed, recipients: users.length };
+  return { sent, failed, recipients: users.length, testError };
 }
