@@ -3,7 +3,7 @@
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-import { consumptionUnit, consumptionLabel, stockDescription } from "@/lib/stock-units";
+import { consumptionUnit, consumptionLabel, stockDescription, innerPackCount, isInnerPack } from "@/lib/stock-units";
 import { inputClass } from "@/app/components/ui";
 
 type ConsumableOption = {
@@ -30,13 +30,16 @@ type TicketConsumablesProps = {
 export function TicketConsumables({ consumables, initialUsages = [] }: TicketConsumablesProps) {
   const initialRows =
     initialUsages.length > 0
-      ? initialUsages.map((usage) => ({
-          key: crypto.randomUUID(),
-          consumableId: usage.consumableId,
-          quantity: String(usage.quantity ?? ""),
-          quantityUnit: "STOCK",
-          usageNotes: usage.notes ?? "",
-        }))
+      ? initialUsages.map((usage) => {
+          const product = consumables.find(item => item.id === usage.consumableId);
+          const innerCount = product && isInnerPack(product) ? innerPackCount(product, usage.quantity) : null;
+          const useInner = innerCount !== null && Number.isInteger(innerCount);
+          return {
+            key: crypto.randomUUID(), consumableId: usage.consumableId,
+            quantity: String(useInner ? innerCount : usage.quantity ?? ""),
+            quantityUnit: useInner ? "CONTENT" : "STOCK", usageNotes: usage.notes ?? "",
+          };
+        })
       : [{ key: crypto.randomUUID(), consumableId: "", quantity: "", quantityUnit: "STOCK", usageNotes: "" }];
   const [rows, setRows] = useState(initialRows);
 

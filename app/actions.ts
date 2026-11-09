@@ -1788,8 +1788,8 @@ export async function updateConsumable(formData: FormData) {
 
   if (!id) return { error: "Produto não identificado." };
 
-  const newStock = decimal(formData, "currentStock");
-  if (Number(newStock) < 0) return { error: "O stock não pode ser negativo." };
+  const enteredStock = decimal(formData, "currentStock");
+  if (Number(enteredStock) < 0) return { error: "O stock não pode ser negativo." };
   const packageQuantity = optionalText(formData, "packageQuantity") ? decimal(formData, "packageQuantity") : null;
   const packageUnit = optionalText(formData, "packageUnit");
   if (packageQuantity !== null && Number(packageQuantity) <= 0) return { error: "A quantidade por embalagem tem de ser positiva." };
@@ -1797,6 +1797,11 @@ export async function updateConsumable(formData: FormData) {
   const result = await prisma.$transaction(async tx => {
     const [current] = await tx.$queryRaw<{ currentStock: string; packageQuantity: string | null; packageUnit: string | null }[]>`SELECT "currentStock"::text, "packageQuantity"::text, "packageUnit" FROM "Consumable" WHERE id = ${id} FOR UPDATE`;
     if (!current) return { error: "O produto já não está no inventário." };
+    let newStock = enteredStock;
+    if (text(formData, "stockCountUnit") === "CONTENT") {
+      if (!Number.isInteger(Number(enteredStock)) || !Number(current.packageQuantity)) return { error: "Indica um número inteiro de embalagens internas." };
+      newStock = (Number(enteredStock) / Number(current.packageQuantity)).toFixed(8);
+    }
     if (current?.packageQuantity && (Number(current.packageQuantity) !== Number(packageQuantity) || current.packageUnit?.toLowerCase() !== packageUnit?.toLowerCase())) {
       const history = await tx.consumableMovement.count({ where: { consumableId: id } });
       if (history > 0) return { error: "Este produto já tem movimentos. Mantém a quantidade e a unidade da embalagem ou cria uma ficha para a nova embalagem." };
@@ -1971,19 +1976,21 @@ export async function createConsumableStockOut(formData: FormData) {
   const user = await requireInventoryWrite();
   const prisma = getPrisma();
   const consumableId = text(formData, "consumableId");
-  const quantity = decimalNumber(text(formData, "quantity"));
+  const entered = Number(decimalString(text(formData, "quantity"), 8));
   const reason = optionalText(formData, "reason") || "Baixa direta de stock";
 
-  if (!consumableId || quantity <= 0) return;
+  if (!consumableId || entered <= 0) return;
 
   await prisma.$transaction(async (tx) => {
+    const product = await tx.consumable.findUniqueOrThrow({ where: { id: consumableId } });
+    const quantity = toStockQuantity(product, entered, text(formData, "quantityUnit") || "STOCK");
     await decrementStock(tx, consumableId, quantity);
 
     await tx.consumableMovement.create({
       data: {
         consumableId,
         type: "SAIDA_DIRETA",
-        quantity: quantity.toFixed(2),
+        quantity: quantity.toFixed(8),
         reason,
         userId: user.id,
       },
@@ -1998,12 +2005,14 @@ export async function createConsumableStockIn(formData: FormData) {
   const user = await requireInventoryWrite();
   const prisma = getPrisma();
   const consumableId = text(formData, "consumableId");
-  const quantity = decimalNumber(text(formData, "quantity"));
+  const entered = Number(decimalString(text(formData, "quantity"), 8));
   const reason = optionalText(formData, "reason") || "Entrada direta de stock";
 
-  if (!consumableId || quantity <= 0) return;
+  if (!consumableId || entered <= 0) return;
 
   await prisma.$transaction(async (tx) => {
+    const product = await tx.consumable.findUniqueOrThrow({ where: { id: consumableId } });
+    const quantity = toStockQuantity(product, entered, text(formData, "quantityUnit") || "STOCK");
     await tx.consumable.update({
       where: { id: consumableId },
       data: { currentStock: { increment: quantity } },
@@ -2013,7 +2022,7 @@ export async function createConsumableStockIn(formData: FormData) {
       data: {
         consumableId,
         type: "ENTRADA_DIRETA",
-        quantity: quantity.toFixed(2),
+        quantity: quantity.toFixed(8),
         reason,
         userId: user.id,
       },

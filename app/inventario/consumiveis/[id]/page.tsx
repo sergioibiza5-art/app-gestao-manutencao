@@ -1,4 +1,4 @@
-import { stockDescription } from "@/lib/stock-units";
+import { stockDescription, stockQuantityLabel, isInnerPack, innerPackCount } from "@/lib/stock-units";
 import { ProductTypeField } from "@/app/components/product-type-field";
 import { productTypeLabel } from "@/lib/product-types";
 import Link from "next/link";
@@ -52,7 +52,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
       <PageHeader
         eyebrow="Ficha de stock"
         title={item.name}
-        description={`${item.category} · ${productTypeLabel(item.productType)} - ${String(item.currentStock)} ${item.unit} em stock - minimo ${String(item.minimumStock)} ${item.unit}`}
+        description={`${item.category} · ${productTypeLabel(item.productType)} - ${stockQuantityLabel(item, item.currentStock)} em stock - minimo ${String(item.minimumStock)} ${item.unit}`}
         action={
           <div className="flex flex-wrap items-center gap-2">
             <DetailsOpenButton targetId="editar-produto" className={buttonClass}>
@@ -94,8 +94,9 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Stock atual (embalagens)">
-                <input name="currentStock" className={inputClass} defaultValue={String(item.currentStock)} placeholder="Ex.: 10" />
+              <Field label={isInnerPack(item) ? "Stock atual (embalagens internas)" : "Stock atual (embalagens)"}>
+                <input type="hidden" name="stockCountUnit" value={isInnerPack(item) ? "CONTENT" : "STOCK"} />
+                <input name="currentStock" className={inputClass} defaultValue={isInnerPack(item) ? innerPackCount(item, item.currentStock) : String(item.currentStock)} placeholder="Ex.: 10" />
               </Field>
               <Field label="Stock mínimo (embalagens)">
                 <input name="minimumStock" className={inputClass} defaultValue={String(item.minimumStock)} placeholder="Ex.: 2" />
@@ -223,7 +224,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
                           ) : null}
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-semibold text-lime-200">{String(movement.quantity)} {item.unit}</p>
+                          <p className="text-sm font-semibold text-lime-200">{stockQuantityLabel(item, movement.quantity)}</p>
                           <p className="mt-1 text-xs text-zinc-500">{formatDate(movement.date)}</p>
                         </div>
                       </div>
@@ -251,7 +252,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
                           {usage.ticket.workOrder && <p className="mt-1 text-xs font-semibold text-teal-300">{usage.ticket.workOrder.number}</p>}
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-semibold text-cyan-200">{String(usage.quantity)} {item.unit}</p>
+                          <p className="text-sm font-semibold text-cyan-200">{stockQuantityLabel(item, usage.quantity)}</p>
                           <p className="mt-1 text-xs text-zinc-500">{formatCurrency(Number(usage.quantity ?? 0) * Number(usage.unitCost ?? 0))}</p>
                         </div>
                       </div>

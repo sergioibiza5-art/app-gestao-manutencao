@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { toStockQuantity, consumptionUnit, contentPerPack } from "./stock-units";
+import { toStockQuantity, consumptionUnit, contentPerPack, stockDescription } from "./stock-units";
 
 test("3 cans of 400 ml, consuming 100 then 50 ml", () => {
   const item = { unit: "lata", packageQuantity: 400, packageUnit: "ml" };
@@ -24,4 +24,10 @@ test("mass conversion and rejection of incompatible quantities", () => {
   assert.throws(() => toStockQuantity(item, -1));
   assert.throws(() => toStockQuantity(item, NaN));
   assert.throws(() => toStockQuantity({ unit: "un" }, 50, "ml"));
+});
+test("caixa de dez: uma entrada de caixa e saídas por embalagem interna", () => {
+  const product = { unit: "caixa", packageQuantity: 10, packageUnit: "embalagem interna" };
+  const stock = 4.3 + toStockQuantity(product, 1) - toStockQuantity(product, 2, "CONTENT");
+  assert.equal(stockDescription({ ...product, currentStock: stock }), "51 embalagens internas");
+  assert.throws(() => toStockQuantity(product, 0.5, "CONTENT"));
 });

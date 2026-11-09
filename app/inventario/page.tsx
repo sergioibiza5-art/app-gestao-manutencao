@@ -1,4 +1,5 @@
-import { stockDescription } from "@/lib/stock-units";
+import { StockMovementFields } from "@/app/components/stock-movement-fields";
+import { stockDescription, stockQuantityLabel } from "@/lib/stock-units";
 import { ProductTypeField } from "@/app/components/product-type-field";
 import { productTypeLabel } from "@/lib/product-types";
 import Link from "next/link";
@@ -122,6 +123,10 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
   const exportParams = new URLSearchParams(
     Object.entries(params).filter(([, value]) => typeof value === "string" && value.length > 0) as string[][],
   );
+  const movementProducts = consumables.map(item => ({
+    id: item.id, name: item.name, unit: item.unit, stock: stockDescription(item),
+    packageQuantity: Number(item.packageQuantity), packageUnit: item.packageUnit,
+  }));
   const templateHref =
     "data:text/csv;charset=utf-8," +
     encodeURIComponent(
@@ -333,19 +338,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                 <DetailsCloseButton targetId="entrada-stock" />
               </div>
               <form action={createConsumableStockIn} className="mt-5 grid gap-3 md:grid-cols-2">
-                <Field label="Produto">
-                  <select name="consumableId" required className={inputClass}>
-                    <option value="">Selecionar produto</option>
-                    {consumables.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name} - stock {stockDescription(item)}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="Embalagens a adicionar">
-                  <input name="quantity" required className={inputClass} placeholder="Ex.: 1" />
-                </Field>
+                <StockMovementFields products={movementProducts} outgoing={false} />
                 <Field label="Motivo">
                   <textarea name="reason" className={`${textareaClass} md:col-span-2`} placeholder="Ex.: compra, reposição de stock, ajuste por contagem..." />
                 </Field>
@@ -373,19 +366,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                 <DetailsCloseButton targetId="baixa-stock" />
               </div>
               <form action={createConsumableStockOut} className="mt-5 grid gap-3 md:grid-cols-2">
-                <Field label="Produto">
-                  <select name="consumableId" required className={inputClass}>
-                    <option value="">Selecionar produto</option>
-                    {consumables.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name} - stock {stockDescription(item)}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="Embalagens a descontar">
-                  <input name="quantity" required className={inputClass} placeholder="Ex.: 1" />
-                </Field>
+                <StockMovementFields products={movementProducts} outgoing={true} />
                 <Field label="Motivo">
                   <textarea name="reason" className={`${textareaClass} md:col-span-2`} placeholder="Ex.: consumo direto, desperdício, ajuste por contagem..." />
                 </Field>
@@ -435,7 +416,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
                           <td className="px-4 py-3 text-zinc-400">{formatDate(movement.date)}</td>
                           <td className="px-4 py-3 font-medium text-zinc-100">{movement.consumable.name}</td>
                           <td className="px-4 py-3 text-zinc-300">{movement.type.replaceAll("_", " ")}</td>
-                          <td className="px-4 py-3 text-cyan-200">{String(movement.quantity)} {movement.consumable.unit}</td>
+                          <td className="px-4 py-3 text-cyan-200">{stockQuantityLabel(movement.consumable, movement.quantity)}</td>
                           <td className="px-4 py-3 text-zinc-400">
                             {movement.workOrder ? `OP ${movement.workOrder.number}` : movement.ticket ? `Ticket ${movement.ticket.number}` : movement.reason ?? "Movimento manual"}
                           </td>

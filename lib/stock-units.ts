@@ -15,11 +15,27 @@ export function consumptionLabel(item: Pack) {
 export function toStockQuantity(item: Pack, quantity: number, unit = "STOCK") {
   if (!Number.isFinite(quantity) || quantity <= 0) throw new Error("Indica uma quantidade positiva.");
   if (unit !== "STOCK" && unit !== consumptionUnit(item)) throw new Error("Unidade de consumo inválida para este produto.");
+  if (isInnerPack(item) && unit === "CONTENT" && !Number.isInteger(quantity)) throw new Error("Indica um número inteiro de embalagens internas.");
   const result = Number((unit === "STOCK" ? quantity : quantity / contentPerPack(item)).toFixed(8));
   if (result <= 0) throw new Error("Quantidade inferior à precisão suportada.");
   return result;
 }
+export function isInnerPack(item: Pack) {
+  return item.packageUnit?.trim().toLowerCase() === "embalagem interna" && Number(item.packageQuantity) > 0;
+}
+
+export function innerPackCount(item: Pack, stock: unknown) {
+  return Number((Number(stock) * Number(item.packageQuantity)).toFixed(6));
+}
+
+export function stockQuantityLabel(item: Pack, quantity: unknown) {
+  if (!isInnerPack(item)) return `${String(quantity)} ${item.unit}`;
+  const count = innerPackCount(item, quantity);
+  return `${count.toLocaleString("pt-PT")} ${count === 1 ? "embalagem interna" : "embalagens internas"}`;
+}
+
 export function stockDescription(item: Pack & { currentStock: unknown }) {
+  if (isInnerPack(item)) return stockQuantityLabel(item, item.currentStock);
   const stock = Number(item.currentStock);
   const format = (n: number) => new Intl.NumberFormat("pt-PT", { maximumFractionDigits: 4 }).format(n);
   if (consumptionUnit(item) === "STOCK") return `${format(stock)} ${item.unit}`;
