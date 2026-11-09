@@ -1008,6 +1008,7 @@ model CalibrationLog {
 }
 
 model Consumable {
+  stockUnitsPerOuterBox Int?
   productType String @default("UNCLASSIFIED")
   id           String  @id @default(cuid())
   name         String

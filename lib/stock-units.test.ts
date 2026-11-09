@@ -31,3 +31,12 @@ test("caixa de dez: uma entrada de caixa e saídas por embalagem interna", () =>
   assert.equal(stockDescription({ ...product, currentStock: stock }), "51 embalagens internas");
   assert.throws(() => toStockQuantity(product, 0.5, "CONTENT"));
 });
+test("stock contado em internas: entrada de uma caixa e consumo de uma interna", () => {
+  const product = { unit: "embalagem interna", stockUnitsPerOuterBox: 10 };
+  assert.equal(13 + toStockQuantity(product, 1, "OUTER_BOX") - toStockQuantity(product, 1), 22);
+  assert.throws(() => toStockQuantity(product, 0.5));
+  assert.throws(() => toStockQuantity(product, 0.5, "OUTER_BOX"));
+  const gown = { unit: "caixa", packageQuantity: 20, packageUnit: "embalagem interna" };
+  assert.equal(stockDescription({ ...gown, currentStock: 2.4 }), "48 embalagens internas");
+  assert.equal(toStockQuantity(gown, 1, "CONTENT"), 0.05);
+});

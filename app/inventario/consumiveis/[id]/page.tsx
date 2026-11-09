@@ -30,7 +30,8 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-function packageDescription(item: { unit: string; packageQuantity?: unknown; packageUnit?: string | null }) {
+function packageDescription(item: { unit: string; stockUnitsPerOuterBox?: number | null; packageQuantity?: unknown; packageUnit?: string | null }) {
+  if (item.stockUnitsPerOuterBox) return `1 caixa externa = ${item.stockUnitsPerOuterBox} embalagens internas`;
   const quantity = Number(item.packageQuantity ?? 0);
   if (!quantity || !item.packageUnit) return null;
   return `1 ${item.unit} = ${String(item.packageQuantity)} ${item.packageUnit}`;
@@ -94,7 +95,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Field label={isInnerPack(item) ? "Stock atual (embalagens internas)" : "Stock atual (embalagens)"}>
+              <Field label={item.stockUnitsPerOuterBox || isInnerPack(item) ? "Stock atual (embalagens internas)" : "Stock atual (embalagens)"}>
                 <input type="hidden" name="stockCountUnit" value={isInnerPack(item) ? "CONTENT" : "STOCK"} />
                 <input name="currentStock" className={inputClass} defaultValue={isInnerPack(item) ? innerPackCount(item, item.currentStock) : String(item.currentStock)} placeholder="Ex.: 10" />
               </Field>

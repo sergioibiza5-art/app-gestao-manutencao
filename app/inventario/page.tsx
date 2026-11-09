@@ -37,7 +37,8 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-function packageDescription(item: { unit: string; packageQuantity?: unknown; packageUnit?: string | null }) {
+function packageDescription(item: { unit: string; stockUnitsPerOuterBox?: number | null; packageQuantity?: unknown; packageUnit?: string | null }) {
+  if (item.stockUnitsPerOuterBox) return `1 caixa externa = ${item.stockUnitsPerOuterBox} embalagens internas`;
   const quantity = Number(item.packageQuantity ?? 0);
   if (!quantity || !item.packageUnit) return null;
   return `1 ${item.unit} = ${String(item.packageQuantity)} ${item.packageUnit}`;
@@ -125,7 +126,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
   );
   const movementProducts = consumables.map(item => ({
     id: item.id, name: item.name, unit: item.unit, stock: stockDescription(item),
-    packageQuantity: Number(item.packageQuantity), packageUnit: item.packageUnit,
+    stockUnitsPerOuterBox: item.stockUnitsPerOuterBox, packageQuantity: Number(item.packageQuantity), packageUnit: item.packageUnit,
   }));
   const templateHref =
     "data:text/csv;charset=utf-8," +

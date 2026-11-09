@@ -1795,8 +1795,9 @@ export async function updateConsumable(formData: FormData) {
   if (packageQuantity !== null && Number(packageQuantity) <= 0) return { error: "A quantidade por embalagem tem de ser positiva." };
   if (Boolean(packageQuantity) !== Boolean(packageUnit)) return { error: "Preenche a quantidade por embalagem e a unidade técnica em conjunto." };
   const result = await prisma.$transaction(async tx => {
-    const [current] = await tx.$queryRaw<{ currentStock: string; packageQuantity: string | null; packageUnit: string | null }[]>`SELECT "currentStock"::text, "packageQuantity"::text, "packageUnit" FROM "Consumable" WHERE id = ${id} FOR UPDATE`;
+    const [current] = await tx.$queryRaw<{ currentStock: string; stockUnitsPerOuterBox: number | null; packageQuantity: string | null; packageUnit: string | null }[]>`SELECT "currentStock"::text, "stockUnitsPerOuterBox", "packageQuantity"::text, "packageUnit" FROM "Consumable" WHERE id = ${id} FOR UPDATE`;
     if (!current) return { error: "O produto já não está no inventário." };
+    if (current.stockUnitsPerOuterBox && !Number.isInteger(Number(enteredStock))) return { error: "Indica um número inteiro de embalagens internas." };
     let newStock = enteredStock;
     if (text(formData, "stockCountUnit") === "CONTENT") {
       if (!Number.isInteger(Number(enteredStock)) || !Number(current.packageQuantity)) return { error: "Indica um número inteiro de embalagens internas." };

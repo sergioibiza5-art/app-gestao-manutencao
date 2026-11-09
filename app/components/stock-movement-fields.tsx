@@ -4,7 +4,7 @@ import { useState } from "react";
 import { consumptionLabel, consumptionUnit, isInnerPack } from "@/lib/stock-units";
 import { inputClass } from "@/app/components/ui";
 
-type Product = { id: string; name: string; unit: string; stock: string; packageQuantity: number; packageUnit: string | null };
+type Product = { id: string; name: string; unit: string; stock: string; stockUnitsPerOuterBox: number | null; packageQuantity: number; packageUnit: string | null };
 
 export function StockMovementFields({ products, outgoing }: { products: Product[]; outgoing: boolean }) {
   const [id, setId] = useState("");
@@ -16,7 +16,8 @@ export function StockMovementFields({ products, outgoing }: { products: Product[
       <select required className={inputClass} name="consumableId" value={id} onChange={event => {
         const product = products.find(option => option.id === event.target.value);
         setId(event.target.value);
-        setQuantityUnit(outgoing && product && isInnerPack(product) ? "CONTENT" : "STOCK");
+        if (!outgoing && product?.stockUnitsPerOuterBox) setQuantityUnit("OUTER_BOX");
+        else setQuantityUnit(outgoing && product && isInnerPack(product) ? "CONTENT" : "STOCK");
       }}>
         <option value="">Selecionar produto</option>
         {products.map(product => <option key={product.id} value={product.id}>{product.name} — {product.stock}</option>)}
@@ -24,12 +25,13 @@ export function StockMovementFields({ products, outgoing }: { products: Product[
     </label>
     <label className="grid gap-1">Unidade do movimento
       <select key={id} className={inputClass} name="quantityUnit" value={quantityUnit} onChange={event => setQuantityUnit(event.target.value)}>
+        {selected?.stockUnitsPerOuterBox && <option value="OUTER_BOX">Caixa externa ({selected.stockUnitsPerOuterBox} embalagens internas)</option>}
         <option value="STOCK">{selected?.unit || "Unidade de stock"}</option>
         {selected && content !== "STOCK" && <option value={content}>{consumptionLabel(selected)}</option>}
       </select>
     </label>
     <label className="grid gap-1">Quantidade
-      <input key={id} name="quantity" required pattern={selected && isInnerPack(selected) && quantityUnit === "CONTENT" ? "[1-9][0-9]*" : undefined} inputMode={selected && isInnerPack(selected) ? "numeric" : "decimal"} className={inputClass} placeholder="Ex.: 1" />
+      <input key={id} name="quantity" required pattern={selected && (selected.stockUnitsPerOuterBox || (isInnerPack(selected) && quantityUnit === "CONTENT")) ? "[1-9][0-9]*" : undefined} inputMode={selected && isInnerPack(selected) ? "numeric" : "decimal"} className={inputClass} placeholder="Ex.: 1" />
     </label>
   </>;
 }
