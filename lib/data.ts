@@ -563,7 +563,7 @@ export async function getKpiData(filters?: { year?: string; month?: string; peri
   );
 }
 
-export async function getModuleData() {
+export async function getModuleData({ completeCalibrationHistory = false } = {}) {
   return readDb(
     async (prisma) => {
       const [
@@ -639,7 +639,7 @@ export async function getModuleData() {
           },
       }),
         prisma.maintenanceLog.findMany({ orderBy: { date: "desc" }, take: 40, include: { equipment: true } }),
-        prisma.calibrationLog.findMany({ orderBy: { calibrationDate: "desc" }, take: 1000, include: { equipment: true, documents: true } }),
+        prisma.calibrationLog.findMany({ orderBy: [{ calibrationDate: "desc" }, { createdAt: "desc" }, { id: "desc" }], take: completeCalibrationHistory ? undefined : 1000, include: { equipment: true, documents: true } }),
         prisma.consumable.findMany({ orderBy: { name: "asc" }, take: 100, include: { equipment: true } }),
         prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
         prisma.user.findMany({
@@ -668,6 +668,7 @@ export async function getModuleData() {
       equipmentTypes: [],
       vehicles: [],
     },
+    completeCalibrationHistory,
   );
 }
 

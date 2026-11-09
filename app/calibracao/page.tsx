@@ -1,3 +1,6 @@
+import { CalibrationSummary } from "./calibration-summary";
+import { daysToCalibration } from "@/lib/calibration-alerts";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { AlertTriangle, CalendarDays, FileSpreadsheet, Search } from "lucide-react";
 
@@ -11,7 +14,7 @@ import { formatDate } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 type CalibrationPageProps = {
-  searchParams?: Promise<{ q?: string; approved?: string; year?: string; month?: string; calibrationId?: string }>;
+  searchParams?: Promise<{ alertas?: string; q?: string; approved?: string; year?: string; month?: string; calibrationId?: string }>;
 };
 
 const monthNames = [
@@ -36,11 +39,7 @@ function normalize(value: unknown) {
 function calibrationTone(nextDueDate: Date | null) {
   if (!nextDueDate) return "border-zinc-800 bg-black/30 text-zinc-100";
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const due = new Date(nextDueDate);
-  due.setHours(0, 0, 0, 0);
-  const days = Math.ceil((due.getTime() - today.getTime()) / 86_400_000);
+  const days = daysToCalibration(nextDueDate);
 
   if (days < 0) return "border-rose-300/50 bg-rose-950/25 text-rose-100";
   if (days <= 30) return "border-amber-300/50 bg-amber-950/25 text-amber-100";
@@ -51,11 +50,7 @@ function calibrationTone(nextDueDate: Date | null) {
 function calibrationStatus(nextDueDate: Date | null) {
   if (!nextDueDate) return "Sem data";
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const due = new Date(nextDueDate);
-  due.setHours(0, 0, 0, 0);
-  const days = Math.ceil((due.getTime() - today.getTime()) / 86_400_000);
+  const days = daysToCalibration(nextDueDate);
 
   if (days < 0) return "Vencida";
   if (days === 0) return "Vence hoje";
@@ -100,7 +95,8 @@ function weekDaysForMonth(year: number, monthIndex: number) {
 
 export default async function CalibrationPage({ searchParams }: CalibrationPageProps) {
   const params = (await searchParams) ?? {};
-  const { equipment, calibrationLogs } = await getModuleData();
+  const { equipment, calibrationLogs } = await getModuleData({ completeCalibrationHistory: true });
+  const user = await requireUser();
   const q = normalize(params.q);
   const approved = params.approved || "all";
   const selectedYear = Number(params.year || new Date().getFullYear());
@@ -112,6 +108,13 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
       return acc;
     }, {}),
   );
+  const today = new Date();
+  const alerts = latestCalibrationByEquipment.flatMap(log => {
+    if (!log.nextDueDate) return [];
+    const days = daysToCalibration(log.nextDueDate, today);
+    if (days > 30) return [];
+    return [{ id: log.id, title: log.title, equipment: log.equipment.name, date: log.nextDueDate.toLocaleDateString("pt-PT", { timeZone: "Europe/Lisbon" }), days }];
+  }).sort((a, b) => a.days - b.days || a.title.localeCompare(b.title, "pt"));
   const annualCalibrationMap = monthNames.map((month, index) => ({
     month,
     items: latestCalibrationByEquipment
@@ -173,6 +176,8 @@ export default async function CalibrationPage({ searchParams }: CalibrationPageP
             </form>
           </div>
         </div>
+
+        <CalibrationSummary key={calibrationReturnPath + (params.alertas ?? "")} entries={alerts} manual={params.alertas === "verificar"} automatic={user.role === "SGQ"} />
 
         <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {annualCalibrationMap.map(({ month, items }, index) => (
