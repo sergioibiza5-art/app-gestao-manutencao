@@ -13,15 +13,16 @@ export async function sendCalibrationEmails(pilotToken?: string) {
   const now = new Date();
   const pilot = pilotToken ? await prisma.alertDigestDelivery.findFirst({
     where: {
-      channel: pilotChannel,
+      channel: { in: [pilotChannel, "calibration-email-daily-request"] },
       digestDate: createHash("sha256").update(pilotToken).digest("hex"),
       createdAt: { gt: new Date(now.valueOf() - 86_400_000) },
     },
   }) : null;
   if (pilotToken && !pilot) throw new Error("Teste inválido ou expirado.");
 
+  const isTest = pilot?.channel === pilotChannel;
   const users = await prisma.user.findMany({
-    where: { active: true, ...(pilot ? { id: pilot.userId, role: { in: ["ADMIN", "MANAGER", "SGQ"] } } : { role: "SGQ" }) },
+    where: { active: true, ...(pilot ? { id: pilot.userId } : {}), role: isTest ? { in: ["ADMIN", "MANAGER", "SGQ"] } : "SGQ" },
     select: { id: true, email: true },
   });
   if (pilot && users.length !== 1) throw new Error("Destinatário do teste indisponível.");
@@ -40,8 +41,8 @@ export async function sendCalibrationEmails(pilotToken?: string) {
   }).sort((a, b) => a.group - b.group || a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
 
   const today = calibrationDay(now);
-  const digestDate = pilot ? "test/" + pilot.digestDate : today;
-  const subject = (pilot ? "[Teste] " : "") + "Plano de calibrações · " + today.split("-").reverse().join("/");
+  const digestDate = isTest ? "test/" + pilot.digestDate : today;
+  const subject = (isTest ? "[Teste] " : "") + "Plano de calibrações · " + today.split("-").reverse().join("/");
 
   const html = renderCalibrationEmail(events, today);
   let sent = 0;
