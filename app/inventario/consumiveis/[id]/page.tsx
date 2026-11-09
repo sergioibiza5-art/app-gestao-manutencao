@@ -6,12 +6,13 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, FolderOpen, History, Package, Pencil, ReceiptText, Trash2 } from "lucide-react";
 
-import { deleteConsumable, updateConsumable } from "@/app/actions";
+import { ConsumableEditForm } from "@/app/components/consumable-edit-form";
+import { deleteConsumable } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
 import { DetailsCloseButton } from "@/app/components/details-close-button";
 import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
-import { getConsumableDetail, getModuleData } from "@/lib/data";
+import { getConsumableDetail, getEquipmentOptions } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -37,7 +38,7 @@ function packageDescription(item: { unit: string; packageQuantity?: unknown; pac
 
 export default async function ConsumablePage({ params }: ConsumablePageProps) {
   const { id } = await params;
-  const [item, moduleData] = await Promise.all([getConsumableDetail(id), getModuleData()]);
+  const [item, equipmentOptions] = await Promise.all([getConsumableDetail(id), getEquipmentOptions()]);
 
   if (!item) {
     notFound();
@@ -78,7 +79,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
             </div>
             <DetailsCloseButton targetId="editar-produto" />
           </div>
-          <form action={updateConsumable} className="grid gap-3 lg:grid-cols-2">
+          <ConsumableEditForm>
             <input type="hidden" name="id" value={item.id} />
             <Field label="Nome">
               <input name="name" required className={inputClass} defaultValue={item.name} placeholder="Nome da peça ou consumível" />
@@ -117,7 +118,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
             <Field label="Equipamento associado">
               <select name="equipmentId" className={inputClass} defaultValue={item.equipmentId ?? ""}>
                 <option value="">Sem equipamento associado</option>
-                {moduleData.equipment.map((equipment) => (
+                {equipmentOptions.map((equipment) => (
                   <option key={equipment.id} value={equipment.id}>
                     {equipment.name}{equipment.code ? ` - ${equipment.code}` : ""}
                   </option>
@@ -136,10 +137,7 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
             <Field label="Notas">
               <textarea name="notes" className={textareaClass} defaultValue={item.notes ?? ""} placeholder="Referência, compatibilidade ou centro de custo" />
             </Field>
-            <div className="flex flex-wrap gap-2">
-              <button className={buttonClass}>Guardar alteracoes</button>
-            </div>
-          </form>
+          </ConsumableEditForm>
           <form action={deleteConsumable} className="mt-3">
             <input type="hidden" name="id" value={item.id} />
             <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-rose-400/35 bg-rose-400/10 px-3 text-sm font-semibold text-rose-200 transition hover:border-rose-300">

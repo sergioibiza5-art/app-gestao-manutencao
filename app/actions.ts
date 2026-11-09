@@ -1786,56 +1786,63 @@ export async function updateConsumable(formData: FormData) {
   const id = text(formData, "id");
   const equipmentId = optionalText(formData, "equipmentId");
 
-  if (!id) return;
+  if (!id) return { error: "Produto não identificado." };
 
-  const current = await prisma.consumable.findUnique({ where: { id }, select: { currentStock: true, packageQuantity: true, packageUnit: true } });
   const newStock = decimal(formData, "currentStock");
-  if (Number(newStock) < 0) throw new Error("O stock não pode ser negativo.");
+  if (Number(newStock) < 0) return { error: "O stock não pode ser negativo." };
   const packageQuantity = optionalText(formData, "packageQuantity") ? decimal(formData, "packageQuantity") : null;
   const packageUnit = optionalText(formData, "packageUnit");
-  if (Boolean(packageQuantity && Number(packageQuantity) > 0) !== Boolean(packageUnit)) throw new Error("Preenche o conteúdo por embalagem e a unidade técnica em conjunto.");
-  if (current?.packageQuantity && (Number(current.packageQuantity) !== Number(packageQuantity) || current.packageUnit?.toLowerCase() !== packageUnit?.toLowerCase())) {
-    const history = await prisma.consumableMovement.count({ where: { consumableId: id } });
-    if (history > 0) throw new Error("Este produto já tem movimentos. Para uma embalagem de tamanho diferente, cria uma ficha separada para preservar o histórico.");
-  }
+  if (packageQuantity !== null && Number(packageQuantity) <= 0) return { error: "A quantidade por embalagem tem de ser positiva." };
+  if (Boolean(packageQuantity) !== Boolean(packageUnit)) return { error: "Preenche a quantidade por embalagem e a unidade técnica em conjunto." };
+  const result = await prisma.$transaction(async tx => {
+    const [current] = await tx.$queryRaw<{ currentStock: string; packageQuantity: string | null; packageUnit: string | null }[]>`SELECT "currentStock"::text, "packageQuantity"::text, "packageUnit" FROM "Consumable" WHERE id = ${id} FOR UPDATE`;
+    if (!current) return { error: "O produto já não está no inventário." };
+    if (current?.packageQuantity && (Number(current.packageQuantity) !== Number(packageQuantity) || current.packageUnit?.toLowerCase() !== packageUnit?.toLowerCase())) {
+      const history = await tx.consumableMovement.count({ where: { consumableId: id } });
+      if (history > 0) return { error: "Este produto já tem movimentos. Mantém a quantidade e a unidade da embalagem ou cria uma ficha para a nova embalagem." };
+    }
 
-  await prisma.consumable.update({
-    where: { id },
-    data: {
-      name: text(formData, "name"),
-      category: text(formData, "category") || "Consumivel",
-      productType: parseProductType(formData.get("productType")),
-      unit: text(formData, "unit") || "un",
-      currentStock: newStock,
-      minimumStock: decimal(formData, "minimumStock"),
-      unitCost: decimal(formData, "unitCost"),
-      packageQuantity: optionalText(formData, "packageQuantity") ? decimal(formData, "packageQuantity") : null,
-      packageUnit: optionalText(formData, "packageUnit"),
-      folderUrl: optionalText(formData, "folderUrl"),
-      location: optionalText(formData, "location"),
-      shelfZone: optionalText(formData, "shelfZone"),
-      supplier: optionalText(formData, "supplier"),
-      notes: optionalText(formData, "notes"),
-      equipmentId,
-    },
-  });
-
-  const delta = Number(newStock) - Number(current?.currentStock ?? 0);
-  if (delta !== 0) {
-    await prisma.consumableMovement.create({
+    await tx.consumable.update({
+      where: { id },
       data: {
-        consumableId: id,
-        type: delta > 0 ? "ENTRADA_MANUAL" : "SAIDA_MANUAL",
-        quantity: Math.abs(delta).toFixed(8),
-        reason: "Ajuste manual de stock",
-        userId: user.id,
+        name: text(formData, "name"),
+        category: text(formData, "category") || "Consumivel",
+        productType: parseProductType(formData.get("productType")),
+        unit: text(formData, "unit") || "un",
+        currentStock: newStock,
+        minimumStock: decimal(formData, "minimumStock"),
+        unitCost: decimal(formData, "unitCost"),
+        packageQuantity: optionalText(formData, "packageQuantity") ? decimal(formData, "packageQuantity") : null,
+        packageUnit: optionalText(formData, "packageUnit"),
+        folderUrl: optionalText(formData, "folderUrl"),
+        location: optionalText(formData, "location"),
+        shelfZone: optionalText(formData, "shelfZone"),
+        supplier: optionalText(formData, "supplier"),
+        notes: optionalText(formData, "notes"),
+        equipmentId,
       },
     });
-  }
+
+    const delta = Number(newStock) - Number(current?.currentStock ?? 0);
+    if (delta !== 0) {
+      await tx.consumableMovement.create({
+        data: {
+          consumableId: id,
+          type: delta > 0 ? "ENTRADA_MANUAL" : "SAIDA_MANUAL",
+          quantity: Math.abs(delta).toFixed(8),
+          reason: "Ajuste manual de stock",
+          userId: user.id,
+        },
+      });
+    }
+    return { saved: true };
+  });
+  if (result.error) return result;
 
   revalidatePath("/inventario");
   revalidatePath(`/inventario/consumiveis/${id}`);
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
+  return result;
 }
 
 export async function deleteConsumable(formData: FormData) {
