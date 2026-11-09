@@ -12,7 +12,8 @@ import { redirect } from "next/navigation";
 
 import type { ChecklistResponseStatus, Dl50Answer, Dl50AssessmentStatus, DocumentType, EquipmentStatus, ExpenseStatus, InterventionKind, MaintenanceScheduleStatus, MaintenanceType, Prisma, SGQStatus, TaskFrequency, TaskStatus, UserRole, VehicleFuel, VehicleServiceType } from "@prisma/client";
 import { createSession, destroySession, hashPassword, requireCanAdmin, requireCanManage, requireCanSgq, requireInventoryWrite, requireCanWrite, requireUser, verifyPassword } from "@/lib/auth";
-import { absoluteUrl, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
+import { absoluteUrl, isDeliverableEmail } from "@/lib/email-alerts";
+import { sendGmail } from "@/lib/gmail";
 import { importGoogleDriveEnvironmentalReports } from "@/lib/environmental-google-drive";
 import { importEnvironmentalWorkbook, saveEnvironmentalImport } from "@/lib/environmental-import";
 import { importMicrosoftEnvironmentalReports } from "@/lib/environmental-microsoft-drive";
@@ -2606,7 +2607,7 @@ function renderTicketAlertEmail(input: {
 
 async function sendTicketAlertEmails(recipients: string[], subject: string, html: string) {
   const uniqueRecipients = [...new Set(recipients.map((email) => email.trim().toLowerCase()).filter(isDeliverableEmail))];
-  await Promise.all(uniqueRecipients.map((email) => sendResendEmail(email, subject, html)));
+  await Promise.all(uniqueRecipients.map((email) => sendGmail(email, subject, html)));
 }
 
 async function markTicketNotificationsRead(tx: Prisma.TransactionClient, ticketNumber: string) {

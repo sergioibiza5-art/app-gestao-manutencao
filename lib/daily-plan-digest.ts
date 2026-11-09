@@ -1,7 +1,8 @@
 import type { PrismaClient, User } from "@prisma/client";
 
 import { buildDailyPlanData, dailyPlanCount, lisbonDateValue } from "@/lib/daily-plan";
-import { absoluteUrl, escapeHtml, isDeliverableEmail, sendResendEmail } from "@/lib/email-alerts";
+import { absoluteUrl, escapeHtml, isDeliverableEmail } from "@/lib/email-alerts";
+import { sendGmail } from "@/lib/gmail";
 import { formatDate, formatShortDate } from "@/lib/format";
 import { getPrisma } from "@/lib/prisma";
 import { sendPushNotifications } from "@/lib/push-notifications";
@@ -238,13 +239,9 @@ export async function sendDailyPlanDigests(options: DigestOptions = {}) {
     }
 
     try {
-      const emailResult = await sendResendEmail(user.email, subject, renderPlanEmail(user, plan));
-      if (emailResult.sent) {
-        await markDelivered(prisma, user.id, dateValue, "EMAIL", subject);
-        result.emailsSent += 1;
-      } else {
-        result.emailsSkipped += 1;
-      }
+      await sendGmail(user.email, subject, renderPlanEmail(user, plan));
+      await markDelivered(prisma, user.id, dateValue, "EMAIL", subject);
+      result.emailsSent += 1;
     } catch (error) {
       result.errors.push(error instanceof Error ? error.message : "Erro desconhecido no envio do email.");
     }
