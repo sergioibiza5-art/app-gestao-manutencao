@@ -1,3 +1,4 @@
+import { sendTeamPlanTest } from "@/lib/team-plan-test";
 import { sendCalibrationEmails } from "@/lib/calibration-email";
 
 export const dynamic = "force-dynamic";
@@ -11,12 +12,13 @@ export async function GET(request: Request) {
   return Response.json(result, { status: result.failed ? 502 : 200 });
 }
 
-// A time-limited test grant selects one SGQ recipient on the server.
+// The time-limited grant fixes the recipient on the server.
 export async function POST(request: Request) {
   const token = request.headers.get("authorization")?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
   if (!token) return new Response(null, { status: 401 });
   try {
-    const result = await sendCalibrationEmails(token);
+    const result = new URL(request.url).searchParams.get("summary") === "team-plan"
+      ? await sendTeamPlanTest(token) : await sendCalibrationEmails(token);
     return Response.json(result, { status: result.failed ? 502 : 200 });
   } catch (error) {
     if (error instanceof Error && error.message === "Teste inválido ou expirado.") return new Response(null, { status: 401 });

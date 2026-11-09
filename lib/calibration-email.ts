@@ -21,7 +21,7 @@ export async function sendCalibrationEmails(pilotToken?: string) {
   if (pilotToken && !pilot) throw new Error("Teste inválido ou expirado.");
 
   const users = await prisma.user.findMany({
-    where: { active: true, role: "SGQ", ...(pilot ? { id: pilot.userId } : {}) },
+    where: { active: true, ...(pilot ? { id: pilot.userId, role: { in: ["ADMIN", "MANAGER", "SGQ"] } } : { role: "SGQ" }) },
     select: { id: true, email: true },
   });
   if (pilot && users.length !== 1) throw new Error("Destinatário do teste indisponível.");

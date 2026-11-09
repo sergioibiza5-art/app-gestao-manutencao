@@ -61,7 +61,7 @@ function row(label: string, meta: string, href: string, tone = "#111827") {
   `;
 }
 
-function renderPlanEmail(user: DigestUser, plan: Awaited<ReturnType<typeof buildDailyPlanData>>) {
+export function renderPlanEmail(user: DigestUser, plan: Awaited<ReturnType<typeof buildDailyPlanData>>) {
   const title = plan.isTeamView ? "Plano diário da equipa" : `Plano diário de ${user.name}`;
   const count = dailyPlanCount(plan);
   const taskRows = plan.tasks.map((task) =>
