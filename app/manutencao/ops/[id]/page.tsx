@@ -1,3 +1,5 @@
+import { WorkOrderEditor } from "../work-order-editor";
+import { requireUser } from "@/lib/auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/app/components/app-shell";
@@ -8,6 +10,7 @@ import { workOrderScope, workOrderStatuses } from "@/lib/work-order-search";
 const dateTime = new Intl.DateTimeFormat("pt-PT", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Lisbon" });
 
 export default async function Order({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; estado?: string; pagina?: string }> }) {
+  const user = await requireUser();
   const scope = await workOrderScope();
   const { id } = await params;
   const { q = "", estado = "", pagina = "1" } = await searchParams;
@@ -27,6 +30,11 @@ export default async function Order({ params, searchParams }: { params: Promise<
   return <AppShell activeHref="/manutencao">
     <PageHeader eyebrow={op.number} title={op.title} description={[op.equipment.code,op.equipment.name].filter(Boolean).join(" · ")}
       action={<Link className={buttonClass} href={"/manutencao/ops?" + new URLSearchParams({ q, estado, pagina })}>Voltar à pesquisa</Link>} />
+    {["ADMIN", "MANAGER"].includes(user.role) && <WorkOrderEditor order={{
+      id: op.id, version: op.updatedAt.toISOString(), title: op.title, type: op.type,
+      performedBy: op.performedBy, actionsDone: op.actionsDone || op.maintenanceLog?.description || null,
+      result: op.result, notes: op.notes, supplier: op.maintenanceLog?.supplier,
+    }} />}
     <Panel><dl className="grid gap-4 sm:grid-cols-2">{fields.filter(([,value]) => value).map(([label,value]) =>
       <div key={label}><dt className="text-sm text-zinc-400">{label}</dt><dd className="whitespace-pre-wrap">{value}</dd></div>)}</dl>
       <div className="mt-5 flex flex-wrap gap-3">
