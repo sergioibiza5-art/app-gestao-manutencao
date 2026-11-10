@@ -481,13 +481,25 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   <input name="supplier" className={`${inputClass} lg:col-span-2`} placeholder="Fornecedor / técnico" />
                   <input name="performedBy" className={`${inputClass} lg:col-span-2`} placeholder="Feito por" />
                   <input name="amount" className={inputClass} placeholder="Custo" />
-                  <input name="startedAt" type="datetime-local" className={inputClass} />
-                  <input name="closedAt" type="datetime-local" className={inputClass} />
                   <select name="machineStopped" className={inputClass} defaultValue="NO">
                     <option value="NO">Máquina sem paragem</option>
                     <option value="YES">Máquina parada</option>
                   </select>
-                  <input name="nextDate" type="date" className={inputClass} />
+
+                  <div className="grid gap-3 sm:grid-cols-3 lg:col-span-6">
+                    <label className="grid min-w-0 gap-1.5 text-sm font-medium text-zinc-300">
+                      Início da intervenção (data e hora)
+                      <input name="startedAt" type="datetime-local" className={inputClass} />
+                    </label>
+                    <label className="grid min-w-0 gap-1.5 text-sm font-medium text-zinc-300">
+                      Fim da intervenção (data e hora)
+                      <input name="closedAt" type="datetime-local" className={inputClass} />
+                    </label>
+                    <label className="grid min-w-0 gap-1.5 text-sm font-medium text-zinc-300">
+                      Próxima manutenção prevista (opcional)
+                      <input name="nextDate" type="date" className={inputClass} />
+                    </label>
+                  </div>
 
                   <textarea name="description" className={`${textareaClass} lg:col-span-6`} placeholder="Descrição do trabalho executado" />
 
