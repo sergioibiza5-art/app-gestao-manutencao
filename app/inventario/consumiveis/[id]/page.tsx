@@ -95,11 +95,11 @@ export default async function ConsumablePage({ params }: ConsumablePageProps) {
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Field label={item.stockUnitsPerOuterBox || isInnerPack(item) ? "Stock atual (embalagens internas)" : "Stock atual (embalagens)"}>
+              <Field label={item.stockUnitsPerOuterBox || isInnerPack(item) ? "Stock atual (embalagens internas)" : `Stock atual (${item.unit})`}>
                 <input type="hidden" name="stockCountUnit" value={isInnerPack(item) ? "CONTENT" : "STOCK"} />
                 <input name="currentStock" className={inputClass} defaultValue={isInnerPack(item) ? innerPackCount(item, item.currentStock) : String(item.currentStock)} placeholder="Ex.: 10" />
               </Field>
-              <Field label="Stock mínimo (embalagens)">
+              <Field label={`Stock mínimo (${item.unit})`}>
                 <input name="minimumStock" className={inputClass} defaultValue={String(item.minimumStock)} placeholder="Ex.: 2" />
               </Field>
             </div>
