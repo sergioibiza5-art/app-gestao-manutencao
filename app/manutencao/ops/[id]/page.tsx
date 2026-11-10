@@ -1,5 +1,8 @@
 import { WorkOrderEditor } from "../work-order-editor";
 import { requireUser } from "@/lib/auth";
+import { WorkOrderControls } from "../../work-order-controls";
+import { WorkOrderExecution } from "../../work-order-execution";
+import { workOrderExecutionInclude } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/app/components/app-shell";
@@ -15,11 +18,16 @@ export default async function Order({ params, searchParams }: { params: Promise<
   const { id } = await params;
   const { q = "", estado = "", pagina = "1" } = await searchParams;
   const op = await getPrisma().workOrder.findFirst({ where: { AND: [scope, { id }] }, include: {
-    equipment: { select: { name: true, code: true } }, ticket: { select: { id: true, number: true } },
+    ...workOrderExecutionInclude,
+    equipment: { select: { name: true, code: true, equipmentType: { select: { checklistTemplates: { where: { active: true }, orderBy: { createdAt: "desc" }, take: 1, include: { items: { where: { active: true }, orderBy: { order: "asc" } } } } } } } }, ticket: { select: { id: true, number: true } },
     schedule: { select: { assignedTo: { select: { name: true } } } },
-    maintenanceLog: { select: { description: true, supplier: true } },
+
   } });
   if (!op) notFound();
+  const canManage = ["ADMIN", "MANAGER"].includes(user.role);
+  const canOperate = canManage || user.role === "USER";
+  const consumables = canOperate && !op.ticket && ["OPEN", "PAUSED", "IN_PROGRESS"].includes(op.status)
+    ? await getPrisma().consumable.findMany({ orderBy: { name: "asc" }, take: 300 }) : [];
   const fields = [
     ["Estado", workOrderStatuses[op.status]], ["Tipo", op.type === "INTERNAL" ? "Interna" : "Externa"],
     ["Abertura", dateTime.format(op.openedAt)], ["Início", op.startedAt && dateTime.format(op.startedAt)],
@@ -42,5 +50,7 @@ export default async function Order({ params, searchParams }: { params: Promise<
         {op.ticket && <Link className={buttonClass} href={`/tickets?ticketId=${op.ticket.id}#ticket-${op.ticket.id}`}>Abrir {op.ticket.number}</Link>}
       </div>
     </Panel>
+    {canOperate && <Panel><WorkOrderControls workOrder={op} canManage={canManage} ticketLinked={Boolean(op.ticket)} /></Panel>}
+    {canOperate && !op.ticket && <WorkOrderExecution workOrder={op} equipmentId={op.equipmentId} template={op.template ?? op.equipment.equipmentType?.checklistTemplates[0]} consumableOptions={consumables} />}
   </AppShell>;
 }

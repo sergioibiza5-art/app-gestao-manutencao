@@ -1238,6 +1238,17 @@ export async function getMaintenanceData(filters: {
   );
 }
 
+export const workOrderExecutionInclude = {
+  template: { include: { items: { where: { active: true }, orderBy: { order: "asc" } } } },
+  documents: { orderBy: { createdAt: "desc" } },
+  checklistRecord: { include: { responses: { include: { item: true, photos: true } } } },
+  maintenanceLog: true,
+  consumableMovements: {
+    orderBy: { createdAt: "asc" },
+    include: { consumable: true, user: true },
+  },
+} as const;
+
 export async function getMaintenanceScheduleDetail(id: string) {
   return readDb(
     async (prisma) => {
@@ -1260,16 +1271,7 @@ export async function getMaintenanceScheduleDetail(id: string) {
           },
           assignedTo: true,
           workOrder: {
-            include: {
-              template: { include: { items: { where: { active: true }, orderBy: { order: "asc" } } } },
-              documents: { orderBy: { createdAt: "desc" } },
-              checklistRecord: { include: { responses: { include: { item: true, photos: true } } } },
-              maintenanceLog: true,
-              consumableMovements: {
-                orderBy: { createdAt: "asc" },
-                include: { consumable: true, user: true },
-              },
-            },
+            include: workOrderExecutionInclude,
           },
         },
       }),

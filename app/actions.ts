@@ -3914,6 +3914,8 @@ export async function startWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   const scheduleId = optionalText(formData, "scheduleId");
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
@@ -3948,6 +3950,8 @@ export async function suspendWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   const scheduleId = optionalText(formData, "scheduleId");
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
@@ -3996,6 +4000,8 @@ export async function cancelWorkOrderOpening(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId") ?? scheduleIdForRevalidate;
@@ -4039,6 +4045,8 @@ export async function reopenWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId");
@@ -4058,7 +4066,7 @@ export async function updateWorkOrderTiming(formData: FormData) {
   const validatedAt = optionalDateTime(formData, "validatedAt");
   const hours = Number.parseInt(optionalText(formData, "durationHours") ?? "0", 10);
   const minutes = Number.parseInt(optionalText(formData, "durationMinutes") ?? "0", 10);
-  const totalWorkSeconds = Math.max((Number.isFinite(hours) ? hours : 0) * 3600 + (Number.isFinite(minutes) ? minutes : 0) * 60, 0);
+  const enteredSeconds = Math.max((Number.isFinite(hours) ? hours : 0) * 3600 + (Number.isFinite(minutes) ? minutes : 0) * 60, 0);
   const manualHourlyRate = decimalNumber(optionalText(formData, "hourlyRate") ?? "");
   const hourlyRate = Number.isFinite(manualHourlyRate) && manualHourlyRate > 0 ? manualHourlyRate : Number(user.hourlyRate ?? 0);
   const correctionNotes = optionalText(formData, "correctionNotes");
@@ -4085,15 +4093,18 @@ export async function updateWorkOrderTiming(formData: FormData) {
       (sum, movement) => sum + Number(movement.quantity ?? 0) * Number(movement.consumable.unitCost ?? 0),
       0,
     );
+    const durationChanged = enteredSeconds !== Math.floor(workOrder.totalWorkSeconds / 60) * 60;
+    const totalWorkSeconds = durationChanged ? enteredSeconds : workOrder.totalWorkSeconds;
+    const recalculateCost = durationChanged || manualHourlyRate > 0;
     const laborCost = Number(((totalWorkSeconds / 3600) * hourlyRate).toFixed(2));
     const totalCost = Number((laborCost + consumableCost).toFixed(2));
-    const costNote = [
+    const costNote = recalculateCost ? [
       `Tempo OP corrigido: ${durationNote(totalWorkSeconds)}`,
       `Custo/hora aplicado: ${hourlyRate.toFixed(2)} EUR`,
       `Mao de obra corrigida: ${laborCost.toFixed(2)} EUR`,
       `Consumiveis: ${consumableCost.toFixed(2)} EUR`,
       `Total corrigido: ${totalCost.toFixed(2)} EUR`,
-    ].join("\n");
+    ].join("\n") : "";
 
     const previous = [
       `aberta=${workOrder.openedAt.toISOString()}`,
@@ -4134,7 +4145,7 @@ export async function updateWorkOrderTiming(formData: FormData) {
         where: { id: workOrder.maintenanceLog.id },
         data: {
           date: startedAt ?? openedAt ?? workOrder.maintenanceLog.date,
-          cost: totalCost.toFixed(2),
+          cost: recalculateCost ? totalCost.toFixed(2) : undefined,
           notes: [
             workOrder.maintenanceLog.notes,
             auditNote("Correcao manual de datas/tempo/custo da OP", user.name, `${previous} -> ${next}. ${correctionNotes ?? ""}\n${costNote}`),
@@ -4148,6 +4159,8 @@ export async function updateWorkOrderTiming(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   revalidatePath("/equipamentos");
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
   const scheduleId = optionalText(formData, "scheduleId") ?? scheduleIdForRevalidate;
@@ -4180,6 +4193,8 @@ export async function pauseWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   const scheduleId = optionalText(formData, "scheduleId");
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
@@ -4324,6 +4339,8 @@ export async function completeWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   if (scheduleIdForRevalidate) revalidatePath(`/manutencao/${scheduleIdForRevalidate}`);
   revalidatePath(`/equipamentos/${equipmentId}`);
   revalidatePath("/inventario");
@@ -4363,6 +4380,8 @@ export async function validateWorkOrder(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${workOrderId}`);
   revalidatePath("/equipamentos");
 
   if (equipmentId) revalidatePath(`/equipamentos/${equipmentId}`);
