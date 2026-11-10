@@ -28,6 +28,7 @@ import { DetailsOpenButton } from "@/app/components/details-open-button";
 import { ModuleCodificationField } from "@/app/components/module-codification-field";
 import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
+import { workOrderStatuses } from "@/lib/work-order-search";
 import { requireUser } from "@/lib/auth";
 import { getMaintenanceData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
@@ -95,16 +96,7 @@ function scheduleStatusLabel(status: string) {
 function workOrderStatusLabel(status?: string | null) {
   if (!status) return "OP não iniciada";
 
-  const labels: Record<string, string> = {
-    OPEN: "OP criada",
-    IN_PROGRESS: "OP iniciada",
-    PAUSED: "OP pausada",
-    SUSPENDED: "OP suspensa",
-    DONE: "OP concluída",
-    VALIDATED: "OP validada",
-    CANCELED: "OP cancelada",
-  };
-
+  const labels: Record<string, string> = workOrderStatuses;
   return labels[status] ?? status;
 }
 
@@ -329,6 +321,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         }
         action={
           <div className="flex flex-wrap gap-2">
+            <Link href="/manutencao/ops" className={buttonClass}>Pesquisar OPs</Link>
             <DetailsOpenButton targetId="op-manual" className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-cyan-300/35 bg-cyan-300/10 px-4 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200">
               <PlayCircle size={18} />
               OP manual
@@ -422,7 +415,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   Usa esta opção para mudanças de setup, afinações e trabalhos pontuais que precisam de contar tempo.
                 </p>
               </div>
-              <DetailsOpenButton targetId="op-manual" className={buttonClass}>
+              <Link href="/manutencao/ops" className={buttonClass}>Pesquisar OPs</Link>
+            <DetailsOpenButton targetId="op-manual" className={buttonClass}>
                 <PlayCircle size={18} />
                 Iniciar OP manual
               </DetailsOpenButton>
