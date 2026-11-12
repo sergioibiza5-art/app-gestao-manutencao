@@ -657,11 +657,20 @@ const latestDl50Document =
                   </div>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     <Link
-                      href={`/manutencao/${schedule.id}`}
+                      href={canEditIntervals ? {
+                        pathname: "/manutencao",
+                        query: {
+                          view: "month",
+                          date: schedule.scheduledAt.toISOString().slice(0, 10),
+                          equipmentId: equipment.id,
+                          scheduleId: schedule.id,
+                        },
+                        hash: `agendamento-${schedule.id}`,
+                      } : `/manutencao/${schedule.id}`}
                       className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs font-semibold text-zinc-100 transition hover:border-amber-300/60"
                     >
                       <ExternalLink size={14} />
-                      Abrir
+                      {canEditIntervals ? "Editar agendamento" : "Abrir"}
                     </Link>
                     {schedule.description && <p className="text-sm text-zinc-500">{schedule.description}</p>}
                   </div>

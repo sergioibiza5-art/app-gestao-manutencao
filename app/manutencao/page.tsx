@@ -74,6 +74,7 @@ type MaintenancePageProps = {
     calendar?: string;
     agendar?: string;
     equipmentId?: string;
+    scheduleId?: string;
   }>;
 };
 
@@ -883,7 +884,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                         return (
                           <details
                             key={schedule.id}
-                            className={`group rounded-lg border p-3 open:border-teal-300/35 ${scheduleCardTone(schedule)}`}
+                            id={`agendamento-${schedule.id}`}
+                            open={filters.scheduleId === schedule.id}
+                            className={`group scroll-mt-24 rounded-lg border p-3 open:border-teal-300/35 ${scheduleCardTone(schedule)}`}
                           >
                             <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
                               <div className="min-w-0">
@@ -1004,6 +1007,8 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                                 <option value="FOUR_MONTHLY">Quadrimestral</option>
                                 <option value="SEMIANNUAL">Semestral</option>
                                 <option value="ANNUAL">Anual</option>
+                                <option value="BIENNIAL">Bienal (2 anos)</option>
+                                <option value="FIVE_YEAR">Quinquenal (5 anos)</option>
                                 <option value="WEEKLY">Semanal</option>
                                 <option value="DAILY">Diaria</option>
                               </select>
