@@ -53,6 +53,7 @@ function frequencyLabel(frequency: string) {
     DAILY: "Diária",
     WEEKLY: "Semanal",
     MONTHLY: "Mensal",
+    EVERY_TWO_MONTHS: "Bimestral",
     QUARTERLY: "Trimestral",
     FOUR_MONTHLY: "Quadrimestral",
     SEMIANNUAL: "Semestral",
@@ -825,7 +826,7 @@ const latestDl50Document =
         <input type="hidden" name="equipmentId" value={equipment.id} />
         <label className="grid gap-1 text-sm">Periodicidade
           <select name="frequency" defaultValue={schedule.frequency} className={inputClass}>
-            {["DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "FOUR_MONTHLY", "SEMIANNUAL", "ANNUAL", "BIENNIAL", "FIVE_YEAR"].map((frequency) => <option key={frequency} value={frequency}>{frequencyLabel(frequency)}</option>)}
+            {["DAILY", "WEEKLY", "MONTHLY", "EVERY_TWO_MONTHS", "QUARTERLY", "FOUR_MONTHLY", "SEMIANNUAL", "ANNUAL", "BIENNIAL", "FIVE_YEAR"].map((frequency) => <option key={frequency} value={frequency}>{frequencyLabel(frequency)}</option>)}
           </select>
         </label>
         <label className="grid gap-1 text-sm">Próxima data

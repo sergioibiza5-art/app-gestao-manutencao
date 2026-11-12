@@ -2,6 +2,7 @@ type MaintenanceFrequency =
   | "DAILY"
   | "WEEKLY"
   | "MONTHLY"
+  | "EVERY_TWO_MONTHS"
   | "QUARTERLY"
   | "FOUR_MONTHLY"
   | "SEMIANNUAL"
@@ -45,6 +46,7 @@ export function maintenanceToleranceEnd(scheduledAt: Date, frequency: string | n
 
   switch (frequency as MaintenanceFrequency) {
     case "MONTHLY":
+    case "EVERY_TWO_MONTHS":
       return endOfDay(addDays(scheduled, 7));
     case "QUARTERLY":
     case "FOUR_MONTHLY":

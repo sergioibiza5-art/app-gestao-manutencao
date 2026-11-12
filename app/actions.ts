@@ -228,6 +228,7 @@ const taskFrequencies = [
   "DAILY",
   "WEEKLY",
   "MONTHLY",
+  "EVERY_TWO_MONTHS",
   "QUARTERLY",
   "FOUR_MONTHLY",
   "SEMIANNUAL",
@@ -240,6 +241,7 @@ const monthIntervals: Record<TaskFrequency, number> = {
   DAILY: 0,
   WEEKLY: 0,
   MONTHLY: 1,
+  EVERY_TWO_MONTHS: 2,
   QUARTERLY: 3,
   FOUR_MONTHLY: 4,
   SEMIANNUAL: 6,
@@ -2265,6 +2267,7 @@ async function createNextMaintenanceSchedule(tx: Prisma.TransactionClient, sched
 
   const recurringFrequencies: readonly TaskFrequency[] = [
     "MONTHLY",
+    "EVERY_TWO_MONTHS",
     "QUARTERLY",
     "FOUR_MONTHLY",
     "SEMIANNUAL",

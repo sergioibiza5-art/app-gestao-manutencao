@@ -1,0 +1,1 @@
+ALTER TYPE "TaskFrequency" ADD VALUE 'EVERY_TWO_MONTHS';

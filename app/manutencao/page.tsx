@@ -555,6 +555,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                     <option value="DAILY">Diária</option>
                     <option value="WEEKLY">Semanal</option>
                     <option value="MONTHLY">Mensal</option>
+                    <option value="EVERY_TWO_MONTHS">Bimestral</option>
                     <option value="QUARTERLY">Trimestral</option>
                     <option value="FOUR_MONTHLY">Quadrimestral</option>
                     <option value="SEMIANNUAL">Semestral</option>
@@ -932,7 +933,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                               </span>
 
                               <span className="rounded-md border border-zinc-800 px-2 py-1">
-                                Frequência: {schedule.frequency}
+                                Frequência: {schedule.frequency === "EVERY_TWO_MONTHS" ? "Bimestral" : schedule.frequency}
                               </span>
 
                               {schedule.costCenter ? (
@@ -998,6 +999,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
                               <select name="frequency" className={inputClass} defaultValue={schedule.frequency}>
                                 <option value="MONTHLY">Mensal</option>
+                                <option value="EVERY_TWO_MONTHS">Bimestral</option>
                                 <option value="QUARTERLY">Trimestral</option>
                                 <option value="FOUR_MONTHLY">Quadrimestral</option>
                                 <option value="SEMIANNUAL">Semestral</option>
