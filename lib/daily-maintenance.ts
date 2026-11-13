@@ -2,11 +2,16 @@ import type { DailyMaintenanceEntry, UserRole } from "@prisma/client";
 import { notFound, redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
-import { maintenancePlanCodes } from "@/lib/mcc-maintenance-plan";
+import { isCleaning, maintenancePlanCodes } from "@/lib/mcc-maintenance-plan";
 
 export const dailyResults = { OK: "Conforme", NOT_OK: "Não conforme" } as const;
 export type DailyResult = keyof typeof dailyResults;
 export type DailyCheck = { label: string; result: DailyResult };
+export type CleaningDetails = { points: DailyCheck[]; products: string; tools: string };
+
+export function canVerifyCleaning(role: UserRole) {
+  return role === "ADMIN" || role === "MANAGER" || role === "SGQ";
+}
 
 export function canRecordDailyMaintenance(role: UserRole) {
   return role === "ADMIN" || role === "MANAGER" || role === "USER";
@@ -55,7 +60,11 @@ export function parseDailyChecks(formData: FormData, points: readonly { key: str
 }
 
 export function entryChecks(entry: DailyMaintenanceEntry) {
-  return entry.checks as DailyCheck[];
+  return cleaningDetails(entry)?.points ?? entry.checks as DailyCheck[];
+}
+
+export function cleaningDetails(entry: DailyMaintenanceEntry) {
+  return isCleaning(entry.groupKey) ? entry.checks as CleaningDetails : null;
 }
 
 export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {
@@ -67,6 +76,7 @@ export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {
 }
 
 export function maintenancePeriodStart(groupKey: string, day: string) {
+  groupKey = groupKey.replace(/^cleaning-/, "");
   const start = new Date(`${day}T00:00:00Z`);
   if (groupKey === "daily") return start;
   if (groupKey === "weekly") {

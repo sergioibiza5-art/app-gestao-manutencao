@@ -1,5 +1,11 @@
 export const pilotCode = "MCC_1";
 export const documentCode = "IMPSUP0833.02";
+export const cleaningDocumentCode = "IMPSUP0824.01";
+export const cleaningProduct = "DINPQ DESINBAC GRASS";
+
+export function isCleaning(key: string) {
+  return key.startsWith("cleaning-");
+}
 
 type PlanGroup = {
   key: string;
@@ -65,6 +71,18 @@ const plans: Record<string, readonly PlanGroup[]> = {
       "Inspecionar visualmente o desgaste da correia dentada.",
       "Verificar se as guias de corrediça se movem livremente e lubrificar se necessário.",
       "Substituir o filtro de pó do ventilador do armário de distribuição.",
+    ]),
+    group("cleaning-daily", "Diária", "1", "Produção", [
+      "Limpeza do chão na zona de trabalho.",
+      "Limpeza do tapete de saída do produto.",
+      "Limpeza das superfícies associadas (mesas e contentores de transporte).",
+      "Limpeza das barras de espalhamento.",
+    ]),
+    group("cleaning-weekly", "Semanal", "1", "Produção", [
+      "Limpeza do corpo da máquina.",
+    ]),
+    group("cleaning-semiannual", "Semestral", "1", "Manutenção", [
+      "Limpeza do ventilador do armário de distribuição.",
     ]),
   ],
   HOT_2: hotMelterGroups(6),

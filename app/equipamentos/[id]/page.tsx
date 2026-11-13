@@ -1,6 +1,6 @@
 import { requireUser } from "@/lib/auth";
 import { dailyPath } from "@/lib/daily-maintenance";
-import { maintenancePlan } from "@/lib/mcc-maintenance-plan";
+import { maintenancePlan, pilotCode } from "@/lib/mcc-maintenance-plan";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -498,6 +498,11 @@ const latestDl50Document =
             {maintenancePlan(equipment.code).length > 0 && (
               <Link href={dailyPath(equipment.id)} className={buttonClass}>
                 <ClipboardCheck size={17} /> Plano preventivo
+              </Link>
+            )}
+            {equipment.code === pilotCode && (
+              <Link href={`${dailyPath(equipment.id)}?grupo=cleaning-daily`} className={buttonClass}>
+                <ClipboardCheck size={17} /> Limpezas
               </Link>
             )}
             {canEditIntervals && isEquipmentOperational && (
