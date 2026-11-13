@@ -1130,7 +1130,7 @@ export async function getInternalMaintenanceRecord(equipmentId: string, recordId
 }
 
 function getMaintenanceRange(view: string, dateValue?: string) {
-  const base = dateValue ? new Date(dateValue) : new Date();
+  const base = dateValue ? new Date(`${dateValue}T00:00:00`) : new Date();
   const start = new Date(base);
   const end = new Date(base);
 

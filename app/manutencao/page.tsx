@@ -64,7 +64,7 @@ const monthNames = [
   "Dezembro",
 ];
 
-const weekDayNames = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+const weekDayNames = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
 type MaintenancePageProps = {
   searchParams: Promise<{
@@ -186,6 +186,14 @@ function dateInputValue(date: Date | null | undefined) {
   return date ? date.toISOString().slice(0, 10) : "";
 }
 
+function calendarDateValue(date: Date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
 function groupByDate<T extends { scheduledAt: Date }>(items: T[]) {
   return items.reduce<Record<string, T[]>>((groups, item) => {
     const key = formatDate(item.scheduledAt);
@@ -264,22 +272,27 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
       items: schedules.filter((schedule) => sameCalendarDay(new Date(schedule.scheduledAt), day)),
     };
   });
-  const selectedMonthDate = new Date(selectedDate);
+  const selectedMonthDate = new Date(`${selectedDate}T00:00:00`);
+  const selectedYear = selectedMonthDate.getFullYear();
+  const selectedMonth = selectedMonthDate.getMonth();
 
   const schedulesByMonth = monthNames.map((month, index) => ({
     month,
-    items: schedules.filter((schedule) => schedule.scheduledAt.getMonth() === index),
+    items: schedules.filter((schedule) =>
+      schedule.scheduledAt.getFullYear() === selectedYear && schedule.scheduledAt.getMonth() === index,
+    ),
   }));
+  const monthSchedules = schedulesByMonth[selectedMonth]?.items ?? [];
 
-  const monthStart = new Date(selectedMonthDate.getFullYear(), selectedMonthDate.getMonth(), 1);
-  const monthEnd = new Date(selectedMonthDate.getFullYear(), selectedMonthDate.getMonth() + 1, 0);
+  const monthStart = new Date(selectedYear, selectedMonth, 1);
+  const monthEnd = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59, 999);
   const firstMonday = new Date(monthStart);
   firstMonday.setDate(monthStart.getDate() - ((monthStart.getDay() + 6) % 7));
   const schedulesByWeek = Array.from({ length: 6 }, (_, weekIndex) => {
-  const start = new Date(firstMonday);
+    const start = new Date(firstMonday);
     start.setDate(firstMonday.getDate() + weekIndex * 7);
-  const end = new Date(start);
-    end.setDate(start.getDate() + 4);
+    const end = new Date(start);
+    end.setDate(start.getDate() + weekDayNames.length - 1);
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
 
@@ -288,27 +301,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
       start,
       end,
       range: `${formatDate(start)} a ${formatDate(end)}`,
-      items: schedules.filter((schedule) => {
-        const scheduledAt = new Date(schedule.scheduledAt);
-
-        return (
-          scheduledAt.getFullYear() === selectedMonthDate.getFullYear() &&
-          scheduledAt.getMonth() === selectedMonthDate.getMonth() &&
-          scheduledAt >= start &&
-          scheduledAt <= end
-        );
-      }),
+      items: monthSchedules.filter(({ scheduledAt }) => scheduledAt >= start && scheduledAt <= end),
     };
-  }).filter((week) => {
-    const day = new Date(week.start);
-
-    while (day <= week.end) {
-      if (day >= monthStart && day <= monthEnd) return true;
-      day.setDate(day.getDate() + 1);
-    }
-
-    return false;
-  });
+  }).filter((week) => week.start <= monthEnd && week.end >= monthStart);
 
   return (
     <AppShell activeHref="/manutencao">
@@ -682,7 +677,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 {schedulesByMonth.map(({ month, items }, monthIndex) => {
                   const visibleItems = items.length > 5 ? items.slice(0, 4) : items.slice(0, 5);
                   const hiddenCount = Math.max(items.length - visibleItems.length, 0);
-                  const monthDate = new Date(new Date(selectedDate).getFullYear(), monthIndex, 1).toISOString().slice(0, 10);
+                  const monthDate = `${selectedYear}-${String(monthIndex + 1).padStart(2, "0")}-01`;
 
                   return (
                     <Link
@@ -690,10 +685,11 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                       href={`/manutencao?view=month-weeks&date=${monthDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
                       className="min-h-42.5 overflow-hidden rounded-lg border border-teal-300/20 bg-zinc-950/60 transition hover:border-teal-300/60"
                     >
-                      <div className="border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
+                      <div className="flex items-center justify-between gap-2 border-b border-teal-300/20 bg-teal-300/10 px-4 py-3">
                         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">
                           {month}
                         </p>
+                        <span className="text-xs tabular-nums text-teal-200" aria-label={`${items.length} agendamentos no total`}>{items.length}</span>
                       </div>
 
                       <div className="space-y-2 p-3">
@@ -720,7 +716,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
                             {hiddenCount > 0 && (
                               <div className="rounded-md border border-teal-300/30 bg-teal-300/10 px-2 py-2 text-center text-xs font-semibold text-teal-200">
-                                + {hiddenCount} manutenções
+                                Mais {hiddenCount}
                               </div>
                             )}
                           </>
@@ -733,11 +729,14 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
             </div>
           ) : selectedView === "month-weeks" ? (
             <div className="mt-5">
-              <h3 className="mb-4 text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
-                Manutenções por semana
-              </h3>
+              <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h3 className="text-lg font-semibold uppercase tracking-[0.14em] text-zinc-100">
+                  Manutenções por semana
+                </h3>
+                <p className="text-sm tabular-nums text-zinc-400">{monthSchedules.length} no mês</p>
+              </div>
 
-              <div className="grid grid-cols-5 gap-3">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
                 {schedulesByWeek.map((week) => {
                   const visibleItems = week.items.length > 5 ? week.items.slice(0, 4) : week.items.slice(0, 5);
                   const hiddenCount = Math.max(week.items.length - visibleItems.length, 0);
@@ -753,6 +752,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                             {week.title}
                           </h4>
                           <p className="mt-1 text-[10px] leading-snug text-zinc-500">{week.range}</p>
+                          <p className="mt-1 text-xs tabular-nums text-zinc-400">{week.items.length} no mês</p>
                         </div>
                       </div>
 
@@ -781,10 +781,10 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
                           {hiddenCount > 0 && (
                             <Link
-                              href={`/manutencao?view=week&date=${dateInputValue(week.start)}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
+                              href={`/manutencao?view=week&date=${calendarDateValue(week.start)}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
                               className="block rounded-lg border border-teal-300/30 bg-teal-300/10 p-3 text-center text-sm font-semibold leading-snug text-teal-200 transition hover:border-teal-200"
                             >
-                              + {hiddenCount} manutenções
+                              Mais {hiddenCount}
                             </Link>
                           )}
                           </>
@@ -802,15 +802,15 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                   Calendário semanal
                 </h3>
                 <p className="text-sm text-zinc-500">
-                  {formatDate(weekBoardDays[0].date)} até {formatDate(weekBoardDays[4].date)}
+                  {formatDate(weekBoardDays[0].date)} até {formatDate(weekBoardDays[weekBoardDays.length - 1].date)}
                 </p>
               </div>
 
-              <div className="grid overflow-hidden rounded-xl border border-teal-300/25 bg-zinc-950/60 md:grid-cols-5">
+              <div className="grid overflow-hidden rounded-xl border border-teal-300/25 bg-zinc-950/60 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7">
                 {weekBoardDays.map((day) => (
                   <div key={day.name} className="min-h-120 border-b border-teal-300/20 md:border-b-0 md:border-r md:last:border-r-0">
                     <Link
-                      href={`/manutencao?view=day&date=${dateInputValue(day.date)}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
+                      href={`/manutencao?view=day&date=${calendarDateValue(day.date)}&type=${selectedType}&equipmentId=${selectedEquipmentId}`}
                       className="block border-b border-teal-300/25 bg-teal-200/70 px-3 py-3 text-center transition hover:bg-teal-100"
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-950">{day.name}</p>
