@@ -3,6 +3,7 @@ import {
   AlertTriangle,
   CalendarDays,
   CheckCircle2,
+  ChevronDown,
   Clock,
   Filter,
   Map,
@@ -338,7 +339,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
         }
       />
 
-      <section className="space-y-4">
+      <section>
         <details id="op-manual" className="group">
           <summary className="hidden">OP manual</summary>
           <div className="fixed inset-0 z-50 hidden overflow-y-auto bg-black/75 p-4 backdrop-blur-sm group-open:block">
@@ -605,7 +606,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
 
         <Panel className="@container">
           <div className="flex flex-col gap-3">
-            <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="flex flex-wrap items-end justify-between gap-3 border-b border-zinc-800 pb-3">
               <div>
                 <div className="flex items-center gap-3">
                   <Map size={22} className="text-teal-300" />
@@ -619,18 +620,20 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                 </p>
               </div>
 
-              <ModuleCodificationField moduleKey="manutencao" returnPath={maintenanceReturnPath} />
-
-              <Link
-                href={
-                  annualCalendar
-                    ? `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}`
-                    : `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}&calendar=year`
-                }
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-teal-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-teal-200"
-              >
-                {annualCalendar ? "Voltar à lista" : "Calendário anual"}
-              </Link>
+              <div className="flex w-full flex-wrap items-end gap-2 @2xl:w-auto">
+                <ModuleCodificationField moduleKey="manutencao" returnPath={maintenanceReturnPath} />
+                <Link
+                  href={
+                    annualCalendar
+                      ? `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}`
+                      : `/manutencao?view=${selectedView}&date=${selectedDate}&type=${selectedType}&equipmentId=${selectedEquipmentId}&calendar=year`
+                  }
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/35 bg-teal-300/10 px-3 text-sm font-semibold text-teal-100 transition hover:border-teal-300"
+                >
+                  <CalendarDays size={17} aria-hidden="true" />
+                  {annualCalendar ? "Voltar à lista" : "Calendário anual"}
+                </Link>
+              </div>
             </div>
 
             <form className="grid gap-2 @sm:grid-cols-2 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.5fr)_auto] [&>*]:min-w-0">
@@ -845,7 +848,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               </div>
             </div>
           ) : (
-            <div className="mt-5 space-y-4">
+            <div className="mt-4 space-y-3">
               {schedules.length === 0 ? (
                 <EmptyState
                   title="Sem agendamentos neste período"
@@ -854,26 +857,27 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               ) : (
                 <>
                   {prioritySchedules.length > 0 ? (
-                    <div className="rounded-lg border border-rose-300/25 bg-rose-950/10 px-4 py-3">
-                      <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-rose-100">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-rose-300/25 bg-rose-950/10 px-3 py-2">
+                      <h3 className="flex items-center gap-2 text-sm font-semibold text-rose-100">
+                        <AlertTriangle size={16} aria-hidden="true" />
                         Prioridade operacional
                       </h3>
-                      <p className="mt-1 text-sm text-zinc-400">
+                      <p className="text-sm text-zinc-400">
                         As manutenções atrasadas e as marcadas para hoje aparecem primeiro.
                       </p>
                     </div>
                   ) : null}
 
                   {Object.entries(groupedSchedules).map(([date, items]) => (
-                    <div key={date} className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
-                    <div className="mb-3 flex items-center justify-between gap-3">
+                    <div key={date} className="border-b border-zinc-800 pb-3 last:border-b-0 last:pb-0">
+                    <div className="mb-2 flex items-center gap-3">
                       <h3 className="font-semibold text-zinc-100">{date}</h3>
                       <span className="rounded-md bg-zinc-900 px-2 py-1 text-xs text-zinc-400">
-                        {items.length} agendamento(s)
+                        {items.length} {items.length === 1 ? "agendamento" : "agendamentos"}
                       </span>
                     </div>
 
-                    <div className="grid gap-3 xl:grid-cols-2">
+                    <div className={`grid items-start gap-2 ${items.length > 1 ? "@xl:grid-cols-2" : ""} ${items.length > 2 ? "@5xl:grid-cols-3" : ""}`}>
                       {items.map((schedule) => {
                         const workOrderStatus = schedule.workOrder?.status ?? null;
                         const opInfo = workOrderStatusInfo(workOrderStatus);
@@ -886,12 +890,12 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                             key={schedule.id}
                             id={`agendamento-${schedule.id}`}
                             open={filters.scheduleId === schedule.id}
-                            className={`group scroll-mt-24 rounded-lg border p-3 open:border-teal-300/35 ${scheduleCardTone(schedule)}`}
+                            className={`group min-w-0 scroll-mt-24 rounded-lg border p-3 open:col-span-full open:border-teal-300/35 ${scheduleCardTone(schedule)}`}
                           >
-                            <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
+                            <summary className="flex min-h-11 cursor-pointer list-none items-start justify-between gap-3 [&::-webkit-details-marker]:hidden">
                               <div className="min-w-0">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <h4 className={`font-medium ${titleTone(schedule)}`}>{schedule.title}</h4>
+                                  <h4 className={`min-w-0 break-words font-medium ${titleTone(schedule)}`}>{schedule.title}</h4>
 
                                   {schedule.workOrder ? (
                                     <span className="rounded-md border border-teal-300/30 bg-teal-300/10 px-2 py-1 text-xs font-semibold text-teal-200">
@@ -926,7 +930,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                                   {typeLabel(schedule.type)}
                                 </span>
 
-                                <span className="text-xs text-teal-300 group-open:hidden">Abrir</span>
+                                <ChevronDown size={18} className="text-teal-300 group-open:rotate-180" aria-hidden="true" />
                               </span>
                             </summary>
 
