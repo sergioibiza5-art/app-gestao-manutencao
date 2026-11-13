@@ -2,14 +2,7 @@ import type { DailyMaintenanceEntry, UserRole } from "@prisma/client";
 import { notFound, redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
-
-export const pilotCode = "MCC_1";
-export const documentCode = "IMPSUP0833.02";
-export const dailyChecks = [
-  { key: "feltro", label: "Lubrificar os discos de feltro com óleo mineral (lâmina de corte longitudinal)." },
-  { key: "espuma", label: "Lubrificar os rolos de espuma com óleo mineral (lâmina de corte transversal)." },
-  { key: "terra", label: "Verificar se a braçadeira do cabo de terra está firme na mesa de dobragem longitudinal e ligada no ponto previsto." },
-] as const;
+import { maintenancePlanCodes } from "@/lib/mcc-maintenance-plan";
 
 export const dailyResults = { OK: "Conforme", NOT_OK: "Não conforme" } as const;
 export type DailyResult = keyof typeof dailyResults;
@@ -23,20 +16,19 @@ export async function dailyMaintenanceAccess(id: string) {
   const user = await requireUser();
   if (user.role === "TICKET") redirect("/tickets");
   const prisma = getPrisma();
-  const equipment = await prisma.equipment.findFirst({
-    where: { id, code: pilotCode },
+  const access = user.role === "USER" ? await prisma.ticketEquipmentAccess.findMany({
+    where: { userId: user.id }, select: { equipmentId: true },
+  }) : [];
+  const units = await prisma.equipment.findMany({
+    where: { code: { in: maintenancePlanCodes }, ...(access.length ? { id: { in: access.map((row) => row.equipmentId) } } : {}) },
     select: { id: true, code: true, name: true, status: true },
   });
+  const equipment = units.find((unit) => unit.id === id);
   if (!equipment) notFound();
-  if (user.role === "USER") {
-    const access = await prisma.ticketEquipmentAccess.findMany({
-      where: { userId: user.id }, select: { equipmentId: true },
-    });
-    if (access.length && !access.some((row) => row.equipmentId === id)) notFound();
-  }
   return {
     user,
     equipment,
+    units: maintenancePlanCodes.flatMap((code) => units.filter((unit) => unit.code === code)),
     canRecord: canRecordDailyMaintenance(user.role) && !["INACTIVE", "DISCARDED"].includes(equipment.status),
   };
 }
@@ -52,9 +44,9 @@ export function lisbonDay(now = new Date()) {
   return ["year", "month", "day"].map((type) => parts.find((part) => part.type === type)?.value).join("-");
 }
 
-export function parseDailyChecks(formData: FormData): DailyCheck[] | null {
+export function parseDailyChecks(formData: FormData, points: readonly { key: string; label: string }[]): DailyCheck[] | null {
   const checks: DailyCheck[] = [];
-  for (const { key, label } of dailyChecks) {
+  for (const { key, label } of points) {
     const result = formData.get(key);
     if (result !== "OK" && result !== "NOT_OK") return null;
     checks.push({ label, result });
@@ -74,7 +66,7 @@ export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {
     : "Verificação registada";
 }
 
-export async function dailyMaintenanceMonth(id: string, requestedMonth?: string | null) {
+export async function dailyMaintenanceMonth(id: string, groupKey: string, requestedMonth?: string | null) {
   const today = lisbonDay();
   const currentMonth = today.slice(0, 7);
   const month = requestedMonth && /^20\d{2}-(0[1-9]|1[0-2])$/.test(requestedMonth) && requestedMonth <= currentMonth
@@ -82,7 +74,7 @@ export async function dailyMaintenanceMonth(id: string, requestedMonth?: string 
   const start = new Date(`${month}-01T00:00:00Z`);
   const end = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 1, 1));
   const entries = await getPrisma().dailyMaintenanceEntry.findMany({
-    where: { equipmentId: id, day: { gte: start, lt: end } },
+    where: { equipmentId: id, groupKey, day: { gte: start, lt: end } },
     orderBy: [{ day: "asc" }, { revision: "desc" }],
   });
   const byDay = new Map<string, DailyMaintenanceEntry[]>();

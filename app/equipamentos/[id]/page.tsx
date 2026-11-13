@@ -1,5 +1,6 @@
 import { requireUser } from "@/lib/auth";
-import { dailyPath, pilotCode } from "@/lib/daily-maintenance";
+import { dailyPath } from "@/lib/daily-maintenance";
+import { maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -494,9 +495,9 @@ const latestDl50Document =
         description="Consulta o cadastro, as checklists internas e o histórico das intervenções efetuadas."
         action={
           <div className="flex flex-wrap gap-2">
-            {equipment.code === pilotCode && (
+            {maintenancePlan(equipment.code).length > 0 && (
               <Link href={dailyPath(equipment.id)} className={buttonClass}>
-                <ClipboardCheck size={17} /> Rotina diária
+                <ClipboardCheck size={17} /> Plano preventivo
               </Link>
             )}
             {canEditIntervals && isEquipmentOperational && (
