@@ -603,9 +603,9 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
           </div>
         </details>
 
-        <Panel>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <Panel className="@container">
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <div className="flex items-center gap-3">
                   <Map size={22} className="text-teal-300" />
@@ -633,25 +633,25 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
               </Link>
             </div>
 
-            <form className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto]">
+            <form className="grid gap-2 @sm:grid-cols-2 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.5fr)_auto] [&>*]:min-w-0">
   {annualCalendar ? <input type="hidden" name="calendar" value="year" /> : null}
 
-  <select name="view" defaultValue={selectedView} className={inputClass}>
+  <select name="view" aria-label="Vista do calendário" defaultValue={selectedView} className={inputClass}>
     <option value="day">Dia</option>
     <option value="week">Semana</option>
     <option value="month">Mês</option>
     <option value="year">Ano</option>
   </select>
 
-  <input name="date" type="date" defaultValue={selectedDate} className={inputClass} />
+  <input name="date" type="date" aria-label="Data de referência" defaultValue={selectedDate} className={inputClass} />
 
-  <select name="type" defaultValue={selectedType} className={inputClass}>
+  <select name="type" aria-label="Tipo de manutenção" defaultValue={selectedType} className={inputClass}>
     <option value="ALL">Todas</option>
     <option value="INTERNAL">Internas</option>
     <option value="EXTERNAL">Externas</option>
   </select>
 
-  <select name="equipmentId" defaultValue={selectedEquipmentId} className={inputClass}>
+  <select name="equipmentId" aria-label="Equipamento" defaultValue={selectedEquipmentId} className={inputClass}>
     <option value="ALL">Todos equipamentos</option>
     {equipment.map((item) => (
       <option key={item.id} value={item.id}>
@@ -660,7 +660,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
     ))}
   </select>
 
-  <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
+  <button className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50 @sm:col-span-2 @3xl:col-span-1">
     <Filter size={17} />
     Filtrar
   </button>

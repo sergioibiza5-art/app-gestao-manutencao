@@ -2,7 +2,7 @@ import { isQualityRole } from "@/lib/quality-roles";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
-import { HomeIcon, LogOut, Search, ShieldCheck } from "lucide-react";
+import { ChevronDown, HomeIcon, LogOut, Menu, Search, ShieldCheck } from "lucide-react";
 
 import { logoutUser } from "@/app/actions";
 import { PushNotificationToggle } from "@/app/components/push-notification-toggle";
@@ -38,11 +38,37 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
     ? navigation
     : navigation.filter((item) => item.href !== "/ferias");
   const homeHref = user.role === "USER" ? "/plano" : "/";
+  const activeModule = visibleNavigation.find((item) => item.href === activeHref);
+  const moduleLinks = visibleNavigation.map((item) => {
+    const Icon = item.icon;
+    const active = item.href === activeHref;
+
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        aria-current={active ? "page" : undefined}
+        className={`flex min-h-12 min-w-0 items-center gap-3 rounded-lg border p-2 text-left transition ${
+          active
+            ? "border-teal-300/35 bg-teal-300/10"
+            : "border-zinc-800 bg-zinc-950/60 hover:border-zinc-700 hover:bg-zinc-900/80"
+        }`}
+      >
+        <span className={`grid size-9 shrink-0 place-items-center rounded-lg ${item.color}`}>
+          <Icon size={18} />
+        </span>
+        <span className="min-w-0">
+          <span className="block break-words text-sm font-semibold text-zinc-100">{item.name}</span>
+          <span className="block break-words text-xs text-zinc-400">{item.meta}</span>
+        </span>
+      </Link>
+    );
+  });
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.10),transparent_25%),#070807]">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <header className="glass-panel sticky top-3 z-30 flex items-center justify-between gap-3 rounded-lg px-3 py-3">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-3 px-3 py-3 sm:px-5 2xl:px-6">
+        <header className="glass-panel sticky top-3 z-30 flex items-center justify-between gap-2 rounded-lg px-2 py-2 sm:px-3">
           <Link href={homeHref} className="flex min-w-0 items-center gap-3">
             <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-teal-400 text-zinc-950">
               <HomeIcon size={22} strokeWidth={2.4} />
@@ -70,8 +96,19 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
           </div>
         </header>
 
-        <div className="grid min-w-0 gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
-          <aside className="glass-panel quiet-scrollbar min-w-0 overflow-hidden rounded-lg p-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-auto">
+        <div className="grid min-w-0 gap-3 xl:pointer-fine:grid-cols-[216px_minmax(0,1fr)] 2xl:pointer-fine:grid-cols-[232px_minmax(0,1fr)]">
+          <details key={activeHref} className="glass-panel group min-w-0 rounded-lg xl:pointer-fine:hidden">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-3 py-2 font-semibold text-zinc-100 [&::-webkit-details-marker]:hidden">
+              <Menu size={20} className="shrink-0 text-teal-300" aria-hidden="true" />
+              <span>Módulos</span>
+              {activeModule && <span className="min-w-0 truncate text-sm font-normal text-zinc-400">{activeModule.name}</span>}
+              <ChevronDown size={18} className="ml-auto shrink-0 text-zinc-400 group-open:rotate-180" aria-hidden="true" />
+            </summary>
+            <nav aria-label="Módulos" className="grid max-h-[50dvh] gap-2 overflow-y-auto overscroll-contain p-2 sm:grid-cols-2 lg:grid-cols-3">
+              {moduleLinks}
+            </nav>
+          </details>
+          <aside className="glass-panel quiet-scrollbar sticky top-24 hidden max-h-[calc(100dvh-7rem)] min-w-0 self-start overflow-auto rounded-lg p-2 xl:pointer-fine:block">
             <div className="mb-3 flex items-center justify-between gap-3 px-1">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-600">Módulos</p>
@@ -80,31 +117,8 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
               <ShieldCheck size={20} className="text-teal-300" />
             </div>
 
-            <nav className="flex max-w-full gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">
-              {visibleNavigation.map((item) => {
-                const Icon = item.icon;
-                const active = item.href === activeHref;
-
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`group flex min-w-52 items-center gap-3 rounded-lg border p-3 text-left transition lg:min-w-0 ${
-                      active
-                        ? "border-teal-300/35 bg-teal-300/10"
-                        : "border-zinc-800 bg-zinc-950/60 hover:border-zinc-700 hover:bg-zinc-900/80"
-                    }`}
-                  >
-                    <span className={`grid size-10 shrink-0 place-items-center rounded-lg ${item.color}`}>
-                      <Icon size={20} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm font-semibold text-zinc-100">{item.name}</span>
-                      <span className="mt-0.5 block truncate text-xs text-zinc-500">{item.meta}</span>
-                    </span>
-                  </Link>
-                );
-              })}
+            <nav aria-label="Módulos" className="grid gap-1.5">
+              {moduleLinks}
             </nav>
           </aside>
 
