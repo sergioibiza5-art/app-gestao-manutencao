@@ -12,6 +12,13 @@ import { workOrderScope, workOrderStatuses } from "@/lib/work-order-search";
 
 const dateTime = new Intl.DateTimeFormat("pt-PT", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Lisbon" });
 
+function formatDuration(seconds: number) {
+  const total = Math.max(0, Math.round(seconds));
+  const hours = Math.floor(total / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  return `${hours}h ${String(minutes).padStart(2, "0")}m ${String(total % 60).padStart(2, "0")}s`;
+}
+
 export default async function Order({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; estado?: string; pagina?: string }> }) {
   const user = await requireUser();
   const scope = await workOrderScope();
@@ -28,10 +35,15 @@ export default async function Order({ params, searchParams }: { params: Promise<
   const canOperate = canManage || user.role === "USER";
   const consumables = canOperate && !op.ticket && ["OPEN", "PAUSED", "IN_PROGRESS"].includes(op.status)
     ? await getPrisma().consumable.findMany({ orderBy: { name: "asc" }, take: 300 }) : [];
+  const elapsedSeconds = op.startedAt && op.closedAt
+    ? (op.closedAt.getTime() - op.startedAt.getTime()) / 1000
+    : null;
   const fields = [
     ["Estado", workOrderStatuses[op.status]], ["Tipo", op.type === "INTERNAL" ? "Interna" : "Externa"],
     ["Abertura", dateTime.format(op.openedAt)], ["Início", op.startedAt && dateTime.format(op.startedAt)],
     ["Conclusão", op.closedAt && dateTime.format(op.closedAt)], ["Validação", op.validatedAt && dateTime.format(op.validatedAt)],
+    ["Tempo entre início e conclusão", elapsedSeconds !== null && elapsedSeconds >= 0 ? formatDuration(elapsedSeconds) : null],
+    ["Tempo de trabalho registado", op.closedAt && formatDuration(op.totalWorkSeconds)],
     ["Executado por", op.performedBy], ["Atribuída a", op.schedule?.assignedTo?.name], ["Fornecedor", op.maintenanceLog?.supplier],
     ["Trabalho executado", op.actionsDone || op.maintenanceLog?.description], ["Resultado", op.result], ["Notas", op.notes],
   ];
