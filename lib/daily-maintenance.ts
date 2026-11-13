@@ -68,26 +68,42 @@ export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {
 
 export function maintenancePeriodStart(groupKey: string, day: string) {
   const start = new Date(`${day}T00:00:00Z`);
+  if (groupKey === "daily") return start;
   if (groupKey === "weekly") {
     start.setUTCDate(start.getUTCDate() - (start.getUTCDay() + 6) % 7);
     return start;
   }
-  if (groupKey === "monthly") {
-    start.setUTCDate(1);
+  if (groupKey === "fortnightly") {
+    // Consecutive two-week blocks anchored to a Monday across year boundaries.
+    const anchor = Date.UTC(1970, 0, 5);
+    const block = 14 * 86400000;
+    return new Date(anchor + Math.floor((start.getTime() - anchor) / block) * block);
+  }
+  if (groupKey === "monthly" || groupKey === "semiannual" || groupKey === "annual") {
+    const month = start.getUTCMonth();
+    start.setUTCMonth(groupKey === "annual" ? 0 : groupKey === "semiannual" ? Math.floor(month / 6) * 6 : month, 1);
     return start;
   }
   return null;
+}
+
+export function biennialDueDate(day: Date) {
+  const year = day.getUTCFullYear() + 2;
+  const month = day.getUTCMonth();
+  const lastDay = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  return new Date(Date.UTC(year, month, Math.min(lastDay, day.getUTCDate())));
 }
 
 export async function currentMaintenancePeriods(id: string, groupKeys: string[], today: string) {
   const end = new Date(`${today}T00:00:00Z`);
   const periods = groupKeys.flatMap((groupKey) => {
     const start = maintenancePeriodStart(groupKey, today);
+    if (groupKey === "biennial" || groupKey === "500-hours") return [{ groupKey, day: { lte: end } }];
     return start ? [{ groupKey, day: { gte: start, lte: end } }] : [];
   });
   if (!periods.length) return new Map<string, DailyMaintenanceEntry>();
   const entries = await getPrisma().dailyMaintenanceEntry.findMany({
-    where: { equipmentId: id, noProduction: false, OR: periods },
+    where: { equipmentId: id, OR: periods },
     orderBy: [{ day: "desc" }, { revision: "desc" }],
     distinct: ["groupKey"],
   });
