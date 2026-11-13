@@ -3,8 +3,8 @@ import { ArrowLeft, Download, Save } from "lucide-react";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import {
-  dailyEntryStatus, dailyMaintenanceAccess, dailyMaintenanceMonth, dailyPath,
-  dailyResults, displayDay, displayRecordedAt, entryChecks,
+  currentMaintenancePeriods, dailyEntryStatus, dailyMaintenanceAccess, dailyMaintenanceMonth, dailyPath,
+  dailyResults, displayDay, displayRecordedAt, entryChecks, lisbonDay, maintenancePeriodStart,
 } from "@/lib/daily-maintenance";
 import { documentCode, maintenanceGroup, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { recordDailyMaintenance } from "./actions";
@@ -24,9 +24,16 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const { id } = await params;
   const query = await searchParams;
   const { equipment, units, canRecord } = await dailyMaintenanceAccess(id);
+  const groups = maintenancePlan(equipment.code);
   const group = maintenanceGroup(equipment.code, query.grupo);
   const isDaily = group.key === "daily";
-  const { month, today, days } = await dailyMaintenanceMonth(id, group.key, query.mes);
+  const [report, periodEntries] = await Promise.all([
+    dailyMaintenanceMonth(id, group.key, query.mes),
+    currentMaintenancePeriods(id, groups.map(({ key }) => key), lisbonDay()),
+  ]);
+  const { month, today, days } = report;
+  const periodStart = maintenancePeriodStart(group.key, today);
+  const periodEntry = periodEntries.get(group.key);
   const visibleDays = isDaily ? days : days.filter(({ entries }) => entries.length > 0);
   const current = days.find(({ day }) => day === today)?.entries[0];
   const showToday = month === today.slice(0, 7);
@@ -47,13 +54,29 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
           ))}
         </nav>
         <nav aria-label="Periodicidade" className="mt-3 flex flex-wrap gap-2 border-t border-zinc-800 pt-3">
-          {maintenancePlan(equipment.code).map((item) => (
-            <Link key={item.key} href={`?grupo=${item.key}&mes=${month}`} aria-current={item.key === group.key ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center rounded-lg border px-3 text-sm ${item.key === group.key ? "border-teal-300 bg-teal-300/10 text-teal-200" : "border-zinc-700"}`}>
-              {item.label}
-            </Link>
-          ))}
+          {groups.map((item) => {
+            const tracksPeriod = item.key === "weekly" || item.key === "monthly";
+            const entry = periodEntries.get(item.key);
+            const hasFailures = entry && dailyEntryStatus(entry) === "Verificação com falhas";
+            return (
+              <Link key={item.key} href={`?grupo=${item.key}&mes=${month}`} aria-current={item.key === group.key ? "page" : undefined}
+                className={`inline-flex min-h-11 flex-wrap items-center gap-2 rounded-lg border px-3 py-2 text-sm ${item.key === group.key ? "border-teal-300 bg-teal-300/10 text-teal-200" : "border-zinc-700"}`}>
+                {item.label}
+                {tracksPeriod && <span className={`text-xs ${hasFailures ? "text-rose-200" : entry ? "text-teal-200" : "text-amber-200"}`}>
+                  {hasFailures ? "Com falhas" : entry ? "Registada" : "Pendente"}
+                </span>}
+              </Link>
+            );
+          })}
         </nav>
+        {periodStart && (
+          <p className="mt-3 text-sm text-zinc-300">
+            {group.key === "weekly" ? "Esta semana" : "Este mês"} · Desde {displayDay(periodStart.toISOString().slice(0, 10))} ·{" "}
+            {periodEntry
+              ? `${dailyEntryStatus(periodEntry)} em ${displayDay(periodEntry.day.toISOString().slice(0, 10))} por ${periodEntry.recorderName}.`
+              : "Ainda sem verificação registada."}
+          </p>
+        )}
       </Panel>
       {error && <p role="alert" className="text-sm text-rose-200">{error}</p>}
       {query.guardado === "1" && <p role="status" className="text-sm text-teal-200">Registo guardado.</p>}

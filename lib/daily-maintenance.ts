@@ -66,6 +66,34 @@ export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {
     : "Verificação registada";
 }
 
+export function maintenancePeriodStart(groupKey: string, day: string) {
+  const start = new Date(`${day}T00:00:00Z`);
+  if (groupKey === "weekly") {
+    start.setUTCDate(start.getUTCDate() - (start.getUTCDay() + 6) % 7);
+    return start;
+  }
+  if (groupKey === "monthly") {
+    start.setUTCDate(1);
+    return start;
+  }
+  return null;
+}
+
+export async function currentMaintenancePeriods(id: string, groupKeys: string[], today: string) {
+  const end = new Date(`${today}T00:00:00Z`);
+  const periods = groupKeys.flatMap((groupKey) => {
+    const start = maintenancePeriodStart(groupKey, today);
+    return start ? [{ groupKey, day: { gte: start, lte: end } }] : [];
+  });
+  if (!periods.length) return new Map<string, DailyMaintenanceEntry>();
+  const entries = await getPrisma().dailyMaintenanceEntry.findMany({
+    where: { equipmentId: id, noProduction: false, OR: periods },
+    orderBy: [{ day: "desc" }, { revision: "desc" }],
+    distinct: ["groupKey"],
+  });
+  return new Map(entries.map((entry) => [entry.groupKey, entry]));
+}
+
 export async function dailyMaintenanceMonth(id: string, groupKey: string, requestedMonth?: string | null) {
   const today = lisbonDay();
   const currentMonth = today.slice(0, 7);
