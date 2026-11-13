@@ -67,7 +67,7 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.10),transparent_25%),#070807]">
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-3 px-3 py-3 sm:px-5 2xl:px-6">
+      <div className="flex w-full flex-col gap-3 px-3 py-3 sm:px-5 2xl:px-6">
         <header className="glass-panel sticky top-3 z-30 flex items-center justify-between gap-2 rounded-lg px-2 py-2 sm:px-3">
           <Link href={homeHref} className="flex min-w-0 items-center gap-3">
             <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-teal-400 text-zinc-950">
