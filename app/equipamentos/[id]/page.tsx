@@ -1,4 +1,5 @@
 import { requireUser } from "@/lib/auth";
+import { dailyPath, pilotCode } from "@/lib/daily-maintenance";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -493,6 +494,11 @@ const latestDl50Document =
         description="Consulta o cadastro, as checklists internas e o histórico das intervenções efetuadas."
         action={
           <div className="flex flex-wrap gap-2">
+            {equipment.code === pilotCode && (
+              <Link href={dailyPath(equipment.id)} className={buttonClass}>
+                <ClipboardCheck size={17} /> Rotina diária
+              </Link>
+            )}
             {canEditIntervals && isEquipmentOperational && (
               <Link href={`/manutencao?equipmentId=${encodeURIComponent(equipment.id)}&agendar=1`} className={buttonClass}>
                 <ClipboardCheck size={17} /> Agendar manutenção

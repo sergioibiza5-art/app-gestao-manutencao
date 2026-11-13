@@ -181,6 +181,7 @@ model User {
   consumableMovements    ConsumableMovement[]
   vacations              Vacation[]
   dl50AssessmentsCreated EquipmentDl50Assessment[]
+  dailyMaintenanceEntries DailyMaintenanceEntry[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -230,6 +231,7 @@ model Equipment {
   interventionPlans          EquipmentInterventionPlan[]
   interventionLogs           EquipmentInterventionLog[]
   internalMaintenanceRecords InternalMaintenanceRecord[]
+  dailyMaintenanceEntries    DailyMaintenanceEntry[]
   maintenanceLogs            MaintenanceLog[]
   maintenanceSchedules       MaintenanceSchedule[]
   workOrders                 WorkOrder[]
@@ -595,6 +597,24 @@ model ChecklistPhoto {
   response   ChecklistResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+}
+
+model DailyMaintenanceEntry {
+  id           String   @id @default(cuid())
+  equipmentId  String
+  equipment    Equipment @relation(fields: [equipmentId], references: [id], onDelete: Restrict)
+  day          DateTime @db.Date
+  revision     Int
+  documentCode String
+  noProduction Boolean
+  checks       Json
+  notes        String?
+  recordedById String
+  recordedBy   User     @relation(fields: [recordedById], references: [id], onDelete: Restrict)
+  recorderName String
+  recordedAt   DateTime @default(now())
+
+  @@unique([equipmentId, day, revision])
 }
 
 model Task {
