@@ -1,6 +1,6 @@
 import { requireUser } from "@/lib/auth";
 import { dailyPath } from "@/lib/daily-maintenance";
-import { maintenancePlan, pilotCode } from "@/lib/mcc-maintenance-plan";
+import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -495,12 +495,17 @@ const latestDl50Document =
         description="Consulta o cadastro, as checklists internas e o histórico das intervenções efetuadas."
         action={
           <div className="flex flex-wrap gap-2">
-            {maintenancePlan(equipment.code).length > 0 && (
+            {maintenancePlan(equipment.code).some((group) => !isCleaning(group.key)) && (
               <Link href={dailyPath(equipment.id)} className={buttonClass}>
                 <ClipboardCheck size={17} /> Plano preventivo
               </Link>
             )}
-            {equipment.code === pilotCode && (
+            {equipment.code === "GER_2" && equipment.parentEquipment?.code === "EST_1" && (
+              <Link href={`${dailyPath(equipment.parentEquipment.id)}?grupo=bimonthly`} className={buttonClass}>
+                <ClipboardCheck size={17} /> Plano preventivo da EST_1
+              </Link>
+            )}
+            {maintenancePlan(equipment.code).some((group) => isCleaning(group.key)) && (
               <Link href={`${dailyPath(equipment.id)}?grupo=cleaning-daily`} className={buttonClass}>
                 <ClipboardCheck size={17} /> Limpezas
               </Link>

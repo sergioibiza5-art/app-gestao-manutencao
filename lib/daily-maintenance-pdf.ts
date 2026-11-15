@@ -3,7 +3,7 @@ import {
   cleaningDetails, dailyEntryStatus, dailyResults, displayDay, displayRecordedAt, entryChecks,
   type dailyMaintenanceMonth,
 } from "@/lib/daily-maintenance";
-import { cleaningDocumentCode, documentCode, isCleaning, type maintenanceGroup } from "@/lib/mcc-maintenance-plan";
+import { isCleaning, type maintenanceGroup } from "@/lib/mcc-maintenance-plan";
 
 export async function dailyMaintenancePdf(
   equipment: { name: string; code: string | null },
@@ -22,7 +22,7 @@ export async function dailyMaintenancePdf(
   doc.font("Helvetica-Bold").fontSize(19).text(cleaning ? "Registo mensal de limpeza" : "Registo mensal de manutenção preventiva");
   doc.moveDown(0.4).font("Helvetica").fontSize(10)
     .text(`${equipment.name} | ${equipment.code}`)
-    .text(`${month}/${year} | Impresso de referência ${cleaning ? cleaningDocumentCode : documentCode}`)
+    .text(`${month}/${year} | Impresso de referência ${group.documentCode}`)
     .text(`${group.label} | Pág. ${group.pages} | ${group.primary}`)
     .text(`Emitido em ${displayRecordedAt(new Date())}`);
   doc.moveDown().font("Helvetica-Bold").text("Resumo diário");
@@ -51,7 +51,7 @@ export async function dailyMaintenancePdf(
     doc.font("Helvetica").fontSize(10)
       .text(`${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
     if (entry.meterHours !== null) doc.text(`Horímetro: ${entry.meterHours.toString()} h`);
-    entryChecks(entry).forEach(({ label, result }) => doc.text(`${dailyResults[result]}: ${label}`));
+    entryChecks(entry).forEach(({ label, result, reading }) => doc.text(`${dailyResults[result]}: ${label}${reading ? ` | ${reading}` : ""}`));
     const materials = cleaningDetails(entry);
     if (materials) {
       doc.text(`Produtos utilizados: ${materials.products}`);

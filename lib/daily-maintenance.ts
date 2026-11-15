@@ -6,8 +6,11 @@ import { isCleaning, maintenancePlanCodes } from "@/lib/mcc-maintenance-plan";
 
 export const dailyResults = { OK: "Conforme", NOT_OK: "Não conforme" } as const;
 export type DailyResult = keyof typeof dailyResults;
-export type DailyCheck = { label: string; result: DailyResult };
+export type DailyCheck = { label: string; result: DailyResult; reading?: string };
 export type CleaningDetails = { points: DailyCheck[]; products: string; tools: string };
+const calendarPeriodMonths: Readonly<Record<string, number>> = {
+  monthly: 1, bimonthly: 2, quarterly: 3, semiannual: 6, annual: 12,
+};
 
 export function canVerifyCleaning(role: UserRole) {
   return role === "ADMIN" || role === "MANAGER" || role === "SGQ";
@@ -76,7 +79,7 @@ export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {
 }
 
 export function maintenancePeriodStart(groupKey: string, day: string) {
-  groupKey = groupKey.replace(/^cleaning-/, "");
+  groupKey = groupKey.replace(/^(cleaning|conveyor)-/, "");
   const start = new Date(`${day}T00:00:00Z`);
   if (groupKey === "daily") return start;
   if (groupKey === "weekly") {
@@ -89,9 +92,9 @@ export function maintenancePeriodStart(groupKey: string, day: string) {
     const block = 14 * 86400000;
     return new Date(anchor + Math.floor((start.getTime() - anchor) / block) * block);
   }
-  if (groupKey === "monthly" || groupKey === "semiannual" || groupKey === "annual") {
-    const month = start.getUTCMonth();
-    start.setUTCMonth(groupKey === "annual" ? 0 : groupKey === "semiannual" ? Math.floor(month / 6) * 6 : month, 1);
+  const months = Object.hasOwn(calendarPeriodMonths, groupKey) ? calendarPeriodMonths[groupKey] : undefined;
+  if (months) {
+    start.setUTCMonth(Math.floor(start.getUTCMonth() / months) * months, 1);
     return start;
   }
   return null;
@@ -108,7 +111,7 @@ export async function currentMaintenancePeriods(id: string, groupKeys: string[],
   const end = new Date(`${today}T00:00:00Z`);
   const periods = groupKeys.flatMap((groupKey) => {
     const start = maintenancePeriodStart(groupKey, today);
-    if (groupKey === "biennial" || groupKey === "500-hours") return [{ groupKey, day: { lte: end } }];
+    if (groupKey === "biennial" || groupKey.endsWith("-hours")) return [{ groupKey, day: { lte: end } }];
     return start ? [{ groupKey, day: { gte: start, lte: end } }] : [];
   });
   if (!periods.length) return new Map<string, DailyMaintenanceEntry>();

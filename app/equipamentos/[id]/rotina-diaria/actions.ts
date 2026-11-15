@@ -3,7 +3,7 @@
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { canVerifyCleaning, dailyMaintenanceAccess, dailyPath, lisbonDay, parseDailyChecks } from "@/lib/daily-maintenance";
-import { cleaningDocumentCode, documentCode, isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
+import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { getPrisma } from "@/lib/prisma";
 
 export async function recordDailyMaintenance(id: string, groupKey: string, formData: FormData) {
@@ -20,9 +20,16 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
   const noProduction = mode === "no-production";
   const checks = noProduction ? [] : parseDailyChecks(formData, group.checks);
   if (!checks) redirect(`${path}&erro=respostas`);
+  if (!noProduction && group.pressureReading) {
+    const pressure = String(formData.get("pressure") ?? "").trim().replace(",", ".");
+    if (!/^\d{1,3}(\.\d{1,2})?$/.test(pressure)) redirect(`${path}&erro=pressao`);
+    const value = Number(pressure);
+    checks[0].reading = `${pressure.replace(".", ",")} bar`;
+    if (value < 6 || value > 7) checks[0].result = "NOT_OK";
+  }
   const rawMeter = formData.get("meterHours");
   const meter = typeof rawMeter === "string" ? rawMeter.trim().replace(",", ".") : "";
-  if (group.key === "500-hours" && !/^\d{1,10}(\.\d{1,2})?$/.test(meter)) redirect(`${path}&erro=horimetro`);
+  if (group.intervalHours && !/^\d{1,10}(\.\d{1,2})?$/.test(meter)) redirect(`${path}&erro=horimetro`);
   const rawNotes = formData.get("notes");
   const notes = typeof rawNotes === "string" ? rawNotes.trim() : "";
   const cleaning = isCleaning(group.key);
@@ -48,9 +55,9 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
         return false;
       }
       await tx.dailyMaintenanceEntry.create({ data: {
-        equipmentId: id, groupKey, day, revision, documentCode: cleaning ? cleaningDocumentCode : documentCode,
+        equipmentId: id, groupKey, day, revision, documentCode: group.documentCode,
         noProduction, checks: cleaning ? { points: checks, products, tools } : checks, notes: notes || null,
-        meterHours: group.key === "500-hours" ? meter : null,
+        meterHours: group.intervalHours ? meter : null,
         recordedById: user.id, recorderName: user.name,
       } });
       return true;

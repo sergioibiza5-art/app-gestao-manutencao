@@ -6,7 +6,7 @@ import {
   biennialDueDate, canVerifyCleaning, cleaningDetails, currentMaintenancePeriods, dailyEntryStatus, dailyMaintenanceAccess, dailyMaintenanceMonth, dailyPath,
   dailyResults, displayDay, displayRecordedAt, entryChecks, lisbonDay, maintenancePeriodStart,
 } from "@/lib/daily-maintenance";
-import { cleaningDocumentCode, cleaningProduct, documentCode, isCleaning, maintenanceGroup, maintenancePlan } from "@/lib/mcc-maintenance-plan";
+import { cleaningProduct, isCleaning, maintenanceGroup, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { recordDailyMaintenance, verifyCleaning } from "./actions";
 
 const errors: Record<string, string> = {
@@ -16,6 +16,7 @@ const errors: Record<string, string> = {
   observacoes: "Descreve a falha nas observações. O limite é de 1000 caracteres.",
   atualizado: "Este dia já foi atualizado. Consulta o registo abaixo.",
   materiais: "Indica os produtos e os equipamentos utilizados.",
+  pressao: "Indica a pressão medida em bar, com até duas casas decimais.",
   verificacao: "O registo já foi verificado ou precisa de ser confirmado por outra pessoa.",
 };
 
@@ -24,6 +25,8 @@ const periodLabels: Record<string, string> = {
   weekly: "Esta semana",
   fortnightly: "Esta quinzena",
   monthly: "Este mês",
+  bimonthly: "Este bimestre",
+  quarterly: "Este trimestre",
   semiannual: "Este semestre",
   annual: "Este ano",
 };
@@ -48,8 +51,8 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const periodStart = maintenancePeriodStart(group.key, today);
   const periodEntry = periodEntries.get(group.key);
   const nextBiennialDay = group.key === "biennial" && periodEntry ? biennialDueDate(periodEntry.day).toISOString().slice(0, 10) : null;
-  const nextMeter = group.key === "500-hours" && periodEntry?.meterHours != null
-    ? periodEntry.meterHours.plus(500).toString()
+  const nextMeter = group.intervalHours && periodEntry?.meterHours != null
+    ? periodEntry.meterHours.plus(group.intervalHours).toString()
     : null;
   const visibleDays = isDaily ? days : days.filter(({ entries }) => entries.length > 0);
   const current = days.find(({ day }) => day === today)?.entries[0];
@@ -60,12 +63,12 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
 
   return (
     <AppShell activeHref="/equipamentos">
-      <PageHeader eyebrow={cleaning ? cleaningDocumentCode : documentCode} title={cleaning ? "Limpezas" : "Plano preventivo"} description={equipment.name}
+      <PageHeader eyebrow={group.documentCode} title={cleaning ? "Limpezas" : "Plano preventivo"} description={equipment.name}
         action={<Link href={`/equipamentos/${id}`} className={buttonClass}><ArrowLeft size={17} /> Ficha</Link>} />
       <Panel>
         {!cleaning && <nav aria-label="Equipamentos do plano" className="flex flex-wrap gap-2">
-          {units.map((unit) => (
-            <Link key={unit.id} href={dailyPath(unit.id)} aria-current={unit.id === id ? "page" : undefined}
+          {units.filter((unit) => maintenancePlan(unit.code).some((item) => item.documentCode === group.documentCode)).map((unit) => (
+            <Link key={unit.id} href={`${dailyPath(unit.id)}?grupo=${maintenancePlan(unit.code).find((item) => item.documentCode === group.documentCode)?.key}`} aria-current={unit.id === id ? "page" : undefined}
               className={`inline-flex min-h-11 items-center rounded-lg border px-3 text-sm font-semibold ${unit.id === id ? "border-teal-300 bg-teal-300/10 text-teal-200" : "border-zinc-700"}`}>
               {unit.code}
             </Link>
@@ -76,7 +79,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
             const entry = periodEntries.get(item.key);
             const hasFailures = entry && dailyEntryStatus(entry) === "Verificação com falhas";
             const biennialDue = item.key === "biennial" && entry && biennialDueDate(entry.day).toISOString().slice(0, 10) <= today;
-            const pending = (!entry && item.key !== "500-hours") || biennialDue;
+            const pending = (!entry && !item.intervalHours) || biennialDue;
             const status = hasFailures ? "Com falhas" : pending ? "Pendente" : entry?.noProduction
               ? "Sem produção" : entry ? (cleaning ? entry.verifiedAt ? "Verificada" : "Por verificar" : "Registada") : "Sem leitura";
             return (
@@ -92,15 +95,15 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
         </nav>
         <div className="mt-3 space-y-1 text-sm text-zinc-300">
           {periodStart && (
-            <p>{periodLabels[group.key.replace(/^cleaning-/, "")]} · Desde {displayDay(periodStart.toISOString().slice(0, 10))}</p>
+            <p>{periodLabels[group.key.replace(/^(cleaning|conveyor)-/, "")]} · Desde {displayDay(periodStart.toISOString().slice(0, 10))}</p>
           )}
           <p>{periodEntry
             ? `${dailyEntryStatus(periodEntry)} em ${displayDay(periodEntry.day.toISOString().slice(0, 10))} por ${periodEntry.recorderName}.`
             : "Ainda sem verificação registada."}</p>
           {nextBiennialDay && <p>Próxima intervenção: {displayDay(nextBiennialDay)}{nextBiennialDay <= today ? " · Pendente" : ""}</p>}
-          {group.key === "500-hours" && <p>{nextMeter
+          {group.intervalHours && <p>{nextMeter
             ? `Horímetro no último registo: ${periodEntry?.meterHours?.toString()} h · Próxima intervenção: ${nextMeter} h`
-            : "Sem leitura de referência para calcular a próxima intervenção."}</p>}
+            : group.firstHours ? `Primeira intervenção prevista às ${group.firstHours} h.` : "Sem leitura de referência para calcular a próxima intervenção."}</p>}
         </div>
       </Panel>
       {error && <p role="alert" className="text-sm text-rose-200">{error}</p>}
@@ -114,8 +117,11 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
             <form action={save} className="mt-4 grid max-w-3xl gap-4">
               <input type="hidden" name="day" value={today} />
               <input type="hidden" name="revision" value={(current?.revision ?? 0) + 1} />
-              {group.key === "500-hours" && <label className="grid gap-1 text-sm">Leitura do horímetro (h)
+              {group.intervalHours && <label className="grid gap-1 text-sm">Leitura do horímetro (h)
                 <input type="number" name="meterHours" min="0" max="9999999999.99" step="0.01" required className={inputClass} />
+              </label>}
+              {group.pressureReading && <label className="grid gap-1 text-sm">Pressão medida (bar)
+                <input name="pressure" inputMode="decimal" required maxLength={6} className={inputClass} />
               </label>}
               {group.checks.map(({ key, label }, index) => (
                 <fieldset key={key} className="min-w-0 border-b border-zinc-800 pb-3">
@@ -132,7 +138,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
               ))}
               {cleaning && <div className="grid gap-3 sm:grid-cols-2">
                 <label className="grid gap-1 text-sm">Produtos utilizados
-                  <input name="products" defaultValue={cleaningProduct} maxLength={300} required className={inputClass} />
+                  <input name="products" defaultValue={["MAS_2", "MAS_3"].includes(equipment.code ?? "") ? "" : cleaningProduct} maxLength={300} required className={inputClass} />
                 </label>
                 <label className="grid gap-1 text-sm">Equipamentos utilizados
                   <input name="tools" maxLength={300} required className={inputClass} />
@@ -184,7 +190,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                           <p className="font-semibold">{dailyEntryStatus(entry)} · {entry.recorderName}</p>
                           <p className="text-zinc-400">{displayRecordedAt(entry.recordedAt)} · {entry.documentCode}</p>
                           {entry.meterHours !== null && <p>Horímetro: {entry.meterHours.toString()} h</p>}
-                          {entryChecks(entry).map(({ label, result }) => <p key={label}>{dailyResults[result]} · {label}</p>)}
+                          {entryChecks(entry).map(({ label, result, reading }) => <p key={label}>{dailyResults[result]} · {label}{reading ? ` · ${reading}` : ""}</p>)}
                           {entry.notes && <p className="whitespace-pre-wrap break-words">{entry.notes}</p>}
                           {materials && <>
                             <p className="break-words">Produtos: {materials.products}</p>

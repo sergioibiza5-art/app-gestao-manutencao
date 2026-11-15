@@ -1,4 +1,5 @@
-export const pilotCode = "MCC_1";
+import { additionalPreventivePlans } from "@/lib/sgq-preventive-plans";
+
 export const documentCode = "IMPSUP0833.02";
 export const cleaningDocumentCode = "IMPSUP0824.01";
 export const cleaningProduct = "DINPQ DESINBAC GRASS";
@@ -13,10 +14,18 @@ type PlanGroup = {
   pages: string;
   primary: "Produção" | "Manutenção";
   checks: readonly { key: string; label: string }[];
+  documentCode: string;
+  intervalHours?: number;
+  firstHours?: number;
+  pressureReading?: boolean;
 };
 
 function group(key: string, label: string, pages: string, primary: PlanGroup["primary"], points: string[]): PlanGroup {
-  return { key, label, pages, primary, checks: points.map((label, index) => ({ key: `point-${index + 1}`, label })) };
+  return {
+    key, label, pages, primary, documentCode: isCleaning(key) ? cleaningDocumentCode : documentCode,
+    intervalHours: key === "500-hours" ? 500 : undefined,
+    checks: points.map((label, index) => ({ key: `point-${index + 1}`, label })),
+  };
 }
 
 const hotMelterGroups = (start: number) => [
@@ -98,10 +107,56 @@ const plans: Record<string, readonly PlanGroup[]> = {
   ],
 };
 
-export const maintenancePlanCodes = Object.keys(plans);
+const workAreaCleaning = [
+  "Limpeza da zona envolvida no carregamento do produto.",
+  "Limpeza do tapete de saída do produto.",
+  "Limpeza de todas as superfícies associadas (mesas e carrinhos).",
+  "Limpeza do chão na zona de trabalho.",
+];
+const machineBody = "Limpeza do corpo da máquina.";
+const cellCleaning = [
+  "Limpeza do chão na zona de trabalho.",
+  "Limpeza dos tapetes de transporte do produto.",
+  "Limpeza de todas as superfícies associadas.",
+];
+const sealingCleaning = ["Limpeza do Teflon.", machineBody, "Limpeza de todas as superfícies associadas."];
+const cleaningPlans: Record<string, [daily: string[], weekly?: string[]]> = {
+  CPAL_1: [[...cellCleaning, "Verificação e limpeza do gripper do robô."], [machineBody]],
+  CEMB_1: [[...cellCleaning, "Verificação e limpeza dos grippers dos robôs."], [machineBody]],
+  FFS_1: [workAreaCleaning, [machineBody, "Limpeza das lamelas."]],
+  MCS_1: [workAreaCleaning, [machineBody]],
+  MLA_1: [["Limpeza do chão na zona de trabalho.", "Limpeza da barra de espalhamento.", "Limpeza dos acessórios associados à máquina."], [machineBody]],
+  MMA_1: [workAreaCleaning, [machineBody]],
+  MME_1: [workAreaCleaning, [machineBody]],
+  MTO_1: [workAreaCleaning, [machineBody]],
+  TLM_1: [workAreaCleaning, ["Limpeza do corpo do tapete.", "Limpeza das lamelas."]],
+  TLM_2: [workAreaCleaning, ["Limpeza do corpo do tapete.", "Limpeza das lamelas."]],
+  MAS_2: [sealingCleaning],
+  MAS_3: [sealingCleaning],
+};
+
+export const maintenancePlanCodes = [...new Set([
+  ...Object.keys(plans), ...Object.keys(additionalPreventivePlans), ...Object.keys(cleaningPlans),
+])];
+
+const preventivePlans: Record<string, readonly {
+  key: string; label: string; pages: readonly number[]; documentCode: string;
+  primary: PlanGroup["primary"]; points: readonly string[]; intervalHours?: number; firstHours?: number;
+}[]> = additionalPreventivePlans;
 
 export function maintenancePlan(code: string | null) {
-  return code && Object.hasOwn(plans, code) ? plans[code] : [];
+  if (!code || !maintenancePlanCodes.includes(code)) return [];
+  const extra = preventivePlans[code]?.map((item) => ({
+    ...group(item.key, item.label, item.pages.join(", "), item.primary, [...item.points]),
+    documentCode: item.documentCode, intervalHours: item.intervalHours, firstHours: item.firstHours,
+    pressureReading: code === "MLA_1" && item.key === "daily",
+  })) ?? [];
+  const cleaning = cleaningPlans[code];
+  return [
+    ...(plans[code] ?? []), ...extra,
+    ...(cleaning ? [group("cleaning-daily", "Diária", "1", "Produção", cleaning[0])] : []),
+    ...(cleaning?.[1] ? [group("cleaning-weekly", "Semanal", "1", "Produção", cleaning[1])] : []),
+  ];
 }
 
 export function maintenanceGroup(code: string | null, key?: string | null) {
