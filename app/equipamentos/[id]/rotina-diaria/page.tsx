@@ -38,7 +38,8 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const { id } = await params;
   const query = await searchParams;
   const { equipment, units, canRecord, user } = await dailyMaintenanceAccess(id);
-  const canSimulate = canRecord && equipment.code === "MLA_1";
+  const isPost = user.role === "TICKET";
+  const canSimulate = !isPost && canRecord && equipment.code === "MLA_1";
   const simulate = canSimulate && query.teste === "1";
   const group = maintenanceGroup(equipment.code, query.grupo);
   const cleaning = isCleaning(group.key);
@@ -64,9 +65,11 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const error = query.erro ? errors[query.erro] : undefined;
 
   return (
-    <AppShell activeHref="/equipamentos">
+    <AppShell activeHref={isPost ? "/tickets" : "/equipamentos"}>
       <PageHeader eyebrow={group.documentCode} title={cleaning ? "Limpezas" : "Plano preventivo"} description={equipment.name}
-        action={<Link href={`/equipamentos/${id}`} className={buttonClass}><ArrowLeft size={17} /> Ficha</Link>} />
+        action={<Link href={isPost ? "/tickets#equipamentos-do-posto" : `/equipamentos/${id}`} className={buttonClass}>
+          <ArrowLeft size={17} /> {isPost ? "Voltar ao posto" : "Ficha"}
+        </Link>} />
       {canSimulate && <div className="flex flex-wrap items-center gap-2">
         <Link href={`?grupo=${group.key}${simulate ? "" : "&teste=1"}`} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-amber-300/50 px-3 text-sm font-semibold text-amber-200">
           <FlaskConical size={17} /> {simulate ? "Sair do teste" : "Modo de teste"}

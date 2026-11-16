@@ -17,7 +17,7 @@ export async function simulateDailyMaintenance(id: string, groupKey: string, for
 async function submitDailyMaintenance(id: string, groupKey: string, formData: FormData, simulate: boolean) {
   const { user, equipment, canRecord } = await dailyMaintenanceAccess(id);
   const group = maintenancePlan(equipment.code).find((item) => item.key === groupKey);
-  if (!group || (simulate && equipment.code !== "MLA_1")) redirect(dailyPath(id));
+  if (!group || (simulate && (user.role === "TICKET" || equipment.code !== "MLA_1"))) redirect(dailyPath(id));
   const path = `${dailyPath(equipment.id)}?grupo=${group.key}${simulate ? "&teste=1" : ""}`;
   if (!canRecord) redirect(path);
 

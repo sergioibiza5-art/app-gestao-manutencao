@@ -1,5 +1,5 @@
 import type { DailyMaintenanceEntry, UserRole } from "@prisma/client";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 import { isCleaning, maintenancePlanCodes } from "@/lib/mcc-maintenance-plan";
@@ -17,18 +17,19 @@ export function canVerifyCleaning(role: UserRole) {
 }
 
 export function canRecordDailyMaintenance(role: UserRole) {
-  return role === "ADMIN" || role === "MANAGER" || role === "USER";
+  return role === "ADMIN" || role === "MANAGER" || role === "USER" || role === "TICKET";
 }
 
 export async function dailyMaintenanceAccess(id: string) {
   const user = await requireUser();
-  if (user.role === "TICKET") redirect("/tickets");
+  const isPost = user.role === "TICKET";
   const prisma = getPrisma();
-  const access = user.role === "USER" ? await prisma.ticketEquipmentAccess.findMany({
+  const access = isPost || user.role === "USER" ? await prisma.ticketEquipmentAccess.findMany({
     where: { userId: user.id }, select: { equipmentId: true },
   }) : [];
   const allowedIds = new Set(access.map(({ equipmentId }) => equipmentId));
-  if (allowedIds.size) {
+  if (isPost && !allowedIds.size) notFound();
+  if (!isPost && allowedIds.size) {
     const childrenByParent = new Map<string, string[]>();
     const children = await prisma.equipment.findMany({
       where: { parentEquipmentId: { not: null } },
@@ -46,7 +47,11 @@ export async function dailyMaintenanceAccess(id: string) {
     }
   }
   const units = await prisma.equipment.findMany({
-    where: { code: { in: maintenancePlanCodes }, ...(allowedIds.size ? { id: { in: [...allowedIds] } } : {}) },
+    where: {
+      code: { in: maintenancePlanCodes },
+      ...(allowedIds.size ? { id: { in: [...allowedIds] } } : {}),
+      ...(isPost ? { status: { notIn: ["INACTIVE", "DISCARDED"] } } : {}),
+    },
     select: { id: true, code: true, name: true, status: true },
   });
   const equipment = units.find((unit) => unit.id === id);

@@ -1,4 +1,4 @@
-import { Bell, CheckCircle2, Pause, Play, Plus, Siren, Trash2, Wrench } from "lucide-react";
+import { Bell, CheckCircle2, ClipboardCheck, Pause, Play, Plus, Siren, Trash2, Wrench } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -21,9 +21,11 @@ import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass }
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { TicketSubmitButton } from "@/app/tickets/ticket-submit-button";
 import { requireUser } from "@/lib/auth";
+import { dailyPath } from "@/lib/daily-maintenance";
 import { getTicketsData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { formatLisbonDateTimeInput } from "@/lib/lisbon-time";
+import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 
 export const dynamic = "force-dynamic";
 
@@ -270,9 +272,43 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
 
   if (isTicketOnly) {
     const ownOpenTickets = data.tickets.filter((ticket) => ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(ticket.status));
+    const equipmentRoutines = data.equipment.flatMap((equipment) => {
+      if (equipment.status === "INACTIVE" || equipment.status === "DISCARDED") return [];
+      const groups = maintenancePlan(equipment.code);
+      const preventive = groups.find(({ key }) => !isCleaning(key));
+      const cleaning = groups.find(({ key }) => isCleaning(key));
+      return groups.length ? [{ equipment, preventive, cleaning }] : [];
+    });
 
     return (
       <AppShell activeHref="/tickets">
+        <section id="equipamentos-do-posto" aria-labelledby="rotinas-do-posto" className="scroll-mt-24">
+          <Panel>
+            <h2 id="rotinas-do-posto" className="flex items-center gap-2 text-xl font-semibold text-zinc-50">
+              <ClipboardCheck size={22} className="shrink-0 text-teal-300" /> Manutenções e limpezas
+            </h2>
+            {equipmentRoutines.length ? (
+              <ul className="mt-3 divide-y divide-zinc-800">
+                {equipmentRoutines.map(({ equipment, preventive, cleaning }) => (
+                  <li key={equipment.id} className="flex flex-wrap items-center justify-between gap-2 py-3">
+                    <div className="min-w-0 break-words">
+                      <p className="font-semibold text-zinc-100">{equipment.name}</p>
+                      <p className="text-sm text-zinc-400">{equipment.code}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {preventive && <Link href={`${dailyPath(equipment.id)}?grupo=${preventive.key}`} className={buttonClass} aria-label={`Plano preventivo: ${equipment.code}`}>
+                        <Wrench size={17} /> Plano preventivo
+                      </Link>}
+                      {cleaning && <Link href={`${dailyPath(equipment.id)}?grupo=${cleaning.key}`} className={buttonClass} aria-label={`Limpezas: ${equipment.code}`}>
+                        <ClipboardCheck size={17} /> Limpezas
+                      </Link>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : <p className="mt-3 text-sm text-zinc-400">Sem impressos disponíveis para os equipamentos deste posto.</p>}
+          </Panel>
+        </section>
         <section className="grid gap-4 xl:grid-cols-[0.75fr_1.25fr]">
           <Panel>
             <div className="flex items-center gap-3">
