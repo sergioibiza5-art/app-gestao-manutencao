@@ -21,7 +21,7 @@ import { buttonClass, EmptyState, inputClass, PageHeader, Panel, textareaClass }
 import { TicketConsumables } from "@/app/tickets/ticket-consumables";
 import { TicketSubmitButton } from "@/app/tickets/ticket-submit-button";
 import { requireUser } from "@/lib/auth";
-import { dailyPath } from "@/lib/daily-maintenance";
+import { dailyMaintenanceUnits, dailyPath } from "@/lib/daily-maintenance";
 import { getTicketsData } from "@/lib/data";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { formatLisbonDateTimeInput } from "@/lib/lisbon-time";
@@ -266,14 +266,17 @@ type TicketsPageProps = {
 
 export default async function TicketsPage({ searchParams }: TicketsPageProps) {
   const user = await requireUser();
-  const data = await getTicketsData({ id: user.id, role: user.role });
   const isTicketOnly = user.role === "TICKET";
-  const params = (await searchParams) ?? {};
+  const [data, stationUnits, query] = await Promise.all([
+    getTicketsData({ id: user.id, role: user.role }),
+    isTicketOnly ? dailyMaintenanceUnits(user) : [],
+    searchParams,
+  ]);
+  const params = query ?? {};
 
   if (isTicketOnly) {
     const ownOpenTickets = data.tickets.filter((ticket) => ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"].includes(ticket.status));
-    const equipmentRoutines = data.equipment.flatMap((equipment) => {
-      if (equipment.status === "INACTIVE" || equipment.status === "DISCARDED") return [];
+    const equipmentRoutines = stationUnits.flatMap((equipment) => {
       const groups = maintenancePlan(equipment.code);
       const preventive = groups.find(({ key }) => !isCleaning(key));
       const cleaning = groups.find(({ key }) => isCleaning(key));

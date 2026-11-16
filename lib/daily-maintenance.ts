@@ -20,16 +20,15 @@ export function canRecordDailyMaintenance(role: UserRole) {
   return role === "ADMIN" || role === "MANAGER" || role === "USER" || role === "TICKET";
 }
 
-export async function dailyMaintenanceAccess(id: string) {
-  const user = await requireUser();
+export async function dailyMaintenanceUnits(user: { id: string; role: UserRole }) {
   const isPost = user.role === "TICKET";
   const prisma = getPrisma();
   const access = isPost || user.role === "USER" ? await prisma.ticketEquipmentAccess.findMany({
     where: { userId: user.id }, select: { equipmentId: true },
   }) : [];
   const allowedIds = new Set(access.map(({ equipmentId }) => equipmentId));
-  if (isPost && !allowedIds.size) notFound();
-  if (!isPost && allowedIds.size) {
+  if (isPost && !allowedIds.size) return [];
+  if (allowedIds.size) {
     const childrenByParent = new Map<string, string[]>();
     const children = await prisma.equipment.findMany({
       where: { parentEquipmentId: { not: null } },
@@ -54,12 +53,18 @@ export async function dailyMaintenanceAccess(id: string) {
     },
     select: { id: true, code: true, name: true, status: true },
   });
+  return maintenancePlanCodes.flatMap((code) => units.filter((unit) => unit.code === code));
+}
+
+export async function dailyMaintenanceAccess(id: string) {
+  const user = await requireUser();
+  const units = await dailyMaintenanceUnits(user);
   const equipment = units.find((unit) => unit.id === id);
   if (!equipment) notFound();
   return {
     user,
     equipment,
-    units: maintenancePlanCodes.flatMap((code) => units.filter((unit) => unit.code === code)),
+    units,
     canRecord: canRecordDailyMaintenance(user.role) && !["INACTIVE", "DISCARDED"].includes(equipment.status),
   };
 }
