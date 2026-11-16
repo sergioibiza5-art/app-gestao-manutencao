@@ -7,10 +7,18 @@ import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { getPrisma } from "@/lib/prisma";
 
 export async function recordDailyMaintenance(id: string, groupKey: string, formData: FormData) {
+  return submitDailyMaintenance(id, groupKey, formData, false);
+}
+
+export async function simulateDailyMaintenance(id: string, groupKey: string, formData: FormData) {
+  return submitDailyMaintenance(id, groupKey, formData, true);
+}
+
+async function submitDailyMaintenance(id: string, groupKey: string, formData: FormData, simulate: boolean) {
   const { user, equipment, canRecord } = await dailyMaintenanceAccess(id);
   const group = maintenancePlan(equipment.code).find((item) => item.key === groupKey);
-  if (!group) redirect(dailyPath(id));
-  const path = `${dailyPath(equipment.id)}?grupo=${group.key}`;
+  if (!group || (simulate && equipment.code !== "MLA_1")) redirect(dailyPath(id));
+  const path = `${dailyPath(equipment.id)}?grupo=${group.key}${simulate ? "&teste=1" : ""}`;
   if (!canRecord) redirect(path);
 
   const today = lisbonDay();
@@ -41,6 +49,8 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
   if (notes.length > 1000 || (checks.some(({ result }) => result === "NOT_OK") && !notes)) {
     redirect(`${path}&erro=observacoes`);
   }
+
+  if (simulate) redirect(`${path}&simulado=1`);
 
   const revision = noProduction ? 1 : Number(formData.get("revision"));
   if (revision !== 1 && revision !== 2) redirect(`${path}&erro=atualizado`);

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Download, Save } from "lucide-react";
+import { ArrowLeft, Download, FlaskConical, Save } from "lucide-react";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import {
@@ -7,7 +7,7 @@ import {
   dailyResults, displayDay, displayRecordedAt, entryChecks, lisbonDay, maintenancePeriodStart,
 } from "@/lib/daily-maintenance";
 import { cleaningProduct, isCleaning, maintenanceGroup, maintenancePlan } from "@/lib/mcc-maintenance-plan";
-import { recordDailyMaintenance, verifyCleaning } from "./actions";
+import { recordDailyMaintenance, simulateDailyMaintenance, verifyCleaning } from "./actions";
 
 const errors: Record<string, string> = {
   dia: "A data mudou. Confirma o dia antes de guardar.",
@@ -33,17 +33,19 @@ const periodLabels: Record<string, string> = {
 
 export default async function DailyMaintenancePage({ params, searchParams }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ mes?: string; grupo?: string; erro?: string; guardado?: string; verificado?: string }>;
+  searchParams: Promise<{ mes?: string; grupo?: string; erro?: string; guardado?: string; verificado?: string; teste?: string; simulado?: string }>;
 }) {
   const { id } = await params;
   const query = await searchParams;
   const { equipment, units, canRecord, user } = await dailyMaintenanceAccess(id);
+  const canSimulate = canRecord && equipment.code === "MLA_1";
+  const simulate = canSimulate && query.teste === "1";
   const group = maintenanceGroup(equipment.code, query.grupo);
   const cleaning = isCleaning(group.key);
   const groups = maintenancePlan(equipment.code).filter((item) => isCleaning(item.key) === cleaning);
   const isDaily = group.key === "daily" || group.key === "cleaning-daily";
   const today = lisbonDay();
-  const [report, periodEntries] = await Promise.all([
+  const [report, periodEntries] = simulate ? [{ month: today.slice(0, 7), days: [] }, new Map<string, never>()] as const : await Promise.all([
     dailyMaintenanceMonth(id, group.key, query.mes),
     currentMaintenancePeriods(id, groups.map(({ key }) => key), today),
   ]);
@@ -57,7 +59,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const visibleDays = isDaily ? days : days.filter(({ entries }) => entries.length > 0);
   const current = days.find(({ day }) => day === today)?.entries[0];
   const showToday = month === today.slice(0, 7);
-  const save = recordDailyMaintenance.bind(null, id, group.key);
+  const save = (simulate ? simulateDailyMaintenance : recordDailyMaintenance).bind(null, id, group.key);
   const verify = verifyCleaning.bind(null, id, group.key, month);
   const error = query.erro ? errors[query.erro] : undefined;
 
@@ -65,8 +67,19 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
     <AppShell activeHref="/equipamentos">
       <PageHeader eyebrow={group.documentCode} title={cleaning ? "Limpezas" : "Plano preventivo"} description={equipment.name}
         action={<Link href={`/equipamentos/${id}`} className={buttonClass}><ArrowLeft size={17} /> Ficha</Link>} />
+      {canSimulate && <div className="flex flex-wrap items-center gap-2">
+        <Link href={`?grupo=${group.key}${simulate ? "" : "&teste=1"}`} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-amber-300/50 px-3 text-sm font-semibold text-amber-200">
+          <FlaskConical size={17} /> {simulate ? "Sair do teste" : "Modo de teste"}
+        </Link>
+        {simulate && <>
+          <p className="text-sm font-semibold text-amber-200">Modo de teste ativo. Nada será gravado.</p>
+          <Link href={`?grupo=${cleaning ? "daily" : "cleaning-daily"}&teste=1`} className="inline-flex min-h-11 items-center rounded-lg border border-zinc-700 px-3 text-sm font-semibold">
+            {cleaning ? "Testar plano preventivo" : "Testar limpezas"}
+          </Link>
+        </>}
+      </div>}
       <Panel>
-        {!cleaning && <nav aria-label="Equipamentos do plano" className="flex flex-wrap gap-2">
+        {!cleaning && !simulate && <nav aria-label="Equipamentos do plano" className="flex flex-wrap gap-2">
           {units.filter((unit) => maintenancePlan(unit.code).some((item) => item.documentCode === group.documentCode)).map((unit) => (
             <Link key={unit.id} href={`${dailyPath(unit.id)}?grupo=${maintenancePlan(unit.code).find((item) => item.documentCode === group.documentCode)?.key}`} aria-current={unit.id === id ? "page" : undefined}
               className={`inline-flex min-h-11 items-center rounded-lg border px-3 text-sm font-semibold ${unit.id === id ? "border-teal-300 bg-teal-300/10 text-teal-200" : "border-zinc-700"}`}>
@@ -83,17 +96,17 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
             const status = hasFailures ? "Com falhas" : pending ? "Pendente" : entry?.noProduction
               ? "Sem produção" : entry ? (cleaning ? entry.verifiedAt ? "Verificada" : "Por verificar" : "Registada") : "Sem leitura";
             return (
-              <Link key={item.key} href={`?grupo=${item.key}&mes=${month}`} aria-current={item.key === group.key ? "page" : undefined}
+              <Link key={item.key} href={`?grupo=${item.key}&mes=${month}${simulate ? "&teste=1" : ""}`} aria-current={item.key === group.key ? "page" : undefined}
                 className={`inline-flex min-h-11 flex-wrap items-center gap-2 rounded-lg border px-3 py-2 text-sm ${item.key === group.key ? "border-teal-300 bg-teal-300/10 text-teal-200" : "border-zinc-700"}`}>
                 {item.label}
-                <span className={`text-xs ${hasFailures ? "text-rose-200" : pending || !entry || (cleaning && !entry.verifiedAt) ? "text-amber-200" : "text-teal-200"}`}>
+                {!simulate && <span className={`text-xs ${hasFailures ? "text-rose-200" : pending || !entry || (cleaning && !entry.verifiedAt) ? "text-amber-200" : "text-teal-200"}`}>
                   {status}
-                </span>
+                </span>}
               </Link>
             );
           })}
         </nav>
-        <div className="mt-3 space-y-1 text-sm text-zinc-300">
+        {!simulate && <div className="mt-3 space-y-1 text-sm text-zinc-300">
           {periodStart && (
             <p>{periodLabels[group.key.replace(/^(cleaning|conveyor)-/, "")]} · Desde {displayDay(periodStart.toISOString().slice(0, 10))}</p>
           )}
@@ -104,17 +117,18 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
           {group.intervalHours && <p>{nextMeter
             ? `Horímetro no último registo: ${periodEntry?.meterHours?.toString()} h · Próxima intervenção: ${nextMeter} h`
             : group.firstHours ? `Primeira intervenção prevista às ${group.firstHours} h.` : "Sem leitura de referência para calcular a próxima intervenção."}</p>}
-        </div>
+        </div>}
       </Panel>
       {error && <p role="alert" className="text-sm text-rose-200">{error}</p>}
-      {query.guardado === "1" && <p role="status" className="text-sm text-teal-200">Registo guardado.</p>}
-      {query.verificado === "1" && <p role="status" className="text-sm text-teal-200">Verificação guardada.</p>}
+      {simulate && query.simulado === "1" && <p role="status" className="text-sm text-teal-200">Teste concluído. Não foi gravado nenhum registo.</p>}
+      {!simulate && query.guardado === "1" && <p role="status" className="text-sm text-teal-200">Registo guardado.</p>}
+      {!simulate && query.verificado === "1" && <p role="status" className="text-sm text-teal-200">Verificação guardada.</p>}
       {showToday && (
         <Panel>
           <h2 className="text-xl font-semibold">{group.label} · {displayDay(today)}</h2>
-          <p className="mt-1 text-sm text-zinc-400">Pág. {group.pages} · {group.primary} · {dailyEntryStatus(current)}</p>
+          <p className="mt-1 text-sm text-zinc-400">Pág. {group.pages} · {group.primary} · {simulate ? "Simulação" : dailyEntryStatus(current)}</p>
           {canRecord && (!current || current.noProduction) && (
-            <form action={save} className="mt-4 grid max-w-3xl gap-4">
+            <form key={`${id}:${group.key}:${simulate}`} action={save} className="mt-4 grid max-w-3xl gap-4">
               <input type="hidden" name="day" value={today} />
               <input type="hidden" name="revision" value={(current?.revision ?? 0) + 1} />
               {group.intervalHours && <label className="grid gap-1 text-sm">Leitura do horímetro (h)
@@ -148,14 +162,17 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                 <textarea name="notes" maxLength={1000} className={textareaClass} />
               </label>
               <div className="flex flex-wrap gap-2">
-                <button name="mode" value="checks" className={buttonClass}><Save size={17} /> {cleaning ? "Guardar limpeza" : "Guardar verificação"}</button>
+                <button name="mode" value="checks" className={buttonClass}>
+                  {simulate ? <FlaskConical size={17} /> : <Save size={17} />}
+                  {simulate ? "Simular registo" : cleaning ? "Guardar limpeza" : "Guardar verificação"}
+                </button>
                 {!cleaning && isDaily && !current && <button name="mode" value="no-production" formNoValidate className="min-h-11 rounded-lg border border-zinc-700 px-4 text-sm font-semibold">Sem produção</button>}
               </div>
             </form>
           )}
         </Panel>
       )}
-      <Panel>
+      {!simulate && <Panel>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h2 className="text-xl font-semibold">Registo mensal</h2>
           <div className="flex flex-wrap items-end gap-2">
@@ -219,7 +236,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
           })}
         </ul>
         {visibleDays.length === 0 && <p className="mt-3 text-sm text-zinc-400">Sem intervenções registadas neste mês.</p>}
-      </Panel>
+      </Panel>}
     </AppShell>
   );
 }
