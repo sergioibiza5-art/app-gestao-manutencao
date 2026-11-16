@@ -282,6 +282,11 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
       const cleaning = groups.find(({ key }) => isCleaning(key));
       return groups.length ? [{ equipment, preventive, cleaning }] : [];
     });
+    const routinesById = new Map(equipmentRoutines.map((routine) => [routine.equipment.id, routine]));
+    const mainRoutines = equipmentRoutines.filter(({ equipment, preventive, cleaning }) => {
+      const parent = equipment.parentEquipmentId ? routinesById.get(equipment.parentEquipmentId) : undefined;
+      return !!cleaning || !preventive || parent?.preventive?.documentCode !== preventive.documentCode;
+    });
 
     return (
       <AppShell activeHref="/tickets">
@@ -290,9 +295,9 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
             <h2 id="rotinas-do-posto" className="flex items-center gap-2 text-xl font-semibold text-zinc-50">
               <ClipboardCheck size={22} className="shrink-0 text-teal-300" /> Manutenções e limpezas
             </h2>
-            {equipmentRoutines.length ? (
+            {mainRoutines.length ? (
               <ul className="mt-3 divide-y divide-zinc-800">
-                {equipmentRoutines.map(({ equipment, preventive, cleaning }) => (
+                {mainRoutines.map(({ equipment, preventive, cleaning }) => (
                   <li key={equipment.id} className="flex flex-wrap items-center justify-between gap-2 py-3">
                     <div className="min-w-0 break-words">
                       <p className="font-semibold text-zinc-100">{equipment.name}</p>

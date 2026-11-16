@@ -51,7 +51,7 @@ export async function dailyMaintenanceUnits(user: { id: string; role: UserRole }
       ...(allowedIds.size ? { id: { in: [...allowedIds] } } : {}),
       ...(isPost ? { status: { notIn: ["INACTIVE", "DISCARDED"] } } : {}),
     },
-    select: { id: true, code: true, name: true, status: true },
+    select: { id: true, code: true, name: true, status: true, parentEquipmentId: true },
   });
   return maintenancePlanCodes.flatMap((code) => units.filter((unit) => unit.code === code));
 }
