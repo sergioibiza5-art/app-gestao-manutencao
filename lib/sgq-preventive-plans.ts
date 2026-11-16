@@ -17,12 +17,14 @@ export const additionalPreventivePlans = {
       key: "quarterly",
       label: "Trimestral",
       pages: [
-        2
+        2,
+        19
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
       points: [
-        "Verificar o switch mecânico das portas."
+        "Verificar o switch mecânico das portas.",
+        "Verificar a abertura e o fecho da porta de carga e descarga da câmara de pré-condicionamento e, se necessário, ajustar."
       ]
     },
     {
@@ -55,12 +57,14 @@ export const additionalPreventivePlans = {
       key: "quarterly",
       label: "Trimestral",
       pages: [
-        5
+        5,
+        20
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
       points: [
-        "Verificar o switch mecânico das portas."
+        "Verificar o switch mecânico das portas.",
+        "Verificar a abertura e o fecho da porta de carga e descarga da câmara de pré-condicionamento e, se necessário, ajustar."
       ]
     },
     {
@@ -150,8 +154,8 @@ export const additionalPreventivePlans = {
       key: "semiannual",
       label: "Semestral",
       pages: [
-        18,
-        19
+        21,
+        22
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -170,9 +174,9 @@ export const additionalPreventivePlans = {
       key: "annual",
       label: "Anual",
       pages: [
-        20,
-        21,
-        22
+        23,
+        24,
+        25
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -197,7 +201,7 @@ export const additionalPreventivePlans = {
       key: "biennial",
       label: "De dois em dois anos",
       pages: [
-        23
+        26
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -209,7 +213,7 @@ export const additionalPreventivePlans = {
       key: "conveyor-monthly",
       label: "Transportador · Mensal",
       pages: [
-        32
+        35
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Produção",
@@ -221,7 +225,7 @@ export const additionalPreventivePlans = {
       key: "conveyor-quarterly",
       label: "Transportador · Trimestral",
       pages: [
-        33
+        36
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -233,7 +237,7 @@ export const additionalPreventivePlans = {
       key: "conveyor-semiannual",
       label: "Transportador · Semestral",
       pages: [
-        34
+        37
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -247,7 +251,7 @@ export const additionalPreventivePlans = {
       key: "daily",
       label: "Diária",
       pages: [
-        24
+        27
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Produção",
@@ -260,7 +264,7 @@ export const additionalPreventivePlans = {
       key: "annual",
       label: "Anual",
       pages: [
-        25
+        28
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -276,7 +280,7 @@ export const additionalPreventivePlans = {
       key: "daily",
       label: "Diária",
       pages: [
-        26
+        29
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Produção",
@@ -289,7 +293,7 @@ export const additionalPreventivePlans = {
       key: "annual",
       label: "Anual",
       pages: [
-        27
+        30
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -306,7 +310,7 @@ export const additionalPreventivePlans = {
       label: "Trimestral",
       pages: [
         17,
-        28
+        31
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -319,7 +323,7 @@ export const additionalPreventivePlans = {
       key: "annual",
       label: "Anual",
       pages: [
-        29
+        32
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -333,19 +337,21 @@ export const additionalPreventivePlans = {
       key: "quarterly",
       label: "Trimestral",
       pages: [
-        30
+        18,
+        33
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
       points: [
-        "Verificar o switch mecânico das portas."
+        "Verificar o switch mecânico das portas.",
+        "Verificar a abertura e o fecho da porta de carga e descarga da câmara de arejamento e, se necessário, ajustar."
       ]
     },
     {
       key: "annual",
       label: "Anual",
       pages: [
-        31
+        34
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -359,7 +365,7 @@ export const additionalPreventivePlans = {
       key: "daily",
       label: "Diária",
       pages: [
-        35
+        38
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -371,7 +377,7 @@ export const additionalPreventivePlans = {
       key: "weekly",
       label: "Semanal",
       pages: [
-        36
+        39
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -385,7 +391,7 @@ export const additionalPreventivePlans = {
       key: "weekly",
       label: "Semanal",
       pages: [
-        37
+        40
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -399,7 +405,7 @@ export const additionalPreventivePlans = {
       key: "daily",
       label: "Diária",
       pages: [
-        38
+        41
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Produção",
@@ -416,7 +422,7 @@ export const additionalPreventivePlans = {
       key: "weekly",
       label: "Semanal",
       pages: [
-        39
+        42
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",
@@ -428,7 +434,7 @@ export const additionalPreventivePlans = {
       key: "semiannual",
       label: "Semestral",
       pages: [
-        40
+        43
       ],
       documentCode: "IMPSUP0820.02",
       primary: "Manutenção",

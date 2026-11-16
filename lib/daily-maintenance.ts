@@ -27,8 +27,26 @@ export async function dailyMaintenanceAccess(id: string) {
   const access = user.role === "USER" ? await prisma.ticketEquipmentAccess.findMany({
     where: { userId: user.id }, select: { equipmentId: true },
   }) : [];
+  const allowedIds = new Set(access.map(({ equipmentId }) => equipmentId));
+  if (allowedIds.size) {
+    const childrenByParent = new Map<string, string[]>();
+    const children = await prisma.equipment.findMany({
+      where: { parentEquipmentId: { not: null } },
+      select: { id: true, parentEquipmentId: true },
+    });
+    for (const { id, parentEquipmentId } of children) {
+      if (!parentEquipmentId) continue;
+      const siblings = childrenByParent.get(parentEquipmentId) ?? [];
+      siblings.push(id);
+      childrenByParent.set(parentEquipmentId, siblings);
+    }
+    // A grant includes descendants only. The set also prevents loops in malformed families.
+    for (const parentId of allowedIds) {
+      for (const childId of childrenByParent.get(parentId) ?? []) allowedIds.add(childId);
+    }
+  }
   const units = await prisma.equipment.findMany({
-    where: { code: { in: maintenancePlanCodes }, ...(access.length ? { id: { in: access.map((row) => row.equipmentId) } } : {}) },
+    where: { code: { in: maintenancePlanCodes }, ...(allowedIds.size ? { id: { in: [...allowedIds] } } : {}) },
     select: { id: true, code: true, name: true, status: true },
   });
   const equipment = units.find((unit) => unit.id === id);
