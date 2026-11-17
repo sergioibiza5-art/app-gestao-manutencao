@@ -1,9 +1,50 @@
 import PDFDocument from "pdfkit/js/pdfkit.standalone.js";
 import {
-  cleaningDetails, dailyEntryStatus, dailyResults, displayDay, displayRecordedAt, entryChecks,
+  cleaningDetails, cleaningPerformerName, dailyEntryStatus, dailyResults, displayDay, displayRecordedAt, entryChecks,
   type dailyMaintenanceMonth,
 } from "@/lib/daily-maintenance";
 import { isCleaning, type maintenanceGroup } from "@/lib/mcc-maintenance-plan";
+
+function cleaningSummary(
+  doc: PDFKit.PDFDocument,
+  days: Awaited<ReturnType<typeof dailyMaintenanceMonth>>["days"],
+) {
+  const widths = [64, 105, 161, 159];
+  const left = doc.page.margins.left;
+  const textOptions = (width: number) => ({ width: width - 10, lineGap: 1 });
+  function row(values: string[], header = false) {
+    doc.font(header ? "Helvetica-Bold" : "Helvetica").fontSize(9);
+    let y = doc.y;
+    const height = Math.max(...values.map((value, i) => doc.heightOfString(value, textOptions(widths[i])))) + 8;
+    if (!header && y + height > doc.page.height - doc.page.margins.bottom) {
+      doc.addPage();
+      heading();
+      doc.font("Helvetica").fontSize(9);
+      y = doc.y;
+    }
+    let x = left;
+    values.forEach((value, i) => {
+      doc.text(value, x + 5, y + 3, textOptions(widths[i]));
+      x += widths[i];
+    });
+    doc.save().strokeColor("#d4d4d4").lineWidth(0.5).moveTo(left, y + height).lineTo(x, y + height).stroke().restore();
+    doc.x = left;
+    doc.y = y + height;
+  }
+  function heading() {
+    row(["Data", "Estado", "Executada por", "Verificada por"], true);
+  }
+  heading();
+  for (const { day, future, entries } of days) {
+    const entry = entries[0];
+    row([
+      displayDay(day),
+      future && !entry ? "Dia futuro" : dailyEntryStatus(entry),
+      entry ? `${cleaningPerformerName(entry)}\n${displayRecordedAt(entry.recordedAt)}` : "",
+      entry?.verifiedAt ? `${entry.verifierName ?? "Nome não registado"}\n${displayRecordedAt(entry.verifiedAt)}` : entry ? "Por verificar" : "",
+    ]);
+  }
+}
 
 export async function dailyMaintenancePdf(
   equipment: { name: string; code: string | null },
@@ -27,12 +68,12 @@ export async function dailyMaintenancePdf(
     .text(`Emitido em ${displayRecordedAt(new Date())}`);
   doc.moveDown().font("Helvetica-Bold").text("Resumo diário");
   const days = group.key === "daily" || group.key === "cleaning-daily" ? report.days : report.days.filter(({ entries }) => entries.length > 0);
-  for (const { day, future, entries } of days) {
+  if (cleaning) cleaningSummary(doc, days);
+  else for (const { day, future, entries } of days) {
     const latest = entries[0];
     const status = future && !latest ? "Dia futuro" : dailyEntryStatus(latest);
-    const verification = cleaning && latest ? (latest.verifiedAt ? " | Verificada" : " | Por verificar") : "";
     doc.font("Helvetica").fontSize(10)
-      .text(`${displayDay(day)}  |  ${status}${latest ? `  |  ${latest.recorderName}` : ""}${verification}`, { lineGap: 3 });
+      .text(`${displayDay(day)}  |  ${status}${latest ? `  |  ${latest.recorderName}` : ""}`, { lineGap: 3 });
   }
 
   doc.addPage().font("Helvetica-Bold").fontSize(15).text("Verificações e histórico");
@@ -48,15 +89,19 @@ export async function dailyMaintenancePdf(
     doc.font("Helvetica-Bold").fontSize(11).text(
       `${displayDay(entry.day.toISOString().slice(0, 10))} | ${dailyEntryStatus(entry)} | Registo ${entry.revision}`,
     );
-    doc.font("Helvetica").fontSize(10)
-      .text(`${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
+    const materials = cleaningDetails(entry);
+    doc.font("Helvetica").fontSize(10).text(materials
+      ? `Executada por: ${cleaningPerformerName(entry)} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`
+      : `${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
+    if (materials?.performedBy) doc.text(`Conta do posto: ${entry.recorderName}`);
     if (entry.meterHours !== null) doc.text(`Horímetro: ${entry.meterHours.toString()} h`);
     entryChecks(entry).forEach(({ label, result, reading }) => doc.text(`${dailyResults[result]}: ${label}${reading ? ` | ${reading}` : ""}`));
-    const materials = cleaningDetails(entry);
     if (materials) {
       doc.text(`Produtos utilizados: ${materials.products}`);
       doc.text(`Equipamentos utilizados: ${materials.tools}`);
-      doc.text(entry.verifiedAt ? `Verificado por ${entry.verifierName} | ${displayRecordedAt(entry.verifiedAt)}` : "Por verificar");
+      doc.text(entry.verifiedAt
+        ? `Verificada por: ${entry.verifierName ?? "Nome não registado"} | ${displayRecordedAt(entry.verifiedAt)}`
+        : "Verificada por: Por verificar");
     }
     if (entry.notes) doc.text(`Observações: ${entry.notes}`);
     doc.moveDown();

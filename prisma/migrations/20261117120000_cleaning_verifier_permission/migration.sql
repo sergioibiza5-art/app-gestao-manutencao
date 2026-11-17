@@ -1,0 +1,1 @@
+ALTER TABLE "User" ADD COLUMN "cleaningVerifier" BOOLEAN NOT NULL DEFAULT false;

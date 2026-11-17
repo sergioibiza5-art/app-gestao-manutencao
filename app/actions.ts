@@ -4691,6 +4691,7 @@ export async function createUser(formData: FormData) {
         email,
         password: hashPassword(password),
         mustChangePassword: true,
+        cleaningVerifier: role !== "TICKET" && formData.get("cleaningVerifier") === "true",
         pin: null,
         hourlyRate: decimal(formData, "hourlyRate"),
         notifyStartTime: text(formData, "notifyStartTime") || "08:00",
@@ -4757,6 +4758,7 @@ export async function updateUser(formData: FormData) {
         name: text(formData, "name"),
         username: finalUsername,
         email,
+        cleaningVerifier: role !== "TICKET" && formData.get("cleaningVerifier") === "true",
 
         ...(role === "TICKET" ? { pin: null } : {}),
         hourlyRate: decimal(formData, "hourlyRate"),

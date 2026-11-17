@@ -2,7 +2,7 @@
 
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { canVerifyCleaning, dailyMaintenanceAccess, dailyPath, lisbonDay, parseDailyChecks } from "@/lib/daily-maintenance";
+import { canVerifyCleaning, cleaningPerformerMaxLength, dailyMaintenanceAccess, dailyPath, lisbonDay, parseDailyChecks } from "@/lib/daily-maintenance";
 import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { getPrisma } from "@/lib/prisma";
 
@@ -41,6 +41,12 @@ async function submitDailyMaintenance(id: string, groupKey: string, formData: Fo
   const rawNotes = formData.get("notes");
   const notes = typeof rawNotes === "string" ? rawNotes.trim() : "";
   const cleaning = isCleaning(group.key);
+  const rawPerformer = formData.get("performedBy");
+  const performedBy = typeof rawPerformer === "string" ? rawPerformer.trim().replace(/\s+/g, " ") : "";
+  const needsPerformer = cleaning && user.role === "TICKET";
+  if (needsPerformer && (!performedBy || performedBy.length > cleaningPerformerMaxLength)) {
+    redirect(`${path}&erro=assinatura`);
+  }
   const products = String(formData.get("products") ?? "").trim();
   const tools = String(formData.get("tools") ?? "").trim();
   if (cleaning && (!products || !tools || products.length > 300 || tools.length > 300)) {
@@ -66,7 +72,9 @@ async function submitDailyMaintenance(id: string, groupKey: string, formData: Fo
       }
       await tx.dailyMaintenanceEntry.create({ data: {
         equipmentId: id, groupKey, day, revision, documentCode: group.documentCode,
-        noProduction, checks: cleaning ? { points: checks, products, tools } : checks, notes: notes || null,
+        noProduction,
+        checks: cleaning ? { points: checks, products, tools, ...(needsPerformer ? { performedBy } : {}) } : checks,
+        notes: notes || null,
         meterHours: group.intervalHours ? meter : null,
         recordedById: user.id, recorderName: user.name,
       } });
@@ -81,7 +89,7 @@ async function submitDailyMaintenance(id: string, groupKey: string, formData: Fo
 export async function verifyCleaning(id: string, groupKey: string, month: string, formData: FormData) {
   const { user, equipment } = await dailyMaintenanceAccess(id);
   const group = maintenancePlan(equipment.code).find((item) => item.key === groupKey && isCleaning(item.key));
-  if (!group || !canVerifyCleaning(user.role)) redirect(dailyPath(id));
+  if (!group || !canVerifyCleaning(user)) redirect(dailyPath(id));
   const path = `${dailyPath(id)}?${new URLSearchParams({ grupo: group.key, mes: month })}`;
   const entryId = formData.get("entryId");
   if (typeof entryId !== "string" || !entryId) redirect(path);

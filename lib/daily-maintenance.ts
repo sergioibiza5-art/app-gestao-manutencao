@@ -1,4 +1,4 @@
-import type { DailyMaintenanceEntry, UserRole } from "@prisma/client";
+import type { DailyMaintenanceEntry, User, UserRole } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
@@ -7,13 +7,14 @@ import { isCleaning, maintenancePlanCodes } from "@/lib/mcc-maintenance-plan";
 export const dailyResults = { OK: "Conforme", NOT_OK: "Não conforme" } as const;
 export type DailyResult = keyof typeof dailyResults;
 export type DailyCheck = { label: string; result: DailyResult; reading?: string };
-export type CleaningDetails = { points: DailyCheck[]; products: string; tools: string };
+export type CleaningDetails = { points: DailyCheck[]; products: string; tools: string; performedBy?: string };
+export const cleaningPerformerMaxLength = 120;
 const calendarPeriodMonths: Readonly<Record<string, number>> = {
   monthly: 1, bimonthly: 2, quarterly: 3, semiannual: 6, annual: 12,
 };
 
-export function canVerifyCleaning(role: UserRole) {
-  return role === "ADMIN" || role === "MANAGER" || role === "SGQ";
+export function canVerifyCleaning(user: Pick<User, "role" | "cleaningVerifier">) {
+  return user.role !== "TICKET" && user.cleaningVerifier;
 }
 
 export function canRecordDailyMaintenance(role: UserRole) {
@@ -96,6 +97,10 @@ export function entryChecks(entry: DailyMaintenanceEntry) {
 
 export function cleaningDetails(entry: DailyMaintenanceEntry) {
   return isCleaning(entry.groupKey) ? entry.checks as CleaningDetails : null;
+}
+
+export function cleaningPerformerName(entry: DailyMaintenanceEntry) {
+  return cleaningDetails(entry)?.performedBy || entry.recorderName;
 }
 
 export function dailyEntryStatus(entry?: DailyMaintenanceEntry) {

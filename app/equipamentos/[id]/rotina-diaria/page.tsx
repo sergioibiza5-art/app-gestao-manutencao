@@ -3,7 +3,7 @@ import { ArrowLeft, Download, FlaskConical, Save } from "lucide-react";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, PageHeader, Panel, textareaClass } from "@/app/components/ui";
 import {
-  biennialDueDate, canVerifyCleaning, cleaningDetails, currentMaintenancePeriods, dailyEntryStatus, dailyMaintenanceAccess, dailyMaintenanceMonth, dailyPath,
+  biennialDueDate, canVerifyCleaning, cleaningDetails, cleaningPerformerMaxLength, cleaningPerformerName, currentMaintenancePeriods, dailyEntryStatus, dailyMaintenanceAccess, dailyMaintenanceMonth, dailyPath,
   dailyResults, displayDay, displayRecordedAt, entryChecks, lisbonDay, maintenancePeriodStart,
 } from "@/lib/daily-maintenance";
 import { cleaningProduct, isCleaning, maintenanceGroup, maintenancePlan } from "@/lib/mcc-maintenance-plan";
@@ -16,6 +16,7 @@ const errors: Record<string, string> = {
   observacoes: "Descreve a falha nas observações. O limite é de 1000 caracteres.",
   atualizado: "Este dia já foi atualizado. Consulta o registo abaixo.",
   materiais: "Indica os produtos e os equipamentos utilizados.",
+  assinatura: "Indica o nome de quem fez a limpeza.",
   pressao: "Indica a pressão medida em bar, com até duas casas decimais.",
   verificacao: "O registo já foi verificado ou precisa de ser confirmado por outra pessoa.",
 };
@@ -164,10 +165,19 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
               <label className="grid gap-1 text-sm">Observações
                 <textarea name="notes" maxLength={1000} className={textareaClass} />
               </label>
+              {cleaning && !simulate && (
+                isPost ? (
+                  <label className="grid gap-1 text-sm">Executada por
+                    <input name="performedBy" maxLength={cleaningPerformerMaxLength} required autoComplete="off" className={inputClass} />
+                  </label>
+                ) : (
+                  <p className="text-sm text-zinc-300">Executada por: <strong>{user.name}</strong></p>
+                )
+              )}
               <div className="flex flex-wrap gap-2">
                 <button name="mode" value="checks" className={buttonClass}>
                   {simulate ? <FlaskConical size={17} /> : <Save size={17} />}
-                  {simulate ? "Simular registo" : cleaning ? "Guardar limpeza" : "Guardar verificação"}
+                  {simulate ? "Simular registo" : cleaning ? "Assinar execução" : "Guardar verificação"}
                 </button>
                 {!cleaning && isDaily && !current && <button name="mode" value="no-production" formNoValidate className="min-h-11 rounded-lg border border-zinc-700 px-4 text-sm font-semibold">Sem produção</button>}
               </div>
@@ -199,27 +209,40 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                     <summary className="flex min-h-11 cursor-pointer flex-wrap items-center gap-x-4 px-2 py-2 text-sm">
                       <time dateTime={day} className="font-semibold tabular-nums">{displayDay(day)}</time>
                       <span className={dailyEntryStatus(latest) === "Verificação com falhas" ? "text-rose-200" : "text-teal-200"}>{dailyEntryStatus(latest)}</span>
-                      <span className="break-words text-zinc-400">{latest.recorderName}</span>
-                      {cleaning && <span className={latest.verifiedAt ? "text-teal-200" : "text-amber-200"}>{latest.verifiedAt ? "Verificada" : "Por verificar"}</span>}
+                      {!cleaning && <span className="break-words text-zinc-400">{latest.recorderName}</span>}
+                      {cleaning && (
+                        <span className="grid w-full min-w-0 grid-cols-2 gap-3 py-1 sm:w-auto sm:grow">
+                          <span className="min-w-0 break-words">
+                            <span className="block text-xs text-zinc-400">Executada por</span>
+                            {cleaningPerformerName(latest)}
+                            <span className="block text-xs text-zinc-400">{displayRecordedAt(latest.recordedAt)}</span>
+                          </span>
+                          <span className={`min-w-0 break-words ${latest.verifiedAt ? "text-teal-200" : "text-amber-200"}`}>
+                            <span className="block text-xs text-zinc-400">Verificada por</span>
+                            {latest.verifiedAt ? latest.verifierName ?? "Nome não registado" : "Por verificar"}
+                            {latest.verifiedAt && <span className="block text-xs text-zinc-400">{displayRecordedAt(latest.verifiedAt)}</span>}
+                          </span>
+                        </span>
+                      )}
                     </summary>
                     <ol className="space-y-3 px-2 pb-3">
                       {entries.map((entry) => {
                         const materials = cleaningDetails(entry);
                         return (
                         <li key={entry.id} className="space-y-1 border-l border-zinc-700 pl-3 text-sm">
-                          <p className="font-semibold">{dailyEntryStatus(entry)} · {entry.recorderName}</p>
+                          <p className="font-semibold">{dailyEntryStatus(entry)} · {materials ? cleaningPerformerName(entry) : entry.recorderName}</p>
                           <p className="text-zinc-400">{displayRecordedAt(entry.recordedAt)} · {entry.documentCode}</p>
+                          {materials?.performedBy && <p className="break-words text-zinc-400">Conta do posto: {entry.recorderName}</p>}
                           {entry.meterHours !== null && <p>Horímetro: {entry.meterHours.toString()} h</p>}
                           {entryChecks(entry).map(({ label, result, reading }) => <p key={label}>{dailyResults[result]} · {label}{reading ? ` · ${reading}` : ""}</p>)}
                           {entry.notes && <p className="whitespace-pre-wrap break-words">{entry.notes}</p>}
                           {materials && <>
                             <p className="break-words">Produtos: {materials.products}</p>
                             <p className="break-words">Equipamentos: {materials.tools}</p>
-                            <p>{entry.verifiedAt ? `Verificado por ${entry.verifierName} · ${displayRecordedAt(entry.verifiedAt)}` : "Por verificar"}</p>
-                            {!entry.verifiedAt && canVerifyCleaning(user.role) && entry.recordedById !== user.id && (
+                            {!entry.verifiedAt && canVerifyCleaning(user) && entry.recordedById !== user.id && (
                               <form action={verify} className="pt-2">
                                 <input type="hidden" name="entryId" value={entry.id} />
-                                <button className={buttonClass}>Confirmar verificação</button>
+                                <button className={buttonClass}>Assinar verificação</button>
                               </form>
                             )}
                           </>}
