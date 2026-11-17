@@ -1,9 +1,21 @@
 import PDFDocument from "pdfkit/js/pdfkit.standalone.js";
+import type { DailyMaintenanceEntry } from "@prisma/client";
 import {
   cleaningDetails, cleaningPerformerName, dailyEntryStatus, dailyResults, displayDay, displayRecordedAt, entryChecks,
   type dailyMaintenanceMonth,
 } from "@/lib/daily-maintenance";
-import { isCleaning, type maintenanceGroup } from "@/lib/mcc-maintenance-plan";
+import { isCleaning, maintenanceGroup } from "@/lib/mcc-maintenance-plan";
+
+function reportDocument() {
+  const doc = new PDFDocument({ size: "A4", margin: 40 });
+  const buffer = new Promise<Buffer>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    doc.on("data", (chunk: Buffer) => chunks.push(chunk));
+    doc.on("end", () => resolve(Buffer.concat(chunks)));
+    doc.on("error", reject);
+  });
+  return { doc, buffer };
+}
 
 function cleaningSummary(
   doc: PDFKit.PDFDocument,
@@ -51,13 +63,7 @@ export async function dailyMaintenancePdf(
   report: Awaited<ReturnType<typeof dailyMaintenanceMonth>>,
   group: ReturnType<typeof maintenanceGroup>,
 ) {
-  const doc = new PDFDocument({ size: "A4", margin: 40, bufferPages: true });
-  const buffer = new Promise<Buffer>((resolve, reject) => {
-    const chunks: Buffer[] = [];
-    doc.on("data", (chunk: Buffer) => chunks.push(chunk));
-    doc.on("end", () => resolve(Buffer.concat(chunks)));
-    doc.on("error", reject);
-  });
+  const { doc, buffer } = reportDocument();
   const [year, month] = report.month.split("-");
   const cleaning = isCleaning(group.key);
   doc.font("Helvetica-Bold").fontSize(19).text(cleaning ? "Registo mensal de limpeza" : "Registo mensal de manutenção preventiva");
@@ -89,23 +95,55 @@ export async function dailyMaintenancePdf(
     doc.font("Helvetica-Bold").fontSize(11).text(
       `${displayDay(entry.day.toISOString().slice(0, 10))} | ${dailyEntryStatus(entry)} | Registo ${entry.revision}`,
     );
-    const materials = cleaningDetails(entry);
-    doc.font("Helvetica").fontSize(10).text(materials
-      ? `Executada por: ${cleaningPerformerName(entry)} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`
-      : `${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
-    if (materials?.performedBy) doc.text(`Conta do posto: ${entry.recorderName}`);
-    if (entry.meterHours !== null) doc.text(`Horímetro: ${entry.meterHours.toString()} h`);
-    entryChecks(entry).forEach(({ label, result, reading }) => doc.text(`${dailyResults[result]}: ${label}${reading ? ` | ${reading}` : ""}`));
-    if (materials) {
-      doc.text(`Produtos utilizados: ${materials.products}`);
-      if (materials.tools) doc.text(`Equipamentos utilizados: ${materials.tools}`);
-      doc.text(entry.verifiedAt
-        ? `Verificada por: ${entry.verifierName ?? "Nome não registado"} | ${displayRecordedAt(entry.verifiedAt)}`
-        : "Verificada por: Por verificar");
-    }
-    if (entry.notes) doc.text(`Observações: ${entry.notes}`);
-    doc.moveDown();
+    printEntry(doc, entry);
   }
+  doc.end();
+  return buffer;
+}
+
+function printEntry(doc: PDFKit.PDFDocument, entry: DailyMaintenanceEntry) {
+  const materials = cleaningDetails(entry);
+  doc.font("Helvetica").fontSize(10).text(materials
+    ? `Executada por: ${cleaningPerformerName(entry)} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`
+    : `${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
+  if (materials?.performedBy) doc.text(`Conta do posto: ${entry.recorderName}`);
+  if (entry.meterHours !== null) doc.text(`Horímetro: ${entry.meterHours.toString()} h`);
+  entryChecks(entry).forEach(({ label, result, reading }) => doc.text(`${dailyResults[result]}: ${label}${reading ? ` | ${reading}` : ""}`));
+  if (materials) {
+    doc.text(`Produtos utilizados: ${materials.products}`);
+    if (materials.tools) doc.text(`Equipamentos utilizados: ${materials.tools}`);
+    doc.text(entry.verifiedAt
+      ? `Verificada por: ${entry.verifierName ?? "Nome não registado"} | ${displayRecordedAt(entry.verifiedAt)}`
+      : "Por verificar");
+  }
+  if (entry.notes) doc.text(`Observações: ${entry.notes}`);
+  doc.moveDown();
+}
+
+export async function dailyArchivePdf(period: { day: string } | { month: string }, cleaning: boolean, entries: readonly (
+  DailyMaintenanceEntry & { equipment: { code: string | null; name: string } }
+)[]) {
+  const { doc, buffer } = reportDocument();
+  const scope = "month" in period ? "mensal final" : "diário";
+  doc.font("Helvetica-Bold").fontSize(19).text(`Relatório ${scope} de ${cleaning ? "limpezas" : "manutenção preventiva"}`);
+  doc.moveDown(0.5).font("Helvetica").fontSize(10)
+    .text("month" in period ? `Mês dos registos: ${period.month.slice(5)}/${period.month.slice(0, 4)}` : `Data dos registos: ${displayDay(period.day)}`)
+    .text(`Emitido em: ${displayRecordedAt(new Date())}`).moveDown();
+  let previousEquipmentId: string | undefined;
+  for (const entry of entries) {
+    if (doc.y > doc.page.height - 140) doc.addPage();
+    if (entry.equipmentId !== previousEquipmentId) {
+      const { name, code } = entry.equipment;
+      doc.font("Helvetica-Bold").fontSize(13).text(code ? `${name} | ${code}` : name).moveDown(0.3);
+      previousEquipmentId = entry.equipmentId;
+    }
+    const group = maintenanceGroup(entry.equipment.code, entry.groupKey);
+    const label = group?.key === entry.groupKey ? group.label : entry.groupKey;
+    const date = "month" in period ? `${displayDay(entry.day.toISOString().slice(0, 10))} | ` : "";
+    doc.font("Helvetica-Bold").fontSize(10).text(`${date}${label} | ${dailyEntryStatus(entry)} | Registo ${entry.revision}`);
+    printEntry(doc, entry);
+  }
+  if (!entries.length) doc.text("month" in period ? "Sem registos neste mês." : "Sem registos nesta data.");
   doc.end();
   return buffer;
 }
