@@ -15,7 +15,7 @@ const errors: Record<string, string> = {
   horimetro: "Indica uma leitura válida do horímetro, com até duas casas decimais.",
   observacoes: "Descreve a falha nas observações. O limite é de 1000 caracteres.",
   atualizado: "Este dia já foi atualizado. Consulta o registo abaixo.",
-  materiais: "Indica os produtos e os equipamentos utilizados.",
+  materiais: "Indica os produtos utilizados. Cada campo aceita até 300 caracteres.",
   assinatura: "Indica o nome de quem fez a limpeza.",
   pressao: "Indica a pressão medida em bar, com até duas casas decimais.",
   verificacao: "O registo já foi verificado ou precisa de ser confirmado por outra pessoa.",
@@ -144,8 +144,8 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                 <label className="grid gap-1 text-sm">Produtos utilizados
                   <input name="products" defaultValue={["MAS_2", "MAS_3"].includes(equipment.code ?? "") ? "" : cleaningProduct} maxLength={300} required className={inputClass} />
                 </label>
-                <label className="grid gap-1 text-sm">Equipamentos utilizados
-                  <input name="tools" maxLength={300} required className={inputClass} />
+                <label className="grid gap-1 text-sm">Equipamentos utilizados (opcional)
+                  <input name="tools" maxLength={300} className={inputClass} />
                 </label>
               </div>}
               <label className="grid gap-1 text-sm">Observações
@@ -224,7 +224,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                           {entry.notes && <p className="whitespace-pre-wrap break-words">{entry.notes}</p>}
                           {materials && <>
                             <p className="break-words">Produtos: {materials.products}</p>
-                            <p className="break-words">Equipamentos: {materials.tools}</p>
+                            {materials.tools && <p className="break-words">Equipamentos: {materials.tools}</p>}
                             {!entry.verifiedAt && canVerifyCleaning(user) && entry.recordedById !== user.id && (
                               <form action={verify} className="pt-2">
                                 <input type="hidden" name="entryId" value={entry.id} />

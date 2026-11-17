@@ -98,7 +98,7 @@ export async function dailyMaintenancePdf(
     entryChecks(entry).forEach(({ label, result, reading }) => doc.text(`${dailyResults[result]}: ${label}${reading ? ` | ${reading}` : ""}`));
     if (materials) {
       doc.text(`Produtos utilizados: ${materials.products}`);
-      doc.text(`Equipamentos utilizados: ${materials.tools}`);
+      if (materials.tools) doc.text(`Equipamentos utilizados: ${materials.tools}`);
       doc.text(entry.verifiedAt
         ? `Verificada por: ${entry.verifierName ?? "Nome não registado"} | ${displayRecordedAt(entry.verifiedAt)}`
         : "Verificada por: Por verificar");

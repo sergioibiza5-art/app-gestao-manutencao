@@ -41,7 +41,7 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
   }
   const products = String(formData.get("products") ?? "").trim();
   const tools = String(formData.get("tools") ?? "").trim();
-  if (cleaning && (!products || !tools || products.length > 300 || tools.length > 300)) {
+  if (cleaning && (!products || products.length > 300 || tools.length > 300)) {
     redirect(`${path}&erro=materiais`);
   }
   if (notes.length > 1000 || (checks.some(({ result }) => result === "NOT_OK") && !notes)) {
