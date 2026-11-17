@@ -34,10 +34,7 @@ function CleaningVerifierCheckbox({ checked = false }: { checked?: boolean }) {
   return (
     <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-zinc-800 px-3 py-2 text-sm text-zinc-100 md:col-span-2">
       <input type="checkbox" name="cleaningVerifier" value="true" defaultChecked={checked} className="size-4 shrink-0 accent-teal-300" />
-      <span>
-        <span className="block font-semibold">Pode verificar limpezas</span>
-        <span className="block text-xs text-zinc-400">Apenas para contas individuais.</span>
-      </span>
+      <span className="font-semibold">Pode verificar limpezas</span>
     </label>
   );
 }

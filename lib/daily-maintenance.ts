@@ -13,8 +13,8 @@ const calendarPeriodMonths: Readonly<Record<string, number>> = {
   monthly: 1, bimonthly: 2, quarterly: 3, semiannual: 6, annual: 12,
 };
 
-export function canVerifyCleaning(user: Pick<User, "role" | "cleaningVerifier">) {
-  return user.role !== "TICKET" && user.cleaningVerifier;
+export function canVerifyCleaning(user: Pick<User, "cleaningVerifier">) {
+  return user.cleaningVerifier;
 }
 
 export function canRecordDailyMaintenance(role: UserRole) {
