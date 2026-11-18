@@ -52,8 +52,10 @@ function cleaningSummary(
     row([
       displayDay(day),
       future && !entry ? "Dia futuro" : dailyEntryStatus(entry),
-      entry ? `${cleaningPerformerName(entry)}\n${displayRecordedAt(entry.recordedAt)}` : "",
-      entry?.verifiedAt ? `${entry.verifierName ?? "Nome não registado"}\n${displayRecordedAt(entry.verifiedAt)}` : entry ? "Por verificar" : "",
+      entry && !entry.noProduction ? `${cleaningPerformerName(entry)}\n${displayRecordedAt(entry.recordedAt)}` : "",
+      !entry || entry.noProduction ? "" : entry.verifiedAt
+        ? `${entry.verifierName ?? "Nome não registado"}\n${displayRecordedAt(entry.verifiedAt)}`
+        : "Por verificar",
     ]);
   }
 }
@@ -105,7 +107,7 @@ function printEntry(doc: PDFKit.PDFDocument, entry: DailyMaintenanceEntry) {
   const materials = cleaningDetails(entry);
   doc.font("Helvetica").fontSize(10).text(materials
     ? `Executada por: ${cleaningPerformerName(entry)} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`
-    : `${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
+    : `${entry.noProduction ? "Assinalado por: " : ""}${entry.recorderName} | ${displayRecordedAt(entry.recordedAt)} | ${entry.documentCode}`);
   if (materials?.performedBy) doc.text(`Conta do posto: ${entry.recorderName}`);
   if (entry.meterHours !== null) doc.text(`Horímetro: ${entry.meterHours.toString()} h`);
   entryChecks(entry).forEach(({ label, result, reading }) => doc.text(`${dailyResults[result]}: ${label}${reading ? ` | ${reading}` : ""}`));

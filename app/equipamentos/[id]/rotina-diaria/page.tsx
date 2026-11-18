@@ -165,7 +165,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                   <Save size={17} />
                   {cleaning ? "Assinar execução" : "Guardar verificação"}
                 </button>
-                {!cleaning && isDaily && !current && <button name="mode" value="no-production" formNoValidate className="min-h-11 rounded-lg border border-zinc-700 px-4 text-sm font-semibold">Sem produção</button>}
+                {isDaily && !current && <button name="mode" value="no-production" formNoValidate className="min-h-11 rounded-lg border border-zinc-700 px-4 text-sm font-semibold">Sem produção</button>}
               </div>
             </form>
           )}
@@ -196,7 +196,10 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
                       <time dateTime={day} className="font-semibold tabular-nums">{displayDay(day)}</time>
                       <span className={dailyEntryStatus(latest) === "Verificação com falhas" ? "text-rose-200" : "text-teal-200"}>{dailyEntryStatus(latest)}</span>
                       {!cleaning && <span className="break-words text-zinc-400">{latest.recorderName}</span>}
-                      {cleaning && (
+                      {cleaning && latest.noProduction && (
+                        <span className="break-words text-zinc-400">Assinalado por: {latest.recorderName}</span>
+                      )}
+                      {cleaning && !latest.noProduction && (
                         <span className="grid w-full min-w-0 grid-cols-2 gap-3 py-1 sm:w-auto sm:grow">
                           <span className="min-w-0 break-words">
                             <span className="block text-xs text-zinc-400">Executada por</span>

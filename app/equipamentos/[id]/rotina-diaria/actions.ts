@@ -16,7 +16,8 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
   const today = lisbonDay();
   if (formData.get("day") !== today) redirect(`${path}&erro=dia`);
   const mode = formData.get("mode");
-  if (mode !== "checks" && (mode !== "no-production" || group.key !== "daily")) redirect(`${path}&erro=respostas`);
+  const isDaily = group.key === "daily" || group.key === "cleaning-daily";
+  if (mode !== "checks" && (mode !== "no-production" || !isDaily)) redirect(`${path}&erro=respostas`);
   const noProduction = mode === "no-production";
   const checks = noProduction ? [] : parseDailyChecks(formData, group.checks);
   if (!checks) redirect(`${path}&erro=respostas`);
@@ -32,7 +33,7 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
   if (group.intervalHours && !/^\d{1,10}(\.\d{1,2})?$/.test(meter)) redirect(`${path}&erro=horimetro`);
   const rawNotes = formData.get("notes");
   const notes = typeof rawNotes === "string" ? rawNotes.trim() : "";
-  const cleaning = isCleaning(group.key);
+  const cleaning = isCleaning(group.key) && !noProduction;
   const rawPerformer = formData.get("performedBy");
   const performedBy = typeof rawPerformer === "string" ? rawPerformer.trim().replace(/\s+/g, " ") : "";
   const needsPerformer = cleaning && user.role === "TICKET";
@@ -84,7 +85,7 @@ export async function verifyCleaning(id: string, groupKey: string, month: string
   const entryId = formData.get("entryId");
   if (typeof entryId !== "string" || !entryId) redirect(path);
   const result = await getPrisma().dailyMaintenanceEntry.updateMany({
-    where: { id: entryId, equipmentId: id, groupKey: group.key, verifiedAt: null, recordedById: { not: user.id } },
+    where: { id: entryId, equipmentId: id, groupKey: group.key, noProduction: false, verifiedAt: null, recordedById: { not: user.id } },
     data: { verifiedAt: new Date(), verifiedById: user.id, verifierName: user.name },
   });
   redirect(`${path}&${result.count ? "verificado=1" : "erro=verificacao"}`);

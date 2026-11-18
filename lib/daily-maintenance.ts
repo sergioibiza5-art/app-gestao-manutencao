@@ -96,7 +96,7 @@ export function entryChecks(entry: DailyMaintenanceEntry) {
 }
 
 export function cleaningDetails(entry: DailyMaintenanceEntry) {
-  return isCleaning(entry.groupKey) ? entry.checks as CleaningDetails : null;
+  return isCleaning(entry.groupKey) && !entry.noProduction ? entry.checks as CleaningDetails : null;
 }
 
 export function cleaningPerformerName(entry: DailyMaintenanceEntry) {

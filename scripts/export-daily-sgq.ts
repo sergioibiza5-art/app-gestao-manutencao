@@ -118,12 +118,16 @@ async function checkpoint(path: string) {
 }
 
 async function main() {
-  const { values: { output } } = parseArgs({ options: { output: { type: "string" } } });
+  const { values: { output, state } } = parseArgs({
+    options: { output: { type: "string" }, state: { type: "string" } },
+  });
   if (!output || !isAbsolute(output)) throw new Error("Pass an absolute folder with --output.");
+  if (state && !isAbsolute(state)) throw new Error("Pass an absolute file path with --state.");
   await mkdir(output, { recursive: true });
   const obsolete = join(output, "0bsoleto");
   await mkdir(obsolete, { recursive: true });
-  const statePath = join(output, ".export-state.json");
+  const statePath = state ?? join(output, ".export-state.json");
+  await mkdir(dirname(statePath), { recursive: true });
   const previous = await checkpoint(statePath);
   const startedAt = new Date();
   const yesterday = moveDay(lisbonDay(startedAt), -1);
