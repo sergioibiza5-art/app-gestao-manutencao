@@ -16,33 +16,6 @@ import { formatCurrency, formatDate, formatShortDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
-const fallbackTasks = [
-  {
-    title: "Verificar bomba de agua",
-    area: "Infraestrutura",
-    due: "09:00",
-    status: "Critica",
-    accent: "border-l-rose-400",
-    href: "/tarefas",
-  },
-  {
-    title: "Limpeza filtro AVAC",
-    area: "Manutencao",
-    due: "15:00",
-    status: "Planeada",
-    accent: "border-l-cyan-400",
-    href: "/tarefas",
-  },
-  {
-    title: "Conferir stock detergente tecnico",
-    area: "Inventario",
-    due: "18:00",
-    status: "Baixo risco",
-    accent: "border-l-emerald-400",
-    href: "/tarefas",
-  },
-];
-
 const fallbackCalendar = [
   { date: "07 Jun", title: "Calibração balança", tag: "Semestral", href: "/manutencao" },
   { date: "12 Jun", title: "Revisão quadro elétrico", tag: "Anual", href: "/manutencao" },
@@ -109,17 +82,14 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const selectedDate = params.date || new Date().toISOString().slice(0, 10);
   const dashboard = await getDashboardData({ view: selectedView, date: selectedDate });
 
-  const tasks =
-    dashboard.tasks.length > 0
-      ? dashboard.tasks.map((task) => ({
-          title: task.title,
-          area: task.equipment?.name ?? (task.frequency ? taskFrequencyLabels[task.frequency] : null) ?? "Pontual",
-          due: formatShortDate(task.dueDate ?? task.nextDue),
-          status: taskStatusLabels[task.status] ?? task.status,
-          accent: "border-l-teal-400",
-          href: `/tarefas?taskId=${task.id}`,
-        }))
-      : fallbackTasks;
+  const tasks = dashboard.tasks.map((task) => ({
+    id: task.id,
+    title: task.title,
+    area: task.equipment?.name ?? (task.frequency ? taskFrequencyLabels[task.frequency] : null) ?? "Pontual",
+    due: task.dueTime || "Hoje",
+    status: taskStatusLabels[task.status] ?? task.status,
+    href: `/tarefas?taskId=${task.id}#task-${task.id}`,
+  }));
 
   const calendar =
     dashboard.calendar.length > 0
@@ -134,8 +104,8 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const kpis = [
     {
       label: "Tarefas hoje",
-      value: String(dashboard.kpis.tasksToday),
-      detail: `${dashboard.kpis.criticalTasks} críticas`,
+      value: dashboard.tasksAvailable ? String(dashboard.kpis.tasksToday) : "—",
+      detail: dashboard.tasksAvailable ? `${dashboard.kpis.overdueTasks} em atraso` : "Indisponível",
       tone: "text-teal-300",
       icon: ClipboardCheck,
       box: "border-teal-300/40 bg-teal-300/10 text-teal-200",
@@ -319,12 +289,17 @@ export default async function Page({ searchParams }: DashboardPageProps) {
             <ClipboardCheck size={22} className="text-teal-300" />
           </div>
 
-          <div className="space-y-3">
+          <div className="max-h-115 space-y-3 overflow-y-auto pr-1">
+            {tasks.length === 0 && (
+              <p className="rounded-lg border border-dashed border-zinc-800 bg-zinc-950/45 p-4 text-sm text-zinc-400">
+                {dashboard.tasksAvailable ? "Sem tarefas pendentes para hoje." : "Não foi possível carregar as tarefas."}
+              </p>
+            )}
             {tasks.map((task) => (
               <Link
-                key={`${task.title}-${task.due}`}
+                key={task.id}
                 href={task.href}
-                className={`block rounded-lg border border-zinc-800 border-l-4 ${task.accent} bg-zinc-950/70 p-4 transition hover:border-teal-300/50 hover:bg-zinc-900/80`}
+                className="block rounded-lg border border-zinc-800 border-l-4 border-l-teal-400 bg-zinc-950/70 p-4 transition hover:border-teal-300/50 hover:bg-zinc-900/80"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>

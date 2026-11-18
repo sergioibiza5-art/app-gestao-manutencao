@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import {
   environmentalEventZones,
   environmentalLimits,
@@ -7,6 +8,7 @@ import {
   temperatureZones,
   type EnvironmentalStatus,
 } from "@/lib/environmental";
+import { dailyPlanRange } from "@/lib/daily-plan";
 import { isMaintenanceOutsideTolerance, maintenanceToleranceEnd } from "@/lib/maintenance-tolerance";
 import { readDb } from "@/lib/prisma";
 
@@ -57,16 +59,18 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
     async (prisma) => {
       const now = new Date();
       const range = dashboardRange(filters?.view, filters?.date);
-      const todayStart = new Date(now);
-      todayStart.setHours(0, 0, 0, 0);
-      const todayEnd = new Date(now);
-      todayEnd.setHours(23, 59, 59, 999);
+      const { start: todayStart, end: todayEnd } = dailyPlanRange();
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
       const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
+      const dueToday = { gte: todayStart, lte: todayEnd };
+      const overdueTasksWhere: Prisma.TaskWhereInput = {
+        status: { in: ["PENDING", "IN_PROGRESS"] },
+        OR: [{ dueDate: { lt: todayStart } }, { dueDate: null, nextDue: { lt: todayStart } }],
+      };
       const [
-        tasksToday,
-        criticalTasks,
+        overdueTaskCount,
+        overdueTasks,
         expenses,
         maintenanceToday,
         ticketAlerts,
@@ -75,17 +79,12 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         vehicles,
         calibrationLogs,
       ] = await Promise.all([
-        prisma.task.count({
-          where: {
-            status: { in: ["PENDING", "IN_PROGRESS"] },
-            OR: [{ dueDate: null }, { dueDate: { lte: now } }, { nextDue: { lte: now } }],
-          },
-        }),
-        prisma.task.count({
-          where: {
-            status: { in: ["PENDING", "IN_PROGRESS"] },
-            dueDate: { lte: now },
-          },
+        prisma.task.count({ where: overdueTasksWhere }),
+        prisma.task.findMany({
+          where: overdueTasksWhere,
+          orderBy: [{ dueDate: "asc" }, { nextDue: "asc" }, { id: "asc" }],
+          take: 8,
+          include: { equipment: true },
         }),
         prisma.expense.aggregate({
           _sum: { amount: true },
@@ -110,9 +109,11 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
           include: { equipment: true, openedBy: true },
         }),
         prisma.task.findMany({
-          where: { status: { in: ["PENDING", "IN_PROGRESS"] } },
-          orderBy: [{ dueDate: "asc" }, { nextDue: "asc" }],
-          take: 4,
+          where: {
+            status: { in: ["PENDING", "IN_PROGRESS"] },
+            OR: [{ dueDate: dueToday }, { dueDate: null, nextDue: dueToday }],
+          },
+          orderBy: [{ dueDate: "asc" }, { nextDue: "asc" }, { id: "asc" }],
           include: { equipment: true },
         }),
         prisma.maintenanceSchedule.findMany({
@@ -186,11 +187,7 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
         .sort((a, b) => (a.nextDueDate?.getTime() ?? 0) - (b.nextDueDate?.getTime() ?? 0));
 
       const operationalAlerts = [
-  ...tasks
-    .filter((task) => {
-      const due = task.dueDate ?? task.nextDue;
-      return due && due <= now;
-    })
+  ...overdueTasks
     .map((task) => ({
       id: `task-${task.id}`,
       type: "TASK",
@@ -238,14 +235,15 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
 
       return {
         kpis: {
-          tasksToday,
-          criticalTasks,
+          tasksToday: tasks.length,
+          overdueTasks: overdueTaskCount,
           monthlyExpenses: expenses._sum.amount ?? 0,
           maintenanceToday,
           fleetDueSoon,
           openTickets: ticketAlerts.length,
         },
-        tasks,
+        tasks: tasks.sort((a, b) => (a.dueDate ?? a.nextDue)!.getTime() - (b.dueDate ?? b.nextDue)!.getTime()),
+        tasksAvailable: true,
         calendar,
         fleetAlerts,
         calibrationAlerts,
@@ -256,14 +254,15 @@ export async function getDashboardData(filters?: { view?: string; date?: string 
     },
     {
       kpis: {
-        tasksToday: 8,
-        criticalTasks: 3,
+        tasksToday: 0,
+        overdueTasks: 0,
         monthlyExpenses: 1284,
         maintenanceToday: 0,
         fleetDueSoon: 0,
         openTickets: 0,
       },
       tasks: [],
+      tasksAvailable: false,
       calendar: [],
       fleetAlerts: [],
       calibrationAlerts: [],
