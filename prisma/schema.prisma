@@ -183,6 +183,7 @@ model User {
   vacations              Vacation[]
   dl50AssessmentsCreated EquipmentDl50Assessment[]
   dailyMaintenanceEntries DailyMaintenanceEntry[]
+  maintenanceMeterReadings MaintenanceMeterReading[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -233,6 +234,7 @@ model Equipment {
   interventionLogs           EquipmentInterventionLog[]
   internalMaintenanceRecords InternalMaintenanceRecord[]
   dailyMaintenanceEntries    DailyMaintenanceEntry[]
+  maintenanceMeterReadings   MaintenanceMeterReading[]
   maintenanceLogs            MaintenanceLog[]
   maintenanceSchedules       MaintenanceSchedule[]
   workOrders                 WorkOrder[]
@@ -598,6 +600,21 @@ model ChecklistPhoto {
   response   ChecklistResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+}
+
+model MaintenanceMeterReading {
+  id                   String @id @default(cuid())
+  equipmentId          String
+  equipment            Equipment @relation(fields: [equipmentId], references: [id], onDelete: Restrict)
+  groupKey             String
+  meterHours           Decimal @db.Decimal(12, 2)
+  referenceHours       Decimal? @db.Decimal(12, 2)
+  recordedAt           DateTime @default(now())
+  recordedById         String
+  recordedBy           User @relation(fields: [recordedById], references: [id], onDelete: Restrict)
+  recorderName         String
+
+  @@index([equipmentId, groupKey, recordedAt])
 }
 
 model DailyMaintenanceEntry {

@@ -7,12 +7,15 @@ import {
   dailyResults, displayDay, displayRecordedAt, entryChecks, lisbonDay, maintenancePeriodStart,
 } from "@/lib/daily-maintenance";
 import { cleaningProduct, isCleaning, maintenanceGroup, maintenancePlan } from "@/lib/mcc-maintenance-plan";
-import { recordDailyMaintenance, verifyCleaning } from "./actions";
+import { recordDailyMaintenance, recordMeterReading, verifyCleaning } from "./actions";
+import { maintenanceMeterState } from "@/lib/maintenance-meter";
+import { getPrisma } from "@/lib/prisma";
 
 const errors: Record<string, string> = {
   dia: "A data mudou. Confirma o dia antes de guardar.",
   respostas: "Responde a todos os pontos antes de guardar.",
   horimetro: "Indica uma leitura válida do horímetro, com até duas casas decimais.",
+  referencia: "As horas não podem ser inferiores à última leitura. A referência da última manutenção não pode exceder a leitura atual.",
   observacoes: "Descreve a falha nas observações. O limite é de 1000 caracteres.",
   atualizado: "Este dia já foi atualizado. Consulta o registo abaixo.",
   materiais: "Indica os produtos utilizados. Cada campo aceita até 300 caracteres.",
@@ -34,7 +37,7 @@ const periodLabels: Record<string, string> = {
 
 export default async function DailyMaintenancePage({ params, searchParams }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ mes?: string; grupo?: string; erro?: string; guardado?: string; verificado?: string }>;
+  searchParams: Promise<{ mes?: string; grupo?: string; erro?: string; guardado?: string; verificado?: string; leitura?: string }>;
 }) {
   const { id } = await params;
   const query = await searchParams;
@@ -53,9 +56,10 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const periodStart = maintenancePeriodStart(group.key, today);
   const periodEntry = periodEntries.get(group.key);
   const nextBiennialDay = group.key === "biennial" && periodEntry ? biennialDueDate(periodEntry.day).toISOString().slice(0, 10) : null;
-  const nextMeter = group.intervalHours && periodEntry?.meterHours != null
-    ? periodEntry.meterHours.plus(group.intervalHours).toString()
-    : null;
+  const meterStates = new Map(await Promise.all(groups.filter((item) => item.intervalHours).map(async (item) => [
+    item.key, await maintenanceMeterState(getPrisma(), id, item.key, item.intervalHours!, item.firstHours),
+  ] as const)));
+  const meterState = meterStates.get(group.key);
   const visibleDays = isDaily ? days : days.filter(({ entries }) => entries.length > 0);
   const current = days.find(({ day }) => day === today)?.entries[0];
   const showToday = month === today.slice(0, 7);
@@ -86,12 +90,16 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
             const pending = (!entry && !item.intervalHours) || biennialDue;
             const status = hasFailures ? "Com falhas" : pending ? "Pendente" : entry?.noProduction
               ? "Sem produção" : entry ? (cleaning ? entry.verifiedAt ? "Verificada" : "Por verificar" : "Registada") : "Sem leitura";
+            const meter = meterStates.get(item.key);
+            const remaining = meter?.next && meter.current ? meter.next.minus(meter.current) : null;
+            const meterStatus = !meter?.current ? "Sem leitura" : !meter.next ? "Sem referência"
+              : remaining!.lte(0) ? "Intervenção devida" : `Faltam ${remaining!.toString()} h`;
             return (
               <Link key={item.key} href={`?grupo=${item.key}&mes=${month}`} aria-current={item.key === group.key ? "page" : undefined}
                 className={`inline-flex min-h-11 flex-wrap items-center gap-2 rounded-lg border px-3 py-2 text-sm ${item.key === group.key ? "border-teal-300 bg-teal-300/10 text-teal-200" : "border-zinc-700"}`}>
                 {item.label}
                 <span className={`text-xs ${hasFailures ? "text-rose-200" : pending || !entry || (cleaning && !entry.verifiedAt) ? "text-amber-200" : "text-teal-200"}`}>
-                  {status}
+                  {item.intervalHours ? meterStatus : status}
                 </span>
               </Link>
             );
@@ -105,17 +113,35 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
             ? `${dailyEntryStatus(periodEntry)} em ${displayDay(periodEntry.day.toISOString().slice(0, 10))} por ${periodEntry.recorderName}.`
             : "Ainda sem verificação registada."}</p>
           {nextBiennialDay && <p>Próxima intervenção: {displayDay(nextBiennialDay)}{nextBiennialDay <= today ? " · Pendente" : ""}</p>}
-          {group.intervalHours && <p>{nextMeter
-            ? `Horímetro no último registo: ${periodEntry?.meterHours?.toString()} h · Próxima intervenção: ${nextMeter} h`
-            : group.firstHours ? `Primeira intervenção prevista às ${group.firstHours} h.` : "Sem leitura de referência para calcular a próxima intervenção."}</p>}
+          {meterState && <>
+            <p>Última leitura: {meterState.current ? `${meterState.current.toString()} h` : "Sem leitura"}</p>
+            <p>Última manutenção: {meterState.baseline !== null ? `${meterState.baseline.toString()} h` : "Sem referência"}</p>
+            {meterState.next && <p>Próxima intervenção: {meterState.next.toString()} h{meterState.current
+              ? meterState.current.gte(meterState.next) ? " · Intervenção devida" : ` · Faltam ${meterState.next.minus(meterState.current).toString()} h` : ""}</p>}
+          </>}
         </div>
       </Panel>
       {error && <p role="alert" className="text-sm text-rose-200">{error}</p>}
       {query.guardado === "1" && <p role="status" className="text-sm text-teal-200">Registo guardado.</p>}
       {query.verificado === "1" && <p role="status" className="text-sm text-teal-200">Verificação guardada.</p>}
+      {query.leitura === "1" && <p role="status" className="text-sm text-teal-200">Leitura guardada. Não foi registada uma manutenção.</p>}
+      {showToday && meterState && <Panel>
+        <h2 className="text-xl font-semibold">Leitura do horímetro</h2>
+        {canRecord && <form action={recordMeterReading.bind(null, id, group.key)} className="mt-4 grid max-w-3xl gap-3">
+          <input type="hidden" name="day" value={today} />
+          <label className="grid gap-1 text-sm">Horas atuais (h)
+            <input type="number" name="meterHours" min={meterState.current?.toString() ?? "0"} max="9999999999.99" step="0.01" required className={inputClass} />
+          </label>
+          {meterState.baseline === null && meterState.next === null && <label className="grid gap-1 text-sm">Horímetro na última manutenção (h)
+            <input type="number" name="referenceHours" min="0" max="9999999999.99" step="0.01" required className={inputClass} />
+          </label>}
+          <button className={buttonClass}><Save size={17} /> Guardar apenas leitura</button>
+        </form>}
+        {meterState.reading && <p className="mt-3 text-sm text-zinc-400">{displayRecordedAt(meterState.reading.recordedAt)} · {meterState.reading.recorderName}</p>}
+      </Panel>}
       {showToday && (
         <Panel>
-          <h2 className="text-xl font-semibold">{group.label} · {displayDay(today)}</h2>
+          <h2 className="text-xl font-semibold">{group.intervalHours ? "Registar manutenção executada" : group.label} · {displayDay(today)}</h2>
           <p className="mt-1 text-sm text-zinc-400">Pág. {group.pages} · {group.primary} · {dailyEntryStatus(current)}</p>
           {canRecord && (!current || current.noProduction) && (
             <form key={`${id}:${group.key}`} action={save} className="mt-4 grid max-w-3xl gap-4">

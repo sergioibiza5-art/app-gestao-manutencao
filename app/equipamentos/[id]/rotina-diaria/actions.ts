@@ -5,6 +5,30 @@ import { redirect } from "next/navigation";
 import { canVerifyCleaning, cleaningPerformerMaxLength, dailyMaintenanceAccess, dailyPath, lisbonDay, parseDailyChecks } from "@/lib/daily-maintenance";
 import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { getPrisma } from "@/lib/prisma";
+import { maintenanceMeterState, parseMeter } from "@/lib/maintenance-meter";
+
+export async function recordMeterReading(id: string, groupKey: string, formData: FormData) {
+  const { user, equipment, canRecord } = await dailyMaintenanceAccess(id);
+  const group = maintenancePlan(equipment.code).find((item) => item.key === groupKey);
+  const path = `${dailyPath(id)}?grupo=${encodeURIComponent(groupKey)}`;
+  if (!canRecord || !group?.intervalHours) redirect(path);
+  if (formData.get("day") !== lisbonDay()) redirect(`${path}&erro=dia`);
+  const meter = parseMeter(formData.get("meterHours"));
+  if (!meter) redirect(`${path}&erro=horimetro`);
+  const saved = await getPrisma().$transaction(async (tx) => {
+    const state = await maintenanceMeterState(tx, id, group.key, group.intervalHours!, group.firstHours);
+    if (state.current && meter.lt(state.current)) return false;
+    const needsReference = state.baseline === null && state.next === null;
+    const reference = needsReference ? parseMeter(formData.get("referenceHours")) : null;
+    if (needsReference && (!reference || reference.gt(meter))) return false;
+    await tx.maintenanceMeterReading.create({ data: {
+      equipmentId: id, groupKey, meterHours: meter, referenceHours: reference,
+      recordedById: user.id, recorderName: user.name,
+    } });
+    return true;
+  }, { isolationLevel: "Serializable" });
+  redirect(`${path}&${saved ? "leitura=1" : "erro=referencia"}`);
+}
 
 export async function recordDailyMaintenance(id: string, groupKey: string, formData: FormData) {
   const { user, equipment, canRecord } = await dailyMaintenanceAccess(id);
@@ -58,6 +82,10 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
       const current = await tx.dailyMaintenanceEntry.findFirst({
         where: { equipmentId: id, groupKey, day }, orderBy: { revision: "desc" },
       });
+      if (group.intervalHours) {
+        const state = await maintenanceMeterState(tx, id, group.key, group.intervalHours, group.firstHours);
+        if (state.current && new Prisma.Decimal(meter).lt(state.current)) return false;
+      }
       if ((current?.revision ?? 0) + 1 !== revision || (current && (!current.noProduction || noProduction))) {
         return false;
       }
