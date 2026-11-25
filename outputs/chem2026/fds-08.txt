@@ -1,0 +1,823 @@
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 1 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/ EMPRESA. 
+ 
+1.1 Identificador do produto. 
+ 
+Nome do produto: CAR GRASS 
+UFI:  J631-C00U-K00N-3Q55 
+ 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas. 
+ 
+Desengrasante carrocerías en automoción. 
+ 
+Usos não aconselhados: 
+Usos diferentes aos aconselhados. 
+ 
+1.3 Identificação do fornecedor da ficha de dados de segurança. 
+ 
+Empresa: RACRISA, S.L. 
+Endereço: C/ Dels Obrers, 54. Pol. Ind. Les Valletes. 
+População: 46192 Montserrrat 
+Distrito: VALENCIA (ESPAÑA) 
+Telefone: 961 533 000 
+Fax: 962 986 147 
+E-mail: dpto.tecnico@racrisa.com 
+Web: www.racrisa.com 
+ 
+1.4 Número de telefone de emergência: 915 620 420 (Disponível 24h) 
+Em caso de intoxicação contactar o Centro de Informação Antivenenos (CIAV) (+351) 800 250 250. 
+Atendimento médico 24 horas por dia, 7 dias por semana. 
+ 
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS. 
+ 
+2.1 Classificação da substância ou mistura. 
+Segundo o Regulamento (EU)  No 1272/2008: 
+Eye Dam. 1 : Provoca lesões oculares graves. 
+Skin Irrit. 2 : Provoca irritação cutânea. 
+ 
+ 
+2.2 Elementos do rótulo.  . 
+. 
+Rótulo de acordo com o Regulamento (EU)  No 1272/2008: 
+Pictogramas: 
+ 
+     
+Palavras-sinal: 
+Perigo 
+Advertências de perigo: 
+H315  Provoca irritação cutânea. 
+H318  Provoca lesões oculares graves. 
+ 
+Recomendações de prudência: 
+P280  Usar luvas de proteção/vestuário de proteção/ proteção ocular/proteção facial/proteção auditiva/… 
+P302+P352 SE ENTRAR EM CONTACTO COM A PELE: lavar a bundantemente com água/... 
+P305+P351+P338 SE ENTRAR EM CONTACTO COM OS OLHOS: Enxaguar cuidadosamente com água durante vários 
+minutos. Se usar lentes de contacto, retire-as, se tal lhe for possível. Continue a enxaguar. 
+P310  Contacte imediatamente um CENTRO DE INFORMAÇÃ O ANTIVENENOS/médico/... 
+P321  Tratamento específico (ver ... no presente ró tulo). 
+P362+P364 Retirar a roupa contaminada e lavá-la ant es de a voltar a usar. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 2 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Manter fora do alcance das crianças. 
+Não ingerir. 
+Em caso de acidente consultar o Serviço de Informação Toxicológica, telefone ... 
+Contém: 
+metassilicato de dissódio 
+Álcoois, C9-11, etoxilatos 
+Quaternary coco alkyl methyl amine ethoxylate methyl chloride 
+ 
+ 
+2.3 Outros perigos. 
+ 
+A mistura não contém substâncias classificadas como PBT. 
+A mistura não contém substâncias classificadas como mPmB. 
+A mistura não contém substâncias com propriedades desreguladoras do sistema endócrino. 
+ 
+O produto pode ter os seguintes riscos adicionais: 
+ Mistura que não atende aos critérios PBT ou mPmB. 
+ 
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES. 
+ 
+3.1 Substâncias. 
+Não Aplicável. 
+ 
+3.2 Misturas. 
+Substâncias que representam um perigo para a saúde ou o meio ambiente de acordo com a Regulamento (CE)  No. 1272/2008, 
+têm atribuído um limite de exposição comunitário no lugar de trabalho, estão classificadas como PBT/ mPmB ou incluídas na Lista 
+de Candidatos: 
+ 
+Identificadores Nome Concentração 
+(*)Classificação -Regulamento 
+1272/2008 
+Classificação 
+Limite de 
+concentração 
+específico e a 
+Estimativa da 
+Toxicidade Aguda 
+N. CAS: 7320-34-5 
+N. CE: 230-785-7 
+N. registo: 01-
+2119489369-18-XXXX 
+tetrapotassium pyrophosphate 1 - 9.99 % Eye Irrit. 2, H319 - 
+N. CAS: 68439-46-3 
+N. registo: 01-
+2119980051-45-XXXX 
+Álcoois, C9-11, etoxilatos 1 - 2.99 % 
+Acute Tox. 4, 
+H302 - Eye 
+Dam. 1, H318 
+- 
+N. CAS: 863679-20-3 Quaternary coco alkyl methyl amine ethoxylate methyl chloride 1 - 2.99 % 
+Acute Tox. 4, 
+H302 - Aquatic 
+Acute 1, H400 - 
+Eye Dam. 1, 
+H318 - Skin 
+Irrit. 2, H315 
+- 
+N. Indice: 014-010-
+00-8 
+N. CAS: 6834-92-0 
+N. CE: 229-912-9 
+N. registo: 01-
+2119449811-37-XXXX 
+metassilicato de dissódio 1 - 2.99 % 
+STOT SE 3, 
+H335 - Skin 
+Corr. 1B, H314 
+- 
+N. Indice: 011-002-
+00-6 
+N. CAS: 1310-73-2 
+N. CE: 215-185-5 
+N. registo: 01-
+2119457892-27-XXXX 
+[2] hidróxido de sódio, soda cáustica 0.5 - 1.99 % Skin Corr. 1A, H314 
+Skin Corr. 1A, 
+H314: C ≥ 5 % 
+Skin Corr. 1B, 
+H314: 2 % ≤ C 
+< 5 % 
+Skin Irrit. 2, 
+H315: 0,5 % ≤ 
+C < 2 % 
+Eye Irrit. 2, 
+H319: 0,5 % ≤ 
+C < 2 % 
+(*)O texto completo das frases H é pormenorizado na secção 16 desta Ficha de Segurança. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 3 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+[2] Substância com limite nacional de exposição no local de trabalho (ver secção 8.1).   
+ 
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS. 
+MISTURA IRRITANTE. O contacto repetido ou prolongad o com a pele ou as mucosas, pode causar sintomas ir ritantes, tais como 
+avermelhamento, bolhas ou dermatite. Alguns dos sin tomas podem não ser imediatos. Podem produzir-se re acções alérgicas na 
+pele. 
+4.1 Descrição das medidas de emergência. 
+Nos casos de dúvida, ou quando persistirem os sinto mas de mal-estar, solicitar atenção médica. Não adm inistrar nunca nada por 
+via oral a pessoas que se encontrem inconscientes. 
+ 
+Inalação. 
+Situar o acidentado ao ar livre, mantê-lo quente e em repouso, se a respiração for irregular ou se det iver, praticar respiração 
+artificial. 
+ 
+Contacto com os olhos. 
+Lavar abundantemente os olhos com água limpa e fres ca durante, pelo menos, 10 minutos, puxando para ci ma das pálpebras e 
+procurar assistência médica. Não permita que a pessoa se esfregue o olho afetado. 
+ 
+Contacto com a pele. 
+Tirar a roupa contaminada. Lavar a pele vigorosamen te com água e sabão ou um limpador de pele adequado . NUNCA utilizar 
+dissolventes ou diluentes. 
+ 
+Ingestão. 
+Se acidentalmente foi ingerido, procurar imediatamente atenção médica. Mantê-lo em repouso. NUNCA provocar o vômito. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados. 
+Producto Corrosivo: o contacto com os olhos ou com a pele pode provocar queimaduras, a ingestão ou ina lação podem provocar 
+danos internos; caso tal aconteça, será necessária assistência médica imediata. 
+O contato com os olhos pode produzir danos irreversíveis. 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários. 
+Solicite ajuda médica de imediato. Não administrar nunca nada por via oral a pessoas que se encontrem inconscientes. Não 
+induzir o vômito. Se a pessoa vomitar, isole as vias respiratórias. Cubra a zona afetada com um compressa estéril seca. Proteja a 
+zona afetada de pressão ou fricção. 
+ 
+ 
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS. 
+ 
+O produto NÃO está classificado como inflamável; em caso de incêndio devem-se seguir as medidas expostas em seguida: 
+ 
+5.1 Meios de extinção. 
+Meios de extinção adequados: 
+Pó extintor ou CO2. Em caso de incêndios mais graves também espuma resistente ao álcool e água pulverizada. 
+ 
+Meios de extinção inadequados: 
+Não usar para a extinção jato direto de água. Em presença de tensão elétrica não é aceitável utilizar água ou espuma como meio 
+de extinção. 
+ 
+5.2 Perigos especiais decorrentes da substância ou mistura. 
+Riscos especiais. 
+A exposição aos produtos de combustão ou decomposição pode ser prejudicial para a saúde. 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios. 
+Refrigerar com água os tanques, cisternas ou recipi entes próximos à fonte de calor ou fogo. Ter em con ta a direção do vento. 
+Evitar que os produtos utilizados na luta contra incêndio passem a esgotos, sumidouros ou cursos de água. 
+ 
+Equipamento de proteção contra incêndios. 
+Segundo a magnitude do incêndio, pode ser necessári o o uso de roupas de proteção contra o calor, equip amento respiratório 
+autónomo, luvas, óculos protetores ou máscaras faciais e botas. 
+ 
+ 
+SECÇÃO 6: MEDIDAS EM CASO DE FUGA ACIDENTAL. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 4 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+ 
+6.2 Precauções a nível ambiental. 
+Produto não classificado como perigoso para o meio ambiente; na medida do possível, evite  qualquer derrame. 
+ 
+6.3 Métodos e materiais de confinamento e limpeza. 
+Conter e recolher o derrame com material absorvente  inerte (terra, areia, vermiculita, terra de diatom áceas...) e limpe a área 
+imediatamente com um descontaminante adequado. 
+Deposite os resíduos em recipientes fechados e adeq uados para a eliminação, de acordo com os regulamen tos locais e nacionais 
+(ver secção 13). 
+ 
+6.4 Remissão para outras secções. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+Para a posterior eliminação dos resíduos, seguir as recomendações da secção 13. 
+ 
+ 
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM. 
+ 
+7.1 Precauções para um manuseamento seguro. 
+Para a proteção pessoal, ver secção 8. 
+Na zona de aplicação deve ser proibido fumar, comer e beber. 
+Cumprir com a legislação sobre segurança e higiene no trabalho. 
+Não utilizar nunca pressão para esvaziar os recipie ntes, não são recipientes resistentes à pressão. Co nservar o produto em 
+recipientes de um material idêntico ao original. 
+ 
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades. 
+Armazenar segundo a legislação local. Observar as i ndicações da etiqueta. Armazenar os recipientes ent re 5 e 25 ºC, num local 
+seco e bem ventilado, longe de fontes de calor e da  luz solar directa. Manter longe de pontos de igniç ão. Manter longe de 
+agentes oxidantes e de materiais fortemente ácidos ou alcalinos. Não fumar. Evitar a entrada a pessoas  não autorizadas. Depois 
+de ter aberto os recipientes, estes devem ser fechados de novo com cuidado, e colocados verticalmente para evitar derrames. 
+ 
+O produto não está afetado pela Directiva 2012/18/UE (SEVESO III). 
+ 
+7.3 Utilizações finais específicas. 
+Desengrasante carrocerías en automoción. USO PROFESIONAL. 
+ 
+ 
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL. 
+ 
+8.1 Parâmetros de controlo. 
+ 
+Limite de exposição durante o trabalho para: 
+ 
+Nome N. CAS País Valor-limite ppm mg/m3 
+hidróxido de sódio, soda cáustica 1310-73-2 Portuga l [1] 
+Oito horas     
+Curta duração   Concentração máxima 2 
+[1] De acordo com a Norma Portuguesa 1796 adotou pelo Instituto português de qualidade. 
+ 
+ O produto NÃO contém substâncias com Valores Biológicos Limite. 
+Níveis de concentração DNEL/DMEL: 
+ 
+Nome DNEL/DMEL Tipo Valor 
+tetrapotassium pyrophosphate 
+N. CAS: 7320-34-5 
+N. CE: 230-785-7 
+DNEL 
+(Trabalhadores) 
+Inalação, Crónico, Efeitos sistémicos 2,79 
+(mg/m³) 
+metassilicato de dissódio 
+N. CAS: 6834-92-0 
+DNEL 
+(Trabalhadores) 
+Inalação, Crónico, Efeitos sistémicos 6,22 
+(mg/m³) 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 5 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+N. CE: 229-912-9 DNEL 
+(Consumidores) 
+Inalação, Crónico, Efeitos sistémicos 1,55 
+(mg/m3) 
+DNEL 
+(Trabalhadores) 
+Dérmica, Crónico, Efeitos sistémicos 1,49 
+(mg/kg 
+bw/day) 
+DNEL 
+(Consumidores) 
+Dérmica, Crónico, Efeitos sistémicos 0,74 
+(mg/m3) 
+DNEL 
+(Consumidores) 
+Oral, Crónico, Efeitos sistémicos 0,74 
+(mg/kg 
+bw/day) 
+hidróxido de sódio, soda cáustica 
+N. CAS: 1310-73-2 
+N. CE: 215-185-5 
+DNEL 
+(Trabalhadores) 
+Inalação, Crónico, Efeitos locais 1 (mg/m³) 
+DNEL 
+(Consumidores) 
+Inalação, Crónico, Efeitos locais 1 (mg/m³) 
+ 
+DNEL: Derived No Effect Level, (nível sem efeito ob tido) nível de exposição à substância por baixo do qual não são previstos  
+efeitos adversos. 
+DMEL: Derived Minimal Effect Level, nível de exposi ção que corresponde a um risco baixo, que deve ser considerado um risco 
+mínimo tolerável. 
+ 
+Níveis de concentração PNEC: 
+ 
+Nome Detalles Valor 
+metassilicato de dissódio 
+N. CAS: 6834-92-0 
+N. CE: 229-912-9 
+água (água doce) 7,5 (mg/l) 
+água (água marinha) 1 (mg/l) 
+água (descargas intermitentes) 7,5 (mg/l) 
+STP 1000 (mg/l) 
+ 
+PNEC: Predicted No Effect Concentration, (concentração prevista sem efeitos) concentração da substânci a por baixo da qual não 
+são esperados efeitos negativos no comportamento ambiental. 
+ 
+ 
+8.2 Controlo da exposição. 
+ 
+Medidas de ordem técnica: 
+ Prover uma ventilação adequada, o qual pode ser conseguido mediante uma boa extração -ventilação local e um bom sistema 
+geral de extração. 
+  
+Concentração: 100 % 
+Usos: Desengrasante carrocerías en automoción. 
+Proteção respiratória: 
+Se as medidas técnicas recomendadas forem cumpridas, não é necessário qualquer equipamento de proteção individual. 
+Proteção das mãos: 
+Se o produto for manuseado corretamente, não é necessário qualquer equipamento de proteção individual. 
+Proteção dos olhos: 
+Se o produto for manuseado corretamente, não é necessário qualquer equipamento de proteção individual. 
+Proteção da pele: 
+EPI: Calçado de trabalho 
+ Características: Marcação «CE» Categoria II. 
+Normas CEN: EN ISO 13287, EN 20347 
+Manutenção: Estes artigos adaptam-se à forma do pé do primeiro utilizador. Por este motivo, e igualmente por questões de higiene, deve-se evitar a sua reutilização por qualquer outra pessoa. 
+Observações: O calçado de trabalho para uso profissional é o que incorpora elementos de protecção destinados à protecção do utilizador contra as lesões que possam provocar acidentes 
+ 
+ 
+ 
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS. 
+ 
+9.1 Informações sobre propriedades físicas e químicas de base. 
+Estado físico: Líquido 
+Cor: Pardo avermelhado 
+Odor: Inodoro 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 6 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Limiar de odor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de fusão: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de congelação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de ebulição ou ponto de ebulição inicial e intervalo de ebulição: 98 ºC (Estimativa com base nas indicações do 
+Regulamento (CE) n.º 1272/2008) 
+Inflamabilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite inferior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite superior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de inflamação: 230 ºC (Estimativa com base nas indicações do Regulamento (CE) n.º 1272/2008) 
+Temperatura de autoignição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Temperatura de decomposição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+pH: 11-12  (1%) 
+Viscosidade cinemática: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Solubilidade: Soluble en agua en todas las proporciones. 
+Hidrosolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Liposolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Coeficiente de partição n-octanol/água (valor logarítmico): Não aplicável/Não disponível devido à natureza/propriedades do 
+produto 
+Pressão de vapor: 23,541 (Estimativa com base nas indicações do Regulamento (CE) n.º 1272/2008) 
+Densidade absoluta: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Densidade relativa: 1.055-1.065 
+Densidade relativa do vapor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Características das partículas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+9.2 Outras informações.  
+Viscosidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Propriedades explosivas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Propriedades comburentes: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de gota: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Cintilação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+ 
+SECÇÃO 10: ESTABILIDADE E REATIVIDADE. 
+ 
+10.1 Reatividade. 
+O produto não apresentar riscos devido à sua reactividade. 
+ 
+10.2 Estabilidade química. 
+Instável em contato com: 
+ - Ácidos. 
+ 
+10.3 Possibilidade de reações perigosas. 
+Pode produzir-se uma neutralização em contato com ácidos. 
+ 
+10.4 Condições a evitar. 
+ - Evitar o contato com ácidos. 
+ 
+10.5 Materiais incompatíveis. 
+Evitar os seguintes materiais: 
+ - Ácidos. 
+ 
+10.6 Produtos de decomposição perigosos. 
+Dependendo das condições de uso, podem ser gerados os seguintes produtos: 
+ - Vapores ou gases corrosivos. 
+ 
+ 
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA. 
+MISTURA IRRITANTE. O contacto repetido ou prolongad o com a pele ou as mucosas, pode causar sintomas ir ritantes, tais como 
+avermelhamento, bolhas ou dermatite. Alguns dos sin tomas podem não ser imediatos. Podem produzir-se re acções alérgicas na 
+pele. 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) nº 1272/2008. 
+O contacto repetido ou prolongado com o produto, pode causar a eliminação da gordura da pele, dando lugar a uma dermatite de 
+contacto não alérgica e a que o produto seja absorvido através da pele. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 7 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+As salpicaduras nos olhos podem causar irritação e danos reversíveis. 
+. 
+Informação Toxicológica sobre as substâncias presentes na composição. 
+ 
+Nome Toxicidade aguda Tipo Ensaio Espécie Valor 
+Álcoois, C9-11, etoxilatos 
+Oral LD50 Rat >2000 mg/kg  
+Cutânea LD50 Rabbit > 2000 mg/kg bw  
+Inalação     N. CAS: 68439-46-3 N. CE:   
+metassilicato de dissódio 
+Oral 
+LD50 Rat 1750 mg/kg bw [1] 
+ 
+[1] Gloxhuber and Potokar (1971). Untersuchungen ue ber 
+die|akute Toxizitaet von Metasilikat. Henkel & Cie GmbH, 
+Report|No. TBD 710118. 
+Cutânea      
+Inalação     N. CAS: 6834-92-0 N. CE: 229-912-9  
+hidróxido de sódio, soda cáustica 
+Oral 
+LD50 Rabbit 325 mg/kg bw [1] 
+ 
+[1] Naunyn-Schmiedeberg's (1937), Archiv für 
+experimentielle|Pathologie und Pharmakologie (Berli n, 
+Germany), 184,|587-604 
+Cutânea      
+Inalação     N. CAS: 1310-73-2 N. CE: 215-185-5  
+a) Toxicidade aguda; 
+Dados não inclusivos para a classificação. 
+ 
+Estimativa de toxicidade aguda (ATE): 
+Misturas: 
+ATE (Oral) = 11.905 mg/kg 
+ 
+b) Corrosão/irritação cutânea; 
+Produto classificado: 
+Irritante cutâneo, Categoria 2: Provoca irritação cutânea. 
+ 
+c) Lesões oculares graves/irritação ocular; 
+Produto classificado: 
+Lesões oculares graves, Categoria 1: Provoca lesões oculares graves. 
+ 
+d) Sensibilização respiratória ou cutânea; 
+Dados não inclusivos para a classificação. 
+ 
+e) Mutagenicidade em células germinativas; 
+Dados não inclusivos para a classificação. 
+ 
+f) Carcinogenicidade; 
+Dados não inclusivos para a classificação. 
+ 
+g) Toxicidade reprodutiva; 
+Dados não inclusivos para a classificação. 
+ 
+h) Toxicidade para órgãos-alvo específicos (STOT) - exposição única; 
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos. 
+ 
+i) Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida; 
+Dados não inclusivos para a classificação. 
+ 
+j) Perigo de aspiração. 
+Dados não inclusivos para a classificação. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 8 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+11.2 Informações sobre outros perigos. 
+Propriedades desreguladoras do sistema endócrino 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino com efeitos sobre a saúde 
+humana. 
+Outras informações 
+Não existem informações disponíveis sobre outros efeitos adversos para a saúde. 
+ 
+ 
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA. 
+ 
+12.1 Toxicidade. 
+ 
+Nome Ecotoxicidade Tipo Ensaio Espécie Valor 
+Álcoois, C9-11, etoxilatos 
+Peixes LC50 Fish 2,4 mg/l (96 h)  
+Invertebrados 
+aquáticos 
+EC50 Daphnia magna 1-10 mg/l (48 h) 
+ 
+Plantas 
+aquáticas 
+    
+N. CAS: 68439-46-3 N. CE:   
+metassilicato de dissódio 
+Peixes 
+LC50 Gambusia affinis 2320 mg/L (96 h) [1] 
+ 
+[1] Wallen IE, Greer WC and Lasater R (1957). Toxicity 
+to|Gambusia affinis of certain pure chemicals in turbid 
+waters.|Sew. Industr. Wastes 29, 695-711. 
+Invertebrados 
+aquáticos 
+    
+ 
+Plantas 
+aquáticas 
+    
+N. CAS: 6834-92-0 N. CE: 229-912-9  
+hidróxido de sódio, soda cáustica 
+Peixes 
+Minimal 
+Lethal 
+Concentra
+tion 
+Notropis sp. 100 mg/L (120 h) [1] 
+ 
+[1] Van Horn et al. (1949), Effects of Kraft Mill 
+Wastes,|American Fisheries Society 
+Invertebrados 
+aquáticos 
+LC50 Ophryotrocha diadema 33 mg/L (48 h) [1] 
+ 
+[1] Parker JG (1984), Wat Res, 18, 865-868 
+Plantas 
+aquáticas 
+    
+N. CAS: 1310-73-2 N. CE: 215-185-5  
+ 
+  
+12.2 Persistência e degradabilidade. 
+Não se dispõe de informação relativa à biodegradabilidade das substâncias presentes. 
+Não se dispõe de informação relativa à degradabilidade das substâncias presentes. 
+Não há informação disponível sobre a persistência e degradabilidade do produto 
+Os componentes do produto cumprem com os critérios de biodegradabilidade estabelecidos no Regulamento (CE) n. º 648/2004 
+relativo aos detergentes. 
+ 
+12.3 Potencial de bioacumulação. 
+Não estão disponíveis informações relativas à Bioacumulação das substâncias presentes. 
+  
+12.4 Mobilidade no solo. 
+Não há informação disponível sobre a mobilidade no solo. 
+Não é permitido o vertido em sumidouros ou cursos de água. 
+Evitar a penetração no solo. 
+ 
+12.5 Resultados da avaliação PBT e mPmB. 
+Não há informações disponíveis sobre a avaliação PBT e mPmB do produto. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 9 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+12.6 Propriedades desreguladoras do sistema endócrino. 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino sobre o ambiente. 
+ 
+12.7 Outros efeitos adversos. 
+Não há informação sobre outros efeitos adversos para o meio ambiente. 
+ 
+ 
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO. 
+ 
+13.1 Métodos de tratamento de resíduos. 
+Não é permitido o vertido em sumidouros ou cursos de  água. Os resíduos e recipientes vazios devem ser m anipulados e 
+eliminados de acordo com as legislações locais/nacionais vigentes. 
+Siga as disposições da Directiva 2008/98/CE relativas à gestão de resíduos, DL 73/2011 e Decisão da Comissão 2014/955 / UE 
+(códigos LER). 
+ 
+Classificação dos resíduos de acordo com o Catálogo Europeu de Resíduos: 
+20 RESÍDUOS URBANOS E EQUIPARADOS (RESÍDUOS DOMÉSTI COS, DO COMÉRCIO, DA INDÚSTRIA E DOS SERVIÇOS), 
+INCLUINDO AS FRAÇÕES RECOLHIDAS SELETIVAMENTE 
+20 01 Frações recolhidas seletivamente (exceto 15 01) 
+20 01 29 detergentes contendo substâncias perigosas 
+Resíduo classificado como perigoso. 
+ 
+ 
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE. 
+ 
+Não é perigoso no transporte. Em caso de acidente e derrame do produto, actuar de acordo com o ponto 6. 
+ 
+14.1 Número ONU ou número de ID. 
+ Não é perigoso no transporte. 
+ 
+14.2 Designação oficial de transporte da ONU. 
+Descrição: 
+ADR/RID: Não é perigoso no transporte. 
+IMDG: Não é perigoso no transporte. 
+OACI/IATA: Não é perigoso no transporte. 
+ 
+14.3 Classes de perigo para efeitos de transporte. 
+Não é perigoso no transporte. 
+ 
+14.4 Grupo de embalagem. 
+Não é perigoso no transporte. 
+ 
+14.5 Perigos para o ambiente. 
+Não é perigoso no transporte. 
+ Transporte por barco, FEm - Fichas de emergência (F – Incêndio, S - Derrames):  Não Aplicável. 
+ 
+14.6 Precauções especiais para o utilizador. 
+Não é perigoso no transporte. 
+ 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI. 
+Não é perigoso no transporte. 
+ 
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO. 
+ 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e 
+ambiente. 
+O produto não é afetado pelo Regulamento (CE) nº 10 05/2009 do Parlamento Europeu e do Conselho, de 16 de Setembro de 
+2009, relativo às substâncias que empobrecem a camada de ozono. 
+ 
+ 
+O produto está em conformidade com o Regulamento (CE) Nº 648/2004 relativo aos detergentes. 
+Conteúdo de acordo com o Regulamento (CE) Nº 648/2004 relativo aos detergentes: 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 10 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+fosfatos < 5% 
+ 
+tensoactivos não iónicos < 5% 
+ 
+tensoactivos catiónicos < 5% 
+ 
+Hidróxidos alcalinos < 5% 
+ 
+Classificação do produto de acordo com  o Anexo I da Directiva 2012/18/UE (SEVESO III): N/A 
+O produto está afetado pelo DL 147/2008, de 29 de julho (responsabilidade por danos ambientais). 
+O produto não está afetado pelo Reglamento (UE) No 528/2012 relativo à comercialização e ao uso dos biocidas. 
+O produto não está afetado pelo procedimento estabe lecido no Regulamento (UE) No 649/2012, relativo à exportação e 
+importação de produtos químicos perigosos. 
+ 
+ 
+15.2 Avaliação da segurança química. 
+Não foi realizado uma avaliação da segurança química do produto. 
+ 
+ 
+SECÇÃO 16: OUTRAS INFORMAÇÕES. 
+ 
+Texto completo das frases H que aparecem no epígrafe 3: 
+ 
+H302  Nocivo por ingestão. 
+H314  Provoca queimaduras na pele e lesões oculares  graves. 
+H315  Provoca irritação cutânea. 
+H318  Provoca lesões oculares graves. 
+H319  Provoca irritação ocular grave. 
+H335  Pode provocar irritação das vias respiratória s. 
+H400  Muito tóxico para os organismos aquáticos. 
+ 
+ 
+Códigos de classificação: 
+ 
+Acute Tox. 4 : Toxicidade aguda (Via oral), Categoria 4 
+Aquatic Acute 1 : Toxicidade aguda para o ambiente aquático, Categoria 1 
+Eye Dam. 1 : Lesões oculares graves, Categoria 1 
+Eye Irrit. 2 : Irritação ocular, Categoria 2 
+STOT SE 3 : Toxicidade para órgãos-alvos específicos resultante de exposição única, Categoria 3 
+Skin Corr. 1A : Corrosivo cutâneo, Categoria 1A 
+Skin Corr. 1B : Corrosivo cutâneo, Categoria 1B 
+Skin Irrit. 2 : Irritante cutâneo, Categoria 2 
+ 
+ 
+Modificações em relação à versão anterior: 
+ 
+ - Mudanças na composição do produto (SECÇÃO 3.2). 
+ - Modificação nos valores das propriedades físico-químicas (SECÇÃO 9). 
+ - Adicionado de valores de ecotoxicidade (SECÇÃO 11.1). 
+ - Mudança na classificação de perigo (SECÇÃO 11.1). 
+ - Adicionado de valores de informação ecológica (SECÇÃO 12.1). 
+ - Adicionado de abreviaturas e siglas (SECÇÃO 16). 
+ 
+ 
+Classificação e procedimento utilizado para determinar a classificação das misturas em conformidade com o 
+Regulamento (CE) n.º 1272/2008 [CRE]: 
+Perigos físicos  Com base em dados de ensaio 
+Perigos para a saúde Método de cálculo 
+Perigos para o ambiente Método de cálculo 
+ 
+ 
+ 
+Aconselha-se que seja dada formação básica relativamente à segurança e higiene laboral para que seja efectuado um 
+manuseamento correcto do produto. 
+ 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ CAR GRASS 
+Versão 1 Data de emissão: 2/10/2019 
+Versão 6 (substitui a versão 5) Data de revisão: 08 /06/2022 
+Página 11 de 11 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Fim da ficha de dados de segurança.- 
+Abreviaturas e siglas utilizadas: 
+CEN: Comité Europeu de Normalização. 
+DMEL: Derived Minimal Effect Level, nível de exposi ção que corresponde a um risco baixo, que deve ser  
+ considerado um risco mínimo tolerável. 
+DNEL: Derived No Effect Level, (nível sem efeito ob tido) nível de exposição à substância por baixo do  
+ qual não são previstos  efeitos adversos. 
+EC50: Concentração média eficaz. 
+EPI: Equipamento de proteção individual. 
+LC50: Concentração letal, 50%. 
+LD50: Dose Letal, 50%. 
+PNEC: Predicted No Effect Concentration, (concentra ção prevista sem efeitos) concentração da substância  
+ por baixo da qual não são esperados efeitos negati vos no comportamento ambiental. 
+ 
+Principais referências bibliográficas e fontes de dados: 
+http://eur-lex.europa.eu/homepage.html 
+http://echa.europa.eu/ 
+Regulamento (UE) 2020/878. 
+Regulamento (CE) No 1907/2006. 
+Regulamento (UE) No 1272/2008. 
+ 
+A informação facilitada nesta ficha de Dados de Seg urança foi redigida de acordo com o REGULAMENTO (UE ) 2020/878 DA 
+COMISSÃO de 18 de junho de 2020 que altera o Anexo II do Regulamento (CE) n.o 1907/2006 do Parlamento Europeu e do 
+Conselho relativo ao registo, avaliação, substâncias e misturas químicas (REACH). 
+ 
+A informação desta Ficha de Dados de Segurança do produto está baseada nos conhecimentos actuais e nas leis vigentes da 
+CE e nacionais, quanto a que as condições de trabal ho dos utilizadores estiverem fora do nosso conheci mento e controlo. O 
+produto não deve ser utilizado para fins distintos àqueles que são especificados, sem ter primeiro uma instrução por escrito, 
+da sua utilização. É sempre responsabilidade do uti lizador tomar as medidas oportunas com a finalidade  de cumprir com as 
+exigências estabelecidas nas legislações. 

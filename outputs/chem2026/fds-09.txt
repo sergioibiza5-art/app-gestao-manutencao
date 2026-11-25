@@ -1,0 +1,661 @@
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 1 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/ EMPRESA. 
+ 
+1.1 Identificador do produto. 
+ 
+Nome do produto: DESINBAC GRAS 
+UFI:  M9R0-20CE-P00T-3C4Y 
+ 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas. 
+ 
+Desinfectantes (biocidas uso Industria Alimentaria y Ambiental) 
+ 
+Usos não aconselhados: 
+Usos diferentes aos aconselhados. 
+ 
+1.3 Identificação do fornecedor da ficha de dados de segurança. 
+ 
+Empresa: RACRISA, S.L. 
+Endereço: C/ Dels Obrers, 54. Pol. Ind. Les Valletes. 
+População: 46192 Montserrrat 
+Distrito: VALENCIA (ESPAÑA) 
+Telefone: 961 533 000 
+Fax: 962 986 147 
+E-mail: dpto.tecnico@racrisa.com 
+Web: www.racrisa.com 
+ 
+1.4 Número de telefone de emergência: 915 620 420 (Disponível 24h) 
+Em caso de intoxicação contactar o Centro de Informação Antivenenos (CIAV) (+351) 800 250 250. 
+Atendimento médico 24 horas por dia, 7 dias por semana. 
+ 
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS. 
+ 
+2.1 Classificação da substância ou mistura. 
+Segundo o Regulamento (EU)  No 1272/2008: 
+Eye Irrit. 2 : Provoca irritação ocular grave. 
+Skin Irrit. 2 : Provoca irritação cutânea. 
+Aquatic Acute 1 : Muito tóxico para os organismos aquáticos. 
+Aquatic Chronic 2 : Tóxico para os organismos aquáticos com efeitos duradouros. 
+ 
+ 
+2.2 Elementos do rótulo.  . 
+. 
+Rótulo de acordo com o Regulamento (EU)  No 1272/2008: 
+Pictogramas: 
+  
+    
+Palavras-sinal: 
+Atenção 
+Advertências de perigo: 
+H315  Provoca irritação cutânea. 
+H319  Provoca irritação ocular grave. 
+H410  Muito tóxico para os organismos aquáticos com  efeitos duradouros. 
+ 
+Recomendações de prudência: 
+P273  Evitar a libertação para o ambiente. 
+P391  Recolher o produto derramado. 
+P102  Manter fora do alcance das crianças. 
+P280  Usar luvas de proteção/vestuário de proteção/ proteção ocular/proteção facial/proteção auditiva/… 
+P264  Lavar as mãos cuidadosamente após manuseament o 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 2 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+P501  Eliminar o conteúdo/recipiente según a normat iva local vigente. 
+ 
+Manter fora do alcance das crianças. 
+Substâncias ativas: 
+Quaternary ammonium compounds, benzyl-C12-16-alkyldimethyl, chlorides, 2,47%; 
+etanol; álcool etílico, 0,309%; 
+ 
+2.3 Outros perigos. 
+ 
+A mistura não contém substâncias classificadas como PBT. 
+A mistura não contém substâncias classificadas como mPmB. 
+A mistura não contém substâncias com propriedades desreguladoras do sistema endócrino. 
+ 
+Em condições de uso normal e na sua forma original, o produto não tem efeitos negativos sobre a saúde e o meio ambiente. 
+ 
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES. 
+ 
+3.1 Substâncias. 
+Não Aplicável. 
+ 
+3.2 Misturas. 
+Substâncias que representam um perigo para a saúde ou o meio ambiente de acordo com a Regulamento (CE)  No. 1272/2008, 
+têm atribuído um limite de exposição comunitário no lugar de trabalho, estão classificadas como PBT/ mPmB ou incluídas na Lista 
+de Candidatos: 
+ 
+Identificadores Nome Concentração 
+(*)Classificação -Regulamento 
+1272/2008 
+Classificação 
+Limite de 
+concentração 
+específico e a 
+Estimativa da 
+Toxicidade Aguda 
+N. CAS: 68424-85-1 
+N. CE: 270-325-2 
+Quaternary ammonium compounds, benzyl-C12-
+16-alkyldimethyl, chlorides 1 - 3 % 
+Acute Tox. 4, 
+H302 - Aquatic 
+Acute 1, H400 
+(M=10) - 
+Aquatic Chronic 
+1, H410 (M=1) 
+- Eye Dam. 1, 
+H318 - Skin 
+Corr. 1B, H314 
+- 
+(*)O texto completo das frases H é pormenorizado na secção 16 desta Ficha de Segurança. 
+    
+ 
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS. 
+MISTURA IRRITANTE. O contacto repetido ou prolongad o com a pele ou as mucosas, pode causar sintomas ir ritantes, tais como 
+avermelhamento, bolhas ou dermatite. Alguns dos sin tomas podem não ser imediatos. Podem produzir-se re acções alérgicas na 
+pele. 
+4.1 Descrição das medidas de emergência. 
+Nos casos de dúvida, ou quando persistirem os sinto mas de mal-estar, solicitar atenção médica. Não adm inistrar nunca nada por 
+via oral a pessoas que se encontrem inconscientes. 
+ 
+Inalação. 
+Situar o acidentado ao ar livre, mantê-lo quente e em repouso, se a respiração for irregular ou se det iver, praticar respiração 
+artificial. 
+ 
+Contacto com os olhos. 
+Retirar as lentes de contato, se levar e resultar f ácil de fazer. Lavar abundantemente os olhos com ág ua limpa e fresca durante, 
+pelo menos, 10 minutos, puxando para cima das pálpebras e procurar assistência médica. Não permita que a pessoa se esfregue 
+o olho afetado. 
+ 
+Contacto com a pele. 
+Tirar a roupa contaminada. Lavar a pele vigorosamen te com água e sabão ou um limpador de pele adequado . NUNCA utilizar 
+dissolventes ou diluentes. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 3 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Ingestão. 
+Se acidentalmente foi ingerido, procurar imediatamente atenção médica. Mantê-lo em repouso. NUNCA provocar o vômito. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados. 
+Produto Irritante: o contacto repetido ou prolongado com a pele ou as mucosas pode causar vermelhidão, bolhas ou dermatite, a 
+inalação de nevoeiro de pulverização ou partículas em suspensão pode causar irritação das vias respira tórias e alguns dos 
+sintomas podem não ser imediatos. 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários. 
+Nos casos de dúvida, ou quando persistirem os sinto mas de mal-estar, solicitar atenção médica. Não adm inistrar nunca nada por 
+via oral a pessoas que se encontrem inconscientes. Cubra a zona afetada com um compressa estéril seca. Proteja a zona afetada 
+de pressão ou fricção. 
+ 
+ 
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS. 
+ 
+O produto não apresenta qualquer risco específico em caso de incêndio. 
+ 
+5.1 Meios de extinção. 
+Meios de extinção adequados: 
+Pó extintor ou CO2. Em caso de incêndios mais graves também espuma resistente ao álcool e água pulverizada. 
+ 
+Meios de extinção inadequados: 
+Não usar para a extinção jato direto de água. Em presença de tensão elétrica não é aceitável utilizar água ou espuma como meio 
+de extinção. 
+ 
+5.2 Perigos especiais decorrentes da substância ou mistura. 
+Riscos especiais. 
+A exposição aos produtos de combustão ou decomposição pode ser prejudicial para a saúde. 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios. 
+Refrigerar com água os tanques, cisternas ou recipi entes próximos à fonte de calor ou fogo. Ter em con ta a direção do vento. 
+Evitar que os produtos utilizados na luta contra incêndio passem a esgotos, sumidouros ou cursos de ág ua. Os restos de produto 
+e meios de extinção podem contaminar o meio ambiente aquático. 
+ 
+Equipamento de proteção contra incêndios. 
+Segundo a magnitude do incêndio, pode ser necessári o o uso de roupas de proteção contra o calor, equip amento respiratório 
+autónomo, luvas, óculos protetores ou máscaras faciais e botas. 
+ 
+ 
+SECÇÃO 6: MEDIDAS EM CASO DE FUGA ACIDENTAL. 
+ 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+ 
+6.2 Precauções a nível ambiental. 
+Produto perigoso para o ambiente, no caso de se pro duzirem grandes vertidos ou se o produto poluir lag os, rios ou sumidouros, 
+informar as autoridades competentes, segundo a legi slação local. Evitar a poluição de esgotos, águas s uperficiais ou 
+subterrâneas, bem como do solo. 
+ 
+6.3 Métodos e materiais de confinamento e limpeza. 
+Conter e recolher o derrame com material absorvente  inerte (terra, areia, vermiculita, terra de diatom áceas...) e limpe a área 
+imediatamente com um descontaminante adequado. 
+Deposite os resíduos em recipientes fechados e adeq uados para a eliminação, de acordo com os regulamen tos locais e nacionais 
+(ver secção 13). 
+ 
+6.4 Remissão para outras secções. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+Para a posterior eliminação dos resíduos, seguir as recomendações da secção 13. 
+ 
+ 
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 4 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+7.1 Precauções para um manuseamento seguro. 
+Para a proteção pessoal, ver secção 8. 
+Na zona de aplicação deve ser proibido fumar, comer e beber. 
+Cumprir com a legislação sobre segurança e higiene no trabalho. 
+Não utilizar nunca pressão para esvaziar os recipie ntes, não são recipientes resistentes à pressão. Co nservar o produto em 
+recipientes de um material idêntico ao original. 
+ 
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades. 
+Armazenar segundo a legislação local. Observar as i ndicações da etiqueta. Armazenar os recipientes ent re 5 e 25 ºC, num local 
+seco e bem ventilado, longe de fontes de calor e da  luz solar directa. Manter longe de pontos de igniç ão. Manter longe de 
+agentes oxidantes e de materiais fortemente ácidos ou alcalinos. Não fumar. Evitar a entrada a pessoas  não autorizadas. Depois 
+de ter aberto os recipientes, estes devem ser fechados de novo com cuidado, e colocados verticalmente para evitar derrames. 
+ 
+O produto não está afetado pela Directiva 2012/18/UE (SEVESO III). 
+ 
+7.3 Utilizações finais específicas. 
+Não disponível. 
+ 
+ 
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL. 
+ 
+8.1 Parâmetros de controlo. 
+ 
+O produto NÃO contém substâncias com Valores Limite Ambientais de Exposição Profissional. O produto NÃO contém substâncias 
+com Valores Biológicos Limite. 
+ 
+8.2 Controlo da exposição. 
+ 
+Medidas de ordem técnica: 
+ Prover uma ventilação adequada, o qual pode ser conseguido mediante uma boa extração -ventilação local e um bom sistema 
+geral de extração. 
+  
+Concentração: 100 % 
+Usos: Desinfectantes (biocidas uso Industria Alimentaria y Ambiental) 
+Proteção respiratória: 
+EPI: Máscara filtrante para protecção contra gases e partículas 
+ 
+Características: Marcação «CE» Categoria III. A máscara deve ter um amplo campo de visão e forma anatómica para oferecer estanquidade e hermeticidade. 
+Normas CEN: EN 136, EN 140, EN 405 
+Manutenção: 
+Não deve ser armazenada em lugares expostos a altas temperaturas e ambientes húmidos antes da sua 
+utilização. Deve-se controlar especialmente o estado das válvulas de inalação e exalação do adaptador 
+facial. 
+Observações: 
+Devem ser lidas atentamente as instruções do fabricante relativamente ao uso e manutenção do 
+equipamento. Devem-se acoplar ao equipamento os filtros necessários em função das características 
+específicas do risco (Partículas e aerossóis: P1-P2-P3, Gases e vapores: A-B-E-K-AX) substituindo-se em 
+conformidade com os conselhos do fabricante. 
+Tipo de filtro 
+necessário: A2 
+Proteção das mãos: 
+EPI: Luvas de trabalho 
+ Características: Marcação «CE» Categoria I. 
+Normas CEN: EN 374-1, En 374-2, EN 374-3, EN 420 
+Manutenção: 
+Devem ser guardadas em lugar seco, afastadas de eventuais fontes de calor, e deve-se evitar a 
+exposição aos raios solares na medida do possível. Não devem ser efectuadas nas luvas quaisquer 
+modificações que possam alterar a sua resistência e também não se devem aplicar nas mesmas tintas, 
+solventes ou adesivos. 
+Observações: As luvas devem ser do tamanho correcto, e ser ajustadas à mão sem ficarem demasiado folgadas nem demasiado apertadas. Deverão ser sempre utilizadas com as mãos limpas e secas. 
+Material: PVC (cloreto polivinílico) Tempo de penetração (min.): > 480 Espessura do material (mm): 0,35 
+Proteção dos olhos: 
+EPI: Óculos de protecção com armação integral 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 5 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Características: Marcação «CE» Categoria II. Protector dos olhos de armação integral para a protecção contra pó, fumos, nevoeiros e vapores. 
+Normas CEN: EN 165, EN 166, EN 167, EN 168 
+Manutenção: 
+A visibilidade através dos óculos deve ser óptima, razão pela qual se devem limpar diariamente estes 
+elementos, devendo os protectores ser desinfectados periodicamente, seguindo as instruções do 
+fabricante. 
+Observações: Exemplos de indicadores de deterioração: coloração amarela das lentes, arranhões superficiais das lentes, rasgões, etc. 
+Proteção da pele: 
+EPI: Roupa de protecção 
+ Características: Marcação «CE» Categoria II. A roupa de protecção não deve ser estreita nem ficar solta para que não interfira nos movimentos do utilizador. 
+Normas CEN: EN 340 
+Manutenção: Devem-se seguir as instruções de lavagem e conservação proporcionadas pelo fabricante para se garantir uma protecção invariável. 
+Observações: 
+A roupa de protecção deve proporcionar um nível de conforto em consonância com o nível de protecção 
+que deve proporcionar face ao risco contra o qual protege, com as condições ambientais, o nível de 
+actividade do utilizador e o tempo de uso previsto. 
+EPI: Calçado de trabalho 
+ Características: Marcação «CE» Categoria II. 
+Normas CEN: EN ISO 13287, EN 20347 
+Manutenção: Estes artigos adaptam-se à forma do pé do primeiro utilizador. Por este motivo, e igualmente por questões de higiene, deve-se evitar a sua reutilização por qualquer outra pessoa. 
+Observações: O calçado de trabalho para uso profissional é o que incorpora elementos de protecção destinados à protecção do utilizador contra as lesões que possam provocar acidentes 
+ 
+ 
+ 
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS. 
+ 
+9.1 Informações sobre propriedades físicas e químicas de base. 
+Estado físico: Líquido 
+Cor: Incoloro 
+Odor: Caracteristico 
+Limiar de odor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de fusão: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de congelação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de ebulição ou ponto de ebulição inicial e intervalo de ebulição: 92 ºC (Estimativa com base nas indicações do 
+Regulamento (CE) n.º 1272/2008) 
+Inflamabilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite inferior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite superior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de inflamação: 2103,56 ºC 
+Temperatura de autoignição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Temperatura de decomposição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+pH: 10.25-10.75 (100%) 
+Viscosidade cinemática: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Solubilidade: Completamente soluble en agua 
+Hidrosolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Liposolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Coeficiente de partição n-octanol/água (valor logarítmico): Não aplicável/Não disponível devido à natureza/propriedades do 
+produto 
+Pressão de vapor: 23,441 (Estimativa com base nas indicações do Regulamento (CE) n.º 1272/2008) 
+Densidade absoluta: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Densidade relativa: 1.04-1.045 
+Densidade relativa do vapor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Características das partículas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+9.2 Outras informações.  
+Viscosidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Propriedades explosivas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Propriedades comburentes: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de gota: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Cintilação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 6 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+ 
+SECÇÃO 10: ESTABILIDADE E REATIVIDADE. 
+ 
+10.1 Reatividade. 
+O produto não apresentar riscos devido à sua reactividade. 
+ 
+10.2 Estabilidade química. 
+Instável em contato com: 
+ - Ácidos. 
+ 
+10.3 Possibilidade de reações perigosas. 
+Pode produzir-se uma neutralização em contato com ácidos. 
+ 
+10.4 Condições a evitar. 
+ - Evitar o contato com ácidos. 
+ 
+10.5 Materiais incompatíveis. 
+Evitar os seguintes materiais: 
+ - Ácidos. 
+ 
+10.6 Produtos de decomposição perigosos. 
+Dependendo das condições de uso, podem ser gerados os seguintes produtos: 
+ - Vapores ou gases corrosivos. 
+ 
+ 
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA. 
+MISTURA IRRITANTE. Salpicaduras nos olhos podem causar irritação dos mesmos. 
+MISTURA IRRITANTE. O contacto repetido ou prolongad o com a pele ou as mucosas, pode causar sintomas ir ritantes, tais como 
+avermelhamento, bolhas ou dermatite. Alguns dos sin tomas podem não ser imediatos. Podem produzir-se re acções alérgicas na 
+pele. 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) nº 1272/2008. 
+Não existem dados disponíveis ensaiados do produto. 
+O contacto repetido ou prolongado com o produto, pode causar a eliminação da gordura da pele, dando lugar a uma dermatite de 
+contacto não alérgica e a que o produto seja absorvido através da pele. 
+. 
+a) Toxicidade aguda; 
+Dados não inclusivos para a classificação. 
+ 
+b) Corrosão/irritação cutânea; 
+Produto classificado: 
+Irritante cutâneo, Categoria 2: Provoca irritação cutânea. 
+ 
+c) Lesões oculares graves/irritação ocular; 
+Produto classificado: 
+Irritação ocular, Categoria 2: Provoca irritação ocular grave. 
+ 
+d) Sensibilização respiratória ou cutânea; 
+Dados não inclusivos para a classificação. 
+ 
+e) Mutagenicidade em células germinativas; 
+Dados não inclusivos para a classificação. 
+ 
+f) Carcinogenicidade; 
+Dados não inclusivos para a classificação. 
+ 
+g) Toxicidade reprodutiva; 
+Dados não inclusivos para a classificação. 
+ 
+h) Toxicidade para órgãos-alvo específicos (STOT) - exposição única; 
+Dados não inclusivos para a classificação. 
+ 
+i) Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida; 
+Dados não inclusivos para a classificação. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 7 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+j) Perigo de aspiração. 
+Dados não inclusivos para a classificação. 
+ 
+11.2 Informações sobre outros perigos. 
+Propriedades desreguladoras do sistema endócrino 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino com efeitos sobre a saúde 
+humana. 
+Outras informações 
+Não existem informações disponíveis sobre outros efeitos adversos para a saúde. 
+ 
+ 
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA. 
+ 
+12.1 Toxicidade. 
+Não estão disponíveis informações relativas à Ecotoxicidade das substâncias presentes. 
+  
+12.2 Persistência e degradabilidade. 
+Não se dispõe de informação relativa à biodegradabilidade das substâncias presentes. 
+Não se dispõe de informação relativa à degradabilidade das substâncias presentes. 
+Não há informação disponível sobre a persistência e degradabilidade do produto 
+Os componentes do produto cumprem com os critérios de biodegradabilidade estabelecidos no Regulamento (CE) n. º 648/2004 
+relativo aos detergentes. 
+ 
+12.3 Potencial de bioacumulação. 
+Não estão disponíveis informações relativas à Bioacumulação das substâncias presentes. 
+  
+12.4 Mobilidade no solo. 
+Não há informação disponível sobre a mobilidade no solo. 
+Não é permitido o vertido em sumidouros ou cursos de água. 
+Evitar a penetração no solo. 
+ 
+12.5 Resultados da avaliação PBT e mPmB. 
+Não há informações disponíveis sobre a avaliação PBT e mPmB do produto. 
+ 
+12.6 Propriedades desreguladoras do sistema endócrino. 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino sobre o ambiente. 
+ 
+12.7 Outros efeitos adversos. 
+Não há informação sobre outros efeitos adversos para o meio ambiente. 
+ 
+ 
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO. 
+ 
+13.1 Métodos de tratamento de resíduos. 
+Não é permitido o vertido em sumidouros ou cursos de  água. Os resíduos e recipientes vazios devem ser m anipulados e 
+eliminados de acordo com as legislações locais/nacionais vigentes. 
+Siga as disposições da Directiva 2008/98/CE relativas à gestão de resíduos, DL 73/2011 e Decisão da Comissão 2014/955 / UE 
+(códigos LER). 
+ 
+Classificação dos resíduos de acordo com o Catálogo Europeu de Resíduos: 
+20 RESÍDUOS URBANOS E EQUIPARADOS (RESÍDUOS DOMÉSTI COS, DO COMÉRCIO, DA INDÚSTRIA E DOS SERVIÇOS), 
+INCLUINDO AS FRAÇÕES RECOLHIDAS SELETIVAMENTE 
+20 01 Frações recolhidas seletivamente (exceto 15 01) 
+20 01 29 detergentes contendo substâncias perigosas 
+Resíduo classificado como perigoso. 
+ 
+ 
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE. 
+ 
+Não é perigoso no transporte. Em caso de acidente e derrame do produto, actuar de acordo com o ponto 6. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 8 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+14.1 Número ONU ou número de ID. 
+ Não é perigoso no transporte. 
+ 
+14.2 Designação oficial de transporte da ONU. 
+Descrição: 
+ADR/RID: Não é perigoso no transporte. 
+IMDG: Não é perigoso no transporte. 
+OACI/IATA: Não é perigoso no transporte. 
+ 
+14.3 Classes de perigo para efeitos de transporte. 
+Não é perigoso no transporte. 
+ 
+14.4 Grupo de embalagem. 
+Não é perigoso no transporte. 
+ 
+14.5 Perigos para o ambiente. 
+Não é perigoso no transporte. 
+ Transporte por barco, FEm - Fichas de emergência (F – Incêndio, S - Derrames):  Não Aplicável. 
+ 
+14.6 Precauções especiais para o utilizador. 
+Não é perigoso no transporte. 
+ 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI. 
+Não é perigoso no transporte. 
+ 
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO. 
+ 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e 
+ambiente. 
+O produto não é afetado pelo Regulamento (CE) nº 10 05/2009 do Parlamento Europeu e do Conselho, de 16 de Setembro de 
+2009, relativo às substâncias que empobrecem a camada de ozono. 
+ 
+ 
+O produto está em conformidade com o Regulamento (CE) Nº 648/2004 relativo aos detergentes. 
+Conteúdo de acordo com o Regulamento (CE) Nº 648/2004 relativo aos detergentes: 
+desinfectantes   
+ 
+Classificação do produto de acordo com  o Anexo I da Directiva 2012/18/UE (SEVESO III): N/A 
+O produto está afetado pelo DL 147/2008, de 29 de julho (responsabilidade por danos ambientais). 
+ 
+Informação relacionada com o Regulamento (UE) No 528/2012 relativo à comercialização e ao uso dos biocidas: 
+ 
+Tipo de produto Grupo 
+Desinfetantes e algicidas não destinados a aplicação direta em seres humanos ou animais Desinfetantes 
+Superfícies em contacto com os géneros alimentícios e alimentos para animais Desinfetantes 
+ 
+Substâncias ativas Concentração % 
+Quaternary ammonium compounds, benzyl-C12-16-alkyldimethyl, chlorides 
+N. CAS: 68424-85-1 
+N. CE: 270-325-2 
+2,47 
+etanol; álcool etílico 
+N. CAS: 64-17-5 
+N. CE: 200-578-6 
+0,309 
+O produto não está afetado pelo procedimento estabe lecido no Regulamento (UE) No 649/2012, relativo à exportação e 
+importação de produtos químicos perigosos. 
+ 
+ 
+15.2 Avaliação da segurança química. 
+Não foi realizado uma avaliação da segurança química do produto. 
+ 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ DESINBAC GRAS 
+Versão 1 Data de emissão: 28/05/2021 
+Versão 4 (substitui a versão 3) Data de revisão: 05 /05/2022 
+Página 9 de 9 
+Data de impressão: 08-06-2022 
+ 
+ 
+-Fim da ficha de dados de segurança.- 
+SECÇÃO 16: OUTRAS INFORMAÇÕES. 
+ 
+Texto completo das frases H que aparecem no epígrafe 3: 
+ 
+H302  Nocivo por ingestão. 
+H314  Provoca queimaduras na pele e lesões oculares  graves. 
+H318  Provoca lesões oculares graves. 
+H400  Muito tóxico para os organismos aquáticos. 
+H410  Muito tóxico para os organismos aquáticos com  efeitos duradouros. 
+ 
+ 
+Códigos de classificação: 
+ 
+Acute Tox. 4 : Toxicidade aguda (Via oral), Categoria 4 
+Aquatic Acute 1 : Toxicidade aguda para o ambiente aquático, Categoria 1 
+Aquatic Chronic 1 : Efeitos crônicos para o ambiente aquático, Categoria 1 
+Aquatic Chronic 2 : Efeitos crônicos para o ambiente aquático, Categoria 2 
+Eye Dam. 1 : Lesões oculares graves, Categoria 1 
+Eye Irrit. 2 : Irritação ocular, Categoria 2 
+Skin Corr. 1B : Corrosivo cutâneo, Categoria 1B 
+Skin Irrit. 2 : Irritante cutâneo, Categoria 2 
+ 
+ 
+Modificações em relação à versão anterior: 
+ 
+ - Modificação de perigos especiais (SECÇÃO 2.3). 
+ - Modificação nas medidas de combate a incêndios (SECÇÃO 5.2). 
+ - Modificações nas medidas a tomar em caso de fugas acidentais (SECÇÃO 6.1). 
+ - Modificações nas medidas a tomar em caso de fugas acidentais (SECÇÃO 6.2). 
+ - Modificação nos valores das propriedades físico-químicas (SECÇÃO 9). 
+ - Mudança na classificação de perigo (SECÇÃO 11.1). 
+ - Modificação da classificação ADR/IMDG/ICAO/IATA/RID (SECÇÃO 14). 
+ 
+ 
+Classificação e procedimento utilizado para determinar a classificação das misturas em conformidade com o 
+Regulamento (CE) n.º 1272/2008 [CRE]: 
+Perigos físicos  Com base em dados de ensaio 
+Perigos para a saúde Método de cálculo 
+Perigos para o ambiente Método de cálculo 
+ 
+ 
+ 
+Aconselha-se que seja dada formação básica relativamente à segurança e higiene laboral para que seja efectuado um 
+manuseamento correcto do produto. 
+ 
+ 
+Abreviaturas e siglas utilizadas: 
+CEN: Comité Europeu de Normalização. 
+EPI: Equipamento de proteção individual. 
+ 
+Principais referências bibliográficas e fontes de dados: 
+http://eur-lex.europa.eu/homepage.html 
+http://echa.europa.eu/ 
+Regulamento (UE) 2020/878. 
+Regulamento (CE) No 1907/2006. 
+Regulamento (UE) No 1272/2008. 
+ 
+A informação facilitada nesta ficha de Dados de Seg urança foi redigida de acordo com o REGULAMENTO (UE ) 2020/878 DA 
+COMISSÃO de 18 de junho de 2020 que altera o Anexo II do Regulamento (CE) n.o 1907/2006 do Parlamento Europeu e do 
+Conselho relativo ao registo, avaliação, substâncias e misturas químicas (REACH). 
+ 
+A informação desta Ficha de Dados de Segurança do produto está baseada nos conhecimentos actuais e nas leis vigentes da 
+CE e nacionais, quanto a que as condições de trabal ho dos utilizadores estiverem fora do nosso conheci mento e controlo. O 
+produto não deve ser utilizado para fins distintos àqueles que são especificados, sem ter primeiro uma instrução por escrito, 
+da sua utilização. É sempre responsabilidade do uti lizador tomar as medidas oportunas com a finalidade  de cumprir com as 
+exigências estabelecidas nas legislações. 

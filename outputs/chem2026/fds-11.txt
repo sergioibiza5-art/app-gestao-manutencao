@@ -1,0 +1,930 @@
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+1/13 
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/EMPRESA
+1.1 Identificador do produto : Glade Gel Absorveodores - Muguet 
+ 
+UFI : N/A 
+ 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações 
+desaconselhadas 
+ 
+ 
+Utilização da substância ou mistura : Produtos de limpeza do ar 
+ 
+Utilizações desaconselhadas : Não conhecidos. 
+ 
+1.3 Identificação do fornecedor da ficha de dados de 
+segurança 
+: Johnson's Wax de Portugal, Lda. 
+R. Maestro Raúl Portela, 1 
+2760-079 Caxias     
+ 
+Telefone : +351 214408130 
+Email endereço : ptgeral@scj.com 
+ 
+1.4 Número de telefone de emergência : CIAV 800 250 250 
+ 
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS 
+2.1 Classificação da substância ou mistura 
+ 
+Classificação de acordo com o Regulamento (EC) Nº 1272/2008 (CLP) 
+Este produto não preenche os critérios para ser classificado em qualquer classe de perigo, de acordo com o Regulamento 
+(EC) 1272/2008 (CLP). 
+2.2 Elementos do rótulo 
+ 
+Rotulagem de acordo com o Regulamento (UE) Nº 1272/2008 (CLP) 
+ 
+ 
+ 
+Recomendações de prudência 
+(P102) Manter fora do alcance das crianças. 
+ 
+ 
+ 
+Rotulagem Adicional:  
+As pessoas sensíveis a perfumes devem ter cuidado ao utilizarem este produto. 
+Os ambientadores não substituem as boas práticas de higiene. 
+ 
+Contém  
+Methylchloroisothiazolinone & Methylisothiazolinone (3:1) 
+Hexyl cinnamal 
+Pode provocar uma reacção alérgica. 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+2/13 
+2.3 Outros perigos :  
+Desreguladores endócrinos 
+A mistura não contém substâncias >0,1% incluídas na lista estabelecida em 
+conformidade com o artigo 59.º, n.º 1, por terem propriedades de 
+desregulação endócrina. 
+ 
+PBT e substância vPvB 
+A mistura não contém substâncias >0,1% que satisfaçam os critérios de 
+persistente, bioacumulável e tóxico ou muito persistente e muito 
+bioacumulável de acordo com o Anexo XIII. 
+  
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES 
+3.1 Misturas 
+ 
+Componentes perigosos: 
+ 
+Nome Químico No. CAS/No. CE Reg. No. Classificação de 
+acordo com o 
+Regulamento (EC) Nº 
+1272/2008 (CLP) 
+Peso por cento Limites de 
+concentração 
+específicos, Fator-M, 
+Estimativa da 
+Toxicidade Aguda 
+Hexyl cinnamal 101-86-0 / 202-983-3 
+ 
+Not required Perigo (agudo) de 
+curto prazo para o 
+ambiente aquático 
+Categoria 1 
+H400 
+ 
+Perigo (crónico) de 
+longo prazo para o 
+ambiente aquático 
+Categoria 2 
+H411 
+ 
+Sensibilização da pele 
+Categoria 1B 
+H317 
+ 
+ 
+>=  0.10 - <  0.50 Fator-M Toxicidade 
+Aguda = 1 
+ATE : 
+Oral = 3,100 mg/kg 
+Espécie: Ratazana 
+Cutânea = > 3,000 
+mg/kg 
+Espécie: Coelho 
+ 
+Methylchloroisothiaz
+olinone & 
+Methylisothiazolinone 
+(3:1) 
+55965-84-9 /  
+ 
+01-2120764691-48 Toxicidade aguda 
+Categoria 3 
+H301 
+ 
+Toxicidade aguda 
+Categoria 2 
+H310 
+>=  0.10 - <=  0.50 Fator-M Toxicidade 
+Crónica = 100 
+Fator-M Toxicidade 
+Aguda = 100 
+ATE : 
+Oral = 64 mg/kg 
+Espécie: Ratazana 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+3/13 
+Nome Químico No. CAS/No. CE Reg. No. Classificação de 
+acordo com o 
+Regulamento (EC) Nº 
+1272/2008 (CLP) 
+Peso por cento Limites de 
+concentração 
+específicos, Fator-M, 
+Estimativa da 
+Toxicidade Aguda 
+ 
+Toxicidade aguda 
+Categoria 2 
+H330 
+ 
+Corrosão cutânea 
+Categoria 1C 
+H314 
+ 
+Lesões oculares 
+graves 
+Categoria 1 
+H318 
+ 
+Sensibilização da pele 
+Categoria 1A 
+H317 
+ 
+Perigo (agudo) de 
+curto prazo para o 
+ambiente aquático 
+Categoria 1 
+H400 
+ 
+Perigo (crónico) de 
+longo prazo para o 
+ambiente aquático 
+Categoria 1 
+H410 
+ 
+ 
+Cutânea = 87 mg/kg 
+Espécie: Coelho 
+Inalação = 0.33 mg/l 
+Espécie: Ratazana 
+ 
+SCL:  
+Corrosão cutânea 
+H314 
+>= 0.6 % 
+ 
+Irritação cutânea 
+H315 
+0.06 - < 0.6 % 
+ 
+Lesões oculares 
+graves 
+H318 
+>= 0.6 % 
+ 
+Iirritação ocular 
+H319 
+0.06 - < 0.6 % 
+ 
+Sensibilização da pele 
+H317 
+>= 0.0015 % 
+ 
+Substância VLE 
+Benzyl Acetate 140-11-4 / 205-399-7 
+ 
+01-2119638272-42 Perigo (crónico) de 
+longo prazo para o 
+ambiente aquático 
+Categoria 3 
+H412 
+ 
+ 
+>=  0.10 - <  0.50 ATE : 
+ 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+4/13 
+ 
+Informação Adicional 
+Para o pleno texto das DECLARAÇÕES H mencionadas nesta Secção, ver a Secção 16. 
+ 
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS 
+4.1 Descrição das medidas de primeiros socorros 
+Inalação : Não há requisitos especiais. 
+ 
+Contacto com a pele : Enxaguar com muita água. 
+Procure assistência médica caso a irritação desenvolva ou persista. 
+ 
+Contacto com os olhos : Enxaguar com muita água. 
+Procure assistência médica caso a irritação desenvolva ou persista. 
+ 
+Ingestão : No caso de problemas prolongados consultar um médico. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados 
+Olhos : Pode irritar os olhos. 
+Não são esperados efeitos adversos quando usado de acordo com as 
+instruções de utilização. 
+ 
+Efeito sobre a pele : Não são esperados efeitos adversos quando usado de acordo com as 
+instruções de utilização. 
+ 
+Inalação : Não são esperados efeitos adversos quando usado de acordo com as 
+instruções de utilização. 
+ 
+Ingestão : Pode causar desconforto abdominal. 
+Não são esperados efeitos adversos quando usado de acordo com as 
+instruções de utilização. 
+ 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários 
+ 
+ Ver Descrição de medidas de primeiros socorros, se não houver outras indicações. 
+ 
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS  
+5.1 Meios de extinção 
+Adequado : Usar meios de extinção que sejam apropriados às circunstâncias locais e 
+ao ambiente envolvente. 
+ 
+Desadequado : Nenhum identificado. 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+5/13 
+ 
+5.2 Perigos especiais decorrentes da 
+substância ou mistura 
+: Em caso de incêndio e/ou explosão não respirar os fumos. 
+A exposição aos produtos de decomposição pode ser prejudicial para a saúde. 
+ 
+5.3 Recomendações para o pessoal 
+de combate a incêndios 
+: Em caso de incêndio, usar equipamento de respiração individual. 
+Usar vestuário de protecção e luvas adequadas. 
+Consultar as actuais regras EN ou Nacionais como apropriado. 
+ 
+ :  
+ 
+SECÇÃO 6: MEDIDAS A TOMAR EM CASO DE FUGAS ACIDENTAIS 
+6.1 Precauções individuais, 
+equipamento de proteção e 
+procedimentos de emergência 
+: Usar equipamento de proteção individual. 
+ 
+ 
+6.2 Precauções a nível ambiental : Para além do uso normal, evitar libertar no ambiente.  
+Evitar que grandes quantidades de produto entrem no sistema de esgotos.  
+Prevenir dispersão ou derramamento, se seguro.  
+Utilizar um recipiente adequado para evitar a contaminação do ambiente.  
+ 
+6.3 Métodos e materiais de 
+confinamento e limpeza 
+: Limpar os resíduos do local onde derramou  
+Varrer ou juntar o produto derramado para contentores adequados para 
+eliminação de resíduos.  
+ 
+ 
+6.4 Remissão para outras secções 
+ 
+: Para a proteção individual ver a secção 8. 
+Para eliminação ver secção 13. 
+ 
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM 
+7.1 Precauções para um 
+manuseamento seguro 
+: Para a proteção individual ver a secção 8. 
+Medidas usuais de protecção preventiva contra incêndio. 
+ 
+7.2 Condições de armazenagem 
+segura, incluindo eventuais 
+incompatibilidades 
+: Não congelar. 
+Manter fora do alcance das crianças. 
+Não congelar. 
+Não se decompõe se armazenado e utilizado de acordo com as instruções. 
+Não se decompõe se armazenado e utilizado de acordo com as instruções. 
+ 
+7.3 Utilização(ões) final(is) 
+específica(s) 
+:  Utilizações pelos consumidores: Residências particulares (= público em geral 
+= consumidores)  
+Produtos de limpeza do ar 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+6/13 
+ 
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL 
+8.1 Parâmetros de controlo 
+Valores Limite de Exposição Ocupacional 
+Componentes No. CAS mg/m3 ppm Forma de 
+exposição 
+Lista 
+Benzyl Acetate 140-11-4    10 ppm  PT_OELTWAS 
+ 
+ 
+Consultar as actuais regras EN ou Nacionais como apropriado. 
+ 
+8.2 Controlo da exposição 
+Protecção respiratória : Não é normalmente necessário equipamento pessoal protector de respiração. 
+ 
+Protecção das mãos : Para um contacto prologado ou repetitivo pôr luvas de protecção. 
+Luvas de Nitrilo – Espessura 0.12mm; Tempo de ruptura >2 horas. 
+ 
+Protecção ocular/ facial : Nenhumas medidas especiais 
+ 
+Proteção do corpo e da pele : Nenhumas medidas especiais 
+ 
+Outras informações : Lavar as mãos antes dos intervalos e no final do dia de trabalho. 
+ 
+Controles de Exposição Ambiental : Ver secção 6. 
+ 
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS 
+9.1 Informações sobre propriedades físicas e químicas de base  
+Aspeto : gel 
+ 
+Cor : verde 
+ 
+Odor : floral 
+ 
+pH  : 8.5 
+10% solução 
+ 
+Ponto de fusão/ponto de 
+congelação 
+: 65 °C 
+ 
+Ponto de ebulição inicial e intervalo 
+de ebulição 
+ 
+: >= 100 °C 
+ 
+Ponto de inflamação : não inflamável 
+ 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+7/13 
+Inflamabilidade (sólido, gás)  : Não sustém a combustão. 
+ 
+Limites Inferior de inflamabilidade 
+ou explosividade 
+ 
+: Não medido uma vez que o ponto de inflamação é > 100 °C. 
+ 
+Limites superior de inflamabilidade 
+ou explosividade 
+: Não medido uma vez que o ponto de inflamação é > 100 °C. 
+ 
+ 
+Pressão de vapor : > 0.0000000 hPa 
+Não medido uma vez que o ponto de inflamação é > 100 °C. 
+ 
+Densidade de vapor : Não medido uma vez que o ponto de inflamação é > 100 °C. 
+ 
+Densidade relativa : 1 g/cm3 a 20 °Cestimado 
+ 
+ 
+Solubilidade(s) : parcialmente solúvel 
+ 
+Coeficiente de partição: n-
+octanol/água 
+: Não requerido uma vez que o produto é uma mistura. 
+ 
+Temperatura de auto-ignição  :  
+não auto-inflamável 
+ 
+Temperatura de decomposição  : Não medido uma vez que a mistura não é auto-reativa. 
+ 
+Viscosidade, cinemático : Não necessário, pois a mistura é um sólido. 
+ 
+Características da partícula : Não medido uma vez que o produto não gera poeira ou partículas. 
+ 
+9.2 Outras informações 
+ 
+Outras informações 
+: 
+: não requerido 
+ 
+ 
+SECÇÃO 10: ESTABILIDADE E REACTIVIDADE 
+ 
+10.1 Reatividade : Nenhuma reacção perigosa nas condições normais de utilização. 
+ 
+10.2 Estabilidade química : Estável sob as condições recomendadas de armazenamento. 
+ 
+10.3 Possibilidade de reações 
+perigosas 
+: Não conhecidos. 
+ 
+ 
+10.4 Condições a evitar : Temperaturas extremas e luz solar direta. 
+   
+10.5 Materiais incompatíveis : Não conhecidos. 
+ 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+8/13 
+10.6 Produtos de decomposição 
+perigosos 
+: Não se decompõe se armazenado e utilizado de acordo com as instruções. 
+ 
+ 
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA 
+11.1 Informações sobre classes de perigo definidas no Regulamento (CE) n.º 1272/2008 
+ 
+Toxicidade aguda por via oral 
+ 
+Nome Método Espécie Dose 
+Produto DL50 
+Calculado 
+ 
+ 
+  > 2,000 mg/kg  
+ 
+Toxicidade aguda por via inalatória 
+ 
+Nome Método Espécie Dose Duração da 
+exposição 
+Produto LC50 (vapor) 
+Calculado 
+ 
+ 
+ 
+> 20 mg/l    
+ 
+Toxicidade aguda por via cutânea 
+ 
+Nome Método Espécie Dose 
+Produto DL50 
+Calculado 
+ 
+ 
+ 
+> 2,000 mg/kg 
+ 
+ 
+Corrosão/irritação cutânea : Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+Lesões oculares graves/irritação ocular : Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+ 
+Sensibilização da pele : Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+Mutagenicidade em células 
+germinativas 
+: Com base nos dados disponíveis, os critérios de classificação não 
+são preenchidos. 
+ 
+Carcinogenicidade : Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+9/13 
+Efeitos tóxicos na reprodução : Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+Toxicidade para órgãos-alvo específicos 
+(STOT) - exposição única 
+: Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+Toxicidade para órgãos-alvo específicos 
+(STOT) - exposição repetida 
+: Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+Perigo de aspiração : Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos. 
+ 
+11.2 Informações sobre outros perigos 
+ 
+Propriedades de Disrupção Endócrina : A mistura não contém substâncias >0,1% incluídas na lista estabelecida 
+em conformidade com o artigo 59.º, n.º 1, por terem propriedades de 
+desregulação endócrina. 
+ 
+ 
+Outras informações : Nenhum identificado. 
+ 
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA 
+Produto : O produto mesmo ainda não foi testado. 
+12.1  Toxicidade 
+Toxicidade em peixes 
+ 
+Componentes Ponto final Espécie Valor Duração da 
+exposição 
+Hexyl cinnamal CL50  Ensaio por 
+escoamento     
+Directrizes do Teste 
+OECD 203 
+ 
+Pimephales promelas 
+(vairão gordo) 
+ 
+1.7 mg/l 
+ 
+96 h 
+ 
+ 
+    
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+CL50  Ensaio por 
+escoamento  Medido   
+ 
+ 
+Oncorhynchus mykiss 
+(truta arco-íris) 
+ 
+0.19 mg/l 
+ 
+96 h 
+ 
+ 
+    
+Benzyl Acetate CL50  Ensaio por 
+escoamento     
+ 
+ 
+Oryzias latipes 
+ 
+4 mg/l 
+ 
+96 h 
+ 
+ 
+NOEC  Ensaio por 
+escoamento     
+Oryzias latipes 0.92 mg/l 28 d 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+10/13 
+   
+ 
+Toxicidade para os invertebrados aquáticos 
+ 
+Componentes Ponto final Espécie Valor Duração da 
+exposição 
+Hexyl cinnamal CE50    Flow through       
+ 
+Daphnia magna 0.38 mg/l 
+ 
+48 h 
+ NOEC      Daphnia magna 0.063 mg/l  21 d 
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+CE50    Flow through    
+Medido   
+ 
+Daphnia magna 0.16 mg/l 
+ 
+48 h 
+ 
+    
+Benzyl Acetate CE50    Ensaio 
+semiestático       
+ 
+Daphnia magna 17 mg/l 
+ 
+48 h 
+ 
+    
+ 
+Toxicidade para as plantas aquáticas 
+ 
+Componentes Ponto final Espécie Valor Duração da 
+exposição 
+Hexyl cinnamal NOEC    Desmodesmus 
+subspicatus (alga 
+verde) 
+ 
+0.065 mg/l 
+ 
+72 h 
+ 
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+CE50r   Medido Scenedesmus 
+capricornutum (alga 
+em água-doce) 
+ 
+0.027 mg/l 
+ 
+72 h 
+ 
+Benzyl Acetate CE50  Ensaio 
+estático  
+Desmodesmus 
+subspicatus (alga 
+verde) 
+ 
+110 mg/l 
+ 
+72 h 
+ 
+ 
+12.2  Persistência e degradabilidade 
+Componente Biodegradabilidade Duração da 
+exposição 
+Sumário 
+Hexyl cinnamal 97 %.. 28 d 
+ 
+Rapidamente biodegradável. 
+ 
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+> 60 %.. 28 d 
+ 
+Não rapidamente biodegradável. 
+ 
+Benzyl Acetate 100 %.. 28 d 
+ 
+Rapidamente biodegradável. 
+ 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+11/13 
+ 
+12.3  Potencial de bioacumulação  
+ 
+Componente Factor de bioconcentração (BCF) Coeficiente de Partição n-Octanol/Água 
+(log) 
+Hexyl cinnamal 704.3 QSAR 4.9  Medido 
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+0.90  -0.32 - 0.7   
+Benzyl Acetate 8 Calculado 1.96   
+ 
+12.4  Mobilidade no solo  
+ 
+Componente Ponto final Valor 
+Hexyl cinnamal Koc 150000..Medido 
+ 
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+Dados não disponíveis  
+Benzyl Acetate Koc 250..estimado 
+ 
+ 
+12.5  Resultados da avaliação PBT e mPmB 
+ 
+Componente Resultados 
+Hexyl cinnamal Não preenche os critérios de PBT e mPmB 
+ 
+Methylchloroisothiazolinone & 
+Methylisothiazolinone (3:1) 
+Não preenche os critérios de PBT e mPmB 
+ 
+Benzyl Acetate Não preenche os critérios de PBT e mPmB 
+ 
+ 
+12.6 Propriedades de Disrupção 
+Endócrina 
+: A mistura não contém substâncias >0,1% incluídas na lista estabelecida em 
+conformidade com o artigo 59.º, n.º 1, por terem propriedades de 
+desregulação endócrina. 
+  
+12.7 Outros efeitos adversos : Não conhecidos. 
+ 
+ 
+ 
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO 
+13.1 Métodos de tratamento de resíduos 
+Produto : Não deitar os resíduos para o esgoto. 
+Não contaminar fontes, poços ou cursos de água com o 
+produto ou recipientes usados. 
+A eliminação deve ser feita de acordo com a legislação local 
+ou nacional. 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+12/13 
+Por favor colocar a embalagem nos pontos de reciclagem. 
+ 
+Embalagem : Não reutilizar os recipientes vazios. 
+ 
+ 
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE 
+ 
+Transporte rodoviário 
+Produto não perigoso segundo o regulamento de transporte. 
+ 
+Transporte marítimo 
+Produto não perigoso segundo o regulamento de transporte. 
+ 
+Transporte aéreo 
+Produto não perigoso segundo o regulamento de transporte. 
+ 
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO 
+ 
+15.1 Regulamentação/legislação 
+específica para a substância ou mistura 
+em matéria de saúde, segurança e 
+ambiente 
+: Esta Ficha de dados de segurança está em conformidade com os requisitos 
+de: 
+ 
+Regulamento(EC) N. 1907/2006 
+ 
+Regulamento (CE) N.º 1272/2008, relativo à classificação, rotulagem e 
+embalagem de substâncias e misturas, e suas alterações (não aplicável a 
+cosméticos). 
+ 
+ 
+Regulamento (UE) N.º 528/2012, relativo à disponibilização no mercado e à 
+utilização de produtos biocidas, e suas alterações. 
+ 
+Directiva 75/324/CEE, de 20 de Maio de 1975, relativa à aproximação das 
+legislações dos Estados-Membros respeitantes às embalagens aerossóis, e 
+suas alterações. 
+ 
+Regulamento (CE) n.º 1223/2009, relativo aos produtos cosméticos, e suas 
+alterações. 
+ 
+Os tensoactivos contidos nesta mistura cumprem o critério de 
+biodegrabilidade estabelecido no Regulamento (CE) n.° 648/2004, relativo 
+aos detergentes, e suas alterações. 
+ 
+Directiva 2001/95/CE, relativa à segurança geral dos produtos, e suas 
+alterações. 
+ 
+Acordo Europeu relativo ao Transporte Internacional de Mercadorias 
+Perigosas por Estrada (ADR). 
+FICHA DE DADOS DE SEGURANÇA  
+(Regulamento (UE) 2020/878 que altera o anexo II do regulamento 
+REACH.) 
+ 
+ 
+Glade Gel Absorveodores - Muguet  
+Versão  1.0 Data de impressão 04.09.2023  
+Data de revisão 25.06.2023   Especificação  Número: 350000043568 
+Nº de Formulação: 30000000000000031305.001 
+ 
+ 
+ 
+13/13 
+ 
+Diretiva 2012/18/UE, relativa ao controlo dos perigos associados a 
+acidentes graves que envolvem substâncias perigosas ( Seveso), e suas 
+alterações. 
+ 
+Regulamento (UE) 2019/1021 do Parlamento Europeu e do Conselho, de 20 
+de junho de 2019, relativo a poluentes orgânicos persistentes. 
+ 
+ 
+ 
+ 
+15.2 Avaliação da segurança química : Não é necessário para produtos de consumo. 
+ 
+SECÇÃO 16: OUTRAS INFORMAÇÕES 
+Se aplicável, a/as revisão/revisões estão assinaladas pelas barras a negro || na margem do lado esquerdo 
+Abreviaturas e acrónimos 
+CE - Comunidade Europeia 
+CEE - Comunidade Económica Europeia 
+CLP - Classificação, rotulagem e embalagem de substâncias e misturas 
+EN - Norma Europeia 
+PBT - Persistente, bioacumulável e tóxico 
+vPvP - muito Persistente e muito Bioacumulável 
+UN - Nações Unidas 
+ 
+Métodos de avaliação 
+Salvo disposição em contrário na Secção 11, o procedimento utilizado para derivar a classificação toxicológica da mistura é o 
+método relevante de acordo com o Regulamento CLP (CE) n.º 1272/2008 e suas alterações. 
+ 
+Salvo disposição em contrário na Secção 12, o procedimento utilizado para derivar a classificação ambiental da mistura baseia-
+se no método da soma das concentrações dos seus componentes classificados de acordo com o Regulamento CLP (CE) n.º 
+1272/2008 e suas alterações. 
+ 
+H400 Muito tóxico para os organismos aquáticos. 
+ 
+A informação fornecida nesta ficha de segurança é a mais correta disponível na data da sua publicação. A informação prestada 
+destina-se apenas a orientar o uso, manuseio, processamento, armazenamento, transporte e eliminação com segurança e não 
+deve ser considerada garantia ou especificação de qualidade. A informação refere-se apenas ao produto designado e, a menos 
+que tal seja especificado no texto, pode não ser válida se o mesmo produto for utilizado em qualquer combinação com outros 
+produtos ou processos.

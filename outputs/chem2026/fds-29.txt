@@ -1,0 +1,458 @@
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+ 
+Cumprir com os Regulamentos (CE) 1907/2006, (CE) 1272/2008, como emendado.
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa
+1.1. Identificador do produto
+Identificação do preparado:
+Nome comercial: SANITEC WC GEL GREENPOWER
+Código comercial: 1945
+1.2. Utilizações identificadas relevantes da substância ou mistura e utilizações
+desaconselhadas
+Uso recomendado:
+Detergente para sanitas
+1.3. Identificação do fornecedor da ficha de dados de segurança
+Fornecedor:
+ITALCHIMICA s.r.l. 
+Riviera Maestri del lavoro 10 35127 Padova Italy
+Phone +39 049 8792456
+ 
+ 
+ITALCHIMICA s.r.l. ||Riviera Maestri del lavoro 10 35127 Padova Italy ||Phone +39 049 8792456
+- www.italchimica.it||
+ 
+Pessoa responsável pela ficha de dados de segurança:
+regulatory@italchimica.it
+1.4. Número de telefone de emergência
+ 
+CIAV:  +351 800 250 250
+ 
+SECÇÃO 2: Identificação dos perigos
+2.1. Classificação da substância ou mistura
+Critérios Regulamento CE 1272/2008 (CLP):
+O produto não é considerado perigoso de acordo com o Regulamento CE 1272/2008 (CLP).
+Efeitos físico-químicos nocivos à saúde humana e ao ambiente: 
+Nenhum outro risco
+2.2. Elementos do rótulo
+O produto não é considerado perigoso de acordo com o Regulamento CE 1272/2008 (CLP).
+Pictogramas de perigo:
+Nenhum
+Advertências de perigo:
+Nenhum
+Recomendações de prudência:
+P101 Se for necessário consultar um médico, mostre-lhe a embalagem ou o rótulo.
+P102 Manter fora do alcance das crianças.
+P103 Ler atentamente e seguir todas as instruções.
+Disposições especiais:
+Nenhum
+Disposições especiais de acordo com o Anexo XVII do REACH e sucessivas alterações:
+Nenhum
+ 
+2.3. Outros perigos
+Nenhuma substância PBT, mPmB ou desreguladora do sistema endócrino presente numa
+concentração >= 0,1%.
+Outros riscos:
+Nenhum outro risco
+ 
+Conteúdo do produto: 
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 1  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+Tensoactivos não-iónicos < 5 %
+Contem também: Perfumes
+ 
+SECÇÃO 3: Composição/informação sobre os componentes
+3.1. Substâncias
+N.A.
+3.2. Misturas
+Componentes perigosos, em conformidade com o Regulamento CLP e relativa classificação:
+ 
+Q.de Nome Número de identificação
+>= 5% - 
+< 7.5%
+Ácido cítrico Numero 
+Index:
+607-750-00-3 3.3/2 Eye Irrit. 2 H319
+CAS: 77-92-9
+3.8/3 STOT SE 3 H335
+EC: 201-069-1
+REACH No.: 01-
+2119457026
+-42-xxxx
+ 
+ 
+SECÇÃO 4: Medidas de primeiros socorros
+4.1. Descrição das medidas de emergência
+Em caso de contacto com a pele:
+Lavar abundantemente com água e sabão.
+Em caso de contacto com os olhos:
+Em caso de contacto com os olhos, lavar imediata e abundantemente com água e consultar um
+especialista.
+Em caso de ingestão:
+Não provocar absolutamente o vómito. CONSULTAR IMEDIATAMENTE UM MÉDICO.
+Em caso de inalação:
+Levar o acidentado ao ar livre e mantê-lo em local aquecido e em repouso.
+4.2. Sintomas e efeitos mais importantes, tanto agudos como retardados
+Nenhum
+4.3. Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários
+Tratamento: 
+Nenhum
+ 
+SECÇÃO 5: Medidas de combate a incêndios
+5.1. Meios de extinção
+Meios de extinção idóneos:
+Água.
+Dióxido de carbono (CO2).
+Meios de extinção que não devem ser utilizados por razões de segurança:
+Nenhum em particular.
+5.2. Perigos especiais decorrentes da substância ou mistura
+Não inalar os gases produzidos pela explosão e combustão.
+A combustão produz fumo pesado.
+5.3. Recomendações para o pessoal de combate a incêndios
+Empregar aparelhagens de respiração adequadas.
+Recolher separadamente a água contaminada utilizada para extinguir o incêndio. Não
+descarregar na rede de esgotos.
+Se factível quanto à segurança, remover da área de imediato perigo os recipientes não
+danificados.
+ 
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 2  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+SECÇÃO 6: Medidas em caso de fuga acidental
+6.1. Precauções individuais, equipamento de proteção e procedimentos de emergência
+Usar os dispositivos de protecção individual.
+Colocar as pessoas em local seguro.
+Consultar as medidas de protecção expostas no ponto 7 e 8.
+6.2. Precauções a nível ambiental
+Impedir a penetração no solo/subsolo. Impedir o defluxo nas águas superficiais ou na rede de
+esgotos.
+Reter a água de lavagem contaminada e eliminá-la.
+Em caso de fuga de gás ou penetração em cursos de água, solo ou sistema de esgoto, informe
+as autoridades responsáveis.
+Material idóneo à colecta: material absorvente, orgânico, areia
+6.3. Métodos e materiais de confinamento e limpeza
+Lavar com água em abundância.
+6.4. Remissão para outras secções
+Ver também os parágrafos 8 e 13
+ 
+SECÇÃO 7: Manuseamento e armazenagem
+7.1. Precauções para um manuseamento seguro
+Evite o contacto com a pele e os olhos, a inalação de vapores e névoas.
+Envia-se ao parágrafo 8 para os dispositivos de protecção recomendados.
+ 
+Durante o trabalho não comer bem beber.
+7.2. Condições de armazenagem segura, incluindo eventuais incompatibilidades
+Manter longe de comidas, bebidas e rações.
+Matérias incompatíveis:
+Nenhuma em particular.
+Indicação para os ambientes:
+Ambientes adequadamente arejados.
+7.3. Utilização(ões) final(is) específica(s)
+Nenhum uso especial
+ 
+SECÇÃO 8: Controlo da exposição/Proteção individual
+8.1. Parâmetros de controlo
+Ácido cítrico - CAS: 77-92-9
+ 11 - TWA: 10 mg/m3
+Valores limite de exposição DNEL
+N.A.
+Valores limite de exposição PNEC
+Ácido cítrico - CAS: 77-92-9
+Alvo: Água doce - Valor: 0.44 N.A.
+Alvo: Água do mar - Valor: 0.04 N.A.
+Alvo: Sedimentos de água doce - Valor: 34.6 mg/kg
+Alvo: Sedimentos de água do mar - Valor: 3.46 mg/kg
+Alvo: Solo (agricultura) - Valor: 33.1 mg/kg
+8.2. Controlo da exposição
+Protecção dos olhos:
+ 
+Protecção da pele:
+ 
+Protecção das Mãos:
+ 
+Protecção respiratória:
+ 
+Riscos térmicos:
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 3  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+Nenhum
+Controles da exposição ambiental:
+Nenhum
+Controlos de engenharia adequados:
+Nenhum
+ 
+ 
+SECÇÃO 9: Propriedades físico-químicas
+9.1. Informações sobre propriedades físicas e químicas de base
+Propriedade Valor Método: Notas
+Estado físico: Líquido -- --
+Cor: verde -- --
+Cheiro: Característica Olfativo --
+Ponto de fusão/ponto de 
+congelação:
+Não Relevante -- --
+Ponto de ebulição ou 
+ponto de ebulição inicial e 
+intervalo de ebulição:
+Não Relevante -- --
+Inflamabilidade: N.A. -- --
+Limite superior e inferior 
+de explosividade:
+Não Relevante -- --
+Ponto de combustão: N.A. --
+Temperatura de auto-
+acendimento:
+Não Relevante -- Parâmetro Não Relevante Para 
+O Tipo De Produto.
+Temperatura de 
+decomposição:
+Não Relevante -- Parâmetro Não Relevante Para 
+O Tipo De Produto.
+pH: 2,20 Controle 
+Instrumental
+--
+Viscosidade cinemática: N.A. -- --
+Hidrosolubilidade: solúvel Test Interni --
+Solubilidade em óleo: Não Relevante -- --
+Coeficiente de partição n-
+octanol/água (valor 
+logarítmico):
+Não Relevante -- --
+Pressão do vapor: Não Relevante -- Parâmetro Não Relevante Para 
+O Tipo De Produto.
+Densidade e/ou 
+densidade relativa:
+1.0300 g/mL 
++/-0,01 gr/ml
+-- --
+Densidade relativa do Não Relevante -- --
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 4  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+vapor:
+Características das partículas:
+Dimensão das partículas: N.A. -- --
+ 
+9.2. Outras informações
+Propriedade Valor Método: Notas
+Viscosidade: 1100 cPs Controle 
+Instrumental
+--
+ 
+ 
+SECÇÃO 10: Estabilidade e reatividade
+10.1. Reatividade
+Estável em condições normais
+10.2. Estabilidade química
+Estável em condições normais
+10.3. Possibilidade de reações perigosas
+Nenhum
+10.4. Condições a evitar
+Estável em condições normais.
+10.5. Materiais incompatíveis
+Nenhuma em particular.
+10.6. Produtos de decomposição perigosos
+Nenhum.
+ 
+SECÇÃO 11: Informação toxicológica
+11.1. Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.°
+1272/2008
+Informação toxicológica do produto:
+N.A.
+Informação toxicológica das substâncias principais encontrada no produto:
+Ácido cítrico - CAS: 77-92-9
+a) Toxicidade aguda:
+Teste: LD50 - Via: Oral - Espécies: Rato = 5400 mg/kg
+Teste: LD50 - Via: Oral - Espécies: Ratazana = 11700 mg/kg
+Teste: LD50 - Via: Pele - Espécies: Ratazana > 2000 mg/kg
+ 
+Se não houver especificação diferente, os dados solicitados pelo Regulamento (UE)2020/878
+indicados abaixo devem ser considerados N.A.:
+a) Toxicidade aguda;
+b) Corrosão/irritação cutânea;
+c) Lesões oculares graves/irritação ocular;
+d) Sensibilização respiratória ou cutânea;
+e) Mutagenicidade em células germinativas;
+f) Carcinogenicidade;
+g) Toxicidade reprodutiva;
+h) Toxicidade para órgãos-alvo específicos (STOT) – exposição única;
+i) Toxicidade para órgãos-alvo específicos (STOT) – exposição repetida;
+j) Perigo de aspiração.
+11.2. Informações sobre outros perigos
+Propriedades desreguladoras do sistema endócrino:
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 5  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+Nenhuma substância desreguladora do sistema endócrino presente numa concentração >=
+0,1%
+ 
+SECÇÃO 12: Informação ecológica
+12.1. Toxicidade
+Utilizar segundo os bons usos profissionais, evitando de dispersar o produto no ambiente.
+N.A.
+12.2. Persistência e degradabilidade
+N.A.
+12.3. Potencial de bioacumulação
+N.A.
+12.4. Mobilidade no solo
+N.A.
+12.5. Resultados da avaliação PBT e mPmB
+Substâncias vPvB: Nenhum - Substâncias PBT: Nenhum
+12.6. Propriedades desreguladoras do sistema endócrino
+Nenhuma substância desreguladora do sistema endócrino presente numa concentração >=
+0,1%
+12.7. Outros efeitos adversos
+Nenhum
+ 
+SECÇÃO 13: Considerações relativas à eliminação
+13.1. Métodos de tratamento de resíduos
+Recuperar se possível. Actuar segundo a legislação em vigor
+ 
+SECÇÃO 14: Informações relativas ao transporte
+ 
+ 
+ 
+ 
+14.1. Número ONU ou número de ID
+Produto não perigoso segundo o regulamento de transporte.
+14.2. Designação oficial de transporte da ONU
+N.A.
+14.3. Classe(s) de perigo para efeitos de transporte 
+N.A.
+14.4. Grupo de embalagem
+N.A.
+14.5. Perigos para o ambiente
+ADR-Poluente ambiental: Não
+IMDG-Marine pollutant: No
+14.6. Precauções especiais para o utilizador
+N.A.
+14.7. Transporte marítimo a granel em conformidade com os instrumentos da OMI
+N.A.
+ 
+SECÇÃO 15: Informação sobre regulamentação
+15.1. Regulamentação/legislação específica para a substância ou mistura em matéria de saúde,
+segurança e ambiente
+Dir. 98/24/CE (Riscos relativos a agentes químicos no trabalho)
+Dir. 2000/39/CE (Valores limites de exposição no trabalho)
+Regulamento (CE) n. 1907/2006 (REACH)
+Regulamento (CE) n. 1272/2008 (CLP)
+Regulamento (CE) n. 790/2009 (ATP 1 CLP) e (EU) n. 758/2013
+Regulamento (EU) n. 2020/878
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 6  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+Regulamento (EU) n. 286/2011 (ATP 2 CLP)
+Regulamento (EU) n. 618/2012 (ATP 3 CLP)
+Regulamento (EU) n. 487/2013 (ATP 4 CLP)
+Regulamento (EU) n. 944/2013 (ATP 5 CLP)
+Regulamento (EU) n. 605/2014 (ATP 6 CLP)
+Regulamento (EU) n. 2015/1221 (ATP 7 CLP)
+Regulamento (EU) n. 2016/918 (ATP 8 CLP)
+Regulamento (EU) n. 2016/1179 (ATP 9 CLP)
+Regulamento (EU) n. 2017/776 (ATP 10 CLP)
+Regulamento (EU) n. 2018/669 (ATP 11 CLP)
+Regulamento (EU) n. 2018/1480 (ATP 13 CLP)
+Regulamento (EU) n. 2019/521 (ATP 12 CLP)
+Regulamento (EU) n. 2020/217 (ATP 14 CLP)
+Regulamento (EU) n. 2020/1182 (ATP 15 CLP)
+Regulamento (EU) n. 2021/643 (ATP 16 CLP)
+Limitações respeitantes ao produto ou às substâncias contidas, de acordo com o Anexo XVII do
+Regulamento (CE) 1907/2006 (REACH) e sucessivas modificações:
+Limitações respeitantes ao produto:
+Nenhuma limitação.
+Limitações respeitantes às substâncias contidas:
+Restrição 40
+Restrição 75
+Pronto all'Uso
+Compostos Orgânicos Voláteis - COV = 1.80 %
+Compostos Orgânicos Voláteis - COV = 18.00 g/Kg
+Substâncias CMR voláteis = 0.00 %
+COV halógenados aos quais seja atribuída a frase de risco R40 = 0.00 %
+Carbono orgânico - C = 0.79
+Onde aplicável, reportar-se às seguintes disposições regulamentares:
+Diretiva 2012/18/UE (Seveso III)
+Regulamento (CE) n.° 648/2004 (detergentes).
+Dir. 2004/42/CE (compostos orgânicos voláteis)
+ 
+Provisões relacionadas com a Diretiva da UE 2012/18 (Seveso III):
+Categoria Seveso III de acordo com o Anexo 1, parte 1
+NA
+ 
+15.2. Avaliação da segurança química
+Não foi realizada nenhuma Avaliação da Segurança Química para a mistura
+ 
+SECÇÃO 16: Outras informações
+Texto das frases mencionadas no parágrafo 3:
+H319 Provoca irritação ocular grave.
+H335 Pode provocar irritação das vias respiratórias.
+ 
+Classe de perigo e 
+categoria de perigo
+Código Descrição
+Eye Irrit. 2 3.3/2 Irritação ocular, Categoria 2
+STOT SE 3 3.8/3 Toxicidade para órgãos-alvo específicos — 
+exposição única, Categoria 3
+ 
+Parágrafos modificados desde da revisão anterior: 
+ 
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 7  de 8   
+Ficha de Segurança
+SANITEC WC GEL GREENPOWER
+SECÇÃO 9: Propriedades físico-químicas 
+SECÇÃO 15: Informação sobre regulamentação 
+ 
+ 
+Este documento foi preparado por pessoa com formação apropriada
+Principais fontes bibliográficas:
+ECDIN - Rede de Informação e Dados de Produtos Químicos Ambientais - Centro de Pesquisa
+Unido, Comissão das Comunidades Europeias
+SAX's DANGEROUS PROPERTIES OF INDUSTRIAL MATERIALS (PROPRIEDADES
+PERIGOSAS DE MATERIAIS INDUSTRIAIS da SAX) - Oitava Edição - Van Nostrand Reinold
+As informações aqui contidas baseiam-se nos nossos conhecimentos na data acima indicada.
+Referem-se exclusivamente ao produto indicado e não constituem garantia particular de qualidade.
+O utilizador é obrigado a assegurar-se que esta informação é apropriada e completa com respeito ao
+uso específico a que se destina.
+Esta ficha anula e substitui todas as edições precedentes.
+ 
+ADR: Acordo Europeu sobre Transporte Rodoviário Internacional de 
+Mercadorias Perigosas
+ATE: Estimativa de Toxicidade Aguda
+ATEmix: Estimativa da toxicidade aguda (Misturas)
+CAS: Chemical Abstracts Service (sector da Sociedade Americana de 
+Química).
+CLP: Classificação, rotulagem, embalagem.
+DNEL: Nível derivado de exposição sem efeito
+EINECS: Inventário Europeu de Substâncias Químicas Existentes em Comércio
+GefStoffVO: Normativa sobre Substâncias Perigosas, Alemanha
+GHS: Sistema globalmente harmonizado de Classificação e Rotulagem de 
+produtos químicos
+IATA: Associação Internacional Transporte Aéreo
+IATA-DGR: Regulamentação Mercadorias Perigosas conforme a Associação 
+Internacional Transporte Aéreo (IATA)
+ICAO: Organização Internacional Aviação Civil
+ICAO-TI: Instruções técnicas conforme a "Organização Internacional Aviação 
+Civil" (ICAO).
+IMDG: Código marítimo internacional para mercadorias perigosas.
+INCI: Nomenclatura Internacional de Ingredientes Cosméticos.
+KSt: Coeficiente de explosão
+LC50: Concentração letal para 50% da população de teste
+LD50: Dose letal para 50% da população de teste.
+PNEC: Concentração previsivelmente sem efeitos
+RID: Regulamentação relativa ao Transporte Ferroviário Internacional de 
+Mercadorias Perigosas.
+STEL: Limite de exposição a curto prazo
+STOT: Toxicidade para órgão alvo específico
+TLV: Valor limite de limiar
+TWA: Média ponderada no tempo
+WGK: Classe de perigo aquático - Alemanha
+ 
+Ficha de Segurança de 22/10/2025, revisão 5
+Pagina n. 8  de 8   

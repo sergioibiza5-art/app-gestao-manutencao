@@ -1,0 +1,743 @@
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Ficha de dados de segurança
+de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa
+1.1 Identificador do produto
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas
+Utilizações identificadas relevantes da substância ou mistura:
+Material lubrificante
+Utilizações desaconselhadas:
+De momento não existem informações sobre esta matéria.
+1.3 Identificação do fornecedor da ficha de dados de segurança
+WD-40 Company Limited
+PO Box 440
+GB-Kiln Farm, Milton Keynes, MK11 3LF
+Tel.: +44 (0) 1908 555400
+Fax: +44 (0) 1908 266900
+E-Mail: Compliance@wd40.co.uk
+Homepage: www.wd40.co.uk
+WD-40 Company Ltd. Portugal
+Edifício Pujol, Avenida do Forte, Nº8 Fração P1
+PT- 2790-072 Carnaxide
+Tel.: +351 215 812 168
+Fax: +351 210 976 973
+E-Mail: wd40@wd40.pt
+Endereço de e-mail da pessoa  competente:  info@chemical-check.de,  k.schnurbusch@chemical-check.de  -  por favor NÃO usar 
+para pedir fichas técnicas de segurança.
+1.4 Número de telefone de emergência
+Serviços de informação de emergência / organismo consultivo oficial:
+Em caso de acidente ou doença súbita ligue 112
+CIAV - Centro de Informação Antivenenos do INEM (Instituto Nacional de Emergência Médica), Rua Almirante Barroso 36, 1000-
+013 Lisboa, Telefone URGÊNCIA (24h): Em caso de intoxicação ligue 800 250 250
+Número de telefone de emergência da empresa:
++351 308 801 773
+SECÇÃO 2: Identificação dos perigos
+2.1 Classificação da substância ou mistura
+Classificação conforme Regulamentação (CE) 1272/2008 (CLP)
+A mistura não está classificada como perigosa na acepção do Regulamentação (CE) 1272/2008 (CLP).
+2.2 Elementos do rótulo
+Rotulagem conforme Regulamentação (CE) 1272/2008 (CLP)
+Página  1 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+EUH210-Ficha de segurança fornecida a pedido.
+2.3 Outros perigos
+A mistura não contém nenhuma substância mPmB (mPmB = muito persistente, muito bioacumulável) ou não está incluída no 
+Anexo XIII do Regulamento (CE) 1907/2006 (< 0,1 %).
+A mistura não contém nenhuma substância PBT (PBT = persistente, bioacumulável, tóxica) ou não está incluída no Anexo XIII do 
+Regulamento (CE) 1907/2006 (< 0,1 %).
+A mistura não contém substâncias com propriedades desreguladoras do sistema endócrino  (< 0,1 %).
+SECÇÃO 3: Composição/informação sobre os componentes
+3.1 Substâncias
+n.a.
+3.2 Misturas
+Ácido fosforoditióico, ésteres mistos O,O-bis(2-etilhexílicos e 
+isobutílicos e isopropílicos), sais de zinco
+Número de registo (REACH) 01-2119521201-61-XXXX
+Index ---
+EINECS, ELINCS, NLP, REACH-IT List-No. 288-917-4
+CAS 85940-28-9
+% zona 1-5 
+Classificação conforme Regulamentação (CE) 1272/2008 (CLP), 
+fatores M
+Skin Irrit. 2, H315
+Eye Irrit. 2, H319
+Aquatic Chronic 2, H411
+Para texto das frases H e abreviatura de classificação (GHS/CLP), ver SECÇÃO 16.
+As substâncias mencionadas nesta secção estão indicadas com a sua respectiva e efectiva classificação!
+No caso das substâncias enumeradas no Anexo VI, Tabela 3.1 do Regulamento (CE) n.º 1272/2008 (Regulamento CLP), tal 
+significa que todas as eventuais notas aí presentes foram consideradas para a classificação aqui indicada.
+SECÇÃO 4: Medidas de primeiros socorros
+4.1 Descrição das medidas de emergência
+Os socorristas devem proteger-se a si próprios!
+Nunca colocar nada na boca de uma pessoa inconsciente!
+Inalação
+Remover as pessoas da área de perigo.
+Colocar a vítima com ar fresco e, segundo os sintomas, consultar o médico.
+Contato com a pele
+Lavar abundantemente com água e sabão, se necessário, consultar um médico.
+Remover as peças de vestuário sujas e molhadas.
+Contato com os olhos
+Remover as lentes de contato.
+Lavar bem com água durante vários minutos, se necessário, consultar um médico.
+Ingestão
+Lavar bem a boca com água.
+Dar muita água a beber, se necessário, consultar um médico.
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados
+Se relevante, os sintomas e os efeitos retardados encontram-se na secção 11. ou nas vias de absorção na secção 4.1.
+Em determinados casos, pode suceder que os sintomas de intoxicação só surjam após um período mais prolongado de tempo/após 
+várias horas.
+Pode ocorrer:
+Irritação das vias respiratórias
+Distúrbios gastrointestinais
+Desidratação da pele.
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários
+Tratamento sintomático.
+Página  2 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+SECÇÃO 5: Medidas de combate a incêndios
+5.1 Meios de extinção
+Meios de extinção adequados
+Não inflamável.
+Adequar a incêndio na proximidade envolvente.
+Meios de extinção inadequados
+n.t.
+5.2 Perigos especiais decorrentes da substância ou mistura
+Em caso de incêndio podem se formar:
+Fumo
+Óxidos de carbono
+Gases tóxicos
+5.3 Recomendações para o pessoal de combate a incêndios
+Equipamento de proteção pessoal ver secção 8.
+Em caso de incêndio e/ou explosão não respirar os fumos.
+Aparelho de proteção respiratória independente do ar ambiental.
+De acordo com as proporções do incêndio
+Se necessário, proteção completa.
+Arrefecer recipientes em perigo com água.
+Eliminar águas de extinção contaminadas de acordo com as prescrições oficiais.
+SECÇÃO 6: Medidas em caso de fuga acidental
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência
+6.1.1 Para o pessoal não envolvido na resposta à emergência
+Em caso de derrame ou libertação inadvertida, utilizar equipamento de proteção pessoal indicado na secção 8 para evitar 
+contaminações.
+Providenciar ventilação suficiente, remover fontes de ignição.
+No caso de produtos sólidos ou em pó, evitar formação de poeiras.
+Se possível, evacuar a área de perigo e utilizar eventuais planos de emergência disponíveis.
+Garantir uma ventilação suficiente.
+Evitar o contato com os olhos e a pele.
+6.1.2 Para o pessoal responsável pela resposta à emergência
+Utilizar equipamento de proteção adequado, consultar os dados do material na secção 8.
+6.2 Precauções a nível ambiental
+Travar fuga de quantidades maiores.
+Eliminar fuga, se puder ser realizado sem perigo.
+Não deitar os resíduos no esgoto.
+Evitar a penetração nas águas pluviais e subterrâneas, bem como no solo.
+6.3 Métodos e materiais de confinamento e limpeza
+Recolher com material absorvente de líquidos (por ex. areia, terra) e eliminar conforme a secção 13.
+Lavar quantidade residual com muita água.
+6.4 Remissão para outras secções
+Ver a secção 13, assim para como equipamento de proteção pessoal ver secção 8
+SECÇÃO 7: Manuseamento e armazenagem
+Para além das informações apresentadas nesta secção, a secção 8 e 6.1 também contém informações relevantes.
+7.1 Precauções para um manuseamento seguro
+7.1.1 Recomendações gerais
+Garantir uma boa ventilação do espaço.
+Evitar o contato com os olhos e a pele.
+Manter afastadas as fontes de ignição - Não fumar.
+Considerar as indicações na etiqueta, assim como as instruções de utilização.
+7.1.2 Indicações relativas a medidas de higiene gerais no local de trabalho
+No manuseio de produtos químicos devem ser aplicadas as medidas gerais de higiene.
+Antes de pausas e ao terminar o trabalho, lavar as mãos.
+Manter afastado de alimentos e bebidas, incluindo os dos animais.
+Antes de entrar em áreas onde se ingere alimentos, tirar vestuário e equipamentos de proteção contaminados.
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades
+Página  3 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Não armazenar o produto em locais de passagem ou escadas.
+Apenas armazenar o produto em embalagens originais e fechadas.
+Armazenar num local bem ventilado.
+Apenas armazenar a temperaturas de 1°C até 40°C.
+7.3 Utilização(ões) final(is) específica(s)
+De momento não existem informações sobre esta matéria.
+SECÇÃO 8: Controlo da exposição/Proteção individual
+8.1 Parâmetros de controlo
+Denominação química Nevoeiro de óleo mineral % zona:
+TLV-TWA:    5 mg/m3 I (Óleo mineral, excluindo 
+fluidos de transfomação de metais, ACGIH)
+TLV-STEL:    --- TLV-C:  ---
+Os processos de monitorização: - Draeger - Oil Mist 1/a (67 33 031)
+BEI:    --- Outras informações:    ---
+Ácido fosforoditióico, ésteres mistos O,O-bis(2-etilhexílicos e isobutílicos e isopropílicos), sais de zinco
+Âmbito de aplicação Via de exposição / 
+elemento do ambiente
+Impacto na saúde Descritor Valor Unidade Observaç
+ão
+ Ambiente – água doce  PNEC 0,002 mg/l
+ Ambiente – água do mar  PNEC 0 mg/l
+ Ambiente – água, 
+libertação esporádica 
+(intermitente)
+ PNEC 0,02 mg/l
+ Ambiente – sedimento, 
+água do mar
+ PNEC 1,93 mg/kg dry 
+weight
+ Ambiente – solo  PNEC 15,7 mg/kg dry 
+weight
+ Ambiente – estação de 
+tratamento de águas 
+residuais
+ PNEC 100 mg/l
+ Ambiente – sedimento, 
+água doce
+ PNEC 19,3 mg/kg dw
+Consumidor Homem – oral A longo prazo, 
+efeitos sistémicos
+DNEL 0,19 mg/kg 
+bw/day
+Consumidor Homem – dérmica A longo prazo, 
+efeitos sistémicos
+DNEL 4,8 mg/kg 
+bw/day
+Consumidor Homem – inalação A longo prazo, 
+efeitos sistémicos
+DNEL 1,67 mg/m3
+Operário / Trabalhador 
+assalariado
+Homem – dérmica A longo prazo, 
+efeitos sistémicos
+DNEL 9,6 mg/kg 
+bw/day
+Operário / Trabalhador 
+assalariado
+Homem – inalação A longo prazo, 
+efeitos sistémicos
+DNEL 6,6 mg/m3
+Carbonato de cálcio
+Âmbito de aplicação Via de exposição / 
+elemento do ambiente
+Impacto na saúde Descritor Valor Unidade Observaç
+ão
+ Ambiente – estação de 
+tratamento de águas 
+residuais
+ PNEC 100 mg/l
+Consumidor Homem – oral A longo prazo, 
+efeitos sistémicos
+DNEL 6,1 mg/kg 
+bw/day
+Consumidor Homem – inalação A longo prazo, 
+efeitos sistémicos
+DNEL 10 mg/m3
+Consumidor Homem – inalação A longo prazo, 
+efeitos locais
+DNEL 1,06 mg/m3
+Consumidor Homem – oral A curto prazo, 
+efeitos sistémicos
+DNEL 6,1 mg/kg 
+bw/day
+Operário / Trabalhador 
+assalariado
+Homem – inalação A longo prazo, 
+efeitos locais
+DNEL 4,26 mg/m3
+Operário / Trabalhador 
+assalariado
+Homem – inalação A longo prazo, 
+efeitos sistémicos
+DNEL 10 mg/m3
+Página  4 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+       TLV-TWA = Valor limite - 8-hs valor médio, I = fração inalável, R = fração respirável, V = vapor e aerosol, IFV = fração inalável e 
+vapor, F = fibras respiráveis (comprimento = >5µm, relação comprimento-largura >= 3:1), T =  fração torácica (ACGIH, Estados-
+Unidos).
+(8) = Fração inalável (Diretiva 2017/164/EU, Diretiva 2004/37/CE). (9) = Fração respirável (Diretiva 2017/164/EU, Diretiva 
+2004/37/CE). (11) =Fração inalável (Diretiva 2004/37/CE). (12) =Fração inalável. Fração respirável nos Estados-Membros que 
+apliquem, à data de entrada em vigor da presente diretiva, um sistema de biomonitorização com um valor-limite biológico que não 
+exceda 0,002 mg de creatinina na urina (Diretiva 2004/37/CE), | TLV-STEL = Valor limite - Curtos períodos de exposição (15 min.) 
+(ACGIH, Estados-Unidos).
+(8) = Fração inalável (2017/164/EU, 2017/2398/EU). (9) = Fração respirável (2017/164/EU, 2017/2398/EU). (10) = Valor-limite de 
+exposição de curta duração em relação a um período de referência de 1 minuto (2017/164/EU). | TLV-C = Valor limite - limite 
+superior ("Ceiling") (ACGIH, Estados-Unidos). | BEI = Índice de exposição biológica. Material de exame: B = Sangue, Hb = 
+Hemoglobina, E = Eritrócitos (glóbulos vermelhos), P = Plasma, S = Soro, U = Urina, EA = ar expirado final. Momento de coleta de 
+material: a = nenhuma restrição / não crítico, b = no final da turno de trabalho, c = Depois de uma semana de trabalho, d = No final 
+de um turno de uma semana de trabalho, e = Antes do último turno de uma semana de trabalho, f = Durante o turno de trabalho, g = 
+Antes da turno de trabalho. (ACGIH, Estados-Unidos) | Outras informações: Categ. p/ poten. cancerígeno - A1 / A2 = Confirm./ 
+Susp. Canceríg. humano, A3 = Canceríg. animal confirm. c/ relevância desconh. p/ os humanos, A4 / A5 = Não classif./ Não é susp. 
+de ser canceríg. p/ o Homem. SEN = Sensibilização, DSEN = Sensibilização cutânea, RSEN = Sensibilização respiratória. Skin = 
+perigo de absorção cutânea, OTO = agente químico ototóxico (NP 1796  /  ACGIH, Estados-Unidos).
+(13) = A substância pode causar sensibilização da pele e das vias respiratórias (Diretiva 2004/37/CE), (14) = A substância pode 
+causar sensibilização da pele (Diretiva 2004/37/CE).
+8.2 Controlo da exposição
+8.2.1 Controlos técnicos adequados
+Assegurar uma boa ventilação. Isso pode conseguir-se quer através de aspiração local, quer de exaustão geral.
+Se estas medidas não forem suficientes para manter a concentração abaixo dos valores limite no local de trabalho (TLV), deve-se 
+utilizar uma proteção respiratória adequada.
+Apenas se aplicam os valores limite de exposição aqui listados.
+Em sistemas fechados não é necessário, uma vez que normalmente aqui não ocorre qualquer exposição.
+Métodos de avaliação adequados para verificação da eficácia das medidas de proteção tomadas abrangem métodos de 
+determinação técnicos de medição e não técnicos de medição.
+Esses são descritos por, por ex. a EN 14042.
+EN 14042 "Atmosfera no local de trabalho. Orientações para a aplicação e utilização de processos e equipamentos para 
+determinação de agentes químicos e biológicos no trabalho".
+8.2.2 Medidas de proteção individual, nomeadamente equipamentos de proteção individual
+As medidas gerais de higiene devem ser aplicadas para o manuseamento de produtos químicos.
+Antes das pausas e no final do trabalho, lavar as mãos.
+Manter afastado de alimentos, bebidas e rações para animais.
+Antes de entrar em áreas onde se ingere alimentos, tirar o vestuário e os equipamentos de proteção contaminados.
+Proteção ocular/facial:
+Óculos de proteção vedados com placas laterais (EN 166).
+Proteção da pele - Proteção das mãos:
+Em caso de contato mais prolongado:
+Luvas de proteção resistentes a produtos químicos (EN ISO 374).
+Luvas de proteção de PVC (EN ISO 374)
+Espessura mínima das camadas em mm:
+>= 0,5
+Tempo de permeação (durabilidade) em minutos:
+>= 480
+As durabilidades determinadas de acordo com EN 16523-1 não foram obtidas em condições práticas.
+O tempo de desgaste máximo recomendado corresponde a 50% da durabilidade.
+Valor recomendado do creme de proteção das mãos.
+Proteção da pele - Outra:
+Vestuário de proteção de trabalho (por ex., botas de proteção EN ISO 20345, vestuário de trabalho de mangas compridas).
+Proteção respiratória:
+Se for ultrapassado o valor limite do local de trabalho (AGW, Alemanha) ou MAK (Suíça, Áustria).
+Filtros A P2 (EN 14387), cor de identificação castanho, branco
+Atente nos limites de tempo de utilização dos aparelhos de proteção respiratória.
+Perigos térmicos:
+Não se aplica
+Página  5 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Informações adicionais sobre a proteção das mãos - Não foram efetuados quaisquer ensaios.
+A seleção das misturas foi efetuada de acordo com os nossos conhecimentos e as informações relativamente às substâncias.
+A seleção dos materiais derivou das informações do fabricante das luvas.
+A seleção final do material das luvas deve ser efetuada considerando a durabilidade, a permeabilidade e a degradação.
+A seleção de luvas adequadas não depende apenas do material, mas também de outras características qualitativas e varia de 
+fabricante para fabricante.
+No caso das misturas, a resistência do material das luvas não é previsível e deve, por isso, ser verificada antes da aplicação.
+A durabilidade exata do material das luvas pode ser informada pelo fabricante das luvas de proteção e deve ser cumprida.
+8.2.3 Controlo da exposição ambiental
+De momento, não existe qualquer informação relativamente a isso.
+SECÇÃO 9: Propriedades físico-químicas
+9.1 Informações sobre propriedades físicas e químicas de base
+Estado físico: Pasta, Sólido
+Cor: Castanho claro
+Odor: Inodoro
+Ponto de fusão/ponto de congelação: >185 °C
+Ponto de ebulição ou ponto de ebulição inicial e intervalo de 
+ebulição: Não existem informações relativas a este parâmetro.
+Inflamabilidade: Inflamável
+Limite inferior de explosividade: Não se aplica aos sólidos.
+Limite superior de explosividade: Não se aplica aos sólidos.
+Ponto de inflamação: >200 °C (Pensky-Martens, closed cup)
+Temperatura de autoignição: Não se aplica aos sólidos.
+Temperatura de decomposição: Não existem informações relativas a este parâmetro.
+pH: A mistura não é solúvel (em água).
+Viscosidade cinemática: Não se aplica aos sólidos.
+Solubilidade: Insolúvel
+Coeficiente de partição n-octanol/água (valor logarítmico): Não se aplica às misturas.
+Pressão de vapor: Não existem informações relativas a este parâmetro.
+Densidade e/ou densidade relativa: Não existem informações relativas a este parâmetro.
+Densidade relativa do vapor: Não se aplica aos sólidos.
+9.2 Outras informações
+Explosivos: Produto não explosivo.
+Sólidos comburentes: Não
+Densidade aparente: n.a.
+SECÇÃO 10: Estabilidade e reatividade
+10.1 Reatividade
+O produto não foi verificado.
+10.2 Estabilidade química
+Estável em caso de armazenamento e manuseamento correctos.
+10.3 Possibilidade de reações perigosas
+Não são conhecidas reações perigosas.
+10.4 Condições a evitar
+Ver também SECÇÃO 7.
+Aquecimento, chamas abertas, fontes de ignição
+10.5 Materiais incompatíveis
+Ver também SECÇÃO 7.
+Evitar contato com agentes oxidantes fortes.
+10.6 Produtos de decomposição perigosos
+Ver também SECÇÃO 5.2.
+Sem decomposição em caso de utilização correta.
+SECÇÃO 11: Informação toxicológica
+11.1. Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.° 
+1272/2008
+Para eventualmente mais informações relativamente a efeitos na saúde ver secção 2.1 (classificação).
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Página  6 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Toxicidade aguda, oral: n.e.d.
+Toxicidade aguda, por via 
+dérmica:
+n.e.d.
+Toxicidade aguda, por 
+inalação:
+n.e.d.
+Corrosão/irritação cutânea: n.e.d.
+Lesões oculares 
+graves/irritação ocular:
+n.e.d.
+Sensibilização respiratória 
+ou cutânea:
+n.e.d.
+Mutagenicidade em células 
+germinativas:
+n.e.d.
+Carcinogenicidade: n.e.d.
+Toxicidade reprodutiva: n.e.d.
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+única (STOT-SE):
+n.e.d.
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+repetida (STOT-RE):
+n.e.d.
+Perigo de aspiração: n.e.d.
+Sintomas: n.e.d.
+Ácido fosforoditióico, ésteres mistos O,O-bis(2-etilhexílicos e isobutílicos e isopropílicos), sais de zinco
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Toxicidade aguda, oral: LD50 3000 mg/kg     Ratazana
+Toxicidade aguda, por via 
+dérmica:
+LD50 >2000 mg/kg     Coelho OECD 402 (Acute 
+Dermal Toxicity)
+Corrosão/irritação cutânea:           Coelho Skin Irrit. 2
+Lesões oculares 
+graves/irritação ocular:
+          Coelho Eye Irrit. 2
+11.2. Informações sobre outros perigos
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Propriedades 
+desreguladoras do sistema 
+endócrino:
+Não se aplica 
+às misturas.
+Outras informações: Não existem 
+informações 
+especiais 
+pertinentes 
+relativas a 
+efeitos nocivos 
+para a saúde.
+SECÇÃO 12: Informação ecológica
+Para eventualmente mais informações relativamente a efeitos no ambiente ver secção 2.1 (classificação).
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+Toxicidade / efeito Fim Tempo Valor Unidade Organismo Método de 
+ensaio
+Observação
+12.1. Toxicidade para 
+peixes:
+n.e.d.
+12.1. Toxicidade para 
+dáfnias:
+n.e.d.
+12.1. Toxicidade para 
+algas:
+n.e.d.
+12.2. Persistência e 
+degradabilidade:
+n.e.d.
+12.3. Potencial de 
+bioacumulação:
+n.e.d.
+12.4. Mobilidade no 
+solo:
+n.e.d.
+Página  7 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+12.5. Resultados da 
+avaliação PBT e 
+mPmB:
+n.e.d.
+12.6. Propriedades 
+desreguladoras do 
+sistema endócrino:
+Não se aplica 
+às misturas.
+12.7. Outros efeitos 
+adversos:
+Não existem 
+informações 
+relativas a 
+outros efeitos 
+nocivos para o 
+meio ambiente.
+Ácido fosforoditióico, ésteres mistos O,O-bis(2-etilhexílicos e isobutílicos e isopropílicos), sais de zinco
+Toxicidade / efeito Fim Tempo Valor Unidade Organismo Método de 
+ensaio
+Observação
+12.2. Persistência e 
+degradabilidade:
+ 28d 1,5 % OECD 301 B 
+(Ready 
+Biodegradability -
+Co2 Evolution 
+Test)
+Não facilmente 
+biodegradável
+12.1. Toxicidade para 
+peixes:
+NOEC/NOEL 96h 1,8 mg/l Oncorhynchus 
+mykiss
+OECD 203 
+(Fish, Acute 
+Toxicity Test)
+Comprovado 
+por analogia
+12.1. Toxicidade para 
+peixes:
+LC50 96h 4,5 mg/l Oncorhynchus 
+mykiss
+OECD 203 
+(Fish, Acute 
+Toxicity Test)
+Comprovado 
+por analogia
+12.1. Toxicidade para 
+dáfnias:
+EC50 48h 5,4 mg/l Daphnia magna OECD 202 
+(Daphnia sp. 
+Acute 
+Immobilisation 
+Test)
+Comprovado 
+por analogia
+12.1. Toxicidade para 
+dáfnias:
+NOEC/NOEL 48h <1 mg/l Daphnia magna OECD 202 
+(Daphnia sp. 
+Acute 
+Immobilisation 
+Test)
+Comprovado 
+por analogia
+12.1. Toxicidade para 
+algas:
+LC50 96h 2,1 mg/l Selenastrum 
+capricornutum
+OECD 201 
+(Alga, Growth 
+Inhibition Test)
+Comprovado 
+por analogia
+SECÇÃO 13: Considerações relativas à eliminação
+13.1 Métodos de tratamento de resíduos
+Para a substância / mistura / quantidades residuais
+N.º do código de resíduos CE:
+Os códigos de resíduos indicados são recomendações baseadas na utilização provável deste produto.
+Devido à utilização e às condições de eliminação específicas do utilizador também podem ser atribuídos
+outros códigos de resíduos em determinadas circunstâncias. (2014/955/UE)
+07 06 99 resíduos sem outras especificações
+Recomendação:
+Deve desaconselhar-se a descarga através das águas residuais.
+Considerar as prescrições locais e oficiais.
+Para as embalagens contaminadas
+Considerar as prescrições locais e oficiais.
+Esvaziar completamente o recipiente.
+As embalagens que não podem ser limpas devem ser eliminadas como o material.
+Embalagens não contaminadas podem ser reutilizadas.
+SECÇÃO 14: Informações relativas ao transporte
+Informações gerais
+14.1. Número ONU ou número de ID: n.a.
+Transporte por estrada / transporte ferroviário (ADR/RID)
+Página  8 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+14.2. Designação oficial de transporte da ONU:
+14.3. Classes de perigo para efeitos de transporte: n.a.
+14.4. Grupo de embalagem: n.a.
+Código de classificação: n.a.
+Número de identificação de perigo: n.a.
+LQ: n.a.
+14.5. Perigos para o ambiente: Não se aplica
+Tunnel restriction code:
+Transporte por via marítima (Código IMDG)
+14.2. Designação oficial de transporte da ONU:
+14.3. Classes de perigo para efeitos de transporte: n.a.
+14.4. Grupo de embalagem: n.a.
+Poluente marinho (Marine Pollutant): n.a.
+14.5. Perigos para o ambiente: Não se aplica
+Transporte por via aérea (IATA)
+14.2. Designação oficial de transporte da ONU:
+14.3. Classes de perigo para efeitos de transporte: n.a.
+14.4. Grupo de embalagem: n.a.
+14.5. Perigos para o ambiente: Não se aplica
+14.6. Precauções especiais para o utilizador
+Excepto determinado em contrário, têm de ser respeitadas as medidas gerais para a realização de um transporte seguro.
+14.7. Transporte marítimo a granel em conformidade com os instrumentos da OMI
+Mercadoria não perigosa conforme as diretivas acima mencionadas.
+SECÇÃO 15: Informação sobre regulamentação
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, 
+segurança e ambiente
+Considerar as restrições:
+No manuseio de produtos químicos devem ser aplicadas as medidas gerais de higiene.
+Directiva 2010/75/UE (COV): 0 %
+15.2 Avaliação da segurança química
+Uma avaliação de segurança química não está prevista para misturas.
+SECÇÃO 16: Outras informações
+EUF0016
+Secções revistas: 1-16
+Classificação e procedimentos utilizados para a dedução da classificação da mistura de acordo 
+com o Regulamento (CE) 1272/2008 (CLP):
+Não aplicável
+As frases seguintes representam as frases H reproduzidas, os códigos das classes e categorias de perigo (GHS/CLP) do produto e 
+das substâncias (indicados nas secções 2 e 3).
+H315 Provoca irritação cutânea.
+H319 Provoca irritação ocular grave.
+H411 Tóxico para os organismos aquáticos com efeitos duradouros.
+Skin Irrit. — Irritação cutânea
+Eye Irrit. — Irritação ocular
+Aquatic Chronic — Perigoso para o ambiente aquático - Crónico
+Referências bibliográficas importantes e fontes 
+dos dados utilizados:
+Regulamento (CE) n.º 1907/2006 (REACH) e Regulamento (CE) n.º 1272/2008 (CLP) na respetiva versão em vigor.
+Orientações sobre a compilação de fichas de dados de segurança na versão em vigor (ECHA).
+Orientações sobre rotulagem e embalagem em conformidade com o Regulamento (CE) n.º 1272/2008 (CLP) na versão em vigor 
+(ECHA).
+Fichas de dados de segurança dos componentes.
+Página  9 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+ECHA-homepage - Informação sobre produtos químicos.
+Base de dados de substâncias GESTIS (Alemanha).
+Agência Federal do Ambiente "Rigoletto" Página de informação sobre poluentes da água (Alemanha).
+Valores-limite de exposição profissional da UE Diretivas 91/322/CEE, 2000/39/CE, 2006/15/CE, 2009/161/UE, (UE) 2017/164, (UE) 
+2019/1831 na respetiva versão em vigor.
+Listas de limites nacionais de exposição profissional dos respetivos países na respetiva versão em vigor.
+Normas para o transporte de mercadorias perigosas por estrada, caminho-de-ferro, mar e ar (ADR, RID, IMDG, IATA) na respetiva 
+versão em vigor.
+Abreviações e acrónimos eventualmente utilizados neste documento:
+ADR Accord européen relatif au transport international des marchandises Dangereuses par Route
+AOX Adsorbable organic halogen compounds (= Comp ostos orgânicos de halogéneo possíveis de adsorção)
+aprox. aproximadamente
+ASTM ASTM International (American Society for Testing and Materials)
+ATE Acute Toxicity Estimate (= ETA - Estimativa da toxicidade aguda)
+BAM Bundesanstalt für Materialforschung und -prüfung (Insti tuto para Pesquisa e Controle de Materiais, Alemanha)
+BAuA Bundesanstalt für Arbeitsschutz und Arbeitsmedizin (Alemanha)
+BSEF The International Bromine Council
+bw body weight (= peso corporal)
+CAS Chemical Abstracts Service
+CE Comunidade Europeia
+CEE Comunidade Económica Europeia
+CLP Classification, Labelling and Packaging (REGULAMENTO (CE)  N.o 1272/2008 relativo à classificação, rotulagem e 
+embalagem de substâncias e misturas)
+CMR carcinogenic, mutagenic, reproductive toxic (canc erígena, mutagénica e tóxica para a reprodução)
+Código IMDG International Maritime Code for Dangerous Goods (IMDG-code)
+conf., seg. conforme, segundo
+DMEL Derived Minimum Effect Level
+DNEL Derived No Effect Level (= o nível derivado de exposição sem efeitos)
+dw dry weight (= massa seca)
+ECHA European Chemicals Agency (= Agênc ia Europeia dos Produtos Químicos)
+EINECS European Inventory of Existing  Commercial Chemical Substances
+ELINCS European List of Notified Chemical Substances
+EN Padrões europeus
+EPA United States Environmental Protecti on Agency (United States of America)
+etc. et cetera
+EVAL Copolímero de álcool etileno-vinílico
+Fax. Número de fax
+GHS Globally Harmonized System of Classification and Labelling of  Chemicals (= Sistema Mundial Harmonizado de Classificação 
+e Rotulagem de Produtos Químicos)
+GWP Global warming potential (= Potenc. de  contribuição para o aquecimento global)
+IARC International Agency for Research on Cancer (=  Agência Internacional de Pesquisa em Câncer)
+IATA International Air Transport Association (= Associação Internacional de Transportes Aéreos)
+IBC (Code) International Bulk Chemical (Code)
+incl. inclusivo, incluindo
+IUCLIDInternational Uniform Chemical Information Database
+IUPAC International Union for Pure Applied Chemistry (= União Internacional de Química Pura e Aplicada)
+LC50 Lethal Concentration to 50 % of a test population (= CL50 - Concentração letal para 50 % de uma população de teste)
+LD50 Lethal Dose to 50% of a test population (Median Lethal Dose) (= DL50 - Dose letal para 50 % de uma população de teste 
+(dose letal mediana))
+LQ Limited Quantities
+mPmB (vPvB) muito persistente, muito bioacumulável (=  vPvB = very persistent and very bioaccumulative)
+n.a. não se aplica
+n.d. não disponível
+n.e.d. não existem dados
+n.t. não testado
+Obs. Observação
+OECD Organisation for Economic Co-operation and Development
+org. orgânico
+p.ex., por ex. por exemplo
+PBT persistent, bioaccumulativ e and toxic (= persistentes, bioacumulativos, tóxico)
+PE Polietileno
+PNEC Predicted No Effect Concentration (= a concentração previsivelmente sem efeitos)
+PVC Policloreto de vinila
+Página  10 de 11
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II
+Revisto em / versão: 01.11.2021  / 0004   
+Versão substituída por / versão: 28.09.2016  / 0003  
+Válida a partir de: 01.11.2021  
+Data de impressão do PDF: 01.11.2021
+3-EN-UNO®Profesional Massa de Lítio Multiusos
+REACH Registration, Evaluation, Authorisation and Restriction of Chemicals (REGULAMENTO (CE) N.o 1907/2006 relativo 
+ao registo, avaliação, autorização e restrição dos produtos químicos)
+REACH-IT List-No. 9xx-xxx-x No. is automat ically assigned, e.g. to pre-registrations without a CAS No. or other numerical 
+identifier. List Numbers do not have any legal significance, rather they are purely technical identifiers for processing a submission via 
+REACH-IT.
+RID Règlement concernant le transport Intern ational ferroviaire de marchandises Dangereuses
+SVHC Substances of Very High Concern
+Tel. Telefone
+UE União Europeia
+UN RTDG United Nations Recommendations on the Transport of  Dangerous Goods (as Recomendações da ONU relativas ao 
+Transporte de Mercadorias Perigosas)
+VOC Volatile organic compounds (= compostos orgânicos voláteis (COV))
+wwt wet weight
+Estas informações devem descrever o produto relativamente às precauções de segurança necessárias,
+que não garantem determinadas propriedades e se baseiam no estado atual dos nossos conhecimentos.
+Exclui-se qualquer responsabilidade.
+Elaborado por:
+Chemical Check GmbH, Chemical Check Platz 1-7, D-32839 Steinheim, Tel.: +49 5233 94 17 0, Fax: 
++49 5233 94 17 90
+© by Chemical Check GmbH Gefahrstoffberatung. A alteração ou reprodução deste documento
+apenas é permitida mediante a autorização expressa da Chemical Check GmbH Gefahrstoffberatung.
+Página  11 de 11

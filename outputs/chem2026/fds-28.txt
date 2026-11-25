@@ -1,0 +1,602 @@
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+Cumprir com os Regulamentos (CE) 1907/2006, (CE) 1272/2008, como emendado.
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa
+1.1. Identificador do produto
+Identificação do preparado:
+Nome comercial: SANITEC BLU POWER WC GEL
+Código comercial: 1946
+1.2. Utilizações identificadas relevantes da substância ou mistura e utilizações
+desaconselhadas
+Uso recomendado:
+Detergente desincrustante gel para sanitas
+1.3. Identificação do fornecedor da ficha de dados de segurança
+Fornecedor:
+ITALCHIMICA s.r.l. 
+Riviera Maestri del lavoro 10 35127 Padova Italy
+Phone +39 049 8792456
+ 
+ 
+ITALCHIMICA s.r.l. ||Riviera Maestri del lavoro 10 35127 Padova Italy ||Phone +39 049 8792456
+- www.italchimica.it||
+ 
+Pessoa responsável pela ficha de dados de segurança:
+regulatory@italchimica.it
+1.4. Número de telefone de emergência
+ 
+CIAV:  +351 800 250 250
+ 
+SECÇÃO 2: Identificação dos perigos
+2.1. Classificação da substância ou mistura
+Critérios Regulamento CE 1272/2008 (CLP):
+ Perigo, Skin Corr. 1A, Provoca queimaduras na pele e lesões oculares graves.
+ Perigo, Eye Dam. 1, Provoca lesões oculares graves.
+Efeitos físico-químicos nocivos à saúde humana e ao ambiente: 
+Nenhum outro risco
+2.2. Elementos do rótulo
+Pictogramas de perigo:
+ 
+Perigo
+Advertências de perigo:
+H314 Provoca queimaduras na pele e lesões oculares graves.
+Recomendações de prudência:
+P101 Se for necessário consultar um médico, mostre-lhe a embalagem ou o rótulo.
+P102 Manter fora do alcance das crianças.
+P280 Use luvas de proteção e proteja os olhos/o rosto.
+P301+P330+P331 EM CASO DE INGESTÃO: Enxaguar a boca. NÃO provocar o vómito.
+P303+P361+P353 SE ENTRAR EM CONTACTO COM A PELE (ou o cabelo): Retirar
+imediatamente toda a roupa contaminada. Enxaguar a pele com água [ou tomar um duche].
+P305+P351+P338 SE ENTRAR EM CONTACTO COM OS OLHOS: Enxaguar cuidadosamente
+com água durante vários minutos. Se usar lentes de contacto, retire-as, se tal lhe for possível.
+Continue a enxaguar.
+Disposições especiais:
+Nenhum
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 1  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+Contém
+Álcoois, C12-13- ramificados elineares, etoxilatos
+3-methyl-5-phenylpent-2-enenitrile: Pode provocar uma reacção alérgica.
+Disposições especiais de acordo com o Anexo XVII do REACH e sucessivas alterações:
+Nenhum
+ 
+2.3. Outros perigos
+Nenhuma substância PBT, mPmB ou desreguladora do sistema endócrino presente numa
+concentração >= 0,1%.
+Outros riscos:
+Nenhum outro risco
+ 
+Conteúdo do produto: 
+Tensoactivos não-iónicos < 5 %
+Contem também: Perfumes
+ 
+SECÇÃO 3: Composição/informação sobre os componentes
+3.1. Substâncias
+N.A.
+3.2. Misturas
+Componentes perigosos, em conformidade com o Regulamento CLP e relativa classificação:
+ 
+Q.de Nome Número de identificação
+>= 15% -
+< 17.5%
+Ácido cítrico Numero 
+Index:
+607-750-00-3 3.3/2 Eye Irrit. 2 H319
+CAS: 77-92-9
+3.8/3 STOT SE 3 H335
+EC: 201-069-1
+REACH No.: 01-
+2119457026
+-42-xxxx
+< 2.5% Álcoois, C12-13- 
+ramificados elineares, 
+etoxilatos
+CAS: 160901-19-9 3.1/4/Oral Acute Tox. 4 H302
+EC: 931-954-4 4.1/C3 Aquatic Chronic 3 H412
+3.3/1 Eye Dam. 1 H318
+Limites de concentração 
+específicos (SCL):
+C >= 10%: Eye Dam. 1 H318
+1% <= C < 10%: Eye Irrit. 2 H319
+< 2.5% Diphenyl ether CAS: 101-84-8 3.3/2 Eye Irrit. 2 H319
+EC: 202-981-2 4.1/A1 Aquatic Acute 1 H400
+REACH No.: 01-
+2119472545
+-33-XXXX
+4.1/C3 Aquatic Chronic 3 H412
+< 2.5% 3-methyl-5-phenylpent-
+2-enenitrile
+CAS: 53243-60-0 3.1/4/Oral Acute Tox. 4 H302
+EC: 258-447-4 3.4.2/1A Skin Sens. 1A H317
+4.1/C3 Aquatic Chronic 3 H412
+ 
+ 
+SECÇÃO 4: Medidas de primeiros socorros
+4.1. Descrição das medidas de emergência
+Em caso de contacto com a pele:
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 2  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+Despir imediatamente as roupas contaminadas.
+CONSULTAR IMEDIATAMENTE UM MÉDICO.
+Retirar imediatamente os indumentos contaminados e eliminá-los de forma segura.
+Em caso de contacto com a pele, lavar imediatamente com água abundante e sabão.
+Em caso de contacto com os olhos:
+Em caso de contacto com os olhos, enxaguá-los com água por um intervalo de tempo
+adequado e mantendo abertas as pálpebras e consultar imediatamente um oftalmologista.
+Proteger o olho ileso.
+Em caso de ingestão:
+NÃO provocar vómito.
+Em caso de inalação:
+Levar o acidentado ao ar livre e mantê-lo em local aquecido e em repouso.
+4.2. Sintomas e efeitos mais importantes, tanto agudos como retardados
+Nenhum
+4.3. Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários
+Em caso de incidente ou mal-estar, consulte imediatamente um médico (se possível, mostre as
+instruções de uso ou a ficha de segurança).
+Tratamento: 
+Nenhum
+ 
+SECÇÃO 5: Medidas de combate a incêndios
+5.1. Meios de extinção
+Meios de extinção idóneos:
+Água.
+Dióxido de carbono (CO2).
+Meios de extinção que não devem ser utilizados por razões de segurança:
+Nenhum em particular.
+5.2. Perigos especiais decorrentes da substância ou mistura
+Não inalar os gases produzidos pela explosão e combustão.
+A combustão produz fumo pesado.
+5.3. Recomendações para o pessoal de combate a incêndios
+Empregar aparelhagens de respiração adequadas.
+Recolher separadamente a água contaminada utilizada para extinguir o incêndio. Não
+descarregar na rede de esgotos.
+Se factível quanto à segurança, remover da área de imediato perigo os recipientes não
+danificados.
+ 
+SECÇÃO 6: Medidas em caso de fuga acidental
+6.1. Precauções individuais, equipamento de proteção e procedimentos de emergência
+Usar os dispositivos de protecção individual.
+Colocar as pessoas em local seguro.
+Consultar as medidas de protecção expostas no ponto 7 e 8.
+6.2. Precauções a nível ambiental
+Impedir a penetração no solo/subsolo. Impedir o defluxo nas águas superficiais ou na rede de
+esgotos.
+Reter a água de lavagem contaminada e eliminá-la.
+Em caso de fuga de gás ou penetração em cursos de água, solo ou sistema de esgoto, informe
+as autoridades responsáveis.
+Material idóneo à colecta: material absorvente, orgânico, areia
+6.3. Métodos e materiais de confinamento e limpeza
+Lavar com água em abundância.
+6.4. Remissão para outras secções
+Ver também os parágrafos 8 e 13
+ 
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 3  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+SECÇÃO 7: Manuseamento e armazenagem
+7.1. Precauções para um manuseamento seguro
+Evite o contacto com a pele e os olhos, a inalação de vapores e névoas.
+Não utilizar recipientes vazios antes que tenham sido limpos.
+Antes das operações de transferência, assegure-se de que nos recipientes não haja materiais
+residuais incompatíveis.
+Envia-se ao parágrafo 8 para os dispositivos de protecção recomendados.
+ 
+Os indumentos contaminados devem ser substituídos antes de entrar nas áreas de refeição.
+Durante o trabalho não comer bem beber.
+7.2. Condições de armazenagem segura, incluindo eventuais incompatibilidades
+Manter longe de comidas, bebidas e rações.
+Matérias incompatíveis:
+Nenhuma em particular.
+Indicação para os ambientes:
+Ambientes adequadamente arejados.
+7.3. Utilização(ões) final(is) específica(s)
+Nenhum uso especial
+ 
+SECÇÃO 8: Controlo da exposição/Proteção individual
+8.1. Parâmetros de controlo
+Ácido cítrico - CAS: 77-92-9
+ 11 - TWA: 10 mg/m3
+Diphenyl ether - CAS: 101-84-8
+ UE - TWA(8h): 7 mg/m3, 1 ppm - STEL: 14 mg/m3, 2 ppm
+ ACGIH - TWA(8h): 1 ppm - STEL: 2 ppm - Notas: (V) - URT and eye irr, nausea
+Valores limite de exposição DNEL
+N.A.
+Valores limite de exposição PNEC
+Ácido cítrico - CAS: 77-92-9
+Alvo: Água doce - Valor: 0.44 N.A.
+Alvo: Água do mar - Valor: 0.04 N.A.
+Alvo: Sedimentos de água doce - Valor: 34.6 mg/kg
+Alvo: Sedimentos de água do mar - Valor: 3.46 mg/kg
+Alvo: Solo (agricultura) - Valor: 33.1 mg/kg
+8.2. Controlo da exposição
+Protecção dos olhos:
+Use viseiras de segurança fechadas de acordo com a EN 166, não use lentes de olho.
+Protecção da pele:
+Utilizar indumentos que garantam uma protecção total para a pele, por exemplo: de algodão,
+borracha, PVC ou Viton.
+Protecção das Mãos:
+Use luvas de proteção em conformidade com a norma UNI EN 374-3 de classe 3 ou superior
+(por exemplo, PVC, neoprene ou borracha). A adequação e a estabilidade de uma luva
+dependem do uso; por exemplo, a duração, a freqüência de contato e a resistência química dos
+materiais, então a escolha final deve considerar as condições específicas de uso.
+Protecção respiratória:
+Não necessária no caso de normal utilização.
+Riscos térmicos:
+Nenhum
+Controles da exposição ambiental:
+Nenhum
+Controlos de engenharia adequados:
+Nenhum
+ 
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 4  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+ 
+SECÇÃO 9: Propriedades físico-químicas
+9.1. Informações sobre propriedades físicas e químicas de base
+Propriedade Valor Método: Notas
+Estado físico: Líquido -- --
+Cor: azul -- --
+Cheiro: Característica Olfativo --
+Ponto de fusão/ponto de 
+congelação:
+Não Relevante -- --
+Ponto de ebulição ou 
+ponto de ebulição inicial e 
+intervalo de ebulição:
+Não Relevante -- --
+Inflamabilidade: não 
+inflamável
+-- --
+Limite superior e inferior 
+de explosividade:
+Não Relevante -- --
+Ponto de combustão: N.A. --
+Temperatura de auto-
+acendimento:
+Não Relevante -- Parâmetro Não Relevante Para 
+O Tipo De Produto.
+Temperatura de 
+decomposição:
+Não Relevante -- Parâmetro Não Relevante Para 
+O Tipo De Produto.
+pH: 1.20 Controle 
+Instrumental
+--
+Viscosidade cinemática: N.A. -- --
+Hidrosolubilidade: Test Interni --
+Solubilidade em óleo: Não Relevante -- --
+Coeficiente de partição n-
+octanol/água (valor 
+logarítmico):
+Não Relevante -- --
+Pressão do vapor: Não Relevante -- Parâmetro Não Relevante Para 
+O Tipo De Produto.
+Densidade e/ou 
+densidade relativa:
+1.07 g/mL +/-
+0,01 gr/ml
+-- --
+Densidade relativa do 
+vapor:
+Não Relevante -- --
+Características das partículas:
+Dimensão das partículas: N.A. -- --
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 5  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+ 
+9.2. Outras informações
+Propriedade Valor Método: Notas
+Viscosidade: 500 cPs Controle 
+Instrumental
+--
+ 
+ 
+SECÇÃO 10: Estabilidade e reatividade
+10.1. Reatividade
+Estável em condições normais
+10.2. Estabilidade química
+Estável em condições normais
+10.3. Possibilidade de reações perigosas
+Nenhum
+10.4. Condições a evitar
+Estável em condições normais.
+10.5. Materiais incompatíveis
+Nenhuma em particular.
+10.6. Produtos de decomposição perigosos
+Nenhum.
+ 
+SECÇÃO 11: Informação toxicológica
+11.1. Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.°
+1272/2008
+Informação toxicológica do produto:
+N.A.
+Informação toxicológica das substâncias principais encontrada no produto:
+Ácido cítrico - CAS: 77-92-9
+a) Toxicidade aguda:
+Teste: LD50 - Via: Oral - Espécies: Rato = 5400 mg/kg
+Teste: LD50 - Via: Oral - Espécies: Ratazana = 11700 mg/kg
+Teste: LD50 - Via: Pele - Espécies: Ratazana > 2000 mg/kg
+Álcoois, C12-13- ramificados elineares, etoxilatos - CAS: 160901-19-9
+a) Toxicidade aguda:
+Teste: LD50 - Via: Oral - Espécies: Ratazana > 300 mg/kg - Notas: Nocivo Se Ingerito
+Teste: LD50 - Via: Pele - Espécies: Coelho > 2000 mg/kg
+b) Corrosão/irritação cutânea:
+Teste: Irritante para a pele - Via: Pele - Espécies: Coelho Não
+c) Lesões oculares graves/irritação ocular:
+Teste: Irritante para os olhos - Via: Pele - Espécies: Coelho Sim - Notas: Può provocare
+danni irreversibili gravi
+d) Sensibilização respiratória ou cutânea:
+Teste: Sensibilização da pele - Via: Pele - Espécies: POR Não
+e) Mutagenicidade em células germinativas:
+Teste: Genotoxidade Não
+f) Carcinogenicidade:
+Teste: Carcinogeneticidade Não
+g) Toxicidade reprodutiva:
+Teste: Toxicidade para a reprodução - Espécies: Ratazana Não
+i) Toxicidade para órgãos-alvo específicos (STOT) – exposição repetida:
+Teste: STOT Não
+Teste: STOT Não
+Dinâmicas de geração de veneno, informações sobre metabolismo e degradação:
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 6  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+Teste: TER - Espécies: Ratazana Não
+Diphenyl ether - CAS: 101-84-8
+a) Toxicidade aguda:
+Teste: LD50 - Via: Oral - Espécies: Ratazana = 2830 mg/kg
+Teste: LD50 - Via: Pele - Espécies: Coelho > 7940 mg/kg
+ 
+Se não houver especificação diferente, os dados solicitados pelo Regulamento (UE)2020/878
+indicados abaixo devem ser considerados N.A.:
+a) Toxicidade aguda;
+b) Corrosão/irritação cutânea;
+c) Lesões oculares graves/irritação ocular;
+d) Sensibilização respiratória ou cutânea;
+e) Mutagenicidade em células germinativas;
+f) Carcinogenicidade;
+g) Toxicidade reprodutiva;
+h) Toxicidade para órgãos-alvo específicos (STOT) – exposição única;
+i) Toxicidade para órgãos-alvo específicos (STOT) – exposição repetida;
+j) Perigo de aspiração.
+11.2. Informações sobre outros perigos
+Propriedades desreguladoras do sistema endócrino:
+Nenhuma substância desreguladora do sistema endócrino presente numa concentração >=
+0,1%
+ 
+SECÇÃO 12: Informação ecológica
+12.1. Toxicidade
+Utilizar segundo os bons usos profissionais, evitando de dispersar o produto no ambiente.
+Álcoois, C12-13- ramificados elineares, etoxilatos - CAS: 160901-19-9
+a) Toxicidade aquática aguda:
+Resultado: LC50 - Espécies: Peixes > 1-10 mg/l - Duração / h: 96 - Notas: OECD TG 203
+Resultado: EC50 - Espécies: Daphnia > 1-10 mg/l - Duração / h: 48 - Notas: OECD TG
+202
+Resultado: EC50 - Espécies: Algas > 1-10 mg/l - Duração / h: 72 - Notas: OECD TG 201
+c) Toxicidade bacteriana:
+Resultado: EC50 - Espécies: BAT = 140 mg/l
+d) Toxicidade terrestre:
+Resultado: NOEC = 10 mg/kg - Notas: OECD TG 208
+12.2. Persistência e degradabilidade
+N.A.
+12.3. Potencial de bioacumulação
+N.A.
+12.4. Mobilidade no solo
+N.A.
+12.5. Resultados da avaliação PBT e mPmB
+Substâncias vPvB: Nenhum - Substâncias PBT: Nenhum
+12.6. Propriedades desreguladoras do sistema endócrino
+Nenhuma substância desreguladora do sistema endócrino presente numa concentração >=
+0,1%
+12.7. Outros efeitos adversos
+Nenhum
+ 
+SECÇÃO 13: Considerações relativas à eliminação
+13.1. Métodos de tratamento de resíduos
+Recuperar se for possível. Enviar para instalações de eliminação autorizadas ou para
+incineradoras em condições controladas. Actuar em conformidade com as vigentes disposições
+locais e nacionais.
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 7  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+ 
+SECÇÃO 14: Informações relativas ao transporte
+ 
+ 
+ 
+14.1. Número ONU ou número de ID
+ADR-UN Number: 3265
+IATA-UN Number: 3265
+IMDG-UN Number: 3265
+14.2. Designação oficial de transporte da ONU
+ADR-Shipping Name: LÍQUIDO ORGÂNICO CORROSIVO, ÁCIDO, N.S.A.
+IATA-Shipping Name: LÍQUIDO ORGÂNICO CORROSIVO, ÁCIDO, N.S.A.
+IMDG-Shipping Name: LÍQUIDO ORGÂNICO CORROSIVO, ÁCIDO, N.S.A.
+14.3. Classe(s) de perigo para efeitos de transporte 
+ADR-Class: 8
+ADR - Número de identificação do perigo: 80
+IATA-Class: 8
+IATA-Label: 8
+IMDG-Class: 8
+14.4. Grupo de embalagem
+ADR-Packing Group: III
+IATA-Packing group: III
+IMDG-Packing group: III
+14.5. Perigos para o ambiente
+ADR-Poluente ambiental: Não
+IMDG-Marine pollutant: No
+IMDG-EmS: F-A,
+S-B
+14.6. Precauções especiais para o utilizador
+ADR-Subsidiary hazards: -
+ADR-S.P.: 274
+ADR-Categoria de transporte (Código de restrição em túneis): 3 (E)
+IATA-Passenger Aircraft: 852
+IATA-Subsidiary hazards: -
+IATA-Cargo Aircraft: 856
+IATA-S.P.: A3 A803
+IATA-ERG: 8L
+IMDG-Subsidiary hazards: -
+IMDG-Stowage and handling: Category A SW2
+IMDG-Segregation: SGG1 SG36 SG49
+14.7. Transporte marítimo a granel em conformidade com os instrumentos da OMI
+N.A.
+ 
+O produto é transportado em condições que atendem aos critérios de isenção para o transporte ADR
+ 
+SECÇÃO 15: Informação sobre regulamentação
+15.1. Regulamentação/legislação específica para a substância ou mistura em matéria de saúde,
+segurança e ambiente
+Dir. 98/24/CE (Riscos relativos a agentes químicos no trabalho)
+Dir. 2000/39/CE (Valores limites de exposição no trabalho)
+Regulamento (CE) n. 1907/2006 (REACH)
+Regulamento (CE) n. 1272/2008 (CLP)
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 8  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+Regulamento (CE) n. 790/2009 (ATP 1 CLP) e (EU) n. 758/2013
+Regulamento (EU) n. 2020/878
+Regulamento (EU) n. 286/2011 (ATP 2 CLP)
+Regulamento (EU) n. 618/2012 (ATP 3 CLP)
+Regulamento (EU) n. 487/2013 (ATP 4 CLP)
+Regulamento (EU) n. 944/2013 (ATP 5 CLP)
+Regulamento (EU) n. 605/2014 (ATP 6 CLP)
+Regulamento (EU) n. 2015/1221 (ATP 7 CLP)
+Regulamento (EU) n. 2016/918 (ATP 8 CLP)
+Regulamento (EU) n. 2016/1179 (ATP 9 CLP)
+Regulamento (EU) n. 2017/776 (ATP 10 CLP)
+Regulamento (EU) n. 2018/669 (ATP 11 CLP)
+Regulamento (EU) n. 2018/1480 (ATP 13 CLP)
+Regulamento (EU) n. 2019/521 (ATP 12 CLP)
+Regulamento (EU) n. 2020/217 (ATP 14 CLP)
+Regulamento (EU) n. 2020/1182 (ATP 15 CLP)
+Regulamento (EU) n. 2021/643 (ATP 16 CLP)
+Limitações respeitantes ao produto ou às substâncias contidas, de acordo com o Anexo XVII do
+Regulamento (CE) 1907/2006 (REACH) e sucessivas modificações:
+Limitações respeitantes ao produto:
+Restrição 3
+Limitações respeitantes às substâncias contidas:
+Restrição 40
+Restrição 75
+Pronto all'Uso
+Compostos Orgânicos Voláteis - COV = 0.42 %
+Compostos Orgânicos Voláteis - COV = 4.17 g/Kg
+Substâncias CMR voláteis = 0.00 %
+COV halógenados aos quais seja atribuída a frase de risco R40 = 0.00 %
+Carbono orgânico - C = 0.17
+Onde aplicável, reportar-se às seguintes disposições regulamentares:
+Diretiva 2012/18/UE (Seveso III)
+Regulamento (CE) n.° 648/2004 (detergentes).
+Dir. 2004/42/CE (compostos orgânicos voláteis)
+ 
+Provisões relacionadas com a Diretiva da UE 2012/18 (Seveso III):
+Categoria Seveso III de acordo com o Anexo 1, parte 1
+NA
+ 
+15.2. Avaliação da segurança química
+Não foi realizada nenhuma Avaliação da Segurança Química para a mistura
+ 
+SECÇÃO 16: Outras informações
+Texto das frases mencionadas no parágrafo 3:
+H319 Provoca irritação ocular grave.
+H335 Pode provocar irritação das vias respiratórias.
+H302 Nocivo por ingestão.
+H412 Nocivo para os organismos aquáticos com efeitos duradouros.
+H318 Provoca lesões oculares graves.
+H400 Muito tóxico para os organismos aquáticos.
+H317 Pode provocar uma reacção alérgica cutânea.
+ 
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 9  de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+Classe de perigo e 
+categoria de perigo
+Código Descrição
+Acute Tox. 4 3.1/4/Oral Toxicidade aguda (via oral), Categoria 4
+Skin Corr. 1A 3.2/1A Corrosão cutânea, Categoria 1A
+Eye Dam. 1 3.3/1 Lesões oculares graves, Categoria 1
+Eye Irrit. 2 3.3/2 Irritação ocular, Categoria 2
+Skin Sens. 1A 3.4.2/1A Sensibilização cutânea, Categoria 1A
+STOT SE 3 3.8/3 Toxicidade para órgãos-alvo específicos — 
+exposição única, Categoria 3
+Aquatic Acute 1 4.1/A1 Perigo agudo para o ambiente aquático, 
+Categoria 1
+Aquatic Chronic 3 4.1/C3 Perigo crónico para o ambiente aquático, 
+Categoria 3
+ 
+Parágrafos modificados desde da revisão anterior: 
+ 
+SECÇÃO 3: Composição/informação sobre os componentes 
+SECÇÃO 9: Propriedades físico-químicas 
+SECÇÃO 15: Informação sobre regulamentação 
+ 
+Classificação e procedimento utilizado para determinar a classificação das misturas em conformidade
+com o Regulamento (CE) n.º 1272/2008 [CRE]:
+ 
+Classificação em conformidade com o 
+Regulamento (CE) n.º 1272/2008
+Procedimento de classificação
+Skin Corr. 1A, H314 Método de cálculo
+Eye Dam. 1, H318 Método de cálculo
+ 
+Este documento foi preparado por pessoa com formação apropriada
+Principais fontes bibliográficas:
+ECDIN - Rede de Informação e Dados de Produtos Químicos Ambientais - Centro de Pesquisa
+Unido, Comissão das Comunidades Europeias
+SAX's DANGEROUS PROPERTIES OF INDUSTRIAL MATERIALS (PROPRIEDADES
+PERIGOSAS DE MATERIAIS INDUSTRIAIS da SAX) - Oitava Edição - Van Nostrand Reinold
+As informações aqui contidas baseiam-se nos nossos conhecimentos na data acima indicada.
+Referem-se exclusivamente ao produto indicado e não constituem garantia particular de qualidade.
+O utilizador é obrigado a assegurar-se que esta informação é apropriada e completa com respeito ao
+uso específico a que se destina.
+Esta ficha anula e substitui todas as edições precedentes.
+ 
+ADR: Acordo Europeu sobre Transporte Rodoviário Internacional de 
+Mercadorias Perigosas
+ATE: Estimativa de Toxicidade Aguda
+ATEmix: Estimativa da toxicidade aguda (Misturas)
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 10 de 11  
+Ficha de Segurança
+SANITEC BLU POWER WC GEL
+CAS: Chemical Abstracts Service (sector da Sociedade Americana de 
+Química).
+CLP: Classificação, rotulagem, embalagem.
+DNEL: Nível derivado de exposição sem efeito
+EINECS: Inventário Europeu de Substâncias Químicas Existentes em Comércio
+GefStoffVO: Normativa sobre Substâncias Perigosas, Alemanha
+GHS: Sistema globalmente harmonizado de Classificação e Rotulagem de 
+produtos químicos
+IATA: Associação Internacional Transporte Aéreo
+IATA-DGR: Regulamentação Mercadorias Perigosas conforme a Associação 
+Internacional Transporte Aéreo (IATA)
+ICAO: Organização Internacional Aviação Civil
+ICAO-TI: Instruções técnicas conforme a "Organização Internacional Aviação 
+Civil" (ICAO).
+IMDG: Código marítimo internacional para mercadorias perigosas.
+INCI: Nomenclatura Internacional de Ingredientes Cosméticos.
+KSt: Coeficiente de explosão
+LC50: Concentração letal para 50% da população de teste
+LD50: Dose letal para 50% da população de teste.
+PNEC: Concentração previsivelmente sem efeitos
+RID: Regulamentação relativa ao Transporte Ferroviário Internacional de 
+Mercadorias Perigosas.
+STEL: Limite de exposição a curto prazo
+STOT: Toxicidade para órgão alvo específico
+TLV: Valor limite de limiar
+TWA: Média ponderada no tempo
+WGK: Classe de perigo aquático - Alemanha
+ 
+Ficha de Segurança de 22/10/2025, revisão 2
+Pagina n. 11 de 11  

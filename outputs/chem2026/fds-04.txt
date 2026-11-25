@@ -1,0 +1,1243 @@
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+1Página 21/
+Emissão (data): 01/01/2001
+AQUAGEN® FRE
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/EMPRESA
+1.1. Identificador do produto
+Nome comercial:
+Limpador cítrico. Perfumado.
+1.2. Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas.
+Utilizações identificadas relevantes:
+Utilizações desaconselhadas:
+O produto não deve ser utilizado para fins diferentes dos indicados.
+1.3. Identificação do fornecedor da ficha de dados de segurança
+1.4. Número de telefone de emergência
+Consulte a SECÇÃO 4
+Suministros Científicos Técnicos S.A.U (SUCITESA): (+34) 937 195 430 (Segunda a sexta 9: 00-13: 30 e 15: 30-18: 00)
+Em caso de ingestão acidental, consultar o Centro de Informação Anti-Venenos. Tf. 800 250 250
+UFI: M5DV-QWW4-U004-HQ6W
+SUMINISTROS CIENTÍFICOS TÉCNICOS, S.A.U. (SUCITESA)
+C/Comadrán 39, nave A6 - P.I. Can Salvatella - 08210 Barberà del Vallès (Barcelona) - España (Spain)
+Tel. +34 937 195 430
+info@sucitesa.com - www.sucitesa.com
+AISE-P403: Limpeza de pavimentos; Processo manual
+AISE-P305: Limpeza de sanitários; Processo manual
+Restringido a usos profissionais
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS
+2.1. Classificação de substâncias ou misturas
+Classificação de acordo com o Regulamento (CE) n º 1272/2008 - CLP
+2.2. Elementos do rótulo
+Elementos do rótulo de acordo com o Regulamento (CE) n º 1272/2008 - CLP
+Pictogramas de perigo:
+Palavra-sinal:
+Advertências de perigo (Frases H):
+Recomendações de prudência (Frases P).
+H319Eye Irrit. 2
+Atenção
+H319 Provoca irritação ocular grave
+P102 Manter fora do alcance das crianças
+P305+P351+P338 SE ENTRAR EM CONTACTO COM OS OLHOS: enxaguar cuidadosamente com água durante vários minutos. Se usar 
+lentes de contacto, retire-as, se tal lhe for possível. Continuar a enxaguar
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+2Página 21/
+Emissão (data): 01/01/2001
+Informação adicional no rótulo
+2.3. Outros perigos:
+O produto não satisfaz os critérios PBT ou mP mB de acordo com o Reg. nº1907/2006, Anexo XIII.
+Outros perigos não são conhecidos. 
+Não ingerir
+Conservantes: Tetramethylolglycoluril
+USO PROFISSIONAL
+UFI: M5DV-QWW4-U004-HQ6W
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES
+Identificador do produto:
+Substâncias perigosas:
+AQUAGEN® FRE
+3.1. Substâncias
+Não aplicável
+3.2. Misturas
+106-22-9    /    203-375-0    /    01-2119453995-23-XXXX    /    
+H315: Skin Irrit. 2- H317: Skin Sens. 1- H319: Eye Irrit. 2- 
+< 0,05
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+---
+CAS No. / EC No. / REACH No.
+Citronellol
+3,7-dimethyloct-6-en-1-ol 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+3Página 21/
+Emissão (data): 01/01/2001
+106-24-1    /    203-377-1    /    01-2119552430-49-XXXX    /    
+H317: Skin Sens. 1- 
+< 0,05
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+---
+CAS No. / EC No. / REACH No.
+Geraniol
+3,7-dimethylocta-(E)-2,6-dien-1-ol 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+118-58-1    /    204-262-9    /    01-2119969442-31-XXXX    /    
+H317: Skin Sens. 1- H319: Eye Irrit. 2- H412: Aquatic Chronic 3- 
+< 0,05
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+M(acute)=1 / M(chronic)=1
+CAS No. / EC No. / REACH No.
+Benzyl salicylate
+Benzyl salicylate 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+5949-29-1    /    201-069-1    /    01-2119457026-42-XXXX    /    
+H319: Eye Irrit. 2- 
+< 1
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+---
+CAS No. / EC No. / REACH No.
+Citric Acid, Monohydrate
+2-hydroxypropane-1,2,3-tricarboxylic acid 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+4Página 21/
+Emissão (data): 01/01/2001
+(*) Para o texto completo das frases referidas nesta Secção, ver Secção 16.
+5989-27-5    /    227-813-5    /    01-2119529223-47-XXXX    /    
+H226: Flam. Liq. 3- H315: Skin Irrit. 2- H317: Skin Sens. 1- H319: Eye Irrit. 2- H400: Aquatic Acute 1- H410: Aquatic 
+Chronic 1- 
+< 0,05
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+M(acute)=1 / M(chronic)=1
+CAS No. / EC No. / REACH No.
+D-limonene
+4-isopropenyl-1-methylcyclohexene 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg Dados não disponíveis
+Não aplicável
+68131-39-5    /    500-195-7     /    01-2119488720-33-XXXX    /    
+H400: Aquatic Acute 1- H412: Aquatic Chronic 3- 
+< 2
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+M(acute)=1
+CAS No. / EC No. / REACH No.
+Alcohol(C12-15) EO(>5-10)
+Alcohols,  C12-15, ethoxylated
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+68891-38-3    /    500-234-8    /    01-2119488639-16-XXXX    /    
+H315: Skin Irrit. 2- H318: Eye Dam. 1- 
+< 1
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+---
+CAS No. / EC No. / REACH No.
+Sodium lauryl EO(1-5) sulfate
+Alcohols, C12-14, ethoxylated, sulfates, sodium salts 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+5Página 21/
+Emissão (data): 01/01/2001
+SECÇÃO 4: PRIMEIROS SOCORROS
+Consultas Instituto Nacional Toxicologia:
+EM CASO DE exposição: contacte um CENTRO DE INFORMAÇÃO ANTIVENENOS ou um médico
+Em caso de ingestão acidental, consultar o Centro de Informação Anti-Venenos. Tf. 800 250 250
+4.1. Descrição das medidas de primeiros socorros
+Inalação
+Retirar a vítima para uma zona ao ar livre e mantê¬ la em repouso numa posição que não dificulte a respiração.
+Contacto com a pele
+Despir/retirar imediatamente toda a roupa contaminada. Enxaguar a pele com água/tomar um duche
+Contacto com os olhos
+Enxaguar cuidadosamente com água durante vários minutos. Se usar lentes de contacto, retire-as, se tal lhe for possível. Contin uar a enxaguar.
+Ingestão
+Enxaguar a boca. NÃO provocar o vómito.
+4.2. Sintomas e efeitos mais importantes, tanto agudos como retardados
+Inalação
+Efeitos não significativos
+Contacto com a pele
+Efeitos não significativos
+Contacto com os olhos
+Irritação, dor, visão desfocada, possíveis queimaduras
+Ingestão
+Irritação do sistema digestivo, dor abdominal, diarreia, vómitos
+4.3. Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários
+Nenhuma informação disponível sobre análises clínicas e controlo médico. Informações toxicológica específica relativa às substâ ncias, se 
+disponível, pode ser encontrado na seção 11.
+NÃO DEIXE A PESSOA INTOXICADA SOZINHA.  Se a pessoa estiver inconsciente, deite-a de lado com a cabeça mais baixa que o resto d o corpo 
+e com os joelhos semi-flectidos. Transporte a pessoa intoxicada para um centro hospitalar, e sempre que for possível lev
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS
+5.1. Meios de extinção
+Meios adequados de extinção:
+Água pulverizada, Espuma, Agentes extintores secos.
+Em caso de incêndio na área envolvente, são permitidos todos os agentes extintores. 
+Não combustível. Pode causar emanações tóxicas, corrosivas, irritantes e sufocantes em caso de incêndio. Monóxido de carbono (C O), Dióxido de 
+carbono (CO2), etc.
+Protecções: Equipamento de protecção química (fato, luvas, protecção olhos/cara, etc). Aparelho respiratório autónomo.
+Borrifar os recipientes com água para os manter frios. Evitar que os produtos contra incêndios passem para esgotos ou cursos de  água. Os resíduos 
+de incêndio assim como a água de extinção contaminada devem gerir-se de acordo com as normas em vigor.
+Meios inadequados de extinção:
+5.2. Perigos especiais decorrentes da substância ou mistura
+5.3 Recomendações para o pessoal de combate a incêndios
+Equipamento especial de proteção
+Recomendações:
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+6Página 21/
+Emissão (data): 01/01/2001
+SECÇÃO 6: MEDIDAS A TOMAR EM CASO DE FUGAS ACIDENTAIS
+6.1. Precauções individuais, equipamento de proteção e procedimentos de emergência
+6.2. Precauções a nível ambiental
+Utilzar o equipamento protector adequado. Veja SEÇÃO 8. Não deixar que passe para os aquedutos ou para os cursos de água. Caso isto ocorra, 
+alertar as autoridades competentes de acordo com a legislação local. 
+Manter afastado dos esgotos, das águas superficiais e subterrâneas.
+Produto líquido: Conter e recolher o derrame com materiais absorv entes (terra, areia e outros absorventes minerais) e colocar n um contentor 
+adequado para a sua posterior eliminação, de acordo com a normativa local vigente.
+6.3. Métodos e materiais de confinamento e limpeza
+6.4. Remissão para outras secções
+Consulte a SECÇÃO 8 e 13
+Produto sólido: Recolher o derrame e colocá-lo num contentor adequado para a sua posterior eliminação, de acordo com a normativ a local vigente. 
+Veja SEÇÃO 13.
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM
+7.1. Precauções para um manuseamento seguro
+Manusear de acordo com as boas práticas industriais de higiene e segurança.  Não comer, beber ou fumar nas áreas de trabalho. R etirar 
+imediatamente todo o vestuário contaminado. Lavar as mãos antes de interrupções, e no final do dia de trabalho.
+Armazenar segundo a legislação local. Armazenar as embalagens entre  5 e 35ºC, num local seco, bem ventilado, afastado de fontes  de calor e da 
+luz solar directa.Assegurar uma adequada rotação dos produtos. Os mais antigos devem ser os primeiros a consumir. Não ultrapass ar os 36 meses 
+de armazenamento, prazo de caducidade estimado para produtos armazenados em condições ambientais adequadas.
+7.2. Condições de armazenagem segura, incluindo eventuais incompatibilidades
+7.3. Utilizações finais específicas
+Consulte a SECÇÃO 1
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL
+8.1. Parâmetros de controlo
+PORTUGAL - Valores-limite de exposição profissional 
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 106-22-9    /    Citronellol
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 106-24-1    /    Geraniol
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 118-58-1    /    Benzyl salicylate
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 5949-29-1    /    Citric Acid, Monohydrate
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+7Página 21/
+Emissão (data): 01/01/2001
+Nível Derivado sem Efeito (DNEL) e Concentração previsivelmente sem efeitos (PNEC)
+Não disponível para a mistura
+8.2. Controlo da exposição
+Manusear de acordo com as boas práticas industriais de higiene e segurança.  Não comer, beber ou fumar nas áreas de trabalho. R etirar 
+imediatamente todo o vestuário contaminado. Lavar as mãos antes de interrupções, e no final do dia de trabalho.
+A seguinte informação aplica-se aos usos indicados na secção 1. Nesta secção estão assumidas as condições normais de uso. Se de sponivél, 
+ consultar as instruções de aplicação e manuseamento, na ficha técnica de informação do produto.
+(A informação deveria ser confirmada pelo avaliador dos postos de trabalho.)
+Controlos técnicos adequados
+Não manuseie o produto antes de ter lido e percebido todas as precauções de segurança.
+PRODUTO PURO - NÃO DILUÍDO
+Proteção ocular/facial:
+Não é necessário nas condições normais de uso. 
+Não é necessário nas condições normais de uso. 
+Quando há risco de salpicos o uso de óculos de segurança de acordo com a norma EN166 é recomendado.
+Usar indumentária adequada
+Proteção da pele:
+- proteção das mãos:
+- Outros:
+Proteção respiratória:
+Perigos térmicos
+Não são conhecidos perigos térmicos.
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas 30 ppm - 168 mg/m3
+Não estabelecido
+CAS No./ Nome  EC 5989-27-5    /    D-limonene 
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 68131-39-5    /    Alcohol(C12-15) EO(>5-10)
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 68891-38-3    /    Sodium lauryl EO(1-5) sulfate
+SECÇÃO 9: PROPRIEDADES FÍSICAS E QUÍMICAS
+9.1. Informações sobre propriedades físicas e químicas de base
+Líquido transparente
+Cor-de-rosa
+Rosas
+Estado físico:
+Cor:
+Odor:
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+8Página 21/
+Emissão (data): 01/01/2001
+Dados não disponíveis
+Dados não disponíveis
+Não inflamável (> 60ºC)
+Dados não disponíveis
+Dados não disponíveis
+Dados não disponíveis
+Não se aplica às misturas.
+Dados não disponíveis
+Dados não disponíveis
+Não explosivo
+Não oxidante
+4+-1
+>90ºC
+Solúvel em água
+Não aplicável
+1,00+-0,01
+Ponto de fusão/ponto de congelação:
+Ponto de ebulição inicial e intervalo de ebulição:
+Ponto de inflamação:
+Inflamabilidade:
+Limites superior/inferior de inflamabilidade ou de explosividad
+Pressão de vapor:
+Densidade relativa do vapor:
+Densidade e/ou densidade relativa:
+Solubilidade:
+Coeficiente de partição n-octanol/água:
+pH:
+Temperatura de auto-ignição:
+Temperatura de decomposição:
+Viscosidade cinemática:
+Propriedades explosivas:
+Propriedades comburentes:
+Produto líquido. Não aplicável. Aplica-se apenas a sólidosCaracterísticas das partículas:
+9.2. Outras informações:
+Outros dados adicionais não disponíveis
+Informação adicional:
+SECÇÃO 10: ESTABILIDADE E REACTIVIDADE
+10.1.  Reactividade
+Estável sob as condições de manipulação e armazenamento recomendadas.
+Nenhum conhecido em condições normais de armazenagem e uso.
+10.2. Estabilidade química:
+10.3. Possibilidade de reações perigosas
+Calor, chama, fontes de ignição, pressão, luz solar directa e manipulação inadequada das embalagens.
+10.4. Condições a evitar
+10.5. Materiais incompatíveis:
+Nenhum conhecido em condições normais de armazenagem e uso. Em caso de combustão, ver SECÇÃO 5
+10.6. Produtos de decomposição perigosos
+Não são conhecidos perigos de reactividade em condições normais de armazenamento e uso, 
+Não apresenta riscos específicos a realçar
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA
+11.1. Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.o 1272/2008
+Dados não disponíveis para a mistura. Informação fornecida sobre as substâncias listadas na seção 3
+Toxicidade aguda:
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+9Página 21/
+Emissão (data): 01/01/2001
+Corrosão-irritação cutânea/Lesões oculares graves-irritação ocular
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+LC50 (4H) 0,5-2 mg/l (vapor)    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 300-2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+LC50 (4H) > 5 mg/l (mist)    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Não irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+106-24-1     /    Geraniol
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+10Página 21/
+Emissão (data): 01/01/2001
+Sensibilização respiratória ou cutânea
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Não irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Corrosivo    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+É sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+É sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+É sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+É sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+11Página 21/
+Emissão (data): 01/01/2001
+Mutagenicidade em células germinativas
+Carcinogenicidade:
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+106-22-9     /    Citronellol
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+106-24-1     /    Geraniol
+Resultado /  Método
+CAS No./ Nome  EC
+Dados não disponíveis    -    Equivalente ou similar a OECD Guideline 471, 474, 476
+118-58-1     /    Benzyl salicylate
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+5949-29-1     /    Citric Acid, Monohydrate
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+5989-27-5     /    D-limonene
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado /  Método Dados não disponíveis    -    Equivalente ou similar a OECD Guideline 451
+118-58-1     /    Benzyl salicylate
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+12Página 21/
+Emissão (data): 01/01/2001
+Efeitos tóxicos na reprodução:
+Toxicidade para órgãos-alvo específicos (STOT) – exposição única
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado /  Método Dados não disponíveis    -    Equivalente ou similar a OECD Guideline 414, 415, 416
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+13Página 21/
+Emissão (data): 01/01/2001
+Toxicidade para órgãos-alvo específicos (STOT) – exposição repetida
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+14Página 21/
+Emissão (data): 01/01/2001
+Perigo de aspiração
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+5989-27-5     /    D-limonene
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+5989-27-5     /    D-limonene
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+15Página 21/
+Emissão (data): 01/01/2001
+11.2. Informações sobre outros perigos
+Propriedades desreguladoras do sistema endócrino
+Não contém substâncias identificadas como desreguladores endócrinos
+Outras informações
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA
+Dados não disponíveis para a mistura. Informação fornecida sobre as substâncias listadas na seção 3.
+12.1. Toxicidade
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Leucescus idus
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 100 mg/l     /     Algas     /     Scenedesmus subspicatus
+106-22-9     /    Citronellol
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Danio rerio
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 100 mg/l     /     Algas     /     Desmodesmus subspicatus
+106-24-1     /    Geraniol
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Danio rerio
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 100 mg/l     /     Algas     /     Pseudokirchneriella subcapitata
+118-58-1     /    Benzyl salicylate
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Lepomis macrochirus
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    Dados não disponíveis     /     Algas     /     Dados não disponíveis
+5949-29-1     /    Citric Acid, Monohydrate
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 0,1 -<=1 mg /l     /     Peixes     /     Pimephales promelas
+EC50 (48h)    /    > 0,1 -<=1 mg /l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 100 mg/l     /     Algas     /     Desmodesmus subspicatus
+5989-27-5     /    D-limonene
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+16Página 21/
+Emissão (data): 01/01/2001
+12.2. Persistência e degradabilidade
+12.3. Potencial de bioacumulação
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 1 mg/l     /     Peixes     /     Oncorhynchus mykiss
+EC50 (48h)    /    > 0,1 -<=1 mg /l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 1000 mg/l      /     Algas     /     Pseudokirchneriella subcapitata
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Danio rerio
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 100 mg/l     /     Algas     /     Scenedesmus subspicatus
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+106-22-9     /    Citronellol
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+106-24-1     /    Geraniol
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+118-58-1     /    Benzyl salicylate
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+5949-29-1     /    Citric Acid, Monohydrate
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+5989-27-5     /    D-limonene
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+17Página 21/
+Emissão (data): 01/01/2001
+12.4. Mobilidade no solo
+Resultados da avaliação PBT e mPmB
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 106-22-9     /    Citronellol
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 106-24-1     /    Geraniol
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 118-58-1     /    Benzyl salicylate
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 5949-29-1     /    Citric Acid, Monohydrate
+Dados não disponíveisResultado
+CAS No./ Nome  EC 5989-27-5     /    D-limonene
+Dados não disponíveisResultado
+CAS No./ Nome  EC 68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Dados não disponíveisResultado
+CAS No./ Nome  EC 106-22-9     /    Citronellol
+Dados não disponíveisResultado
+CAS No./ Nome  EC 106-24-1     /    Geraniol
+Dados não disponíveisResultado
+CAS No./ Nome  EC 118-58-1     /    Benzyl salicylate
+Dados não disponíveisResultado
+CAS No./ Nome  EC 5949-29-1     /    Citric Acid, Monohydrate
+Dados não disponíveisResultado
+CAS No./ Nome  EC 5989-27-5     /    D-limonene
+Dados não disponíveisResultado
+CAS No./ Nome  EC 68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Dados não disponíveisResultado
+CAS No./ Nome  EC 68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 106-22-9     /    Citronellol
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+18Página 21/
+Emissão (data): 01/01/2001
+12.6. Propriedades desreguladoras do sistema endócrino
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 106-24-1     /    Geraniol
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 118-58-1     /    Benzyl salicylate
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 5949-29-1     /    Citric Acid, Monohydrate
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 5989-27-5     /    D-limonene
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+CAS No./ Nome  EC
+Resultado
+106-22-9     /    Citronellol
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+106-24-1     /    Geraniol
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+118-58-1     /    Benzyl salicylate
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+5949-29-1     /    Citric Acid, Monohydrate
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+5989-27-5     /    D-limonene
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+19Página 21/
+Emissão (data): 01/01/2001
+12.7. Outros efeitos adversos:
+CAS No./ Nome  EC
+Resultado
+106-22-9     /    Citronellol
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+106-24-1     /    Geraniol
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+118-58-1     /    Benzyl salicylate
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+5949-29-1     /    Citric Acid, Monohydrate
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+5989-27-5     /    D-limonene
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+68891-38-3     /    Sodium lauryl EO(1-5) sulfate
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO
+13.1. Métodos de tratamento de resíduos
+Não se permite o derrame directo do produto puro nos esgotos e cursos de água. Os resíduos e as embalagens vazias devem ser tra tados de 
+acordo com a legislação vigente.
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE
+14.1. Número ONU ou número de ID
+Não classificado
+14.2. Designação oficial de transporte da ONU
+14.3. Classes de perigo para efeitos de transporte
+Não aplicável
+14.4. Grupo de embalagem
+Não aplicável
+14.5. Perigos para o ambiente
+Consulte a SECÇÃO 2
+14.6. Precauções especiais para o utilizador
+Consulte a SECÇÃO 8
+Isenções por formato ADR:
+Não aplicável
+Grupo do segregação IMDG:
+Não aplicável
+Não classificado - Não aplicável
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+20Página 21/
+Emissão (data): 01/01/2001
+Poluente marinho IMDG:
+14.7. Transporte marítimo a granel em conformidade com os instrumentos da OMI
+O produto não é transportado a granel.
+Não aplicável
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO
+15.1. Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e ambiente
+Aplicável. Os tensoativos utilizados na formulação de detergente , se eles são mencionados na próxima seção, satisfazem os crit érios de 
+biodegradação aeróbia final (mineralização) estabelecido no Regulamento Europeu (CE) n. º 648/2004 relativo aos detergentes. Bi odegradabilidade 
+= acima de 60% no prazo de 28 dias.
+Detergentes regulamentos - Regulamento (CE) n º 648/2004 e alterações:
+Conteúdo de acordo com o REGULAMENTO (CE) Nº648/2004 sobre detergentes:
+Não aplicável
+Legislação Biocidas - Regulamento (CE) no 1451/2007 e alterações:
+Não aplicável
+Cosméticos regulamentos - Regulamento (CE) n º 1223/2009 e alterações:
+Não aplicável
+Outros regulamentos:
+Regulamento (CE) No. 1907/2006 (REACH)
+Anexo XIV-REACH  (Lista de substâncias sujeitas a autorização - SVHC)
+Fabricado na U.E. (Espanha)
+Registos:
+A avaliação de segurança química não foi realizada á mistura. Este produto contém substâncias relativamente às quais ainda são necessárias 
+Avaliações de Segurança Química.
+15.2. Avaliação da segurança química
+Todos os componentes estão registados , pré-registados ou dispensados de registro REACH.
+O produto não contém substâncias na lista de candidatos a serem considerados como substâncias de grande preocupação, de acordo com a 
+Agência Europeia dos Produtos Químicos (ECHA)
+Tensioactivos não-iónicos inferior 5%. Tensioactivos aniónicos in ferior 5%. Perfumes. Citronellol. Limonene. Geraniol. Benzyl s alicylate. 
+Tetramethylolglycoluril.
+SECÇÃO 16: OUTRAS INFORMAÇÕES
+Modificações do documento:
+Texto completo das frases mencionado na secção 3
+H226 Líquido e vapor inflamáveis
+H315 Provoca irritação cutânea
+H317 Pode provocar uma reação alérgica cutânea
+H318 Provoca lesões oculares graves
+H319 Provoca irritação ocular grave
+H400 Muito tóxico para os organismos aquáticos
+H410 Muito tóxico para os organismos aquáticos com efeitos duradouros
+H412 Nocivo para os organismos aquáticos com efeitos duradouros
+15/11/2022 Informação ajsutada de acordo com o Regulamento (CE) n º 2020/878:
+16/02/2021 Código UFI:
+01/03/2017 Informação ajsutada de acordo com o Regulamento (CE) n º 830/2015:
+12/01/2015 Informação ajsutada de acordo com o Regulamento (CE) n º 1907/2006, Anexo II:
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 323305
+Nome comercial: AQUAGEN® FRE
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 13
+21Página 21/
+Emissão (data): 01/01/2001
+Será sempre da responsabilidade do utilizador a adopção das medidas oportunas no que diz respeito à proteção da saúde, seguranç a no trabalho e a 
+proteção do meio ambiente, garantindo-se que os meios, as  instalações no pessoal envolvido e os serviços são o
+A informação contida no presente documento baseia-se nos conheciment os actuais e na legislação aplicável da CE, contudo, as con dições de 
+utilização pelos utilizadores estão fora do nosso conhecimento e controlo. O produto não deve ser utilizado para fins 
+O Departamento Técnico da Suministros Científicos Técnicos, S.A.U., atenderá qualquer consulta técnica dos utilizadores.
+A versão em vigor deste documento está disponível unicamente na página da Internet www.sucitesa.com. Para evitar a distribuição de versões 
+obsoletas, recomendamos não guardar cópias ou verificar previamente que o documento não foi modificado.
+Abreviações e acrónimos:
+• AISE - Associação Internacional de Sabões, Detergentes e Produtos de Limpeza
+• OEDC - Organização para a Cooperação e Desenvolvimento Econômico
+• EUH - CLP Frases de perigo específico
+• DNEL - Níveis derivados de exposição sem efeitos
+• PBT- Persistente, Biocumulável e Tóxico 
+• Número REACH - Número de registo REACH, sem parte específica do fornecedor
+• PNEC - Concentração prevísivel sem efeitos
+• mPmB - Muito persistente e muito biocumulável

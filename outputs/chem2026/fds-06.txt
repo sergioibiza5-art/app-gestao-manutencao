@@ -1,0 +1,2031 @@
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+1 / 26 
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa 
+1.1 Identificador do produto 
+Nome comercial 
+ 
+: ANTI-CONGELANTE PURO 5L 
+ 
+Código do produto 
+ 
+: 0893332721 
+ 
+Identificador Único De Fór-
+mula (UFI) 
+ 
+: 3S7A-D099-S00J-0X41 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselha-
+das 
+Utilização da substância ou 
+mistura 
+ 
+: Agentes anticongelantes 
+Produto de uso profissional 
+ 
+Restrições de utilização re-
+comendadas 
+ 
+ 
+: Não aplicável 
+1.3 Identificação do fornecedor da ficha de dados de segurança 
+Companhia 
+ 
+: Würth-Portugal Técnica de Montagem, Lda. 
+Estrada Nacional 249-4 - Abrunheira 
+2710-089  Sintra 
+ 
+Telefone 
+ 
+: +351 219 157 200 
+ 
+ 
+Telefax 
+ 
+: +351 219 151 331 
+ 
+Endereço de correio electró-
+nico da pessoa responsável 
+por SDS 
+ 
+: prodsafe@wuerth.com 
+ 
+1.4 Número de telefone de emergência 
++351 800 250 250 
+ 
+ 
+ 
+SECÇÃO 2: Identificação dos perigos 
+2.1 Classificação da substância ou mistura 
+Classificação (REGULAMENTO (CE) N.o 1272/2008) 
+Toxicidade aguda, Categoria 4 
+ 
+ H302: Nocivo por ingestão. 
+ 
+Toxicidade reprodutiva, Categoria 1B 
+ 
+ H360D: Pode afectar o nascituro. 
+ 
+Toxicidade para órgãos-alvo específicos -  H373: Pode afectar os órgãos após exposição 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+2 / 26 
+exposição repetida, Categoria 2 
+ 
+prolongada ou repetida. 
+ 
+Persistente, móvel e tóxico 
+ 
+ EUH450: Pode causar uma contaminação prolon-
+gada e difusa dos recursos hídricos 
+ 
+Muito persistente e muito móvel 
+ 
+ EUH451: Pode causar uma contaminação muito 
+prolongada e difusa dos recursos hídricos 
+ 
+2.2 Elementos do rótulo 
+Rótulo (REGULAMENTO (CE) N.o 1272/2008) 
+Pictogramas de perigo 
+ 
+: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Palavra-sinal 
+ 
+: Perigo 
+ 
+Advertências de perigo 
+ 
+: H302 Nocivo por ingestão. 
+H360D Pode afectar o nascituro. 
+H373 Pode afectar os órgãos após exposição prolonga-
+da ou repetida. 
+EUH451 Pode causar uma contaminação muito prolongada 
+e difusa dos recursos hídricos 
+ 
+Recomendações de pru-
+dência 
+ 
+: Prevenção:  
+P201 Pedir instruções específicas antes da utilização. 
+P260 Não respirar névoas ou vapores. 
+P273 Evitar a libertação para o ambiente. 
+P280 Usar luvas de proteção/ vestuário de proteção/ 
+proteção ocular/ proteção facial. 
+Resposta:  
+P391 Recolher o produto derramado. 
+Destruição:  
+P501 Eliminar o conteúdo/ recipiente em instalação 
+aprovada de destruição de resíduos. 
+ 
+Componentes determinantes de perigo para o rótulo: 
+Etilenoglicol 
+Sódio 2-etilhexanoato 
+Etiquetagem suplementar 
+ 
+ 
+Reservado aos utilizadores profissionais. 
+ 
+2.3 Outros perigos 
+A substância/mistura não contém componentes considerados persistentes, bioacumuláveis e tó-
+xicos (PBT) ou muito persistentes e muito bioacumuláveis (vPvB) a níveis de 0.1% ou superior.  
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+3 / 26 
+Informação ecológica: A substância/mistura não contém componentes considerados como tendo 
+propriedades desreguladoras do sistema endócrino de acordo com o artigo 57(f) do  REACH ou o 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o Regulamento da Comissão (UE) 
+2018/605 a níveis de 0,1% ou superiores. 
+ 
+Informação toxicológica: A substância/mistura não contém componentes considerados como 
+tendo propriedades desreguladoras do sistema endócrino de acordo com o artigo 57(f) do 
+REACH ou o Regulamento Delegado da Comissão (UE) 2017/2100 ou o Regulamento da Co-
+missão (UE) 2018/605 a níveis de 0,1% ou superiores. 
+ 
+SECÇÃO 3: Composição/informação sobre os componentes 
+3.2 Misturas 
+Componentes 
+Nome Químico No. CAS 
+No. CE 
+No. de Index 
+Número de registo 
+Classificação Concentração 
+(% w/w) 
+Etilenoglicol 107-21-1 
+203-473-3 
+603-027-00-1 
+01-2119456816-28 
+Acute Tox. 4; H302 
+STOT RE 2; H373 
+(Rim) 
+ 
+Estimativa da toxici-
+dade aguda 
+ 
+Toxicidade aguda por 
+via oral: 1.330 mg/kg 
+>= 90 - <= 100 
+Sódio 2-etilhexanoato 19766-89-3 
+243-283-8 
+607-230-00-6 
+01-2119979083-31 
+Repr. 1B; H360D >= 1 - < 10 
+Metil-1H-benzotriazol 29385-43-1 
+249-596-6 
+613-351-00-5 
+ 
+Acute Tox. 4; H302 
+Repr. 2; H361d 
+Aquatic Chronic 2; 
+H411 
+PMT; EUH450 
+mPmM; EUH451 
+ 
+Estimativa da toxici-
+dade aguda 
+ 
+Toxicidade aguda por 
+via oral: 720 mg/kg 
+>= 0,25 - < 1 
+Para a explicação das abreviaturas ver seção 16. 
+ 
+SECÇÃO 4: Medidas de primeiros socorros 
+4.1 Descrição das medidas de emergência 
+Recomendação geral :  Em caso de acidente, ou indisposição, consultar imediata-
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+4 / 26 
+ mente o médico. 
+Se os sintomas persistem ou no caso de dúvidas consultar 
+um médico. 
+ 
+Protecção dos socorristas 
+ 
+:  Os prestados serviços de primeiros socorros devem prestar 
+atenção ao equipamento de proteção, e usar o equipamento 
+de proteção pessoal recomendada no caso existência de 
+exposição potencial (ver secção 8). 
+ 
+Em caso de inalação 
+ 
+:  Se for inalado, levar para o ar puro. 
+Consultar o médico. 
+ 
+Em caso de contacto com a 
+pele 
+ 
+:  Em caso de contacto, lavar imediatamente a pele com sabão 
+e muita água. 
+Retirar o fato e os sapatos contaminados. 
+Consultar o médico. 
+Lavar o vestuário contaminado antes de voltar a usá-lo. 
+Limpar cuidadosamente os sapatos antes de os utilizar de 
+novo. 
+ 
+Se entrar em contacto com 
+os olhos 
+ 
+:  Lavar os olhos com água como precaução. 
+Procure assistência médica caso a irritação desenvolva ou 
+persista. 
+ 
+Em caso de ingestão 
+ 
+:  Se engolido, NÃO provocar vómitos. 
+Consultar o médico. 
+Enxagúe minuciosamente a boca com água. 
+Nunca dar nada pela boca a uma pessoa inconsciente. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados 
+Perigo : Nocivo por ingestão. 
+Pode afectar o nascituro. 
+Pode afectar os órgãos após exposição prolongada ou repeti-
+da. 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários  
+Tratamento 
+ 
+: Trate sintomaticamente e com apoio. 
+SECÇÃO 5: Medidas de combate a incêndios 
+5.1 Meios de extinção 
+Meios adequados de extin-
+ção 
+ 
+:  Pulverização de água 
+Espuma resistente ao álcool 
+Dióxido de carbono (CO2) 
+Substância química seca 
+ 
+Meios inadequados de extin-
+ção 
+ 
+:  Jacto de água de grande volume 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+5 / 26 
+5.2 Perigos especiais decorrentes da substância ou mistura 
+Perigos específicos para 
+combate a incêndios 
+ 
+:  A exposição aos produtos da combustão pode se constituir 
+num risco para a saúde. 
+ 
+Produtos de combustão peri-
+gosos 
+ 
+:  Óxidos de carbono 
+Óxidos de metal 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios 
+Equipamento especial de 
+proteção a utilizar pelo pes-
+soal de combate a incêndio 
+ 
+:  Em caso de incêndio, usar equipamento de respiração indivi-
+dual. Usar equipamento de proteção individual.  
+ 
+Métodos específicos de ex-
+tinção 
+ 
+: Adapte as medidas de combate a incêndios às condições do 
+local e ao ambiente envolvente. 
+Os jatos de água podem ser utilizados para arrefecer os con-
+tentores fechados. 
+Se seguro, remover os recipientes não danificados da área de 
+fogo. 
+Evacuar a zona. 
+ 
+SECÇÃO 6: Medidas em caso de fuga acidental 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência  
+Precauções individuais 
+ 
+:  Usar equipamento de proteção individual. 
+Seguir indicação de manipulação segura (ver secção 7) e 
+recomendações para equipamento de protecção pessoal (ver 
+secção 8). 
+ 
+6.2 Precauções a nível ambiental 
+Precauções a nível ambien-
+tal 
+ 
+:  Evitar a libertação para o ambiente. 
+Prevenir dispersão ou derramamento, se seguro. 
+Prevenir a propagação numa áreas vastas (por exemplo por 
+contenção ou barreiras de óleo). 
+Conter e eliminar a água de lavagem contaminada. 
+As autoridades locais devem ser avisadas se uma quantidade 
+importante de derramamento não pode ser controlada. 
+ 
+6.3 Métodos e materiais de confinamento e limpeza 
+Métodos de limpeza 
+ 
+:  Embeber com material absorvente inerte. 
+Para grandes derramamentos, forneça barreiras ou outro 
+meio de contenção apropriado para evitar que o material se 
+espalhe. Se for possível bombear o material protegido, arma-
+zene o material recuperado num recipiente adequado. 
+Limpe o material restante do derramamento com material 
+absorvente adequado. 
+Podem ser aplicados regulamentos locais ou nacionais às 
+libertações e deve eliminar o material, assim como os materi-
+ais e os itens usados na limpeza. Deverá determinar que 
+normas são aplicáveis. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+6 / 26 
+As secções 13 e 15 deste SDS oferecem informações refe-
+rentes a alguns requisitos locais ou nacionais. 
+ 
+6.4 Remissão para outras secções 
+Ver seções: 7, 8, 11, 12 e 13. 
+SECÇÃO 7: Manuseamento e armazenagem 
+7.1 Precauções para um manuseamento seguro 
+Medidas de carácter técnico 
+ 
+: Consulte as medidas de Engenharia na secção de 
+CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL. 
+ 
+Ventilação local/total 
+ 
+: Se não existir ventilação suficiente, use ventilação de exaus-
+tão local. 
+ 
+Informação para um manu-
+seamento seguro 
+ 
+: Não colocar na pele ou na roupa. 
+Não respirar névoas ou vapores. 
+Não engolir. 
+Evitar o contacto com os olhos. 
+Lavar a pele cuidadosamente após manuseamento. 
+Manusear de acordo com as boas práticas industriais de higi-
+ene e segurança, com base nos resultados da avaliação da 
+exposição no local de trabalho 
+Manter o recipiente bem fechado. 
+Não comer, beber ou fumar durante a utilização deste produ-
+to. 
+Deve ter cuidado para prevenir vazamentos, resíduos e mini-
+mizar a libertação para o meio ambiente. 
+ 
+Medidas de higiene 
+ 
+:  Se a exposição a produtos químicos for provável durante o 
+uso típico, forneça sistemas de limpeza para os olhos e chu-
+veiros de segurança nas imediações do local de trabalho. Não 
+comer, beber ou fumar durante da utilização. Lavar o vestuá-
+rio contaminado antes de voltar a usá-lo.  
+ 
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades 
+Requisitos para áreas de 
+armazenagem e recipientes 
+ 
+:  Guardar dentro de contentores correctamente etiquetados. 
+Armazenar em local fechado à chave. Manter hermeticamente 
+fechado. Armazenar de acordo com as regulações particula-
+res nacionais.  
+ 
+Recomendações para arma-
+zenagem conjunta 
+ 
+: Não armazene com os seguintes tipos de produto: 
+Agentes oxidantes fortes 
+Substâncias e misturas auto-reactivas 
+Peróxidos orgânicos 
+Explosivos 
+Gases 
+ 
+Tempo de Estocagem 
+ 
+: 60 Meses 
+ 
+Temperatura recomendada : 5 - 30 °C 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+7 / 26 
+de armazenagem 
+ 
+ 
+7.3 Utilização(ões) final(is) específica(s) 
+Utilizações específicas 
+ 
+:  Dados não disponíveis 
+ 
+SECÇÃO 8: Controlo da exposição/ Proteção individual 
+8.1 Parâmetros de controlo 
+Limites de Exposição Ocupacional 
+Componentes No. CAS tipo de valor 
+(Forma de expo-
+sição) 
+Parâmetros de controlo Bases 
+Etilenoglicol 107-21-1 TWA 20 ppm 
+52 mg/m³ 
+2000/39/EC 
+ Informações adicionais: Identifica a possibilidade da significante captação 
+através da pele, Indicativo 
+  STEL 40 ppm 
+104 mg/m³ 
+2000/39/EC 
+ Informações adicionais: Identifica a possibilidade da significante captação 
+através da pele, Indicativo 
+  VLE-CE (aeros-
+sol) 
+100 mg/m³ PT OEL 
+ Informações adicionais: Agente não classificável como carcinogénico no Ho-
+mem. 
+  oito horas 20 ppm 
+52 mg/m³ 
+PT DL 
+305/2007 
+ Informações adicionais: Uma notação cutânea atribuída ao valor limite de 
+exposição profissional assinala a possibilidade de absorção significativa atra-
+vés de pele. 
+  curta duração 40 ppm 
+104 mg/m³ 
+PT DL 
+305/2007 
+ Informações adicionais: Uma notação cutânea atribuída ao valor limite de 
+exposição profissional assinala a possibilidade de absorção significativa atra-
+vés de pele. 
+ 
+Nível derivado de exposição sem efeitos (DNEL) de acordo com o Regulamento (CE) No. 
+1907/2006 
+Nome da substância Utilização final Vias de exposi-
+ção 
+Possíveis danos 
+para a saúde 
+Valor 
+Etilenoglicol Trabalhadores Inalação Longo prazo - efeitos 
+locais 
+35 mg/m³ 
+ Trabalhadores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+106 mg/kg 
+bw/dia 
+ Consumidores Inalação Longo prazo - efeitos 
+locais 
+7 mg/m³ 
+ Consumidores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+53 mg/kg 
+bw/dia 
+Sódio 2-etilhexanoato Trabalhadores Inalação Longo prazo - efeitos 14 mg/m³ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+8 / 26 
+sistémicos 
+ Trabalhadores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+2 mg/kg 
+bw/dia 
+ Consumidores Inalação Longo prazo - efeitos 
+sistémicos 
+3,5 mg/m³ 
+ Consumidores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+1 mg/kg 
+bw/dia 
+ Consumidores Ingestão Longo prazo - efeitos 
+sistémicos 
+1 mg/kg 
+bw/dia 
+Metil-1H-benzotriazol Trabalhadores Inalação Longo prazo - efeitos 
+sistémicos 
+21,2 mg/m³ 
+ Trabalhadores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+0,3 mg/kg 
+bw/dia 
+ Consumidores Inalação Longo prazo - efeitos 
+sistémicos 
+350 µg/m³ 
+ Consumidores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+0,01 mg/kg 
+bw/dia 
+ Consumidores Ingestão Longo prazo - efeitos 
+sistémicos 
+0,01 mg/kg 
+bw/dia 
+Concentração previsivelmente sem efeitos (PNEC) de acordo com o Regulamento (CE) No. 
+1907/2006 
+Nome da substância Compartimento Ambiental Valor 
+Etilenoglicol Agua doce 10 mg/l 
+ Água do mar 1 mg/l 
+ Utilização/libertação intermitente 10 mg/l 
+ Estação de Patamento de esgoto 199,5 mg/l 
+ Sedimento de água doce 37 mg/kg 
+ Sedimento marinho 3,7 mg/kg 
+ Solos 1,53 mg/kg 
+Sódio 2-etilhexanoato Agua doce 0,36 mg/l 
+ Água doce - intermitente 0,493 mg/l 
+ Água do mar 0,036 mg/l 
+ Estação de Patamento de esgoto 71,7 mg/l 
+ Sedimento de água doce 0,301 mg / kg de 
+peso seco (d.w.) 
+ Sedimento marinho 0,03 mg / kg de 
+peso seco (d.w.) 
+ Solos 0,058 mg / kg de 
+peso seco (d.w.) 
+Metil-1H-benzotriazol Agua doce 8 µg/l 
+ Água doce - intermitente 85,8 µg/l 
+ Água do mar 8 µg/l 
+ Água do mar - intermitente 53 µg/l 
+ Estação de Patamento de esgoto 0,218 mg/l 
+ Sedimento de água doce 0,117 mg / kg de 
+peso seco (d.w.) 
+ Sedimento marinho 0,117 mg / kg de 
+peso seco (d.w.) 
+ Solos 0,045 mg / kg de 
+peso seco (d.w.) 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+9 / 26 
+8.2 Controlo da exposição 
+Medidas de planeamento 
+Minimizar as concentrações de exposição no local de trabalho. 
+Se não existir ventilação suficiente, use ventilação de exaustão local. 
+Proteção individual 
+Proteção ocular/ facial :  Por favor, siga todos os requisitos locais/nacionais aplicáveis 
+ao seleccionar medidas de proteçcão para um local de traba-
+lho específico. 
+ 
+   Vestir o equipamento individual de protecção seguinte: 
+Óculos de segurança 
+Usar sempre potecção para os olhos quando puder ocorrer 
+um contato inadvertido dos olhos com o produto. 
+O equipamento deverá estar de acordo com NP EN 166 
+ 
+Protecção das mãos 
+ 
+Material : Borracha nitrílica 
+Pausa através do tempo : > 480 min 
+Espessura das luvas : 0,4 mm 
+Orientações : O equipamento deverá estar de acordo com NP EN 374 
+ 
+Observações 
+ 
+: O tipo das luvas protectoras contra produtos químicos devem 
+ser seleccionadas de acordo com a concentração e quanti-
+dade da substância perigosa e especificamente para o local 
+de trabalho. Aconselha-se acordar com o fabricante das lu-
+vas a resistência das luvas protectoras face a produtos quí-
+micos para aplicações específicas. Lavar as mãos antes das 
+pausas, e no fim do dia de trabalho.  
+ 
+Proteção do corpo e da pele :  Selecionar roupas de proteção apropriadas com base nos 
+dados de resistência química e uma avaliação do potencial 
+de exposição local. 
+O contacto com a pele deve ser evitado, usando roupa de 
+protecção impermeável (luvas, aventais, botas, etc). 
+ 
+Protecção respiratória : Se a ventilação de exaustão local adequada não estiver dis-
+ponível ou a avaliação da exposição demonstrar exposições 
+fora das diretrizes recomendadas, use proteção respiratória. 
+O filtro deve estar em conformidade com a NP EN 14387 
+ 
+Filtro tipo : Combinado sob a forma de particulados e vapor orgânico (A-
+P) 
+ 
+SECÇÃO 9: Propriedades físico-químicas 
+9.1 Informações sobre propriedades físicas e químicas de base 
+Estado físico 
+ 
+ 
+: líquido 
+ 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+10 / 26 
+Cor 
+ 
+ 
+:  verde-claro 
+ 
+ 
+Odor 
+ 
+ 
+:  agradável 
+ 
+ 
+Limiar olfativo 
+ 
+ 
+:  Dados não disponíveis  
+ 
+Ponto de fusão/ponto de con-
+gelação 
+ 
+ 
+: Dados não disponíveis  
+ 
+Ponto de ebulição inicial e 
+intervalo de ebulição 
+ 
+ 
+: 177 °C 
+ 
+Inflamabilidade (sólido, gás) 
+ 
+: Não aplicável 
+ 
+Inflamabilidade (líquidos) : Ignitável (ver ponto de inflamação) 
+ 
+Limite superior de explosão / 
+Limite de inflamabilidade su-
+perior 
+ 
+ 
+: Dados não disponíveis  
+ 
+Limite inferior de explosão / 
+Limite de inflamabilidade infe-
+rior 
+ 
+ 
+: Dados não disponíveis  
+ 
+Ponto de inflamação 
+ 
+ 
+: 111 °C 
+ 
+Temperatura de auto-ignição 
+ 
+ 
+: 400 °C 
+ 
+Temperatura de decomposi-
+ção 
+ 
+ 
+:  Dados não disponíveis  
+ 
+pH 
+ 
+ 
+: 7,5 - 8,5 
+Concentração: 50 % 
+ 
+Viscosidade 
+Viscosidade, cinemático 
+ 
+ 
+: Dados não disponíveis  
+ 
+Solubilidade(s) 
+Hidrossolubilidade 
+ 
+ 
+: solúvel  
+ 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+11 / 26 
+Coeficiente de partição: n-
+octanol/água 
+ 
+ 
+: Não aplicável  
+ 
+Pressão de vapor 
+ 
+ 
+: 737 Pa (20 °C) 
+ 
+ 
+ 
+ 
+ 3.908 Pa (50 °C) 
+ 
+Densidade relativa 
+ 
+ 
+: 1,104 (20 °C) 
+ 
+Densidade 
+ 
+ 
+: 1,062 - 1,072 g/cm³ (20 °C) 
+ 
+Densidade relativa do vapor 
+ 
+ 
+: Dados não disponíveis  
+ 
+Caraterísticas da partícula 
+Tamanho da partícula 
+ 
+ 
+: Não aplicável 
+ 
+9.2 Outras informações 
+Explosivos 
+ 
+ 
+: Não explosivo 
+ 
+Propriedades comburentes 
+ 
+ 
+: A substância ou a mistura não está classificada como oxidan-
+te. 
+ 
+Taxa de evaporação 
+ 
+ 
+:  Dados não disponíveis  
+ 
+Índice de refracção  
+ 
+ 
+: 1,4255 
+ 
+SECÇÃO 10: Estabilidade e reatividade 
+10.1 Reatividade 
+Não classificado como uma reactividade perigosa. 
+10.2 Estabilidade química 
+Estável em condições normais. 
+10.3 Possibilidade de reações perigosas 
+Reações perigosas 
+ 
+:  Pode reagir com agentes oxidantes fortes. 
+10.4 Condições a evitar 
+Condições a evitar 
+ 
+: Nenhum conhecido. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+12 / 26 
+10.5 Materiais incompatíveis 
+Materiais a evitar 
+ 
+:  Oxidantes 
+ 
+10.6 Produtos de decomposição perigosos 
+Nenhuns produtos de decomposição conhecidos. 
+SECÇÃO 11: Informação toxicológica 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.o 
+1272/2008 
+Informações sobre vias de 
+exposição prováveis 
+ 
+: Inalação 
+Contacto com a pele 
+Ingestão 
+Contacto ocular 
+ 
+Toxicidade aguda 
+Nocivo por ingestão. 
+Produto: 
+Toxicidade aguda por via 
+oral 
+ 
+:  Estimativa da toxicidade aguda: 1.358 mg/kg  
+Método: Método de cálculo 
+ 
+Componentes: 
+Etilenoglicol: 
+Toxicidade aguda por via 
+oral 
+ 
+:  Estimativa da toxicidade aguda: 1.330 mg/kg  
+Método: Opinião especializada 
+ 
+Toxicidade aguda por via 
+inalatória 
+ 
+:  CL50 (Ratazana): > 2,5 mg/l  
+Duração da exposição: 6 h 
+Atmosfera de ensaio: pó/névoa 
+ 
+Toxicidade aguda por via 
+cutânea 
+ 
+:  DL50 (Coelho): > 5.000 mg/kg 
+ 
+Sódio 2-etilhexanoato: 
+Toxicidade aguda por via 
+oral 
+ 
+:  DL50 (Ratazana, fêmea): > 2.000 mg/kg  
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade aguda por via 
+cutânea 
+ 
+:  DL50 (Ratazana): > 2.000 mg/kg 
+Método: Directrizes do Teste OECD 402 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Metil-1H-benzotriazol: 
+Toxicidade aguda por via 
+oral 
+ 
+:  DL50 (Ratazana): 720 mg/kg  
+Método: Directrizes do Teste OECD 401 
+Observações: O ensaio foi realizado de uma forma equivalen-
+te ou semelhante à diretriz 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+13 / 26 
+Toxicidade aguda por via 
+cutânea 
+ 
+:  DL50 (Coelho): > 2.000 mg/kg 
+Método: Directrizes do Teste OECD 402 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Corrosão/irritação cutânea 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Etilenoglicol: 
+Espécie : Coelho 
+Resultado : Não provoca irritação da pele 
+ 
+Metil-1H-benzotriazol: 
+Espécie : Coelho 
+Método : Directrizes do Teste OECD 404 
+Resultado : Não provoca irritação da pele 
+Observações : O ensaio foi desenvolvido de acordo com a diretriz 
+ 
+Lesões oculares graves/irritação ocular 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Etilenoglicol: 
+Espécie : Coelho 
+Resultado : Não irrita os olhos 
+ 
+Metil-1H-benzotriazol: 
+Espécie : Coelho 
+Método : Directrizes do Teste OECD 405 
+Resultado : Não irrita os olhos 
+Observações : O ensaio foi desenvolvido de acordo com a diretriz 
+ 
+Sensibilização respiratória ou cutânea 
+Sensibilização da pele  
+Não classificado com base nas informações disponíveis. 
+Sensibilização respiratória  
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Etilenoglicol: 
+Tipo de Teste : Teste de maximização 
+Vias de exposição : Contacto com a pele 
+Espécie : Porquinho da índia 
+Resultado : negativo 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+14 / 26 
+Sódio 2-etilhexanoato: 
+Tipo de Teste : Teste de maximização 
+Vias de exposição : Contacto com a pele 
+Espécie : Porquinho da índia 
+Resultado : negativo 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Metil-1H-benzotriazol: 
+Tipo de Teste : Teste de maximização 
+Vias de exposição : Contacto com a pele 
+Espécie : Porquinho da índia 
+Método : Directrizes do Teste OECD 406 
+Resultado : negativo 
+Observações : O ensaio foi desenvolvido de acordo com a diretriz 
+ 
+Mutagenicidade em células germinativas 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Etilenoglicol: 
+Genotoxicidade in vitro 
+ 
+: Tipo de Teste: Ensaio de mutação reversa bacteriana (AMES) 
+Método: Directrizes do Teste OECD 471 
+Resultado: negativo 
+ 
+ 
+ 
+ Tipo de Teste: Danos e reparação do ADN, síntese não pro-
+gramada de ADN em células de mamíferos (in vitro) 
+Resultado: negativo 
+ 
+ 
+ 
+ Tipo de Teste: Teste de aberação cromática in vitro 
+Resultado: negativo 
+ 
+Genotoxicidade in vivo 
+ 
+:  Tipo de Teste: Teste de micronúcleos de eritrócitos de mamí-
+feros (teste citogenético in vivo) 
+Espécie: Rato 
+Via de aplicação: Injecção intraperitoneal 
+Resultado: negativo 
+ 
+Sódio 2-etilhexanoato: 
+Genotoxicidade in vitro 
+ 
+: Tipo de Teste: Ensaio de mutação reversa bacteriana (AMES) 
+Método: Directrizes do Teste OECD 471 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+ 
+ 
+ Tipo de Teste: No teste de mutação genética de células de 
+mamíferos in vitro 
+Método: Directrizes do Teste OECD 476 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+  Tipo de Teste: Teste de aberação cromática in vitro 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+15 / 26 
+ Método: Directrizes do Teste OECD 473 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Genotoxicidade in vivo 
+ 
+:  Tipo de Teste: Teste de micronúcleos de eritrócitos de mamí-
+feros (teste citogenético in vivo) 
+Espécie: Rato 
+Via de aplicação: Ingestão 
+Método: Directrizes do Teste OECD 474 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Mutagenicidade em células 
+germinativas- Avaliação 
+ 
+:   
+Observações: aom base em dados de materiais semelhantes 
+ 
+Metil-1H-benzotriazol: 
+Genotoxicidade in vitro 
+ 
+: Tipo de Teste: Ensaio de mutação reversa bacteriana (AMES) 
+Método: Directrizes do Teste OECD 471 
+Resultado: negativo 
+Observações: O ensaio foi realizado de uma forma equivalen-
+te ou semelhante à diretriz 
+ 
+ 
+ 
+  
+Genotoxicidade in vivo 
+ 
+:  Tipo de Teste: Teste de micronúcleos de eritrócitos de mamí-
+feros (teste citogenético in vivo) 
+Espécie: Rato 
+Via de aplicação: Ingestão 
+Método: Directrizes do Teste OECD 474 
+Resultado: negativo 
+Observações: O ensaio foi realizado de uma forma equivalen-
+te ou semelhante à diretriz 
+ 
+Carcinogenicidade 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Etilenoglicol: 
+Espécie : Rato 
+Via de aplicação : Ingestão 
+Duração da exposição : 2 Anos 
+Resultado : negativo 
+ 
+Toxicidade reprodutiva 
+Pode afectar o nascituro. 
+Componentes: 
+Sódio 2-etilhexanoato: 
+Efeitos na fertilidade 
+ 
+:  Tipo de Teste: Estudo de toxicidade de dose repetida combi-
+nada com o teste de triagem de toxidade para desenvolvi-
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+16 / 26 
+ment/reprodução 
+Espécie: Ratazana 
+Via de aplicação: Ingestão 
+Método: Directrizes do Teste OECD 422 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Efeitos sobre o desenvolvi-
+mento do feto 
+ 
+:  Tipo de Teste: Desenvolvimento embriofetal 
+Espécie: Ratazana 
+Via de aplicação: Ingestão 
+Resultado: positivo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade reprodutiva - 
+Avaliação 
+ 
+:  Clara evidência de efeitos adversos no desenvolvimento, 
+baseada sobre experiências com animais. 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Metil-1H-benzotriazol: 
+Efeitos sobre o desenvolvi-
+mento do feto 
+ 
+:  Tipo de Teste: Desenvolvimento embriofetal 
+Espécie: Ratazana 
+Via de aplicação: Ingestão 
+Método: Directrizes do Teste OECD 414 
+Resultado: positivo 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+Toxicidade reprodutiva - 
+Avaliação 
+ 
+:  Algumas provas de efeitos adversos sobre o desenvolvimen-
+to, baseadas sobre experiências com animais. 
+ 
+Toxicidade para órgãos-alvo específicos (STOT) - exposição única 
+Não classificado com base nas informações disponíveis. 
+Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida 
+Pode afectar os órgãos após exposição prolongada ou repetida. 
+Componentes: 
+Etilenoglicol: 
+Vias de exposição : Ingestão 
+Orgãos alvo : Rim 
+Avaliação : Demonstra produzir efeitos de saúde significantes em animais 
+a concentrações de >10 até 100 mg/kg pc. 
+ 
+Toxicidade por dose repetida 
+Componentes: 
+Etilenoglicol: 
+Espécie : Ratazana 
+NOAEL : 200 mg/kg  
+Via de aplicação : Ingestão 
+Duração da exposição : 33 Dias 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+17 / 26 
+ 
+Espécie : Cão 
+NOAEL : 2.200 - 4.400 mg/kg  
+Via de aplicação : Contacto com a pele 
+Duração da exposição : 4 Sems. 
+Método : Directrizes do Teste OECD 410 
+ 
+ 
+Sódio 2-etilhexanoato: 
+Espécie : Ratazana 
+NOAEL : > 100 mg/kg  
+Via de aplicação : Ingestão 
+Duração da exposição : 90 Dias 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Metil-1H-benzotriazol: 
+Espécie : Ratazana 
+NOAEL : >= 750 mg/kg  
+Via de aplicação : Ingestão 
+Duração da exposição : 90 Dias 
+Método : Directrizes do Teste OECD 408 
+Observações : O ensaio foi desenvolvido de acordo com a diretriz 
+ 
+Toxicidade por aspiração 
+Não classificado com base nas informações disponíveis. 
+11.2 Informações sobre outros perigos 
+Propriedades desreguladoras do sistema endócrino 
+Não classificado com base nas informações disponíveis. 
+Produto: 
+Avaliação : A substância/mistura não contém componentes considerados 
+como tendo propriedades desreguladoras do sistema endó-
+crino de acordo com o artigo 57(f) do REACH ou o Regula-
+mento Delegado da Comissão (UE) 2017/2100 ou o Regula-
+mento da Comissão (UE) 2018/605 a níveis de 0,1% ou supe-
+riores. 
+ 
+SECÇÃO 12: Informação ecológica 
+12.1 Toxicidade 
+Componentes: 
+Etilenoglicol: 
+Toxicidade em peixes 
+ 
+:  CL50 (Pimephales promelas (vairão gordo)): 53.000 mg/l 
+Duração da exposição: 96 h 
+ 
+Toxicidade em dáfnias e :  CE50 (Daphnia magna): > 100 mg/l 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+18 / 26 
+outros invertebrados aquáti-
+cos 
+ 
+Duração da exposição: 48 h 
+Método: Directrizes do Teste OECD 202 
+ 
+Toxicidade para às al-
+gas/plantas aquáticas 
+ 
+:  CE50r (Raphidocelis subcapitata (algas verdes de água do-
+ce)): 6.500 - 13.000 mg/l 
+Duração da exposição: 96 h 
+ 
+ 
+ 
+   
+Toxicidade em dáfnias e 
+outros invertebrados aquáti-
+cos (Toxicidade crónica) 
+ 
+: NOEC: 8.590 mg/l  
+Duração da exposição: 7 d 
+Espécie: Ceriodaphnia dubia (pulga d'água) 
+ 
+Sódio 2-etilhexanoato: 
+Toxicidade em peixes 
+ 
+:  CL50 (Oryzias latipes (medaka)): > 100 mg/l 
+Duração da exposição: 96 h 
+Método: Directrizes do Teste OECD 203 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados aquáti-
+cos 
+ 
+:  CE50 (Daphnia magna): 910 mg/l 
+Duração da exposição: 48 h 
+ 
+Toxicidade para às al-
+gas/plantas aquáticas 
+ 
+:  CE50r (Pseudokirchneriella subcapitata (alga verde)): 500 
+mg/l 
+Duração da exposição: 72 h 
+Método: Directrizes do Teste OECD 201 
+ 
+ 
+ 
+  NOEC (Pseudokirchneriella subcapitata (alga verde)): 130 
+mg/l 
+Duração da exposição: 72 h 
+Método: Directrizes do Teste OECD 201 
+ 
+Toxicidade para os micro-
+organismos 
+ 
+:  EC10 (Pseudomonas putida): > 1 mg/l  
+Duração da exposição: 17 h 
+Método: DIN 38 412 Part 8 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados aquáti-
+cos (Toxicidade crónica) 
+ 
+: NOEC: 18 mg/l  
+Duração da exposição: 21 d 
+Espécie: Daphnia magna 
+Método: Directrizes do Teste OECD 211 
+ 
+Metil-1H-benzotriazol: 
+Toxicidade em peixes 
+ 
+:  CL50 (Cyprinodon variegatus (sargo-choupa)): 55 mg/l 
+Duração da exposição: 96 h 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados aquáti-
+cos 
+ 
+:  CE50 (Acartia tonsa (copépode calanoida)): 55 mg/l 
+Duração da exposição: 48 h 
+Método: ISO 14669 e método PARCOM 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+19 / 26 
+Toxicidade para às al-
+gas/plantas aquáticas 
+ 
+:  NOEC (Skeletonema costatum): 30 mg/l 
+Duração da exposição: 72 h 
+Método: ISO 10253 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+ 
+ 
+  CE50r (Skeletonema costatum): 53 mg/l 
+Duração da exposição: 72 h 
+Método: ISO 10253 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+Toxicidade para os micro-
+organismos 
+ 
+:  EC10 (lamas activadas): > 1 mg/l  
+Duração da exposição: 3 h 
+Método: Directrizes do Teste OECD 209 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+aom base em dados de materiais semelhantes 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados aquáti-
+cos (Toxicidade crónica) 
+ 
+: EC10: > 0,1 - 1 mg/l  
+Duração da exposição: 21 d 
+Espécie: Daphnia galeata 
+Método: Directrizes do Teste OECD 211 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+aom base em dados de materiais semelhantes 
+ 
+12.2 Persistência e degradabilidade 
+Componentes: 
+Etilenoglicol: 
+Biodegradabilidade 
+ 
+:  Resultado: Rapidamente biodegradável. 
+Biodegradabilidade:  90 - 100 % 
+Duração da exposição: 10 d 
+Método: Directrizes do Teste OECD 301 A 
+ 
+Sódio 2-etilhexanoato: 
+Biodegradabilidade 
+ 
+:  Resultado: Rapidamente biodegradável. 
+Método: Directrizes do Teste OECD 301E 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Metil-1H-benzotriazol: 
+Biodegradabilidade 
+ 
+:  Resultado: Não rapidamente biodegradável. 
+Biodegradabilidade:  4 % 
+Duração da exposição: 28 d 
+Método: Directiva 92/32/EEG, Anexo V, C.4.D. 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+Testes de simulação de bio- :  Compartimento Ambiental: Agua doce 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+20 / 26 
+degradação 
+ 
+tipo de valor: DT50 
+Valor: > 60 d 
+Método de medição: Directrizes do Teste OECD 309 
+Temperatura: 10 °C 
+pH: 7,89 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+12.3 Potencial de bioacumulação 
+Componentes: 
+Etilenoglicol: 
+Coeficiente de partição: n-
+octanol/água 
+ 
+: log Pow: -1,36 
+Observações: Cálculo 
+ 
+Sódio 2-etilhexanoato: 
+Coeficiente de partição: n-
+octanol/água 
+ 
+: log Pow: 1,3 
+Método: Directrizes do Teste OECD 117 
+ 
+Metil-1H-benzotriazol: 
+Coeficiente de partição: n-
+octanol/água 
+ 
+: log Pow: 1,079 - 1,083 
+Método: Directrizes do Teste OECD 117 
+Observações: O ensaio foi desenvolvido de acordo com a 
+diretriz 
+ 
+12.4 Mobilidade no solo 
+Componentes: 
+Metil-1H-benzotriazol: 
+Distribuição por comparti-
+mentos ambientais 
+ 
+: log Koc: < 2 
+Observações: aom base em dados de materiais semelhantes 
+ 
+12.5 Resultados da avaliação PBT e mPmB 
+Produto: 
+Avaliação 
+ 
+: A substância/mistura não contém componentes considerados 
+persistentes, bioacumuláveis e tóxicos (PBT) ou muito persis-
+tentes e muito bioacumuláveis (vPvB) a níveis de 0.1% ou 
+superior. 
+ 
+12.6 Propriedades desreguladoras do sistema endócrino 
+Produto: 
+Avaliação : A substância/mistura não contém componentes considerados 
+como tendo propriedades desreguladoras do sistema endó-
+crino de acordo com o artigo 57(f) do REACH ou o Regula-
+mento Delegado da Comissão (UE) 2017/2100 ou o Regula-
+mento da Comissão (UE) 2018/605 a níveis de 0,1% ou supe-
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+21 / 26 
+riores. 
+ 
+12.7 Outros efeitos adversos 
+Componentes: 
+Metil-1H-benzotriazol: 
+Avaliação 
+ 
+: A substância é persistente, móvel e tóxica (PMT). 
+A substância é muito persistente e muito móvel (vPvM). 
+ 
+SECÇÃO 13: Considerações relativas à eliminação 
+13.1 Métodos de tratamento de resíduos 
+Produto :  Eliminar de acordo com os regulamentos locais. 
+De acordo com o Catálogo Europeu dos Resíduos, os Códi-
+gos dos Resíduos não são específicos ao produto, mas espe-
+cíficos à aplicação. 
+Os códigos dos resíduos devem ser atribuídos pelo usuário, 
+de preferência em discussão com as autoridades responsá-
+veis pela destruição dos resíduos. 
+Não deitar os resíduos para o esgoto. 
+ 
+Embalagens contaminadas :  Os contentores vazios devem ser levados para um local apro-
+vado para a manipulação de resíduos para a reciclagem ou a 
+destruição. 
+Se não especificado de outra forma: Eliminar como produto 
+não utilizado. 
+ 
+Número de eliminação de 
+resíduos 
+:  Os códigos dos resíduos seguintes são somente sugestões: 
+ 
+   produto usado 
+16 01 14*, fluidos anticongelantes contendo substâncias peri-
+gosas 
+ 
+   produto não usado 
+16 01 14*, fluidos anticongelantes contendo substâncias peri-
+gosas 
+ 
+   embalagens contaminadas 
+15 01 10*, embalagens contendo ou contaminadas por resí-
+duos de substâncias perigosas 
+ 
+SECÇÃO 14: Informações relativas ao transporte 
+14.1 Número ONU ou número de ID 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+22 / 26 
+IMDG : Não regulado como mercadoria perigosa 
+IATA : Não regulado como mercadoria perigosa 
+14.2 Designação oficial de transporte da ONU 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA : Não regulado como mercadoria perigosa 
+ 
+14.3 Classes de perigo para efeitos de transporte 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA : Não regulado como mercadoria perigosa 
+14.4 Grupo de embalagem 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA (Navio de carga) : Não regulado como mercadoria perigosa 
+IATA (Passageiro) : Não regulado como mercadoria perigosa 
+14.5 Perigos para o ambiente 
+Não regulado como mercadoria perigosa 
+14.6 Precauções especiais para o utilizador 
+Não aplicável 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI  
+Observações :  Não aplicável ao produto tal como fornecido. 
+ 
+SECÇÃO 15: Informação sobre regulamentação 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, 
+segurança e ambiente 
+REACH - Restrições aplicáveis ao fabrico, à colocação 
+no mercado e à utilização de determinadas substâncias 
+e misturas perigosas e de certos artigos perigosos 
+(Anexo XVII) 
+: Condições de limitação para as 
+seguintes entradas devem ser con-
+sideradas: 
+Número na lista 30: Sódio 2-
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+23 / 26 
+ etilhexanoato 
+   
+Número na lista 3 
+   
+Número na lista 75: Se pretende 
+utilizar este produto como tinta para 
+tatuagem, por favor contate o seu 
+fornecedor. 
+ 
+   
+ 
+  A(s) substância(s) ou mistura(s) são 
+aqui enumeradas de acordo com a 
+sua aparência no regulamento, in-
+dependentemente da sua utiliza-
+ção/fim ou das condições da restri-
+ção. Consultar as condições do 
+regulamento correspondente para 
+determinar se uma entrada é ou não 
+aplicável à colocação no mercado. 
+REACH - Lista de substâncias que suscitam elevada 
+preocupação candidatas a autorização (artigo 59). 
+ 
+: Não aplicável 
+Regulamentação (EC) No 2024/590 sobre substâncias 
+que empobrecem a camada de ozônio 
+ 
+: Não aplicável 
+Regulamento (UE) 2019/1021 relativo a poluentes orgâ-
+nicos persistentes (reformulação) 
+ 
+: Não aplicável 
+Regulamentação (UE) No 649/2012 do Parlamento eu-
+ropeu e o Conselho sobre a importação e exportação de 
+produtos químicos perigosos 
+ 
+: Não aplicável 
+REACH - Lista de substâncias sujeitas à autorização 
+(Anexo XIV) 
+ 
+: Não aplicável 
+Seveso III: Diretiva 2012/18/UE do Parlamento Europeu e do Conselho relativa ao controlo dos 
+perigos associados a acidentes graves que envolvem substâncias perigosas.  
+  Não aplicável 
+ 
+ 
+Componentes orgânicos 
+voláteis. 
+ 
+: Diretiva 2010/75/UE do Parlamento Europeu e do Conselho, 
+de 24 de Novembro de 2010, relativa às emissões industriais 
+e exploração pecuária (prevenção e controlo integrados da 
+poluição) 
+Teor dos componentes orgânicos voláteis: 0 %, 0 g/l 
+Observações: Conteúdo VOC excluindo a água 
+ 
+Outro regulamentação: 
+Tenha a atenção à Directiva 94/33/EC relativa à protecção de jovens no trabalho ou regula-
+mentos nacionais mais rigorosos, quando aplicável. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+24 / 26 
+Tenha a atenção à Directiva 92/85/EEC em matéria de protecção de maternidade ou regula-
+mentos nacionais mais rigorosos, quando aplicável. 
+ 
+15.2 Avaliação da segurança química 
+Uma Avaliação de Segurança de Produtos Químicos não foi executada. 
+SECÇÃO 16: Outras informações 
+Outras informações 
+ 
+:  Os itens onde foram feitas alterações à versão anterior são 
+destacados no corpo deste documento por duas linhas verti-
+cais. 
+ 
+Texto completo das Demonstrações -H 
+EUH450 : Pode causar uma contaminação prolongada e difusa dos 
+recursos hídricos 
+EUH451 : Pode causar uma contaminação muito prolongada e difusa 
+dos recursos hídricos 
+H302 : Nocivo por ingestão. 
+H360D : Pode afectar o nascituro. 
+H361d : Suspeito de afectar o nascituro. 
+H373 : Pode afectar os órgãos após exposição prolongada ou repeti-
+da por ingestão. 
+H411 : Tóxico para os organismos aquáticos com efeitos duradouros. 
+Texto completo das outras siglas 
+Acute Tox. : Toxicidade aguda 
+Aquatic Chronic : Perigo (crónico) de longo prazo para o ambiente aquático 
+mPmM : Muito persistente e muito móvel 
+PMT : Persistente, móvel e tóxico 
+Repr. : Toxicidade reprodutiva 
+STOT RE : Toxicidade para órgãos-alvo específicos - exposição repetida 
+2000/39/EC : Directiva 2000/39/CE da Comissão relativa ao estabelecimen-
+to de uma primeira lista de valores limite de exposição profis-
+sional indicativos 
+PT DL 305/2007 : Valores limites de exposição profissional indicativos 
+PT OEL : Segurança e Saúde no Trabalho - Valores limite de exposição 
+profissional a agentes químicos 
+2000/39/EC / TWA : Valores limite - oito horas 
+2000/39/EC / STEL : Limite de exposição de curta duração 
+PT DL 305/2007 / oito horas : Valores limite oito horas 
+PT DL 305/2007 / curta dura-
+ção 
+: Valores limite curta duração 
+PT OEL / VLE-CE : Valor limite de exposição - concentração máxima 
+ 
+ADN - Acordo europeu relativo ao transporte internacional de mercadorias perigosas por via na-
+vegável interior; ADR - Acordo Relativo ao Transporte Internacional de Mercadorias Perigosas 
+por Estrada; AIIC - Inventário Australiano de Químicos Industriais; AS TM - Sociedade Americana 
+para a Testagem de Materiais; bw - Peso corporal; CLP - Regulamento relativo à classificação, 
+rotulagem e embalagem; Regulamento (CE) No 1272/2008; CMR - Cancerígeno, mutagénico ou 
+tóxico para a reprodução; DIN - Norma do Instituto  Alemão de Normalização; DSL - Lista de 
+Substâncias Domésticas (Canadá); ECHA - Agência Europeia de Produtos Químicos; EC -
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+25 / 26 
+Number - Número da Comunidade Europeia; ECx - Concentração associada pela resposta de 
+x%; ELx - Taxa de carregamento associada à respo sta de x%; EmS - Procedimento de Emer-
+gência; ENCS - Substâncias Químicas Novas e Existentes (Japão); ErCx - Concentração associ-
+ada à resposta de taxa de crescimento de x%; GHS - Sistema Globalmente Harmonizado; GLP - 
+Boas Práticas de Laboratório; IARC - Agência Internacional de Pesquisa sobre Câncer; IATA - 
+Associação Internacional do Transporte Aéreo; IBC - Código Internacional para a Construção e 
+Equipamento de Navios que Transportam Substâncias Químicas Perigosas a Granel; IC50 - 
+concentração média máxim a inibitória; ICAO - Organização Internacional da Aviação Civil; 
+IECSC - Relação de Substâncias Químicas Existentes na China; IMDG - Código Marítimo Inter-
+nacional de Mercadorias Perigosas; IMO - Organização Marítima Internacional; ISHL - Lei de 
+Saúde e Seg urança Industrial (Japão); ISO - Organização Internacional para a Padronização; 
+KECI - Relação de Químicos Existentes na Coreia; LC50 - Concentração Letal para 50% de uma 
+população de teste; LD50 - Dose Letal para 50% de uma População de teste (Dose Letal Média); 
+MARPOL - Convenção Internacional para a Prevenção de Poluição dos Navios; n.o.s. - N.S.A.: 
+Não especificadas de outro modo. NO(A)EC - Concentração máxima que não éobservado ne-
+nhum efeito (adverso); NO(A)EL - Nivel máximo que não é observado nenhum efeito (adverso); 
+NOELR - Taxa de Carregamento que não éobservado nenhum efeito; NZIoC - Relação de Quí-
+micos da Nova Zelândia; OECD - Organização para a Cooperação e o Desenvolvimento Econô-
+mico; OPPTS - Gabinete de Segurança Química e Prevenção à Poluição;  PBT - Substância Per-
+sistente, Bioacumulativa e Tóxica; PICCS - Relação de Substâncias Químicas e Químicos das 
+Filipinas; (Q)SAR - Relações (Quantitativas) entre Estrutura Química e Atividade Biológica ; 
+REACH - Regulamento (CE) No 1907/2006 do Parlamento Europeu e do Concelho a propósito 
+do Registro, da Avaliação, Autorização, e Restrição de Químicos; RID - Regulamento relativo ao 
+transporte internacional ferroviário de mercadorias perigosas; SADT - Temperatura de Decom-
+posição Autoacelerada; SDS - Ficha de  dados de segurança; SVHC - substância que suscita 
+elevada preocupação; TCSI - Relação de Substâncias Químicas de Taiwan; TECI - Inventário de 
+produtos químicos existentes na Tailândia;TRGS - Regra Técnica para Substâncias Perigosas; 
+TSCA - Lei de Controle  de Substâncias Tóxicas (Estados Unidos); UN - Nações Unidas; vPvB - 
+Muito Persistentes e Muito Bioacumulativos 
+Informações adicionais 
+Fontes dos principais dados 
+utilizados na elaboração da 
+ficha 
+ 
+:  Dados técnicos internos, dados de matéria-prima SDSs, re-
+sultados da pesquisa da OCDE eChem Portal e Agência Eu-
+ropeia de Produtos Químicos, http://echa.europa.eu/ 
+ 
+Classificação da mistura: Procedimento de classificação: 
+Acute Tox. 4 H302 Método de cálculo 
+Repr. 1B H360D Método de cálculo 
+STOT RE 2 H373 Método de cálculo 
+PMT EUH450 Método de cálculo 
+mPmM EUH451 Método de cálculo 
+ 
+Os itens onde foram feitas alterações à versão anterior são destacados no corpo deste docu-
+mento por duas linhas verticais. 
+A informação fornecida nesta Ficha de Dados de Segurança é a correcta, para o melhor do nos-
+so conhecimento, informação e crença na data da sua publicação. A informação destina -se ape-
+nas como orientação para manusear, usar, processar, armazenar, transportar, eliminar e publicar 
+e não deve ser considerada como uma garantia ou especificação de qualquer tipo de qualidade. 
+A informação fornecida refere-se apenas ao material específico identificado no topo deste SDS e 
+pode não ser válida, quando o material do SDS é usado em combinação com outros materiais, 
+ou em qualquer processo, excepto se especificado no texto. Os utilizadores dos materiais devem 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+ANTI-CONGELANTE PURO 5L 
+ 
+ 
+ 
+Versão  
+7.0 
+Data de revisão:  
+12.06.2025 
+Número SDS:  
+10801053-00010 
+Data de última emissão: 08.11.2024 
+Data da primeira emissão: 12.05.2015 
+ 
+26 / 26 
+analisar as informações e recomendações no contexto específico em termos da forma pretendi-
+da de manuseio, uso, processamento e armazenamento, incluindo uma avaliação da adequação 
+do material SDS no produto final do utilizador, se aplicável. 
+ 
+PT / PT 
+ 
+ 

@@ -1,0 +1,750 @@
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/EMPRESA
+1.1 Identificador do produto: PRODET LAV MAQ
+Detergente Máquina Loiça
+Outros meios de identificação:
+UFI: HJ10-F06W-G004-R082
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas:
+Usos pertinentes: Produto para lavagem de louça. Para uso utilizador profissional/utilizador industrial.
+Usos desaconselhados: Todos aqueles usos não especificados nesta epígrafe ou na subsecção 7.3
+1.3 Identificação do fornecedor da ficha de dados de segurança:
+CARVIDET – Higiene Industrial, Lda
+Rua Alto da Cruz, n.º 825
+4780-393 Santo Tirso - Porto - Portugal
+Tel.: +351 252 833 315 - Fax: +351 252 852 194
+info@carvidet.pt
+http://www.carvidet.pt
+1.4 Número de telefone de emergência: CIAV: +351 800 250 250
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS
+2.1 Classificação da substância ou mistura:
+Adverte-se de que, devido à inclusão da matéria activa numa matriz, estima-se que os perigos por inalação para as vias
+respiratórias podem ser considerados como nulos (este critério prevalece durante a elaboração integral da FDS).
+Regulamento nº1272/2008 (CLP):
+A classificação deste produto foi efectuada em conformidade com o Regulamento nº1272/2008 (CLP).
+Eye Dam. 1: Lesões oculares graves/irritação ocular, Categoria 1, H318
+Skin Corr. 1: Corrosão cutânea, Categoria 1, H314
+2.2 Elementos do rótulo:
+Os metais maciços, as ligas, as misturas com polímeros e as misturas com elastómeros não obrigam à aposição de um rótulo se
+não apresentarem perigo para a saúde humana por inalação, ingestão ou contacto com a pele, nem para o ambiente aquático,
+sob a forma em que são colocados no mercado, embora classificados como perigosos
+Regulamento nº1272/2008 (CLP):
+Perigo
+Advertências de perigo:
+Skin Corr. 1: H314 - Provoca queimaduras na pele e lesões oculares graves.
+Recomendações de prudência:
+P101: Se for necessário consultar um médico, mostre-lhe a embalagem ou o rótulo.
+P102: Manter fora do alcance das crianças.
+P301+P330+P331: EM CASO DE INGESTÃO: Enxaguar a boca. NÃO provocar o vómito.
+P303+P361+P353: SE ENTRAR EM CONTACTO COM A PELE (ou o cabelo): Retirar imediatamente toda a roupa contaminada.
+Enxaguar a pele com água ou tomar um duche.
+P305+P351+P338: SE ENTRAR EM CONTACTO COM OS OLHOS: Enxaguar cuidadosamente com água durante vários
+minutos. Se usar lentes de contacto, retire-as, se tal lhe for possível. Continue a enxaguar.
+P501: Eliminar o conteúdo/recipiente por meio do sistema de recolha seletiva em vigor no seu município.
+ Substâncias que contribuem para a classificação 
+ hidróxido de sódio; Acido etidronico 
+2.3 Outros perigos:
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 1/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS (continuação)
+O produto não atende aos critérios PBT/mPmB
+O produto não cumpre os critérios devido às suas propriedades de alteração endócrina.
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES
+3.1 Substâncias:
+Não aplicável
+3.2 Misturas:
+Descrição química: Mistura de polímeros, dispersantes e compostos orgânicos e inorgânicos
+Componentes:
+De acordo com o Anexo II do Regulamento (EC) nº1907/2006 (ponto 3), o produto contém:
+Identificação Nome químico/classificação Concentração
+hidróxido de sódio⁽¹⁾ ATP CLP00
+Regulamento 1272/2008 Skin Corr. 1A: H314 - Perigo
+5 - <15 %
+Acido etidronico⁽¹⁾ Auto-classificada
+Regulamento 1272/2008 Acute Tox. 4: H302; Eye Dam. 1: H318; Met. Corr. 1: H290 - Perigo
+<5 %
+⁽¹⁾ Substância que apresentam um risco para a saúde ou para o meio ambiente e que atendem aos critérios estabelecidos pelo Regulamento (UE) n.º 2020/878
+Para mais informações sobre a perigosidade da substâncias, consultar as seções 11, 12 e 16.
+Outras informações:
+Identificação Limite de concentração específico
+hidróxido de sódio
+CAS: 1310-73-2
+EC: 215-185-5
+% (p/p) >=5: Skin Corr. 1A - H314
+2<= % (p/p) <5: Skin Corr. 1B - H314
+0,5<= % (p/p) <2: Skin Irrit. 2 - H315
+% (p/p) >=2: Eye Dam. 1 - H318
+0,5<= % (p/p) <2: Eye Irrit. 2 - H319
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS
+ 4.1 Descrição das medidas de emergência: 
+ Solicitar assistência médica imediata, mostrando-lhe a FDS deste produto. 
+ Por inalação: 
+A possibilidade de ser respirado é practicamente nula, no entanto, em caso de sintomas:
+ Trata-se de um produto que não contém substâncias classificadas como perigosas por inalação, no entanto, no caso de
+sintomas de intoxicação é recomendado retirar o afectado do local de exposição e proporcionar ar fresco. Solicitar cuidados
+médicos se os sintomas agravarem ou persistirem
+ Por contacto com a pele: 
+ Tirar a roupa e os sapatos contaminados, limpar a pele ou lavar a zona afectada com água fria abundante e sabão neutro. Em
+caso de afecção grave consultar um médico. Se o produto causar queimaduras ou congelação, não se deve tirar a roupa pois
+poderá agravar a lesão se esta estiver colada à pele. Caso se formem bolhas na pele, estás não se devem rebentar pois
+aumentaria o risco de infecção.
+ Por contacto com os olhos: 
+ Enxaguar os olhos com água em abundância à temperatura ambiente pelo menos durante 15 minutos. Evitar que o afectado
+esfregue ou feche os olhos. No caso, do afectado usar lentes de contacto, estas devem ser retiradas sempre que não estejam
+coladas aos olhos, pois, de outro modo, poderia produzir-se um dano adicional. Em todos os casos, depois da lavagem, deve
+consultar um médico o mais rapidamente possível com a FDS do produto.
+ Por ingestão/aspiração: 
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 2/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+CAS:
+EC:
+Index:
+REACH:
+1310-73-2
+215-185-5
+011-002-00-6
+01-2119457892-27-
+XXXX
+CAS:
+EC:
+Index:
+REACH:
+2809-21-4
+220-552-8
+Não aplicável
+01-2119510391-53-
+XXXX
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS (continuação)
+ Solicitar assistência médica imediata, mostrando a FDS deste produto. Não induzir o vómito, porque a sua expulsão do
+estômago pode provocar danos na mucosa do tracto digestivo superior e a sua aspiração, ao tracto respiratório. Enxaguar a
+boca e a garganta, porque existe a possibilidade de que tenham sido afectadas na ingestão. No caso de perda de consciência
+não administrar nada por via oral até supervisão de um médico. Manter o afectado em repouso.
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados:
+Os efeitos agudos e retardados são os indicados nos pontos 2 e 11.
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários:
+Não relevante
+SECÇÃO 5:  MEDIDAS DE COMBATE A INCÊNDIOS
+ 5.1 Meios de extinção: 
+Meios de extinção adequados:
+Produto não inflamável em condições normais de armazenamento, manipulação e uso. No caso de inflamação como
+consequência da manipulação, armazenamento ou uso indevido, utilizar preferencialmente extintores de pó polivalente (pó ABC),
+de acordo com o Regulamento de instalações de protecção contra incêndios.
+Meios de extinção inadequados:
+Não relevante
+ 5.2 Perigos especiais decorrentes da substância ou mistura: 
+ Como consequência da combustão ou decomposição térmica são gerados subprodutos de reacção que podem ser altamente
+tóxicos e, consequentemente, podem apresentar um risco elevado para a saúde.
+ 5.3 Recomendações para o pessoal de combate a incêndios: 
+ Em função da magnitude do incêndio, poderá ser necessário o uso de roupa protectora completa e equipamento de respiração
+autónomo. Dispor de um mínimo de instalações de emergência ou elementos de actuação (mantas ignífugas, farmácia portátil,
+etc.) conforme a Directiva 89/654/EC.
+ Disposições adicionais: 
+ Actuar conforme o Plano de Emergência Interno e as Fichas Informativas sobre a actuação perante acidentes e outras
+emergências. Suprimir qualquer fonte de ignição. Em caso de incêndio, refrigerar os recipientes e tanques de armazenamento de
+produtos susceptíveis de inflamação, explosão ou "BLEVE" como consequência de elevadas temperaturas. Evitar o derrame dos
+produtos utilizados na extinção do incêndio no meio aquático.
+SECÇÃO 6: MEDIDAS EM CASO DE FUGA ACIDENTAL
+ 6.1 Precauções individuais, equipamento de protecção e procedimentos de emergência: 
+Para o pessoal não envolvido na resposta à emergência:
+ Isolar as fugas sempre que não representar um risco adicional para as pessoas que desempenhem esta função. Perante a
+exposição potencial com o produto derramado, é obrigatório o uso de elementos de protecção pessoal (ver epígrafe 8). Evacuar
+a zona e manter as pessoas sem protecção afastadas.
+Para o pessoal responsável pela resposta à emergência:
+Usar equipamento de protecção. Manter as pessoas desprotegidas afastadas. Ver SECÇÃO 8.
+ 6.2 Precauções a nível ambiental: 
+ Produto não classificado como perigoso para o meio ambiente. Manter afastado dos esgotos, das águas superficiais e
+subterrâneas
+ 6.3 Métodos e materiais de confinamento e limpeza: 
+ Recomenda-se: 
+Absorver o derrame através de areia ou absorvente inerte e transladar para um local seguro. Não absorver com serradura ou
+outros absorventes combustíveis. Para qualquer consideração relativa à eliminação, consultar a epígrafe 13.
+6.4 Remissão para outras secções: 
+ Veja as seções 8 e 13. 
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 3/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM
+ 7.1 Precauções para um manuseamento seguro: 
+ A.- Precauções para a manipulação segura 
+Cumprir a legislação vigente em matéria de prevenção de riscos laborais quanto ao manuseamento de cargas. Manter
+ordem, limpeza e eliminar por métodos seguros (epígrafe 6).
+ B.- Recomendações técnicas para a prevenção de incêndios e explosões. 
+Produto não inflamável em condições normais de armazenamento, manipulação e uso. É recomendado que o produto seja
+transvazado a velocidades lentas para evitar a geração de cargas electrostáticas que possam afectar produtos inflamáveis.
+Consultar a epígrafe 10 sobre condições e matérias que devem ser evitadas.
+ C.- Recomendações técnicas para prevenir riscos ergonómicos e toxicológicos. 
+Não comer nem beber durante o seu manuseamento, lavando as mãos posteriormente com produtos de limpeza adequados.
+D.- Recomendações técnicas para prevenir riscos meio ambientais.
+É recomendado dispor de material absorvente nas imediações do produto (ver epígrafe 6.3)
+ 7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades: 
+ A.- Medidas técnicas de armazenamento 
+Temperatura mínima: 5 ºC
+Temperatura máxima: 30 ºC
+ B.- Condições gerais de armazenamento. 
+Evitar fontes de calor, radiação, electricidade estática e o contacto com alimentos. Para informação adicional, ver epígrafe
+10.5
+ 7.3 Utilização(ões) final(is) específica(s): 
+ Excepto as indicações já especificadas, não é necessário realizar nenhuma recomendação especial quanto às utilizações deste
+produto.
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL
+ 8.1 Parâmetros de controlo: 
+ Substâncias cujos valores limite de exposição ocupacional devem ser controladas no ambiente de trabalho: 
+NP 1796:2014:
+Identificação Valores limite ambientais
+hidróxido de sódio VLE–MP
+CAS: 1310-73-2       EC: 215-185-5 VLE-CD 2 mg/m³
+DNEL (Trabalhadores):
+ Curta exposição Longa exposição
+Identificação Sistémica Locais Sistémica Locais
+hidróxido de sódio Oral Não relevante Não relevante Não relevante Não relevante
+CAS: 1310-73-2 Cutânea Não relevante Não relevante Não relevante Não relevante
+EC: 215-185-5 Inalação Não relevante Não relevante Não relevante 1 mg/m³
+Acido etidronico Oral Não relevante Não relevante Não relevante Não relevante
+CAS: 2809-21-4 Cutânea Não relevante Não relevante 34 mg/kg Não relevante
+EC: 220-552-8 Inalação Não relevante Não relevante 12 mg/m³ Não relevante
+DNEL (População):
+ Curta exposição Longa exposição
+Identificação Sistémica Locais Sistémica Locais
+hidróxido de sódio Oral Não relevante Não relevante Não relevante Não relevante
+CAS: 1310-73-2 Cutânea Não relevante Não relevante Não relevante Não relevante
+EC: 215-185-5 Inalação Não relevante Não relevante Não relevante 1 mg/m³
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 4/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL (continuação)
+ Curta exposição Longa exposição
+Identificação Sistémica Locais Sistémica Locais
+Acido etidronico Oral 1,7 mg/kg Não relevante 1,7 mg/kg Não relevante
+CAS: 2809-21-4 Cutânea Não relevante Não relevante 17 mg/kg Não relevante
+EC: 220-552-8 Inalação Não relevante Não relevante 2,95 mg/m³ Não relevante
+PNEC:
+Identificação
+Acido etidronico STP 40 mg/L Água doce 0,068 mg/L
+CAS: 2809-21-4 Solo 10 mg/kg Água marinha 0,007 mg/L
+EC: 220-552-8 Intermitentes Não relevante Sedimentos (Água doce) 136 mg/kg
+Oral 0,0037 g/kg Sedimentos (Água marinha) 13,6 mg/kg
+ 8.2 Controlo da exposição: 
+ A.- Medidas de proteção individual, nomeadamente equipamentos de proteção individual 
+Como medida de prevenção recomenda-se a utilização de equipamentos de protecção individuais básicos, com o
+correspondente marcação CE. Para mais informações sobre os equipamentos de protecção individual (armazenamento,
+utilização, limpeza, manutenção, classe de protecção,…) consultar o folheto informativo fornecido pelo fabricante do EPI. As
+indicações contidas neste ponto referem-se ao produto puro. As medidas de protecção para o produto diluído podem variar
+em função do seu grau de diluição, uso, método de aplicação, etc. Para determinar o cumprimento de instalação de duches
+de emergência e/ou lava-olhos nos armazéns deve ter-se em conta a regulamentação referente ao armazenamento de
+produtos químicos aplicável em cada caso. Para mais informações ver epígrafe 7.1 e 7.2.  Toda a informação aqui
+apresentada é uma recomendação, sendo necessário a sua implementaçãopor parte dos serviços de prevenção de riscos
+laborais ao desconhecer as medidas de prevenção adicionais que a empresa possa dispor.
+ B.- Protecção respiratória: 
+Será necessária a utilização de equipamentos de protecção no caso de formação de neblinas ou no caso de ultrapassar os
+limites de exposição profissional.
+ C.- Protecção específica das mãos. 
+Pictograma PPE Marcação Normas ECN Observações
+Protecção obrigatória
+das mãos
+Luvas de protecção química
+(Material: Polietileno de
+baixa densidade linear
+(LLPDE), Tempo de
+penetração: > 480 min,
+Espessura: 0,062 mm)
+EN ISO 21420:2020 Substituir as luvas perante qualquer indício dedeterioração.
+Dado que o produto é uma mistura de diferentes materiais, a resistência do material das luvas não se pode calcular de
+antemão com total fiabilidade e, portanto, têm de ser controladas antes da sua aplicação.
+ D.- Protecção ocular e facial 
+Pictograma PPE Marcação Normas ECN Observações
+Protecção obrigatória
+da cara
+Óculos panorâmicos contra
+salpicos/projeções
+EN 166:2002
+EN ISO 4007:2018
+Limpar diariamente e desinfectar periodicamente
+de acordo com as instruções do fabricante.
+Recomenda-se a sua utilização, no caso de risco
+de salpicos.
+ E.- Protecção corporal 
+Pictograma PPE Marcação Normas ECN Observações
+Roupa de trabalho
+Substituir perante qualquer indício de deterioração.
+Para períodos de exposição prolongados ao
+produto por utilizadores profissionais/industriais é
+recomendável CE III, de acordo com as normas EN
+ISO 6529:2013, EN ISO 6530:2005, EN ISO
+13688:2013, EN 464:1995
+Calçado de trabalho anti-
+derrapante EN ISO 20347:2012
+Substituir perante qualquer indício de deterioração.
+Para períodos de exposição prolongados ao
+produto por utilizadores profissionais/industriais é
+recomendável CE III, de acordo com as normas EN
+ISO 20345:2012 e EN 13832-1:2007
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 5/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL (continuação)
+ F.- Medidas complementares de emergência 
+Medida de emergência Normas Medida de emergência Normas
+Duche de segurança
+ANSI Z358-1
+ISO 3864-1:2011, ISO 3864-4:2011
+Lavagem dos olhos
+DIN 12 899
+ISO 3864-1:2011, ISO 3864-4:2011
+ Controlo da exposição ambiental: 
+ Em virtude da legislação comunitária de protecção do meio ambiente, é recomendado evitar o derrame tanto do produto como da
+sua embalagem no meio ambiente. Para informação adicional, ver epígrafe 7.1.D
+Compostos orgânicos voláteis:
+Em aplicação do Decreto-Lei n° 127/2013 (Directiva 2010/75/UE), este produto apresenta as seguintes características:
+C.O.V. (Fornecimento): 0 % peso
+Densidade de C.O.V. a 20 ºC: 0 kg/m³  (0 g/L)
+Número de carbonos médio: Não relevante
+Peso molecular médio: Não relevante
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS
+ 9.1 Informações sobre propriedades físicas e químicas de base: 
+ Para obter informações completas ver a ficha técnica do produto. 
+Aspecto físico:
+Estado físico a 20 ºC: Líquido.
+Aspecto: Translúcido
+Cor: Laranja
+Odor: Característico
+Limiar olfativo: Não relevante *
+Volatilidade:
+Temperatura de ebulição à pressão atmosférica: 100 ºC
+Pressão de vapor a 20 ºC: 2350 Pa
+Pressão de vapor a 50 ºC: 12381,01 Pa  (12,38 kPa)
+Taxa de evaporação a 20 ºC: Não relevante *
+Caracterização do produto:
+Densidade a 20 ºC: 1097,1 kg/m³
+Densidade relativa a 20 ºC: 1,097
+Viscosidade dinâmica a 20 ºC: Não relevante *
+Viscosidade cinemática a 20 ºC: Não relevante *
+Viscosidade cinemática a 40 ºC: Não relevante *
+Concentração: Não relevante *
+pH: 12 (a 1 %)
+Densidade do vapor a 20 ºC: Não relevante *
+Coeficiente de partição n-octanol/água: Não relevante *
+Solubilidade em água a 20 ºC: Não relevante *
+Propriedade de solubilidade: Não relevante *
+Temperatura de decomposição: Não relevante *
+Ponto de fusão/ponto de congelação: Não relevante *
+*Não existem dados disponíveis a data da elaboração deste documento ou porque não é aplicável devido a natureza e perigo do produto
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 6/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS (continuação)
+Inflamabilidade:
+Temperatura de inflamação: Não inflamável (>60 ºC)
+Inflamabilidade (sólido, gás): Não relevante *
+Temperatura de auto-ignição: Não relevante *
+Limite de inflamabilidade inferior: Não relevante *
+Limite de inflamabilidade superior: Não relevante *
+Características das partículas:
+Diâmetro equivalente mediano: Não aplicável
+9.2 Outras informações:
+Informações relativas às classes de perigo físico:
+Propriedades explosivas: Não relevante *
+Propriedades comburentes: Não relevante *
+Corrosivos para os metais: Não relevante *
+Calor de combustão: Não relevante *
+Aerossóis-percentagem total (em massa) de
+componentes inflamáveis:
+Não relevante *
+Outras características de segurança:
+Tensão superficial a 20 ºC: Não relevante *
+Índice de refracção: Não relevante *
+*Não existem dados disponíveis a data da elaboração deste documento ou porque não é aplicável devido a natureza e perigo do produto
+SECÇÃO 10: ESTABILIDADE E REATIVIDADE
+ 10.1 Reactividade: 
+ Não se esperam reacções perigosas se cumprirem as instruções técnicas de armazenamento de produtos químicos. 
+ 10.2 Estabilidade química: 
+ Quimicamente estável nas condições de manuseamento, armazenamento e utilização. 
+ 10.3 Possibilidade de reações perigosas: 
+ Sob as condições não são esperadas reacções perigosas para produzir uma pressão ou temperaturas excessivas. 
+ 10.4 Condições a evitar: 
+Aplicáveis para manipulação e armazenamento à temperatura ambiente:
+ Choque e fricção Contacto com o ar Aquecimento Luz Solar Humidade 
+Não aplicável Não aplicável Não aplicável Não aplicável Não aplicável
+ 10.5 Materiais incompatíveis: 
+ Ácidos Água Matérias comburentes Matérias combustíveis Outros 
+Evitar ácidos fortes Não aplicável Precaução Não aplicável Não aplicável
+ 10.6 Produtos de decomposição perigosos: 
+ Ver epígrafe 10.3, 10.4 e 10.5 para conhecer os produtos de decomposição especificamente. Dependendo das condições de
+decomposição, como consequência da mesma podem ser libertadas misturas complexas de substâncias químicas: dióxido de
+carbono (CO₂), monóxido de carbono e outros compostos orgânicos.
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA
+ 11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.o 1272/2008: 
+ Não se dispõem de dados experimentais do produto em si relativamente às propriedades toxicológicas 
+ Efeitos perigosos para a saúde: 
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 7/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA (continuação)
+Em caso de exposição repetitiva, prolongada ou a concentrações superiores às estabelecidas pelos limites de exposição
+ocupacional, podem ocorrer efeitos adversos para a saúde em função da via de exposição:
+ A- Ingestão (efeito agudo): 
+-   Toxicidade aguda: Com base nos dados disponíveis, os critérios de classificação não são preenchidos, no entanto,
+apresenta substâncias classificadas como perigosas por ingestão. Para mais informação, ver epígrafe 3.
+-   Corrosividade/Irritação: Produto corrosivo - a sua ingestão provoca queimaduras, destruindo os tecidos em toda a sua
+espessura. Para mais informação sobre efeitos secundários por contacto com a pele, ver epígrafe 2.
+B- Inalação (efeito agudo):
+Adverte-se de que, devido à inclusão da matéria activa numa matriz, estima-se que os perigos por inalação para as vias
+respiratórias podem ser considerados como nulos (este critério prevalece durante a elaboração integral da FDS).
+-   Toxicidade aguda: Com base nos dados disponíveis, os critérios de classificação não são preenchidos e não apresenta
+substâncias classificadas como perigosas por inalação. Para mais informação, ver epígrafe 3.
+-   Corrosividade/Irritação: Em caso de inalação prolongada o produto é destrutivo para os tecidos das membranas mucosas
+e das vias respiratórias superiores
+C- Contacto com a pele e os olhos. (efeito agudo):
+-   Contato com a pele: Principalmente o contacto com a pele destrói os tecidos em toda a sua espessura, provocando
+queimaduras. Para mais informação sobre efeitos secundários por contacto com a pele, ver epígrafe 2.
+-   Contato com os olhos: Lesões oculares significativas após o contacto
+D- Efeitos CMR (carcinogenicidade, mutagenicidade e toxicidade para a reprodução):
+-   Carcinogenicidade: Com base nos dados disponíveis, os critérios de classificação não são preenchidos e não apresenta
+substâncias classificadas como perigosas para os efeitos descritos. Para mais informação, ver epígrafe 3.
+   IARC: C.I.Food Yellow 3 (3)
+-   Mutagenicidade: Com base nos dados disponíveis, os critérios de classificação não são preenchidos, não apresentando
+substâncias classificadas como perigosas para este artigo. Para mais informações ver epígrafe 3.
+-   Toxicidade pela reprodução: Com base nos dados disponíveis, os critérios de classificação não são preenchidos, não
+apresentando substâncias classificadas como perigosas para este artigo. Para mais informações ver epígrafe 3.
+E- Efeitos de sensibilização:
+-   Respiratória: Com base nos dados disponíveis, os critérios de classificação não são preenchidos e não apresenta
+substâncias classificadas como perigosas com efeitos sensibilizantes. Para mais informação, ver epígrafe 3.
+-   Cutânea: Com base nos dados disponíveis, os critérios de classificação não são preenchidos, não apresentando
+substâncias classificadas como perigosas para este artigo. Para mais informações ver epígrafe 3.
+ F- Toxicidade para órgãos-alvo específicos (STOT), tempo de exposição: 
+ Com base nos dados disponíveis, os critérios de classificação não são preenchidos, não apresentando substâncias
+classificadas como perigosas para este artigo. Para mais informações ver epígrafe 3.
+ G- Toxicidade para órgãos-alvo específicos (STOT), a exposição repetida: 
+ -   Toxicidade para órgãos-alvo específicos (STOT), a exposição repetida: Com base nos dados disponíveis, os critérios de
+classificação não são preenchidos, não apresentando substâncias classificadas como perigosas para este artigo. Para mais
+informações ver epígrafe 3.
+-   Pele: Com base nos dados disponíveis, os critérios de classificação não são preenchidos, não apresentando substâncias
+classificadas como perigosas para este artigo. Para mais informações ver epígrafe 3.
+ H- Perigo de aspiração: 
+ Com base nos dados disponíveis, os critérios de classificação não são preenchidos, não apresentando substâncias
+classificadas como perigosas para este artigo. Para mais informações ver epígrafe 3.
+Outras informações:
+Não relevante
+ Informação toxicológica específica das substâncias: 
+Identificação Toxicidade aguda Género
+hidróxido de sódio DL50 oral >2000 mg/kg
+CAS: 1310-73-2 DL50 cutânea >2000 mg/kg
+EC: 215-185-5 CL50 inalação >5 mg/L
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 8/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA (continuação)
+Identificação Toxicidade aguda Género
+Acido etidronico DL50 oral 1878 mg/kg Ratazana
+CAS: 2809-21-4 DL50 cutânea >2000 mg/kg
+EC: 220-552-8 CL50 inalação >5 mg/L
+ Estimativa da toxicidade aguda (ATE mix): 
+ATE mix Ingrediente(s) de toxicidade aguda desconhecida
+Oral 156500 mg/kg (Método de cálculo) 0 %
+Cutânea >2000 mg/kg (Método de cálculo) Não aplicável
+Inalação >20 mg/L (4 h) (Método de cálculo) Não aplicável
+11.2 Informações sobre outros perigos:
+Propriedades desreguladoras do sistema endócrino
+O produto não cumpre os critérios devido às suas propriedades de alteração endócrina.
+Outras informações
+Não relevante
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA
+Não se dispõem de dados experimentais do produto em si relativamente às propriedades ecotoxicológicas
+ 12.1 Toxicidade: 
+Toxicidade aguda:
+Identificação Concentração Espécie Género
+hidróxido de sódio CL50 189 mg/L (48 h) Leuciscus idus Peixe
+CAS: 1310-73-2 EC50 33 mg/L Crangon crangon Crustáceo
+EC: 215-185-5 EC50 Não relevante
+Acido etidronico CL50 2180 mg/L (96 h) Pimephales promelas Peixe
+CAS: 2809-21-4 EC50 527 mg/L (24 h) Daphnia magna Crustáceo
+EC: 220-552-8 EC50 Não relevante
+Toxicidade a longo prazo:
+Identificação Concentração Espécie Género
+Acido etidronico NOEC Não relevante
+CAS: 2809-21-4 EC: 220-552-8 NOEC 6,75 mg/L Daphnia magna Crustáceo
+ 12.2 Persistência e degradabilidade: 
+Não disponível
+ 12.3 Potencial de bioacumulação: 
+Não disponível
+ 12.4 Mobilidade no solo: 
+ Não disponível 
+ 12.5 Resultados da avaliação PBT e mPmB: 
+O produto não atende aos critérios PBT/mPmB
+ 12.6 Propriedades desreguladoras do sistema endócrino: 
+O produto não cumpre os critérios devido às suas propriedades de alteração endócrina.
+12.7 Outros efeitos adversos:
+Não descritos
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO
+ 13.1 Métodos de tratamento de resíduos: 
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 9/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO (continuação)
+Código Descrição Tipo de resíduo  (Regulamento (UE)n. °1357/2014)
+20 01 29* detergentes contendo substâncias perigosas Perigoso
+Tipo de resíduo (Regulamento (UE) n. °1357/2014):
+HP8 Corrosivo
+ Gestão do resíduo (eliminação e valorização): 
+Consultar o gestor de resíduos autorizado para as operações de valorização e eliminação, conforme o Anexo 1 e Anexo 2
+(Directiva 2008/98/CE, Decreto-Lei n.º 102-D/2020). De acordo com os códigos 15 01 (Decisão da Comissão 2014/955/UE), no
+caso da embalagem ter estado em contacto direto com o produto,  esta será tratada do mesmo modo como o próprio produto,
+caso contrário será tratada com resíduo não perigoso. Não se aconselha a descarga através das águas residuais. Ver epígrafe
+6.2.
+Disposições relacionadas com a gestão de resíduos:
+De acordo com o Anexo II do Regulamento (EC) nº1907/2006 (REACH) são apresentadas as disposições comunitárias ou
+estatais relacionadas com a gestão de resíduos.
+Legislação comunitária: Directiva 2008/98/EC, Decisão da Comissão 2014/955/UE, Regulamento (UE) n. °1357/2014
+Legislação nacional: Decreto-Lei n.º 102-D/2020
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE
+ Transporte terrestre de mercadorias perigosas: 
+ Em aplicação do ADR 2021 e RID 2021: 
+14.1 Número ONU ou número de ID: UN1760
+14.2 Designação oficial de
+transporte da ONU:
+LÍQUIDO CORROSIVO, N.S.A. (hidróxido de sódio)
+14.3 Classes de perigo para efeitos
+de transporte:
+8
+Etiquetas: 8
+14.4 Grupo de embalagem: II
+14.5 Perigos para o ambiente: Não
+14.6 Precauções especiais para o utilizador
+Disposições especiais: 274
+Código de Restrição em túneis: E
+Propriedades físico-químicas: Ver secção 9
+Quantidades Limitadas: 1 L
+14.7 Transporte marítimo a granel
+em conformidade com os
+instrumentos da OMI:
+Não relevante
+ Transporte de mercadorias perigosas por mar: 
+ Em aplicação ao IMDG 40-20: 
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 10/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE (continuação)
+14.1 Número ONU ou número de ID: UN1760
+14.2 Designação oficial de
+transporte da ONU:
+LÍQUIDO CORROSIVO, N.S.A. (hidróxido de sódio)
+14.3 Classes de perigo para efeitos
+de transporte:
+8
+Etiquetas: 8
+14.4 Grupo de embalagem: II
+14.5 Poluente marinho: Não
+Precauções especiais para o utilizador14.6
+Disposições especiais: 274
+Códigos EmS: F-A, S-B
+Propriedades físico-químicas: Ver secção 9
+Quantidades Limitadas: 1 L
+Grupo de segregação: SGG18
+14.7 Transporte marítimo a granel
+em conformidade com os
+instrumentos da OMI:
+Não relevante
+ Transporte de mercadorias perigosas por ar: 
+ Em aplicação ao IATA/ICAO 2022: 
+14.1 Número ONU ou número de ID: UN1760
+14.2 Designação oficial de
+transporte da ONU:
+LÍQUIDO CORROSIVO, N.S.A. (hidróxido de sódio)
+14.3 Classes de perigo para efeitos
+de transporte:
+8
+Etiquetas: 8
+14.4 Grupo de embalagem: II
+14.5 Perigos para o ambiente: Não
+14.6 Precauções especiais para o utilizador
+Propriedades físico-químicas: Ver secção 9
+14.7 Transporte marítimo a granel
+em conformidade com os
+instrumentos da OMI:
+Não relevante
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO
+ 15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e ambiente: 
+Substâncias candidatas a autorização no Regulamento (CE) 1907/2006 (REACH): Não relevante
+Substâncias incluídas no Anexo XIV do REACH (lista de autorização) e data de validade: Não relevante
+Regulamento (CE) 1005/2009, sobre substâncias que esgotam a camada de ozono: Não relevante
+Artigo 95, Regulamento (UE) Nº 528/2012: Não relevante
+REGULAMENTO (UE) N.o 649/2012, relativo à exportação e importação de produtos químicos perigosos: Não relevante
+Regulamento (EC) nº648/2004 sobre detergentes:
+De acordo com este regulamento, o produto cumpre o seguinte:
+Rotulagem do conteúdo:
+Componentes Intervalo de concentração
+Fosfonatos % (p/p) < 5
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 11/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO (continuação)
+Cleanright (www.cleanright.eu) © A.I.S.E.:
+Manter fora do alcance das crianças.
+Evitar o contacto com os olhos. Em caso de contacto com os olhos, lavar abundantemente com água.
+Lavar as mãos depois da utilização.
+ Limitações à comercialização e ao uso de determinadas substâncias e misturas perigosas (Anexo XVII REACH, etc...): 
+Não podem ser utilizadas em:
+—objectos decorativos destinados à produção de efeitos de luz ou de cor obtidos por meio de fases diferentes, por exemplo em
+candeeiros decorativos e cinzeiros,
+ —máscaras e partidas,
+ —jogos para um ou mais participantes ou quaisquer objectos destinados a ser utilizados como tais, mesmo com aspectos
+decorativos.
+ Disposições particulares em matéria de protecção das pessoas ou do meio ambiente: 
+É recomendado utilizar a informação recompilada nesta ficha de dados de segurança como dados de entrada numa avaliação de
+riscos das circunstâncias locais com o objectivo de estabelecer as medidas necessárias de prevenção de riscos para o
+manuseamento, utilização, armazenamento e eliminação deste produto.
+ Outras legislações: 
+Decreto-Lei n.º 220/2012, de 10 de outubro, que assegura a execução na ordem jurídica interna das obrigações decorrentes do
+Regulamento (CE) n.º 1272/2008, do Parlamento Europeu e do Conselho, de 16 de dezembro, relativo à classificação, rotulagem
+e embalagem de substâncias e misturas, que altera e revoga as Diretivas n.os 67/548/CEE e 1999/45/CE e altera o Regulamento
+(CE) n.º 1907/2006.
+Decreto-Lei n.º 293/2009, de 13 de Outubro, que assegura a execução, na ordem jurídica nacional, das obrigações decorrentes
+do Regulamento (CE) n.º 1907/2006, do Parlamento Europeu e do Conselho, de 18 de Dezembro, relativo ao registo, avaliação,
+autorização e restrição dos produtos químicos (REACH) e que procede à criação da Agência Europeia dos Produtos Químicos.
+Decreto-Lei n.º 33/2015, de 4 de março - Estabelece obrigações relativas à exportação e importação de produtos químicos
+perigosos, assegurando a execução, na ordem jurídica interna do Regulamento (UE) n.º 649/2012, do Parlamento Europeu e do
+Conselho.
+Decreto-Lei 41-A/2010 de 29 de Abril que regulamenta o transporte rodoviário e ferroviário de mercadorias perigosas.
+Decreto-Lei n.º 147/2008 de 29 de Julho, estabelece o regime jurídico da responsabilidade por danos ambientais e transpõe para
+a ordem jurídica interna a Directiva n.º 2004/35/CE, do Parlamento Europeu e do Conselho.
+Decreto-Lei n.º 24/2012 de 6 de Fevereiro, alterado pelo D.L. n.º 88/2015 de 28 de Maio, pelo D.L. n.º 41/2018 de 11 de Junho e
+pelo D.L. n.º 1/2021 de 6 de Janeiro. Consolida as prescrições mínimas em matéria de protecção dos trabalhadores contra os
+riscos para a segurança e a saúde devido à exposição a agentes químicos no trabalho e transpõe a Directiva n.º 2009/161/UE,
+da Comissão, de 17 de Dezembro de 2009.
+Decreto-Lei n.º 102-D/2020, de 10 de Dezembro -  Aprova o regime geral da gestão de resíduos, o regime jurídico da deposição
+de resíduos em aterro e altera o regime da gestão de fluxos específicos de resíduos, transpondo as Diretivas (UE) 2018/849,
+2018/850, 2018/851 e 2018/852.
+Decisão da Comissão 2014/955/EU - Lista Europeia de Resíduos.
+Regulamento (CE) n. o 1223/2009 do Parlamento Europeu e do Conselho, de 30 de Novembro de 2009 , relativo aos produtos
+cosméticos
+Regulamento (CE) n.° 648/2004 do Parlamento Europeu e do Conselho, de 31 de Março de 2004, relativo aos detergentes e
+alterações
+Regulamento (CE) n. o 551/2009 da Comissão, de 25 de Junho de 2009 , que altera o Regulamento (CE) n. o 648/2004 do
+Parlamento Europeu e do Conselho, relativo aos detergentes, a fim de adaptar os respectivos anexos V e VI
+Regulamento (CE) n. o 907/2006 da Comissão, de 20 de Junho de 2006 , que altera o Regulamento (CE) n. o 648/2004 do
+Parlamento Europeu e do Conselho, relativo aos detergentes, a fim de adaptar os respectivos anexos III e VII
+Decreto-Lei n.º 49/2007 de 28 de Fevereiro que estabelece regras de execução do Regulamento (CE) n.º 648/2004, do
+Parlamento Europeu e do Conselho, de 31 de Março, relativo aos detergentes.
+15.2 Avaliação da segurança química:
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 12/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO (continuação)
+O fornecedor não realizou avaliação de segurança química.
+SECÇÃO 16: OUTRAS INFORMAÇÕES
+ Legislação aplicável a ficha de dados de segurança: 
+Esta ficha de dados de segurança foi desenvolvida em conformidade com o ANEXO II - Guia para a elaboração de Fichas de
+Dados de Segurança do Regulamento (EC) Nº 1907/2006 (REGULAMENTO (UE) 2020/878 DA COMISSÃO)
+Modificações relativas à ficha de segurança anterior que afectam as medidas de gestão de risco:
+Não relevante
+Textos das frases contempladas na seção 2:
+H318: Provoca lesões oculares graves.
+H314: Provoca queimaduras na pele e lesões oculares graves.
+ Textos das frases contempladas na seção 3: 
+As frases indicadas não se referem ao produto em si, são apenas a título informativo e fazem referência aos componentes
+individuais que aparecem na secção 3
+Regulamento nº1272/2008 (CLP):
+Acute Tox. 4: H302 - Nocivo por ingestão.
+Eye Dam. 1: H318 - Provoca lesões oculares graves.
+Met. Corr. 1: H290 - Pode ser corrosivo para os metáis.
+Skin Corr. 1A: H314 - Provoca queimaduras na pele e lesões oculares graves.
+Procedimento de classificação:
+Eye Dam. 1: Método de cálculo
+Skin Corr. 1: Método de cálculo
+ Conselhos relativos à formação: 
+Recomenda-se formação mínima em matéria de prevenção de riscos laborais ao pessoal que vai a manipular este produto, com
+a finalidade de facilitar a compreensão e a interpretação desta ficha de dados de segurança, bem como da etiqueta / rótulo do
+produto.
+Principais fontes de literatura:
+http://echa.europa.eu
+http://eur-lex.europa.eu
+Abreviaturas e acrónimos:
+(ADR) Acordo Europeu relativo ao Transporte Internacional de Mercadorias Perigosas por Estrada
+(IMDG) Código Marítimo Internacional para o Transporte de Mercadorias Perigosas
+(IATA) Associação Internacional de Transporte Aéreo
+(ICAO) Organização de Aviação Civil Internacional
+(DQO) Demanda Química de oxigénio
+(DBO5) Demanda biológica de oxigénio aos 5 dias  (BCF) Fator de bioconcentração
+(DL50) Dose letal para 50 % de uma população de teste (dose letal mediana)
+(CL50) Concentração letal para 50 % de uma população de teste
+(EC50) Concentração efetiva para 50 % de uma população de teste
+(Log POW) logaritmo coeficiente partição octanolágua
+(Koc) coeficiente de partição do carbono orgânico
+(CAS) Número CAS (Chemical Abstracts Service)
+(CMR) Carcinogénico, mutagénico ou tóxico para a reprodução
+(DNEL) Nível derivado de exposição sem efeito (Derived No Effect Level)
+(CE) Número EINECS e ELINCS (ver também EINECS e ELINCS)
+(PBT) Substância Persistente, Bioacumulável e Tóxica
+(PNEC) Concentração Previsivelmente Sem Efeitos (Predicted No Effect Concentration)
+(EPI) Equipamento de proteção individual
+(STOT) Toxicidade para órgãosalvo específicos
+(mPmB) Persistente, bioacumulável e tóxico ou muito persistente e muito bioacumulável
+(UFI) identificador único de fórmula
+(IARC) Centro Internacional de Investigação do Cancro
+(C.O.V.) Compostos Orgânicos Voláteis
+- CONTINUA NA PÁGINA SEGUINTE -
+Emissão: 21/06/2022            Versão: 1 Página 13/14
+Documento gerado com o CHEMETER (www.siam-it.com)
+PRODET LAV MAQ
+Detergente Máquina Loiça
+Ficha de dados de segurança
+conforme REGULAMENTO (UE) 2020/878 DA COMISSÃO
+As informações constantes desta ficha são baseadas nos nossos melhores conhecimentos até à data de publicação, e são prestadas de boa fé. Devem no entanto ser entendidas como guia, não
+constituindo garantia, uma vez que as operações com o produto não estão sob nosso controlo, não assumindo esta empresa, qualquer responsabilidade por perdas ou danos daí
+resultantes.Estas informações não dispensam, em nenhum caso, ao utilizador do produto de cumprir e respeitar a legislação e regulamentos aplicáveis ao produto, à segurança, à higiene e à
+protecção da saúde do Homem e do meio ambiente, e de efectuar suficiente verificação e teste processual de eficácia. Os trabalhadores envolvidos e responsáveis pela área de segurança
+deverão ter acesso às informações constantes desta ficha de forma a garantir a segurança na armazenagem, manuseamento e transporte deste produto.
+FIM DA FICHA DE DADOS DE SEGURANÇA
+Emissão: 21/06/2022            Versão: 1 Página 14/14
+Documento gerado com o CHEMETER (www.siam-it.com)

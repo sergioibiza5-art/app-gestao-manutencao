@@ -1,0 +1,843 @@
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 1 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/ EMPRESA. 
+ 
+1.1 Identificador do produto. 
+ 
+Nome do produto: IGEL REP  
+UFI:  GJP0-X0JG-J00W-UHGP 
+ 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas. 
+ 
+Floor cleaner. 
+ 
+Usos não aconselhados: 
+Usos diferentes aos aconselhados. 
+ 
+1.3 Identificação do fornecedor da ficha de dados de segurança. 
+ 
+Empresa: RACRISA, S.L. 
+Endereço: C/ Dels Obrers, 54. Pol. Ind. Les Valletes. 
+População: 46192 Montserrrat 
+Distrito: VALENCIA (ESPAÑA) 
+Telefone: 961 533 000 
+Fax: 962 986 147 
+E-mail: dpto.tecnico@racrisa.com 
+Web: www.racrisa.com 
+ 
+1.4 Número de telefone de emergência: 915 620 420 (Servicio de Información Toxicológica ( Instituto Nacional de 
+Toxicología y Ciencias Forenses) Teléfono: +34 91 5620420. 
+Información en español (24h/365 días). Únicamente con la finalidad de proporcionar respuesta sanitaria en caso de urgencia.) 
+Em caso de intoxicação contactar o Centro de Informação Antivenenos (CIAV) (+351) 800 250 250. 
+Atendimento médico 24 horas por dia, 7 dias por semana. 
+ 
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS. 
+ 
+2.1 Classificação da substância ou mistura. 
+Segundo o Regulamento (CE)  No 1272/2008: 
+Eye Irrit. 2 : Provoca irritação ocular grave. 
+ 
+ 
+2.2 Elementos do rótulo.  . 
+. 
+Rótulo de acordo com o Regulamento (CE)  No 1272/2008: 
+Pictogramas: 
+ 
+     
+Palavras-sinal: 
+Atenção 
+Advertências de perigo: 
+H319  Provoca irritação ocular grave. 
+ 
+Recomendações de prudência: 
+P264  Lavar ... cuidadosamente após manuseamento. 
+P280  Usar luvas de proteção/vestuário de proteção/ proteção ocular/proteção facial/proteção auditiva/… 
+P305+P351+P338 SE ENTRAR EM CONTACTO COM OS OLHOS: Enxaguar cuidadosamente com água durante vários 
+minutos. Se usar lentes de contacto, retire-as, se tal lhe for possível. Continue a enxaguar. 
+P337+P313 Caso a irritação ocular persista: consult e um médico. 
+ 
+Advertências de perigo adicional: 
+EUH208 Contém 1,2-benzisotiazol-3(2H)-ona; 1,2-benz isotiazolin-3-ona. Pode provocar uma reacção  alérgica. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 2 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+EUH208 Contém Massa reaccional de: 5-cloro-2-metil- 2H-isotiazolin-3-ona [CE n. 247-500-7] e 2-metil-2H-isotiazol-3-
+ona [CE n. 220-239-6] (3: 1). Pode provocar uma reacção  alérgica. 
+ 
+ 
+2.3 Outros perigos. 
+ 
+A mistura não contém substâncias classificadas como PBT. 
+A mistura não contém substâncias classificadas como mPmB. 
+A mistura não contém substâncias com propriedades desreguladoras do sistema endócrino. 
+ 
+Em condições de uso normal e na sua forma original,  o produto não apresenta quaisquer outros efeitos n egativos à saúde e ao 
+meio ambiente. 
+ 
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES. 
+ 
+3.1 Substâncias.  
+Não Aplicável. 
+ 
+3.2 Misturas.  
+Substâncias que representam um perigo para a saúde ou o meio ambiente de acordo com a Regulamento (CE) No. 1272/2008, 
+têm atribuído um limite de exposição comunitário no lugar de trabalho, estão classificadas como PBT/ mPmB ou incluídas na Lista 
+de Candidatos: 
+  
+Identificadores Nome Concentração 
+(*)Classificação -Regulamento 
+1272/2008 
+Classificação 
+Limite de 
+concentração 
+específico e a 
+Estimativa da 
+Toxicidade Aguda 
+N. Indice: 603-117-
+00-0 
+N. CAS: 67-63-0 
+N. CE: 200-661-7 
+N. registo: 01-
+2119457558-25-XXXX 
+[2] propan-2-ol, álcool isopropílico, isopropanol 1  - 9.99 % 
+Eye Irrit. 2, 
+H319 - Flam. 
+Liq. 2, H225 - 
+STOT SE 3, 
+H336 
+- 
+N. CAS: 68439-46-3 
+N. registo: 01-
+2119980051-45-XXXX 
+Álcoois, C9-11, etoxilatos 1 - 2.99 % 
+Acute Tox. 4, 
+H302 - Eye 
+Dam. 1, H318 
+- 
+N. Indice: 613-088-
+00-6 
+N. CAS: 2634-33-5 
+N. CE: 220-120-9 
+N. registo: 01-
+2120761540-60-XXXX 
+1,2-benzisotiazol-3(2H)-ona, 1,2-benzisotiazolin-
+3-ona 0 - 0.0499 % 
+Acute Tox. 4 *, 
+H302 - Aquatic 
+Acute 1, H400 - 
+Eye Dam. 1, 
+H318 - Skin 
+Irrit. 2, H315 - 
+Skin Sens. 1, 
+H317 
+Skin Sens. 1, 
+H317: C ≥ 0,05 
+% 
+N. Indice: 613-167-
+00-5 
+N. CAS: 55965-84-9 
+Massa reaccional de: 5-cloro-2-metil-2H-
+isotiazolin-3-ona [CE n. 247-500-7] e 2-metil-2H-
+isotiazol-3-ona [CE n. 220-239-6] (3: 1) 
+0 - 0.00149 % 
+Acute Tox. 2, 
+H310 - Acute 
+Tox. 2, H330 - 
+Acute Tox. 3, 
+H301 - Aquatic 
+Acute 1, H400 
+(M=100) - 
+Aquatic Chronic 
+1, H410 
+(M=100) - Eye 
+Dam. 1, H318 - 
+Skin Corr. 1C, 
+H314 - Skin 
+Sens. 1A, H317, 
+ EUH071 
+Skin Corr. 1C, 
+H314: C ≥ 0,6 
+% 
+Skin Irrit. 2, 
+H315: 0,06 % 
+≤ C < 0,6 % 
+Eye Irrit. 2, 
+H319: 0,06 % 
+≤ C < 0,6 % 
+Skin Sens. 1A, 
+H317: C ≥ 
+0,0015 % 
+Eye Dam. 1, 
+H318: C ≥ 0,6 
+% 
+(*)O texto completo das frases H é pormenorizado na secção 16 desta Ficha de Segurança. 
+* Ver Regulamento (CE) Nº 1272/2008, anexo VI, ponto 1.2. 
+[2] Substância com limite nacional de exposição no local de trabalho (ver secção 8.1).   
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 3 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS. 
+ 
+4.1 Descrição das medidas de emergência. 
+Em caso de dúvida, ou quando persistirem os sintomas de mal-estar, solicitar ajuda médica.  Não administrar nunca nada por via 
+oral a pessoas que se encontrem inconscientes. 
+ 
+Inalação. 
+Retirar o acidentado para o ar livre, mantê-lo em repouso, se a respiração for irregular ou se detiver, praticar respiração artificial. 
+ 
+Contacto com os olhos. 
+Retirar as lentes de contacto, se existirem e for fácil de o fazer. Lavar os olhos com água limpa e fresca e procurar ajuda médica. 
+Não permita que a pessoa esfrega o olho afetado. 
+ 
+Contacto com a pele. 
+Tirar a roupa contaminada. Lavar com água e sabão o u um produto de limpeza adequado para a pele. NUNCA  utilizar 
+dissolventes ou diluentes. 
+ 
+Ingestão. 
+Em caso de ingestão acidental e má disposição, procurar ajuda médica. Mantê-lo em repouso. NUNCA provocar o vômito. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados. 
+Não são conhecidos efeitos agudos e tardios da exposição ao produto. 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários. 
+Em caso de dúvida, ou quando persistirem os sintomas de mal-estar, solicitar ajuda médica.  Não administrar nunca nada por via 
+oral a pessoas que se encontrem inconscientes.  
+ 
+ 
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS. 
+ 
+O produto não apresenta qualquer risco específico em caso de incêndio. 
+ 
+5.1 Meios de extinção. 
+Meios de extinção adequados: 
+Pó extintor ou CO2. Em caso de incêndios mais graves também espuma resistente ao álcool e água pulverizada. 
+ 
+Meios de extinção inadequados: 
+Não usar para a extinção jato direto de água. Em presença de tensão elétrica não é aceitável utilizar água ou espuma como meio 
+de extinção. 
+ 
+5.2 Perigos especiais decorrentes da substância ou mistura. 
+Riscos especiais. 
+A exposição aos produtos de combustão ou decomposição pode ser prejudicial para a saúde. 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios. 
+Refrigerar com água os tanques, cisternas ou recipi entes próximos à fonte de calor ou fogo. Ter em con ta a direção do vento. 
+Evitar que os produtos utilizados na luta contra incêndio passem a esgotos, sumidouros ou cursos de água. 
+ 
+Equipamento de proteção contra incêndios. 
+Segundo a magnitude do incêndio, pode ser necessári o o uso de roupas de proteção contra o calor, equip amento respiratório 
+autónomo, luvas, óculos protetores ou máscaras faciais e botas. 
+ 
+ 
+SECÇÃO 6: MEDIDAS EM CASO DE FUGA ACIDENTAL. 
+ 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+ 
+6.2 Precauções a nível ambiental. 
+Produto não classificado como perigoso para o meio ambiente; na medida do possível, evite  qualquer derrame. 
+ 
+6.3 Métodos e materiais de confinamento e limpeza. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 4 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+Conter e recolher o derrame com material absorvente  inerte (terra, areia, vermiculita, terra de diatom áceas...) e limpe a área 
+imediatamente com um descontaminante adequado. 
+Deposite os resíduos em recipientes fechados e adeq uados para a eliminação, de acordo com os regulamen tos locais e nacionais 
+(ver secção 13). 
+ 
+6.4 Remissão para outras secções. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+Para a posterior eliminação dos resíduos, seguir as recomendações da secção 13. 
+ 
+ 
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM. 
+ 
+7.1 Precauções para um manuseamento seguro. 
+Para a proteção pessoal, ver secção 8. 
+Na zona de trabalho deve ser proibido fumar, comer e beber. 
+Cumprir com a legislação sobre segurança e higiene no trabalho. 
+Não utilizar nunca pressão para esvaziar os recipie ntes, não são recipientes resistentes à pressão. Co nservar o produto em 
+recipientes de um material idêntico ao original. 
+ 
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades. 
+Armazenar segundo a legislação local. Observar as indicações do rótulo. Armazenar os recipientes entre 5 e 25 ºC, num local seco 
+e bem ventilado, longe de fontes de calor e da luz solar directa. Manter longe de pontos de ignição. M anter longe de agentes 
+oxidantes e de materiais fortemente ácidos ou alcal inos. Não fumar. Evitar a entrada a pessoas não aut orizadas. Depois de ter 
+aberto os recipientes, estes devem ser fechados de novo com cuidado, e colocados verticalmente para evitar derrames. 
+ 
+O produto não está afetado pela Directiva 2012/18/UE (SEVESO III). 
+ 
+7.3 Utilizações finais específicas. 
+Limpador perfumado. USO PROFISSIONAL. 
+ 
+ 
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL. 
+ 
+8.1 Parâmetros de controlo. 
+ 
+Limite de exposição durante o trabalho para: 
+ 
+Nome N. CAS País Valor-limite ppm mg/m3 
+propan-2-ol, álcool isopropílico, 
+isopropanol 67-63-0 Portugal [1] 
+Oito horas 200   
+Curta duração 400   
+ 
+ 
+Valor limite de exposição biológicos para: 
+ 
+Nome N. CAS País Indicador biológico VLB (Valor Biológico Limite) Momento de amostra 
+propan-2-ol, álcool isopropílico, 
+isopropanol 67-63-0 Portugal [1] Acetona na urina 40 mg/L 
+Fim do turno no 
+fim da semana de 
+trabalho 
+[1] De acordo com a Norma Portuguesa 1796 adotou pelo Instituto português de qualidade. 
+ 
+Níveis de concentração DNEL/DMEL: 
+ 
+Nome DNEL/DMEL Tipo Valor 
+propan-2-ol, álcool isopropílico, isopropanol 
+N. CAS: 67-63-0 
+N. CE: 200-661-7 
+DNEL 
+(Trabalhadores) 
+Inalação, Crónico, Efeitos sistémicos 500 
+(mg/m³) 
+DNEL 
+(Consumidores) 
+Inalação, Crónico, Efeitos sistémicos 89 
+(mg/m³) 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 5 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+DNEL 
+(Trabalhadores) 
+Dérmica, Crónico, Efeitos sistémicos 888 
+(mg/kg 
+bw/day) 
+DNEL 
+(Consumidores) 
+Dérmica, Crónico, Efeitos sistémicos 319 
+(mg/kg 
+bw/day) 
+DNEL 
+(Consumidores) 
+Oral, Crónico, Efeitos sistémicos 26 (mg/kg 
+bw/day) 
+ 
+DNEL: Derived No Effect Level, (nível sem efeito ob tido) nível de exposição à substância por baixo do qual não são previstos  
+efeitos adversos. 
+DMEL: Derived Minimal Effect Level, nível de exposi ção que corresponde a um risco baixo, que deve ser considerado um risco 
+mínimo tolerável. 
+ 
+Níveis de concentração PNEC: 
+ 
+Nome Detalles Valor 
+propan-2-ol, álcool isopropílico, isopropanol 
+N. CAS: 67-63-0 
+N. CE: 200-661-7 
+água (água doce) 140,9 (mg/L) 
+água (água marinha) 140,9 (mg/L) 
+água (descargas intermitentes) 140,9 (mg/L) 
+sedimento (água doce) 552 (mg/kg 
+sediment dw) 
+sedimento (água marinha) 552 (mg/kg 
+sediment dw) 
+Solo 28 (mg/kg 
+soil dw) 
+Estação de Tratamento de Efluentes 2251 (mg/L) 
+oral (Hazard for predators) 160 (mg/kg 
+food) 
+ 
+PNEC: Predicted No Effect Concentration, (concentração prevista sem efeitos) concentração da substânci a por baixo da qual não 
+são esperados efeitos negativos no comportamento ambiental. 
+ 
+ 
+8.2 Controlo da exposição. 
+ 
+Medidas de ordem técnica: 
+ Prover uma ventilação adequada, o qual pode ser conseguido mediante uma boa extração -ventilação local e um bom sistema 
+geral de extração. 
+  
+Concentração: 100 % 
+Usos: Floor cleaner. 
+Proteção respiratória: 
+Se as medidas técnicas recomendadas forem cumpridas, não é necessário qualquer equipamento de proteção individual. 
+Proteção das mãos: 
+Se o produto for manuseado corretamente, não é necessário qualquer equipamento de proteção individual. 
+Proteção dos olhos: 
+Se o produto for manuseado corretamente, não é necessário qualquer equipamento de proteção individual. 
+Proteção da pele: 
+EPI: Calçado de trabalho 
+ Características: Marcação «CE» Categoria II. 
+Normas CEN: EN ISO 13287, EN 20347 
+Manutenção: Estes artigos adaptam-se à forma do pé do primeiro utilizador. Por este motivo, e igualmente por questões de higiene, deve-se evitar a sua reutilização por qualquer outra pessoa. 
+Observações: O calçado de trabalho para uso profissional é o que incorpora elementos de protecção destinados à protecção do utilizador contra as lesões que possam provocar acidentes 
+ 
+ 
+ 
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS. 
+ 
+9.1 Informações sobre propriedades físicas e químicas de base. 
+Estado físico: Líquido 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 6 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+Cor: Violeta 
+Odor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limiar de odor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de fusão: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de congelação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de ebulição ou ponto de ebulição inicial e intervalo de ebulição: 103 ºC (Estimativa com base nas indicações do 
+Regulamento (CE) n.º 1272/2008) 
+Inflamabilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite inferior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite superior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de inflamação: >61 ºC 
+Temperatura de autoignição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Temperatura de decomposição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+pH: 6,5-7,5 (100%) 
+Viscosidade cinemática: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Solubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Hidrosolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Liposolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Coeficiente de partição n-octanol/água (valor logarítmico): Não aplicável/Não disponível devido à natureza/propriedades do 
+produto 
+Pressão de vapor: 23,99 (Estimativa com base nas indicações do Regulamento (CE) n.º 1272/2008) 
+Densidade absoluta: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Densidade relativa: 0.990-1.000 
+Densidade relativa do vapor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Características das partículas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+9.2 Outras informações.  
+Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+ 
+SECÇÃO 10: ESTABILIDADE E REATIVIDADE. 
+ 
+10.1 Reatividade. 
+O produto não apresentar riscos devido à sua reactividade. 
+ 
+10.2 Estabilidade química. 
+Estável sob as condições de manipulação e armazenamento recomendadas (ver epígrafe 7). 
+ 
+10.3 Possibilidade de reações perigosas. 
+O produto não tem a possibilidade de reacções perigosas. 
+ 
+10.4 Condições a evitar. 
+Evitar qualquer tipo de manipulação incorreta. 
+ 
+10.5 Materiais incompatíveis. 
+Manter afastado de agentes oxidantes e de materiais fortemente alcalinos ou ácidos, com o fim de evitar reacções exotérmicas. 
+ 
+10.6 Produtos de decomposição perigosos. 
+Não se decompõe se for destinado aos usos previstos. 
+ 
+ 
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA. 
+MISTURA IRRITANTE. Salpicaduras nos olhos podem causar irritação dos mesmos. 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) nº 1272/2008. 
+O contacto repetido ou prolongado com os olhos pode causar ardor, lacrimejo, vermelhidão, inchaço e visão turva. 
+. 
+Informação Toxicológica sobre as substâncias presentes na composição. 
+ 
+Nome Toxicidade aguda Tipo Ensaio Espécie Valor 
+propan-2-ol, álcool isopropílico, isopropanol Oral 
+LD50 Rato 5050 mg/kg bw [1] 
+ 
+[1] Gigiena i Sanitariya. For English translation, see HYSAAV. 
+Vol. 43(1), Pg. 8, 1978 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 7 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+Cutânea 
+LD50 Coelho 12800 mg/kg bw [1] 
+ 
+[1] Raw Material Data Handbook, Vol.1: Organic Solvents, 
+1974. Vol. 1, Pg. 100, 1974 
+Inalação     N. CAS: 67-63-0 N. CE: 200-661-7  
+Álcoois, C9-11, etoxilatos 
+Oral LD50 Rato >2000 mg/kg  
+Cutânea LD50 Coelho > 2000 mg/kg bw  
+Inalação     N. CAS: 68439-46-3 N. CE:   
+a) Toxicidade aguda; 
+Dados não conclusivos para a classificação. 
+ 
+Estimativa de toxicidade aguda (ATE): 
+Misturas: 
+ATE (Oral) = 21.450 mg/kg 
+ 
+b) Corrosão/irritação cutânea; 
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos. 
+ 
+c) Lesões oculares graves/irritação ocular; 
+Produto classificado: 
+Irritação ocular, Categoria 2: Provoca irritação ocular grave. 
+ 
+d) Sensibilização respiratória ou cutânea; 
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos. 
+ 
+e) Mutagenicidade em células germinativas; 
+Dados não conclusivos para a classificação. 
+ 
+f) Carcinogenicidade; 
+Dados não conclusivos para a classificação. 
+ 
+g) Toxicidade reprodutiva; 
+Dados não conclusivos para a classificação. 
+ 
+h) Toxicidade para órgãos-alvo específicos (STOT) - exposição única; 
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos. 
+ 
+i) Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida; 
+Dados não conclusivos para a classificação. 
+ 
+j) Perigo de aspiração. 
+Dados não conclusivos para a classificação. 
+ 
+11.2 Informações sobre outros perigos. 
+Propriedades desreguladoras do sistema endócrino 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino com efeitos sobre a saúde 
+humana. 
+Outras informações 
+Não existem informações disponíveis sobre outros efeitos adversos para a saúde. 
+ 
+ 
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA. 
+ 
+12.1 Toxicidade. 
+ 
+Nome Ecotoxicidade Tipo Ensaio Espécie Valor 
+propan-2-ol, álcool isopropílico, isopropanol Peixes LC50 Peixe 9640 mg/l (96 h) [1] 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 8 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+[1] Brooke, L.T., D.J. Call, D.L. Geiger, and C.E. Northcott 
+1984. Acute Toxicities of Organic Chemicals to Fathead 
+Minnows (Pimephales promelas), Vol. 1. Center for Lake 
+Superior Environmental Stud., Univ.of Wisconsin-Superior, 
+Superior, WI :414 
+Invertebrados 
+aquáticos 
+LC50 Crustáceo 1400 mg/l (48 h) [1] 
+ 
+[1] Blackman, R.A.A. 1974. Toxicity of Oil-Sinking Agents. 
+Mar.Pollut.Bull. 5:116-118 
+Plantas 
+aquáticas 
+    
+N. CAS: 67-63-0 N. CE: 200-661-7  
+Álcoois, C9-11, etoxilatos 
+Peixes LC50 Peixe 2,4 mg/l (96 h)  
+Invertebrados 
+aquáticos 
+EC50 Daphnia magna 1-10 mg/l (48 h) 
+ 
+Plantas 
+aquáticas 
+    
+N. CAS: 68439-46-3 N. CE:   
+1,2-benzisotiazol-3(2H)-ona, 1,2-benzisotiazolin-
+3-ona 
+Peixes 
+LC50 Peixe 10 mg/l (96 h) [1] 
+ 
+[1] Linden, E., B.E. Bengtsson, O. Svanberg, and G. 
+Sundstrom 1979.  The Acute Toxicity of 78 Chemicals and 
+Pesticide Formulations Against Two Brackish Water 
+Organisms, the Bleak (Alburnus alburnus) and the 
+Harpacticoid Nitocra spinipes.  Chemosphere 8(11/12):843-
+851 (Author Communication Used) (OECDG Data File) 
+Invertebrados 
+aquáticos 
+EC50 Crustáceo 4,4 mg/l (48 h) [1] 
+ 
+[1] Office of Pesticide Programs 2000.  Pesticide Ecotoxicity 
+Database (Formerly:  Environmental Effects Database 
+(EEDB)).  Environmental Fate and Effects Division, U.S.EPA, 
+Washington, D.C 
+Plantas 
+aquáticas 
+    
+N. CAS: 2634-33-5 N. CE: 220-120-9  
+ 
+  
+12.2 Persistência e degradabilidade. 
+Não se dispõe de informação relativa à biodegradabilidade das substâncias presentes. 
+Não se dispõe de informação relativa à degradabilidade das substâncias presentes. 
+Não há informação disponível sobre a persistência e degradabilidade do produto 
+Os tensioativos contidos neste produto respeitam os  critérios de biodegradabilidade estipulados no Reg ulamento (CE) 
+n.º 648/2004 relativo aos detergentes. Os dados que  justificam esta afirmação estão à disposição das a utoridades componentes 
+que os solicitem. 
+ 
+12.3 Potencial de bioacumulação. 
+Informações relativas à Bioacumulação das substâncias presentes. 
+ 
+Nome 
+Bioacumulação 
+Log Pow BCF NOECs Nível 
+propan-2-ol, álcool isopropílico, isopropanol 
+0,05 - - Muito baixo 
+N. CAS: 67-63-0 N. CE: 200-661-7 
+ 
+  
+12.4 Mobilidade no solo. 
+Não há informação disponível sobre a mobilidade no solo. 
+Não é permitida a descarga nos esgotos  ou cursos de agua. 
+Evitar a penetração no solo. 
+ 
+12.5 Resultados da avaliação PBT e mPmB. 
+Não há informações disponíveis sobre a avaliação PBT e mPmB do produto. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 9 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+12.6 Propriedades desreguladoras do sistema endócrino. 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino sobre o ambiente. 
+ 
+12.7 Outros efeitos adversos. 
+O produto não é afetado pelo Regulamento (UE) 2024/590 do Parlamento Europeu e do Conselho, de 7 de fevereiro de 2024, 
+relativo às substâncias que empobrecem a camada de ozono. 
+Não há informação sobre outros efeitos adversos para o meio ambiente. 
+ 
+ 
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO. 
+ 
+13.1 Métodos de tratamento de resíduos. 
+Não é permitida a descarga em sumidouros ou cursos de água Os resíduos e recipientes vazios devem ser manipulados e 
+eliminados de acordo com as legislações locais/nacionais vigentes. 
+Siga as disposições da Directiva (UE) 2018/851 rela tiva aos resíduos, Decreto-Lei n.º 102-D/2020 e Dec isão da Comissão 
+2014/955 / UE (códigos LER), nas suas redações atuais. 
+ 
+Classificação dos resíduos de acordo com o Catálogo Europeu de Resíduos: 
+20 RESÍDUOS URBANOS E EQUIPARADOS (RESÍDUOS DOMÉSTI COS, DO COMÉRCIO, DA INDÚSTRIA E DOS SERVIÇOS), 
+INCLUINDO AS FRAÇÕES RECOLHIDAS SELETIVAMENTE 
+20 01 Frações recolhidas seletivamente (exceto 15 01) 
+20 01 30 detergentes não abrangidos em 20 01 29 
+ 
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE. 
+ 
+Não é perigoso no transporte. Em caso de acidente e derrame do produto, actuar de acordo com o ponto 6. 
+ 
+14.1 Número ONU ou número de ID. 
+ Não é perigoso no transporte. 
+ 
+14.2 Designação oficial de transporte da ONU. 
+Descrição: 
+ADR/RID: Não é perigoso no transporte. 
+IMDG: Não é perigoso no transporte. 
+OACI/IATA: Não é perigoso no transporte. 
+ 
+14.3 Classes de perigo para efeitos de transporte. 
+Não é perigoso no transporte. 
+ 
+14.4 Grupo de embalagem. 
+Não é perigoso no transporte. 
+ 
+14.5 Perigos para o ambiente. 
+Não é perigoso no transporte. 
+ Transporte por barco, FEm - Fichas de emergência (F – Incêndio, S - Derrames):  Não Aplicável. 
+ 
+14.6 Precauções especiais para o utilizador. 
+Não é perigoso no transporte. 
+ 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI. 
+Não é perigoso no transporte. 
+ 
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO. 
+ 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e 
+ambiente. 
+ 
+ 
+Conteúdo de acordo com o Regulamento (CE) Nº 648/2004 relativo aos detergentes: 
+Alcoois Alifáticos < 5% 
+ 
+tensoactivos não iónicos < 5% 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 10 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Continua na página seguinte.- 
+tensoactivos aniónicos < 5% 
+ 
+Agentes conservantes: BENZISOTHIAZOLINONE; METHYLCHLOROISOTHIAZOLINONE/METHYLISOTHIAZOLINONE 
+ 
+O produto não está afetado pelo Reglamento (UE) No 528/2012 relativo à comercialização e ao uso dos biocidas. 
+O produto não está afetado pelo procedimento estabe lecido no Regulamento (UE) No 649/2012, relativo à exportação e 
+importação de produtos químicos perigosos. 
+ 
+ 
+15.2 Avaliação da segurança química.  
+Não foi realizado uma avaliação da segurança química do produto. 
+ 
+ 
+SECÇÃO 16: OUTRAS INFORMAÇÕES. 
+ 
+Texto completo das frases H que aparecem no epígrafe 3: 
+ 
+H225  Líquido e vapor facilmente inflamáveis. 
+H301  Tóxico por ingestão. 
+H302  Nocivo por ingestão. 
+H310  Mortal em contacto com a pele. 
+H314  Provoca queimaduras na pele e lesões oculares  graves. 
+H315  Provoca irritação cutânea. 
+H317  Pode provocar uma reacção alérgica cutânea. 
+H318  Provoca lesões oculares graves. 
+H319  Provoca irritação ocular grave. 
+H330  Mortal por inalação. 
+H336  Pode provocar sonolência ou vertigens. 
+H400  Muito tóxico para os organismos aquáticos. 
+H410  Muito tóxico para os organismos aquáticos com  efeitos duradouros. 
+ 
+Texto completo das frases EUH que aparecem no epígrafe 3: 
+ 
+EUH071  Corrosivo para as vias respiratórias. 
+ 
+Códigos de classificação: 
+ 
+Acute Tox. 2: Toxicidade aguda (Via cutânea), Categoria 2 
+Acute Tox. 2: Toxicidade aguda (Via inalatória), Categoria 2 
+Acute Tox. 3: Toxicidade aguda (Via oral), Categoria 3 
+Acute Tox. 4: Toxicidade aguda (Via oral), Categoria 4 
+Aquatic Acute 1: Toxicidade aguda para o ambiente aquático, Categoria 1 
+Aquatic Chronic 1: Efeitos crônicos para o ambiente aquático, Categoria 1 
+Eye Dam. 1: Lesões oculares graves, Categoria 1 
+Eye Irrit. 2: Irritação ocular, Categoria 2 
+Flam. Liq. 2: Líquido inflamável, Categoria 2 
+STOT SE 3: Toxicidade para órgãos-alvos específicos resultante de exposição única, Categoria 3 
+Skin Corr. 1C: Corrosivo cutâneo, Categoria 1C 
+Skin Irrit. 2: Irritante cutâneo, Categoria 2 
+Skin Sens. 1: Sensibilizante cutâneo, Categoria 1 
+Skin Sens. 1A: Sensibilizante cutâneo, Categoria 1A 
+ 
+ 
+Modificações em relação à versão anterior: 
+ 
+ - Mudança das utilizações do produto (SECÇÃO 7.3). 
+ - Modificação nos valores das propriedades físico-químicas (SECÇÃO 9). 
+Classificação e procedimento utilizado para determinar a classificação das misturas em conformidade com o Regulamento (CE) n.º 
+1272/2008 [CRE]: 
+Perigos físicos Com base em dados de ensaio 
+Perigos para a saúde Método de cálculo 
+Perigos para o ambiente Método de cálculo 
+  
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ IGEL REP 
+Versão 1 Data de emissão: 7/04/2020 
+Versão 9 (substitui a versão 8) Data de revisão: 21 /05/2025 
+Página 11 de 11 
+Data de impressão: 04-06-2025 
+ 
+ 
+-Fim da ficha de dados de segurança.- 
+Aconselha-se que seja dada formação básica relativamente à segurança e higiene laboral para que seja efectuado um 
+manuseamento correcto do produto. 
+ 
+Abreviaturas e siglas utilizadas: 
+BCF: Factor de bioconcentração. 
+CEN: Comité Europeu de Normalização. 
+DMEL: Derived Minimal Effect Level, nível de exposi ção que corresponde a um risco baixo, que deve ser  
+ considerado um risco mínimo tolerável. 
+DNEL: Derived No Effect Level, (nível sem efeito ob tido) nível de exposição à substância por baixo do  
+ qual não são previstos  efeitos adversos. 
+EC50: Concentração média eficaz. 
+EPI: Equipamento de proteção individual. 
+LC50: Concentração letal, 50%. 
+LD50: Dose Letal, 50%. 
+NOEC: Não se observou efeito de concentração. 
+PNEC: Predicted No Effect Concentration, (concentra ção prevista sem efeitos) concentração da substância  
+ por baixo da qual não são esperados efeitos negati vos no comportamento ambiental. 
+ 
+Principais referências bibliográficas e fontes de dados: 
+http://eur-lex.europa.eu/homepage.html 
+http://echa.europa.eu/ 
+Regulamento (UE) 2020/878. 
+Regulamento (CE) No 1907/2006. 
+Regulamento (CE) No 1272/2008. 
+ 
+A informação facilitada nesta ficha de Dados de Segurança foi redigida de acordo com o REGULAMENTO (UE) 2020/878 DA 
+COMISSÃO de 18 de junho de 2020 que altera o Anexo II do Regulamento (CE) n.o 1907/2006 do Parlamento Europeu e do 
+Conselho relativo ao registo, avaliação, substâncias e misturas químicas (REACH). 
+ 
+A informação desta Ficha de Dados de Segurança do produto está baseada nos conhecimentos actuais e nas leis vigentes da 
+CE e nacionais, quanto a que as condições de trabalho dos utilizadores estiverem fora do nosso conhecimento e controlo. O 
+produto não deve ser utilizado para fins distintos àqueles que são especificados, sem ter primeiro uma instrução por escrito, 
+da sua utilização. É sempre responsabilidade do utilizador tomar as medidas oportunas com a finalidade de cumprir com as 
+exigências estabelecidas nas legislações. 
+ 

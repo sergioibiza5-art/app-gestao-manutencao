@@ -1,0 +1,1105 @@
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Ficha de dados de segurança
+de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração
+pelo Regulamento (UE) 2020/878)
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa
+1.1 Identificador do produto
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de 
+Silicone
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas
+Utilizações identificadas relevantes da substância ou mistura:
+Material lubrificante
+Utilizações desaconselhadas:
+De momento não existem informações sobre esta matéria.
+1.3 Identificação do fornecedor da ficha de dados de segurança
+WD-40 Company Limited
+252 Upper Third Street
+Milton Keynes, MK9 1DZ, United Kingdom
+WD-40 Company Limited
+PO Box 440
+GB-Kiln Farm, Milton Keynes, MK11 3LF
+Tel.: +44 (0) 1908 555400
+Fax: +44 (0) 1908 266900
+E-Mail: Compliance@wd40.co.uk
+Homepage: www.wd40.co.uk
+WD-40 Company Ltd. Portugal
+Edifício Pujol, Avenida do Forte, Nº8 Fração P1
+PT- 2790-072 Carnaxide
+Tel.: +351 215 812 168
+Fax: +351 210 976 973
+E-Mail: wd40@wd40.pt
+Endereço de e-mail da pessoa  competente:  info@chemical-check.de,  k.schnurbusch@chemical-check.de  -  por favor NÃO usar 
+para pedir fichas técnicas de segurança.
+1.4 Número de telefone de emergência
+Serviços de informação de emergência / organismo consultivo oficial:
+Em caso de acidente ou doença súbita ligue 112
+CIAV - Centro de Informação Antivenenos do INEM (Instituto Nacional de Emergência Médica), Rua Almirante Barroso 36, 1000-
+013 Lisboa, Telefone URGÊNCIA (24h): Em caso de intoxicação ligue 800 250 250
+Número de telefone de emergência da empresa:
++351 308 801 773
+SECÇÃO 2: Identificação dos perigos
+Página  1 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+2.1 Classificação da substância ou mistura
+Classificação conforme Regulamentação (CE) 1272/2008 (CLP)
+Classe de perigo Categoria de perigo Advertência de perigo
+Asp. Tox. 1 H304-Pode ser mortal por ingestão e penetração nas 
+vias respiratórias.
+STOT SE 3 H336-Pode provocar sonolência ou vertigens.
+Aerosol 1 H222-Aerossol extremamente inflamável.
+Aerosol 1 H229-Recipiente sob pressão: risco de explosão sob a 
+ação do calor.
+2.2 Elementos do rótulo
+Rotulagem conforme Regulamentação (CE) 1272/2008 (CLP)
+Perigo
+H336-Pode provocar sonolência ou vertigens.    H222-Aerossol extremamente inflamável.  H229-Recipiente sob pressão: risco de 
+explosão sob a ação do calor.
+P101-Se for necessário consultar um médico, mostre-lhe a embalagem ou o rótulo.  P102-Manter fora do alcance das crianças.
+P210-Manter afastado do calor, superfícies quentes, faísca, chama aberta e outras fontes de ignição. Não fumar.  P211-Não 
+pulverizar sobre chama aberta ou outra fonte de ignição.  P251-Não furar nem queimar, mesmo após utilização.  P261-Evitar 
+respirar os vapores ou aerossóis.  P271-Utilizar apenas ao ar livre ou em locais bem ventilados.
+P312-Caso sinta indisposição, contacte um CENTRO DE INFORMAÇÃO ANTIVENENOS / médico.
+P405-Armazenar em local fechado à chave.  P410+P412-Manter ao abrigo da luz solar. Não expor a temperaturas superiores a 50 
+°C.
+P501-Eliminar o conteúdo / recipiente em instalação autorizada de eliminação de resíduos.
+EUH066-Pode provocar pele seca ou gretada, por exposição repetida.
+Sem a necessária ventilação, é possível a formação de uma mistura explosiva.
+Hidrocarbonetos, C9-C11, n-alcanos, isoalcanos, cicloalcanos, <2% aromáticos
+2.3 Outros perigos
+A mistura não contém nenhuma substância mPmB (mPmB = muito persistente, muito bioacumulável) ou não está incluída no 
+Anexo XIII do Regulamento (CE) 1907/2006 (< 0,1 %).
+A mistura não contém nenhuma substância PBT (PBT = persistente, bioacumulável, tóxica) ou não está incluída no Anexo XIII do 
+Regulamento (CE) 1907/2006 (< 0,1 %).
+A mistura não contém substâncias com propriedades desreguladoras do sistema endócrino  (< 0,1 %).
+Vapores perigosos, mais pesados do que o ar.
+Devido à distribuição na proximidade com o solo é possível uma nova ignição em fontes de ignição remotas.
+SECÇÃO 3: Composição/informação sobre os componentes
+Aerossol
+3.1 Substâncias
+n.a.
+3.2 Misturas
+Hidrocarbonetos, C9-C11, n-alcanos, isoalcanos, cicloalcanos, 
+<2% aromáticos
+Número de registo (REACH) 01-2119463258-33-XXXX
+Index ---
+Página  2 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+EINECS, ELINCS, NLP, REACH-IT List-No. 919-857-5
+CAS ---
+% zona 50-60 
+Classificação conforme Regulamentação (CE) 1272/2008 (CLP), 
+fatores M
+EUH066
+Flam. Liq. 3, H226
+STOT SE 3, H336
+Asp. Tox. 1, H304
+Gases de petróleo, liquefeitos
+Número de registo (REACH) ---
+Index 649-202-00-6
+EINECS, ELINCS, NLP, REACH-IT List-No. 270-704-2
+CAS 68476-85-7
+% zona 30-50 
+Classificação conforme Regulamentação (CE) 1272/2008 (CLP), 
+fatores M
+Flam. Gas 1A, H220
+Para texto das frases H e abreviatura de classificação (GHS/CLP), ver SECÇÃO 16.
+As substâncias mencionadas nesta secção estão indicadas com a sua respectiva e efectiva classificação!
+No caso das substâncias enumeradas no Anexo VI, Tabela 3.1 do Regulamento (CE) n.º 1272/2008 (Regulamento CLP), tal 
+significa que todas as eventuais notas aí presentes foram consideradas para a classificação aqui indicada.
+Se, p. ex., for necessário aplicar a nota P para um hidrocarboneto, tal já foi considerado para a classificação aqui indicada.
+Citação: "Nota P - Não é necessário classificar a substância como cancerígena ou mutagénica se for possível provar que a 
+substância contém menos de 0,1 % p/p de benzeno (número EINECS 200-753-7)."
+O art.º 4º do Regulamento (CE) n.º 1272/2008 (Regulamento CLP) foi igualmente observado e já considerado para a classificação 
+aqui indicada.
+A adição das concentrações mais altas listadas aqui pode resultar em uma classificação. Somente quando esta classificação 
+estiver listada na Seção 2 ela se aplica. Em todos os outros casos, a concentração total está abaixo da classificação.
+SECÇÃO 4: Medidas de primeiros socorros
+4.1 Descrição das medidas de emergência
+Os socorristas devem proteger-se a si próprios!
+Nunca colocar nada na boca de uma pessoa inconsciente!
+Inalação
+Remover as pessoas da área de perigo.
+Colocar a vítima com ar fresco e, segundo os sintomas, consultar o médico.
+Em caso de perda de consciência colocar na posição latera estável e consultar o médico.
+Contato com a pele
+Lavar abundantemente com água e sabão, remover imediatamente as peças de vestuário sujas e molhadas, consultar um médico 
+irritação da pele (vermelhidão, etc.).
+Contato com os olhos
+Remover as lentes de contato.
+Lavar bem com água durante vários minutos, se necessário, consultar um médico.
+Ingestão
+Normalmente sem vias de admissão.
+Lavar bem a boca com água.
+Não forçar o vómito, dar muita água a beber, consultar imediatamente um médico.
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados
+Se relevante, os sintomas e os efeitos retardados encontram-se na secção 11. ou nas vias de absorção na secção 4.1.
+Pode ocorrer:
+Irritação das vias respiratórias
+Tosse
+Dores de cabeça
+Tonturas
+Influência/danos do sistema nervoso central
+Perturbações na coordenação
+Em caso de contato mais prolongado:
+Produto remove gordura.
+Desidratação da pele.
+Dermatite (inflamação da pele)
+Reação alérgica possível.
+Ingestão:
+Espasmos
+Página  3 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Vómitos
+Perigo de aspiração.
+Edema pulmonar
+Não podem ser excluídas outras características perigosas.
+Em determinados casos, pode suceder que os sintomas de intoxicação só surjam após um período mais prolongado de tempo/após 
+várias horas.
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários
+Tratamento sintomático.
+SECÇÃO 5: Medidas de combate a incêndios
+5.1 Meios de extinção
+Meios de extinção adequados
+CO2
+Pó extintor
+Borrifo de jato de água
+Espuma resistente ao álcool
+Meios de extinção inadequados
+Jato de água
+5.2 Perigos especiais decorrentes da substância ou mistura
+Em caso de incêndio podem se formar:
+Óxidos de carbono
+Formaldeídos
+Misturas explosivas de vapor/ar ou gás/ar.
+Gases tóxicos
+Risco de rebentamento com calor
+5.3 Recomendações para o pessoal de combate a incêndios
+Equipamento de proteção pessoal ver secção 8.
+Em caso de incêndio e/ou explosão não respirar os fumos.
+Aparelho de proteção respiratória independente do ar ambiental.
+De acordo com as proporções do incêndio
+Se necessário, proteção completa.
+Arrefecer recipientes em perigo com água.
+Eliminar águas de extinção contaminadas de acordo com as prescrições oficiais.
+SECÇÃO 6: Medidas em caso de fuga acidental
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência
+6.1.1 Para o pessoal não envolvido na resposta à emergência
+Em caso de derrame ou libertação inadvertida, utilizar equipamento de proteção pessoal indicado na secção 8 para evitar 
+contaminações.
+Providenciar ventilação suficiente, remover fontes de ignição.
+No caso de produtos sólidos ou em pó, evitar formação de poeiras.
+Se possível, evacuar a área de perigo e utilizar eventuais planos de emergência disponíveis.
+Remover fontes de ignição, não fumar.
+Garantir uma ventilação suficiente.
+Evitar o contato com os olhos e a pele, assim como a inalação.
+Se for o caso, observar o perigo de derrapagem.
+6.1.2 Para o pessoal responsável pela resposta à emergência
+Utilizar equipamento de proteção adequado, consultar os dados do material na secção 8.
+6.2 Precauções a nível ambiental
+Evitar a penetração na canalização, cave, poços de trabalho ou outros locais, nos quais a acumulação se poderia tornar perigosa.
+Evitar a penetração nas águas pluviais e subterrâneas, bem como no solo.
+Em caso de introdução acidental na canalização informar as autoridades responsáveis.
+6.3 Métodos e materiais de confinamento e limpeza
+Em caso de fuga de aerossol/gás garantir ar fresco suficiente.
+Sem a necessária ventilação, é possível a formação de uma mistura explosiva.
+Substância ativa:
+Recolher com material absorvente de líquidos (por ex. absorvente universal, areia, diatomite) e eliminar conforme a secção 13.
+6.4 Remissão para outras secções
+Ver a secção 13, assim para como equipamento de proteção pessoal ver secção 8
+Página  4 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+SECÇÃO 7: Manuseamento e armazenagem
+Para além das informações apresentadas nesta secção, a secção 8 e 6.1 também contém informações relevantes.
+7.1 Precauções para um manuseamento seguro
+7.1.1 Recomendações gerais
+Garantir uma boa ventilação do espaço.
+Evitar a inalação dos vapores.
+Evitar o contato com os olhos e a pele.
+Manter afastadas as fontes de ignição - Não fumar.
+Se necessário, tomar medidas contra cargas eletroestáticas.
+Não utilizar em superfícies quentes.
+Proibido comer, beber, fumar, assim como conservar produtos alimentares no espaço de trabalho.
+Considerar as indicações na etiqueta, assim como as instruções de utilização.
+Aplicar procedimentos de trabalho conforme as instruções de operação.
+7.1.2 Indicações relativas a medidas de higiene gerais no local de trabalho
+No manuseio de produtos químicos devem ser aplicadas as medidas gerais de higiene.
+Antes de pausas e ao terminar o trabalho, lavar as mãos.
+Manter afastado de alimentos e bebidas, incluindo os dos animais.
+Antes de entrar em áreas onde se ingere alimentos, tirar vestuário e equipamentos de proteção contaminados.
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades
+Armazenar de modo a impedir o acesso de pessoas estranhas.
+Não armazenar o produto em locais de passagem ou escadas.
+Apenas armazenar o produto em embalagens originais e fechadas.
+Não armazenar juntamente com substâncias inflamáveis ou de combustão instantânea.
+Considerar prescrições especiais para aerossóis!
+Considerar as condições de armazenamento especiais.
+Considerar as condições de armazenamento especiais.
+Proteger da radiação solar e temperaturas acima dos 50°C.
+Armazenar num local bem ventilado.
+Conservar no frio.
+7.3 Utilização(ões) final(is) específica(s)
+De momento não existem informações sobre esta matéria.
+Respeitar os manuais de boas práticas profissionais, bem como as recomendações para a identificação de perigos.
+Dependendo da aplicação, utilizar sistemas de informação de substâncias perigosas, p. ex., das associações profissionais, da 
+indústria química
+ou de vários setores (materiais de construção, madeira, produtos químicos, laboratórios, couro, metal).
+SECÇÃO 8: Controlo da exposição/Proteção individual
+8.1 Parâmetros de controlo
+Valor resultante de orientação de grupo (GGVmix - calculada de 8 horas TWA-OEL) do teor de hidrocarbonetos solventes total da 
+mistura (método RCP segundo ACGIH TLV ®, Anexo H (EUA)):
+1200 mg/m3
+Denominação química Hidrocarbonetos, C9-C11, n-alcanos, isoalcanos, cicloalcanos, <2% aromáticos
+TLV-TWA:    1200 mg/m3 (alcanos/cicloalcanos 
+C9-C15) (TLV-TWA)
+TLV-STEL:    --- TLV-C:  ---
+Os processos de monitorização: - Draeger - Hydrocarbons 0,1%/c (81 03 571)
+- Draeger - Hydrocarbons 2/a (81 03 581)
+- Compur - KITA-187 S (551 174)
+BEI:    --- Outras informações:    ---
+Denominação química Gases de petróleo, liquefeitos
+TLV-TWA:    1000 ppm (Gases de 
+hidrocarbonetos alifáticos (Alcano C1-C4)) (TLV-
+TWA)
+TLV-STEL:    --- TLV-C:  ---
+Os processos de monitorização:  ---
+BEI:    --- Outras informações:    ---
+Página  5 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Hidrocarbonetos, C9-C11, n-alcanos, isoalcanos, cicloalcanos, <2% aromáticos
+Âmbito de aplicação Via de exposição / 
+elemento do ambiente
+Impacto na saúde Descritor Valor Unidade Observaç
+ão
+Consumidor Homem – dérmica A longo prazo, 
+efeitos sistémicos
+DNEL 46 mg/kg 
+bw/day
+Consumidor Homem – inalação A longo prazo, 
+efeitos sistémicos
+DNEL 185 mg/m3
+Consumidor Homem – oral A longo prazo, 
+efeitos sistémicos
+DNEL 46 mg/kg 
+bw/day
+Operário / Trabalhador 
+assalariado
+Homem – dérmica A longo prazo, 
+efeitos sistémicos
+DNEL 77 mg/kg 
+bw/day
+Operário / Trabalhador 
+assalariado
+Homem – inalação A longo prazo, 
+efeitos sistémicos
+DNEL 871 mg/m3
+       - Portugal | TLV-TWA = Valores limite de exposição - média ponderada (Concentração média ponderada para um dia de 
+trabalho de 8 h e uma semana 40 h) (No. 4, Norma Portuguesa, NP 1796  e/ou  TLV®-CS, TLVs® and BEIs®, ACGIH®, Estados-
+Unidos):
+I = fração inalável,  R = fração respirável,  V = vapor e aerosol,  IFV = fração inalável e vapor,  F = fibras respiráveis (comprimento = 
+>5µm, relação comprimento-largura >= 3:1),  T =  fração torácica,  TLV-SL = Valor Limite Limite - Limite Superficial: A concentração 
+em superfícies de equipamentos e instalações de trabalho que provavelmente não resultará em efeitos adversos após contato direto 
+ou indireto.
+(UE) = Diretiva 91/322/CEE, 98/24/CE, 2000/39/CE, 2004/37/CE, 2006/15/CE, 2009/161/UE, 2017/164/UE ou 2019/1831/UE:
+(8) = Fração inalável (2004/37/CE, 2017/164/UE).  (9) = Fração respirável (2004/37/CE, 2017/164/UE).  (11) =Fração inalável 
+(2004/37/CE).  (12) =Fração inalável. Fração respirável nos Estados-Membros que apliquem, à data de entrada em vigor da 
+presente diretiva, um sistema de biomonitorização com um valor-limite biológico que não exceda 0,002 mg de creatinina na urina 
+(2004/37/CE). |
+ | TLV-STEL = Valores limite de exposição - curta duração (15 min.) (Concentração à qual se considera que praticamente todos os 
+trabalhadores possam estar repetidamente expostos por curtos períodos de tempo.) (No. 4, Norma Portuguesa, NP 1796  e/ou  
+TLV®-CS, TLVs® and BEIs®, ACGIH®, Estados-Unidos).
+I = fração inalável,  R = fração respirável,  V = vapor e aerosol,  IFV = fração inalável e vapor,  F = fibras respiráveis (comprimento = 
+>5µm, relação comprimento-largura >= 3:1),  T =  fração torácica.
+(UE) = Diretiva 91/322/CEE, 98/24/CE, 2000/39/CE, 2004/37/CE, 2006/15/CE, 2009/161/UE, 2017/164/UE ou 2019/1831/UE:
+(8) = Fração inalável (2004/37/CE, 2017/164/UE).  (9) = Fração respirável (2004/37/CE, 2017/164/UE).  (10) = Valor-limite de 
+exposição de curta duração em relação a um período de referência de 1 minuto (2017/164/UE). |
+ | TLV-C = Valores limite de exposição - concentração máxima ("Ceiling") (Concentração que nunca deve ser excedida durante 
+qualquer período da exposição) (No. 4, Norma Portuguesa, NP 1796  e/ou  TLV®-CS, TLVs® and BEIs®, ACGIH®, Estados-
+Unidos). |
+ | BEI = Índice biológico de exposição (No. 5, Norma Portuguesa, NP 1796  e/ou  BEIs®, 2024 TLVs® and BEIs®, ACGIH®, Estados-
+Unidos): 
+Material de exame:  B = Sangue,  Hb = Hemoglobina,  E = Eritrócitos (glóbulos vermelhos),  P = Plasma,  S = Soro,  U = Urina,  EA 
+= ar expirado final. 
+Momento de coleta de material:  a = nenhuma restrição / não crítico,  b = no final da turno de trabalho,  c = Depois de uma semana 
+de trabalho,  d = No final de um turno de uma semana de trabalho,  e = Antes do último turno de uma semana de trabalho,  f = 
+Durante o turno de trabalho,  g = Antes da turno de trabalho. (ACGIH, Estados-Unidos)
+(UE) = Diretiva 98/24/CE ou 2004/37/CE ou SCOEL (Valor Limite Biológico - BLV, Recomendação do Comité Científico sobre 
+Limites de Exposição Ocupacional (SCOEL)). |
+ | Outras informações (TLV (Valores limite de exposição) - No. 4, Norma Portuguesa, NP 1796  e/ou  TLV®-CS, TLVs® and BEIs®, 
+ACGIH®, Estados-Unidos): 
+Carcinogenicidade - A1 = Carcinógeno Humano Confirmado, A2 = Suspeita de Carcinógeno Humano, A3 = Carcinógeno animal 
+confirmado com relevância desconhecida para humanos, A4 = Não classificável como cancerígeno humano, A5 = Não suspeito de 
+ser cancerígeno humano.  SEN = Sensibilização, DSEN = Sensibilização cutânea, RSEN = Sensibilização respiratória.  Skin = 
+perigo de absorção cutânea.  OTO = agente químico ototóxico.
+(UE) = Diretiva 91/322/CEE, 98/24/CE, 2000/39/CE, 2004/37/CE, 2006/15/CE, 2009/161/UE, 2017/164/UE, 2019/1831/UE ou 
+2024/869/UE:
+(13) = A substância pode causar sensibilização da pele e das vias respiratórias (98/24/CE, 2004/37/CE).  (14) = A substância pode 
+causar sensibilização da pele (2004/37/CE),  (15) = Possibilidade de contribuição considerável para a carga corporal total pela via de 
+exposição cutânea. |
+8.2 Controlo da exposição
+8.2.1 Controlos técnicos adequados
+Assegurar uma boa ventilação. Isso pode conseguir-se quer através de aspiração local, quer de exaustão geral.
+Se estas medidas não forem suficientes para manter a concentração abaixo dos valores limite no local de trabalho (TLV), deve-se 
+utilizar uma proteção respiratória adequada.
+Apenas se aplicam os valores limite de exposição aqui listados.
+Página  6 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Métodos de avaliação adequados para verificação da eficácia das medidas de proteção tomadas abrangem métodos de 
+determinação técnicos de medição e não técnicos de medição.
+Esses são descritos por, por ex. a EN 14042.
+EN 14042 "Atmosfera no local de trabalho. Orientações para a aplicação e utilização de processos e equipamentos para 
+determinação de agentes químicos e biológicos no trabalho".
+8.2.2 Medidas de proteção individual, nomeadamente equipamentos de proteção individual
+As medidas gerais de higiene devem ser aplicadas para o manuseamento de produtos químicos.
+Antes das pausas e no final do trabalho, lavar as mãos.
+Manter afastado de alimentos, bebidas e rações para animais.
+Antes de entrar em áreas onde se ingere alimentos, tirar o vestuário e os equipamentos de proteção contaminados.
+Proteção ocular/facial:
+Óculos de proteção vedados com placas laterais (EN 166).
+Proteção da pele - Proteção das mãos:
+Luvas de proteção resistentes a solvente (EN ISO 374).
+Se necessário
+Luvas de proteção de neoprene® / de policloropreno (EN ISO 374).
+Espessura mínima das camadas em mm:
+1
+Tempo de permeação (durabilidade) em minutos:
+>= 480
+Luvas de proteção de nitrilo (EN ISO 374).
+Espessura mínima das camadas em mm:
+0,4
+Tempo de permeação (durabilidade) em minutos:
+>= 480
+Valor recomendado do creme de proteção das mãos.
+As durabilidades determinadas de acordo com EN 16523-1 não foram obtidas em condições práticas.
+O tempo de desgaste máximo recomendado corresponde a 50% da durabilidade.
+Proteção da pele - Outra:
+Vestuário de proteção de trabalho (por ex., botas de proteção EN ISO 20345, vestuário de trabalho de mangas compridas).
+Proteção respiratória:
+Normalmente não é necessário.
+Se for ultrapassado o valor limite do local de trabalho (AGW, Alemanha) ou MAK (Suíça, Áustria).
+Filtros A2 P2 (EN 14387), cor de identificação castanho, branco
+Em caso de altas concentrações:
+Aparelho de proteção respiratória (aparelho de isolamento) (por ex. EN 137 ou EN 138)
+Atente nos limites de tempo de utilização dos aparelhos de proteção respiratória.
+Perigos térmicos:
+Não se aplica
+Informações adicionais sobre a proteção das mãos - Não foram efetuados quaisquer ensaios.
+A seleção das misturas foi efetuada de acordo com os nossos conhecimentos e as informações relativamente às substâncias.
+A seleção dos materiais derivou das informações do fabricante das luvas.
+A seleção final do material das luvas deve ser efetuada considerando a durabilidade, a permeabilidade e a degradação.
+A seleção de luvas adequadas não depende apenas do material, mas também de outras características qualitativas e varia de 
+fabricante para fabricante.
+No caso das misturas, a resistência do material das luvas não é previsível e deve, por isso, ser verificada antes da aplicação.
+A durabilidade exata do material das luvas pode ser informada pelo fabricante das luvas de proteção e deve ser cumprida.
+8.2.3 Controlo da exposição ambiental
+De momento, não existe qualquer informação relativamente a isso.
+SECÇÃO 9: Propriedades físico-químicas
+9.1 Informações sobre propriedades físicas e químicas de base
+Estado físico: Aerossol. Substância ativa: líquida.
+Cor: Incolor
+Odor: Solvente
+Ponto de fusão/ponto de congelação: Não existem informações relativas a este parâmetro.
+Página  7 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Ponto de ebulição ou ponto de ebulição inicial e intervalo de 
+ebulição: n.a.
+Inflamabilidade: Não se aplica aos aerossóis.
+Limite inferior de explosividade: Não existem informações relativas a este parâmetro.
+Limite superior de explosividade: Não exis tem informações relativas a este parâmetro.
+Ponto de inflamação: Não se aplica aos aerossóis.
+Temperatura de autoignição: Não se aplica aos aerossóis.
+Temperatura de decomposição: Não existem informações relativas a este parâmetro.
+pH: Não existem informações relativas a este parâmetro.
+Viscosidade cinemática: Não se aplica aos aerossóis.
+Solubilidade: Não existem informações relativas a este parâmetro.
+Coeficiente de partição n-octanol/água (valor logarítmico): Não se aplica às misturas.
+Pressão de vapor: Não existem informações relativas a este parâmetro.
+Densidade e/ou densidade relativa: Não se aplica aos aerossóis.
+Densidade relativa do vapor: Va pores, mais pesados do que o ar.
+Características das partículas: Não se aplica aos aerossóis.
+9.2 Outras informações
+Explosivos: Formação de misturas vapor-ar explosivas / facilmente 
+inflamáveis, possível. Produto não explosivo.
+Líquidos comburentes: Não
+SECÇÃO 10: Estabilidade e reatividade
+10.1 Reatividade
+O produto não foi verificado.
+10.2 Estabilidade química
+Estável em caso de armazenamento e manuseamento correctos.
+10.3 Possibilidade de reações perigosas
+Não são conhecidas reações perigosas.
+10.4 Condições a evitar
+Aquecimento, chamas abertas, fontes de ignição
+Aumento de pressão leva a risco de rebentamento.
+10.5 Materiais incompatíveis
+Evitar contato com agentes oxidantes fortes.
+10.6 Produtos de decomposição perigosos
+Sem decomposição em caso de utilização correta.
+SECÇÃO 11: Informação toxicológica
+11.1. Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.° 
+1272/2008
+Para eventualmente mais informações relativamente a efeitos na saúde ver secção 2.1 (classificação).
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Toxicidade aguda, oral: n.e.d.
+Toxicidade aguda, por via 
+dérmica:
+n.e.d.
+Toxicidade aguda, por 
+inalação:
+n.e.d.
+Corrosão/irritação cutânea: n.e.d.
+Lesões oculares 
+graves/irritação ocular:
+n.e.d.
+Sensibilização respiratória 
+ou cutânea:
+n.e.d.
+Mutagenicidade em células 
+germinativas:
+n.e.d.
+Carcinogenicidade: n.e.d.
+Toxicidade reprodutiva: n.e.d.
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+única (STOT-SE):
+n.e.d.
+Página  8 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+repetida (STOT-RE):
+n.e.d.
+Perigo de aspiração: n.e.d.
+Sintomas: n.e.d.
+Hidrocarbonetos, C9-C11, n-alcanos, isoalcanos, cicloalcanos, <2% aromáticos
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Toxicidade aguda, oral: LD50 >5000 mg/kg     Ratazana OECD 401 (Acute 
+Oral Toxicity)
+Toxicidade aguda, por via 
+dérmica:
+LD50 >5000 mg/kg Coelho OECD 402 (Acute 
+Dermal Toxicity)
+Toxicidade aguda, por 
+inalação:
+LD50 >18,5 mg/l/4h Ratazana OECD 403 (Acute 
+Inhalation Toxicity)
+Corrosão/irritação cutânea: Coelho OECD 404 (Acute 
+Dermal 
+Irritation/Corrosion)
+Não irritante, 
+Pode provocar 
+secura da pele 
+ou fissuras, por 
+exposição 
+repetida.
+Lesões oculares 
+graves/irritação ocular:
+Coelho OECD 405 (Acute 
+Eye 
+Irritation/Corrosion)
+Não irritante
+Sensibilização respiratória 
+ou cutânea:
+Porquinho-
+da-índia
+OECD 406 (Skin 
+Sensitisation)
+Não (contato 
+com a pele)
+Mutagenicidade em células 
+germinativas:
+Salmonella 
+typhimurium
+OECD 471 (Bacterial 
+Reverse Mutation 
+Test)
+Negativo, 
+Comprovado 
+por analogia
+Mutagenicidade em células 
+germinativas:
+Ser humano OECD 473 (In Vitro 
+Mammalian 
+Chromosome 
+Aberration Test)
+Negativo, 
+Comprovado 
+por analogia
+Mutagenicidade em células 
+germinativas:
+Rato OECD 476 (In Vitro 
+Mammalian Cell Gene 
+Mutation Test)
+Negativo, 
+Comprovado 
+por analogia
+Mutagenicidade em células 
+germinativas:
+Ratazana OECD 478 (Genetic 
+Toxicology - Rodent 
+dominant Lethal Test)
+Negativo, 
+Comprovado 
+por analogia
+Mutagenicidade em células 
+germinativas:
+OECD 479 (Genetic 
+Toxicology - In Vitro 
+Sister Chromatid 
+Exchange assay in 
+Mammalian Cells)
+Negativo, 
+Comprovado 
+por analogia 
+Chinese 
+hamster
+Carcinogenicidade: NOAEC 1100 mg/m3    Rato OECD 453 
+(Combined Chronic 
+Toxicity/Carcinogenicit
+y Studies)
+Fêmea
+Carcinogenicidade: NOAEC >= 2200 mg/m3    Rato OECD 453 
+(Combined Chronic 
+Toxicity/Carcinogenicit
+y Studies)
+Macho
+Toxicidade reprodutiva: OECD 414 (Prenatal 
+Developmental 
+Toxicity Study)
+Negativo, 
+Comprovado 
+por analogia
+Toxicidade reprodutiva 
+(fertilidade):
+NOAEL >= 3000 mg/kg 
+bw/d
+Ratazana OECD 415 (One-
+Generation 
+Reproduction Toxicity 
+Study)
+Macho
+Toxicidade reprodutiva 
+(fertilidade):
+NOAEL >= 1500 mg/kg 
+bw/d
+Ratazana OECD 415 (One-
+Generation 
+Reproduction Toxicity 
+Study)
+Fêmea
+Página  9 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+única (STOT-SE):
+Pode provocar 
+sonolência ou 
+vertigens., 
+STOT SE 3, 
+H336
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+repetida (STOT-RE), oral:
+NOAEL 3000 mg/kg/d  Ratazana OECD 408 (Repeated 
+Dose 90-Day Oral 
+Toxicity Study in 
+Rodents)
+Comprovado 
+por analogia
+Toxicidade para órgãos-alvo 
+específicos - exposição 
+repetida (STOT-RE), por 
+inalação:
+NOAEC 1444 ppm       Ratazana OECD 413 
+(Subchronic Inhalation 
+Toxicity - 90-Day 
+Study)
+Comprovado 
+por analogia
+Perigo de aspiração: Sim
+Sintomas: perda de 
+consciência, 
+dor de cabeça, 
+vertigem, 
+pigmentação 
+da pele, 
+vómitos, 
+diarreia
+Gases de petróleo, liquefeitos
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Toxicidade aguda, por 
+inalação:
+LC50 >5 mg/l      
+Corrosão/irritação cutânea: Não irritante
+Lesões oculares 
+graves/irritação ocular:
+Não irritante
+Sensibilização respiratória 
+ou cutânea:
+Não (contato 
+com a pele)
+Perigo de aspiração: Não
+11.2. Informações sobre outros perigos
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Toxicidade / efeito Fim Valor Unidade Organismo Método de ensaio Observação
+Propriedades 
+desreguladoras do sistema 
+endócrino:
+Não se aplica 
+às misturas.
+Outras informações: Não existem 
+informações 
+especiais 
+pertinentes 
+relativas a 
+efeitos nocivos 
+para a saúde.
+SECÇÃO 12: Informação ecológica
+Para eventualmente mais informações relativamente a efeitos no ambiente ver secção 2.1 (classificação).
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Toxicidade / efeito Fim Tempo Valor Unidade Organismo Método de 
+ensaio
+Observação
+12.1. Toxicidade para 
+peixes:
+n.e.d.
+12.1. Toxicidade para 
+dáfnias:
+n.e.d.
+12.1. Toxicidade para 
+algas:
+n.e.d.
+Página  10 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+12.2. Persistência e 
+degradabilidade:
+Separação, 
+tanto quanto 
+possível, por 
+separador de 
+óleo.
+12.3. Potencial de 
+bioacumulação:
+n.e.d.
+12.4. Mobilidade no 
+solo:
+n.e.d.
+12.5. Resultados da 
+avaliação PBT e 
+mPmB:
+n.e.d.
+12.6. Propriedades 
+desreguladoras do 
+sistema endócrino:
+Não se aplica 
+às misturas.
+12.7. Outros efeitos 
+adversos:
+Não existem 
+informações 
+relativas a 
+outros efeitos 
+nocivos para o 
+meio ambiente.
+Outras informações: Não contém 
+AOX conforme 
+a composição.
+Hidrocarbonetos, C9-C11, n-alcanos, isoalcanos, cicloalcanos, <2% aromáticos
+Toxicidade / efeito Fim Tempo Valor Unidade Organismo Método de 
+ensaio
+Observação
+12.1. Toxicidade para 
+peixes:
+NOELR 28d 0,13 mg/l Oncorhynchus 
+mykiss
+QSAR
+12.1. Toxicidade para 
+peixes:
+LC50 96h >1000 mg/l Oncorhynchus 
+mykiss
+OECD 203 
+(Fish, Acute 
+Toxicity Test)
+ 
+12.1. Toxicidade para 
+dáfnias:
+EC50 48h >1000 mg/l Daphnia magna OECD 202 
+(Daphnia sp. 
+Acute 
+Immobilisation 
+Test)
+12.1. Toxicidade para 
+algas:
+ErC50 72h >1000 mg/l Pseudokirchnerie
+lla subcapitata
+OECD 201 
+(Alga, Growth 
+Inhibition Test)
+12.1. Toxicidade para 
+algas:
+EbC50 72h >1000 mg/l Pseudokirchnerie
+lla subcapitata
+OECD 201 
+(Alga, Growth 
+Inhibition Test)
+12.1. Toxicidade para 
+algas:
+NOELR 72h 100 mg/l Raphidocelis 
+subcapitata
+OECD 201 
+(Alga, Growth 
+Inhibition Test)
+12.1. Toxicidade para 
+algas:
+NOELR 72h 3 mg/l Pseudokirchnerie
+lla subcapitata
+OECD 201 
+(Alga, Growth 
+Inhibition Test)
+12.2. Persistência e 
+degradabilidade:
+28d 80 % OECD 301 F 
+(Ready 
+Biodegradability -
+Manometric 
+Respirometry 
+Test)
+Facilmente 
+biodegradável
+12.3. Potencial de 
+bioacumulação:
+5-6,7 Elevado
+12.5. Resultados da 
+avaliação PBT e 
+mPmB:
+Sem 
+substância 
+PBT, Sem 
+substância 
+mPmB
+Toxicidade para 
+bactérias:
+EL50 48h 0,95 mg/l QSAR
+Página  11 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Gases de petróleo, liquefeitos
+Toxicidade / efeito Fim Tempo Valor Unidade Organismo Método de 
+ensaio
+Observação
+12.1. Toxicidade para 
+peixes:
+LC50 96h 147,54 mg/l QSAR
+12.3. Potencial de 
+bioacumulação:
+Não previsível
+12.5. Resultados da 
+avaliação PBT e 
+mPmB:
+Sem 
+substância 
+PBT, Sem 
+substância 
+mPmB
+SECÇÃO 13: Considerações relativas à eliminação
+13.1 Métodos de tratamento de resíduos
+Para a substância / mistura / quantidades residuais
+N.º do código de resíduos CE:
+Os códigos de resíduos indicados são recomendações baseadas na utilização provável deste produto.
+Devido à utilização e às condições de eliminação específicas do utilizador também podem ser atribuídos
+outros códigos de resíduos em determinadas circunstâncias. (2014/955/UE)
+07 06 04 outros solventes, líquidos de lavagem e licores-mãe orgânicos
+16 05 04 gases em recipientes sob pressão (incluindo halons), contendo substâncias perigosas
+Recomendação:
+Deve desaconselhar-se a descarga através das águas residuais.
+Considerar as prescrições locais e oficiais.
+Entregar latas de aerossol ainda cheias para recolha de resíduos perigosos ou especiais.
+Entregar latas de aerossol completamente vazias para reciclagem.
+Para as embalagens contaminadas
+Considerar as prescrições locais e oficiais.
+Recomendação:
+Não perfurar, cortar ou soldar os recipientes sujos.
+Reciclagem
+15 01 04 embalagens de metal
+SECÇÃO 14: Informações relativas ao transporte
+Informações gerais
+Transporte por estrada / transporte ferroviário (ADR/RID)
+14.1. Número ONU ou número de ID: 1950
+14.2. Designação oficial de transporte da ONU:
+UN 1950 AEROSOLS
+14.3. Classes de perigo para efeitos de transporte: 2.1
+14.4. Grupo de embalagem: -
+14.5. Perigos para o ambiente: Não se aplica
+Tunnel restriction code: D
+Código de classificação: 5F
+LQ: 1 L
+Categoria de transporte: 2
+Transporte por via marítima (Código IMDG)
+14.1. Número ONU ou número de ID: 1950
+14.2. Designação oficial de transporte da ONU:
+UN 1950 AEROSOLS
+14.3. Classes de perigo para efeitos de transporte: 2.1
+14.4. Grupo de embalagem: -
+14.5. Perigos para o ambiente: Não se aplica
+Poluente marinho (Marine Pollutant): Não se aplica
+EmS: F-D, S-U
+Transporte por via aérea (IATA)
+14.1. Número ONU ou número de ID: 1950
+14.2. Designação oficial de transporte da ONU:
+UN 1950 Aerosols, flammable
+Página  12 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+14.3. Classes de perigo para efeitos de transporte: 2.1
+14.4. Grupo de embalagem: -
+14.5. Perigos para o ambiente: Não se aplica
+14.6. Precauções especiais para o utilizador
+As pessoas que trabalham no transporte de produtos perigosos devem receber formação.
+As prescrições relativas a segurança têm de ser respeitadas por todos os que participam no transporte.
+Têm de ser cumpridas medidas de precaução contra ocorrência de danos.
+14.7. Transporte marítimo a granel em conformidade com os instrumentos da OMI
+O transporte da carga não se realiza em forma de produto a granel mas sim na forma de produto em volumes, e por isso não é 
+aplicável.
+Os regulamentos relativos às quantidades mínimas não são aqui levados em consideração.
+Código de risco e código de embalagem sob consulta.
+Observar as disposições específicas (special provisions).
+SECÇÃO 15: Informação sobre regulamentação
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, 
+segurança e ambiente
+Considerar as restrições:
+Observar as normas/legislação nacionais relativas à proteção dos jovens no trabalho (especialmente a implementação nacional da 
+diretiva 94/33/CE)!
+Considerar as prescrições de medicina do trabalho / da associação comercial.
+Diretiva 2012/18/UE ("Seveso-III"), anexo I, parte 1 - as seguintes categorias correspondem a este produto (em circunstâncias pode 
+ser necessário considerar outras, dependendo do armazenamento, manuseamento etc.):
+Categorias de perigo Notas ao Anexo I Quantidades-limiar (em 
+toneladas) das substâncias 
+perigosas referidas no artigo 
+3.° , n.° 10, para a aplicação 
+de - Requisitos do nível inferior
+Quantidades-limiar (em 
+toneladas) das substâncias 
+perigosas referidas no artigo 
+3.° , n.° 10, para a aplicação 
+de - Requisitos do nível 
+superior
+P3a 11.1 150 (netto) 500 (netto)
+Para a atribuição das categorias e limites de quantidades devem-se respeitar sempre as notas relativas ao Anexo I  da diretiva 
+2012/18/UE especialmente as nomeadas nas tabelas e as notas 1 - 6.
+Directiva 2010/75/UE (COV): ~ 97 %
+Respeitar o regulamento em caso de acidente.
+Devem ser aplicadas as normas/regulamentos nacionais relativos à segurança e proteção do trabalho em caso de utilização de 
+meios de trabalho.
+15.2 Avaliação da segurança química
+Uma avaliação de segurança química não está prevista para misturas.
+SECÇÃO 16: Outras informações
+EUF0005
+Secções revistas: 1
+Necessária formação dos colaboradores para o manuseamento de mercadorias perigosas.
+Estas indicações referem-se ao produto em condições de entrega.
+Necessária instrução inicial/formação dos colaboradores para o manuseamento de materiais perigosos.
+Classificação e procedimentos utilizados para a dedução da classificação da mistura de acordo 
+com o Regulamento (CE) 1272/2008 (CLP):
+Classificação de acordo com o Regulamento 
+(CE) N.º 1272/2008 (CRE)
+Método de avaliação utilizado
+Asp. Tox. 1, H304 Classificação segundo o processo de cálculo.
+STOT SE 3, H336 Classificação segundo o processo de cálculo.
+Página  13 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+Aerosol 1, H222 Classificação segundo o processo de cálculo.
+Aerosol 1, H229 Classificação devido à forma ou ao estado físico.
+As frases seguintes representam as frases H reproduzidas, os códigos das classes e categorias de perigo (GHS/CLP) do produto e 
+das substâncias.
+H226 Líquido e vapor inflamáveis.
+H304 Pode ser mortal por ingestão e penetração nas vias respiratórias.
+H336 Pode provocar sonolência ou vertigens.
+H220 Gás extremamente inflamável.
+EUH066 Pode provocar pele seca ou gretada, por exposição repetida.
+Asp. Tox. — Perigo de aspiração
+STOT SE — Toxicidade para órgãos-alvo específicos - exposição única - Efeitos narcóticos
+Aerosol — Aerossóis
+Flam. Liq. — Líquido inflamável
+Flam. Gas — Gases inflamáveis - Gás inflamável
+Referências bibliográficas importantes e fontes 
+dos dados utilizados:
+Regulamento (CE) n.º 1907/2006 (REACH) e Regulamento (CE) n.º 1272/2008 (CLP) na respetiva versão em vigor.
+Orientações sobre a compilação de fichas de dados de segurança na versão em vigor (ECHA).
+Orientações sobre rotulagem e embalagem em conformidade com o Regulamento (CE) n.º 1272/2008 (CLP) na versão em vigor 
+(ECHA).
+Fichas de dados de segurança dos componentes.
+ECHA-homepage - Informação sobre produtos químicos.
+Base de dados de substâncias GESTIS (Alemanha).
+Agência Federal do Ambiente "Rigoletto" Página de informação sobre poluentes da água (Alemanha).
+Valores-limite de exposição profissional da UE Diretivas 91/322/CEE, 2000/39/CE, 2006/15/CE, 2009/161/UE, (UE) 2017/164, (UE) 
+2019/1831 na respetiva versão em vigor.
+Listas de limites nacionais de exposição profissional dos respetivos países na respetiva versão em vigor.
+Normas para o transporte de mercadorias perigosas por estrada, caminho-de-ferro, mar e ar (ADR, RID, IMDG, IATA) na respetiva 
+versão em vigor.
+Abreviações e acrónimos eventualmente utilizados neste documento:
+ADR Accord européen relatif au transport international des marchandises Dangereuses par Route
+AOX Adsorbable organic halogen compounds (= Comp ostos orgânicos de halogéneo possíveis de adsorção)
+aprox. aproximadamente
+ASTM ASTM International (American Society for Testing and Materials)
+ATE Acute Toxicity Estimate (= ETA - Estimativa da toxicidade aguda)
+BAM Bundesanstalt für Materialforschung und -prüfung (Insti tuto para Pesquisa e Controle de Materiais, Alemanha)
+BAuA Bundesanstalt für Arbeitsschutz und Arbeitsmedizin (Alemanha)
+BSEF The International Bromine Council
+bw body weight (= peso corporal)
+CAS Chemical Abstracts Service
+CE Comunidade Europeia
+CEE Comunidade Económica Europeia
+CLP Classification, Labelling and Packaging (REGULAMENTO (CE)  N.o 1272/2008 relativo à classificação, rotulagem e 
+embalagem de substâncias e misturas)
+CMR carcinogenic, mutagenic, reproductive toxic (canc erígena, mutagénica e tóxica para a reprodução)
+Código IMDG International Maritime Code for Dangerous Goods (IMDG-code)
+conf., seg. conforme, segundo
+DMEL Derived Minimum Effect Level
+DNEL Derived No Effect Level (= o nível derivado de exposição sem efeitos)
+dw dry weight (= massa seca)
+ECHA European Chemicals Agency (= Agênc ia Europeia dos Produtos Químicos)
+EINECS European Inventory of Existing  Commercial Chemical Substances
+ELINCS European List of Notified Chemical Substances
+EN Padrões europeus
+EPA United States Environmental Protecti on Agency (United States of America)
+etc. et cetera
+EVAL Copolímero de álcool etileno-vinílico
+Fax. Número de fax
+Página  14 de 15
+Ficha de dados de segurança de acordo com o Regulamento (CE) n.º 1907/2006, Anexo II (última alteração pelo Regulamento (UE) 
+2020/878)
+Revisto em / versão: 08.04.2025  / 0009   
+Versão substituída por / versão: 26.09.2022  / 0008  
+Válida a partir de: 08.04.2025  
+Data de impressão do PDF: 09.04.2025
+3-EN-UNO® Profesional Lubrificante de Silicone  3-EN-UNO®Lubrificante de Silicone
+GHS Globally Harmonized System of Classification and Labelling of  Chemicals (= Sistema Mundial Harmonizado de Classificação 
+e Rotulagem de Produtos Químicos)
+GWP Global warming potential (= Potenc. de  contribuição para o aquecimento global)
+IARC International Agency for Research on Cancer (=  Agência Internacional de Pesquisa em Câncer)
+IATA International Air Transport Association (= Associação Internacional de Transportes Aéreos)
+IBC (Code) International Bulk Chemical (Code)
+incl. inclusivo, incluindo
+IUCLIDInternational Uniform Chemical Information Database
+IUPAC International Union for Pure Applied Chemistry (= União Internacional de Química Pura e Aplicada)
+LC50 Lethal Concentration to 50 % of a test population (= CL50 - Concentração letal para 50 % de uma população de teste)
+LD50 Lethal Dose to 50% of a test population (Median Lethal Dose) (= DL50 - Dose letal para 50 % de uma população de teste 
+(dose letal mediana))
+LQ Limited Quantities
+mPmB (vPvB) muito persistente, muito bioacumulável (=  vPvB = very persistent and very bioaccumulative)
+n.a. não se aplica
+n.d. não disponível
+n.e.d. não existem dados
+n.t. não testado
+Obs. Observação
+OECD Organisation for Economic Co-operation and Development
+org. orgânico
+p.ex., por ex. por exemplo
+PBT persistent, bioaccumulativ e and toxic (= persistentes, bioacumulativos, tóxico)
+PE Polietileno
+PNEC Predicted No Effect Concentration (= a concentração previsivelmente sem efeitos)
+PVC Policloreto de vinila
+REACH Registration, Evaluation, Authorisation and Restriction of Chemicals (REGULAMENTO (CE) N.o 1907/2006 relativo 
+ao registo, avaliação, autorização e restrição dos produtos químicos)
+REACH-IT List-No. 9xx-xxx-x No. is automat ically assigned, e.g. to pre-registrations without a CAS No. or other numerical 
+identifier. List Numbers do not have any legal significance, rather they are purely technical identifiers for processing a submission via 
+REACH-IT.
+RID Règlement concernant le transport Intern ational ferroviaire de marchandises Dangereuses
+SVHC Substances of Very High Concern
+Tel. Telefone
+UE União Europeia
+UN RTDG United Nations Recommendations on the Transport of  Dangerous Goods (as Recomendações da ONU relativas ao 
+Transporte de Mercadorias Perigosas)
+VOC Volatile organic compounds (= compostos orgânicos voláteis (COV))
+wwt wet weight
+Estas informações devem descrever o produto relativamente às precauções de segurança necessárias,
+que não garantem determinadas propriedades e se baseiam no estado atual dos nossos conhecimentos.
+Exclui-se qualquer responsabilidade.
+Elaborado por:
+Chemical Check GmbH, Chemical Check Platz 1-7, D-32839 Steinheim, Tel.: +49 5233 94 17 0, Fax: 
++49 5233 94 17 90
+© by Chemical Check GmbH Gefahrstoffberatung. A alteração ou reprodução deste documento
+apenas é permitida mediante a autorização expressa da Chemical Check GmbH Gefahrstoffberatung.
+Página  15 de 15

@@ -1,0 +1,4549 @@
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+1 / 75 
+ 
+SECTION 1: Identification of the substance/mixture and of the company/undertaking 
+1.1 Product identifier 
+Trade name 
+ 
+: ANDEROL 555 
+ 
+ 
+ 
+1.2 Relevant identified uses of the substance or mixture and uses advised against  
+Use of the Sub-
+stance/Mixture 
+ 
+: Lubricant 
+ 
+Recommended restrictions 
+on use 
+ 
+: Restricted to professional users. 
+ 
+1.3 Details of the supplier of the safety data sheet  
+ 
+Company:  Supplier  
+LANXESS Deutschland GmbH 
+Production, Technology, Safety & Environment  
+Leverkusen    
+Germany 
+51369 
+ 
+  Manufacturer 
+Anderol Specialty Lubricants  
+Groot Egtenrayseweg  23  
+ 5928 PA Venlo  
+Netherlands  
+Telephone : +31-77 396 0340 
+ 
+   
+ 
+Prepared by  Production, Technology, Safety & Environment  
++4922188852288  
+ 
+ 
+Further information for the safety data sheet : in-
+fosds@lanxess.com 
+ 
+ 
+1.4 Emergency telephone number 
+   
++44 20 3885 0382   
+ 
+For additional emergency telephone numbers see section 16 of the Safety 
+Data Sheet. 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+2 / 75 
+ 
+SECTION 2: Hazards identification 
+2.1 Classification of the substance or mixture 
+Classification (REGULATION (EC) No 1272/2008 ) 
+Long-term (chronic) aquatic hazard, Cat-
+egory 3 
+ 
+ H412: Harmful to aquatic life with long lasting ef-
+fects. 
+ 
+2.2 Label elements 
+Labelling (REGULATION (EC) No 1272/2008 ) 
+Hazard statements 
+ 
+: H412 Harmful to aquatic life with long lasting effects.  
+ 
+Precautionary statements 
+ 
+: Prevention:  
+P273 Avoid release to the environment. 
+Disposal:  
+P501 Dispose of contents/ container to an approved waste 
+disposal plant. 
+ 
+Additional Labelling 
+EUH208 
+ 
+Contains N-1-naphthylaniline. May produce an allergic reaction. 
+ 
+2.3 Other hazards 
+This substance/mixture contains no components considered to be either persistent, bioaccumul a-
+tive and toxic (PBT), or very persistent and very bioaccumulative (vPvB) at levels of 0.1% or 
+higher. 
+ 
+Ecological information: The substance/mixture does not contain components considered to have 
+endocrine disrupting properties according to REACH Article 57(f) or Commission Delegated reg u-
+lation (EU) 2017/2100 or Commission Regulation (EU) 2018/605 at levels of 0.1%  or higher. 
+ 
+Toxicological information: The substance/mixture does not contain components considered to 
+have endocrine disrupting properties according to REACH Article 57(f) or Commission Delegated 
+regulation (EU) 2017/2100 or Commission Regulation (EU) 2 018/605 at levels of 0.1% or higher. 
+ 
+SECTION 3: Composition/information on ingredients 
+3.2 Mixtures 
+Components 
+Chemical name CAS-No. 
+EC-No. 
+Index-No. 
+Registration number 
+Classification Concentration 
+(% w/w) 
+N-1-naphthylaniline 90-30-2 
+201-983-0 
+01-2119488704-27-
+xxxx 
+Acute Tox. 4; H302 
+Skin Sens. 1B; H317 
+STOT RE 2; H373 
+(Blood, Kidney) 
+Aquatic Acute 1; 
+>= 0.25 - < 1 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+3 / 75 
+ 
+H400 
+Aquatic Chronic 1; 
+H410 
+ 
+M-Factor (Acute 
+aquatic toxicity): 1 
+M-Factor (Chronic 
+aquatic toxicity): 1 
+ 
+For explanation of abbreviations see section 16.  
+ 
+SECTION 4: First aid measures 
+4.1 Description of first aid measures 
+Protection of first-aiders 
+ 
+:  First Aid responders should pay attention to self -protection 
+and use the recommended protective clothing  
+If potential for exposure exists refer to Section 8 for specific 
+personal protective equipment. 
+ 
+If inhaled 
+ 
+:  Move to fresh air in case of accidental inhalation of dust or 
+fumes from overheating or combustion. 
+If symptoms persist, call a physician. 
+ 
+In case of skin contact 
+ 
+:  Take off contaminated clothing and shoes immediately.  
+Wash off with soap and plenty of water. 
+Get medical attention if irritation develops and persists.  
+ 
+In case of eye contact 
+ 
+:  Flush eyes with water as a precaution.  
+Remove contact lenses. 
+Protect unharmed eye. 
+Keep eye wide open while rinsing. 
+If eye irritation persists, consult a specialist.  
+ 
+If swallowed 
+ 
+:  Clean mouth with water and drink afterwards plenty of water.  
+Do not give milk or alcoholic beverages. 
+Never give anything by mouth to an unconscious person.  
+If symptoms persist, call a physician. 
+ 
+4.2 Most important symptoms and effects, both acute and delayed  
+Symptoms : No symptoms known or expected. 
+May cause skin irritation in susceptible persons.  
+ 
+4.3 Indication of any immediate medical attention and special treatment needed  
+Treatment 
+ 
+: For specialist advice physicians should contact the Poisons 
+Information Service. 
+SECTION 5: Firefighting measures 
+5.1 Extinguishing media 
+Suitable extinguishing media :  Use extinguishing measures that are appropriate to local ci r-
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+4 / 75 
+ 
+ cumstances and the surrounding environment.  
+Water mist 
+Alcohol-resistant foam 
+Carbon dioxide (CO2) 
+Dry chemical 
+ 
+Unsuitable extinguishing 
+media 
+ 
+:  High volume water jet 
+ 
+5.2 Special hazards arising from the substance or mixture  
+Specific hazards during fire-
+fighting 
+ 
+:  Burning produces noxious and toxic fumes.  
+ 
+5.3 Advice for firefighters 
+Special protective equipment 
+for firefighters 
+ 
+:  In the event of fire, wear self-contained breathing apparatus.  
+ 
+Further information 
+ 
+:  Collect contaminated fire extinguishing water separately. This 
+must not be discharged into drains. 
+Fire residues and contaminated fire extinguishing water must 
+be disposed of in accordance with local regulations.  
+ 
+SECTION 6: Accidental release measures 
+6.1 Personal precautions, protective equipment and emergency procedures  
+Personal precautions 
+ 
+:  Use personal protective equipment. 
+Ensure adequate ventilation. 
+Evacuate personnel to safe areas. 
+ 
+6.2 Environmental precautions 
+Environmental precautions 
+ 
+:  Do not allow uncontrolled discharge of product into the env i-
+ronment. 
+If the product contaminates rivers and lakes or drains inf orm 
+respective authorities. 
+ 
+6.3 Methods and material for containment and cleaning up  
+Methods for cleaning up 
+ 
+:  Prevent further leakage or spillage if safe to do so.  
+Do not flush into surface water or sanitary sewer system.  
+Wipe up with absorbent material (e.g. cloth, fleece).  
+Keep in suitable, closed containers for disposal.  
+ 
+6.4 Reference to other sections 
+Refer to protective measures listed in sections 7 and 8., For disposal considerations see section 13.  
+SECTION 7: Handling and storage 
+7.1 Precautions for safe handling 
+Advice on safe handling : Avoid contact with skin, eyes and clothing. 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+5 / 75 
+ 
+ Use with adequate ventilation. 
+Wear suitable protective equipment. 
+For personal protection see section 8. 
+Avoid spillage on floor as the product can become very slip-
+pery when wet. 
+Floors, walls and other surfaces must be regularly cleaned.  
+Dispose of rinse water in accordance with local and national 
+regulations. 
+ 
+Advice on protection against 
+fire and explosion 
+ 
+:  Normal measures for preventive fire protection.  
+ 
+Hygiene measures 
+ 
+:  Handle in accordance with good industrial hygiene and safety 
+practice. Wash hands before breaks and at the end of wor k-
+day.  
+ 
+Dust explosion class 
+ 
+:  No data available  
+ 
+7.2 Conditions for safe storage, including any incompatibilities  
+Requirements for storage 
+areas and containers 
+ 
+:  Keep container tightly closed in a dry and well -ventilated 
+place. Keep in a dry place. Store at room temperature.  
+ 
+Storage period 
+ 
+:  5 y 
+ 
+Further information on stor-
+age stability 
+ 
+:  Keep in a dry place. 
+7.3 Specific end use(s) 
+Specific use(s) 
+ 
+:  Raw material for industry 
+ 
+SECTION 8: Exposure controls/personal protection 
+8.1 Control parameters 
+Contains no substances with occupational exposure limit values.  
+Derived No Effect Level (DNEL) according to Regulation (EC) No. 1907/2006 : 
+Substance name End Use Exposure routes Potential health ef-
+fects 
+Value 
+N-1-naphthylaniline Workers Inhalation Long-term systemic 
+effects 
+0.18 mg/m3 
+ Workers Inhalation Acute systemic ef-
+fects 
+44 mg/m3 
+ Workers Dermal Long-term systemic 
+effects 
+0.05 mg/kg 
+ Workers Dermal Acute systemic ef-
+fects 
+6.67 mg/kg 
+ General expo-
+sures 
+Inhalation Long-term systemic 
+effects 
+0.044 mg/m3 
+ General expo-
+sures 
+Inhalation Acute systemic ef-
+fects 
+33 mg/m3 
+ General expo- Dermal Long-term systemic 0.03 mg/kg 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+6 / 75 
+ 
+sures effects 
+ General expo-
+sures 
+Dermal Long-term systemic 
+effects 
+3.33 mg/kg 
+ General expo-
+sures 
+Ingestion Long-term systemic 
+effects 
+0.03 mg/kg 
+ General expo-
+sures 
+Ingestion Acute systemic ef-
+fects 
+8 mg/kg 
+Predicted No Effect Concentration (PNEC) according to Regulation (EC) No. 1907/2006 : 
+Substance name Environmental Compartment Value 
+N-1-naphthylaniline Fresh water 0.0002 mg/l 
+ Marine water 0.00002 mg/l 
+ Fresh water sediment 0.0344 mg/kg 
+ Marine sediment 0.00344 mg/kg 
+ Soil 0.0068 mg/kg 
+ STP 100 mg/l 
+8.2 Exposure controls 
+Engineering measures 
+Effective exhaust ventilation system 
+Ensure that eyewash stations and safety showers are close to the workstation location.  
+Personal protective equipment 
+Eye protection :  Eye wash bottle with pure water 
+Tightly fitting safety goggles 
+ 
+Hand protection 
+Material : Nitrile rubber 
+Break through time : <= 60 min 
+Glove thickness : 0.2 mm 
+ 
+ 
+Remarks 
+ 
+: The selected protective gloves have to satisfy the specific a-
+tions of Regulation (EU) 2016/425 and the standard EN 374 
+derived from it.  
+ 
+Skin and body protection :  Impervious clothing 
+Choose body protection according to the amount and co n-
+centration of the dangerous substance at the work place.  
+ 
+Respiratory protection :  not required under normal use 
+Use respirator when performing operations involving potential 
+exposure to vapour of the product. 
+In case of mist, spray or aerosol exposure wear suitable pe r-
+sonal respiratory protection and protective suit.  
+Respirator with filter for organic vapour 
+ 
+Filter type 
+ 
+: Combined inorganic and acidic gas/vapour, ammonia/amines 
+and organic vapour type (ABEK) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+7 / 75 
+ 
+SECTION 9: Physical and chemical properties 
+9.1 Information on basic physical and chemical properties  
+Physical state : oily 
+ 
+Colour 
+ 
+:  light yellow 
+ 
+Odour 
+ 
+:  ester-like 
+ 
+Odour Threshold 
+ 
+:  Not relevant  
+ 
+Pour point 
+ 
+: -33 °C 
+ 
+Boiling point/boiling range 
+ 
+: No data available  
+ 
+Upper explosion limit / Upper 
+flammability limit 
+ 
+: No data available  
+ 
+Lower explosion limit / Lower 
+flammability limit 
+ 
+: No data available  
+ 
+Flash point 
+ 
+: 250 °C 
+ 
+Auto-ignition temperature 
+ 
+: No data available  
+ 
+Decomposition temperature 
+Decomposition tempera-
+ture 
+ 
+:  No data available  
+ 
+Self-Accelerating decom-
+position temperature 
+(SADT) 
+ 
+: Method: No information available. 
+ 
+pH 
+ 
+: Not applicable  
+ 
+Viscosity 
+Viscosity, dynamic 
+ 
+: 93.5 mPa.s (40 °C) 
+ 
+Viscosity, kinematic 
+ 
+: 103 mm2/s (40 °C) 
+ 
+Solubility(ies) 
+Water solubility 
+ 
+: No data available  
+Solubility in other solvents 
+ 
+: No data available 
+ 
+ 
+Partition coefficient: n-
+octanol/water 
+ 
+: No data available  
+ 
+Vapour pressure 
+ 
+: No data available  
+ 
+Relative density 
+ 
+: 0.956 (15 °C) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+8 / 75 
+ 
+Density 
+ 
+: 0.957 g/cm3 (15 °C) 
+ 
+Relative vapour density 
+ 
+: No data available  
+ 
+9.2 Other information 
+Flammability (liquids) : Not classified as supporting combustion according to the 
+transport regulations. 
+ 
+Metal corrosion rate 
+ 
+: Not corrosive to metals  
+ 
+Dust explosion class 
+ 
+: No data available 
+ 
+Evaporation rate 
+ 
+:  No data available  
+ 
+Oxidizing potential 
+ 
+: No information available. 
+ 
+Molecular weight 
+ 
+: No data available 
+ 
+SECTION 10: Stability and reactivity 
+10.1 Reactivity 
+Stable under recommended storage conditions.  
+No decomposition if used as directed. 
+10.2 Chemical stability 
+No decomposition if stored and applied as directed.  
+10.3 Possibility of hazardous reactions 
+Hazardous reactions 
+ 
+:  No decomposition if used as directed. 
+10.4 Conditions to avoid 
+Conditions to avoid 
+ 
+: Contamination 
+ 
+10.5 Incompatible materials 
+Materials to avoid 
+ 
+:  Strong oxidizing agents 
+ 
+10.6 Hazardous decomposition products 
+Hazardous decomposition 
+products 
+ 
+: Carbon dioxide (CO2), carbon monoxide (CO), oxides of n i-
+trogen (NOx), dense black smoke. 
+ 
+SECTION 11: Toxicological information 
+11.1 Information on hazard classes as defined in Regulation (EC) No 1272/2008  
+Information on likely routes of 
+exposure 
+ 
+:  
+Inhalation 
+Eye contact 
+Skin contact 
+Skin Absorption 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+9 / 75 
+ 
+ 
+Acute toxicity 
+Product: 
+Acute inhalation toxicity 
+ 
+:  Remarks: Not classified due to lack of data. 
+ 
+Components: 
+N-1-naphthylaniline: 
+Acute oral toxicity 
+ 
+:  LD50 (Rat): 1,625 mg/kg  
+ 
+Acute dermal toxicity 
+ 
+:  LD50 Dermal (Rabbit, male): > 5,000 mg/kg 
+ 
+Skin corrosion/irritation 
+Components: 
+N-1-naphthylaniline: 
+Species : Rabbit 
+Method : OECD Test Guideline 404 
+Result : No skin irritation 
+GLP : no 
+ 
+Serious eye damage/eye irritation 
+Components: 
+N-1-naphthylaniline: 
+Species : Rabbit 
+Method : OECD Test Guideline 405 
+Result : No eye irritation 
+GLP : no 
+ 
+Respiratory or skin sensitisation 
+Components: 
+N-1-naphthylaniline: 
+Test Type : Maximisation Test 
+Exposure routes : Skin contact 
+Species : Guinea pig 
+Method : OECD Test Guideline 406 
+Result : Probability or evidence of low to moderate skin sensitisation 
+rate in humans 
+GLP 
+ 
+: no 
+ 
+Germ cell mutagenicity 
+Product: 
+Germ cell mutagenicity- As- :  Not classified due to lack of data. 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+10 / 75 
+ 
+sessment 
+ 
+ 
+Components: 
+N-1-naphthylaniline: 
+Genotoxicity in vitro 
+ 
+: Test Type: Ames test 
+Test system: Salmonella typhimurium 
+Metabolic activation: with and without metabolic activation 
+Method: OECD Test Guideline 471 
+Result: negative 
+GLP: No information available. 
+ 
+ 
+ 
+ Test Type: Chinese Hamster Ovary (CHO) 
+Test system: Chinese hamster ovary cells 
+Metabolic activation: with and without metabolic activation 
+Method: OECD Test Guideline 473 
+Result: negative 
+GLP: No information available. 
+ 
+Genotoxicity in vivo 
+ 
+:  Test Type: dominant lethal test 
+Species: Mouse (male) 
+Application Route: Intraperitoneal 
+Method: OECD Test Guideline 478 
+Result: negative 
+GLP: No information available. 
+ 
+Germ cell mutagenicity- As-
+sessment 
+ 
+:  Animal testing did not show any mutagenic effects., Tests on 
+bacterial or mammalian cell cultures did not show mutagenic 
+effects. 
+ 
+Carcinogenicity 
+Product: 
+Carcinogenicity - Assess-
+ment 
+ 
+:  Not classified due to lack of data. 
+ 
+Components: 
+N-1-naphthylaniline: 
+Carcinogenicity - Assess-
+ment 
+ 
+:  Animal testing did not show any carcinogenic effects.  
+ 
+Reproductive toxicity 
+Product: 
+Reproductive toxicity - As-
+sessment 
+ 
+:  Not classified due to lack of data. 
+ 
+Components: 
+N-1-naphthylaniline: 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+11 / 75 
+ 
+Effects on foetal develop-
+ment 
+ 
+:  Test Type: Pre-natal 
+Species: Rat, female 
+Application Route: Oral 
+Dose: 15 - 50 - 150 milligram per kilogram 
+General Toxicity Maternal: NOAEL: 50 mg/kg bw/day 
+Developmental Toxicity: NOAEL: 150 mg/kg body weight 
+Method: OECD Test Guideline 414 
+GLP: yes 
+ 
+STOT - single exposure 
+Product: 
+Assessment : Not classified due to lack of data. 
+ 
+STOT - repeated exposure 
+Product: 
+Assessment : Not classified due to lack of data. 
+ 
+Components: 
+N-1-naphthylaniline: 
+Exposure routes : Oral 
+Target Organs : Blood, Kidney 
+Assessment : May cause damage to organs through prolonged or repeated 
+exposure. 
+ 
+Repeated dose toxicity 
+Components: 
+N-1-naphthylaniline: 
+Species : Rat, male and female 
+LOAEL : 5 mg/kg 
+Application Route : Oral 
+Exposure time : 90 h 
+Number of exposures : dail 
+Dose : 5 - 25 - 50 mg/kg bw/day 
+Method : OECD Test Guideline 408 
+GLP : yes 
+Remarks : Subchronic toxicity 
+ 
+Aspiration toxicity 
+Product: 
+No aspiration toxicity classification 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+12 / 75 
+ 
+11.2 Information on other hazards 
+Endocrine disrupting properties 
+Product: 
+Assessment : The substance/mixture does not contain components consi d-
+ered to have endocrine disrupting properties according to 
+REACH Article 57(f) or Commission Delegated reg ulation 
+(EU) 2017/2100 or Commission Regulation (EU) 2018/605 at 
+levels of 0.1% or higher. 
+ 
+Further information 
+Product: 
+Remarks : No data is available on the product itself.  
+Health injuries are not known or expected under normal use.  
+ 
+SECTION 12: Ecological information 
+12.1 Toxicity 
+Product: 
+Toxicity to fish 
+ 
+:  Remarks: No data available 
+ 
+Components: 
+N-1-naphthylaniline: 
+Toxicity to fish 
+ 
+:  LC50 (Oncorhynchus mykiss (rainbow trout)): 0.44 mg/l 
+Exposure time: 96 h 
+Test Type: semi-static test 
+Analytical monitoring: yes 
+ 
+Toxicity to daphnia and other 
+aquatic invertebrates 
+ 
+:  EC50 (Daphnia magna (Water flea)): 0.68 mg/l 
+Exposure time: 48 h 
+Test Type: semi-static test 
+Analytical monitoring: yes 
+ 
+M-Factor (Acute aquatic tox-
+icity) 
+ 
+: 1 
+Toxicity to microorganisms 
+ 
+:  EC50 (Protozoa): 2 mg/l  
+Exposure time: 48 h 
+ 
+ 
+ 
+  EC50 (Bacteria): > 10,000 mg/l  
+Exposure time: 3 h 
+ 
+Toxicity to daphnia and other 
+aquatic invertebrates (Chron-
+ic toxicity) 
+ 
+: NOEC: 0.02 mg/l  
+Exposure time: 21 d 
+Species: Daphnia magna (Water flea) 
+Analytical monitoring: yes 
+ 
+M-Factor (Chronic aquatic : 1 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+13 / 75 
+ 
+toxicity) 
+ 
+12.2 Persistence and degradability 
+Product: 
+Biodegradability 
+ 
+:  Result: No data available 
+ 
+Components: 
+N-1-naphthylaniline: 
+Biodegradability 
+ 
+:  Test Type: aerobic 
+Inoculum: activated sludge 
+Concentration: 100 mg/l 
+Result: According to the results of tests of biodegradability this 
+product is not readily biodegradable.  
+Biodegradation:  0 % 
+Exposure time: 28 d 
+Method: OECD Test Guideline 301 
+GLP: yes 
+ 
+12.3 Bioaccumulative potential 
+Product: 
+Bioaccumulation 
+ 
+:  Remarks: No data available 
+ 
+Components: 
+N-1-naphthylaniline: 
+Bioaccumulation 
+ 
+:  Species: Cyprinus carpio (Carp) 
+Exposure time: 56 d 
+Temperature: 25 °C 
+Concentration: 0.1 mg/l  
+Bioconcentration factor (BCF): 427 - 2,730 
+ 
+Partition coefficient: n-
+octanol/water 
+ 
+: log Pow: 4.28 
+ 
+12.4 Mobility in soil 
+Product: 
+Mobility 
+ 
+:  Remarks: No data available 
+ 
+12.5 Results of PBT and vPvB assessment 
+Product: 
+Assessment 
+ 
+: This substance/mixture contains no components considered 
+to be either persistent, bioaccumulative and toxic (PBT), or 
+very persistent and very bioaccumulative (vPvB) at levels of 
+0.1% or higher.. 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+14 / 75 
+ 
+12.6 Endocrine disrupting properties 
+Product: 
+Assessment : The substance/mixture does not contain components consi d-
+ered to have endocrine disrupting properties according to 
+REACH Article 57(f) or Commission Delegated regulation 
+(EU) 2017/2100 or Commission Regulation (EU) 2018/605 at 
+levels of 0.1% or higher. 
+ 
+12.7 Other adverse effects 
+Product: 
+Additional ecological infor-
+mation 
+ 
+:  The product itself has not been tested.  
+An environmental hazard cannot be excluded in the event of 
+unprofessional handling or disposal. 
+Harmful to aquatic organisms, may cause long -term adverse 
+effects in the aquatic environment. 
+ 
+SECTION 13: Disposal considerations 
+13.1 Waste treatment methods 
+Product :  The product should not be allowed to enter drains, water 
+courses or the soil. 
+Do not contaminate ponds, waterways or ditches with chem i-
+cal or used container. 
+Offer surplus and non-recyclable solutions to a licensed dis-
+posal company. 
+ 
+Contaminated packaging :  Empty remaining contents. 
+Dispose of as unused product. 
+Do not re-use empty containers. 
+ 
+SECTION 14: Transport information 
+14.1 UN number or ID number 
+Not regulated as a dangerous good 
+14.2 UN proper shipping name 
+Not regulated as a dangerous good 
+14.3 Transport hazard class(es) 
+Not regulated as a dangerous good 
+14.4 Packing group 
+Not regulated as a dangerous good 
+14.5 Environmental hazards 
+Not regulated as a dangerous good 
+14.6 Special precautions for user 
+Remarks : Not classified as dangerous in the meaning of transport reg u-
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+15 / 75 
+ 
+lations. 
+ 
+14.7 Maritime transport in bulk according to IMO instruments  
+Not applicable for product as supplied.  
+SECTION 15: Regulatory information 
+15.1 Safety, health and environmental regulations/legislation specific for the substance or mi x-
+ture 
+REACH - Candidate List of Substances of Very High 
+Concern for Authorisation (Article 59). 
+ 
+: This product does not contain sub-
+stances of very high concern (Regu-
+lation (EC) No 1907/2006 (REACH), 
+Article 57). 
+REACH - List of substances subject to authorisation 
+(Annex XIV) 
+ 
+: Not applicable 
+Regulation (EC) No 1005/2009 on substances that d e-
+plete the ozone layer 
+ 
+: Not applicable 
+Regulation (EU) 2019/1021 on persistent organic poll u-
+tants (recast) 
+ 
+: Not applicable 
+ 
+Seveso III: Directive 2012/18/EU of the Euro-
+pean Parliament and of the Council on the 
+control of major-accident hazards involving 
+dangerous substances. 
+ 
+ 
+Not applicable 
+ 
+ 
+The components of this product are reported in the following inventories:  
+TCSI 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+US.TSCA 
+ 
+: All substances listed as active on the TSCA inventory  
+ 
+AIIC 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+DSL 
+ 
+: All components of this product are on the Canadian DSL  
+ 
+ 
+ENCS 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+KECI 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+PICCS 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+IECSC 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+NZIoC 
+ 
+: On the inventory, or in compliance with the inventory  
+ 
+15.2 Chemical safety assessment 
+Chemical Safety Assessments have been carried out for these substances.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+16 / 75 
+ 
+SECTION 16: Other information 
+Full text of H-Statements 
+H302 : Harmful if swallowed. 
+H317 : May cause an allergic skin reaction. 
+H373 : May cause damage to organs through prolonged or repeated 
+exposure if swallowed. 
+H400 : Very toxic to aquatic life. 
+H410 : Very toxic to aquatic life with long lasting effects.  
+Full text of other abbreviations 
+Acute Tox. : Acute toxicity 
+Aquatic Acute : Short-term (acute) aquatic hazard 
+Aquatic Chronic : Long-term (chronic) aquatic hazard 
+Skin Sens. : Skin sensitisation 
+STOT RE : Specific target organ toxicity - repeated exposure 
+ 
+ADN - European Agreement concernin g the International Carriage of Dangerous Goods by Inland 
+Waterways; ADR - European Agreement concerning the International Carriage of Dangerous 
+Goods by Road; AIIC - Australian Inventory of Industrial Chemicals; ASTM - American Society for 
+the Testing of Materials; bw - Body weight; CLP - Classification Labelling Packaging Regulation; 
+Regulation (EC) No 1272/2008; CMR - Carcinogen, Mutagen or Reproductive Toxicant; DIN - 
+Standard of the German Institute for Standardisation; DSL - Domestic Substances List ( Canada); 
+ECHA - European Chemicals Agency; EC -Number - European Community number; ECx - Con-
+centration associated with x% response; ELx - Loading rate associated with x% response; EmS - 
+Emergency Schedule; ENCS - Existing and New Chemical Substances (Japan) ; ErCx - Concen-
+tration associated with x% growth rate response; GHS - Globally Harmonized System; GLP - 
+Good Laboratory Practice; IARC - International Agency for Research on Cancer; IATA - Interna-
+tional Air Transport Association; IBC - International Code f or the Construction and Equipment of 
+Ships carrying Dangerous Chemicals in Bulk; IC50 - Half maximal inhibitory concentration; ICAO 
+- International Civil Aviation Organization; IECSC - Inventory of Existing Chemical Substances in 
+China; IMDG - International Maritime Dangerous Goods; IMO - International Maritime Organiz a-
+tion; ISHL - Industrial Safety and Health Law (Japan); ISO - International Organisation for Stan d-
+ardization; KECI - Korea Existing Chemicals Inventory; LC50 - Lethal Concentration to 50 % of a 
+test population; LD50 - Lethal Dose to 50% of a test population (Median Lethal Dose); MARPOL - 
+International Convention for the Prevention of Pollution from Ships; n.o.s. - Not Otherwise Spec i-
+fied; NO(A)EC - No Observed (Adverse) Effect Concentration; NO (A)EL - No Observed (Adverse) 
+Effect Level; NOELR - No Observable Effect Loading Rate; NZIoC - New Zealand Inventory of 
+Chemicals; OECD - Organization for Economic Co -operation and Development; OPPTS - Office 
+of Chemical Safety and Pollution Prevention; PB T - Persistent, Bioaccumulative and Toxic su b-
+stance; PICCS - Philippines Inventory of Chemicals and Chemical Substances; (Q)SAR - (Quanti-
+tative) Structure Activity Relationship; REACH - Regulation (EC) No 1907/2006 of the European 
+Parliament and of the Cou ncil concerning the Registration, Evaluation, Authorisation and R e-
+striction of Chemicals; RID - Regulations concerning the International Carriage of Dangerous 
+Goods by Rail; SADT - Self-Accelerating Decomposition Temperature; SDS - Safety Data Sheet; 
+SVHC - Substance of Very High Concern; TCSI - Taiwan Chemical Substance Inventory; TECI - 
+Thailand Existing Chemicals Inventory; TRGS - Technical Rule for Hazardous Substances; TSCA 
+- Toxic Substances Control Act (United States); UN - United Nations; vPvB - Very Persistent and 
+Very Bioaccumulative 
+Further information 
+Classification of the mixture: Classification procedure: 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+17 / 75 
+ 
+Aquatic Chronic 3 H412 Calculation method 
+ 
+ 
+The information provided in this Safety Data Sheet is correct to the best of our knowledge, info r-
+mation and belief at the date of its publication. The information given is designed only as a gui d-
+ance for safe handling, use, processing, st orage, transportation, disposal and release and is not 
+to be considered a warranty or quality specification. The information relates only to the specific 
+material designated and may not be valid for such material used in combination with any other 
+materials or in any process, unless specified in the text.  
+ 
+FR / EN 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+18 / 75 
+ 
+Annex: Exposure Scenarios 
+Table of Contents 
+Number Title 
+ES 1 Formulation or re-packing; Formulation of preparations; Lubricants, greases, release pro d-
+ucts; (N-1-naphthylaniline, CAS: 90-30-2). 
+ES 2 Use at industrial sites; General exposures; Lubricants, greases, release products; Engine 
+lubricant service; (N-1-naphthylaniline, CAS: 90-30-2). 
+ES 3 Widespread use by professional workers; General exposures; Lubricants, greases, release 
+products; Engine lubricant service; In-door use; (N-1-naphthylaniline, CAS: 90 -30-2). 
+ES 4 Widespread use by professional workers; General exposures; Lubricants, greases, release 
+products; Engine lubricant service; Out-door use; (N-1-naphthylaniline, CAS: 90-30-2). 
+ES 5 Use at industrial sites; General exposures (open systems); Lubricants, greases, release 
+products; Corrosion inhibitors; Dipping; Spraying; Rolling, Brushing; (N -1-naphthylaniline, 
+CAS: 90-30-2). 
+ES 6 Widespread use by professional workers; General exposures (open systems); Lubricants, 
+greases, release products; Corrosion inhibitors; Dipping; Spraying; Rolling, Brushing; Indoor 
+use. 
+ES 7 Widespread use by professional workers; General exposures (open systems); Lubricants, 
+greases, release products; Corrosion inhibitors; Dipping; Spraying; Rolling, Brushing; Ou t-
+door use. 
+ES 8 Use at industrial sites; Lubricants, greases, release products; Treatment by heat ing; (open 
+systems). 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+19 / 75 
+ 
+ES 1: Formulation or re-packing; Formulation of preparations; Lubricants, greases, 
+release products; (N-1-naphthylaniline, CAS: 90-30-2). 
+1.1. Title section 
+Exposure Scenario name : Formulation of preparations, Lubricants, greases, release pro d-
+ucts 
+Structured Short Title : Formulation or re-packing; Formulation of preparations; Lubri-
+cants, greases, release products; (N-1-naphthylaniline, CAS: 
+90-30-2). 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Formulation of preparations ERC2 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Use in closed batch process (synthesis or formulation)  PROC3 
+CS 5 Use in batch and other process (synthesis) where opportunity for exp o-
+sure arises 
+PROC4 
+CS 6 Mixing or blending in batch processes for formulation of preparations 
+and articles (multistage and/ or significant contact)  
+PROC5 
+CS 7 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities 
+PROC8a 
+CS 8 Transfer of substance or preparation (charging/ disc harging) from/ to 
+vessels/ large containers at dedicated facilities  
+PROC8b 
+CS 9 Transfer of substance or preparation into small containers (dedicated 
+filling line, including weighing) 
+PROC9 
+CS 10 Use as laboratory reagent PROC15 
+ 
+ 
+1.2. Conditions of use affecting exposure 
+1.2.1. Control of environmental exposure: Formulation of preparations (ERC2) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+20 / 75 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount per site : 233.33 kg  
+Annual amount per site : 70000 kg  
+Release type : Intermittent use/release 
+Emission days : 300 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre -treatment. 
+Soil emission controls are not applicable as there is no direct release to soil.  
+Conditions and measures related to sewage treatment plant  
+STP type : Municipal sewage treatment plant 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.005 % 
+Emission or Release Factor: Water 
+Worst case assumption 0 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0 % 
+ 
+1.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 100 % (unless stated differently).    
+Physical form of product : Liquid substance 
+Vapour pressure : < 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 480 min 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+21 / 75 
+ 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly). 5 days/week 
+Technical and organisational conditions and measures  
+Handle substance within a closed system.  
+Provide a basic standard of general ventilation (1 to 3 air changes per hour).  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+<=27%   
+Physical form of product : Liquid substance 
+Vapour pressure : < 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 480 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly). 5 days/week 
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Handle substance within a closed system.  
+Use only in area provided with appropriate exhaust ventilation.  
+Inhalation - minimum efficiency of 90 % 
+Conditions and measures related to personal protection , hygiene and health evaluation 
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+22 / 75 
+ 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.4. Control of worker exposure: Use in closed batch process (synthesis or formulation)  
+(PROC3) 
+ 
+Product (article) characteristics 
+<=27%   
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly). 5 days/week 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+Inhalation - minimum efficiency of 90 % 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.5. Control of worker exposure: Use in batch and other process (synthesis) where opportun i-
+ty for exposure arises (PROC4) 
+ 
+Product (article) characteristics 
+<=27%   
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+23 / 75 
+ 
+Physical form of product : Liquid mixture 
+Vapour pressure : < 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Use frequency : 5 days/week 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+Inhalation - minimum efficiency of 90 % 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.6. Control of worker exposure: Mixing or blending in batch processes for formulation of 
+preparations and articles (multistage and/ or significant contact)  (PROC5) 
+ 
+Product (article) characteristics 
+Limit the substance content in the product to 10 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : < 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Use frequency : 5 days/week 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+Inhalation - minimum efficiency of 90 % 
+General standard operating procedures to control routine activities  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+24 / 75 
+ 
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.7. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 100 % (unless stated differently).    
+Physical form of product : Solid, low dustiness 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 60 min 
+Use frequency : 5 days/week 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+Inhalation - minimum efficiency of 90 % 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management supervi-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+25 / 75 
+ 
+1.2.8. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 100 % (unless stated differently).    
+Physical form of product : Solid, low dustiness 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 60 min 
+Use frequency : 5 days/week 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+Inhalation - minimum efficiency of 95 % 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.9. Control of worker exposure: Transfer of substance or preparation into small containers 
+(dedicated filling line, including weighing)  (PROC9) 
+ 
+Product (article) characteristics 
+<=27%   
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+26 / 75 
+ 
+Inhalation - minimum efficiency of 90 % 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+1.2.10. Control of worker exposure: Use as laboratory reagent (PROC15) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 100 % (unless stated differently).    
+Physical form of product : Solid, low dustiness 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+Inhalation - minimum efficiency of 90 % 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+27 / 75 
+ 
+1.3. Exposure estimation and reference to its source 
+1.3.1. Environmental release and exposure:  Formulation of preparations (ERC2) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.000007 mg/L (EASY TRA v4.1) 0.033 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Soil 0.0000027 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Sewage treatment plant < 0.0000001 mg/L (EASY TRA 
+v4.1) 
+< 0.001 
+ 
+1.3.2. Worker exposure: Use in closed process, no likelihood of exposure  (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.091 mg/m³ 
+(EASY TRA v4.1) 
+0.508 
+dermal systemic long-term 0.002 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.034 
+ 
+1.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.01 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.054 
+dermal systemic long-term 0.019 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.37 
+ 
+1.3.4. Worker exposure: Use in closed batch process (synthesis or formulation)  (PROC3) 
+ 
+Exposure route Health effect Exposure indica- Exposure esti- RCR 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+28 / 75 
+ 
+tor mate 
+inhalative systemic long-term 0.091 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.508 
+dermal systemic long-term 0.009 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.185 
+ 
+1.3.5. Worker exposure: Use in batch and other process (synthesis) where opportunity for e x-
+posure arises (PROC4) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.055 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.305 
+dermal systemic long-term 0.022 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.444 
+ 
+1.3.6. Worker exposure: Mixing or blending in batch processes for formulation of preparations 
+and articles (multistage and/ or significant contact)  (PROC5) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.033 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.183 
+dermal systemic long-term 0.016 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.329 
+ 
+1.3.7. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.01 mg/m³ (EASY 
+TRA v4.1) 
+0.056 
+dermal systemic long-term 0.017 mg/kg 
+bw/day 
+(RISKOFDERM 
+v2.1) 
+0.336 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+29 / 75 
+ 
+1.3.8. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.001 mg/m³ 
+(EASY TRA v4.1) 
+0.006 
+dermal systemic long-term 0.017 mg/kg 
+bw/day 
+(RISKOFDERM 
+v2.1) 
+0.336 
+ 
+1.3.9. Worker exposure: Transfer of substance or preparation into small containers (dedicated 
+filling line, including weighing) (PROC9) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.055 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.305 
+dermal systemic long-term 0.022 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.444 
+ 
+1.3.10. Worker exposure: Use as laboratory reagent (PROC15) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.006 mg/m³ 
+(EASY TRA v4.1) 
+0.033 
+dermal systemic long-term 0.010 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.206 
+ 
+ 
+1.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream user is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this exposure scenario.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+30 / 75 
+ 
+ES 2: Use at industrial sites; General exposures; Lubricants, greases, release prod-
+ucts; Engine lubricant service; (N-1-naphthylaniline, CAS: 90-30-2). 
+2.1. Title section 
+Exposure Scenario name : General exposures, Lubricants, greases, release products, 
+Engine lubricant service 
+Structured Short Title : Use at industrial sites; General exposures; Lubricants, greases, 
+release products; Engine lubricant service; (N-1-
+naphthylaniline, CAS: 90-30-2). 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Industrial use of processing aids in processes and 
+products, not becoming part of articles 
+ERC4 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  
+PROC8b 
+CS 5 Transfer of substance or preparation into small containers (dedicated 
+filling line, including weighing) 
+PROC9 
+ 
+ 
+2.2. Conditions of use affecting exposure 
+2.2.1. Control of environmental exposure: Industrial use of processing aids in processes and 
+products, not becoming part of articles (ERC4) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount per site : 100 kg  
+Annual amount per site : 30000 kg  
+Release type : Intermittent use/release 
+Emission days : 300 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+31 / 75 
+ 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre -treatment. 
+Soil emission controls are not applicable as there is no direct release to soil.  
+Conditions and measures related to sewage treatment plant  
+STP type : Municipal sewage treatment plant 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.005 % 
+Emission or Release Factor: Water 
+Worst case assumption 0 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0 % 
+ 
+2.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures 
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+32 / 75 
+ 
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+2.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+2.2.4. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+33 / 75 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+2.2.5. Control of worker exposure: Transfer of substance or preparation into small containers 
+(dedicated filling line, including weighing)  (PROC9) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+34 / 75 
+ 
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+ 
+2.3. Exposure estimation and reference to its source 
+2.3.1. Environmental release and exposure:  Industrial use of processing aids in processes and 
+products, not becoming part of articles (ERC4) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.0000067 mg/L (EASY TRA 
+v4.1) 
+0.033 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Soil 0.0000012 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Sewage treatment plant < 0.0000001 mg/L (EASY TRA 
+v4.1) 
+< 0.001 
+ 
+2.3.2. Worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.018 mg/m³ 
+(EASY TRA v4.1) 
+0.102 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+35 / 75 
+ 
+2.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.097 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.541 
+dermal systemic long-term 0.003 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.069 
+ 
+2.3.4. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.110 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.609 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+2.3.5. Worker exposure: Transfer of substance or preparation into small containers (dedicated 
+filling line, including weighing) (PROC9) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.097 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.541 
+dermal systemic long-term 0.007 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.137 
+ 
+ 
+2.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream u ser is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this e xposure scenario. 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+36 / 75 
+ 
+ES 3: Widespread use by professional workers; General exposures; Lubricants, 
+greases, release products; Engine lubricant service; In-door use; (N-1-naphthylaniline, 
+CAS: 90-30-2). 
+3.1. Title section 
+Exposure Scenario name : General exposures, Lubricants, greases, release products, 
+Engine lubricant service, Indoor use 
+Structured Short Title : Widespread use by professional workers; General exposures; 
+Lubricants, greases, release products; Engine lubricant service; 
+In-door use; (N-1-naphthylaniline, CAS: 90-30-2). 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Wide dispersive indoor use of substances in closed 
+systems 
+ERC9a 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities 
+PROC8a 
+CS 5 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  
+PROC8b 
+CS 6 Heat and pressure transfer fluids in dispersive, professional use but 
+closed systems 
+PROC20 
+ 
+ 
+3.2. Conditions of use affecting exposure 
+3.2.1. Control of environmental exposure: Wide dispersive indoor use of substances in closed 
+systems (ERC9a) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount for wide dispersive 
+uses 
+: 0.002 kg  
+Annual amount for wide disperse : 15000 kg  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+37 / 75 
+ 
+uses 
+Release type : Intermittent use/release 
+Emission days : 365 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre -treatment. 
+Conditions and measures related to sewage treatment plant  
+STP type : Municipal sewage treatment plant 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.01 % 
+Emission or Release Factor: Water 
+Worst case assumption 0.05 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0.1 % 
+ 
+3.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+38 / 75 
+ 
+Ensure adequate ventilation, especially in confined areas.  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+3.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+39 / 75 
+ 
+3.2.4. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+3.2.5. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+40 / 75 
+ 
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+3.2.6. Control of worker exposure: Heat and pressure transfer fluids in dispersive, professional 
+use but closed systems (PROC20) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Provide extraction ventilation at points where emissions occur.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+41 / 75 
+ 
+3.3. Exposure estimation and reference to its source 
+3.3.1. Environmental release and exposure:  Wide dispersive indoor use of substances in 
+closed systems (ERC9a) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.0000067 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.035 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Soil < 0.0000001 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Sewage treatment plant 0.0000005 mg/L (EASY TRA 
+v4.1) 
+< 0.001 
+ 
+3.3.2. Worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.009 mg/m³ 
+(EASY TRA v4.1) 
+0.051 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+3.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.091 mg/m³ 
+(EASY TRA v4.1) 
+0.508 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.274 
+ 
+3.3.4. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+42 / 75 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.055 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.305 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+3.3.5. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.055 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.305 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+3.3.6. Worker exposure: Heat and pressure transfer fluids in dispersive, professional use but 
+closed systems (PROC20) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.055 mg/m³ 
+(EASY TRA v4.1) 
+0.305 
+dermal systemic long-term 0.017 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.343 
+ 
+ 
+3.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream user is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this exposure scenario.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+43 / 75 
+ 
+ES 4: Widespread use by professional workers; General exposures; Lubricants, 
+greases, release products; Engine lubricant service; Out-door use; (N-1-
+naphthylaniline, CAS: 90-30-2). 
+4.1. Title section 
+Exposure Scenario name : General exposures, Lubricants, greases, release product s, 
+Engine lubricant service, Outdoor use 
+Structured Short Title : Widespread use by professional workers; General exposures; 
+Lubricants, greases, release products; Engine lubricant service; 
+Out-door use; (N-1-naphthylaniline, CAS: 90 -30-2). 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Wide dispersive outdoor use of substances in closed 
+systems 
+ERC9b 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities 
+PROC8a 
+CS 5 Transfer of substance or preparation (charging/ dischargin g) from/ to 
+vessels/ large containers at dedicated facilities  
+PROC8b 
+CS 6 Heat and pressure transfer fluids in dispersive, professional use but 
+closed systems 
+PROC20 
+ 
+ 
+4.2. Conditions of use affecting exposure 
+4.2.1. Control of environmental exposure: Wide dispersive outdoor use of substances in closed 
+systems (ERC9b) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount for wide dispersive 
+uses 
+: 0.002 kg  
+Annual amount for wide disperse : 15000 kg  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+44 / 75 
+ 
+uses 
+Release type : Intermittent use/release 
+Emission days : 365 
+Conditions and measures related to sewage treatment plant  
+STP type : none 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.01 % 
+Emission or Release Factor: Water 
+Worst case assumption 0.05 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0.1 % 
+ 
+4.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+45 / 75 
+ 
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Outdoor 
+ 
+4.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Outdoor 
+ 
+4.2.4. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+46 / 75 
+ 
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Outdoor 
+ 
+4.2.5. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Outdoor 
+ 
+4.2.6. Control of worker exposure: Heat and pressure transfer fluids in dispersive, professional 
+use but closed systems (PROC20) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+47 / 75 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Outdoor 
+ 
+ 
+4.3. Exposure estimation and reference to its source 
+4.3.1. Environmental release and exposure:  Wide dispersive outdoor use of substances in 
+closed systems (ERC9b) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.0000067 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.035 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Soil < 0.0000001 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+ 
+4.3.2. Worker exposure: Use in closed process, no likelihood of exposure  (PROC1) 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+48 / 75 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.006 mg/m³ 
+(EASY TRA v4.1) 
+0.036 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+4.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.064 mg/m³ 
+(EASY TRA v4.1) 
+0.355 
+dermal systemic long-term 0.013 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.274 
+ 
+4.3.4. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.038 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.213 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+4.3.5. Worker exposure: Transfer of substance or preparation (charging/ d ischarging) from/ to 
+vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.038 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.213 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+49 / 75 
+ 
+4.3.6. Worker exposure: Heat and pressure transfer fluids in dispersive, professional use but 
+closed systems (PROC20) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.038 mg/m³ 
+(EASY TRA v4.1) 
+0.213 
+dermal systemic long-term 0.017 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.343 
+ 
+ 
+4.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream user is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this exposure scenario.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+50 / 75 
+ 
+ES 5: Use at industrial sites; General exposures (open systems); Lubricants, greases, 
+release products; Corrosion inhibitors; Dipping; Spraying; Rolling, Brushing; (N-1-
+naphthylaniline, CAS: 90-30-2). 
+5.1. Title section 
+Exposure Scenario name : General exposures (open systems), Use of lubricants and 
+greases, Corrosion inhibitors, Rolling, Brushing, Dipping, 
+Spraying 
+Structured Short Title : Use at industrial sites; General exposures (open systems); 
+Lubricants, greases, release products; Corrosion inhibitors; 
+Dipping; Spraying; Rolling, Brushing; (N -1-naphthylaniline, 
+CAS: 90-30-2). 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Industrial use of processing aids in processes and 
+products, not becoming part of articles 
+ERC4 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  
+PROC8b 
+CS 5 Transfer of substance or preparation into small containers (dedicated 
+filling line, including weighing) 
+PROC9 
+CS 6 Roller application or brushing PROC10 
+CS 7 Treatment of articles by dipping and pouring  PROC13 
+ 
+ 
+5.2. Conditions of use affecting exposure 
+5.2.1. Control of environmental exposure: Industrial use of processing aids in processes and 
+products, not becoming part of articles (ERC4) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount per site : 100 kg  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+51 / 75 
+ 
+Annual amount per site : 30000 kg  
+Release type : Intermittent use/release 
+Emission days : 300 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre -treatment. 
+Soil emission controls are not applicable as there is no direct release to soil.  
+Conditions and measures related to sewage treatment plant  
+STP type : Default industrial size 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.005 % 
+Emission or Release Factor: Water 
+Worst case assumption 0 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0 % 
+ 
+5.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+52 / 75 
+ 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+5.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+53 / 75 
+ 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+5.2.4. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with specific activity training.  
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+5.2.5. Control of worker exposure: Transfer of substance or preparation into small containers 
+(dedicated filling line, including weighing)  (PROC9) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 60 min 
+Technical and organisational conditions and measures  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+54 / 75 
+ 
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+5.2.6. Control of worker exposure: Roller application or brushing (PROC10) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Use only in area provided with appropriate exhaust ventilation.  
+Dermal - minimum efficiency of 90 % 
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+55 / 75 
+ 
+5.2.7. Control of worker exposure: Treatment of articles by dipping and pouring  (PROC13) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and healt h evaluation 
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Dermal - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+ 
+5.3. Exposure estimation and reference to its source 
+5.3.1. Environmental release and exposure:  Industrial use of processing aids in processes and 
+products, not becoming part of articles (ERC4) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.0000067 mg/L (EASY TRA 
+v4.1) 
+0.033 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight < 0.001 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+56 / 75 
+ 
+(EASY TRA v4.1) 
+Soil 0.0000012 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Sewage treatment plant < 0.0000001 mg/L (EASY TRA 
+v4.1) 
+< 0.001 
+ 
+5.3.2. Worker exposure: Use in closed process, no likelihood of exposure  (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.018 mg/m³ 
+(EASY TRA v4.1) 
+0.102 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+5.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.097 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.541 
+dermal systemic long-term 0.003 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.069 
+ 
+5.3.4. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.110 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.609 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+5.3.5. Worker exposure: Transfer of substance or preparation into small containers (dedicated 
+filling line, including weighing) (PROC9) 
+ 
+Exposure route Health effect Exposure indica- Exposure esti- RCR 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+57 / 75 
+ 
+tor mate 
+inhalative systemic long-term 0.037 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.203 
+dermal systemic long-term 0.003 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.069 
+ 
+5.3.6. Worker exposure: Roller application or brushing (PROC10) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.009 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.051 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.274 
+ 
+5.3.7. Worker exposure: Treatment of articles by dipping and pouring  (PROC13) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.097 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.541 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.274 
+ 
+ 
+5.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream u ser is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this e xposure scenario. 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+58 / 75 
+ 
+ES 6: Widespread use by professional workers; General exposures (open systems); 
+Lubricants, greases, release products; Corrosion inhibitors; Dipping; Spraying; Roll-
+ing, Brushing; Indoor use. 
+6.1. Title section 
+Exposure Scenario name : General exposures (open systems), Use of lubricants and 
+greases, Corrosion inhibitors, Rolling, Brushing, Dipping, 
+Spraying, Indoor use 
+Structured Short Title : Widespread use by professional workers; General exposures 
+(open systems); Lubricants, greases, release products; Corr o-
+sion inhibitors; Dipping; Spraying; Rolling, Brushing; Indoor 
+use. 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Wide dispersive indoor use of processing aids in open 
+systems 
+ERC8a 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities 
+PROC8a 
+CS 5 Roller application or brushing PROC10 
+CS 6 Treatment of articles by dipping and pouring  PROC13 
+ 
+ 
+6.2. Conditions of use affecting exposure 
+6.2.1. Control of environmental exposure: Wide dispersive indoor use of processing aids in 
+open systems (ERC8a) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount per site : 0.822 kg  
+Annual amount for wide disperse 
+uses 
+: 6000 kg  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+59 / 75 
+ 
+Release type : Intermittent use/release 
+Emission days : 365 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre -treatment. 
+Soil emission controls are not applicable as there is no direct release to soil.  
+Conditions and measures related to sewage treatment plant  
+STP type : Municipal sewage treatment plant 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.010 % 
+Emission or Release Factor: Water 
+Worst case assumption 0.050 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0.100 % 
+ 
+6.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+60 / 75 
+ 
+Handle substance within a closed system.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+6.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+61 / 75 
+ 
+6.2.4. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear suitable gloves tested to EN374.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+6.2.5. Control of worker exposure: Roller application or brushing (PROC10) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.   
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Application rate : 0.2 L/min 
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+62 / 75 
+ 
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+Additional good practice advice. Obligations according to Article 37(4) of REACH do not apply  
+Ensure that direction of application is only downward.  
+ 
+6.2.6. Control of worker exposure: Treatment of articles by dipping and pouring  (PROC13) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+63 / 75 
+ 
+ 
+ 
+6.3. Exposure estimation and reference to its source 
+6.3.1. Environmental release and exposure:  Wide dispersive indoor use of processing aids in 
+open systems (ERC8a) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.0000067 mg/L (EASY TRA 
+v4.1) 
+0.033 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Soil < 0.0000001 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Sewage treatment plant 0.0000002 mg/L (EASY TRA 
+v4.1) 
+< 0.001 
+ 
+6.3.2. Worker exposure: Use in closed process, no likelihood of exposure  (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.009 mg/m³ 
+(EASY TRA v4.1) 
+0.051 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+6.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.091 mg/m³ 
+(EASY TRA v4.1) 
+0.508 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.274 
+ 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+64 / 75 
+ 
+6.3.4. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at non-dedicated facilities (PROC8a) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.055 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.305 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.165 
+ 
+6.3.5. Worker exposure: Roller application or brushing (PROC10) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.01 mg/m³ (ART) 0.054 
+dermal systemic long-term 0.038 mg/kg 
+bw/day 
+(RISKOFDERM 
+v2.1) 
+0.76 
+ 
+6.3.6. Worker exposure: Treatment of articles by dipping and pouring  (PROC13) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.091 mg/m³ 
+(ECETOC TRA 
+worker v3) 
+0.508 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (ECETOC 
+TRA worker v3) 
+0.274 
+ 
+ 
+6.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream user is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this exposure scenario.  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+65 / 75 
+ 
+ES 7: Widespread use by professional workers; General exposures (open systems); 
+Lubricants, greases, release products; Corrosion inhibitors; Dipping; Spraying; Roll-
+ing, Brushing; Outdoor use. 
+7.1. Title section 
+Exposure Scenario name : General exposures (open systems), Use of lub ricants and 
+greases, Corrosion inhibitors, Rolling, Brushing, Dipping, 
+Spraying, Outdoor use 
+Structured Short Title : Widespread use by professional workers; General exposures 
+(open systems); Lubricants, greases, release products; Corr o-
+sion inhibitors; Dipping; Spraying; Rolling, Brushing; Outdoor 
+use. 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Wide dispersive outdoor use of processing aids in open 
+systems 
+ERC8d 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure  PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Roller application or brushing PROC10 
+ 
+ 
+7.2. Conditions of use affecting exposure 
+7.2.1. Control of environmental exposure: Wide dispersive outdoor use of processing aids in 
+open systems (ERC8d) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount per site : 0.822 kg  
+Annual amount for wide disperse 
+uses 
+: 6000 kg  
+Release type : Intermittent use/release 
+Emission days : 365 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+66 / 75 
+ 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre-treatment. 
+Soil emission controls are not applicable as there is no direct release to soil.  
+Conditions and measures related to sewage treatment plant 
+STP type : none 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.010 % 
+Emission or Release Factor: Water 
+Worst case assumption 0.050 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0.100 % 
+ 
+7.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and me asures 
+Handle substance within a closed system.  
+General standard operating procedures to control routine activities  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+67 / 75 
+ 
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Outdoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+7.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Outdoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+7.2.4. Control of worker exposure: Roller application or brushing (PROC10) 
+ 
+Product (article) characteristics 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+68 / 75 
+ 
+Covers percentage substance in the product up to 1 %.    
+Physical form of product : Liquid mixture 
+Vapour pressure : > 10 hPa 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Application rate : 0.2 L/min 
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+General standard operating procedures to control routine activities  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with ‘basic’ employee training.  
+Dermal - minimum efficiency of 90 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Outdoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+Additional good practice advice. Obligations according to Article 37(4) of REACH do not apply  
+Ensure that direction of application is only downward.  
+ 
+ 
+7.3. Exposure estimation and reference to its source 
+7.3.1. Environmental release and exposure:  Wide dispersive outdoor use of processing aids in 
+open systems (ERC8d) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.0000067 mg/L (EASY TRA 
+v4.1) 
+0.033 
+Marine water 0.0000007 mg/L (EASY TRA 
+v4.1) 
+0.034 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+Marine sediment 0.0000027 mg/kg dry weight < 0.001 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+69 / 75 
+ 
+(EASY TRA v4.1) 
+Soil < 0.0000001 mg/kg dry weight 
+(EASY TRA v4.1) 
+< 0.001 
+ 
+7.3.2. Worker exposure: Use in closed process, no likelihood of exposure  (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.006 mg/m³ 
+(EASY TRA v4.1) 
+0.036 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+7.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.064 mg/m³ 
+(EASY TRA v4.1) 
+0.355 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.274 
+ 
+7.3.4. Worker exposure: Roller application or brushing (PROC10) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.01 mg/m³ (ART) 0.054 
+dermal systemic long-term 0.038 mg/kg 
+bw/day 
+(RISKOFDERM 
+v2.1) 
+0.76 
+ 
+ 
+7.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream u ser is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this e xposure scenario. 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+70 / 75 
+ 
+ES 8: Use at industrial sites; Lubricants, greases, release products; Treatment by 
+heating; (open systems). 
+8.1. Title section 
+Exposure Scenario name : Treatment by heating, Lubricants, greases, release products, 
+(open systems) 
+Structured Short Title : Use at industrial sites; Lubricants, greases, release products; 
+Treatment by heating; (open systems). 
+Substance : N-1-naphthylaniline 
+EC-No.: 201-983-0 
+Registration number: 
+01-2119488704-27-xxxx 
+ 
+Environment 
+CS 1 Industrial use of processing aids in processes and 
+products, not becoming part of articles 
+ERC4 
+Worker 
+CS 2 Use in closed process, no likelihood of exposure PROC1 
+CS 3 Use in closed, continuous process with occasional controlled exposure  PROC2 
+CS 4 Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  
+PROC8b 
+CS 5 Treatment of articles by dipping and pouring  PROC13 
+ 
+ 
+8.2. Conditions of use affecting exposure 
+8.2.1. Control of environmental exposure: Industrial use of processing aids in processes and 
+products, not becoming part of articles (ERC4) 
+ 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Daily amount per site : 20 kg  
+Annual amount per site : 6000 kg  
+Release type : Intermittent use/release 
+Emission days : 300 
+Technical and organisational conditions and measures  
+Product must not be released into water without pre -treatment. 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+71 / 75 
+ 
+Conditions and measures related to sewage treatment plant  
+STP type : Municipal sewage treatment plant 
+STP effluent : 2,000 m3/d 
+ 
+Conditions and measures related to treatment of waste (including article waste)  
+Waste treatment : Can be incinerated, when in compliance with local regulations.  
+ 
+Other conditions affecting environmental exposure  
+Receiving surface water flow : 18,000 m3/d 
+Local freshwater dilution factor : 10 
+Local marine water dilution factor : 100 
+Emission or Release Factor: Air 
+Worst case assumption 0.005 % 
+Emission or Release Factor: Water 
+Worst case assumption < 0.001 % 
+Emission or Release Factor: Soil 
+Worst case assumption 0 % 
+ 
+8.2.2. Control of worker exposure: Use in closed process, no likelihood of exposure (PROC1) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with specific activity training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+72 / 75 
+ 
+Body parts exposed : 240 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+8.2.3. Control of worker exposure: Use in closed, continuous process with occasional co n-
+trolled exposure (PROC2) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational condi tions and measures 
+Ensure adequate ventilation, especially in confined areas.  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with specific activity training.  
+Dermal - minimum efficiency of 95 % 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+ 
+8.2.4. Control of worker exposure: Transfer of substance or preparation (charging/ discharging) 
+from/ to vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration < 240 min 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+73 / 75 
+ 
+Technical and organisational conditions and measures  
+Ensure adequate ventilation, especially in confined areas.  
+Ensure operatives are trained to minimise exposures.  
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensive management superv i-
+sion controls. 
+Suitable mask with particle filter P3 (European Norm 143)  
+Dermal - minimum efficiency of 98 % 
+Inhalation - minimum efficiency of 98 % 
+Other conditions affecting workers exposure  
+Body parts exposed : 960 cm2 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+Process Temperature 123 °C 
+ 
+8.2.5. Control of worker exposure: Treatment of articles by dipping and pouring  (PROC13) 
+ 
+Product (article) characteristics 
+Covers the percentage of the substance in the product up to 5%.    
+Physical form of product : Liquid mixture 
+Amount used (or contained in articles), frequency and duration of use/exposure  
+Duration : Exposure duration > 240 min 
+Use frequency : Covers daily exposures up to 8 hours (unless stated differen t-
+ly).   
+Technical and organisational conditions and measures  
+Ensure operatives are trained to minimise exposures.  
+Use only in area provided with appropriate exhaust ventilation.  
+Inhalation - minimum efficiency of 90 % 
+Conditions and measures related to personal protection, hygiene and health evaluation  
+Wear chemically resistant gloves (tested to EN374) in combination with intensi ve management supervi-
+sion controls. 
+Suitable mask with particle filter P3 (European Norm 143)  
+Dermal - minimum efficiency of 98 % 
+Inhalation - minimum efficiency of 98 % 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+74 / 75 
+ 
+Other conditions affecting workers exposure  
+Body parts exposed : Palms of both hands (480 cm2) 
+Indoor or outdoor use : Indoor 
+Assumes a good basic standard of occupational hygiene is implemented  
+Process Temperature 123 °C 
+ 
+ 
+8.3. Exposure estimation and reference to its source 
+8.3.1. Environmental release and exposure:  Industrial use of processing aids in processes and 
+products, not becoming part of articles (ERC4) 
+ 
+Protection Target 
+ 
+Exposure estimate RCR 
+Fresh water 0.000007 mg/L (EUSES v2.1) 0.033 
+Marine water 0.0000007 mg/L (EUSES v2.1) 0.034 
+Fresh water sediment 0.000026 mg/kg dry weight 
+(EUSES v2.1) 
+< 0.01 
+Marine sediment 0.0000027 mg/kg dry weight 
+(EUSES v2.1) 
+< 0.01 
+Soil 0.0000003 mg/kg dry weight 
+(EUSES v2.1) 
+< 0.001 
+Sewage treatment plant < 0.0000001 mg/L (EUSES v2.1) < 0.001 
+ 
+8.3.2. Worker exposure: Use in closed process, no likelihood of exposure  (PROC1) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.018 mg/m³ 
+(EASY TRA v4.1) 
+0.102 
+dermal systemic long-term < 0.001 mg/kg 
+bw/day (EASY TRA 
+v4.1) 
+0.007 
+ 
+8.3.3. Worker exposure: Use in closed, continuous process with occasional controlled exp o-
+sure (PROC2) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.097 mg/m³ 
+(ECETOC TRA) 
+0.541 
+SAFETY DATA SHEET 
+according to Regulation (EC) No. 1907/2006 
+ 
+ANDEROL 555 
+ 
+  
+Version  
+1.21 
+Revision Date:  
+15.02.2022 
+SDS Number:  
+000000007152 
+Date of last issue: 05.10.2020 
+Date of first issue: 30.03.2011 
+ 
+75 / 75 
+ 
+dermal systemic long-term 0.003 mg/kg 
+bw/day (ECETOC 
+TRA) 
+0.069 
+ 
+8.3.4. Worker exposure: Transfer of substance or preparation (charging/ discharging) from/ to 
+vessels/ large containers at dedicated facilities  (PROC8b) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.110 mg/m³ 
+(ECETOC TRA) 
+0.609 
+dermal systemic long-term 0.008 mg/kg 
+bw/day (ECETOC 
+TRA) 
+0.165 
+ 
+8.3.5. Worker exposure: Treatment of articles by dipping and pouring  (PROC13) 
+ 
+Exposure route Health effect Exposure indica-
+tor 
+Exposure esti-
+mate 
+RCR 
+inhalative systemic long-term 0.037 mg/m³ 
+(ECETOC TRA) 
+0.203 
+dermal systemic long-term 0.014 mg/kg 
+bw/day (ECETOC 
+TRA) 
+0.274 
+ 
+ 
+8.4. Guidance to DU to evaluate whether he works inside the boundaries set by the ES 
+Fulfilling the above conditions the downstream user is deemed to work safely inside the boundaries 
+set by this exposure scenario. 
+Other conditions should only be considered if the downstream user implements or recommends an 
+exposure scenario which includes as a minimum the conditions described in this exposure scenario.  
+ 
+ 

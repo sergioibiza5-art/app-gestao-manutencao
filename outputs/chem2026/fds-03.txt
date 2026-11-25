@@ -1,0 +1,877 @@
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+1Página 15/
+Emissão (data): 30/05/2014
+AQUAGEN® DFX PLUS
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/EMPRESA
+1.1. Identificador do produto
+Nome comercial:
+Detergente desinfetante - Baixa espuma. Bactericída e fungicída.
+1.2. Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas.
+Utilizações identificadas relevantes:
+Utilizações desaconselhadas:
+O produto não deve ser utilizado para fins diferentes dos indicados.
+1.3. Identificação do fornecedor da ficha de dados de segurança
+1.4. Número de telefone de emergência
+Consulte a SECÇÃO 4
+Suministros Científicos Técnicos S.A.U (SUCITESA): (+34) 937 195 430 (Segunda a sexta 9: 00-13: 30 e 15: 30-18: 00)
+Em caso de ingestão acidental, consultar o Centro de Informação Anti-Venenos. Tf. 800 250 250
+UFI: 5JGG-C9RG-X20T-A9WF
+SUMINISTROS CIENTÍFICOS TÉCNICOS, S.A.U. (SUCITESA)
+C/Comadrán 39, nave A6 - P.I. Can Salvatella - 08210 Barberà del Vallès (Barcelona) - España (Spain)
+Tel. +34 937 195 430
+info@sucitesa.com - www.sucitesa.com
+AISE-P314: Desinfetante de superfícies; Processo manual
+Restringido a usos profissionais
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS
+2.1. Classificação de substâncias ou misturas
+Classificação de acordo com o Regulamento (CE) n º 1272/2008 - CLP
+2.2. Elementos do rótulo
+Elementos do rótulo de acordo com o Regulamento (CE) n º 1272/2008 - CLP
+Pictogramas de perigo:
+Palavra-sinal:
+Advertências de perigo (Frases H):
+Recomendações de prudência (Frases P).
+H314Skin Corr. 1
+H410Aquatic Chronic 1
+Perigo
+H314 Provoca queimaduras na pele e lesões oculares graves
+H410 Muito tóxico para os organismos aquáticos com efeitos duradouros
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+2Página 15/
+Emissão (data): 30/05/2014
+Informação adicional no rótulo
+2.3. Outros perigos:
+O produto não satisfaz os critérios PBT ou mP mB de acordo com o Reg. nº1907/2006, Anexo XIII.
+Outros perigos não são conhecidos. 
+P102 Manter fora do alcance das crianças
+P260_5 Não respirar os vapores
+P273 Evitar a libertação para o ambiente
+P280_13 Usar luvas de protecção e protecção ocular
+P302+P352 SE ENTRAR EM CONTACTO COM A PELE: lavar com sabonete e água abundantes
+P305+P351 SE ENTRAR EM CONTACTO COM OS OLHOS: Enxaguar cuidadosamente com água durante vários minutos
+P363 Lavar a roupa contaminada antes de a voltar a usar
+P391 Recolher o produto derramado
+P501_1 Eliminar o conteúdo/recipiente como resíduo perigoso de acordo com as normas em vigor
+Não ingerir
+Contém hidróxido de sódio
+Aplicação por pessoal profissional
+PRAZO DE VALIDADE: 3 ANOS, A CONTAR DA DATA IMPRESSA NA EMBALAGEM
+UFI: 5JGG-C9RG-X20T-A9WF
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES
+Identificador do produto:
+Substâncias perigosas:
+AQUAGEN® DFX PLUS
+3.1. Substâncias
+Não aplicável
+3.2. Misturas
+1310-73-2    /    215-185-5    /    01-2119457892-27-XXXX    /    
+H314: Skin Corr. 1- 
+< 1
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+---
+CAS No. / EC No. / REACH No.
+Hidróxido de sódio
+Sodium hydroxide
+Skin Irrit.2, H315,  0,5% < C < 2%   Eye Irrit.2, H319,   0,5% < C < 2%   Skin Corr.1A, H314,  C > 5% - Skin Corr.1B, 
+H314  2% < C < 5%
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+3Página 15/
+Emissão (data): 30/05/2014
+(*) Para o texto completo das frases referidas nesta Secção, ver Secção 16.
+67-63-0    /    200-661-7    /    01-2119457558-25-XXXX    /    
+H225: Flam. Liq. 2- H319: Eye Irrit. 2- H336: STOT SE 3- 
+< 12
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+---
+CAS No. / EC No. / REACH No.
+Isopropanol
+Propan-2-ol
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+68131-39-5    /    500-195-7     /    01-2119488720-33-XXXX    /    
+H400: Aquatic Acute 1- H412: Aquatic Chronic 3- 
+< 3
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+M(acute)=1
+CAS No. / EC No. / REACH No.
+Alcohol(C12-15) EO(>5-10)
+Alcohols,  C12-15, ethoxylated
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >2000 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+7173-51-5    /    230-525-2    /    01-2119945987-15-XXXX    /    
+H301: Acute Tox. 3- H314: Skin Corr. 1- H318: Eye Dam. 1- H400: Aquatic Acute 1- H410: Aquatic Chronic 1- 
+< 3
+Fator M
+Nome  EC
+Nome  IUPAC
+Intervalos de concentração -%
+Classificação CLP
+Limites de concentração específicos CLP
+M(acute)=10 / M(chronic)=10
+CAS No. / EC No. / REACH No.
+Didecyldimethylammonium chloride
+Didecyldimethylammonium chloride 
+---
+Estimativa de Toxicidade Aguda (ATE) Oral
+Uso da substância em nanoforma
+Cutânea RespiratóriaATEoral >50 / =<300 mg/kg ATEcut >2000 mg/kg ATEinh.vap >20,0  mg/l
+Não aplicável
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+4Página 15/
+Emissão (data): 30/05/2014
+SECÇÃO 4: PRIMEIROS SOCORROS
+Consultas Instituto Nacional Toxicologia:
+EM CASO DE exposição: contacte um CENTRO DE INFORMAÇÃO ANTIVENENOS ou um médico
+Em caso de ingestão acidental, consultar o Centro de Informação Anti-Venenos. Tf. 800 250 250
+4.1. Descrição das medidas de primeiros socorros
+Inalação
+Retirar a vítima para uma zona ao ar livre e mantê¬ la em repouso numa posição que não dificulte a respiração.
+Contacto com a pele
+Despir/retirar imediatamente toda a roupa contaminada. Enxaguar a pele com água/tomar um duche
+Contacto com os olhos
+Enxaguar cuidadosamente com água durante vários minutos. Se usar lentes de contacto, retire-as, se tal lhe for possível. Contin uar a enxaguar.
+Ingestão
+Enxaguar a boca. NÃO provocar o vómito.
+4.2. Sintomas e efeitos mais importantes, tanto agudos como retardados
+Inalação
+Sensação de queimadura, tosse, dificuldades respiratórias.
+Contacto com a pele
+Avermelhamento, dor, graves queimaduras cutâneas
+Contacto com os olhos
+Dor, visão desfocada, queimaduras profundas graves
+Ingestão
+Dor abdominal, sensação de queimadura, diarreia, vómitos
+4.3. Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários
+Nenhuma informação disponível sobre análises clínicas e controlo médico. Informações toxicológica específica relativa às substâ ncias, se 
+disponível, pode ser encontrado na seção 11.
+NÃO DEIXE A PESSOA INTOXICADA SOZINHA.  Se a pessoa estiver inconsciente, deite-a de lado com a cabeça mais baixa que o resto d o corpo 
+e com os joelhos semi-flectidos. Transporte a pessoa intoxicada para um centro hospitalar, e sempre que for possível lev
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS
+5.1. Meios de extinção
+Meios adequados de extinção:
+Água pulverizada, Espuma, Agentes extintores secos.
+Em caso de incêndio na área envolvente, são permitidos todos os agentes extintores. 
+Não combustível. Pode causar emanações tóxicas, corrosivas, irritantes e sufocantes em caso de incêndio. 
+Protecções: Equipamento de protecção química (fato, luvas, protecção olhos/cara, etc). Aparelho respiratório autónomo.
+Borrifar os recipientes com água para os manter frios. Evitar que os produtos contra incêndios passem para esgotos ou cursos de  água. Os resíduos 
+de incêndio assim como a água de extinção contaminada devem gerir-se de acordo com as normas em vigor.
+Meios inadequados de extinção:
+5.2. Perigos especiais decorrentes da substância ou mistura
+5.3 Recomendações para o pessoal de combate a incêndios
+Equipamento especial de proteção
+Recomendações:
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+5Página 15/
+Emissão (data): 30/05/2014
+SECÇÃO 6: MEDIDAS A TOMAR EM CASO DE FUGAS ACIDENTAIS
+6.1. Precauções individuais, equipamento de proteção e procedimentos de emergência
+6.2. Precauções a nível ambiental
+Utilzar o equipamento protector adequado. Veja SEÇÃO 8. Não deixar que passe para os aquedutos ou para os cursos de água. Caso isto ocorra, 
+alertar as autoridades competentes de acordo com a legislação local. 
+Manter afastado dos esgotos, das águas superficiais e subterrâneas.
+Produto líquido: Conter e recolher o derrame com materiais absorv entes (terra, areia e outros absorventes minerais) e colocar n um contentor 
+adequado para a sua posterior eliminação, de acordo com a normativa local vigente.
+6.3. Métodos e materiais de confinamento e limpeza
+6.4. Remissão para outras secções
+Consulte a SECÇÃO 8 e 13
+Produto sólido: Recolher o derrame e colocá-lo num contentor adequado para a sua posterior eliminação, de acordo com a normativ a local vigente. 
+Veja SEÇÃO 13.
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM
+7.1. Precauções para um manuseamento seguro
+Manusear de acordo com as boas práticas industriais de higiene e segurança.  Não comer, beber ou fumar nas áreas de trabalho. R etirar 
+imediatamente todo o vestuário contaminado. Lavar as mãos antes de interrupções, e no final do dia de trabalho.
+Armazenar segundo a legislação local. Armazenar as embalagens entre  5 e 35ºC, num local seco, bem ventilado, afastado de fontes  de calor e da 
+luz solar directa.Assegurar uma adequada rotação dos produtos. Os mais antigos devem ser os primeiros a consumir. Não ultrapass ar os 36 meses 
+de armazenamento, prazo de caducidade estimado para produtos armazenados em condições ambientais adequadas.
+7.2. Condições de armazenagem segura, incluindo eventuais incompatibilidades
+7.3. Utilizações finais específicas
+Consulte a SECÇÃO 1
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL
+8.1. Parâmetros de controlo
+PORTUGAL - Valores-limite de exposição profissional 
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+2 mg/m3
+CAS No./ Nome  EC 1310-73-2    /    Sodium hydroxide
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas 200 ppm - 500 mg/m3
+400 ppm - 1000 mg/m3
+CAS No./ Nome  EC 67-63-0    /    Isopropanol
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 68131-39-5    /    Alcohol(C12-15) EO(>5-10)
+VALORES-LIMITE - Curto prazo
+VALORES-LIMITE - 8 horas Não estabelecido
+Não estabelecido
+CAS No./ Nome  EC 7173-51-5    /    Didecyldimethylammonium chloride
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+6Página 15/
+Emissão (data): 30/05/2014
+Nível Derivado sem Efeito (DNEL) e Concentração previsivelmente sem efeitos (PNEC)
+Não disponível para a mistura
+8.2. Controlo da exposição
+Manusear de acordo com as boas práticas industriais de higiene e segurança.  Não comer, beber ou fumar nas áreas de trabalho. R etirar 
+imediatamente todo o vestuário contaminado. Lavar as mãos antes de interrupções, e no final do dia de trabalho.
+A seguinte informação aplica-se aos usos indicados na secção 1. Nesta secção estão assumidas as condições normais de uso. Se de sponivél, 
+ consultar as instruções de aplicação e manuseamento, na ficha técnica de informação do produto.
+(A informação deveria ser confirmada pelo avaliador dos postos de trabalho.)
+Controlos técnicos adequados
+Não manuseie o produto antes de ter lido e percebido todas as precauções de segurança.
+PRODUTO PURO - NÃO DILUÍDO
+Proteção ocular/facial:
+Não é necessário nas condições normais de uso. 
+Luvas impermeáveis, de acordo com a norma EN374.
+Quando há risco de salpicos o uso de óculos de segurança de acordo com a norma EN166 é recomendado..
+Usar indumentária adequada
+Proteção da pele:
+- proteção das mãos:
+- Outros:
+Proteção respiratória:
+Perigos térmicos
+Não são conhecidos perigos térmicos.
+SECÇÃO 9: PROPRIEDADES FÍSICAS E QUÍMICAS
+9.1. Informações sobre propriedades físicas e químicas de base
+Dados não disponíveis
+Dados não disponíveis
+Não inflamável (> 60ºC)
+Dados não disponíveis
+Dados não disponíveis
+Não se aplica às misturas.
+Dados não disponíveis
+Dados não disponíveis
+Líquido transparente
+Incolor
+Pinho
+12+-1
+>90ºC
+Solúvel em água
+Não aplicável
+Estado físico:
+Cor:
+Odor:
+Ponto de fusão/ponto de congelação:
+Ponto de ebulição inicial e intervalo de ebulição:
+Ponto de inflamação:
+Inflamabilidade:
+Limites superior/inferior de inflamabilidade ou de explosividad
+Pressão de vapor:
+Solubilidade:
+Coeficiente de partição n-octanol/água:
+pH:
+Temperatura de auto-ignição:
+Temperatura de decomposição:
+Viscosidade cinemática:
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+7Página 15/
+Emissão (data): 30/05/2014
+Dados não disponíveis
+Não explosivo
+Não oxidante
+0,98+-0,01
+Densidade relativa do vapor:
+Densidade e/ou densidade relativa:
+Propriedades explosivas:
+Propriedades comburentes:
+Produto líquido. Não aplicável. Aplica-se apenas a sólidosCaracterísticas das partículas:
+9.2. Outras informações:
+Outros dados adicionais não disponíveis
+Informação adicional:
+SECÇÃO 10: ESTABILIDADE E REACTIVIDADE
+10.1.  Reactividade
+Estável sob as condições de manipulação e armazenamento recomendadas.
+Nenhum conhecido em condições normais de armazenagem e uso.
+10.2. Estabilidade química:
+10.3. Possibilidade de reações perigosas
+Calor, chama, fontes de ignição, pressão, luz solar directa e manipulação inadequada das embalagens.
+10.4. Condições a evitar
+10.5. Materiais incompatíveis:
+Nenhum conhecido em condições normais de armazenagem e uso. Em caso de combustão, ver SECÇÃO 5
+10.6. Produtos de decomposição perigosos
+Não são conhecidos perigos de reactividade em condições normais de armazenamento e uso, 
+Ácidos, metais reactivos (zinco, alumínio, estanho e chumbo)
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA
+11.1. Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.o 1272/2008
+Dados não disponíveis para a mistura. Informação fornecida sobre as substâncias listadas na seção 3
+Toxicidade aguda:
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+Dados não disponíveis    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 > 2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+LC50 (4H) > 20000 ppmV (gas)    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 300-2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+LC50 (4H) > 5 mg/l (mist)    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+8Página 15/
+Emissão (data): 30/05/2014
+Corrosão-irritação cutânea/Lesões oculares graves-irritação ocular
+Sensibilização respiratória ou cutânea
+Mutagenicidade em células germinativas
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+LD50 300-2000 mg/kg bw    -    Oral     -     Equivalente ou similar a OECD Guideline 401
+LD50 > 2000 mg/kg bw    -    Cutânea     -     Equivalente ou similar a OECD Guideline 402
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline 403
+7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Corrosivo    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Corrosivo    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não irritante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Não irritante    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Corrosivo    -    Cutânea     -     Equivalente ou similar a OECD Guideline 404, 439, 431
+Corrosivo    -    Ocular     -     Equivalente ou similar a OECD Guideline 405, 492
+7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Não é sensibilizante    -    Cutânea     -     Equivalente ou similar a OECD Guideline 406, 442D, 442E
+Dados não disponíveis    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+7173-51-5     /    Didecyldimethylammonium chloride
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+9Página 15/
+Emissão (data): 30/05/2014
+Carcinogenicidade:
+Efeitos tóxicos na reprodução:
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+1310-73-2     /    Hidróxido de sódio
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+67-63-0     /    Isopropanol
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Resultado /  Método
+CAS No./ Nome  EC
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 471, 474, 476
+7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 451
+7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+10Página 15/
+Emissão (data): 30/05/2014
+Toxicidade para órgãos-alvo específicos (STOT) – exposição repetida
+Toxicidade para órgãos-alvo específicos (STOT) – exposição única
+CAS No./ Nome  EC
+Resultado /  Método Com base nos dados disponíveis, os critérios de classificação não são preenchidos    -    Equivalente ou similar a 
+OECD Guideline 414, 415, 416
+7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic cut: C>2000 mg/kg    -    Cutânea     -     Equivalente ou similar a OECD Guideline: Não estabelecido
+STOTunic inh vap: C>20 mg/l-4h    -    Respiratória     -     Equivalente ou similar a OECD Guideline: Não estabelecid
+7173-51-5     /    Didecyldimethylammonium chloride
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+11Página 15/
+Emissão (data): 30/05/2014
+Perigo de aspiração
+11.2. Informações sobre outros perigos
+Propriedades desreguladoras do sistema endócrino
+Não contém substâncias identificadas como desreguladores endócrinos
+Outras informações
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+Resultado / Via de exposição / Método
+STOTrep oral (90d):  C>100 mg/kg/day    -    Oral     -     Equivalente ou similar a OECD Guideline 407, 408, 409
+STOTrep cut (90d): >200 mg/kg/day    -    Cutânea     -     Equivalente ou similar a OECD Guideline 410, 411
+STOTrep inh vap (90d):C>1 mg/l-6h/day    -    Respiratória     -     Equivalente ou similar a OECD Guideline 412, 413
+7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+CAS No./ Nome  EC
+Resultado Não aplicável. Viscosidade cinemática a 40ºC >= 20,5 mm2/s    -    Oral     -     Equivalente ou similar a OECD Guideli
+7173-51-5     /    Didecyldimethylammonium chloride
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA
+Dados não disponíveis para a mistura. Informação fornecida sobre as substâncias listadas na seção 3.
+12.1. Toxicidade
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Dados não disponíveis
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    Dados não disponíveis     /     Algas     /     Dados não disponíveis
+1310-73-2     /    Hidróxido de sódio
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 100 mg/l     /     Peixes     /     Pimephales promelas
+EC50 (48h)    /    > 100 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    Dados não disponíveis     /     Algas     /     Dados não disponíveis
+67-63-0     /    Isopropanol
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 1 mg/l     /     Peixes     /     Oncorhynchus mykiss
+EC50 (48h)    /    > 0,1 -<=1 mg /l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 1000 mg/l      /     Algas     /     Pseudokirchneriella subcapitata
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+12Página 15/
+Emissão (data): 30/05/2014
+12.2. Persistência e degradabilidade
+12.3. Potencial de bioacumulação
+12.4. Mobilidade no solo
+CAS No./ Nome  EC
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+Parâmetro / Resultado / IOrganismo / Espécie
+LC50 (96h)    /    > 0,1 -<=1 mg /l     /     Peixes     /     Brachydanio rerio
+EC50 (48h)    /    > 0,01-<=0,1 mg/l     /     Crustáceos      /     Daphnia magna
+EC50 (72h)    /    > 0,1 -<=1 mg /l     /     Algas     /     Selenastrum capricornutum
+7173-51-5     /    Didecyldimethylammonium chloride
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+Substância inorgânica. Não aplicável
+Não aplicável    /    Equivalente ou similar a OECD Guideline 301
+1310-73-2     /    Hidróxido de sódio
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+67-63-0     /    Isopropanol
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Outros:
+Resultado /  Método
+CAS No./ Nome  EC
+A substância é facilmente biodegradavel. Com base nos dados disponíveis, os critérios de classificação não são 
+preenchidos
+Facilmente biodegradável    /    Equivalente ou similar a OECD Guideline 301
+7173-51-5     /    Didecyldimethylammonium chloride
+Substância inorgânica. Não aplicávelResultado
+CAS No./ Nome  EC 1310-73-2     /    Hidróxido de sódio
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 67-63-0     /    Isopropanol
+Dados não disponíveisResultado
+CAS No./ Nome  EC 68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+logKow <4,5. Com base nos dados disponíveis, os critérios de classificação não são preenchidosResultado
+CAS No./ Nome  EC 7173-51-5     /    Didecyldimethylammonium chloride
+Substância inorgânica. Não aplicávelResultado
+CAS No./ Nome  EC 1310-73-2     /    Hidróxido de sódio
+Dados não disponíveisResultado
+CAS No./ Nome  EC 67-63-0     /    Isopropanol
+Dados não disponíveisResultado
+CAS No./ Nome  EC 68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+13Página 15/
+Emissão (data): 30/05/2014
+Resultados da avaliação PBT e mPmB
+12.7. Outros efeitos adversos:
+12.6. Propriedades desreguladoras do sistema endócrino
+Dados não disponíveisResultado
+CAS No./ Nome  EC 7173-51-5     /    Didecyldimethylammonium chloride
+Substância inorgânica. Não aplicávelResultado
+CAS No./ Nome  EC 1310-73-2     /    Hidróxido de sódio
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 67-63-0     /    Isopropanol
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+A substância não satisfaz os critérios PBT ou mPmB de acordo com o Reg. nº1907/2006, Anexo XIII.Resultado
+CAS No./ Nome  EC 7173-51-5     /    Didecyldimethylammonium chloride
+CAS No./ Nome  EC
+Resultado
+1310-73-2     /    Hidróxido de sódio
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+67-63-0     /    Isopropanol
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+7173-51-5     /    Didecyldimethylammonium chloride
+Dados não disponíveis
+CAS No./ Nome  EC
+Resultado
+1310-73-2     /    Hidróxido de sódio
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+67-63-0     /    Isopropanol
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+68131-39-5     /    Alcohol(C12-15) EO(>5-10)
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+CAS No./ Nome  EC
+Resultado
+7173-51-5     /    Didecyldimethylammonium chloride
+Não existem dados disponíveis sobre os efeitos adversos no ambiente causados   pelas propriedades de desregulação 
+endócrina
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+14Página 15/
+Emissão (data): 30/05/2014
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO
+13.1. Métodos de tratamento de resíduos
+Não se permite o derrame directo do produto puro nos esgotos e cursos de água. Os resíduos e as embalagens vazias devem ser tra tados de 
+acordo com a legislação vigente.
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE
+14.1. Número ONU ou número de ID
+3082
+14.2. Designação oficial de transporte da ONU
+14.3. Classes de perigo para efeitos de transporte
+9
+14.4. Grupo de embalagem
+III
+14.5. Perigos para o ambiente
+Consulte a SECÇÃO 2
+14.6. Precauções especiais para o utilizador
+Consulte a SECÇÃO 8
+Isenções por formato ADR:
+Isentos se forem transportados em embalagens simples/ combinados contendo 5L ou menos por embalagem simples ou interior (dispos icao especial
+Grupo do segregação IMDG:
+Não aplicável
+Poluente marinho IMDG:
+14.7. Transporte marítimo a granel em conformidade com os instrumentos da OMI
+O produto não é transportado a granel.
+sim
+MATÉRIA LÍQUIDA POTENCIALMENTE PERIGOSA PARA O MEIO AMBIENTE.N.E.P. - (Cloreto de didecildimetilamónio)
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO
+15.1. Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e ambiente
+Não aplicável
+Detergentes regulamentos - Regulamento (CE) n º 648/2004 e alterações:
+Conteúdo de acordo com o REGULAMENTO (CE) Nº648/2004 sobre detergentes:
+Aplicável
+Legislação Biocidas - Regulamento (CE) no 1451/2007 e alterações:
+Não aplicável
+Cosméticos regulamentos - Regulamento (CE) n º 1223/2009 e alterações:
+Não aplicável
+Outros regulamentos:
+Regulamento (CE) No. 1907/2006 (REACH)
+Anexo XIV-REACH  (Lista de substâncias sujeitas a autorização - SVHC)
+Indústria alimentar: 17-20/40-09054 HA. Uso ambiental: 17-20/40-09054.
+Registos:
+Todos os componentes estão registados , pré-registados ou dispensados de registro REACH.
+O produto não contém substâncias na lista de candidatos a serem considerados como substâncias de grande preocupação, de acordo com a 
+Agência Europeia dos Produtos Químicos (ECHA)
+ Não aplicável.
+Ficha de dados de segurança 
+Em conformidade com o Regulamento (CE) Nº 1907/2006 (REACH)
+04LAB004Documento:
+Código: 800326
+Nome comercial: AQUAGEN® DFX PLUS
+PTGIdioma:
+Revisão (data): 15/11/2022
+Versão: 3
+15Página 15/
+Emissão (data): 30/05/2014
+Será sempre da responsabilidade do utilizador a adopção das medidas oportunas no que diz respeito à proteção da saúde, seguranç a no trabalho e a 
+proteção do meio ambiente, garantindo-se que os meios, as  instalações no pessoal envolvido e os serviços são o
+A informação contida no presente documento baseia-se nos conheciment os actuais e na legislação aplicável da CE, contudo, as con dições de 
+utilização pelos utilizadores estão fora do nosso conhecimento e controlo. O produto não deve ser utilizado para fins 
+O Departamento Técnico da Suministros Científicos Técnicos, S.A.U., atenderá qualquer consulta técnica dos utilizadores.
+A versão em vigor deste documento está disponível unicamente na página da Internet www.sucitesa.com. Para evitar a distribuição de versões 
+obsoletas, recomendamos não guardar cópias ou verificar previamente que o documento não foi modificado.
+A avaliação de segurança química não foi realizada á mistura. Este produto contém substâncias relativamente às quais ainda são necessárias 
+Avaliações de Segurança Química.
+15.2. Avaliação da segurança química
+SECÇÃO 16: OUTRAS INFORMAÇÕES
+Modificações do documento:
+Texto completo das frases mencionado na secção 3
+Abreviações e acrónimos:
+• AISE - Associação Internacional de Sabões, Detergentes e Produtos de Limpeza
+• OEDC - Organização para a Cooperação e Desenvolvimento Econômico
+• EUH - CLP Frases de perigo específico
+• DNEL - Níveis derivados de exposição sem efeitos
+• PBT- Persistente, Biocumulável e Tóxico 
+• Número REACH - Número de registo REACH, sem parte específica do fornecedor
+• PNEC - Concentração prevísivel sem efeitos
+• mPmB - Muito persistente e muito biocumulável
+H225 Líquido e vapor facilmente inflamáveis
+H301 Tóxico por ingestão
+H314 Provoca queimaduras na pele e lesões oculares graves
+H318 Provoca lesões oculares graves
+H319 Provoca irritação ocular grave
+H336 Pode provocar sonolência ou vertigens
+H400 Muito tóxico para os organismos aquáticos
+H410 Muito tóxico para os organismos aquáticos com efeitos duradouros
+H412 Nocivo para os organismos aquáticos com efeitos duradouros
+15/11/2022 Informação ajsutada de acordo com o Regulamento (CE) n º 2020/878:
+04/05/2021 Código UFI:
+21/11/2017 Não aplicável. Versão:1:

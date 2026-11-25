@@ -1,0 +1,1062 @@
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+1/14
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/EMPRESA
+1.1 DENTIFICADOR DO PRODUTO:
+CELLAQUA CFA
+Código : 03.006.04            UFI: JGQE-Q3FS-XPE9-TAD6
+1.2 UTILIZAÇÕES IDENTIFICADAS RELEVANTES DA SUBSTÂNCIA OU MISTURA E UTILIZAÇÕES DESACONSELHADAS:
+Setores de uso:
+Utilizações profissionais (SU22).
+Utilizações desaconselhadas:
+Este produto não é recomendado para qualquer utilização ou sector de uso industrial, profissional ou de consumo diferentes aos
+anteriormente listados como ''Utilizações previstas ou identificadas''.
+Restrições ao fabrico, à colocação no mercado e à utilização, Anexo XVII do Regulamento (CE) nº 1907/2006:
+Não restrito.
+1.3 IDENTIFICAÇÃO DO FORNECEDOR DA FICHA DE DADOS DE SEGURANÇA:
+- Endereço electrónico da pessoa responsável pela ficha de dados de segurança:
+1.4 NÚMERO DE TELEFONE DE EMERGÊNCIA:
+Centro de Informação Antivenenos (Portugal) - Telefone de urgência em caso de intoxicação: (+351) 800 250 250 (24h/365d)
+- Em alternativa ligue 112 (Número europeu de emergência)
+Centros de toxicologia PORTUGAL:
+· Centro de Informação Antivenenos (CIAV) - Instituto Nacional de Emergencia Medica (INEM) - Rua Almirante Barroso, 36 - 1000-013
+Lisboa - Telefone (Secretariado): +351 213 303 271 (Chamada para a rede fixa nacional) | Telefone de urgência: 800 250 250
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS
+2.1 CLASSIFICAÇÃO DA SUBSTÂNCIA OU MISTURA:
+A classificação das misturas é feita de acordo com os seguintes princípios:  a) quando dados (ensaios) estão disponíveis para a
+classificação de misturas, geralmente é feito com base nesses dados, b) na ausência de dados (testes) para as misturas, os métodos de
+interpolação ou extrapolação são geralmente utilizados para avaliar o risco, utilizando os dados de classificação disponíveis para misturas
+semelhantes, e  c) na ausência de testes e informações que permitam a aplicação de técnicas de interpolação ou extrapolação, são
+utilizados métodos para classificar a avaliação de risco com base nos dados dos componentes individuais da mistura.
+Classificação de acordo com o Regulamento (UE) nº 1272/2008~2021/849 (CLP):
+PERIGO:Skin Corr. 1B:H314|Eye Dam. 1:H318
+O texto completo das advertências de perigo mencionadas é indicado na seção 16.
+Nota: Quando na secção 3 é utilizado uma gama de percentagens, os perigos para a saúde e meio ambiente descrevem os efeitos da
+concentração mais elevada de cada componente, mas abaixo do valor máximo indicado.
+O produto é etiquetado com a palavra-sinal PERIGO de acordo o Regulamento (UE) nº
+1272/2008~2021/849 (CLP)
+2.2 ELEMENTOS DO RÓTULO:
+- Advertências de perigo:
+H314  Provoca queimaduras na pele e lesões oculares graves.
+- Recomendações de prudência:
+P102-P405 Manter fora do alcance das crianças. Armazenar em local fechado à chave.
+P280 Usar luvas de protecção, vestuário de protecção e protecção ocular. Em caso de ventilação inadequada, usar
+protecção respiratória.
+P363 Lavar a roupa contaminada antes de a voltar a usar.
+P303+P361+P353-
+P352-P312
+SE ENTRAR EM CONTACTO COM A PELE (ou o cabelo): Retirar imediatamente toda a roupa contaminada.
+Enxaguar a pele com água [ou tomar um duche]. Lavar abundantemente com água e sabonete. Caso sinta
+indisposição, contacte um CENTRO DE INFORMAÇÃO ANTIVENENOS ou um médico.
+P305+P351+P338-
+P310
+SE ENTRAR EM CONTACTO COM OS OLHOS: Enxaguar cuidadosamente com água durante vários minutos. Se
+usar lentes de contacto, retire-as, se tal lhe for possível. Continue a enxaguar. Contacte imediatamente um
+CENTRO DE INFORMAÇÃO ANTIVENENOS ou um médico.
+P501 Eliminar o conteúdo/recipiente em um ponto de recolha para resíduos perigosos ou especiais.
+- Informações suplementares:
+Classe de perigo Classificação da mistura Cat. Vias de exposição Orgãos-alvo Efeitos
+Físico-químico:
+Não classificado
+Saúde humana: Skin Corr. 1B:H314 c)
+Eye Dam. 1:H318 c)
+Cat.1B
+Cat.1
+Pele
+Olhos
+Pele
+Olhos
+Queimaduras
+Lesões graves
+Meio ambiente:
+Não classificado
+ECOTERME– Equipamentos e Instalações Térmicas, Lda
+Rua dos Selões, Edificio B1 - Terrugem Park II - Vila Verde  - 2706-501 Terrugem  PORTUGAL
+Telefone: +351 219605700 - Fax: +351 219605709
+geral@ecoterme.pt
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+2/14
+- Substâncias que contribuem para a classificação:
+Morfolina
+Acido etidrónico
+Hidróxido de sódio
+2.3 OUTROS PERIGOS:
+Perigos que não têm repercussões na classificação, mas que podem contribuir para o perigo global da mistura:
+- Outros perigos físico-químicos:
+Não se conhecem outros efeitos adversos relevantes.
+- Outros riscos e efeitos adversos para a saúde humana:
+A exposição prolongada aos vapores pode produzir sonolência transitória. Em caso de contacto prolongado a pele pode ressecar-se.
+- Outros riscos e efeitos adversos para o ambiente:
+Não contém substâncias que cumpram os critérios PBT/mPmB.
+Propriedades desreguladoras do sistema endócrino:
+Este produto não contém substâncias com propriedades desreguladoras endócrinas identificadas ou em avaliação.
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES
+3.1 SUBSTÂNCIAS:
+Não aplicável (mistura).
+3.2 MISTURAS:
+Este produto é uma mistura.
+Descrição química:
+Solução de produtos químicos em meio aquoso.
+COMPONENTES PERIGOSOS:
+Substâncias que intervêm numa percentagem superior ao limite de isenção:
+2,5 < C < 5 % Morfolina
+CAS: 110-91-8, EC: 203-815-1, REACH: 01-2119496057-30
+CLP: Perigo: Flam. Liq. 3:H226 | Acute Tox. (inh.) 4:H332 (ATE=1500
+mg/m3) | Acute Tox. (skin) 4:H312 (ATE=1100 mg/kg) | Acute Tox. (oral)
+4:H302 (ATE=1900 mg/kg) | Skin Corr. 1B:H314
+REACH /
+CLP00
+1 < C ≤ 3 % Etilenoglicol
+CAS: 107-21-1, EC: 203-473-3, REACH: 01-2119456816-28
+CLP: Atenção: Acute Tox. (oral) 4:H302 (ATE=500 mg/kg) | STOT RE 2:H373
+REACH
+1 < C < 2,5 % Acido etidrónico
+CAS: 2809-21-4, EC: 220-552-8, REACH: 01-2119510391-53
+CLP: Perigo: Met. Corr. 1:H290 | Acute Tox. (oral) 4:H302 (ATE=1878 mg/kg)
+| Eye Dam. 1:H318
+Autoclassificada
+REACH
+1 < C < 2 % Hidróxido de sódio
+CAS: 1310-73-2, EC: 215-185-5, REACH: 01-2119457892-27
+CLP: Perigo: Met. Corr. 1:H290 | Skin Corr. 1A:H314 | Eye Dam. 1:H318
+REACH Skin Corr. 1A, H314:
+C ≥5 %
+Skin Corr. 1B, H314:
+2 % ≤ C < 5 %
+Skin Irrit. 2, H315:
+0,5 % ≤ C < 2 %
+Eye Irrit. 2, H319:
+0,5 % ≤ C < 2 %
+C ≤ 0,5 % Metil-1H-benzotriazole
+CAS: 29385-43-1, EC: 249-596-6, REACH: 01-2119979081-35
+CLP: Atenção: Acute Tox. (oral) 4:H302 (ATE=720 mg/kg) | Repr. 2:H361 |
+Aquatic Chronic 2:H411
+Autoclassificada
+REACH
+Impurezas:
+Não contém outros componentes ou impurezas que possam influenciar a classificação do produto.
+Estabilizadores:
+Nenhum.
+Remissão para outras secções:
+Para maior informação sobre componentes perigosos, ver as secções 8, 11, 12 e 16.
+SUBSTÂNCIAS DE PREOCUPAÇÃO MUITO ELEVADA (SVHC):
+Lista atualizada pela ECHA em 17/01/2023.
+Substâncias SVHC sujeitas a autorização, incluídas no anexo XIV do Regulamento (CE) nº 1907/2006:
+Nenhuma.
+Substâncias SVHC candidatas a serem incluídas no anexo XIV do Regulamento (CE) nº 1907/2006:
+Nenhuma.
+SUBSTÂNCIAS PERSISTENTES, BIOACUMULÁVEIS, TÓXICAS (PBT) OU MUITO PERSISTENTES E MUITO
+BIOACUMULÁVEIS (MPMB):
+Não contém substâncias que cumpram os critérios PBT/mPmB.
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+3/14
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS
+4.1 DESCRIÇÃO DAS MEDIDAS DE EMERGÊNCIA:
+Os sintomas podem ocorrer após a exposição, de modo que em caso de exposição direta ao produto, em caso de dúvida, ou
+inconsciência.Os socorristas devem prestar atenção para a auto-protecção e usar a equipamento de proteção individual
+recomendada se houver uma possibilidade de exposição.Usar luvas protectoras quando se administrem primeiros socorros.
+4.2 SINTOMAS E EFEITOS MAIS IMPORTANTES, TANTO AGUDOS COMO RETARDADOS:
+Os principais sintomas e efeitos são indicados nas secções 4.1 e 11.1
+4.3 INDICAÇÕES SOBRE CUIDADOS MÉDICOS URGENTES E TRATAMENTOS ESPECIAIS NECESSÁRIOS:
+As informações sobre a composição do produto foram enviadas para o Centro de Informação Antivenenos (CIAV).Em caso de acidente,
+ligue o CIAV, Teléfono: (+351) 800250250 (24h/365d).
+Informação para o médico:
+O tratamento deve dirigir-se ao controlo dos sintomas e das condições clínicas do paciente..
+Antídotos e contraindicações:
+Não se conhece antídoto específico.
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS
+5.1 MEIOS DE EXTINÇÃO:)
+Extintor de pó ou CO2.
+5.2 PERIGOS ESPECIAIS DECORRENTES DA SUBSTÂNCIA OU MISTURA:
+Como consequência da combustão e da decomposição térmica, podem formar-se produtos perigosos: monóxido de carbono, dióxido de
+carbono, óxidos de nitrogênio, vestígios de ácido cianídrico, óxidos de fósforo.A exposição aos produtos de combustão ou decomposição
+pode ser prejudicial para a saúde.
+5.3 RECOMENDAÇÕES PARA O PESSOAL DE COMBATE A INCÊNDIOS:
+Equipamento de protecção especial:
+Dependendo da magnitude do incêndio, pode ser necessário usar vestuário de protecção contra o calor, equipamento de respiração
+autónomo, luvas, óculos protectores ou viseiras de segurança e botas.Se o equipamento de protecção contra incêndios não está
+disponível ou não utilizado, combater o incêndio de um lugar protegido ou distância segura.A norma EN469 fornece um nivel básico de
+protecção em caso de incidente químico.
+Outras recomendações:
+Arrefecer com água os tanques, cisternas ou recipientes próximos da fonte de calor ou fogo.Observar a direcção do vento.Evitar que os
+produtos utilizados no combate contra-incêndios, passem para esgotos ou cursos de água.
+Via de exposição Sintomas e efeitos, agudos e retardados Descrição das medidas de primeiros socorros
+Inalação: A inalação dos vapores de solventes pode produzir
+dor de cabeça, vertigem, cansaço, fraqueza
+muscular, sonolência e em casos extremos, a perda
+de consciência.A inalação produz sensação de
+queimadura, tosse, dificuldade respiratória e dor de
+garganta.
+Transportar o acidentado para o ar livre fora da zona
+contaminada.Se a respiração estiver irregular ou parada,
+aplicar a respiração artificial.Se a pessoa está
+inconsciente, colocar em posição de segurança
+apropriada.Manter coberto com roupa de abrigo
+enquanto se procura assistência médica.
+Pele: O contacto com a pele produz vermelhidão,
+queimaduras e dor.Em caso de contacto
+prolongado, a pele pode secar.
+Remover imediatamente a roupa contaminada.Lavar a
+fundo as zonas afectadas com abundante água fria ou
+morna e uma solução de bicarbonato sódio a
+5%.Finalmente, repetir a lavagem da zona com água e
+sabão.
+Olhos: O contacto com os olhos causa vermelhidão, dor e
+queimaduras profundas graves e perda de visão.
+Remover as lentes de contacto.Lavar por irrigação os
+olhos com água limpa abundante e fresca pelo menos
+durante 15 minutos, mantendo as pálpebras afastadas,
+até que a irritação diminua.Se a irritação persiste,
+consultar com um médico.
+Ingestão: A ingestão, pode causar irritação de garganta, dor
+abdominal, sonolência, náuseas, vómitos e
+diarreia.Se ingerido, provoca graves queimaduras
+nos lábios, garganta e esófago, com transtornos
+gástricos e dores abdominais.
+Em caso de ingestão, consultar imediatamente o médico
+e mostrar-lhe a embalagem ou o rótulo.Beber água em
+grandes quantidades.Não provocar o vómito, devido ao
+risco da perfuração.Manter a vítima em repouso.
+quando persistirem os sintomas do mal-estar, procurar cuidado médico.Nunca administrar nada pela boca a pessoas em estado de
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+4/14
+SECÇÃO 6: MEDIDAS EM CASO DE FUGA ACIDENTAL
+6.1 PRECAUÇÕES INDIVIDUAIS, EQUIPAMENTO DE PROTECÇÃO E PROCEDIMENTOS DE EMERGÊNCIA:
+Eliminar as possíveis fontes de ignição e se necessário, ventilar a área. Não fumar.Evitar o contacto directo com o produto.Evitar respirar
+os vapores.Manter as pessoas sem protecção em posição contrária à direcção do vento.
+6.2 PRECAUÇÕES A NÍVEL AMBIENTAL:
+Evitar a contaminação de esgotos, águas superficiais ou subterrâneas e do solo.Em caso de se produzirem grandes derrames ou se o
+produto contaminar lagos, rios ou esgotos, informar as autoridades competentes, de acordo com a legislação local.
+6.3 MÉTODOS E MATERIAIS DE CONFINAMENTO E LIMPEZA:
+Recolher o derrame com materiais absorventes não-combustíveis (terra, areia, vermiculite, terra de diatomáceas, etc..). Transferir para um
+recipiente apropriado para sua recuperação ou eliminação. Neutralizar com carbonato ou bicarbonato de sódio. Finalmente, lavar a área
+com água em abundância. Guardar os resíduos num recipiente fechado.
+6.4 REMISSÃO PARA OUTRAS SECÇÕES:
+Para informações de contato em caso de emergência, ver a seção 1.
+Para informações sobre um manuseamento seguro, ver a seção 7.
+No controlo da exposição e medidas de protecção individual ver secção 8.
+Para a eliminação dos resíduos, seguir as recomendações da secção 13.
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM
+7.1 PRECAUÇÕES PARA UM MANUSEAMENTO SEGURO:
+Cumprir com a legislação em vigor sobre prevenção de riscos laborais.
+- Recomendações gerais:
+Utilizar em zonas afastadas de pontos de ignição e longe de fontes de calor ou eléctricas.Não fumar.Manipular evitando projecções.Evitar
+todo tipo de derrame ou fuga.Não deixar os recipientes abertos.
+- Recomendações para prevenir riscos de incêndio e explosão:
+Os vapores são mais pesados do que o ar, podem deslocar-se pelo chão a distâncias consideráveis e podem formar com o ar misturas que
+ao alcançar fontes de ignição afastadas podem inflamar-se ou explodir.Devido à inflamabilidade, este material só pode ser utilizado em
+zonas livres de fontes de ignição e afastado das fontes de calor ou eléctricas.Desligar os telemóveis e não fumar.Não utilizar ferramentas
+que possam provocar faíscas.
+Ponto de inflamação 45* ºC (Pensky-Martens) CLP 2.6.4.3.
+Temperatura de auto-ignição: Não aplicável (não mantém a combustão).
+Limites inferior/superior de inflamabilidade/explosividade: 2,2* - 20,0* % Volume 25ºC
+- Recomendações para prevenir riscos toxicológicos:
+Não comer, beber ou fumar durante o manuseamento.Depois do manuseamento, lavar as mãos com água e sabão. No controlo da
+exposição e medidas de protecção individual ver secção 8.
+- Recomendações para prevenir a contaminação do meio ambiente:
+Não se considera um perigo para o ambiente. No caso de derrames acidentais, seguir as instruções da secção 6.
+7.2 CONDIÇÕES DE ARMAZENAGEM SEGURA, INCLUINDO EVENTUAIS INCOMPATIBILIDADES:
+Proibir o acesso a pessoas não autorizadas. Manter fora do alcance das crianças. O produto  deve armazenar-se afastado de fontes de
+calor e eléctricas. Não fumar na área de armazenagem. Se possível, evitar a incidência directa de radiação solar. Para evitar derrames, os
+recipientes que forem abertos, devem ser cuidadosamente fechados e mantidos na posição vertical. Devido a sua natureza corrossiva,
+deve prestar-se extrema cautela na selecção de materiais para bombas, embalagens e linhas. O chão deve ser impermeável e resistente à
+corrosão, com um sistema de canais que permitam a recolha do líquido até uma fossa de neutralização. O equipamento eléctrico deve
+estar feito com materiais não oxidantes. Para maior informação, ver secção 10.
+- Classe do armazém:
+Conforme as disposições vigentes.
+- Tempo máximo de armazenagem:
+6 Meses.
+- Intervalo de temperaturas:
+min:5 ºC,  max:40 ºC (recomendado).
+- Matérias incompatíveis:
+Manter ao abrigo de agentes oxidantes, ácidos, álcalis, metais, agentes redutores.
+- Tipo de embalagem:
+Conforme as disposições vigentes.
+- Quantidades limite (Seveso III): Directiva 2012/18/UE (DL.150/2015):
+Não aplicável (os critérios de classificação não são preenchidos).
+7.3 UTILIZAÇÃO(ÕES) FINAL(IS) ESPECÍFICA(S):
+Nenhuma recomendação específica disponível pelo uso deste produto distintas das já indicadas.
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+5/14
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL
+8.1 PARÂMETROS DE CONTROLO:
+Se um produto contiver ingredientes com limites de exposição, pode ser necessário a monitorização pessoal, do ambiente de trabalho ou
+biológico, para determinar a eficácia da ventilação ou outras medidas de controlo e/ou a necessidade de utilizar equipamento de protecção
+respiratória. Deve ser feita referência a normas de monotorização como EN689, EN14042 e EN482 sobre os métodos para availar a
+exposição por inalação a agentes químicos, e a exposição a agentes químicos e biológicos. Também deve ser feita referência a
+documentos de orientação nacionais, para os métodos de determinação de substâncias perigosas.
+- VALORES-LIMITE DE EXPOSIÇÃO PROFISSIONAL (VLE)
+VLE-CDVLE-MP
+ppmppm
+(DL.1/2021) (Portugal, 2021) Observações
+mg/m3 mg/m3
+Ano
+2012Morfolina 10 36 7220
+Vd2012Etilenoglicol 20 52 10440
+VLE - Valor limite de exposição, VLE-MP - Média Ponderada no Tempo, VLE-CD - Limite Exposição Curta Duração.
+Vd - Notação cutânea.
+- Vía dérmica (Vd):
+Indica que, em exposição a esta substância, a absorção por a via cutânea, incluindo as membranas mucosas e os olhos, pode ser
+significativa para o conteúdo corporal total se não forem tomadas medidas para evitar a absorção. Existem alguns agentes químicos para
+os quais a absorção por via dérmica, tanto na fase líquida como de vapor, pode ser muito alta, e esta via de entrada pode ser de igual ou
+maior importância que a via inalatória. Nestas situações, é essencial a utilização do controlo biológico para poder quantificar a quantidade
+global de contaminante absorvido.
+- VALORES-LIMITE BIOLÓGICOS:
+Não estabelecido
+- NÍVEL DERIVADO SEM EFEITO (DNEL):
+O nível sem efeito derivado (DNEL) é um nível de exposição que se estima seguro, derivado de dados de toxicidade segundo orientações
+específicas que recolhe o REACH. O valor DNEL pode diferir de um limite de exposição ocupacional (OEL) correspondente ao mesmo
+produto químico. Os valores OEL podem vir recomendados por uma determinada empresa, um organismo normativo governamental ou
+uma organização de peritos. Se bem que se considerem protectores da saúde, os valores OEL obtêm-se por um processo diferente ao do
+REACH.
+DNEL OralDNEL Inalação DNEL Cutânea- NÍVEL DERIVADO SEM EFEITO,
+TRABALHADORES:- Efeitos sistémicos, aguda e
+crônica:
+mg/m3 mg/kg bw/d mg/kg bw/d
+(a)Acido etidrónico - - -- - -(a) (a) (c)(c)(c)
+(a)Metil-1H-benzotriazole s/r 21,2 0,3s/r - -(a) (a) (c)(c)(c)
+(a)Morfolina m/r 91 1,04m/r - -(a) (a) (c)(c)(c)
+(a)Hidróxido de sódio s/r s/r s/rs/r - -(a) (a) (c)(c)(c)
+(a)Etilenoglicol - - 106- - -(a) (a) (c)(c)(c)
+DNEL OlhosDNEL Inalação DNEL Cutânea- NÍVEL DERIVADO SEM EFEITO,
+TRABALHADORES:- Efeitos locais, aguda e crônica:
+mg/m3 mg/cm2 mg/cm2
+(a)Acido etidrónico s/r s/r s/rs/r - -(a) (a) (c)(c)(c)
+(a)Metil-1H-benzotriazole s/r s/r s/rs/r s/r -(a) (a) (c)(c)(c)
+(a)Morfolina 72 36 m/rm/r m/r -(a) (a) (c)(c)(c)
+(a)Hidróxido de sódio s/r 1 a/ra/r a/r -(a) (a) (c)(c)(c)
+(a)Etilenoglicol - 35 -- - -(a) (a) (c)(c)(c)
+- Nível derivado sem efeito, população em geral:
+Não aplicável (produto para utilização profissional ou industrial).
+(a) - Aguda, exposição a curto prazo, (c) - Crônica, exposição prolongada ou repetida.
+(-) - DNEL não disponível (sem dados de registo REACH).
+s/r - DNEL não derivado (nenhun risco identificado).
+m/r - DNEL não derivado (risco meio).
+a/r - DNEL não derivado (risco alto).
+- CONCENTRAÇÃO PREVISIVELMENTE SEM EFEITOS (PNEC):
+PNEC MarinePNEC Água doce
+mg/l
+PNEC Intermitente
+mg/lmg/l
+- CONCENTRAÇÃO PREVISIVELMENTE SEM
+EFEITOS, AQUÁTICO:- Água doce, ambiente
+marinho e descargas intermitentes:
+Acido etidrónico 0.136 0.0136 -
+Metil-1H-benzotriazole 0.008 0.02 0.086
+Morfolina 0.163 0.0163 0.09
+Hidróxido de sódio - - -
+Etilenoglicol 10 1 10
+PNEC SedimentoPNEC STP
+mg/kg dw/d
+PNEC Sedimento
+mg/kg dw/dmg/l
+- DEPURADORAS RESIDUAIS (STP) E
+SEDIMENTOS EM ÁGUA DOCE E ÁGUA
+MARINHA:
+Acido etidrónico 20 59 5.9
+Metil-1H-benzotriazole 39.4 0.117 0.292
+Morfolina 10 1.83 0.183
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+6/14
+Hidróxido de sódio - - -
+Etilenoglicol 199.5 37 3.7
+PNEC SoloPNEC Ar
+mg/kg dw/d
+PNEC Oral
+mg/kg dw/dmg/m3
+- CONCENTRAÇÃO PREVISIVELMENTE SEM
+EFEITOS, TERRESTRE:- Ar, solo e efeitos para
+predadores e seres humanos:
+Acido etidrónico - 96 12000
+Metil-1H-benzotriazole s/r 0.0187 n/b
+Morfolina s/r 0.269 n/b
+Hidróxido de sódio s/r - n/b
+Etilenoglicol s/r 1.53 -7
+(-) - PNEC não disponível (sem dados de registo REACH).
+n/b - PNEC não derivado (sem potencial de bioacumulação).
+s/r - PNEC não derivado (sem risco identificado).
+8.2 CONTROLO DA EXPOSIÇÃO:
+MEDIDAS DE ORDEM TÉCNICA:
+Providenciar uma ventilação adequada.Para isto, deve-se realizar uma muito boa
+ventilação no local, usando um bom sistema de extracção geral.Se isto não for
+suficiente para manter as concentrações de partículas e vapores abaixo dos limites
+de exposição durante o trabalho, o utilizador deve usar uma protecção respiratória
+apropriada.
+- Protecção do sistema respiratório:
+Evitar a inalação de vapores.
+- Protecção dos olhos e face:
+Ter à disposição torneiras, fontes ou frascos lava-olhos que contém água limpa nas proximidades da zona de utilização.
+- Protecção das mãos e da pele:
+Ter à disposição  torneiras ou fontes com água limpa nas proximidades da zona de utilização.O uso de cremes protectores pode ajudar a
+proteger as áreas expostas da pele.Não devem ser aplicados cremes protectores depois da exposição.
+CONTROLO DA EXPOSIÇÃO PROFISSIONAL: REGULAMENTO (CE) Nº 2016/425:
+Como uma medida de prevenção geral de segurança no ambiente de trabalho, recomenda-se o uso de equipamentos de proteção
+individual (EPI) básicos, com a marcação CE relevante.  Para mais informações sobre equipamentos de proteção individual
+(armazenagem, uso, limpeza, manutenção, tipo e características do EPI, classe de proteção, marcação, categoría, norma CEN, etc..),
+deve-se consultar os prospectos informativos fornecidos pelos fabricantes dos EPI.
+- Perigos térmicos:
+Não aplicável (o produto é manuseado à temperatura ambiente).
+CONTROLO DA EXPOSIÇÃO AMBIENTAL:
+Evitar qualquer derrame para o meio ambiente. Evitar a emissão na atmosfera.
+- Derrames no solo:
+Máscara: Máscara com filtro de tipo A (castanho) para gases e vapores de compostos orgânicos com ponto de
+ebulição superior a 65ºC (EN14387).Classe 1: capacidade baixa até 1000 ppm, Classe 2: capacidade
+média até 5000 ppm, Classe 3: capacidade alta até 10000 ppm.Para obter um nível de protecção
+adequado, a classe de filtro deve-se escolher em função do tipo e concentração dos agentes
+contaminantes presentes, de acordo com as especificações do fabricante dos filtros.Os equipamentos
+de  respiração com filtros não operam satisfatoriamente quando o ar contém concentrações altas de
+vapor ou teor de oxígénio inferior a 18% em volume.Em presença de concentrações de vapor
+elevadas, utilizar um equipamento respiratório autónomo.
+Óculos: Óculos de segurança com proteções laterais para produtos químicos (EN166).Limpar diáriamente e
+desinfetar periodicamente de acordo as instruções do fabricante.
+Viseira de segurança: Viseira de segurança contra respingos de líquidos (EN166), recomendável quando possa haver risco
+de derrame, projecção ou nebulização do liquido.
+Luvas: Luvas de borracha de neopreno (EN374).Quando pode ter lugar um contato frequente ou prolongado,
+recomenda-se usar luvas com proteção do nível 5 ou superior, con um tempo de penetração >240
+min.Quando só espera-se um breve contato, recomenda-se usar luvas com proteção do nível 2 ou
+superior, con um tempo de penetração >30 min.O tempo de penetração das luvas seleccionadas deve
+ser de acordo com o período de uso pretendido.Existem vários factores (por exemplo, a temperatura),
+que fazem com que na prática o período de uso de umas luvas de protecção resistentes aos produtos
+químicos seja manifestamente inferior ao estabelecido na norma EN374.Devido à grande variedade de
+circunstâncias e possibilidades, temos de ter em conta o manual de instruções dos fabricantes de
+luvas.Utilizar a técnica adequada de retirar as luvas (sem tocar a superfície exterior da luva) para
+evitar o contacto deste produto com a pele.As luvas devem ser substituídas imediatamente, caso se
+observem indícios de degradação.
+Botas: Botas de borracha de neopreno (EN347).
+Avental: Não.
+Fato macaco: Devem ser usadas roupas resistentes aos produtos corrosivos.
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+7/14
+Evitar a penetração no terreno.
+- Derrames na água:
+ Não se deve permitir que o produto entre nos esgotos nem em linhas de água.
+     -Lei de gestão de águas:
+Este produto não contém qualquer substância na lista de substâncias prioritárias no domínio da política da águas, de acordo com a
+Directiva 2000/60/CE~2013/39/UE.
+- Emissões na atmosfera:
+Devido a volatilidade, podem resultar emissões para a atmosfera durante a manipulação e utilização. Evitar a emissão na atmosfera.
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS
+9.1 INFORMAÇÕES SOBRE PROPRIEDADES FÍSICAS E QUÍMICAS DE BASE:
+Aspecto
+Estado físico: Líquido
+Cor: Incolor
+Odor: Característico
+Limiar olfactivo: Não disponível (mistura).
+Mudança de estado
+Ponto de fusão: Não disponível (mistura).
+Intervalo de ebulição: 100* - 197,4* ºC a 760 mmHg
+-  Inflamabilidade:
+Ponto de inflamação 45* ºC (Pensky-Martens) CLP 2.6.4.3.
+Limites inferior/superior de inflamabilidade/explosividade: 2,21 - 20,03
+Temperatura de auto-ignição: Não aplicável (não mantém a combustão).
+Estabilidade
+Temperatura de decomposição: Não disponível
+Valor pH
+pH: 10 ± 0,5 a 20ºC
+-  Viscosidade:
+Viscosidade dinâmica: Não disponível.
+Viscosidade cinemática: Não disponível.
+-  Solubilidade(s):
+Solubilidade em água Miscível
+Lipossolubilidade: Não aplicável (produto inorgânico).
+Coeficiente de partição n-octanol/água: Não aplicável (mistura).
+-  Volatilidade:
+Pressão de vapor: 17,2553* mmHg a 20ºC
+Pressão de vapor: 11,9193* kPa  a 50ºC
+Taxa de evaporação: Não disponível (falta de dados).
+Densidade
+Densidade relativa: 1,046*   a 20/4ºC Relativa água
+Densidade relativa do vapor: < 1 (mais leve que o ar).
+Características de partícula
+Tamanho da partícula: Não aplicável.
+-  Propriedades explosivas:
+ Os vapores podem formar com o ar misturas que podem inflamar-se ou explodir na presença de uma fonte de ignição.
+-  Propriedades comburentes:
+Não classificado como produto comburente.
+*Os valores estimados com base nas substâncias que entram na mistura.
+9.2 OUTRAS INFORMAÇÕES:
+Informações sobre as classes de perigo físico
+Nenhuma informação adicional disponível.
+Outros recursos de segurança:
+COV (fornecimento): 7,0   % Peso
+COV (fornecimento): 73,2   g/l
+Não voláteis: 8,02  * % Peso 1h. 60ºC
+Os valores indicados nem sempre coincidem com as especificações do produto. Os dados correspondentes às especificações do produto
+podem ser encontradas na folha técnica do mesmo. Para maior informação sobre propriedades físicas e químicas relativas a segurança e
+meio ambiente, ver as secções 7 e 12.
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+8/14
+SECÇÃO 10: ESTABILIDADE E REATIVIDADE
+10.1 REATIVIDADE:
+-  Corrosividade para os metais:
+Não disponível.
+-  Propriedades pirofóricas:
+Não pirofórico.
+10.2 ESTABILIDADE QUÍMICA:
+Estável dentro das condições recomendadas de armazenagem e manuseamento.
+10.3 POSSIBILIDADE DE REAÇÕES PERIGOSAS:
+Possível reacção perigosa com agentes oxidantes, ácidos, álcalis, metais, agentes redutores.
+10.4 CONDIÇÕES A EVITAR:
+-  Calor:
+Manter afastado de fontes de calor.
+-  Luz:
+Se possível, evitar a incidência directa de radiação solar.
+-  Ar:
+O produto não é afectada por exposição ao ar, mas os recipientes não devem ser deixados abertos.
+-  Pressão:
+Não relevante.
+-  Choques:
+O produto não é sensível a choques, mas como uma recomendação de carácter geral devem ser evitados choques e manuseio brusco
+para evitar mossas e quebra de embalagens,  especialmente quando o produto é manuseado em grandes quantidades, e durante as
+operações de carga e descarga.
+10.5 MATERIAIS INCOMPATÍVEIS:
+Manter ao abrigo de agentes oxidantes, ácidos, álcalis, metais, agentes redutores.
+10.6 PRODUTOS DE DECOMPOSIÇÃO PERIGOSOS:
+Como consequência da decomposição térmica, podem formar-se produtos perigosos: óxidos de nitrogênio, ácido cianídrico, fosfina, óxidos
+de fósforo.
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA
+Não existem dados toxicológicos experimentais disponíveis sobre a preparação. A classificação toxicológica desta mistura
+realizou-se usando o método convencional do cálculo do Regulamento (UE) nº 1272/2008~2021/849 (CLP).
+11.1 INFORMAÇÕES SOBRE AS CLASSES DE PERIGO, TAL COMO DEFINIDAS NO REGULAMENTO (CE) N.O 1272/2008:
+TOXICIDADE AGUDA:
+(*) - Estimativa pontual de toxicidade aguda correspondente à categoria de classificação (ver GHS/CLP Tabela 3.1.2). Estes valores foram
+concebidos para serem utilizados no cálculo da ATE para efeitos de classificação de misturas com base nos seus componentes e não
+representam resultados de ensaios.
+(-) - Os componentes que se presume não ter toxicidade aguda no limite superior da categoria 4 para a via de exposição correspondente
+são ignorados.
+mg/kg bw/d mg/kg bw/d mg/m3
+- Dose mínima sem efeitos adversos observados
+Não disponível
+INFORMAÇÕES SOBRE VIAS DE EXPOSIÇÃO PROVÁVEIS: TOXICIDADE AGUDA:
+Vias de exposição Toxicidade aguda Cat. Principais efeitos, agudos e/ou retardados Critério
+Inalação:
+Não classificado
+ATE > 20000 mg/m3 - Não classificado como um produto com
+toxicidade aguda por inalação (com base nos
+dados disponíveis, os critérios de
+classificação não são preenchidos).
+GHS/CLP
+3.1.3.6.
+Doses e concentrações letais
+de componentes individuais:
+DL50 (OECD401)
+mg/kg bw Oral
+DL50 (OECD402)
+mg/kg bw Cutânea
+CL50 (OECD403)
+mg/m3·4h Inalação
+Acido etidrónico 1878 Cobaia > 10000 Coelho
+Metil-1H-benzotriazole 720 Cobaia > 2000 Coelho
+Morfolina 1900 Cobaia > 500 Coelho
+Hidróxido de sódio 340 Cobaia 1350 Coelho
+Etilenoglicol 7712 Cobaia 9530 Coelho > 20000 Cobaia
+Estimativas da toxicidade aguda (ATE)
+de componentes individuais:
+ATE
+mg/kg bw Oral
+ATE
+mg/kg bw Cutânea
+ATE
+mg/m3·4h Inalação
+Acido etidrónico 1878 - -
+Metil-1H-benzotriazole 720 - -
+Morfolina 1900 *1100 *1500
+Etilenoglicol *> 500 - -
+- Dose sem efeitos adversos observados NOAEL Oral NOAEL Cutânea NOAEC Inalação
+Metil-1H-benzotriazole 150 Cobaia
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+9/14
+Pele:
+Não classificado
+ATE > 5000 mg/kg bw - Não classificado como um produto com
+toxicidade aguda em contacto com a pele
+(com base nos dados disponíveis, os
+critérios de classificação não são
+preenchidos).
+GHS/CLP
+3.1.3.6.
+Olhos:
+Não classificado
+Não disponível. - Não classificado como um produto com
+toxicidade aguda por contacto com os olhos
+(falta de dados).
+GHS/CLP
+1.2.5.
+Ingestão:
+Não classificado
+ATE > 5000 mg/kg bw - Não classificado como um produto com
+toxicidade aguda por ingestão (com base
+nos dados disponíveis, os critérios de
+classificação não são preenchidos).
+GHS/CLP
+3.1.3.6.
+GHS/CLP 3.1.3.6: Classificação de misturas com base em ingredientes da mistura (fórmula de aditividade).
+CORROSÃO / IRRITAÇÃO / SENSIBILIZAÇÃO:
+Classe de perigo Orgãos-alvo Cat. Principais efeitos, agudos e/ou retardados Critério
+-  Corrosão/irritação respiratória:
+Não classificado
+- - Não classificado como um produto corrosivo
+ou irritante por inalação (com base nos
+dados disponíveis, os critérios de
+classificação não são preenchidos).
+GHS/CLP
+1.2.6.
+3.8.3.4.
+-  Corrosão/irritação cutânea: Pele Cat.1B CORROSIVO: Provoca queimaduras na
+pele.
+GHS/CLP
+3.2.3.3.
+-  Lesão/irritação ocular grave: Olhos Cat.1 LESÕES: Provoca lesões oculares graves. GHS/CLP
+3.3.3.3.
+-  Sensibilização respiratória:
+Não classificado
+- - Não classificado como um produto
+sensibilizante por inalação (com base nos
+dados disponíveis, os critérios de
+classificação não são preenchidos).
+GHS/CLP
+3.4.3.3.
+-  Sensibilização cutânea:
+Não classificado
+- - Não classificado como um produto
+sensibilizante em contacto com a pele (com
+base nos dados disponíveis, os critérios de
+classificação não são preenchidos).
+GHS/CLP
+3.4.3.3.
+GHS/CLP 3.2.3.3: Classificação de misturas se houver dados para todos os ingredientes ou apenas para alguns ingredientes.
+GHS/CLP 3.3.3.3: Classificação de misturas se houver dados para todos os ingredientes ou apenas para alguns ingredientes.
+GHS/CLP 3.4.3.3: Classificação de misturas se houver dados para todos os ingredientes ou apenas para alguns ingredientes.
+GHS/CLP 3.8.3.4: Classificação de misturas se houver dados para todos os ingredientes ou apenas para alguns ingredientes da mistura.
+-  PERIGO DE ASPIRAÇÃO:
+Classe de perigo Orgãos-alvo Cat. Principais efeitos, agudos e/ou retardados Critério
+-  Perigo de aspiração:
+Não classificado
+- - Não classificado como um produto perigoso
+por aspiração (com base nos dados
+disponíveis, os critérios de classificação não
+são preenchidos).
+GHS/CLP
+3.10.3.3.
+GHS/CLP 3.10.3.3: Classificação de misturas se houver dados para todos os ingredientes ou apenas para alguns ingredientes da mistura.
+TOXICIDADE PARA ORGÂOS-ALVO ESPECÍFICOS (STOT): Exposição única (SE) e/ou Exposição repetida (RE):
+Não classificado como um produto com toxicidade para orgâos-alvo específicos.
+GHS/CLP 3.8.3.4: Classificação de misturas se houver dados para todos os ingredientes ou apenas para alguns ingredientes da mistura.
+EFEITOS CMR:
+-  Efeitos cancerígenos:
+Não é considerado como um produto cancerígeno.
+-  Genotoxicidade:
+Não é considerado como um produto mutagénico.
+-  Toxicidade para a reprodução:
+Não prejudica a fertilidade.Não prejudica o desenvolvimento do feto.
+-  Efeitos via aleitamento:
+Não classificado como um produto prejudicial para as crianças em aleitamento materno.
+EFEITOS IMEDIATOS E RETARDADOS E EFEITOS CRÓNICOS DECORRENTES DE EXPOSIÇÃO BREVE E
+PROLONGADA:
+Vias de exposição
+Pode ser absorvido por inalação do vapor, através da pele e por ingestão.
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+10/14
+- Exposição a curto prazo:
+A exposição à concentração de vapores do solvente acima do limite de exposição ocupacional fixado, pode resultar num efeito prejudicial à
+saúde, com a irritação das mucosas e do aparelho respiratório, e um efeito prejudicial nos rins, fígado e sistema nervoso central.Os
+salpicos do líquido nos olhos podem causar irritação e danos reversíveis.Se ingerido, pode causar irritações na garganta; podem ocorrer
+outros efeitos, iguais aos descritos na exposição aos vapores.Pode produzir queimaduras na pele ou nos olhos por contacto directo ou nas
+vias digestivas em caso de ingestão.As névoas de finas particulas são irritantes para a pele e as vias respiratórias.Provoca lesões oculares
+graves.
+- Exposição prolongada ou repetida:
+O contacto repetido ou prolongado pode provocar a eliminação da gordura natural da pele, dando como resultado dermatites de contacto
+não alérgica e absorção através da pele.
+INTERACCÕES:
+Não disponível.
+INFORMAÇÕES SOBRE TOXICOCINÉTICA, METABOLISMO E DISTRIBUIÇÃO:
+-  Absorção dérmica:
+Esta preparação contém as seguintes substâncias para as quais a absorção por via cutânea pode ser muito alta: Etilenoglicol.
+-  Toxicocinética básica:
+Não disponível.
+INFORMAÇÃO ADICIONAL:
+Não disponível.
+11.2 INFORMAÇÕES SOBRE OUTROS PERIGOS:
+Propriedades desreguladoras do sistema endócrino:
+Este produto não contém substâncias com propriedades desreguladoras endócrinas identificadas ou em avaliação.
+Outras informações:
+Nenhuma informação adicional disponível.
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA
+Não existem dados ecotoxicológicos experimentais disponíveis sobre a preparação. A classificação ecotoxicológica desta
+mistura realizou-se usando o método convencional do cálculo do Regulamento (UE) nº 1272/2008~2021/849 (CLP).
+12.1 TOXICIDADE:
+mg/l·96horas mg/l·48horas mg/l·72horas
+mg/l · 28 dias mg/l · 21 dias mg/l · 72 horas
+- Concentração mínima com efeitos observados
+Não disponível
+AVALIAÇÃO DA TOXICIDADE AQUÁTICA:
+Toxicidade aquática Cat. Principais perigos para o ambiente aquático Critério
+-  Toxicidade aquática aguda:
+Não classificado
+- Não classificado como um material perigoso, com uma toxicidade aguda
+para os organismos aquáticos (com base nos dados disponíveis, os
+critérios de classificação não são preenchidos).
+GHS/CLP
+4.1.3.5.5.3.
+-  Toxicidade aquática crónica: - Não classificado como um produto perigoso com toxicidade crônica para
+os organismos aquáticos com efeitos duradouros (com base nos dados
+disponíveis, os critérios de classificação não são preenchidos).
+GHS/CLP
+4.1.3.5.5.4.
+CLP 4.1.3.5.5.3: Classificação das misturas em termos de perigos agudos, com base na soma dos componentes classificados.
+CLP 4.1.3.5.5.4: Classificação das misturas em termos de perigos crónicos (de longo prazo), com base na soma dos componentes
+classificados.
+12.2 PERSISTÊNCIA E DEGRADABILIDADE:
+- Biodegradabilidade:
+Não é facilmente biodegradável.
+mgO2/g 5 dias 14 dias 28 dias
+- Toxicidade aguda em meio aquático
+de componentes individuais
+CL50 (OECD 203) CE50 (OECD 202) CE50 (OECD 201)
+Acido etidrónico 195 - Peixes 527 - Dafnias
+Metil-1H-benzotriazole 180 - Peixes 8.6 - Dafnias 75 - Algas
+Morfolina 180 - Peixes 45 - Dafnias 28 - Algas
+Hidróxido de sódio 45 - Peixes 40 - Dafnias
+Etilenoglicol 18500 - Peixes 1000 - Dafnias 2000 - Algas
+- Concentração sem efeitos observados NOEC (OECD 210) NOEC (OECD 211) NOEC (OECD 201)
+Acido etidrónico 3 - Dafnias
+Metil-1H-benzotriazole 0.4 - Dafnias 1.2 - Algas
+Morfolina 8.1 - Dafnias 10 - Algas
+Biodegradação aeróbica
+de componentes individuais
+CQO %DBO/DQO Biodegradabilidad
+Acido etidrónico 440     -        -        - Inherente
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+11/14
+- Hidrólise:
+Não disponível.
+- Fotodegradabilidade:
+Não disponível.
+12.3 POTENCIAL DE BIOACUMULAÇÃO:
+Pode bioacumular-se.
+L/kg
+12.4 MOBILIDADE NO SOLO:
+Não disponível
+Pa·m3/mol 20ºC
+12.5 RESULTADOS DA AVALIAÇÃO PBT E MPMB:(Anexo XIII do Regulamento (CE) nº 1907/2006:)
+Não contém substâncias que cumpram os critérios PBT/mPmB.
+12.6 PROPRIEDADES DESREGULADORAS DO SISTEMA ENDÓCRINO:
+Este produto não contém substâncias com propriedades desreguladoras endócrinas identificadas ou em avaliação.
+12.7 OUTROS EFEITOS ADVERSOS:
+- Potencial de empobrecimento da camada do ozono:
+Não disponível.
+- Potencial de criação fotoquímica de ozono:
+Não disponível.
+- Potencial de contribuição para o aquecimento global:
+Não disponível.
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO
+13.1 MÉTODOS DE TRATAMENTO DE RESÍDUOS:Directiva 2008/98/CE~Regulamento (UE) nº 1357/2014
+(DL.178/2006~DL.73/2011):
+Tomar todas as medidas que sejam necessárias para evitar ao máximo a produção de resíduos. Analisar possíveis métodos de
+revalorização ou reciclagem. Não efectuar a descarga no sistema de esgotos ou no ambiente; entregar num local autorizado para recolha
+de resíduos. Os resíduos devem manipular-se e eliminar-se de acordo com as legislações locais e nacionais vigentes. No controlo da
+exposição e medidas de protecção individual ver secção 8.
+Eliminação recipientes vazios:Directiva 94/62/CE~2015/720/UE (DL.152-D/2017 e DL.102-D/2020), Decisão
+2000/532/CE~2014/955/UE (DL.92/2006, DL.178/2006 e DL.73/2011) e Decisão 2014/955/UE (DL.71/2016):
+Os recipientes vazios e embalagens devem eliminar-se de acordo com as legislações locais e nacionais vigentes.A classificação da
+embalagem como resíduo perigoso dependerá do grau de esvaziamento da mesma, sendo o detentor do resíduo o responsável pela sua
+classificação, em conformidade com o Capítulo 15 01 da Portaria 209/2004, e pelo encaminhamento para destino final adequado.Com os
+recipientes e embalagens contaminados deverão adoptar as mesmas medidas que para o produto.
+Procedimentos da neutralização ou destruição do produto:
+Aterro oficialmente autorizado, de acordo com os regulamentos locais.
+Metil-1H-benzotriazole     -    2  4 Não fácil
+Morfolina 1      -        - Fácil
+Etilenoglicol 1289 93  99      - Fácil
+Bioacumulação
+de componentes individuais
+logPow BCF Potencial
+Acido etidrónico -0.81 3.2  (calculado) Não bioacumulável
+Metil-1H-benzotriazole 1.08 2.4  (calculado) Improvável, baixo
+Morfolina -2.55 3.2  (calculado) Não bioacumulável
+Hidróxido de sódio Não bioacumulável
+Etilenoglicol -1.36 3.2  (calculado) Não bioacumulável
+Movilidade
+de componentes individuais
+log Poc Constante de Henry Potencial
+Acido etidrónico 0,61 Não bioacumulável
+Metil-1H-benzotriazole 2,04 Improvável, baixo
+Morfolina 1,85 0,011 (calculado) Não bioacumulável
+Etilenoglicol -0,65 0,00608 (calculado) Não bioacumulável
+Nota: Os dados de biodegradabilidade correspondem a uma média de dados de várias fontes bibliográficas.
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+12/14
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE
+14.1 NÚMERO ONU OU NÚMERO DE ID:
+3266
+14.2 DESIGNAÇÃO OFICIAL DE TRANSPORTE DA ONU:
+LÍQUIDO INORGÂNICO CORROSIVO, BÁSICO, N.S.A. (Hidróxido de sódio,Morfolina)
+14.3 CLASSE(S) DE PERIGO PARA EFEITOS DE TRANSPORTE:
+Transporte rodoviário (ADR 2023) e
+ Transporte ferroviário (RID 2023):
+- Classe:
+- Grupo de embalagem:
+- Código de classificação:
+- Código de restrição em túneis:
+- Categoría de transporte:
+- Quantidades limitadas:
+- Documento do transporte:
+- Instruções escritas:
+8
+II
+C5
+(E)
+2, máx. ADR 1.1.3.6. 333 L
+1 L (ver isenções totais ADR 3.4)
+Documento do transporte.
+ADR 5.4.3.4
+Transporte via marítima (IMDG 40-20):
+- Classe:
+- Grupo de embalagem:
+- Ficha de Emergência (EmS):
+- Guia Primeiros Socorros (MFAG):
+- Poluente marinho:
+- Documento do transporte:
+8
+II
+F-A,S-B
+760
+Não.
+Conhecimento do embarque.
+Transporte via aérea (ICAO/IATA 2021):
+- Classe:
+- Grupo de embalagem:
+- Documento do transporte:
+8
+II
+Conhecimento aéreo.
+Transporte por via navegável interior (ADN):
+Não disponível
+14.4 GRUPO DE EMBALAGEM:
+Ver secção 14.3
+14.5 PERIGOS PARA O AMBIENTE:
+Não aplicável (não classificado como perigoso para o ambiente).
+14.6 PRECAUÇÕES ESPECIAIS PARA O UTILIZADOR:
+Assegurar-se que as pessoas transportando o produto sabem o que fazer em caso de acidente ou derrame. Transporte sempre em
+recipientes fechados, mantidos em posição vertical e segura. Garantir uma ventilacão adequada.
+14.7 TRANSPORTE MARÍTIMO A GRANEL EM CONFORMIDADE COM OS INSTRUMENTOS DA OMI:
+Não disponível.
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO
+15.1 REGULAMENTAÇÃO/LEGISLAÇÃO ESPECÍFICA PARA A SUBSTÂNCIA OU MISTURA EM MATÉRIA DE SAÚDE,
+SEGURANÇA E AMBIENTE:
+Os regulamentos aplicáveis a este produto estão listados geralmente ao longo desta ficha de dados de segurança.
+Restrições ao fabrico, à colocação no mercado e à utilização:
+Ver secção 1.2
+Advertência de perigo táctil:
+Não aplicável (produto para utilização profissional ou industrial).
+Protecção de segurança para crianças:
+Não aplicável (produto para utilização profissional ou industrial).
+OUTRAS LEGISLAÇÕES:
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+13/14
+- Decreto-Lei n.º 220/2012, de 10 de outubro (e suas respetivas alterações) - Assegura a execução na ordem jurídica interna das
+obrigações decorrentes do Regulamento (CE) n.º 1272/2008, do Parlamento Europeu e do Conselho, de 16 de dezembro, relativo à
+classificação, rotulagem e embalagem de substâncias e misturas, que altera e revoga as Diretivas n.os 67/548/CEE e 1999/45/CE e altera
+o Regulamento (CE) n.º 1907/2006.
+- Decreto-Lei n.º 293/2009, de 13 de Outubro - Assegura a execução, na ordem jurídica nacional, das obrigações decorrentes do
+Regulamento (CE) n.º 1907/2006, do Parlamento Europeu e do Conselho, de 18 de Dezembro, relativo ao registo, avaliação, autorização e
+restrição dos produtos químicos (REACH) e que procede à criação da Agência Europeia dos Produtos Químicos.
+- Decreto-Lei n.º 33/2015, de 4 de março - Estabelece obrigações relativas à exportação e importação de produtos químicos perigosos,
+assegurando a execução, na ordem jurídica interna do Regulamento (UE) n.º 649/2012, do Parlamento Europeu e do Conselho.
+- Decreto-Lei n.º 1/2021, de 6 de Janeiro - Transpõe a Diretiva (UE) 2019/1831, que estabelece uma quinta lista de valores-limite de
+exposição profissional indicativos para os agentes químicos.
+- Decreto-Lei n.º 102-D/2020, de 10 de Dezembro - Aprova o regime geral da gestão de resíduos, o regime jurídico da deposição de
+resíduos em aterro e altera o regime da gestão de fluxos específicos de resíduos, transpondo as Diretivas (UE) 2018/849, 2018/850,
+2018/851 e 2018/852.
+- Decreto Lei n.º 127/2013, de 30 de Agosto - Estabelece o regime de emissões industriais aplicável à prevenção e ao controlo integrados
+da poluição, bem como as regras destinadas a evitar e ou reduzir as emissões para o ar, a água e o solo e a produção de resíduos,
+transpondo a Diretiva n.º 2010/75/UE, do Parlamento Europeu e do Conselho, de 24 de novembro de 2010, relativa às emissões industriais
+(prevenção e controlo integrados da poluição).
+- Decreto-Lei n.º 147/2008, de 29 de julho - Estabelece o regime jurídico da responsabilidade por danos ambientais e transpõe para a
+ordem jurídica interna a Directiva n.º 2004/35/CE, do Parlamento Europeu e do Conselho, de 21 de Outubro, que aprovou, com base no
+princípio do poluidor-pagador, o regime relativo à responsabilidade ambiental aplicável à prevenção e reparação dos danos ambientais,
+com a alteração que lhe foi introduzida pela Directiva n.º 2006/21/CE, do Parlamento Europeu e do Conselho, relativa à gestão de resíduos
+da indústria extrativa.
+- Decreto-Lei 41-A/2010, de 29 de Abril (e suas respetivas alterações) - Regula o transporte terrestre, rodoviário e ferroviário, de
+mercadorias perigosas, transpondo para a ordem jurídica interna a Diretiva n.º 2006/90/CE, da Comissão, de 3 de Novembro, e a Diretiva
+n.º 2008/68/CE, do Parlamento Europeu e do Conselho, de 24 de Setembro.
+- Decreto-Lei n.º 150/2015, de 5 de agosto - Estabelece o regime de prevenção de acidentes graves que envolvem substâncias perigosas
+e de limitação das suas consequências para a saúde humana e para o ambiente, transpondo a Diretiva n.º 2012/18/UE, do Parlamento
+Europeu e do Conselho, de 4 de julho de 2012, relativa ao controlo dos perigos associados a acidentes graves que envolvem substâncias
+perigosas.
+- Decreto-Lei 62/2021, de 26 de julho- Assegura a execução, na ordem jurídica interna, do Regulamento (UE) n.º 2019/1148, sobre a
+comercialização e utilização de precursores de explosivos.
+- Decreto-Lei nº 24/2012, de 6 de Fevereiro - Consolida as prescrições mínimas em matéria de proteção dos trabalhadores contra os riscos
+para a segurança e a saúde devido à exposição a agentes químicos no trabalho e transpõe a Directiva nº 2009/161/UE, da Comissão, de
+17 de dezembro de 2009.
+Controle dos riscos inerentes aos acidentes graves (Seveso III):
+Ver secção 7.2
+Outras legislações locais:
+O receptor deve verificar a possível existência de regulamentos locais aplicáveis ao produto químico.
+15.2 AVALIAÇÃO DA SEGURANÇA QUÍMICA:
+Para esta mistura não foi feita uma avaliação da segurança química.
+SECÇÃO 16: OUTRAS INFORMAÇÕES
+16.1 TEXTO DAS FRASES E NOTAS REFERENCIADAS NAS SECÇÕES 2 E/OU 3:
+Indicações de perigo segundo o Regulamento (UE) nº 1272/2008~2021/849 (CLP), Anexo III:
+H226 Líquido e vapor inflamáveis. H290 Pode ser corrosivo para os metais. H302 Nocivo por ingestão. H312 Nocivo em contacto com a
+pele. H314 Provoca queimaduras na pele e lesões oculares graves. H318 Provoca lesões oculares graves. H332 Nocivo por inalação.
+H411 Tóxico para os organismos aquáticos com efeitos duradouros. H373 Pode afectar os rins após exposição prolongada ou repetida por
+ingestão. H361 Suspeito de afectar o nascituro por ingestão.
+AVALIAÇÃO DA INFORMAÇÃO SOBRE O PERIGO DE MISTURAS:
+Veja as seções 9.1, 11.1 e 12.1.
+RECOMENDAÇÕES ACERCA DA EVENTUAL FORMAÇÃO A MINISTRAR AOS TRABALHADORES:
+Recomenda-se que todos os funcionários que lidem com este produto realizar um treino básico em prevenção de riscos laborais, a fim de
+facilitar a compreensão e interpretação das fichas de segurança e rotulagem dos produtos.
+REFERÊNCIAS BIBLIOGRÁFICAS IMPORTANTES E FONTES DOS DADOS UTILIZADOS:
+· European Chemicals Agency: ECHA, http://echa.europa.eu/
+· Access to European Union Law, http://eur-lex.europa.eu/
+· Industrial Solvents Handbook, Ibert Mellan (Noyes Data Co., 1970).
+· Threshold Limit Values, (AGCIH, 2021).
+· Acordo europeu sobre transporte rodoviário internacional de mercadorias perigosas, (ADR 2023).
+· Código marítimo internacional de mercadorías perigosas IMDG incluindo a alteração 40-20 (IMO, 2020).
+ABREVIATURAS E SIGLAS:
+
+CELLAQUA CFA
+Pág.
+Conforme Regulamento (CE) nº 1907/2006 e Regulamento (UE) nº 2020/878
+Código : 03.006.04
+Versão: 7 Revisão: 29/05/2023
+FICHA DE DADOS DE SEGURANÇA (REACH)
+(Lingua:PT)
+Revisão precedente: 16/07/2020 Data de impressão: 29/05/2023
+14/14
+Lista de abreviaturas e siglas que poderíam ser usadas (embora não necessáriamente utilizadas) nesta ficha de dados de segurança:
+· REACH: Regulamento relativo ao registo, avaliação, autorização e restrição dos produtos químicos.
+· GHS: Sistema Globalmente Harmonizado de Classificação e Rotulagem de produtos químicos das Nações Unidas.
+· CLP: Regulamento Europeu sobre Classificação, Embalagem e Rotulagem de Substâncias e Misturas químicas.
+· EINECS: Inventário europeu das substâncias químicas existentes no mercado.
+· ELINCS: Inventário europeu das substâncias químicas notificadas.
+· CAS: Chemical Abstracts Service (Division of the American Chemical Society).
+· UVCB: Substância complexa com composição desconhecida ou variável, produtos de reacção complexa ou materiais biológicos.
+· SVHC: Substâncias de preocupação muito elevada.
+· PBT: Substâncias persistentes, bioacumuláveis e tóxicas.
+· mPmB: Substâncias muito persistentes e muito bioacumuláveis.
+· COV: Compostos Orgánicos Voláteis.
+· DNEL: Nível derivado sem efeito (REACH).
+· PNEC: Concentração previsivelmente sem efeitos (REACH).
+· LC50: Concentração letal, 50 por cento.
+· LD50: Dose letal, 50 por cento.
+· ONU: Organização das Nações Unidas.
+· ADR: Acordo europeu sobre transporte rodoviário internacional de mercadorias perigosas.
+· RID: Regulações concernentes ao trasporte ferroviário internacional de mercadorias perigosas.
+· IMDG: Código marítimo internacional de mercadorías perigosas.
+· IATA: International Air Transport Association.
+· ICAO: International Civil Aviation Organization.
+REGULAÇÕES SOBRE FICHAS DE DADOS DE SEGURANÇA:
+Ficha de Dados de Segurança em conformidade com o Artigo 31 do Regulamento (CE) nº 1907/2006 (REACH) e com o Anexo do
+Regulamento (UE) nº 2020/878.
+HISTÓRICO:                     REVISÃO:
+Versão: 6 16/07/2020
+Versão: 7 29/05/2023
+Alterações em relação a ficha de dados de segurança anterior:
+Alterações que foram introduzidas em relação à versão anterior devido à adaptação estrutural e de conteúdo da Ficha de Segurança ao
+Regulamento (UE) n.º 2020/878: Todas as secções.
+As informações contidas nesta Ficha de Dados de Segurança, tem como base o melhor do nosso conhecimento sobre o produto e as leis em vigor na
+Comunidade Europeia,dado que as condições de trabalho do utilizador estão para além do nosso conhecimento e controlo. O produto não deve ser
+usado com outro propósito senão o especificado. É sempre exclusivamente da responsabilidade do utilizador seguir todos os passos necessários de
+maneira a cumprir o estabelecido nas leis e regras vigentes.As informações constantes desta Ficha de Dados de Segurança são apenas a descrição
+dos cuidados a ter para utilizar com segurança o nosso produto: não poderão em caso algum ser consideradas como uma garantia das propriedades
+do produto.

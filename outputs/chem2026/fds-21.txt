@@ -1,0 +1,931 @@
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+1 / 13 
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa 
+1.1 Identificador do produto 
+Nome comercial 
+ 
+: MASSA CONSISTENTE IV 
+ 
+Código do produto 
+ 
+: 0893107003 
+ 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações 
+desaconselhadas 
+Utilização da substância ou 
+mistura 
+ 
+: Lubrificante 
+Produto de uso profissional 
+ 
+Restrições de utilização 
+recomendadas 
+  
+: Não aplicável 
+1.3 Identificação do fornecedor da ficha de dados de segurança 
+Companhia 
+ 
+: Würth-Portugal Técnica de Montagem, Lda. 
+Estrada Nacional 249-4 - Abrunheira 
+2710-089  Sintra 
+ 
+Telefone 
+ 
+: +351 219 157 200 
+ 
+ 
+Telefax 
+ 
+: +351 219 151 331 
+ 
+Endereço de correio 
+electrónico da pessoa 
+responsável por SDS 
+ 
+: prodsafe@wuerth.com 
+ 
+1.4 Número de telefone de emergência 
++351 800 250 250 
+ 
+ 
+SECÇÃO 2: Identificação dos perigos 
+2.1 Classificação da substância ou mistura 
+Classificação (REGULAMENTO (CE) N.o 1272/2008) 
+Não é uma substância ou uma mistura perigosa. 
+2.2 Elementos do rótulo 
+Rótulo (REGULAMENTO (CE) N.o 1272/2008) 
+Sem pictograma de perigo, sem palavra-sinal, sem аdvertência(ões) de perigo, sem 
+recomendação de prudência. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+2 / 13 
+2.3 Outros perigos 
+A substância/mistura não contém componentes considerados persistentes, bioacumuláveis e 
+tóxicos (PBT) ou muito persistentes e muito bioacumuláveis (vPvB) a níveis de 0.1% ou superior.  
+ 
+Informação ecológica: A substância/mistura não contém componentes considerados como tendo 
+propriedades desreguladoras do sistema endócrino de acordo com o artigo 57(f) do REACH ou o 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o Regulamento da Comissão (UE) 
+2018/605 a níveis de 0,1% ou superiores. 
+ 
+Informação toxicológica: A substância/mistura não contém componentes considerados como 
+tendo propriedades desreguladoras do sistema endócrino de acordo com o artigo 57(f) do 
+REACH ou o Regulamento Delegado da Comissão (UE) 2017/2100 ou o Regulamento da 
+Comissão (UE) 2018/605 a níveis de 0,1% ou superiores. 
+ 
+SECÇÃO 3: Composição/informação sobre os componentes 
+3.2 Misturas 
+Componentes 
+Observações :  Nenhum ingrediente perigoso. 
+ 
+ 
+SECÇÃO 4: Medidas de primeiros socorros 
+4.1 Descrição das medidas de emergência 
+Protecção dos socorristas 
+ 
+:  Não são necessárias quaisquer medidas específicas de 
+prevenção para prestadores de primeiros socorros. 
+ 
+Em caso de inalação 
+ 
+:  Se for inalado, levar para o ar puro. 
+Procure assistência médica se verificar a ocorrência de 
+sintomas. 
+ 
+Em caso de contacto com a 
+pele 
+ 
+:  Lavar com água e sabão, como precaução. 
+Procure assistência médica se verificar a ocorrência de 
+sintomas. 
+ 
+Se entrar em contacto com 
+os olhos 
+ 
+:  Lavar os olhos com água como precaução. 
+Procure assistência médica caso a irritação desenvolva ou 
+persista. 
+ 
+Em caso de ingestão 
+ 
+:  Se engolido, NÃO provocar vómitos. 
+Procure assistência médica se verificar a ocorrência de 
+sintomas. 
+Enxagúe minuciosamente a boca com água. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados 
+Nenhum conhecido. 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários  
+Tratamento : Trate sintomaticamente e com apoio. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+3 / 13 
+ 
+SECÇÃO 5: Medidas de combate a incêndios 
+5.1 Meios de extinção 
+Meios de extinção 
+adequados 
+ 
+:  Pulverização de água 
+Espuma resistente ao álcool 
+Dióxido de carbono (CO2) 
+Substância química seca 
+ 
+Meios de extinção 
+inadequados 
+ 
+:  Jacto de água de grande volume 
+ 
+5.2 Perigos especiais decorrentes da substância ou mistura 
+Perigos específicos para 
+combate a incêndios 
+ 
+:  A exposição aos produtos da combustão pode se constituir 
+num risco para a saúde. 
+ 
+Produtos de combustão 
+perigosos 
+ 
+:  Óxidos de carbono 
+Óxidos de metal 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios 
+Equipamento especial de 
+proteção a utilizar pelo 
+pessoal de combate a 
+incêndio 
+ 
+:  Usar equipamento de respiração autónomo para combate a 
+incêndios, se necessário. Usar equipamento de proteção 
+individual.  
+ 
+Métodos específicos de 
+extinção  
+: Adapte as medidas de combate a incêndios às condições do 
+local e ao ambiente envolvente. 
+Os jatos de água podem ser utilizados para arrefecer os 
+contentores fechados. 
+Se seguro, remover os recipientes não danificados da área de 
+fogo. 
+Evacuar a zona.  
+SECÇÃO 6: Medidas em caso de fuga acidental 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência 
+Precauções individuais 
+ 
+:  Seguir indicação de manipulação segura (ver secção 7) e 
+recomendações para equipamento de protecção pessoal (ver 
+secção 8). 
+ 
+6.2 Precauções a nível ambiental 
+Precauções a nível 
+ambiental 
+ 
+:  Evitar a libertação para o ambiente. 
+Prevenir dispersão ou derramamento, se seguro. 
+Conter e eliminar a água de lavagem contaminada. 
+As autoridades locais devem ser avisadas se uma quantidade 
+importante de derramamento não pode ser controlada. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+4 / 13 
+6.3 Métodos e materiais de confinamento e limpeza 
+Métodos de limpeza 
+ 
+:  Amontar e varrer, ou aspirar o derramamento e apanhar num 
+contentor adequado para a destruição. 
+Podem ser aplicados regulamentos locais ou nacionais às 
+libertações e deve eliminar o material, assim como os 
+materiais e os itens usados na limpeza. Deverá determinar 
+que normas são aplicáveis. 
+As secções 13 e 15 deste SDS oferecem informações 
+referentes a alguns requisitos locais ou nacionais. 
+ 
+6.4 Remissão para outras secções 
+Ver seções: 7, 8, 11, 12 e 13. 
+SECÇÃO 7: Manuseamento e armazenagem 
+7.1 Precauções para um manuseamento seguro 
+Medidas de carácter técnico  : Consulte as medidas de Engenharia na secção de 
+CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL.  
+Ventilação local/total  : Só utilizar com uma ventilação adequada.  
+Informação para um 
+manuseamento seguro  
+: Manusear de acordo com as boas práticas industriais de 
+higiene e segurança, com base nos resultados da avaliação 
+da exposição no local de trabalho 
+Deve ter cuidado para prevenir vazamentos, resíduos e 
+minimizar a libertação para o meio ambiente.  
+Medidas de higiene  :  Se a exposição a produtos químicos for provável durante o 
+uso típico, forneça sistemas de limpeza para os olhos e 
+chuveiros de segurança nas imediações do local de trabalho. 
+Não comer, beber ou fumar durante da utilização. Lavar o 
+vestuário contaminado antes de voltar a usá-lo.   
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades  
+Requisitos para áreas de 
+armazenagem e recipientes 
+ 
+:  Guardar dentro de contentores correctamente etiquetados. 
+Armazenar de acordo com as regulações particulares 
+nacionais.  
+ 
+Recomendações para 
+armazenagem conjunta 
+ 
+: Não armazene com os seguintes tipos de produto: 
+Agentes oxidantes fortes 
+ 
+Outras informações sobre a 
+estabilidade de 
+armazenamento  
+:  Não se decompõe se armazenado e utilizado de acordo com 
+as instruções. 
+7.3 Utilização(ões) final(is) específica(s) 
+Utilizações específicas 
+ 
+:  Dados não disponíveis 
+ 
+SECÇÃO 8: Controlo da exposição/ Proteção individual 
+8.1 Parâmetros de controlo 
+Limites de Exposição Ocupacional 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+5 / 13 
+Componentes No. CAS tipo de valor 
+(Forma de 
+exposição) 
+Parâmetros de controlo Bases 
+Petróleo branco 
+(petróleo) 
+8042-47-5 VLE-MP (Fração 
+inalável) 
+5 mg/m³ PT OEL 
+ 
+Informações adicionais: Agente não classificável como carcinogénico no 
+Homem. 
+ 
+Nível derivado de exposição sem efeitos (DNEL) de acordo com o Regulamento (CE) No. 
+1907/2006 
+Nome da substância Utilização final Vias de 
+exposição 
+Possíveis danos 
+para a saúde 
+Valor 
+Carbonato de cálcio Trabalhadores Inalação Longo prazo - efeitos 
+sistémicos 
+6,36 mg/m³ 
+ 
+Consumidores Ingestão Agudo - efeitos 
+sistémicos 
+6,1 mg/kg 
+bw/dia  
+Consumidores Inalação Longo prazo - efeitos 
+sistémicos 
+1,06 mg/m³ 
+ 
+Consumidores Ingestão Longo prazo - efeitos 
+sistémicos 
+6,1 mg/kg 
+bw/dia 
+Concentração previsivelmente sem efeitos (PNEC) de acordo com o Regulamento (CE) No. 
+1907/2006 
+Nome da substância Compartimento Ambiental Valor 
+Carbonato de cálcio Estação de Patamento de esgoto 100 mg/l 
+8.2 Controlo da exposição 
+Controlos técnicos adequados 
+Introduzir ventilação adequada, especialmente em áreas fechadas. 
+Minimizar as concentrações de exposição no local de trabalho. 
+Medidas de proteção individual, nomeadamente equipamentos de proteção individ ual 
+(EPI) 
+Proteção ocular/ facial :  Por favor, siga todos os requisitos locais/nacionais aplicáveis 
+ao seleccionar medidas de proteçcão para um local de 
+trabalho específico.   
+  Vestir o equipamento individual de protecção seguinte: 
+Óculos de segurança 
+Usar sempre potecção para os olhos quando puder ocorrer 
+um contato inadvertido dos olhos com o produto. 
+O equipamento deverá estar de acordo com NP EN 166  
+Protecção das mãos 
+ 
+Material : Borracha nitrílica 
+Pausa através do tempo : 480 min 
+Espessura das luvas : 0,45 mm 
+Orientações : O equipamento deverá estar de acordo com NP EN 374 
+ 
+Observações  : O tipo das luvas protectoras contra produtos químicos devem 
+ser seleccionadas de acordo com a concentração e 
+quantidade da substância perigosa e especificamente para o 
+local de trabalho. Aconselha-se acordar com o fabricante das 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+6 / 13 
+luvas a resistência das luvas protectoras face a produtos 
+químicos para aplicações específicas. Lavar as mãos antes 
+das pausas, e no fim do dia de trabalho.   
+Proteção do corpo e da pele :  A pele deve ser lavada depois do contacto.  
+Protecção respiratória : Se a ventilação de exaustão local adequada não estiver 
+disponível ou a avaliação da exposição demonstrar 
+exposições fora das diretrizes recomendadas, use proteção 
+respiratória. 
+O filtro deve estar em conformidade com a NP EN 14387  
+Filtro tipo : Combinado sob a forma de particulados e vapor orgânico (A-
+P)  
+SECÇÃO 9: Propriedades físico-químicas 
+9.1 Informações sobre propriedades físicas e químicas de base 
+Estado físico 
+  
+: sólido 
+  
+Forma 
+  
+: Sólido pastoso 
+  
+Cor 
+  
+:  Branco a amarelo 
+  
+Odor 
+  
+:  doce 
+  
+Limiar olfativo 
+  
+:  Dados não disponíveis  
+ 
+Ponto de fusão/ponto de 
+congelação 
+  
+: Dados não disponíveis  
+ 
+Ponto de ebulição inicial e 
+intervalo de ebulição 
+  
+: > 200 °C 
+ 
+Inflamabilidade (sólido, gás) : Não classificado como um perigo de inflamação 
+ 
+Limite superior de explosão / 
+Limite de inflamabilidade 
+superior 
+ 
+ 
+: Não aplicável  
+ 
+Limite inferior de explosão / 
+Limite de inflamabilidade 
+inferior 
+ 
+ 
+: Não aplicável  
+ 
+Ponto de inflamação 
+  
+: > 100 °C 
+Método: ISO 3679 
+ 
+Temperatura de auto-ignição 
+  
+: Não aplicável  
+ 
+Temperatura de 
+decomposição 
+  
+:  Dados não disponíveis  
+ 
+pH : a substância/mistura não é solúvel (na água)  
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+7 / 13 
+   
+Viscosidade 
+Viscosidade, cinemático 
+  
+: 350 mm²/s (40 °C) 
+Método: ISO 3104 
+ 
+Solubilidade(s) 
+Hidrossolubilidade 
+  
+: solúvel  
+ 
+ 
+Coeficiente de partição: n-
+octanol/água 
+  
+: Não aplicável  
+ 
+Pressão de vapor 
+  
+: Não aplicável  
+ 
+Densidade relativa 
+  
+: Dados não disponíveis  
+ 
+Densidade 
+  
+: 0,875 g/cm³ (20 °C) 
+Método: DIN 51757 
+ 
+Densidade relativa do vapor 
+  
+: Não aplicável  
+ 
+Caraterísticas da partícula 
+Tamanho da partícula 
+  
+: Dados não disponíveis 
+ 
+9.2 Outras informações 
+Explosivos 
+  
+: Não explosivo 
+ 
+Propriedades comburentes 
+  
+: A substância ou a mistura não está classificada como 
+oxidante. 
+ 
+Taxa de evaporação 
+  
+:  Não aplicável  
+ 
+SECÇÃO 10: Estabilidade e reatividade 
+10.1 Reatividade 
+Não classificado como uma reactividade perigosa. 
+10.2 Estabilidade química 
+Estável em condições normais. 
+10.3 Possibilidade de reações perigosas 
+Reações perigosas 
+ 
+:  Pode reagir com agentes oxidantes fortes. 
+10.4 Condições a evitar 
+Condições a evitar 
+ 
+: Nenhum conhecido. 
+ 
+10.5 Materiais incompatíveis 
+Materiais a evitar 
+ 
+:  Oxidantes 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+8 / 13 
+10.6 Produtos de decomposição perigosos 
+Nenhuns produtos de decomposição conhecidos. 
+SECÇÃO 11: Informação toxicológica 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.o 
+1272/2008 
+Informações sobre vias de 
+exposição prováveis  
+: Contacto com a pele 
+Ingestão 
+Contacto ocular  
+Toxicidade aguda 
+Não classificado com base nas informações disponíveis. 
+Corrosão/irritação cutânea 
+Não classificado com base nas informações disponíveis. 
+Lesões oculares graves/irritação ocular 
+Não classificado com base nas informações disponíveis. 
+Sensibilização respiratória ou cutânea 
+Sensibilização da pele  
+Não classificado com base nas informações disponíveis. 
+Sensibilização respiratória  
+Não classificado com base nas informações disponíveis. 
+Mutagenicidade em células germinativas 
+Não classificado com base nas informações disponíveis. 
+Carcinogenicidade 
+Não classificado com base nas informações disponíveis. 
+Toxicidade reprodutiva 
+Não classificado com base nas informações disponíveis. 
+Toxicidade para órgãos-alvo específicos (STOT) - exposição única 
+Não classificado com base nas informações disponíveis. 
+Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida 
+Não classificado com base nas informações disponíveis. 
+Perigo de aspiração 
+Não classificado com base nas informações disponíveis. 
+11.2 Informações sobre outros perigos 
+Propriedades desreguladoras do sistema endócrino 
+Não classificado com base nas informações disponíveis. 
+Produto: 
+Avaliação : A substância/mistura não contém componentes considerados 
+como tendo propriedades desreguladoras do sistema 
+endócrino de acordo com o artigo 57(f) do REACH ou o 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+9 / 13 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o 
+Regulamento da Comissão (UE) 2018/605 a níveis de 0,1% 
+ou superiores. 
+ 
+SECÇÃO 12: Informação ecológica 
+12.1 Toxicidade 
+Dados não disponíveis 
+12.2 Persistência e degradabilidade 
+Dados não disponíveis 
+12.3 Potencial de bioacumulação 
+Dados não disponíveis 
+12.4 Mobilidade no solo 
+Dados não disponíveis 
+12.5 Resultados da avaliação PBT e mPmB 
+Produto: 
+Avaliação  : A substância/mistura não contém componentes considerados 
+persistentes, bioacumuláveis e tóxicos (PBT) ou muito 
+persistentes e muito bioacumuláveis (vPvB) a níveis de 0.1% 
+ou superior. 
+ 
+12.6 Propriedades desreguladoras do sistema endócrino 
+Produto: 
+Avaliação : A substância/mistura não contém componentes considerados 
+como tendo propriedades desreguladoras do sistema 
+endócrino de acordo com o artigo 57(f) do REACH ou o 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o 
+Regulamento da Comissão (UE) 2018/605 a níveis de 0,1% 
+ou superiores. 
+ 
+12.7 Outros efeitos adversos 
+Dados não disponíveis 
+ 
+SECÇÃO 13: Considerações relativas à eliminação 
+13.1 Métodos de tratamento de resíduos 
+Produto :  Eliminar de acordo com os regulamentos locais. 
+De acordo com o Catálogo Europeu dos Resíduos, os 
+Códigos dos Resíduos não são específicos ao produto, mas 
+específicos à aplicação. 
+Os códigos dos resíduos devem ser atribuídos pelo usuário, 
+de preferência em discussão com as autoridades 
+responsáveis pela destruição dos resíduos. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+10 / 13 
+Não deitar os resíduos para o esgoto.  
+Embalagens contaminadas :  Os contentores vazios devem ser levados para um local 
+aprovado para a manipulação de resíduos para a reciclagem 
+ou a destruição. 
+Se não especificado de outra forma: Eliminar como produto 
+não utilizado.  
+Número de eliminação de 
+resíduos 
+:  Os códigos dos resíduos seguintes são somente sugestões: 
+ 
+   produto usado 
+12 01 12*, ceras e gorduras usadas 
+ 
+   produto não usado 
+12 01 12*, ceras e gorduras usadas 
+ 
+   embalagens contaminadas 
+15 01 10*, embalagens contendo ou contaminadas por 
+resíduos de substâncias perigosas 
+ 
+SECÇÃO 14: Informações relativas ao transporte 
+14.1 Número ONU ou número de ID 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA : Não regulado como mercadoria perigosa 
+14.2 Designação oficial de transporte da ONU 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA : Não regulado como mercadoria perigosa 
+ 
+14.3 Classes de perigo para efeitos de transporte 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA : Não regulado como mercadoria perigosa 
+14.4 Grupo de embalagem 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+11 / 13 
+ADN : Não regulado como mercadoria perigosa 
+ADR : Não regulado como mercadoria perigosa 
+RID : Não regulado como mercadoria perigosa 
+IMDG : Não regulado como mercadoria perigosa 
+IATA (Navio de carga) : Não regulado como mercadoria perigosa 
+IATA (Passageiro) : Não regulado como mercadoria perigosa 
+14.5 Perigos para o ambiente 
+Não regulado como mercadoria perigosa 
+14.6 Precauções especiais para o utilizador 
+Não aplicável 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI  
+Observações :  Não aplicável ao produto tal como fornecido. 
+ 
+SECÇÃO 15: Informação sobre regulamentação 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, 
+segurança e ambiente 
+REACH - Restrições aplicáveis ao fabrico, à colocação 
+no mercado e à utilização de determinadas substâncias 
+e misturas perigosas e de certos artigos perigosos 
+(Anexo XVII)  
+: Não aplicável 
+REACH - Lista de substâncias que suscitam elevada 
+preocupação candidatas a autorização (artigo 59).  
+: Não aplicável 
+Regulamentação (EC) No 2024/590 sobre substâncias 
+que empobrecem a camada de ozônio  
+: Não aplicável 
+Regulamento (UE) 2019/1021 relativo a poluentes 
+orgânicos persistentes (reformulação)  
+: Não aplicável 
+Regulamentação (UE) No 649/2012 do Parlamento 
+europeu e o Conselho sobre a importação e exportação 
+de produtos químicos perigosos  
+: Não aplicável 
+REACH - Lista de substâncias sujeitas à autorização 
+(Anexo XIV)  
+: Não aplicável 
+Seveso III: Diretiva 2012/18/UE do Parlamento Europeu e do Conselho relativa ao controlo dos 
+perigos associados a acidentes graves que envolvem substâncias perigosas.    
+Não aplicável 
+ 
+Componentes orgânicos 
+voláteis. 
+: Diretiva 2010/75/UE do Parlamento Europeu e do Conselho, 
+de 24 de Novembro de 2010, relativa às emissões industriais 
+e exploração pecuária (prevenção e controlo integrados da 
+poluição) 
+Teor dos componentes orgânicos voláteis: 0 %, 0 g/l 
+Observações: Conteúdo VOC excluindo a água 
+ 
+15.2 Avaliação da segurança química 
+Uma Avaliação de Segurança de Produtos Químicos não foi executada. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+12 / 13 
+ 
+SECÇÃO 16: Outras informações 
+Outras informações  :  Os itens onde foram feitas alterações à versão anterior são 
+destacados no corpo deste documento por duas linhas 
+verticais. 
+ 
+Texto completo das outras siglas 
+PT OEL : Segurança e Saúde no Trabalho - Valores limite de exposição 
+profissional a agentes químicos 
+PT OEL / VLE-MP : Valor limite de exposição-media ponderada 
+ 
+ADN - Acordo europeu relativo ao transporte internacional de mercadorias perigosas por via 
+navegável interior; ADR - Acordo Relativo ao Transporte Internacional de Mercadorias Perigosas 
+por Estrada; AIIC - Inventário Australiano de Químicos Industriais; AS TM - Sociedade Americana 
+para a Testagem de Materiais; bw - Peso corporal; CLP - Regulamento relativo à classificação, 
+rotulagem e embalagem; Regulamento (CE) No 1272/2008; CMR - Cancerígeno, mutagénico ou 
+tóxico para a reprodução; DIN - Norma do Instituto  Alemão de Normalização; DSL - Lista de 
+Substâncias Domésticas (Canadá); ECHA - Agência Europeia de Produtos Químicos; EC -
+Number - Número da Comunidade Europeia; ECx - Concentração associada pela resposta de 
+x%; ELx - Taxa de carregamento associada à respo sta de x%; EmS - Procedimento de 
+Emergência; ENCS - Substâncias Químicas Novas e Existentes (Japão); ErCx - Concentração 
+associada à resposta de taxa de crescimento de x%; GHS - Sistema Globalmente Harmonizado; 
+GLP - Boas Práticas de Laboratório; IARC - Agência Internacional de Pesquisa sobre Câncer; 
+IATA - Associação Internacional do Transporte Aéreo; IBC - Código Internacional para a 
+Construção e Equipamento de Navios que Transportam Substâncias Químicas Perigosas a 
+Granel; IC50 - concentração média máxim a inibitória; ICAO - Organização Internacional da 
+Aviação Civil; IECSC - Relação de Substâncias Químicas Existentes na China; IMDG - Código 
+Marítimo Internacional de Mercadorias Perigosas; IMO - Organização Marítima Internacional; 
+ISHL - Lei de Saúde e Seg urança Industrial (Japão); ISO - Organização Internacional para a 
+Padronização; KECI - Relação de Químicos Existentes na Coreia; LC50 - Concentração Letal 
+para 50% de uma população de teste; LD50 - Dose Letal para 50% de uma População de teste 
+(Dose Letal Média); MARPOL - Convenção Internacional para a Prevenção de Poluição dos 
+Navios; n.o.s. - N.S.A.: Não especificadas de outro modo. NO(A)EC - Concentração máxima que 
+não éobservado nenhum efeito (adverso); NO(A)EL - Nivel máximo que não é observado 
+nenhum efeito (adverso); NOELR - Taxa de Carregamento que não éobservado nenhum efeito; 
+NZIoC - Relação de Químicos da Nova Zelândia; OECD - Organização para a Cooperação e o 
+Desenvolvimento Econômico; OPPTS - Gabinete de Segurança Química e Prevenção à 
+Poluição; PBT - Substância Persistente, Bioacumulativa e Tóxica; PICCS - Relação de 
+Substâncias Químicas e Químicos das Filipinas; (Q)SAR - Relações (Quantitativas) entre 
+Estrutura Química e Atividade Biológica ; REACH - Regulamento (CE) No 1907/2006 do 
+Parlamento Europeu e do Concelho a propósito do Registro, da Avaliação, Autorização, e 
+Restrição de Químicos; RID - Regulamento relativo ao transporte internacional ferroviário de 
+mercadorias perigosas; SADT - Temperatura de Decomposição Autoacelerada; SDS - Ficha de 
+dados de segurança; SVHC - substância que suscita elevada preocupação; TCSI - Relação de 
+Substâncias Químicas de Taiwan; TECI - Inventário de produtos químicos existentes na 
+Tailândia;TRGS - Regra Técnica para Substâncias Perigosas; TSCA - Lei de Controle  de 
+Substâncias Tóxicas (Estados Unidos); UN - Nações Unidas; vPvB - Muito Persistentes e Muito 
+Bioacumulativos 
+Informações adicionais 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MASSA CONSISTENTE IV 
+ 
+ 
+ 
+Versão  
+5.0 
+Data de revisão:  
+26.05.2026 
+Número SDS:  
+10676517-00017 
+Data de última emissão: 05.11.2025 
+Data da primeira emissão: 06.11.2013 
+ 
+13 / 13 
+Fontes dos principais dados 
+utilizados na elaboração da 
+ficha  
+:  Dados técnicos internos, dados de matéria-prima SDSs, 
+resultados da pesquisa da OCDE eChem Portal e Agência 
+Europeia de Produtos Químicos, http://echa.europa.eu/ 
+ 
+Os itens onde foram feitas alterações à versão anterior são destacados no corpo deste 
+documento por duas linhas verticais. 
+A informação fornecida nesta Ficha de Dados de Segurança é a correcta, para o melhor do 
+nosso conhecimento, informação e crença na data da sua publicação. A informação destina-se 
+apenas como orientação para manusear, usar, processar, armazenar, transportar, eliminar e 
+publicar e não deve ser considerada como uma garantia ou especificação de qualquer tipo de 
+qualidade. A informação fornecida refere-se apenas ao material específico identificado no topo 
+deste SDS e pode não ser válida, quando o material do SDS é usado em combinação com 
+outros materiais, ou em qualquer processo, excepto se especificado no texto. Os uti lizadores dos 
+materiais devem analisar as informações e recomendações no contexto específico em termos da 
+forma pretendida de manuseio, uso, processamento e armazenamento, incluindo uma avaliação 
+da adequação do material SDS no produto final do utilizador, se aplicável. 
+ 
+PT / PT 
+ 
+ 

@@ -1,0 +1,794 @@
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 1 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+SECÇÃO 1: IDENTIFICAÇÃO DA SUBSTÂNCIA/MISTURA E DA SOCIEDADE/ EMPRESA. 
+ 
+1.1 Identificador do produto. 
+ 
+Nome do produto: AGORA ALLURE  
+UFI:  71D0-R0XE-J00Y-EMTH 
+ 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações desaconselhadas. 
+ 
+Ambientador Fragrância. 
+ 
+Usos não aconselhados: 
+Usos diferentes aos aconselhados. 
+ 
+1.3 Identificação do fornecedor da ficha de dados de segurança. 
+ 
+Empresa: RACRISA, S.L. 
+Endereço: C/ Dels Obrers, 54. Pol. Ind. Les Valletes. 
+População: 46192 Montserrrat 
+Distrito: VALENCIA (ESPAÑA) 
+Telefone: 961 533 000 
+Fax: 962 986 147 
+E-mail: dpto.tecnico@racrisa.com 
+Web: www.racrisa.com 
+ 
+1.4 Número de telefone de emergência: 915 620 420 (Disponível 24h) 
+Em caso de intoxicação contactar o Centro de Informação Antivenenos (CIAV) (+351) 800 250 250. 
+Atendimento médico 24 horas por dia, 7 dias por semana. 
+ 
+SECÇÃO 2: IDENTIFICAÇÃO DOS PERIGOS. 
+ 
+2.1 Classificação da substância ou mistura. 
+Segundo o Regulamento (EU)  No 1272/2008: 
+Flam. Liq. 3 : Líquido e vapor inflamáveis. 
+ 
+ 
+2.2 Elementos do rótulo.  . 
+. 
+Rótulo de acordo com o Regulamento (EU)  No 1272/2008: 
+Pictogramas: 
+ 
+     
+Palavras-sinal: 
+Atenção 
+Advertências de perigo: 
+H226  Líquido e vapor inflamáveis. 
+ 
+Recomendações de prudência: 
+P210  Manter afastado do calor, superfícies quentes , faíscas, chamas abertas e outras fontes de ignição. Não fumar. 
+P233  Manter o recipiente bem fechado. 
+P303+P361+P353 SE ENTRAR EM CONTACTO COM A PELE (ou  o cabelo): Retirar imediatamente toda a roupa 
+contaminada. Enxaguar a pele com água [ou tomar um duche]. 
+P370+P378 Em caso de incêndio: para a extinção util izar espuma, pó, dióxido de carbono o água pulverizada. 
+P403+P235 Armazenar em local bem ventilado. Conserv ar em ambiente fresco. 
+P501  Eliminar o conteúdo/recipiente según a normat iva local vigente. 
+ 
+Manter fora do alcance das crianças. 
+Em caso de acidente consultar o Serviço de Informação Toxicológica, telefone ... 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 2 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Advertências de perigo adicional: 
+EUH208 Contém (R)-p-menta-1,8-dieno; D-limoneno. Po de provocar uma reacção  alérgica. 
+EUH208 Contém Linalol; 3,7-dimetil-1,6- octadien-3- ol; dl-linalol. Pode provocar uma reacção  alérgica. 
+ 
+ 
+2.3 Outros perigos. 
+ 
+A mistura não contém substâncias classificadas como PBT. 
+A mistura não contém substâncias classificadas como mPmB. 
+A mistura não contém substâncias com propriedades desreguladoras do sistema endócrino. 
+ 
+O produto pode ter os seguintes riscos adicionais: 
+ Mistura que não atende aos critérios PBT ou mPmB. 
+ 
+SECÇÃO 3: COMPOSIÇÃO/INFORMAÇÃO SOBRE OS COMPONENTES. 
+ 
+3.1 Substâncias. 
+Não Aplicável. 
+ 
+3.2 Misturas. 
+Substâncias que representam um perigo para a saúde ou o meio ambiente de acordo com a Regulamento (CE)  No. 1272/2008, 
+têm atribuído um limite de exposição comunitário no lugar de trabalho, estão classificadas como PBT/ mPmB ou incluídas na Lista 
+de Candidatos: 
+ 
+Identificadores Nome Concentração 
+(*)Classificação -Regulamento 
+1272/2008 
+Classificação 
+Limite de 
+concentração 
+específico e a 
+Estimativa da 
+Toxicidade Aguda 
+N. Indice: 603-002-
+00-5 
+N. CAS: 64-17-5 
+N. CE: 200-578-6 
+N. registo: 01-
+2119457610-43-XXXX 
+[2] etanol, álcool etílico 50 - 74.99 % Flam. Liq. 2, H225 - 
+N. Indice: 601-029-
+00-7 
+N. CAS: 5989-27-5 
+N. CE: 227-813-5 
+N. registo: 01-
+2119529223-47-XXXX 
+(R)-p-menta-1,8-dieno, D-limoneno 0.1 - 0.249 % 
+Aquatic Acute 
+1, H400 - 
+Aquatic Chronic 
+1, H410 - Flam. 
+Liq. 3, H226 - 
+Skin Irrit. 2, 
+H315 - Skin 
+Sens. 1, H317 
+- 
+N. Indice: 603-235-
+00-2 
+N. CAS: 78-70-6 
+N. CE: 201-134-4 
+N. registo: 01-
+2119474016-42-XXXX 
+Linalol, 3,7-dimetil-1,6- octadien-3-ol, dl-linalol 0.1 - 0.99 % Skin Sens. 1B, H317 - 
+(*)O texto completo das frases H é pormenorizado na secção 16 desta Ficha de Segurança. 
+[2] Substância com limite nacional de exposição no local de trabalho (ver secção 8.1).   
+ 
+SECÇÃO 4: MEDIDAS DE PRIMEIROS SOCORROS. 
+ 
+4.1 Descrição das medidas de emergência. 
+Nos casos de dúvida, ou quando persistirem os sinto mas de mal-estar, solicitar atenção médica. Não adm inistrar nunca nada por 
+via oral a pessoas que se encontrem inconscientes. 
+ 
+Inalação. 
+Situar o acidentado ao ar livre, mantê-lo quente e em repouso, se a respiração for irregular ou se det iver, praticar respiração 
+artificial. 
+ 
+Contacto com os olhos. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 3 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Retirar as lentes de contato, se levar e resultar f ácil de fazer. Lavar abundantemente os olhos com ág ua limpa e fresca durante, 
+pelo menos, 10 minutos, puxando para cima das pálpebras e procurar assistência médica. 
+ 
+Contacto com a pele. 
+Tirar a roupa contaminada. Lavar a pele vigorosamen te com água e sabão ou um limpador de pele adequado . NUNCA utilizar 
+dissolventes ou diluentes. 
+ 
+Ingestão. 
+Se acidentalmente foi ingerido, procurar imediatamente atenção médica. Mantê-lo em repouso. NUNCA provocar o vômito. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados. 
+Não são conhecidos efeitos agudos e tardios da exposição ao produto. 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários. 
+Nos casos de dúvida, ou quando persistirem os sinto mas de mal-estar, solicitar atenção médica. Não adm inistrar nunca nada por 
+via oral a pessoas que se encontrem inconscientes. 
+ 
+ 
+SECÇÃO 5: MEDIDAS DE COMBATE A INCÊNDIOS. 
+ 
+Produto inflamável, devem ser tomadas as medidas de  prevenção necessárias para se evitarem riscos; em caso de incêndio, 
+recomendam-se as medidas seguintes: 
+ 
+5.1 Meios de extinção. 
+Meios de extinção adequados: 
+Pó extintor ou CO2. Em caso de incêndios mais graves também espuma resistente ao álcool e água pulverizada. 
+ 
+Meios de extinção inadequados: 
+Não usar para a extinção jato direto de água. Em presença de tensão elétrica não é aceitável utilizar água ou espuma como meio 
+de extinção. 
+ 
+5.2 Perigos especiais decorrentes da substância ou mistura. 
+Riscos especiais. 
+A exposição aos produtos de combustão ou decomposição pode ser prejudicial para a saúde. 
+ 
+Durante um incêndio e dependendo de sua magnitude podem chegar a produzir-se: 
+ - Vapores ou gases inflamáveis. 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios. 
+Refrigerar com água os tanques, cisternas ou recipi entes próximos à fonte de calor ou fogo. Ter em con ta a direção do vento. 
+Evitar que os produtos utilizados na luta contra in cêndio passem a esgotos, sumidouros ou cursos de ág ua. Seguir as instruções 
+descritas no plano ou planos de emergência e evacuação contra incêndios se estiver disponível. 
+ 
+Equipamento de proteção contra incêndios. 
+Segundo a magnitude do incêndio, pode ser necessári o o uso de roupas de proteção contra o calor, equip amento respiratório 
+autónomo, luvas, óculos protetores ou máscaras faci ais e botas. Durante a extinção e dependendo da mag nitude e proximidade 
+ao fogo podem ser necessários equipamentos de prote ção adicionais como luvas de proteção química, roup as termorreflectantes 
+ou roupas estancadas a gases. 
+ 
+ 
+SECÇÃO 6: MEDIDAS EM CASO DE FUGA ACIDENTAL. 
+ 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência. 
+Eliminar os possíveis pontos de ignição e ventilar a zona. Não fumar. Evitar respirar os vapores. Para  controlo de exposição e 
+medidas de proteção individual, ver secção 8. 
+ 
+6.2 Precauções a nível ambiental. 
+Produto não classificado como perigoso para o meio ambiente; na medida do possível, evite  qualquer derrame. 
+ 
+6.3 Métodos e materiais de confinamento e limpeza. 
+Conter e recolher o derrame com material absorvente  inerte (terra, areia, vermiculita, terra de diatom áceas...) e limpe a área 
+imediatamente com um descontaminante adequado. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 4 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Deposite os resíduos em recipientes fechados e adeq uados para a eliminação, de acordo com os regulamen tos locais e nacionais 
+(ver secção 13). 
+ 
+6.4 Remissão para outras secções. 
+Para controlo de exposição e medidas de proteção individual, ver secção 8. 
+Para a posterior eliminação dos resíduos, seguir as recomendações da secção 13. 
+ 
+ 
+SECÇÃO 7: MANUSEAMENTO E ARMAZENAGEM. 
+ 
+7.1 Precauções para um manuseamento seguro. 
+Os vapores são mais pesados do que o ar e podem esp alhar-se pelo chão. Podem formar misturas explosiva s com o ar. Evitar a 
+criação de concentrações do vapor no ar, inflamávei s ou explosivas; evitar concentrações do vapor supe riores aos limites de 
+exposição durante o trabalho. O produto apenas deve  ser utilizado em zonas nas quais se tenham elimina do qualquer chama 
+desprotegida e outros pontos de ignição. O equipamento eléctrico há-de estar protegido segundo as normas adequadas. 
+O produto pode carregar-se electrostaticamente: uti lizar sempre tomadas de terra quando o produto for transvasado. Os 
+operários devem usar calçado e roupa anti-estáticos, e os chãos devem ser condutores. 
+Manter o recipiente bem fechado, isolado de fontes de calor, faíscas e fogo. Não serão utilizadas ferr amentas que puderem 
+produzir faíscas. 
+Evitar que o produto entre em contacto com a pele e  olhos. Evitar a inalação de vapor e as névoas que se produzem durante o 
+pulverizado. Para a proteção pessoal, ver secção 8. 
+Na zona de aplicação deve ser proibido fumar, comer e beber. 
+Cumprir com a legislação sobre segurança e higiene no trabalho. 
+Não utilizar nunca pressão para esvaziar os recipie ntes, não são recipientes resistentes à pressão. Co nservar o produto em 
+recipientes de um material idêntico ao original. 
+ 
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades. 
+Armazenar segundo a legislação local. Observar as i ndicações da etiqueta. Armazenar os recipientes ent re 5 e 25 ºC, num local 
+seco e bem ventilado, longe de fontes de calor e da  luz solar directa. Manter longe de pontos de igniç ão. Manter longe de 
+agentes oxidantes e de materiais fortemente ácidos ou alcalinos. Não fumar. Evitar a entrada a pessoas  não autorizadas. Depois 
+de ter aberto os recipientes, estes devem ser fechados de novo com cuidado, e colocados verticalmente para evitar derrames. 
+ 
+O produto não está afetado pela Directiva 2012/18/UE (SEVESO III). 
+ 
+7.3 Utilizações finais específicas. 
+Ambientador Fragrância. USO PROFISSIONAL. 
+ 
+ 
+SECÇÃO 8: CONTROLO DA EXPOSIÇÃO/PROTEÇÃO INDIVIDUAL. 
+ 
+8.1 Parâmetros de controlo. 
+ 
+Limite de exposição durante o trabalho para: 
+ 
+Nome N. CAS País Valor-limite ppm mg/m3 
+etanol, álcool etílico 64-17-5 Portugal [1] 
+Oito horas     
+Curta duração 1000   
+[1] De acordo com a Norma Portuguesa 1796 adotou pelo Instituto português de qualidade. 
+ 
+ O produto NÃO contém substâncias com Valores Biológicos Limite. 
+Níveis de concentração DNEL/DMEL: 
+ 
+Nome DNEL/DMEL Tipo Valor 
+etanol, álcool etílico 
+N. CAS: 64-17-5 
+N. CE: 200-578-6 
+DNEL 
+(Trabalhadores) 
+Inalação, Crónico, Efeitos sistémicos 950 
+(mg/m³) 
+(R)-p-menta-1,8-dieno, D-limoneno 
+N. CAS: 5989-27-5 
+N. CE: 227-813-5 
+DNEL 
+(Trabalhadores) 
+Inalação, Crónico, Efeitos sistémicos 33,3 
+(mg/m³) 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 5 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+DNEL: Derived No Effect Level, (nível sem efeito ob tido) nível de exposição à substância por baixo do qual não são previstos  
+efeitos adversos. 
+DMEL: Derived Minimal Effect Level, nível de exposi ção que corresponde a um risco baixo, que deve ser considerado um risco 
+mínimo tolerável. 
+ 
+Níveis de concentração PNEC: 
+ 
+Nome Detalles Valor 
+etanol, álcool etílico 
+N. CAS: 64-17-5 
+N. CE: 200-578-6 
+Fresh water 0,96 (mg/L) 
+Marine water 0,79 (mg/L) 
+água (descargas intermitentes) 2,75 (mg/L) 
+Soil 0,63 (mg/kg 
+soil dw) 
+sedimento (água doce) 3,6 (mg/kg 
+sediment dw) 
+ 
+PNEC: Predicted No Effect Concentration, (concentração prevista sem efeitos) concentração da substânci a por baixo da qual não 
+são esperados efeitos negativos no comportamento ambiental. 
+ 
+ 
+8.2 Controlo da exposição. 
+ 
+Medidas de ordem técnica: 
+ Prover uma ventilação adequada, o qual pode ser conseguido mediante uma boa extração -ventilação local e um bom sistema 
+geral de extração. 
+  
+Concentração: 100 % 
+Usos: Ambientador Fragrância. 
+Proteção respiratória: 
+Se as medidas técnicas recomendadas forem cumpridas, não é necessário qualquer equipamento de proteção individual. 
+Proteção das mãos: 
+Se o produto for manuseado corretamente, não é necessário qualquer equipamento de proteção individual. 
+Proteção dos olhos: 
+Se o produto for manuseado corretamente, não é necessário qualquer equipamento de proteção individual. 
+Proteção da pele: 
+EPI: Calçado de trabalho 
+ Características: Marcação «CE» Categoria II. 
+Normas CEN: EN ISO 13287, EN 20347 
+Manutenção: Estes artigos adaptam-se à forma do pé do primeiro utilizador. Por este motivo, e igualmente por questões de higiene, deve-se evitar a sua reutilização por qualquer outra pessoa. 
+Observações: O calçado de trabalho para uso profissional é o que incorpora elementos de protecção destinados à protecção do utilizador contra as lesões que possam provocar acidentes 
+ 
+ 
+ 
+SECÇÃO 9: PROPRIEDADES FÍSICO-QUÍMICAS. 
+ 
+9.1 Informações sobre propriedades físicas e químicas de base. 
+Estado físico: Líquido 
+Cor: Incoloro 
+Odor: Substâncias aromáticas 
+Limiar de odor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de fusão: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de congelação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de ebulição ou ponto de ebulição inicial e intervalo de ebulição: 91 ºC (Estimativa com base nas indicações do 
+Regulamento (CE) n.º 1272/2008) 
+Inflamabilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite inferior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Limite superior de explosividade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de inflamação: >30 ºC 
+Temperatura de autoignição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Temperatura de decomposição: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+pH: 6.0-8.0 (100%) 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 6 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+Viscosidade cinemática: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Solubilidade: Soluble en agua 
+Hidrosolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Liposolubilidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Coeficiente de partição n-octanol/água (valor logarítmico): Não aplicável/Não disponível devido à natureza/propriedades do 
+produto 
+Pressão de vapor: 36,55 (Estimativa com base nas indicações do Regulamento (CE) n.º 1272/2008) 
+Densidade absoluta: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Densidade relativa: 0.900 - 0.920 
+Densidade relativa do vapor: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Características das partículas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+9.2 Outras informações.  
+Viscosidade: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Propriedades explosivas: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Propriedades comburentes: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Ponto de gota: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+Cintilação: Não aplicável/Não disponível devido à natureza/propriedades do produto 
+ 
+ 
+SECÇÃO 10: ESTABILIDADE E REATIVIDADE. 
+ 
+10.1 Reatividade. 
+Se forem cumpridas as condições de armazenagem, não produz reações perigosas. 
+ 
+10.2 Estabilidade química. 
+Instável em contato com: 
+ - Ácidos. 
+ - Bases. 
+ - Agentes oxidantes. 
+ 
+10.3 Possibilidade de reações perigosas. 
+Líquido e vapor inflamáveis. 
+Em determinadas condições pode produzir-se uma reação de polimerização. 
+ 
+10.4 Condições a evitar. 
+Evitar as seguintes condições: 
+ - Aquecimento. 
+ - Alta temperatura. 
+ - Descargas estáticas. 
+ - Contato com materiais incompatíveis. 
+ - Evite temperaturas próximas do ponto de inflamaç ão, não aqueça recipientes fechados. Evite luz sola r direta e calor pode 
+causar risco de incêndio. 
+ 
+10.5 Materiais incompatíveis. 
+Evitar os seguintes materiais: 
+ - Ácidos. 
+ - Bases. 
+ - Agentes oxidantes. 
+ - Matérias explosivas. 
+ - Matérias tóxicas. 
+ - Matérias comburentes. 
+ 
+10.6 Produtos de decomposição perigosos. 
+Dependendo das condições de uso, podem ser gerados os seguintes produtos: 
+ - COx (óxidos de carbono). 
+ - Compostos orgânicos. 
+Em caso de incêndio podem ser gerados produtos de decomposição perigosos, tais como monóxido e dióxido de carbono, fumos 
+e óxidos de nitrogénio. 
+ 
+ 
+SECÇÃO 11: INFORMAÇÃO TOXICOLÓGICA. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 7 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) nº 1272/2008. 
+. 
+Informação Toxicológica sobre as substâncias presentes na composição. 
+ 
+Nome Toxicidade aguda Tipo Ensaio Espécie Valor 
+(R)-p-menta-1,8-dieno, D-limoneno 
+Oral 
+LD50 Rat 5300 mg/kg bw [1] 
+ 
+[1] Food and Cosmetics Toxicology.  Vol. 12, Pg. 703, 1974. 
+Cutânea 
+LD50 Rabbit > 5000 mg/kg bw [1] 
+ 
+[1] Food and Cosmetics Toxicology. Vol. 13, Pg. 825, 1975 
+Inalação     N. CAS: 5989-27-5 N. CE: 227-813-5  
+a) Toxicidade aguda; 
+Dados não inclusivos para a classificação. 
+ 
+b) Corrosão/irritação cutânea; 
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos. 
+ 
+c) Lesões oculares graves/irritação ocular; 
+Dados não inclusivos para a classificação. 
+ 
+d) Sensibilização respiratória ou cutânea; 
+Com base nos dados disponíveis, os critérios de classificação não são preenchidos. 
+ 
+e) Mutagenicidade em células germinativas; 
+Dados não inclusivos para a classificação. 
+ 
+f) Carcinogenicidade; 
+Dados não inclusivos para a classificação. 
+ 
+g) Toxicidade reprodutiva; 
+Dados não inclusivos para a classificação. 
+ 
+h) Toxicidade para órgãos-alvo específicos (STOT) - exposição única; 
+Dados não inclusivos para a classificação. 
+ 
+i) Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida; 
+Dados não inclusivos para a classificação. 
+ 
+j) Perigo de aspiração. 
+Dados não inclusivos para a classificação. 
+ 
+11.2 Informações sobre outros perigos. 
+Propriedades desreguladoras do sistema endócrino 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino com efeitos sobre a saúde 
+humana. 
+Outras informações 
+Não existem informações disponíveis sobre outros efeitos adversos para a saúde. 
+ 
+ 
+SECÇÃO 12: INFORMAÇÃO ECOLÓGICA. 
+ 
+12.1 Toxicidade. 
+ 
+Nome Ecotoxicidade Tipo Ensaio Espécie Valor 
+(R)-p-menta-1,8-dieno, D-limoneno Peixes LC50 Fish 17,9 mg/l (96 h) [1] 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 8 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+ 
+[1] Geiger, D.L., L.T. Brooke, and D.J. Call 1990.  Acute 
+Toxicities of Organic Chemicals to Fathead Minnows 
+(Pimephales promelas), Volume 5.  Ctr.for Lake Superior 
+Environ.Stud., Univ.of Wisconsin-Superior, Superior, WI :332 
+p.. Fingas, M.F., D.A. Kyle, N. Laroche, B. Fieldhouse, G. 
+Sergy, and G. Stoodley 1995.  The Effectiveness Testing of 
+Oil Spill-Treating Agents.  In: P.Lane (Ed.), The Use of 
+Chemicals in Oil SpillResponse, ASTM STP 1252, 
+Philadelphia, PA :286-298 
+Invertebrados 
+aquáticos 
+EC50 Crustacean 17 mg/l (48 h) [1] 
+ 
+[1] Office of Pesticide Programs 2000.  Pesticide Ecotoxicity 
+Database (Formerly:  Environmental Effects Database 
+(EEDB)).  Environmental Fate and Effects Division, U.S.EPA, 
+Washington, D.C 
+Plantas 
+aquáticas 
+    
+N. CAS: 5989-27-5 N. CE: 227-813-5  
+ 
+  
+12.2 Persistência e degradabilidade. 
+Não se dispõe de informação relativa à biodegradabilidade das substâncias presentes. 
+Não se dispõe de informação relativa à degradabilidade das substâncias presentes. 
+Não há informação disponível sobre a persistência e degradabilidade do produto 
+Os componentes do produto cumprem com os critérios de biodegradabilidade estabelecidos no Regulamento (CE) n. º 648/2004 
+relativo aos detergentes. 
+ 
+12.3 Potencial de bioacumulação. 
+Informações relativas à Bioacumulação das substâncias presentes. 
+ 
+Nome 
+Bioacumulação 
+Log Pow BCF NOECs Nível 
+etanol, álcool etílico 
+-0,3 - - Muito baixo 
+N. CAS: 64-17-5 N. CE: 200-578-6 
+ 
+  
+12.4 Mobilidade no solo. 
+Não há informação disponível sobre a mobilidade no solo. 
+Não é permitido o vertido em sumidouros ou cursos de água. 
+Evitar a penetração no solo. 
+ 
+12.5 Resultados da avaliação PBT e mPmB. 
+Não há informações disponíveis sobre a avaliação PBT e mPmB do produto. 
+ 
+12.6 Propriedades desreguladoras do sistema endócrino. 
+Este produto não contém componentes com propriedades desreguladoras do sistema endócrino sobre o ambiente. 
+ 
+12.7 Outros efeitos adversos. 
+Não há informação sobre outros efeitos adversos para o meio ambiente. 
+ 
+ 
+SECÇÃO 13: CONSIDERAÇÕES RELATIVAS À ELIMINAÇÃO. 
+ 
+13.1 Métodos de tratamento de resíduos. 
+Não é permitido o vertido em sumidouros ou cursos de  água. Os resíduos e recipientes vazios devem ser m anipulados e 
+eliminados de acordo com as legislações locais/nacionais vigentes. 
+Siga as disposições da Directiva 2008/98/CE relativas à gestão de resíduos, DL 73/2011 e Decisão da Comissão 2014/955 / UE 
+(códigos LER). 
+ 
+Classificação dos resíduos de acordo com o Catálogo Europeu de Resíduos: 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 9 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+20 RESÍDUOS URBANOS E EQUIPARADOS (RESÍDUOS DOMÉSTI COS, DO COMÉRCIO, DA INDÚSTRIA E DOS SERVIÇOS), 
+INCLUINDO AS FRAÇÕES RECOLHIDAS SELETIVAMENTE 
+20 01 Frações recolhidas seletivamente (exceto 15 01) 
+20 01 99 outras frações, sem outras especificações 
+ 
+ 
+SECÇÃO 14: INFORMAÇÕES RELATIVAS AO TRANSPORTE. 
+ 
+Transportar seguindo as normas ADR/TPC para o trans porte por estrada, as RID por caminho-de-ferro, as IMDG por mar e as 
+ICAO/IATA para transporte aéreo. 
+Terra: Transporte por estrada: ADR, Transporte por caminho-de-ferro: RID. 
+Documentação de transporte: Carta de porte e Instruções escritas. 
+Mar: Transporte por barco: IMDG. 
+Documentação de transporte: Conhecimento de embarque. 
+Ar: Transporte por avião: IATA/ICAO. 
+Documento de transporte: Conhecimento aéreo. 
+ 
+14.1 Número ONU ou número de ID. 
+Nº UN: 1993 
+ 
+14.2 Designação oficial de transporte da ONU. 
+Descrição: 
+ADR/RID: UN 1993, LÍQUIDO INFLAMÁVEL, N.S.A. (CONTÉM ETANOL ÁLCOOL ETÍLICO / (R)-P-MENTA-1,8-DIENO D-
+LIMONENO), 3, GE III, (D/E) 
+IMDG: UN 1993, LÍQUIDO INFLAMÁVEL, N.S.A. (CONTÉM E TANOL ÁLCOOL ETÍLICO / (R)-P-MENTA-1,8-DIENO D-
+LIMONENO), 3, GE III (30ºC) 
+OACI/IATA: UN 1993, LÍQUIDO INFLAMÁVEL, N.S.A. (CON TÉM ETANOL ÁLCOOL ETÍLICO / (R)-P-MENTA-1,8-DIENO D-
+LIMONENO), 3, GE III 
+ 
+14.3 Classes de perigo para efeitos de transporte. 
+Classe(s): 3 
+ 
+14.4 Grupo de embalagem. 
+Grupo de embalagem: III 
+ 
+14.5 Perigos para o ambiente. 
+Poluente marinho: Não 
+ Transporte por barco, FEm - Fichas de emergência (F – Incêndio, S - Derrames):  F-E,S-E 
+ 
+14.6 Precauções especiais para o utilizador. 
+Etiquetas: 3 
+ 
+  
+ 
+Número de perigo: 30 
+ADR LQ: 5 L 
+IMDG LQ: 5 L 
+ICAO LQ: 10 L 
+ 
+Disposições relativas ao transporte a granel em ADR: Transporte a granel não autorizado, de acordo com o ADR. 
+Actuar de acordo com o ponto 6.  
+ 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI. 
+ O produto não é afetado pelo transporte a granel em navios. 
+ 
+SECÇÃO 15: INFORMAÇÃO SOBRE REGULAMENTAÇÃO. 
+ 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, segurança e 
+ambiente. 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 10 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Continua na página seguinte.- 
+O produto não é afetado pelo Regulamento (CE) nº 10 05/2009 do Parlamento Europeu e do Conselho, de 16 de Setembro de 
+2009, relativo às substâncias que empobrecem a camada de ozono. 
+ 
+ 
+O produto está em conformidade com o Regulamento (CE) Nº 648/2004 relativo aos detergentes. 
+Conteúdo de acordo com o Regulamento (CE) Nº 648/2004 relativo aos detergentes: 
+Alcoois Alifáticos > 30% 
+ 
+perfumes   
+ 
+Fragâncias alergénicas: CITRAL; LIMONENE; LINALOOL; CITRONELLOL; COUMARIN 
+Classificação do produto de acordo com  o Anexo I da Directiva 2012/18/UE (SEVESO III): N/A 
+O produto está afetado pelo DL 147/2008, de 29 de julho (responsabilidade por danos ambientais). 
+O produto não está afetado pelo Reglamento (UE) No 528/2012 relativo à comercialização e ao uso dos biocidas. 
+O produto não está afetado pelo procedimento estabe lecido no Regulamento (UE) No 649/2012, relativo à exportação e 
+importação de produtos químicos perigosos. 
+ 
+ 
+15.2 Avaliação da segurança química. 
+Não foi realizado uma avaliação da segurança química do produto. 
+ 
+ 
+SECÇÃO 16: OUTRAS INFORMAÇÕES. 
+ 
+Texto completo das frases H que aparecem no epígrafe 3: 
+ 
+H225  Líquido e vapor facilmente inflamáveis. 
+H226  Líquido e vapor inflamáveis. 
+H315  Provoca irritação cutânea. 
+H317  Pode provocar uma reacção alérgica cutânea. 
+H400  Muito tóxico para os organismos aquáticos. 
+H410  Muito tóxico para os organismos aquáticos com  efeitos duradouros. 
+ 
+ 
+Códigos de classificação: 
+ 
+Aquatic Acute 1 : Toxicidade aguda para o ambiente aquático, Categoria 1 
+Aquatic Chronic 1 : Efeitos crônicos para o ambiente aquático, Categoria 1 
+Flam. Liq. 2 : Líquido inflamável, Categoria 2 
+Flam. Liq. 3 : Líquido inflamável, Categoria 3 
+Skin Irrit. 2 : Irritante cutâneo, Categoria 2 
+Skin Sens. 1 : Sensibilizante cutâneo, Categoria 1 
+Skin Sens. 1B : Sensibilizante cutâneo, Categoria 1B 
+ 
+ 
+Modificações em relação à versão anterior: 
+ 
+ - Mudanças na informação do fornecedor (SECÇÃO 1.3). 
+ - Modificação de perigos especiais (SECÇÃO 2.3). 
+ - Mudanças na composição do produto (SECÇÃO 3.2). 
+ - Modificação nas medidas de combate a incêndios (SECÇÃO 5.2). 
+ - Modificações nas medidas a tomar em caso de fugas acidentais (SECÇÃO 6.1). 
+ - Modificação nos valores das propriedades físico-químicas (SECÇÃO 9). 
+ - Mudança na classificação de perigo (SECÇÃO 11.1). 
+ - Modificação da classificação ADR/IMDG/ICAO/IATA/RID (SECÇÃO 14). 
+ - Eliminação de abreviaturas e siglas (SECÇÃO 16). 
+ - Adicionado de abreviaturas e siglas (SECÇÃO 16). 
+ 
+ 
+Classificação e procedimento utilizado para determinar a classificação das misturas em conformidade com o 
+Regulamento (CE) n.º 1272/2008 [CRE]: 
+Perigos físicos  Com base em dados de ensaio 
+Perigos para a saúde Método de cálculo 
+Perigos para o ambiente Método de cálculo 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+(de acordo com o Regulamento (UE) 2020/878) 
+ AGORA ALLURE 
+Versão 1 Data de emissão: 10/10/2018 
+Versão 14 (substitui a versão 13) Data de revisão: 05/05/2022 
+Página 11 de 11 
+Data de impressão: 16-06-2022 
+ 
+ 
+-Fim da ficha de dados de segurança.- 
+ 
+ 
+Aconselha-se que seja dada formação básica relativamente à segurança e higiene laboral para que seja efectuado um 
+manuseamento correcto do produto. 
+ 
+ 
+Abreviaturas e siglas utilizadas: 
+ADR/RID: Acordo europeu sobre o transporte internacional de mercadorias perigosas por estrada. 
+BCF: Factor de bioconcentração. 
+CEN: Comité Europeu de Normalização. 
+DMEL: Derived Minimal Effect Level, nível de exposi ção que corresponde a um risco baixo, que deve ser  
+ considerado um risco mínimo tolerável. 
+DNEL: Derived No Effect Level, (nível sem efeito ob tido) nível de exposição à substância por baixo do  
+ qual não são previstos  efeitos adversos. 
+EC50: Concentração média eficaz. 
+EPI: Equipamento de proteção individual. 
+IATA: Associação Internacional dos Transportes Aére os. 
+OACI: Organização da Aviação Civil Internacional. 
+IMDG: Código Internacional Marítimo sobre Mercadori as Perigosas. 
+LC50: Concentração letal, 50%. 
+LD50: Dose Letal, 50%. 
+NOEC: Não se observou efeito de concentração. 
+PNEC: Predicted No Effect Concentration, (concentra ção prevista sem efeitos) concentração da substância  
+ por baixo da qual não são esperados efeitos negati vos no comportamento ambiental. 
+RID: Regulamento relativo ao transporte internacion al de mercadorias perigosas por via férrea. 
+ 
+Principais referências bibliográficas e fontes de dados: 
+http://eur-lex.europa.eu/homepage.html 
+http://echa.europa.eu/ 
+Regulamento (UE) 2020/878. 
+Regulamento (CE) No 1907/2006. 
+Regulamento (UE) No 1272/2008. 
+ 
+A informação facilitada nesta ficha de Dados de Seg urança foi redigida de acordo com o REGULAMENTO (UE ) 2020/878 DA 
+COMISSÃO de 18 de junho de 2020 que altera o Anexo II do Regulamento (CE) n.o 1907/2006 do Parlamento Europeu e do 
+Conselho relativo ao registo, avaliação, substâncias e misturas químicas (REACH). 
+ 
+A informação desta Ficha de Dados de Segurança do produto está baseada nos conhecimentos actuais e nas leis vigentes da 
+CE e nacionais, quanto a que as condições de trabal ho dos utilizadores estiverem fora do nosso conheci mento e controlo. O 
+produto não deve ser utilizado para fins distintos àqueles que são especificados, sem ter primeiro uma instrução por escrito, 
+da sua utilização. É sempre responsabilidade do uti lizador tomar as medidas oportunas com a finalidade  de cumprir com as 
+exigências estabelecidas nas legislações. 

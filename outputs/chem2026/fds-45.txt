@@ -1,0 +1,1849 @@
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+1 / 25 
+SECÇÃO 1: Identificação da substância/mistura e da sociedade/empresa 
+1.1 Identificador do produto 
+Nome comercial 
+ 
+: MULTI 400ML 
+ 
+Código do produto 
+ 
+: 0893055400 
+ 
+Identificador Único De 
+Fórmula (UFI) 
+ 
+: 3XW1-F0J6-000E-JS69 
+1.2 Utilizações identificadas relevantes da substância ou mistura e utilizações 
+desaconselhadas 
+Utilização da substância ou 
+mistura 
+ 
+: Detergente, Agente de limpeza, Lubrificante, Inibidor de 
+corrosão 
+Produto de uso profissional 
+ 
+Restrições de utilização 
+recomendadas 
+  
+: Não aplicável 
+1.3 Identificação do fornecedor da ficha de dados de segurança 
+Companhia 
+ 
+: Würth-Portugal Técnica de Montagem, Lda. 
+Estrada Nacional 249-4 - Abrunheira 
+2710-089  Sintra 
+ 
+Telefone 
+ 
+: +351 219 157 200 
+ 
+ 
+Telefax 
+ 
+: +351 219 151 331 
+ 
+Endereço de correio 
+electrónico da pessoa 
+responsável por SDS 
+ 
+: prodsafe@wuerth.com 
+ 
+1.4 Número de telefone de emergência 
++351 800 250 250 
+ 
+ 
+ 
+SECÇÃO 2: Identificação dos perigos 
+2.1 Classificação da substância ou mistura 
+Classificação (REGULAMENTO (CE) N.o 1272/2008) 
+Aerosóis, Categoria 1   H222: Aerossol extremamente inflamável. 
+H229: Recipiente sob pressão: risco de explosão 
+sob a ação do calor.  
+Toxicidade para órgãos-alvo específicos - 
+exposição única, Categoria 3  
+ H336: Pode provocar sonolência ou vertigens.  
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+2 / 25 
+Perigo (crónico) de longo prazo para o 
+ambiente aquático, Categoria 3  
+ H412: Nocivo para os organismos aquáticos com 
+efeitos duradouros.  
+2.2 Elementos do rótulo 
+Rótulo (REGULAMENTO (CE) N.o 1272/2008) 
+Pictogramas de perigo  : 
+  
+   
+      
+Palavra-sinal 
+ 
+: Perigo 
+ 
+Advertências de perigo 
+ 
+: H222 Aerossol extremamente inflamável. 
+H229 Recipiente sob pressão: risco de explosão sob a 
+ação do calor. 
+H336 Pode provocar sonolência ou vertigens. 
+H412 Nocivo para os organismos aquáticos com efeitos 
+duradouros. 
+ 
+Declarações de Perigo 
+Adicionais 
+: EUH066 Pode provocar pele seca ou gretada, por 
+exposição repetida. 
+ 
+Recomendações de 
+prudência 
+ 
+: Prevenção:  
+P210 Manter afastado do calor, superfícies quentes, 
+faísca, chama aberta e outras fontes de ignição. 
+Não fumar. 
+P211 Não pulverizar sobre chama aberta ou outra fonte 
+de ignição. 
+P251 Não furar nem queimar, mesmo após utilização. 
+P261 Evitar respirar os aerossóis. 
+P273 Evitar a libertação para o ambiente. 
+Armazenagem:  
+P410 + P412 Manter ao abrigo da luz solar. Não expor a 
+temperaturas superiores a 50 °C/ 122 °F. 
+ 
+Componentes determinantes de perigo para o rótulo: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos 
+Etiquetagem suplementar 
+EUH208  Contém Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato). 
+Pode provocar uma reacção alérgica. 
+ 
+2.3 Outros perigos 
+A substância/mistura não contém componentes considerados persistentes, bioacumuláveis e 
+tóxicos (PBT) ou muito persistentes e muito bioacumuláveis (vPvB) a níveis de 0.1% ou superior.  
+ 
+Informação ecológica: A substância/mistura não contém componentes considerados como tendo 
+propriedades desreguladoras do sistema endócrino de acordo com o artigo 57(f) do REACH ou o 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o Regulamento da Comissão (UE) 
+2018/605 a níveis de 0,1% ou superiores. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+3 / 25 
+ 
+Informação toxicológica: A substância/mistura não contém componentes considerados como 
+tendo propriedades desreguladoras do sistema endócrino de acordo com o artigo 57(f) do 
+REACH ou o Regulamento Delegado da Comissão (UE) 2017/2100 ou o Regulamento da 
+Comissão (UE) 2018/605 a níveis de 0,1% ou superiores. 
+ 
+Pode deslocar o oxigênio e causar sufocamento rápido. 
+SECÇÃO 3: Composição/informação sobre os componentes 
+3.2 Misturas 
+Componentes 
+Nome Químico No. CAS 
+No. CE 
+No. de Index 
+Número de registo 
+Classificação Concentração 
+(% w/w) 
+Hidrocarbonetos, C9-C10, n-
+alcanos, isoalcanos, cíclicos, <2% 
+aromáticos 
+Não atribuído 
+ 
+01-2119471843-32 
+Flam. Liq. 3; H226 
+STOT SE 3; H336 
+Asp. Tox. 1; H304 
+Aquatic Chronic 3; 
+H412 
+EUH066 
+ 
+>= 30 - < 50 
+Hidrocarbonetos, C11-C14, n-
+alcanos, isoalcanos, cíclicos, <2% 
+aromáticos 
+Não atribuído 
+ 
+01-2119456620-43 
+Asp. Tox. 1; H304 
+EUH066 
+ 
+>= 1 - < 10 
+Cálcio bis(di C8-C10, ramificado, 
+rico em C9, 
+alquilnaftalenosulfonato) 
+1474044-79-5 
+ 
+01-2119980985-16 
+Skin Irrit. 2; H315 
+Eye Irrit. 2; H319 
+Skin Sens. 1B; H317 
+>= 0,1 - < 1 
+Para a explicação das abreviaturas ver seção 16. 
+ 
+SECÇÃO 4: Medidas de primeiros socorros 
+4.1 Descrição das medidas de emergência 
+Recomendação geral 
+ 
+:  Em caso de acidente, ou indisposição, consultar 
+imediatamente o médico. 
+Se os sintomas persistem ou no caso de dúvidas consultar 
+um médico. 
+ 
+Protecção dos socorristas 
+ 
+:  Os prestados serviços de primeiros socorros devem prestar 
+atenção ao equipamento de proteção, e usar o equipamento 
+de proteção pessoal recomendada no caso existência de 
+exposição potencial (ver secção 8). 
+ 
+Em caso de inalação 
+ 
+:  Se for inalado, levar para o ar puro. 
+Se não respirar, dar respiração artificial. 
+Se tiver dificuldades em respirar, dar oxigénio. 
+Chamar imediatamente um médico. 
+ 
+Em caso de contacto com a :  Em caso de contacto, lavar imediatamente a pele com muita 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+4 / 25 
+pele 
+ 
+água. 
+Retirar o fato e os sapatos contaminados. 
+Consultar o médico. 
+Lavar o vestuário contaminado antes de voltar a usá-lo. 
+Limpar cuidadosamente os sapatos antes de os utilizar de 
+novo. 
+ 
+Se entrar em contacto com 
+os olhos 
+ 
+:  Lavar os olhos com água como precaução. 
+Procure assistência médica caso a irritação desenvolva ou 
+persista. 
+ 
+Em caso de ingestão 
+ 
+:  Se engolido, NÃO provocar vómitos. 
+Procure assistência médica se verificar a ocorrência de 
+sintomas. 
+Enxagúe minuciosamente a boca com água. 
+ 
+4.2 Sintomas e efeitos mais importantes, tanto agudos como retardados 
+Perigo : O gás reduz o oxigénio disponível para respirar. 
+ 
+   Pode provocar sonolência ou vertigens. 
+Pode provocar pele seca ou gretada, por exposição repetida. 
+ 
+   Pode provocar uma reacção alérgica. 
+ 
+4.3 Indicações sobre cuidados médicos urgentes e tratamentos especiais necessários  
+Tratamento 
+ 
+: Trate sintomaticamente e com apoio. 
+SECÇÃO 5: Medidas de combate a incêndios 
+5.1 Meios de extinção 
+Meios de extinção 
+adequados 
+ 
+:  Pulverização de água 
+Espuma resistente ao álcool 
+Dióxido de carbono (CO2) 
+Substância química seca 
+ 
+Meios de extinção 
+inadequados 
+ 
+:  Jacto de água de grande volume 
+ 
+5.2 Perigos especiais decorrentes da substância ou mistura 
+Perigos específicos para 
+combate a incêndios 
+ 
+:  Flash back possível acima de uma distância considerável. 
+Os vapores podem formar misturas explosivas com o ar. 
+A exposição aos produtos da combustão pode se constituir 
+num risco para a saúde. 
+Devido à elevada pressão do vapor existe o perigo de 
+rebentamento dos recipientes no caso de aumento de 
+temperatura. 
+ 
+Produtos de combustão 
+perigosos 
+:  Óxidos de carbono 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+5 / 25 
+ 
+5.3 Recomendações para o pessoal de combate a incêndios 
+Equipamento especial de 
+proteção a utilizar pelo 
+pessoal de combate a 
+incêndio 
+ 
+:  Em caso de incêndio, usar equipamento de respiração 
+individual. Usar equipamento de proteção individual.  
+ 
+Métodos específicos de 
+extinção  
+: Adapte as medidas de combate a incêndios às condições do 
+local e ao ambiente envolvente. 
+Os jatos de água podem ser utilizados para arrefecer os 
+contentores fechados. 
+Se seguro, remover os recipientes não danificados da área de 
+fogo. 
+Evacuar a zona.  
+SECÇÃO 6: Medidas em caso de fuga acidental 
+6.1 Precauções individuais, equipamento de proteção e procedimentos de emergência  
+Precauções individuais 
+ 
+:  Evacuar o pessoal para áreas de segurança. 
+Cortar todas as fontes de ignição. 
+Arejar a área. 
+Usar equipamento de proteção individual. 
+Seguir indicação de manipulação segura (ver secção 7) e 
+recomendações para equipamento de protecção pessoal (ver 
+secção 8). 
+ 
+6.2 Precauções a nível ambiental 
+Precauções a nível 
+ambiental 
+ 
+:  Evitar a libertação para o ambiente. 
+Prevenir dispersão ou derramamento, se seguro. 
+Prevenir a propagação numa áreas vastas (por exemplo por 
+contenção ou barreiras de óleo). 
+Conter e eliminar a água de lavagem contaminada. 
+As autoridades locais devem ser avisadas se uma quantidade 
+importante de derramamento não pode ser controlada. 
+ 
+6.3 Métodos e materiais de confinamento e limpeza 
+Métodos de limpeza 
+ 
+:  Ferramentas que não produzem faíscas devem ser utilizadas. 
+Embeber com material absorvente inerte. 
+Conter os gases/vapores/névoas com jactos de água. 
+Para grandes derramamentos, forneça barreiras ou outro 
+meio de contenção apropriado para evitar que o material se 
+espalhe. Se for possível bombear o material protegido, 
+armazene o material recuperado num recipiente adequado. 
+Limpe o material restante do derramamento com material 
+absorvente adequado. 
+Podem ser aplicados regulamentos locais ou nacionais às 
+libertações e deve eliminar o material, assim como os 
+materiais e os itens usados na limpeza. Deverá determinar 
+que normas são aplicáveis. 
+As secções 13 e 15 deste SDS oferecem informações 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+6 / 25 
+referentes a alguns requisitos locais ou nacionais. 
+ 
+6.4 Remissão para outras secções 
+Ver seções: 7, 8, 11, 12 e 13. 
+SECÇÃO 7: Manuseamento e armazenagem 
+7.1 Precauções para um manuseamento seguro 
+Medidas de carácter técnico  : Consulte as medidas de Engenharia na secção de 
+CONTROLO DA EXPOSIÇÃO/PROTECÇÃO INDIVIDUAL.  
+Ventilação local/total  : Se não existir ventilação suficiente, use ventilação de 
+exaustão local. 
+Se recomendado pela avaliação do potencial de exposição 
+local, use apenas numa área equipada com ventilação de 
+exaustão à prova de explosão.  
+Informação para um 
+manuseamento seguro  
+: Não colocar na pele ou na roupa. 
+Evitar respirar os aerossóis. 
+Não engolir. 
+Evitar o contacto com os olhos. 
+Manusear de acordo com as boas práticas industriais de 
+higiene e segurança, com base nos resultados da avaliação 
+da exposição no local de trabalho 
+Manter afastado do calor, superfícies quentes, faísca, chama 
+aberta e outras fontes de ignição. Não fumar. 
+Evitar acumulação de cargas electrostáticas. 
+Deve ter cuidado para prevenir vazamentos, resíduos e 
+minimizar a libertação para o meio ambiente. 
+Não pulverizar sobre chama aberta ou outra fonte de ignição.  
+Medidas de higiene  :  Se a exposição a produtos químicos for provável durante o 
+uso típico, forneça sistemas de limpeza para os olhos e 
+chuveiros de segurança nas imediações do local de trabalho. 
+Não comer, beber ou fumar durante da utilização. Lavar o 
+vestuário contaminado antes de voltar a usá-lo.   
+7.2 Condições de armazenagem segura, incluindo eventuais incompatibilidades  
+Requisitos para áreas de 
+armazenagem e recipientes 
+ 
+:  Armazenar em local fechado à chave. Guardar em lugar frio e 
+bem arejado. Armazenar de acordo com as regulações 
+particulares nacionais. Não furar ou queimar mesmo após a 
+utilização. Conservar em ambiente fresco. Manter ao abrigo 
+da luz solar.  
+ 
+Recomendações para 
+armazenagem conjunta 
+ 
+: Não armazene com os seguintes tipos de produto: 
+Substâncias e misturas auto-reactivas 
+Peróxidos orgânicos 
+Oxidantes 
+Sólidos inflamáveis 
+Líquidos pirofóricos 
+Sólidos pirofóricos 
+Substâncias e misturas susceptíveis de auto-aquecimento 
+Substâncias e misturas que, em contacto com a água, 
+libertam gases inflamáveis 
+Explosivos 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+7 / 25 
+Gases 
+ 
+Temperatura recomendada 
+de armazenagem 
+ 
+: < 40 °C 
+ 
+7.3 Utilização(ões) final(is) específica(s) 
+Utilizações específicas 
+ 
+:  Dados não disponíveis 
+ 
+SECÇÃO 8: Controlo da exposição/ Proteção individual 
+8.1 Parâmetros de controlo 
+Limites de Exposição Ocupacional 
+Componentes No. CAS tipo de valor 
+(Forma de 
+exposição) 
+Parâmetros de controlo Bases 
+Hidrocarbonetos, 
+C9-C10, n-
+alcanos, 
+isoalcanos, 
+cíclicos, <2% 
+aromáticos 
+Não 
+atribuído 
+VLE-MP (Fração 
+inalável) 
+5 mg/m³ PT OEL 
+ 
+Informações adicionais: Agente não classificável como carcinogénico no 
+Homem. 
+Butano 106-97-8 VLE_CD 1.000 ppm PT OEL 
+ 
+Nível derivado de exposição sem efeitos (DNEL) de acordo com o Regulamento (CE) No. 
+1907/2006 
+Nome da substância Utilização final Vias de 
+exposição 
+Possíveis danos 
+para a saúde 
+Valor 
+Cálcio bis(di C8-C10, 
+ramificado, rico em 
+C9, 
+alquilnaftalenosulfona
+to) 
+Trabalhadores Inalação Longo prazo - efeitos 
+sistémicos 
+70 mg/m³ 
+ 
+Trabalhadores Contacto com a 
+pele 
+Longo prazo - efeitos 
+sistémicos 
+10 mg/kg 
+bw/dia 
+Concentração previsivelmente sem efeitos (PNEC) de acordo com o Regulamento (CE) No. 
+1907/2006 
+Nome da substância Compartimento Ambiental Valor 
+Destilados (petróleo), parafínicos 
+pesados tratados com hidrogénio 
+Oral (Intoxicação secundária) 9,33 mg/kg 
+alimento 
+Cálcio bis(di C8-C10, ramificado, 
+rico em C9, 
+alquilnaftalenosulfonato) 
+Agua doce 4 µg/l 
+ Água doce - intermitente 2,7 µg/l 
+ Água do mar 0,4 µg/l 
+ Estação de Patamento de esgoto 10 mg/l 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+8 / 25 
+ Sedimento de água doce 69 mg / kg de 
+peso seco (d.w.) 
+ Sedimento marinho 6,9 mg / kg de 
+peso seco (d.w.) 
+ Solos 13,9 mg / kg de 
+peso seco (d.w.) 
+ Oral (Intoxicação secundária) 22,2 mg/kg 
+alimento 
+8.2 Controlo da exposição 
+Controlos técnicos adequados 
+Minimizar as concentrações de exposição no local de trabalho. 
+Se não existir ventilação suficiente, use ventilação de exaustão local. 
+Se recomendado pela avaliação do potencial de exposição local, use apenas numa área 
+equipada com ventilação de exaustão à prova de explosão. 
+Medidas de proteção individual, nomeadamente equipamentos de proteção individual 
+(EPI) 
+Proteção ocular/ facial :  Vestir o equipamento individual de protecção seguinte: 
+Óculos de segurança 
+O equipamento deverá estar de acordo com NP EN 166  
+Protecção das mãos 
+Material : Borracha nitrílica 
+Pausa através do tempo : > 480 min 
+Espessura das luvas : > 0,4 mm 
+ 
+ 
+Observações  : O tipo das luvas protectoras contra produtos químicos devem 
+ser seleccionadas de acordo com a concentração e 
+quantidade da substância perigosa e especificamente para o 
+local de trabalho. Aconselha-se acordar com o fabricante das 
+luvas a resistência das luvas protectoras face a produtos 
+químicos para aplicações específicas. Lavar as mãos antes 
+das pausas, e no fim do dia de trabalho.   
+Proteção do corpo e da pele :  Vestir o equipamento individual de protecção seguinte: 
+Se a avaliação demonstrar que existe risco de atmosferas 
+explosivas ou combustão, use vestuário de proteção 
+antiestático retardador de chamas.  
+Protecção respiratória : Se a ventilação de exaustão local adequada não estiver 
+disponível ou a avaliação da exposição demonstrar 
+exposições fora das diretrizes recomendadas, use proteção 
+respiratória. 
+O equipamento deverá estar de acordo com NP EN 137 
+O filtro deve estar em conformidade com a NP EN 14387  
+Filtro tipo : Combinado sob a forma de particulados e vapor orgânico (A-
+P)  
+SECÇÃO 9: Propriedades físico-químicas 
+9.1 Informações sobre propriedades físicas e químicas de base 
+Estado físico 
+  
+: aerossol 
+  
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+9 / 25 
+Forma 
+  
+: Aerossol com conteúdo de gás liquefeito 
+  
+Propulsor 
+  
+:  Propano, Butano 
+  
+Cor 
+  
+:  amarelo claro 
+  
+Odor 
+  
+:  característico 
+  
+Limiar olfativo 
+  
+:  Dados não disponíveis  
+ 
+Ponto de fusão/ponto de 
+congelação 
+  
+: Dados não disponíveis  
+ 
+Ponto de ebulição inicial e 
+intervalo de ebulição 
+  
+: Não aplicável  
+ 
+Inflamabilidade (sólido, gás) : Aerossol extremamente inflamável. 
+ 
+Limite superior de explosão / 
+Limite de inflamabilidade 
+superior 
+ 
+ 
+: Dados não disponíveis  
+ 
+Limite inferior de explosão / 
+Limite de inflamabilidade 
+inferior 
+ 
+ 
+: Dados não disponíveis  
+ 
+Ponto de inflamação 
+  
+: 33,3 °C 
+Ponto de inflamação é válido apenas para parte líquida na 
+lata de aerossol. 
+ 
+Temperatura de auto-ignição 
+  
+: Dados não disponíveis  
+ 
+Temperatura de 
+decomposição 
+  
+:  Dados não disponíveis  
+ 
+pH 
+  
+: a substância/mistura não é solúvel (na água)  
+ 
+Viscosidade 
+Viscosidade, cinemático 
+  
+: Não aplicável  
+ 
+Solubilidade(s) 
+Hidrossolubilidade 
+  
+: insolúvel  
+ 
+ 
+Coeficiente de partição: n-
+octanol/água 
+  
+: Não aplicável  
+ 
+Pressão de vapor 
+  
+: Não aplicável  
+ 
+Densidade 
+  
+: 0,789 g/cm³ (20 °C) 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+10 / 25 
+Densidade relativa do vapor 
+  
+: Não aplicável  
+ 
+Caraterísticas da partícula 
+Tamanho da partícula 
+  
+: Não aplicável 
+ 
+9.2 Outras informações 
+Explosivos 
+  
+: Não explosivo 
+ 
+Propriedades comburentes 
+  
+: A substância ou a mistura não está classificada como 
+oxidante. 
+ 
+Taxa de evaporação 
+  
+:  Não aplicável  
+ 
+SECÇÃO 10: Estabilidade e reatividade 
+10.1 Reatividade 
+Não classificado como uma reactividade perigosa. 
+10.2 Estabilidade química 
+Estável em condições normais. 
+10.3 Possibilidade de reações perigosas 
+Reações perigosas 
+ 
+:  Aerossol extremamente inflamável. 
+Vapores podem formar misturas explosivas com o ar. 
+Devido à elevada pressão do vapor existe o perigo de 
+rebentamento dos recipientes no caso de aumento de 
+temperatura. 
+Pode reagir com agentes oxidantes fortes. 
+10.4 Condições a evitar 
+Condições a evitar 
+ 
+: Calor, chamas e faíscas. 
+ 
+10.5 Materiais incompatíveis 
+Materiais a evitar 
+ 
+:  Oxidantes 
+ 
+10.6 Produtos de decomposição perigosos 
+Nenhuns produtos de decomposição conhecidos. 
+SECÇÃO 11: Informação toxicológica 
+11.1 Informações sobre as classes de perigo, tal como definidas no Regulamento (CE) n.o 
+1272/2008 
+Informações sobre vias de 
+exposição prováveis  
+: Inalação 
+Contacto com a pele 
+Ingestão 
+Contacto ocular  
+Toxicidade aguda 
+Não classificado com base nas informações disponíveis. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+11 / 25 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Toxicidade aguda por via 
+oral  
+:  DL50 (Ratazana): > 5.000 mg/kg  
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade aguda por via 
+inalatória  
+:  CL50 (Ratazana): > 4.951 mg/m³  
+Duração da exposição: 4 h 
+Atmosfera de ensaio: vapor 
+Avaliação: A substância ou mistura não tem toxicidade aguda 
+por inalação 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade aguda por via 
+cutânea  
+:  DL50 (Coelho): > 3.160 mg/kg 
+Avaliação: A substância ou mistura não tem toxicidade aguda 
+por via dérmica 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Toxicidade aguda por via 
+oral  
+:  DL50 (Ratazana): > 5.000 mg/kg  
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade aguda por via 
+cutânea  
+:  DL50 (Ratazana): > 2.000 mg/kg 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Toxicidade aguda por via 
+oral  
+:  DL50 (Ratazana): > 5.000 mg/kg  
+ 
+Toxicidade aguda por via 
+cutânea  
+:  DL50 (Coelho): > 5.000 mg/kg 
+ 
+Corrosão/irritação cutânea 
+Pode provocar pele seca ou gretada, por exposição repetida. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Espécie : Coelho 
+Resultado : Leve irritação da pele 
+ 
+Avaliação : Pode provocar pele seca ou gretada, por exposição repetida. 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Espécie : Coelho 
+Resultado : Não provoca irritação da pele 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Avaliação : Pode provocar pele seca ou gretada, por exposição repetida. 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Espécie : Coelho 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+12 / 25 
+Resultado : Irritação cutânea 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Lesões oculares graves/irritação ocular 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Espécie : Coelho 
+Método : Directrizes do Teste OECD 405 
+Resultado : Não irrita os olhos 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Espécie : Coelho 
+Resultado : Não irrita os olhos 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Espécie : Coelho 
+Resultado : Irritação nos olhos, revertendo dentro de 21 dias 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Sensibilização respiratória ou cutânea 
+Sensibilização da pele  
+Não classificado com base nas informações disponíveis. 
+Sensibilização respiratória  
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Tipo de Teste : Teste de maximização 
+Vias de exposição : Contacto com a pele 
+Espécie : Porquinho da índia 
+Resultado : negativo 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Tipo de Teste : Teste de maximização 
+Vias de exposição : Contacto com a pele 
+Espécie : Porquinho da índia 
+Resultado : negativo 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Tipo de Teste : Buehler Test 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+13 / 25 
+Vias de exposição : Contacto com a pele 
+Espécie : Porquinho da índia 
+Resultado : positivo 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Avaliação : A probabilidade ou prova de baixo a moderado índice de 
+sensibilização cutânea nos seres humanos 
+ 
+Mutagenicidade em células germinativas 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Genotoxicidade in vitro  : Tipo de Teste: No teste de mutação genética de células de 
+mamíferos in vitro 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Genotoxicidade in vivo  :  Tipo de Teste: Teste de micronúcleos de eritrócitos de 
+mamíferos (teste citogenético in vivo) 
+Espécie: Rato 
+Via de aplicação: Ingestão 
+Resultado: negativo 
+ 
+Mutagenicidade em células 
+germinativas- Avaliação  
+:  Classificados de acordo com teor de benzeno < 0.1% 
+(Regulamento (EC) 1272/2008, Anexo VI, Parte 3, Nota P) 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Genotoxicidade in vitro  : Tipo de Teste: Ensaio de mutação reversa bacteriana (AMES) 
+Método: Directrizes do Teste OECD 471 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Genotoxicidade in vitro  : Tipo de Teste: Ensaio de mutação reversa bacteriana (AMES) 
+Método: Directrizes do Teste OECD 471 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+  
+ 
+Tipo de Teste: No teste de mutação genética de células de 
+mamíferos in vitro 
+Método: Directrizes do Teste OECD 476 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+  
+ 
+Tipo de Teste: Teste de aberação cromática in vitro 
+Método: Directrizes do Teste OECD 473 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+14 / 25 
+Carcinogenicidade 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Espécie : Ratazana 
+Via de aplicação : inalação (vapor) 
+Duração da exposição : 105 semanas 
+Resultado : negativo 
+Observações : aom base em dados de materiais semelhantes 
+ 
+Carcinogenicidade - 
+Avaliação  
+:  Classificados de acordo com teor de benzeno < 0.1% 
+(Regulamento (EC) 1272/2008, Anexo VI, Parte 3, Nota P) 
+ 
+Toxicidade reprodutiva 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Efeitos na fertilidade  :  Tipo de Teste: Teste de despistagem de toxidade de 
+Reprodução/Desenvolvimento 
+Espécie: Ratazana 
+Via de aplicação: inalação (vapor) 
+Resultado: negativo 
+ 
+Efeitos sobre o 
+desenvolvimento do feto  
+:  Tipo de Teste: Desenvolvimento embriofetal 
+Espécie: Ratazana 
+Via de aplicação: inalação (vapor) 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Efeitos sobre o 
+desenvolvimento do feto  
+:  Tipo de Teste: Desenvolvimento embriofetal 
+Espécie: Ratazana 
+Via de aplicação: inalação (vapor) 
+Resultado: negativo 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Efeitos na fertilidade  :  Tipo de Teste: Estudo de toxicidade de dose repetida 
+combinada com o teste de triagem de toxidade para 
+desenvolviment/reprodução 
+Espécie: Ratazana 
+Via de aplicação: Ingestão 
+Método: Directrizes do Teste OECD 422 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Efeitos sobre o 
+desenvolvimento do feto  
+:  Tipo de Teste: Estudo de toxicidade de dose repetida 
+combinada com o teste de triagem de toxidade para 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+15 / 25 
+desenvolviment/reprodução 
+Espécie: Ratazana 
+Via de aplicação: Ingestão 
+Método: Directrizes do Teste OECD 422 
+Resultado: negativo 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade para órgãos-alvo específicos (STOT) - exposição única 
+Pode provocar sonolência ou vertigens. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Avaliação : Pode provocar sonolência ou vertigens. 
+ 
+Toxicidade para órgãos-alvo específicos (STOT) - exposição repetida 
+Não classificado com base nas informações disponíveis. 
+Toxicidade por dose repetida 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Espécie : Ratazana 
+NOAEL : 10.186 mg/m³  
+Via de aplicação : inalação (vapor) 
+Duração da exposição : 13 Sems. 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Espécie : Ratazana 
+NOAEL : 100 mg/kg  
+LOAEL : 300 mg/kg  
+Via de aplicação : Ingestão 
+Duração da exposição : 90 Dias 
+Método : Directrizes do Teste OECD 408 
+ 
+Perigo de aspiração 
+Não classificado com base nas informações disponíveis. 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+A substância ou a mistura é conhecida por causar perigos de toxicidade humana por aspiração 
+ou deve ser considerada como se causar um perigo de toxicidade humana por aspiração.  
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+A substância ou a mistura é conhecida por causar perigos de toxicidade humana por aspiração 
+ou deve ser considerada como se causar um perigo de toxicidade humana por aspiração. 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+16 / 25 
+11.2 Informações sobre outros perigos 
+Propriedades desreguladoras do sistema endócrino 
+Não classificado com base nas informações disponíveis. 
+Produto: 
+Avaliação : A substância/mistura não contém componentes considerados 
+como tendo propriedades desreguladoras do sistema 
+endócrino de acordo com o artigo 57(f) do REACH ou o 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o 
+Regulamento da Comissão (UE) 2018/605 a níveis de 0,1% 
+ou superiores. 
+ 
+SECÇÃO 12: Informação ecológica 
+12.1 Toxicidade 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Toxicidade em peixes  :  LL50 (Oncorhynchus mykiss (truta arco-íris)): > 10 - 30 mg/l 
+Duração da exposição: 96 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 203 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados 
+aquáticos  
+:  EL50 (Daphnia magna): > 22 - 46 mg/l 
+Duração da exposição: 48 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 202 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade para às 
+algas/plantas aquáticas  
+:  EL50 (Pseudokirchneriella subcapitata (alga verde)): > 1.000 
+mg/l 
+Duração da exposição: 72 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 201 
+Observações: aom base em dados de materiais semelhantes 
+ 
+    NOELR (Pseudokirchneriella subcapitata (alga verde)): 1 mg/l 
+Duração da exposição: 72 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 201 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Toxicidade em peixes  :  LL50 (Oncorhynchus mykiss (truta arco-íris)): > 1.000 mg/l 
+Duração da exposição: 96 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 203 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+17 / 25 
+Toxicidade em dáfnias e 
+outros invertebrados 
+aquáticos  
+:  EL50 (Daphnia magna): > 1.000 mg/l 
+Duração da exposição: 48 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 202 
+ 
+Toxicidade para às 
+algas/plantas aquáticas  
+:  EL50 (Pseudokirchneriella subcapitata (alga verde)): > 1.000 
+mg/l 
+Duração da exposição: 72 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 201 
+ 
+    NOELR (Pseudokirchneriella subcapitata (alga verde)): 1.000 
+mg/l 
+Duração da exposição: 72 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 201 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Toxicidade em peixes  :  LL50 (Cyprinus carpio (Carpa)): > 100 mg/l 
+Duração da exposição: 96 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 203 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados 
+aquáticos  
+:  EL50 (Daphnia magna): > 100 mg/l 
+Duração da exposição: 48 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 202 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade para às 
+algas/plantas aquáticas  
+:  EL50 (Pseudokirchneriella subcapitata (alga verde)): > 10 
+mg/l 
+Duração da exposição: 72 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 201 
+Observações: aom base em dados de materiais semelhantes 
+ 
+    EL10 (Pseudokirchneriella subcapitata (alga verde)): > 1 mg/l 
+Duração da exposição: 72 h 
+Substância teste: Fracção Acomodada de Água 
+Método: Directrizes do Teste OECD 201 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade para os micro-
+organismos  
+:  NOEC : > 100 mg/l  
+Duração da exposição: 3 h 
+Método: Directrizes do Teste OECD 209 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Toxicidade em dáfnias e 
+outros invertebrados 
+aquáticos (Toxicidade 
+crónica)  
+: NOELR: 2,2 mg/l  
+Duração da exposição: 21 d 
+Espécie: Daphnia magna 
+Substância teste: Fracção Acomodada de Água 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+18 / 25 
+Método: Directrizes do Teste OECD 211 
+ 
+12.2 Persistência e degradabilidade 
+Componentes: 
+Hidrocarbonetos, C9-C10, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Biodegradabilidade  :  Resultado: Rapidamente biodegradável. 
+Biodegradabilidade:  89 % 
+Duração da exposição: 28 d 
+Método: Directrizes do Teste OECD 301F 
+Observações: aom base em dados de materiais semelhantes 
+ 
+Hidrocarbonetos, C11-C14, n-alcanos, isoalcanos, cíclicos, <2% aromáticos: 
+Biodegradabilidade  :  Resultado: Rapidamente biodegradável. 
+Biodegradabilidade:  69 % 
+Duração da exposição: 28 d 
+Método: Directrizes do Teste OECD 301F 
+ 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Biodegradabilidade  :  Resultado: Não rapidamente biodegradável. 
+Observações: aom base em dados de materiais semelhantes 
+ 
+12.3 Potencial de bioacumulação 
+Componentes: 
+Cálcio bis(di C8-C10, ramificado, rico em C9, alquilnaftalenosulfonato): 
+Coeficiente de partição: n-
+octanol/água  
+: log Pow: > 6,6 
+ 
+12.4 Mobilidade no solo 
+Dados não disponíveis 
+12.5 Resultados da avaliação PBT e mPmB 
+Produto: 
+Avaliação  : A substância/mistura não contém componentes considerados 
+persistentes, bioacumuláveis e tóxicos (PBT) ou muito 
+persistentes e muito bioacumuláveis (vPvB) a níveis de 0.1% 
+ou superior. 
+ 
+12.6 Propriedades desreguladoras do sistema endócrino 
+Produto: 
+Avaliação : A substância/mistura não contém componentes considerados 
+como tendo propriedades desreguladoras do sistema 
+endócrino de acordo com o artigo 57(f) do REACH ou o 
+Regulamento Delegado da Comissão (UE) 2017/2100 ou o 
+Regulamento da Comissão (UE) 2018/605 a níveis de 0,1% 
+ou superiores. 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+19 / 25 
+ 
+12.7 Outros efeitos adversos 
+Dados não disponíveis 
+ 
+SECÇÃO 13: Considerações relativas à eliminação 
+13.1 Métodos de tratamento de resíduos 
+Produto :  Eliminar de acordo com os regulamentos locais. 
+De acordo com o Catálogo Europeu dos Resíduos, os 
+Códigos dos Resíduos não são específicos ao produto, mas 
+específicos à aplicação. 
+Os códigos dos resíduos devem ser atribuídos pelo usuário, 
+de preferência em discussão com as autoridades 
+responsáveis pela destruição dos resíduos. 
+Não deitar os resíduos para o esgoto.  
+Embalagens contaminadas :  Os contentores vazios devem ser levados para um local 
+aprovado para a manipulação de resíduos para a reciclagem 
+ou a destruição. 
+Recipientes vazios retêm resíduos e podem ser perigosos. 
+Não pressurizar, cortar, soldar, perfurar ou expor estes 
+recipientes ao calor, chamas, faíscas ou outras fontes de 
+ignição. Podem explodir e causar ferimentos e/ou morte. 
+Se não especificado de outra forma: Eliminar como produto 
+não utilizado. 
+Esvaziar por completo latas de aerossóis (incluindo gás 
+propulsor)  
+Número de eliminação de 
+resíduos 
+:  Os códigos dos resíduos seguintes são somente sugestões: 
+ 
+   produto usado 
+13 02 05*, óleos minerais não clorados de motores, 
+transmissões e lubrificação 
+ 
+   produto não usado 
+13 02 05*, óleos minerais não clorados de motores, 
+transmissões e lubrificação 
+ 
+   embalagens contaminadas 
+15 01 10*, embalagens contendo ou contaminadas por 
+resíduos de substâncias perigosas 
+ 
+SECÇÃO 14: Informações relativas ao transporte 
+14.1 Número ONU ou número de ID 
+ADN : UN 1950 
+ADR : UN 1950 
+RID : UN 1950 
+IMDG : UN 1950 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+20 / 25 
+IATA : UN 1950 
+14.2 Designação oficial de transporte da ONU 
+ADN : AEROSSÓIS 
+ADR : AEROSSÓIS 
+RID : AEROSSÓIS 
+IMDG : AEROSOLS 
+IATA : Aerosols, flammable 
+ 
+14.3 Classes de perigo para efeitos de transporte 
+  Classe Riscos subsidiários 
+ADN : 2 2.1 
+ADR : 2 2.1 
+RID : 2 2.1 
+IMDG : 2.1 
+ 
+IATA : 2.1 
+ 
+14.4 Grupo de embalagem 
+ADN 
+ 
+Grupo de embalagem : Não atribuído pela regulamentação 
+Código de classificação : 5F 
+Rótulos : 2.1 
+ADR 
+ 
+Grupo de embalagem : Não atribuído pela regulamentação 
+Código de classificação : 5F 
+Rótulos : 2.1 
+Código de restrição de 
+utilização do túnel 
+: (D) 
+RID 
+ 
+Grupo de embalagem : Não atribuído pela regulamentação 
+Código de classificação : 5F 
+Número de identificação de 
+perigo 
+: 23 
+Rótulos : 2.1 
+IMDG 
+ 
+Grupo de embalagem : Não atribuído pela regulamentação 
+Rótulos : 2.1 
+EmS Código : F-D, S-U 
+IATA (Navio de carga)   
+Instruções de embalagem 
+(aeronave de carga) 
+: 203  
+Instrução de embalagem 
+(LQ) 
+: Y203  
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+21 / 25 
+Grupo de embalagem : Não atribuído pela regulamentação 
+Rótulos : Flammable Gas 
+IATA (Passageiro)   
+Instruções de embalagem 
+(aeronave de passageiro) 
+: 203  
+Instrução de embalagem 
+(LQ) 
+: Y203  
+Grupo de embalagem : Não atribuído pela regulamentação 
+Rótulos : Flammable Gas 
+14.5 Perigos para o ambiente 
+ADN  
+Perigoso para o Ambiente : não 
+ADR  
+Perigoso para o Ambiente : não 
+RID  
+Perigoso para o Ambiente : não 
+IMDG  
+Poluente marinho : não 
+14.6 Precauções especiais para o utilizador 
+A(s) classificação(ões) de transporte fornecida(s) aqui são apenas para fins informativos, e 
+baseadas unicamente nas propriedades do material não embalado conforme descrito nesta 
+Ficha de Dados de Segurança. As classificações de transporte podem variar de acordo com o 
+modo de transporte, tamanho das embalagens e variações nas regulamentações regionais ou 
+nacionais. 
+14.7 Transporte marítimo a granel em conformidade com os instrumentos da OMI  
+Observações :  Não aplicável ao produto tal como fornecido. 
+ 
+SECÇÃO 15: Informação sobre regulamentação 
+15.1 Regulamentação/legislação específica para a substância ou mistura em matéria de saúde, 
+segurança e ambiente 
+REACH - Restrições aplicáveis ao fabrico, à colocação 
+no mercado e à utilização de determinadas substâncias 
+e misturas perigosas e de certos artigos perigosos 
+(Anexo XVII)  
+:  
+  
+Condições de limitação para as 
+seguintes entradas devem ser 
+consideradas: 
+Número na lista 40 
+Esta substância/mistura não deve 
+ser utilizada em dispensadores de 
+aerossol destinados ao 
+fornecimento ao público em geral 
+para fins de entretenimento e 
+decoração.   
+  
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+22 / 25 
+Número na lista 75 
+Se pretende utilizar este produto 
+como tinta para tatuagem, por favor 
+contate o seu fornecedor. 
+ 
+  A(s) substância(s) ou mistura(s) são 
+aqui enumeradas de acordo com a 
+sua aparência no regulamento, 
+independentemente da sua 
+utilização/fim ou das condições da 
+restrição. Consultar as condições do 
+regulamento correspondente para 
+determinar se uma entrada é ou não 
+aplicável à colocação no mercado. 
+REACH - Lista de substâncias que suscitam elevada 
+preocupação candidatas a autorização (artigo 59).  
+: Não aplicável 
+Regulamentação (EC) No 2024/590 sobre substâncias 
+que empobrecem a camada de ozônio  
+: Não aplicável 
+Regulamento (UE) 2019/1021 relativo a poluentes 
+orgânicos persistentes (reformulação)  
+: Não aplicável 
+Regulamentação (UE) No 649/2012 do Parlamento 
+europeu e o Conselho sobre a importação e exportação 
+de produtos químicos perigosos  
+: Não aplicável 
+REACH - Lista de substâncias sujeitas à autorização 
+(Anexo XIV)  
+: Não aplicável 
+Seveso III: Diretiva 2012/18/UE do Parlamento Europeu e do Conselho relativa ao controlo dos 
+perigos associados a acidentes graves que envolvem substâncias perigosas.   
+Quantidade 1 Quantidade 2 
+P3a 
+ 
+ AEROSSÓIS 
+INFLAMÁVEIS 
+150 t 500 t 
+18 
+ 
+ Gases inflamáveis 
+liquefeitos (incluindo GPL) 
+e gás natural 
+50 t 200 t 
+34 
+ 
+ Produtos petrolíferos e 
+combustíveis alternativos 
+a) Gasolinas e naftas b) 
+Querosenes (incluindo 
+combustível de aviação) c) 
+Gasóleos (incluindo 
+combustíveis para motores 
+diesel, fuelóleos 
+domésticos e gasóleos de 
+mistura) d) Fuelóleos 
+pesados e) Combustíveis 
+alternativos que sirvam os 
+mesmos propósitos e com 
+as mesmas propriedades 
+em relação à 
+inflamabilidade e aos 
+riscos ambientais que os 
+produtos mencionados em 
+a) a d) 
+2.500 t 25.000 t 
+ 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+23 / 25 
+Componentes orgânicos 
+voláteis. 
+: Diretiva 2010/75/UE do Parlamento Europeu e do Conselho, 
+de 24 de Novembro de 2010, relativa às emissões industriais 
+e exploração pecuária (prevenção e controlo integrados da 
+poluição) 
+Teor dos componentes orgânicos voláteis: 88 %, 694,32 g/l 
+Observações: Conteúdo VOC excluindo a água 
+ 
+Regulamento (CE) n.º 
+648/2004, conforme alterado 
+: 30 % e superior: Hidrocarbonetos alifáticos 
+Outros constituentes: Perfumes 
+ 
+Outro regulamentação: 
+Tenha a atenção à Directiva 94/33/EC relativa à protecção de jovens no trabalho ou 
+regulamentos nacionais mais rigorosos, quando aplicável.  
+15.2 Avaliação da segurança química 
+Uma Avaliação de Segurança de Produtos Químicos não foi executada. 
+ 
+SECÇÃO 16: Outras informações 
+Outras informações  :  Os itens onde foram feitas alterações à versão anterior são 
+destacados no corpo deste documento por duas linhas 
+verticais. 
+ 
+Texto completo das Demonstrações -H 
+EUH066 : Pode provocar pele seca ou gretada, por exposição repetida. 
+H226 : Líquido e vapor inflamáveis. 
+H304 : Pode ser mortal por ingestão e penetração nas vias 
+respiratórias. 
+H315 : Provoca irritação cutânea. 
+H317 : Pode provocar uma reacção alérgica cutânea. 
+H319 : Provoca irritação ocular grave. 
+H336 : Pode provocar sonolência ou vertigens. 
+H412 : Nocivo para os organismos aquáticos com efeitos 
+duradouros. 
+Texto completo das outras siglas 
+Aquatic Chronic : Perigo (crónico) de longo prazo para o ambiente aquático 
+Asp. Tox. : Perigo de aspiração 
+Eye Irrit. : Iirritação ocular 
+Flam. Liq. : Líquidos inflamáveis 
+Skin Irrit. : Irritação cutânea 
+Skin Sens. : Sensibilização da pele 
+STOT SE : Toxicidade para órgãos-alvo específicos - exposição única 
+PT OEL : Segurança e Saúde no Trabalho - Valores limite de exposição 
+profissional a agentes químicos 
+PT OEL / VLE-MP : Valor limite de exposição-media ponderada 
+PT OEL / VLE_CD : Valor limite de exposição - curta duração 
+ 
+ADN - Acordo europeu relativo ao transporte internacional de mercadorias perigosas por via 
+navegável interior; ADR - Acordo Relativo ao Transporte Internacional de Mercadorias Perigosas 
+por Estrada; AIIC - Inventário Australiano de Químicos Industriais; ASTM - Sociedade Americana 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+24 / 25 
+para a Testagem de Materiais; bw - Peso corporal; CLP - Regulamento relativo à classificação, 
+rotulagem e embalagem; Regulamento (CE) No 1272/2008; CMR - Cancerígeno, mutagénico ou 
+tóxico para a reprodução; DIN - Norma do Instituto Alemão de Normalização; DSL - Lista de 
+Substâncias Domésticas (Canadá); ECHA - Agência Europeia de Produtos Químicos; EC -
+Number - Número da Comunidade Europeia; ECx - Concentração associada pela resposta de 
+x%; ELx - Taxa de carregamento associada à resposta de x%; EmS - Procedimento de 
+Emergência; ENCS - Substâncias Químicas Novas e Existentes (Japã o); ErCx - Concentração 
+associada à resposta de taxa de crescimento de x%; GHS - Sistema Globalmente Harmonizado; 
+GLP - Boas Práticas de Laboratório; IARC - Agência Internacional de Pesquisa sobre Câncer; 
+IATA - Associação Internacional do Transporte Aéreo ; IBC - Código Internacional para a 
+Construção e Equipamento de Navios que Transportam Substâncias Químicas Perigosas a 
+Granel; IC50 - concentração média máxima inibitória; ICAO - Organização Internacional da 
+Aviação Civil; IECSC - Relação de Substâncias Q uímicas Existentes na China; IMDG - Código 
+Marítimo Internacional de Mercadorias Perigosas; IMO - Organização Marítima Internacional; 
+ISHL - Lei de Saúde e Segurança Industrial (Japão); ISO - Organização Internacional para a 
+Padronização; KECI - Relação de  Químicos Existentes na Coreia; LC50 - Concentração Letal 
+para 50% de uma população de teste; LD50 - Dose Letal para 50% de uma População de teste 
+(Dose Letal Média); MARPOL - Convenção Internacional para a Prevenção de Poluição dos 
+Navios; n.o.s. - N.S.A.: Não especificadas de outro modo. NO(A)EC - Concentração máxima que 
+não éobservado nenhum efeito (adverso); NO(A)EL - Nivel máximo que não é observado 
+nenhum efeito (adverso); NOELR - Taxa de Carregamento que não éobservado nenhum efeito; 
+NZIoC - Relação de Químicos da Nova Zelândia; OECD - Organização para a Cooperação e o 
+Desenvolvimento Econômico; OPPTS - Gabinete de Segurança Química e Prevenção à 
+Poluição; PBT - Substância Persistente, Bioacumulativa e Tóxica; PICCS - Relação de 
+Substâncias Químicas e  Químicos das Filipinas; (Q)SAR - Relações (Quantitativas) entre 
+Estrutura Química e Atividade Biológica ; REACH - Regulamento (CE) No 1907/2006 do 
+Parlamento Europeu e do Concelho a propósito do Registro, da Avaliação, Autorização, e 
+Restrição de Químicos ; RID - Regulamento relativo ao transporte internacional ferroviário de 
+mercadorias perigosas; SADT - Temperatura de Decomposição Autoacelerada; SDS - Ficha de 
+dados de segurança; SVHC - substância que suscita elevada preocupação; TCSI - Relação de 
+Substâncias Químicas de Taiwan; TECI - Inventário de produtos químicos existentes na 
+Tailândia;TRGS - Regra Técnica para Substâncias Perigosas; TSCA - Lei de Controle de 
+Substâncias Tóxicas (Estados Unidos); UN - Nações Unidas; vPvB - Muito Persistentes e Muito 
+Bioacumulativos 
+Informações adicionais 
+Fontes dos principais dados 
+utilizados na elaboração da 
+ficha  
+:  Dados técnicos internos, dados de matéria-prima SDSs, 
+resultados da pesquisa da OCDE eChem Portal e Agência 
+Europeia de Produtos Químicos, http://echa.europa.eu/ 
+ 
+Classificação da mistura: Procedimento de classificação: 
+Aerosol 1 H222, H229 Com base em dados de produtos ou 
+avaliação 
+STOT SE 3 H336 Método de cálculo 
+Aquatic Chronic 3 H412 Método de cálculo 
+ 
+A informação fornecida nesta Ficha de Dados de Segurança é a correcta, para o melhor do 
+nosso conhecimento, informação e crença na data da sua publicação. A informação destina -se 
+apenas como orientação para manusear, usar, processar, armazenar, transportar, eliminar e 
+publicar e não deve ser considerada como uma garantia ou especificação de qualquer tipo de 
+qualidade. A informação fornecida refere-se apenas ao material específico identificado no topo 
+deste SDS e pode não ser válida, quando o material do SDS é usado em combinação com 
+FICHA DE DADOS DE SEGURANÇA 
+de acordo com o Regulamento (CE) n.º 1907/2006, alterado pelo 
+Regulamento da Comissão (UE) 2020/878 
+ 
+MULTI 400ML 
+ 
+ 
+ 
+Versão  
+8.1 
+Data de revisão:  
+10.06.2026 
+Número SDS:  
+4660742-00028 
+Data de última emissão: 30.03.2026 
+Data da primeira emissão: 12.07.2019 
+ 
+25 / 25 
+outros materiais, ou em qualquer processo, excepto se especificado no texto. Os utilizadores dos 
+materiais devem analisar as informações e recomendações no contexto específi co em termos da 
+forma pretendida de manuseio, uso, processamento e armazenamento, incluindo uma avaliação 
+da adequação do material SDS no produto final do utilizador, se aplicável. 
+ 
+PT / PT 
+ 
+ 
