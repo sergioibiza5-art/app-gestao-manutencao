@@ -18,9 +18,11 @@ export async function recordMeterReading(id: string, groupKey: string, formData:
   const saved = await getPrisma().$transaction(async (tx) => {
     const state = await maintenanceMeterState(tx, id, group.key, group.intervalHours!, group.firstHours);
     if (state.current && meter.lt(state.current)) return false;
-    const needsReference = state.baseline === null && state.next === null;
-    const reference = needsReference ? parseMeter(formData.get("referenceHours")) : null;
-    if (needsReference && (!reference || reference.gt(meter))) return false;
+    const canSetReference = state.baseline === null;
+    const rawReference = String(formData.get("referenceHours") ?? "").trim();
+    const reference = canSetReference && rawReference ? parseMeter(rawReference) : null;
+    if (canSetReference && ((rawReference && !reference) ||
+        (!reference && group.firstHours == null) || reference?.gt(meter))) return false;
     await tx.maintenanceMeterReading.create({ data: {
       equipmentId: id, groupKey, meterHours: meter, referenceHours: reference,
       recordedById: user.id, recorderName: user.name,

@@ -4220,7 +4220,7 @@ export async function completeWorkOrder(formData: FormData) {
 
     scheduleIdForRevalidate = workOrder.scheduleId;
     const performedAt = workOrder.startedAt ?? new Date();
-    const completionMoment = new Date();
+    const completionMoment = workOrder.closedAt ?? new Date();
     const totalWorkSeconds =
       workOrder.totalWorkSeconds +
       (workOrder.status === "IN_PROGRESS" ? elapsedSeconds(workOrder.lastResumedAt ?? workOrder.startedAt, completionMoment) : 0);

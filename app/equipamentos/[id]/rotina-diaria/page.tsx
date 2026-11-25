@@ -132,8 +132,9 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
           <label className="grid gap-1 text-sm">Horas atuais (h)
             <input type="number" name="meterHours" min={meterState.current?.toString() ?? "0"} max="9999999999.99" step="0.01" required className={inputClass} />
           </label>
-          {meterState.baseline === null && meterState.next === null && <label className="grid gap-1 text-sm">Horímetro na última manutenção (h)
-            <input type="number" name="referenceHours" min="0" max="9999999999.99" step="0.01" required className={inputClass} />
+          {meterState.baseline === null && <label className="grid gap-1 text-sm">
+            {group.firstHours != null ? "Horímetro na primeira manutenção já realizada (h, opcional)" : "Horímetro na última manutenção (h)"}
+            <input type="number" name="referenceHours" min="0" max="9999999999.99" step="0.01" required={group.firstHours == null} className={inputClass} />
           </label>}
           <button className={buttonClass}><Save size={17} /> Guardar apenas leitura</button>
         </form>}

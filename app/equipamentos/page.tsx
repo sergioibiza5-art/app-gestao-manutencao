@@ -225,6 +225,8 @@ const filteredEquipment = typedEquipment.filter((item) => {
     typeId,
     measurement,
   };
+  const filterKey = JSON.stringify(filterParams);
+  const hasFilters = Boolean(q) || [status, location, category, typeId, measurement].some((value) => value !== "all");
   const equipmentReturnParams = new URLSearchParams();
   Object.entries({ ...filterParams, page: params.page || "" }).forEach(([key, value]) => {
     if (value && value !== "all") equipmentReturnParams.set(key, value);
@@ -287,7 +289,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
               <h2 className="text-xl font-semibold text-zinc-50">Filtros</h2>
             </div>
 
-            <form className="mt-4 grid gap-3 text-sm md:grid-cols-2 xl:grid-cols-6">
+            <form key={filterKey} action="/equipamentos" className="mt-4 grid gap-3 text-sm md:grid-cols-2 xl:grid-cols-6">
               <div className="relative md:col-span-2 xl:col-span-2">
                 <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input
@@ -351,6 +353,14 @@ const filteredEquipment = typedEquipment.filter((item) => {
                 </Link>
               </div>
             </form>
+            {hasFilters && <div className="mt-3 flex flex-wrap gap-2 text-xs text-teal-200" aria-label="Filtros aplicados">
+              {q && <span>Pesquisa: {params.q}</span>}
+              {status !== "all" && <span>Estado: {statusLabel(status)}</span>}
+              {location !== "all" && <span>Local: {location}</span>}
+              {category !== "all" && <span>Categoria: {category}</span>}
+              {typeId !== "all" && <span>Tipo: {equipmentTypes.find((type) => type.id === typeId)?.name ?? typeId}</span>}
+              {measurement !== "all" && <span>{measurement === "true" ? "Só medição/monitorização" : "Sem medição/monitorização"}</span>}
+            </div>}
           </Panel>
 
           <details id="novo-equipamento" className="group">
@@ -500,7 +510,7 @@ const filteredEquipment = typedEquipment.filter((item) => {
             <div>
               <h2 className="text-xl font-semibold text-zinc-50">Equipamentos</h2>
               <p className="mt-1 text-sm text-zinc-500">
-                {filteredEquipment.length} resultado(s) · página {safePage} de {totalPages}
+                {filteredEquipment.length} de {typedEquipment.length} equipamentos · página {safePage} de {totalPages}
               </p>
             </div>
             <ModuleCodificationField moduleKey="equipamentos" returnPath={equipmentReturnPath} />
