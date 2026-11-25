@@ -981,6 +981,7 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                             <form action={updateMaintenanceSchedule} className="mt-3 grid gap-2 md:grid-cols-2">
                               <input type="hidden" name="id" value={schedule.id} />
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Equipamento
                               <select name="equipmentId" className={inputClass} defaultValue={schedule.equipmentId}>
                                 {equipment.map((item) => (
                                   <option key={item.id} value={item.id}>
@@ -988,22 +989,32 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                                   </option>
                                 ))}
                               </select>
+                              </label>
 
-                              <input name="title" className={inputClass} defaultValue={schedule.title} />
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Título da intervenção
+                                <input name="title" className={inputClass} defaultValue={schedule.title} />
+                              </label>
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Tipo de manutenção
                               <select name="type" className={inputClass} defaultValue={schedule.type}>
                                 <option value="INTERNAL">Interna</option>
                                 <option value="EXTERNAL">Externa</option>
                               </select>
+                              </label>
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Estado do agendamento
                               <select name="status" className={inputClass} defaultValue={schedule.status}>
                                 <option value="SCHEDULED">Agendada</option>
                                 <option value="DONE">Concluida</option>
                                 <option value="CANCELED">Cancelada</option>
                               </select>
+                              </label>
 
-                              <input name="scheduledAt" type="date" className={inputClass} defaultValue={dateInputValue(schedule.scheduledAt)} />
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Data agendada
+                                <input name="scheduledAt" type="date" className={inputClass} defaultValue={dateInputValue(schedule.scheduledAt)} />
+                              </label>
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Periodicidade
                               <select name="frequency" className={inputClass} defaultValue={schedule.frequency}>
                                 <option value="MONTHLY">Mensal</option>
                                 <option value="EVERY_TWO_MONTHS">Bimestral</option>
@@ -1016,9 +1027,13 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                                 <option value="WEEKLY">Semanal</option>
                                 <option value="DAILY">Diaria</option>
                               </select>
+                              </label>
 
-                              <input name="supplier" className={inputClass} defaultValue={schedule.supplier ?? ""} placeholder="Fornecedor" />
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Prestador de serviços / fornecedor
+                                <input name="supplier" className={inputClass} defaultValue={schedule.supplier ?? ""} />
+                              </label>
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Responsável atribuído
                               <select name="assignedToId" className={inputClass} defaultValue={schedule.assignedToId ?? ""}>
                                 <option value="">Sem responsável</option>
                                 {assignableUsers.map((item) => (
@@ -1027,22 +1042,29 @@ export default async function MaintenancePage({ searchParams }: MaintenancePageP
                                   </option>
                                 ))}
                               </select>
+                              </label>
 
-                              <input name="costCenter" className={inputClass} defaultValue={schedule.costCenter ?? ""} placeholder="Centro de custos" />
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300">Centro de custos
+                                <input name="costCenter" className={inputClass} defaultValue={schedule.costCenter ?? ""} />
+                              </label>
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300 md:col-span-2">Descrição da intervenção
                               <textarea
                                 name="description"
-                                className={`${textareaClass} md:col-span-2`}
+                                className={textareaClass}
                                 defaultValue={schedule.description ?? ""}
                                 placeholder="Descricao"
                               />
+                              </label>
 
+                              <label className="grid min-w-0 gap-1 text-sm text-zinc-300 md:col-span-2">Notas
                               <textarea
                                 name="notes"
-                                className={`${textareaClass} md:col-span-2`}
+                                className={textareaClass}
                                 defaultValue={schedule.notes ?? ""}
                                 placeholder="Notas"
                               />
+                              </label>
 
                               <button className="inline-flex h-10 items-center justify-center rounded-lg border border-zinc-800 px-3 text-sm font-semibold text-zinc-100">
                                 Editar agendamento
