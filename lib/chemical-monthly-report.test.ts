@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { firstBusinessDay, chemicalMonth, monthlyChemicalSchedule, portugueseHolidays } from "./chemical-monthly-calendar";
 import { monthlyChemicalCsv, monthlyChemicalHtml, monthlyChemicalEntryTypes } from "./chemical-monthly-report";
+import { chemicalVolume } from "./chemical-volume";
 
 test("first business day excludes weekends and fixed/movable Portuguese holidays", () => {
   assert.equal(firstBusinessDay("2026-12"), "2026-12-02");
@@ -55,12 +56,12 @@ test("the two daily UTC cron slots cover 08:00 Lisbon in every month", () => {
 
 test("CSV and email have one line per aggregated product, preserve exact decimals and escape content", () => {
   const report = { ...chemicalMonth("2026-11"), rows: [
-    { id: "one", name: 'Produto <A>; "X"', productType: "CHEMICAL_LIQUID", unit: "un", supplier: null, quantity: "9", entries: 3 },
-    { id: "two", name: "=Produto", productType: "CHEMICAL_AEROSOL", unit: "L", supplier: null, quantity: "0.00000003", entries: 3 },
-  ] };
+    { id: "one", name: 'Produto <A>; "X"', productType: "CHEMICAL_LIQUID", unit: "un", supplier: null, quantity: "9", entries: 3, packageQuantity: null, packageUnit: null },
+    { id: "two", name: "=Produto", productType: "CHEMICAL_AEROSOL", unit: "L", supplier: null, quantity: "0.00000003", entries: 3, packageQuantity: null, packageUnit: null },
+  ].map(row => ({ ...row, ...chemicalVolume(row, row.quantity) })) };
   const csv = monthlyChemicalCsv(report), html = monthlyChemicalHtml(report);
-  assert.equal(csv.split("\r\n").length, 5);
-  assert.ok(csv.includes('"9";"un";"3"'));
+  assert.equal(csv.split("\r\n").length, 6);
+  assert.ok(csv.includes('"9";"un";"";"";"Capacidade'));
   assert.ok(csv.includes('"0,00000003"'));
   assert.ok(csv.includes('"\'=Produto"'));
   assert.ok(html.includes("Produto &lt;A&gt;"));
@@ -69,4 +70,8 @@ test("CSV and email have one line per aggregated product, preserve exact decimal
   assert.ok(monthlyChemicalCsv({ ...report, rows: [] }).includes("Sem entradas"));
   assert.ok(monthlyChemicalHtml(report, true).includes("TESTE: pré-visualização"));
   assert.ok(!monthlyChemicalHtml(report).includes("TESTE:"));
+  assert.ok(html.includes("Total parcial apurado (L)"));
+  assert.ok(csv.includes("Total (L)"));
+  assert.ok(csv.includes("Total parcial: 1 produto(s)"));
+  assert.ok(monthlyChemicalHtml({ ...report, rows: [report.rows[0]] }).includes("Total não apurado (L)"));
 });

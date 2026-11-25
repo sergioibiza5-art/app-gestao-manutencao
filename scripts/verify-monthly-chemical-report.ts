@@ -13,7 +13,7 @@ async function main() {
   try {
     await prisma.$transaction(async tx => {
       const base = { category: tag, unit: "un", name: tag };
-      const chemical = await tx.consumable.create({ data: { ...base, productType: "CHEMICAL_LIQUID" } });
+      const chemical = await tx.consumable.create({ data: { ...base, productType: "CHEMICAL_LIQUID", packageQuantity: "2", packageUnit: "L" } });
       const other = await tx.consumable.create({ data: { ...base, productType: "NON_CHEMICAL" } });
       const sameName = await tx.consumable.create({ data: { ...base, unit: "L", productType: "CHEMICAL_LIQUID" } });
       for (const [id, type, quantity, date] of [
@@ -30,8 +30,11 @@ async function main() {
       assert.equal(rows.length, 2);
       assert.equal(rows.find(row => row.id === chemical.id)?.quantity, "9");
       assert.equal(rows.find(row => row.id === chemical.id)?.entries, 3);
+      assert.equal(rows.find(row => row.id === chemical.id)?.litresPerUnit, "2");
+      assert.equal(rows.find(row => row.id === chemical.id)?.totalLitres, "18");
       assert.equal(rows.find(row => row.id === sameName.id)?.quantity, "0.00000003");
       assert.equal(rows.find(row => row.id === sameName.id)?.entries, 2);
+      assert.equal(rows.find(row => row.id === sameName.id)?.totalLitres, "0.00000003");
       console.log("PASS: 3 x 3 = 9 in one row; initial stock included; adjustments, withdrawals, non-chemicals and next-month entries excluded; distinct product IDs and exact decimals preserved.");
       throw rollback;
     }, { timeout: 30_000 });
