@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
+import type { Attachment } from "nodemailer/lib/mailer";
 
-export async function sendGmail(to: string, subject: string, html: string, key?: string) {
+export async function sendGmail(to: string, subject: string, html: string, key?: string, attachments?: Attachment[]) {
   const user = process.env.GMAIL_USER?.trim();
   const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, "");
   if (!user || !pass) throw new Error("Envio de e-mail indisponível. Falta configurar o Gmail.");
@@ -13,7 +14,7 @@ export async function sendGmail(to: string, subject: string, html: string, key?:
   try {
     await transport.sendMail({
       from: { name: "Gestão de manutenção", address: user },
-      to, subject, html, messageId: key ? `<${key}@${user.split("@")[1]}>` : undefined,
+      to, subject, html, attachments, messageId: key ? `<${key}@${user.split("@")[1]}>` : undefined,
     });
   } catch (error) {
     const code = error && typeof error === "object" && "code" in error ? String(error.code) : "SMTP";
