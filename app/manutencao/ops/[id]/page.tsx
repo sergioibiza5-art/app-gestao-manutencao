@@ -44,7 +44,7 @@ export default async function Order({ params, searchParams }: { params: Promise<
     ["Conclusão", op.closedAt && dateTime.format(op.closedAt)], ["Validação", op.validatedAt && dateTime.format(op.validatedAt)],
     ["Tempo entre início e conclusão", elapsedSeconds !== null && elapsedSeconds >= 0 ? formatDuration(elapsedSeconds) : null],
     ["Tempo de trabalho registado", op.closedAt && formatDuration(op.totalWorkSeconds)],
-    ["Executado por", op.performedBy], ["Atribuída a", op.schedule?.assignedTo?.name], ["Fornecedor", op.maintenanceLog?.supplier],
+    ["Executado por", op.performedBy], ["Atribuída a", op.schedule?.assignedTo?.name], ["Prestador de serviços", op.supplier],
     ["Trabalho executado", op.actionsDone || op.maintenanceLog?.description], ["Resultado", op.result], ["Notas", op.notes],
   ];
   return <AppShell activeHref="/manutencao">
@@ -53,7 +53,7 @@ export default async function Order({ params, searchParams }: { params: Promise<
     {["ADMIN", "MANAGER"].includes(user.role) && <WorkOrderEditor order={{
       id: op.id, version: op.updatedAt.toISOString(), title: op.title, type: op.type,
       performedBy: op.performedBy, actionsDone: op.actionsDone || op.maintenanceLog?.description || null,
-      result: op.result, notes: op.notes, supplier: op.maintenanceLog?.supplier,
+      result: op.result, notes: op.notes, supplier: op.supplier,
     }} />}
     <Panel><dl className="grid gap-4 sm:grid-cols-2">{fields.filter(([,value]) => value).map(([label,value]) =>
       <div key={label}><dt className="text-sm text-zinc-400">{label}</dt><dd className="whitespace-pre-wrap">{value}</dd></div>)}</dl>

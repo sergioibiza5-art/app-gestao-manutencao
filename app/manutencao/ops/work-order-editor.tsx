@@ -37,7 +37,7 @@ export function WorkOrderEditor({ order }: { order: EditableOrder }) {
       <label className="grid gap-1">Título da intervenção<input name="title" required defaultValue={order.title} className={inputClass} /></label>
       <label className="grid gap-1">Tipo<select name="type" defaultValue={order.type} className={inputClass}><option value="INTERNAL">Interna</option><option value="EXTERNAL">Externa</option></select></label>
       <label className="grid gap-1">Executado por<input name="performedBy" defaultValue={order.performedBy ?? ""} className={inputClass} /></label>
-      {order.supplier !== undefined && <label className="grid gap-1">Fornecedor<input name="supplier" defaultValue={order.supplier ?? ""} className={inputClass} /></label>}
+      {order.supplier !== undefined && <label className="grid gap-1">Prestador de serviços<input name="supplier" maxLength={200} defaultValue={order.supplier ?? ""} className={inputClass} /></label>}
       <label className="grid gap-1 sm:col-span-2">Trabalho executado<textarea name="actionsDone" defaultValue={order.actionsDone ?? ""} className={textareaClass} /></label>
       <label className="grid gap-1 sm:col-span-2">Resultado<input name="result" defaultValue={order.result ?? ""} className={inputClass} /></label>
       <label className="grid gap-1 sm:col-span-2">Notas<textarea name="notes" defaultValue={order.notes ?? ""} className={textareaClass} /></label>

@@ -40,6 +40,7 @@ export function WorkOrderExecution({ workOrder, equipmentId, template, consumabl
                 {[
                   ["Tempo do serviço", durationLabel(workOrder.totalWorkSeconds)],
                   ["Feito por", workOrder.performedBy ?? "Sem responsável"],
+                  ...(workOrder.type === "EXTERNAL" ? [["Prestador de serviços", workOrder.supplier ?? "Não indicado"]] : []),
                   ["Resultado", workOrder.result ?? "Sem resultado"],
                   ["O que foi feito", workOrder.actionsDone ?? "Sem descrição"],
                 ].map(([label, value]) => (

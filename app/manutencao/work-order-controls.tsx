@@ -2,11 +2,21 @@ import type { WorkOrder } from "@prisma/client";
 import { cancelWorkOrderOpening, pauseWorkOrder, reopenWorkOrder, startWorkOrder, suspendWorkOrder, updateWorkOrderTiming, validateWorkOrder } from "@/app/actions";
 import { inputClass, textareaClass } from "@/app/components/ui";
 import { formatLisbonDateTimeInput } from "@/lib/lisbon-time";
+import { updateWorkOrderSupplier } from "@/app/actions";
 
 export function WorkOrderControls({ workOrder, canManage, ticketLinked = false }: { workOrder: WorkOrder; canManage: boolean; ticketLinked?: boolean }) {
   const workOrderDurationHours = Math.floor(Math.max(workOrder.totalWorkSeconds, 0) / 3600);
   const workOrderDurationMinutes = Math.floor((Math.max(workOrder.totalWorkSeconds, 0) % 3600) / 60);
   return <>
+    {workOrder.type === "EXTERNAL" && (
+      canManage ? <form action={updateWorkOrderSupplier} className="mt-4 grid gap-3">
+        <input type="hidden" name="workOrderId" value={workOrder.id} />
+        <label className="grid gap-1 text-sm">Prestador de serviços
+          <input name="supplier" defaultValue={workOrder.supplier ?? ""} maxLength={200} className={inputClass} />
+        </label>
+        <button className="min-h-11 rounded-lg border border-teal-300/40 px-3 text-sm font-semibold text-teal-100">Guardar prestador</button>
+      </form> : <p className="mt-4 text-sm">Prestador de serviços: {workOrder.supplier ?? "Não indicado"}</p>
+    )}
     {!ticketLinked && <div className="mt-4 flex flex-wrap gap-2">
       {(workOrder.status === "OPEN" || workOrder.status === "PAUSED" || workOrder.status === "SUSPENDED") && (
         <form action={startWorkOrder}>

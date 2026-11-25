@@ -778,6 +778,7 @@ model WorkOrder {
   totalWorkSeconds Int             @default(0)
   lastResumedAt    DateTime?
   performedBy      String?
+  supplier         String?
   actionsDone      String?
   result           String?
   notes            String?

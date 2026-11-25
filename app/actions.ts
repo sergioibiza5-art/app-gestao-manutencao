@@ -3792,6 +3792,7 @@ export async function createWorkOrderFromSchedule(formData: FormData) {
       equipmentId: schedule.equipmentId,
       scheduleId: schedule.id,
       templateId: schedule.equipment.equipmentType?.checklistTemplates[0]?.id,
+      supplier: schedule.type === "EXTERNAL" ? schedule.supplier : null,
       notes: schedule.notes,
     },
   });
@@ -4202,6 +4203,36 @@ export async function pauseWorkOrder(formData: FormData) {
   if (scheduleId) revalidatePath(`/manutencao/${scheduleId}`);
 }
 
+export async function updateWorkOrderSupplier(formData: FormData) {
+  const user = await requireCanManage();
+  const id = text(formData, "workOrderId");
+  const supplier = optionalText(formData, "supplier");
+  if (!id || (supplier && supplier.length > 200)) return;
+  const order = await getPrisma().$transaction(async (tx) => {
+    const current = await tx.workOrder.findUnique({ where: { id } });
+    if (!current || current.type !== "EXTERNAL") return null;
+    const updated = await tx.workOrder.update({ where: { id }, data: {
+      supplier,
+      notes: [current.notes, auditNote("Prestador de serviços corrigido", user.name,
+        `${current.supplier ?? "Não indicado"} -> ${supplier ?? "Não indicado"}`)].filter(Boolean).join("\n"),
+    } });
+    if (current.scheduleId) await tx.maintenanceSchedule.update({
+      where: { id: current.scheduleId }, data: { supplier },
+    });
+    if (current.maintenanceLogId) await tx.maintenanceLog.update({
+      where: { id: current.maintenanceLogId }, data: { supplier },
+    });
+    return updated;
+  });
+  if (!order) return;
+  revalidatePath("/manutencao");
+  revalidatePath("/manutencao/ops");
+  revalidatePath(`/manutencao/ops/${id}`);
+  if (order.scheduleId) revalidatePath(`/manutencao/${order.scheduleId}`);
+  revalidatePath(`/equipamentos/${order.equipmentId}`);
+  revalidatePath("/analises");
+}
+
 export async function completeWorkOrder(formData: FormData) {
   const user = await requireCanWrite();
   const prisma = getPrisma();
@@ -4274,7 +4305,7 @@ export async function completeWorkOrder(formData: FormData) {
         description: optionalText(formData, "actionsDone") || "Ordem de servico executada.",
         type: workOrder.type,
         date: performedAt,
-        supplier: workOrder.performedBy ?? user.name,
+        supplier: workOrder.type === "EXTERNAL" ? workOrder.supplier : workOrder.performedBy ?? user.name,
         performedBy: workOrder.performedBy ?? user.name,
         cost: totalCost.toFixed(2),
         notes: costNotes,

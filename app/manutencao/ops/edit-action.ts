@@ -16,19 +16,22 @@ export async function saveWorkOrderDetails(id: string, version: string, form: Fo
   const actionsDone = field("actionsDone") || null;
   const result = field("result") || null;
   const notes = field("notes") || null;
+  const supplier = field("supplier") || null;
+  if (supplier && supplier.length > 200) return { error: "O prestador aceita até 200 caracteres." };
 
   const linked = await getPrisma().$transaction(async tx => {
     const changed = await tx.workOrder.updateMany({
       where: { id, updatedAt: new Date(version) },
-      data: { title, type, performedBy, actionsDone, result, notes },
+      data: { title, type, performedBy, actionsDone, result, notes, supplier },
     });
     if (!changed.count) return null;
     const op = await tx.workOrder.findUniqueOrThrow({ where: { id },
       select: { maintenanceLogId: true, equipmentId: true, scheduleId: true } });
     if (op.maintenanceLogId) {
       await tx.maintenanceLog.update({ where: { id: op.maintenanceLogId },
-        data: { title, type, performedBy, description: actionsDone, notes, supplier: field("supplier") || null } });
+        data: { title, type, performedBy, description: actionsDone, notes, supplier } });
     }
+    if (op.scheduleId) await tx.maintenanceSchedule.update({ where: { id: op.scheduleId }, data: { supplier } });
     return op;
   });
   if (!linked) return { error: "A OP foi alterada ou removida. Atualiza a página antes de voltar a guardar." };
