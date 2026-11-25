@@ -49,9 +49,10 @@ export function monthlyChemicalCsv(report: Report) {
   return "\uFEFF" + rows.map(row => row.map(csvCell).join(";")).join("\r\n");
 }
 
-export function monthlyChemicalHtml(report: Report) {
+export function monthlyChemicalHtml(report: Report, test = false) {
   const table = report.rows.length ? `<table cellpadding="9" cellspacing="0" style="border-collapse:collapse;width:100%;text-align:left"><thead><tr><th>Produto</th><th>Quantidade total</th><th>Unidade</th><th>Entradas</th></tr></thead><tbody>${report.rows.map(row => `<tr><td style="border-top:1px solid #ddd">${escapeHtml(row.name)}</td><td style="border-top:1px solid #ddd">${escapeHtml(row.quantity.replace(".", ","))}</td><td style="border-top:1px solid #ddd">${escapeHtml(row.unit)}</td><td style="border-top:1px solid #ddd">${row.entries}</td></tr>`).join("")}</tbody></table>` : "<p>Sem entradas de produtos químicos neste período.</p>";
-  return `<html lang="pt"><body style="font-family:Arial,sans-serif;color:#222"><h1 style="font-size:22px">Entradas de produtos químicos</h1><p>Período: ${report.start.split("-").reverse().join("/")} a ${report.end.split("-").reverse().join("/")}.</p><p>Olá,<br>Segue o resumo mensal, com as quantidades somadas por produto.</p>${table}<p>Inclui entradas diretas e stock inicial. Não inclui ajustes nem saídas. As quantidades são apresentadas na unidade de stock atual de cada produto, sem somar unidades diferentes.</p><p>O relatório em CSV segue em anexo e pode ser aberto no Excel.</p></body></html>`;
+  const notice = test ? "<p><strong>TESTE: pré-visualização dos dados disponíveis. Não corresponde ao fecho mensal e não altera o envio automático.</strong></p>" : "";
+  return `<html lang="pt"><body style="font-family:Arial,sans-serif;color:#222"><h1 style="font-size:22px">Entradas de produtos químicos</h1>${notice}<p>Período: ${report.start.split("-").reverse().join("/")} a ${report.end.split("-").reverse().join("/")}.</p><p>Olá,<br>Segue o resumo mensal, com as quantidades somadas por produto.</p>${table}<p>Inclui entradas diretas e stock inicial. Não inclui ajustes nem saídas. As quantidades são apresentadas na unidade de stock atual de cada produto, sem somar unidades diferentes.</p><p>O relatório em CSV segue em anexo e pode ser aberto no Excel.</p></body></html>`;
 }
 
 export async function sendMonthlyChemicalReport(now = new Date()) {

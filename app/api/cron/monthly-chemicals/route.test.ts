@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { GET } from "./route";
+import { GET, POST } from "./route";
+
+test("test email cannot be requested without a correctly formatted single-use grant", async () => {
+  for (const request of [
+    new Request("http://localhost/api/cron/monthly-chemicals", { method: "POST" }),
+    new Request("http://localhost/api/cron/monthly-chemicals", { method: "POST", headers: { authorization: "Bearer cron-secret" } }),
+    new Request("http://localhost/api/cron/monthly-chemicals?token=" + "a".repeat(64), { method: "POST" }),
+  ]) assert.equal((await POST(request)).status, 401);
+});
 
 test("monthly chemical cron rejects missing, wrong and query-only credentials", async () => {
   const previous = process.env.CRON_SECRET;

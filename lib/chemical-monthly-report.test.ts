@@ -67,4 +67,6 @@ test("CSV and email have one line per aggregated product, preserve exact decimal
   assert.ok(!html.includes("Produto <A>"));
   assert.ok(monthlyChemicalHtml({ ...report, rows: [] }).includes("Sem entradas"));
   assert.ok(monthlyChemicalCsv({ ...report, rows: [] }).includes("Sem entradas"));
+  assert.ok(monthlyChemicalHtml(report, true).includes("TESTE: pré-visualização"));
+  assert.ok(!monthlyChemicalHtml(report).includes("TESTE:"));
 });
