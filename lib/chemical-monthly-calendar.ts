@@ -53,5 +53,5 @@ export function monthlyChemicalSchedule(now = new Date()) {
   const period = chemicalMonth(date.toISOString().slice(0, 7));
   const dueDate = firstBusinessDay(today.slice(0, 7));
   const hour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Lisbon", hour: "2-digit", hourCycle: "h23" }).format(now));
-  return { ...period, today, dueDate, due: today > dueDate || (today === dueDate && hour >= 8) };
+  return { ...period, today, dueDate, due: today >= dueDate && hour >= 8 };
 }

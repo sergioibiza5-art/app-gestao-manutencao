@@ -8,6 +8,14 @@
     {
       "path": "/api/cron/daily-plan",
       "schedule": "0 7 * * 1-5"
+    },
+    {
+      "path": "/api/cron/monthly-chemicals",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/monthly-chemicals",
+      "schedule": "0 8 * * *"
     }
   ]
 }

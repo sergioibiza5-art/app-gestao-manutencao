@@ -30,6 +30,8 @@ test("send gate respects 08:00 Lisbon, national holidays and catch-up runs", () 
   assert.equal(monthlyChemicalSchedule(new Date("2026-12-02T07:59:59Z")).due, false);
   assert.equal(monthlyChemicalSchedule(new Date("2026-12-02T08:00:00Z")).due, true);
   assert.equal(monthlyChemicalSchedule(new Date("2026-12-03T08:00:00Z")).due, true);
+  assert.equal(monthlyChemicalSchedule(new Date("2026-12-03T07:59:59Z")).due, false);
+  assert.equal(monthlyChemicalSchedule(new Date("2026-07-02T06:59:59Z")).due, false);
   const summer = monthlyChemicalSchedule(new Date("2026-07-01T07:00:00Z"));
   assert.equal(summer.due, true);
   assert.equal(summer.month, "2026-06");
@@ -38,6 +40,17 @@ test("send gate respects 08:00 Lisbon, national holidays and catch-up runs", () 
 
 test("report explicitly includes initial stock but not adjustments or withdrawals", () => {
   assert.deepEqual(monthlyChemicalEntryTypes, ["ENTRADA_DIRETA", "ENTRADA_INICIAL"]);
+});
+
+test("the two daily UTC cron slots cover 08:00 Lisbon in every month", () => {
+  for (let month = 1; month <= 12; month++) {
+    const day = firstBusinessDay(`2027-${String(month).padStart(2, "0")}`);
+    const slots = [7, 8].map(hour => new Date(`${day}T${String(hour).padStart(2, "0")}:00:00Z`));
+    const firstDue = slots.find(now => monthlyChemicalSchedule(now).due);
+    assert.ok(firstDue);
+    const localHour = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Lisbon", hour: "2-digit", hourCycle: "h23" }).format(firstDue);
+    assert.equal(localHour, "08", day);
+  }
 });
 
 test("CSV and email have one line per aggregated product, preserve exact decimals and escape content", () => {
