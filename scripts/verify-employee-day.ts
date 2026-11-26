@@ -15,6 +15,7 @@ const base = process.env.EMPLOYEE_TEST_URL || "http://localhost:3014";
 async function main() {
   const db = getPrisma(), tag = `employee-qa-${randomBytes(5).toString("hex")}`;
   const userIds: string[] = [];
+  const extraBatchIds: string[] = [];
   let equipmentId = "", batchId = "";
   const browser = await chromium.launch({ channel: "msedge", headless: true });
   try {
@@ -27,6 +28,8 @@ async function main() {
     const mainEquipment = await db.equipment.findUniqueOrThrow({ where: { code: "MCC_1" }, select: { id: true } });
     await db.ticketEquipmentAccess.create({ data: { userId: operator.id, equipmentId: mainEquipment.id } });
     const batch = await db.productionBatch.create({ data: { reference: tag, lot: tag, equipmentId, createdById: manager.id, status: "OPEN" } }); batchId = batch.id;
+    const privateBatch = await db.productionBatch.create({ data: { reference: tag, lot: "PRIVATE-OTHER-BATCH", equipmentId, createdById: other.id, status: "OPEN" } });
+    extraBatchIds.push(privateBatch.id);
     const time = (hour: string) => new Date(`2026-11-25T${hour}:00Z`);
     await db.productionActivity.createMany({ data: [
       { batchId, collaboratorId: operator.id, operation: "PCAM", startedAt: time("08:00"), endedAt: time("09:00") },
@@ -47,7 +50,19 @@ async function main() {
     assert.equal(day.totals.overlap, true);
     assert.equal(day.events.filter(e => e.kind === "Assinatura").length, 1);
     assert.equal(day.events.find(e => e.kind === "Assinatura")?.minutes, undefined);
-    assert.equal(day.pending.length, 1);
+    assert.equal(day.pending.filter(item => item.id === `batch-${batchId}`).length, 1);
+    assert.equal(day.pending.length, 2);
+    assert.ok(day.events.every((event, index) => index === 0 || day.events[index - 1].at >= event.at));
+    const currentDay = await getEmployeeDay(operator, operator.id, lisbonDay());
+    assert.equal(currentDay.current.length, 1);
+    assert.equal(currentDay.events.filter(event => event.id === currentDay.current[0].id).length, 0);
+    assert.equal(currentDay.pending.filter(item => item.id === `batch-${batchId}`).length, 0);
+    assert.ok(!JSON.stringify(currentDay).includes("PRIVATE-OTHER-BATCH"));
+    const plannedBatch = await db.productionBatch.create({ data: { reference: tag, lot: "PLANNED-OWN", equipmentId, createdById: operator.id, status: "PLANNED" } });
+    extraBatchIds.push(plannedBatch.id);
+    assert.equal((await getEmployeeDay(operator, operator.id, lisbonDay())).pending.find(item => item.id === `batch-${plannedBatch.id}`)?.statusLabel, "Lote por iniciar");
+    await db.productionBatch.update({ where: { id: plannedBatch.id }, data: { status: "DONE" } });
+    assert.equal((await getEmployeeDay(operator, operator.id, lisbonDay())).pending.filter(item => item.id === `batch-${plannedBatch.id}`).length, 0);
     assert.ok(!JSON.stringify(day).includes("PRIVATE-OTHER"));
     await assert.rejects(() => getEmployeeDay(operator, other.id, "2026-11-25"));
     assert.equal((await getEmployeeDay(manager, other.id, "2026-11-25")).totals.total, 240);
@@ -67,6 +82,9 @@ async function main() {
     await page.getByRole("heading", { name: "O meu dia", exact: true }).waitFor();
     assert.equal(await page.locator('select[name="pessoa"]').count(), 0);
     await page.getByRole("heading", { name: "O que tenho em curso" }).waitFor();
+    assert.equal(await page.locator('section[aria-labelledby="current-heading"] li').count(), 1);
+    assert.equal(await page.locator('section[aria-labelledby="diary-heading"] li').count(), 0);
+    assert.equal(await page.locator('section[aria-labelledby="pending-heading"]').getByText(`Lote ${tag}`, { exact: false }).count(), 0);
     const routines = page.locator("details").filter({ has: page.locator("summary").filter({ hasText: "Manutenções e limpezas dos equipamentos" }) });
     await routines.locator("summary").click();
     assert.ok(await routines.getByRole("link", { name: "Limpezas", exact: true }).count() > 0);
@@ -82,6 +100,9 @@ async function main() {
     await page.getByRole("button", { name: "Consultar", exact: true }).click();
     await page.waitForURL(/dia=2026-11-25/);
     assert.equal(await page.getByTestId("day-total").innerText(), "1h 30m 00s");
+    const diaryTitles = await page.locator('section[aria-labelledby="diary-heading"] li h3').allTextContents();
+    assert.ok(diaryTitles[0].includes("Pedido próprio"));
+    assert.equal(diaryTitles[diaryTitles.length - 1], "Produção de campos");
     await page.getByText("Existem horários sobrepostos.", { exact: false }).waitFor();
     assert.equal(await page.getByRole("heading", { name: "Por terminar agora" }).count(), 0);
     assert.ok(!(await page.locator("body").innerText()).includes("PRIVATE-OTHER"));
@@ -92,6 +113,18 @@ async function main() {
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
       await page.screenshot({ path: `outputs/employee-day-${viewport.width}.png`, fullPage: true });
     }
+    await page.goto(base + "/funcionario");
+    await db.productionActivity.updateMany({ where: { batchId, collaboratorId: operator.id, endedAt: null }, data: { endedAt: new Date() } });
+    await page.getByRole("button", { name: "Atualizar registos" }).click();
+    const pending = page.locator('section[aria-labelledby="pending-heading"]');
+    await pending.getByText(`${tag} · Lote ${tag}`, { exact: true }).waitFor();
+    assert.equal(await pending.getByText(`${tag} · Lote ${tag}`, { exact: true }).count(), 1);
+    assert.equal(await page.locator('section[aria-labelledby="current-heading"] li').count(), 0);
+    await pending.getByText("Lote em curso", { exact: false }).waitFor();
+    await page.screenshot({ path: "outputs/employee-day-pending-lot.png", fullPage: true });
+    await db.productionBatch.update({ where: { id: batchId }, data: { status: "DONE", endedAt: new Date() } });
+    await page.getByRole("button", { name: "Atualizar registos" }).click();
+    await pending.getByText(`${tag} · Lote ${tag}`, { exact: true }).waitFor({ state: "detached" });
     const forbidden = await page.goto(`${base}/funcionario?pessoa=${other.id}`);
     assert.equal(forbidden.status(), 404);
     const invalid = await page.goto(base + "/funcionario?dia=2026-02-31");
@@ -105,7 +138,7 @@ async function main() {
     await page.goto(base + "/");
     await page.waitForURL(base + "/funcionario");
     assert.deepEqual(errors, []);
-    console.log("PASS BROWSER: real login + Home routing, date filter, strict 404 on other employee/invalid dates, coordinator selector, desktop/tablet/mobile without overflow, no browser errors.");
+    console.log("PASS BROWSER: newest diary first; no current/diary duplication; finished personal activity leaves open lot pending once; closing lot removes it; login, scopes and responsive layouts preserved.");
   } finally {
     await browser.close();
     if (equipmentId) {
@@ -117,6 +150,7 @@ async function main() {
       await db.productionQualityCall.deleteMany({ where: { batchId } });
       await db.productionBatch.delete({ where: { id: batchId } });
     }
+    await db.productionBatch.deleteMany({ where: { id: { in: extraBatchIds } } });
     if (equipmentId) await db.equipment.delete({ where: { id: equipmentId } });
     await db.session.deleteMany({ where: { userId: { in: userIds } } });
     await db.user.deleteMany({ where: { id: { in: userIds } } });

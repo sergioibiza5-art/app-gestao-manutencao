@@ -2,13 +2,18 @@ import type { User } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { getPrisma } from "@/lib/prisma";
 import { canViewEmployee, employeeDayTotals, employeeDayWindow, clipDayPeriod, type DayPeriod } from "@/lib/employee-day";
-import { cleaningPerformerName } from "@/lib/daily-maintenance";
+import { cleaningPerformerName, lisbonDay } from "@/lib/daily-maintenance";
 import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { productionOperations } from "@/lib/production";
 
 export type DayEvent = {
   id: string; at: Date; end?: Date | null; title: string; detail: string;
   kind: string; minutes?: number; href?: string; open?: boolean;
+};
+
+export type PendingDayItem = {
+  id: string; title: string; detail: string; status: string;
+  statusLabel?: string; minutes?: number; href?: string;
 };
 
 export async function getEmployeeDay(viewer: User, personId: string, day: string, now = new Date()) {
@@ -18,7 +23,7 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
   if (!person) notFound();
   const window = employeeDayWindow(day);
   const inDay = { gte: window.start, lt: window.end };
-  const [activities, quality, entries, tickets, orders] = await Promise.all([
+  const [activities, quality, entries, tickets, orders, batches] = await Promise.all([
     db.productionActivity.findMany({
     where: { collaboratorId: personId, startedAt: { lt: window.end }, OR: [{ endedAt: null }, { endedAt: { gt: window.start } }] },
     select: { id: true, startedAt: true, endedAt: true, operation: true, batch: { select: { id: true, lot: true, reference: true } } },
@@ -44,10 +49,20 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
     where: { ticket: null, status: { in: ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"] }, OR: [{ schedule: { assignedToId: personId } }, { maintenanceLog: { userId: personId } }] },
     select: { id: true, number: true, title: true, status: true, totalWorkSeconds: true, lastResumedAt: true },
     }),
+    db.productionBatch.findMany({
+      where: { status: { in: ["PLANNED", "OPEN"] }, OR: [
+        { createdById: personId },
+        { activities: { some: { collaboratorId: personId } } },
+        { qualityCalls: { some: { technicianId: personId } } },
+      ] },
+      select: { id: true, reference: true, lot: true, status: true, equipment: { select: { code: true, name: true } } },
+      orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
+    }),
   ]);
   const events: DayEvent[] = [];
   const periods: DayPeriod[] = [];
   const current: DayEvent[] = [];
+  const activeBatchIds = new Set<string>();
   for (const a of activities) {
     const period: DayPeriod = { start: a.startedAt, end: a.endedAt, kind: "production" };
     periods.push(period);
@@ -57,7 +72,10 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
       detail: `${a.batch.reference} · Lote ${a.batch.lot}`, kind: "Produção", href: `/producao?lote=${a.batch.id}`, open: !a.endedAt,
       minutes: interval ? (interval.end.getTime() - interval.start.getTime()) / 60000 : 0 };
     if (interval) events.push(event);
-    if (!a.endedAt && a.startedAt <= now) current.push(event);
+    if (!a.endedAt && a.startedAt <= now) {
+      current.push(event);
+      activeBatchIds.add(a.batch.id);
+    }
   }
   for (const q of quality) {
     const period: DayPeriod | null = q.arrivedAt ? { start: q.arrivedAt, end: q.endedAt, kind: "quality" } : null;
@@ -68,7 +86,10 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
       detail: `Lote ${q.batch.lot}`, kind: "Qualidade", href: `/producao?lote=${q.batch.id}`, open: !q.endedAt,
       ...(interval ? { minutes: (interval.end.getTime() - interval.start.getTime()) / 60000 } : {}) };
     if (interval || (!q.arrivedAt && q.calledAt >= window.start && q.calledAt < window.end)) events.push(event);
-    if (!q.endedAt && q.calledAt <= now) current.push(event);
+    if (!q.endedAt && q.calledAt <= now) {
+      current.push(event);
+      activeBatchIds.add(q.batch.id);
+    }
   }
   const within = (date: Date | null) => date && date >= window.start && date < window.end;
   for (const entry of entries) {
@@ -88,11 +109,19 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
   }
   const accumulated = (record: { totalWorkSeconds: number; lastResumedAt: Date | null; status: string }) =>
     (record.totalWorkSeconds + (record.status === "IN_PROGRESS" && record.lastResumedAt ? Math.max(0, (now.getTime() - record.lastResumedAt.getTime()) / 1000) : 0)) / 60;
-  const pending = [
+  const pending: PendingDayItem[] = [
+    ...batches.filter(b => !activeBatchIds.has(b.id)).map(b => ({
+      id: `batch-${b.id}`, title: `${b.reference} · Lote ${b.lot}`, status: b.status,
+      statusLabel: b.status === "OPEN" ? "Lote em curso" : "Lote por iniciar",
+      detail: `${b.equipment.code || b.equipment.name} · Lote de produção`, href: `/producao?lote=${b.id}`,
+    })),
     ...tickets.filter(t => ["OPEN", "IN_PROGRESS", "PAUSED"].includes(t.status)).map(t => ({ id: t.id, title: `${t.number} · ${t.title}`, status: t.status,
       detail: t.assignedToId === personId ? "Intervenção atribuída" : "Pedido em acompanhamento", minutes: accumulated(t), href: ticketHref(t.openedById, t.id) })),
     ...orders.map(o => ({ id: o.id, title: `${o.number} · ${o.title}`, status: o.status, detail: "Ordem de serviço atribuída", minutes: accumulated(o), href: ["ADMIN", "MANAGER", "VIEWER"].includes(viewer.role) ? `/manutencao/ops/${o.id}` : undefined })),
   ];
-  events.sort((a, b) => a.at.getTime() - b.at.getTime() || a.id.localeCompare(b.id));
-  return { person, events, current, pending, totals: employeeDayTotals(periods, window, now) };
+  const currentIds = new Set(current.map(event => event.id));
+  const diary = day === lisbonDay(now) ? events.filter(event => !currentIds.has(event.id)) : events;
+  diary.sort((a, b) => b.at.getTime() - a.at.getTime() || a.id.localeCompare(b.id));
+  current.sort((a, b) => b.at.getTime() - a.at.getTime() || a.id.localeCompare(b.id));
+  return { person, events: diary, current, pending, totals: employeeDayTotals(periods, window, now) };
 }
