@@ -168,3 +168,12 @@
  GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 832ms (next.js: 4ms, application-code: 828ms)
  POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1099ms (next.js: 3ms, application-code: 1096ms)
   └─ ƒ productionAction({}, {}) in 473ms app/producao/actions.ts
+✓ Compiled in 172ms
+✓ Compiled in 144ms
+✓ Compiled in 140ms
+ GET /producao 200 in 1037ms (next.js: 143ms, application-code: 893ms)
+ POST /producao 200 in 702ms (next.js: 3ms, application-code: 699ms)
+  └─ ƒ productionAction({}, {}) in 276ms app/producao/actions.ts
+ GET /producao?lote=cmwxpphv6002g88v3p2r2fejz 200 in 956ms (next.js: 5ms, application-code: 951ms)
+ GET /producao?lote=cmwxpphv6002g88v3p2r2fejz 200 in 1168ms (next.js: 3ms, application-code: 1164ms)
+ GET /producao?lote=cmwxpphv6002g88v3p2r2fejz 200 in 1108ms (next.js: 3ms, application-code: 1105ms)
