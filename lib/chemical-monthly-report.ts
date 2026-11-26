@@ -5,7 +5,7 @@ import { escapeHtml, isDeliverableEmail } from "@/lib/email-alerts";
 import { sendGmail } from "@/lib/gmail";
 import { getPrisma } from "@/lib/prisma";
 import { chemicalTypes, productTypeLabel } from "@/lib/product-types";
-import { chemicalVolume, chemicalVolumeTotal } from "@/lib/chemical-volume";
+import { chemicalMeasurement, chemicalVolumeTotal, chemicalMassTotal } from "@/lib/chemical-volume";
 import { buildChemicalOpeningReport, openingDeliveryChannel, openingDigestDate, openingReportRequired } from "@/lib/chemical-opening-report";
 
 export const monthlyChemicalEntryTypes = ["ENTRADA_DIRETA", "ENTRADA_INICIAL"];
@@ -34,7 +34,7 @@ export async function buildMonthlyChemicalReport(month: string, prisma: ReportDb
   const rows = products.map(product => {
     const totals = quantities.get(product.id)!;
     const quantity = totals._sum.quantity!.toFixed();
-    return { ...product, quantity, entries: totals._count._all, ...chemicalVolume(product, quantity) };
+    return { ...product, quantity, entries: totals._count._all, ...chemicalMeasurement(product, quantity) };
   }).sort((a, b) => a.name.localeCompare(b.name, "pt") || a.id.localeCompare(b.id));
   return { ...period, rows };
 }
@@ -47,40 +47,54 @@ export type ChemicalReport = Awaited<ReturnType<typeof buildMonthlyChemicalRepor
 type Report = ChemicalReport;
 
 export function monthlyChemicalCsv(report: Report) {
-  const total = chemicalVolumeTotal(report.rows);
-  const hasVolume = report.rows.some(row => row.totalLitres !== null);
+  const groups = chemicalReportGroups(report);
+  const number = (value: string | null | undefined) => value?.replace(".", ",") ?? "";
   const rows: unknown[][] = [
     [report.title || "Entradas mensais de produtos químicos", report.start, report.end, "Europe/Lisbon"],
-    ["Inclui entradas diretas e stock inicial. Exclui ajustes e saídas. Uma linha por produto; classificação e unidade atuais."],
-    ["Produto", "Tipo de produto", "Quantidade total", "Unidade de stock", "Litros por unidade de stock", "Total (L)", "Conversão em litros", "N.º de entradas", "Fornecedor atual", ...(report.breakdown ? ["Stock inicial (unidade de stock)", "Entradas diretas (unidade de stock)"] : [])],
-    ...report.rows.map(row => [row.name, productTypeLabel(row.productType), row.quantity.replace(".", ","), row.unit, row.litresPerUnit?.replace(".", ","), row.totalLitres?.replace(".", ","), row.litreNote, row.entries, row.supplier, ...(report.breakdown ? [report.breakdown[row.id]?.initial.replace(".", ","), report.breakdown[row.id]?.direct.replace(".", ",")] : [])]),
+    ["Inclui entradas diretas e stock inicial. Exclui ajustes e saídas. Uma linha por produto; classificação e unidades atuais. Totais separados em litros (L) e peso (kg), sem conversão entre ambos."],
+    ["Produto", "Tipo de produto", "Grupo", "Quantidade total", "Unidade de stock", "Litros por unidade de stock", "Total (L)", "Kg por unidade de stock", "Total (kg)", "Estado da conversão", "N.º de entradas", "Fornecedor atual", ...(report.breakdown ? ["Stock inicial (unidade de stock)", "Entradas diretas (unidade de stock)"] : [])],
+    ...[...groups.volume, ...groups.mass, ...groups.unknown].map(row => [row.name, productTypeLabel(row.productType), row.totalLitres !== null ? "Volume (L)" : row.totalKilograms !== null ? "Peso (kg)" : "Por confirmar", number(row.quantity), row.unit, number(row.litresPerUnit), number(row.totalLitres), number(row.kilogramsPerUnit), number(row.totalKilograms), row.totalLitres === null && row.totalKilograms === null ? "Conteúdo por embalagem em volume ou peso não configurado." : "", row.entries, row.supplier, ...(report.breakdown ? [number(report.breakdown[row.id]?.initial), number(report.breakdown[row.id]?.direct)] : [])]),
   ];
   if (!report.rows.length) rows.push(["Sem entradas de produtos químicos neste período."]);
-  else rows.push(["TOTAL APURADO (L)", "", "", "", "", hasVolume ? total.litres.replace(".", ",") : "", total.missing ? `Total parcial: ${total.missing} produto(s) sem conversão em litros.` : ""]);
+  else {
+    const pending = groups.unknown.length ? `${groups.unknown.length} produto(s) por confirmar; não incluídos nos totais.` : "";
+    rows.push(["TOTAL APURADO (L)", "", "Volume (L)", "", "", "", groups.volume.length ? number(chemicalVolumeTotal(groups.volume).litres) : "", "", "", pending]);
+    rows.push(["TOTAL APURADO (kg)", "", "Peso (kg)", "", "", "", "", "", groups.mass.length ? number(chemicalMassTotal(groups.mass)) : "", pending]);
+  }
   return "\uFEFF" + rows.map(row => row.map(csvCell).join(";")).join("\r\n");
 }
 
+export function chemicalReportGroups(report: Report) {
+  return {
+    volume: report.rows.filter(row => row.totalLitres !== null),
+    mass: report.rows.filter(row => row.totalLitres === null && row.totalKilograms !== null),
+    unknown: report.rows.filter(row => row.totalLitres === null && row.totalKilograms === null),
+  };
+}
+
 function chemicalReportSection(report: Report, test: boolean) {
-  const total = chemicalVolumeTotal(report.rows);
-  const hasVolume = report.rows.some(row => row.totalLitres !== null);
-  const totalLabel = !hasVolume ? "Total não apurado (L)" : total.missing ? "Total parcial apurado (L)" : "Total apurado (L)";
-  const tableRows = report.rows.map(row => `<tr>
+  const groups = chemicalReportGroups(report);
+  function table(rows: Report["rows"], unit: "L" | "kg") {
+    if (!rows.length) return `<p>Sem produtos registados em ${unit} neste período.</p>`;
+    const total = unit === "L" ? chemicalVolumeTotal(rows).litres : chemicalMassTotal(rows);
+    const tableRows = rows.map(row => `<tr>
     <td style="border-top:1px solid #ddd">${escapeHtml(row.name)}</td>
     <td style="border-top:1px solid #ddd">${escapeHtml(row.quantity.replace(".", ","))}${report.breakdown ? `<br><small>Stock inicial: ${escapeHtml(report.breakdown[row.id]?.initial.replace(".", ","))}<br>Entradas diretas: ${escapeHtml(report.breakdown[row.id]?.direct.replace(".", ","))}</small>` : ""}</td>
     <td style="border-top:1px solid #ddd">${escapeHtml(row.unit)}</td>
-    <td style="border-top:1px solid #ddd">${escapeHtml(row.litresPerUnit?.replace(".", ",") ?? "-")}</td>
-    <td style="border-top:1px solid #ddd">${row.totalLitres === null ? escapeHtml(row.litreNote) : escapeHtml(row.totalLitres.replace(".", ","))}</td>
+    <td style="border-top:1px solid #ddd">${escapeHtml((unit === "L" ? row.litresPerUnit : row.kilogramsPerUnit)?.replace(".", ","))}</td>
+    <td style="border-top:1px solid #ddd">${escapeHtml((unit === "L" ? row.totalLitres : row.totalKilograms)?.replace(".", ","))}</td>
     <td style="border-top:1px solid #ddd">${row.entries}</td>
   </tr>`).join("");
-  const table = report.rows.length ? `<table cellpadding="9" cellspacing="0" style="border-collapse:collapse;width:100%;text-align:left">
-    <thead><tr><th>Produto</th><th>Quantidade total</th><th>Unidade</th><th>L por unidade</th><th>Total (L)</th><th>Entradas</th></tr></thead>
+    return `<table cellpadding="9" cellspacing="0" style="border-collapse:collapse;width:100%;text-align:left">
+    <thead><tr><th>Produto</th><th>Quantidade total</th><th>Unidade de stock</th><th>${unit} por unidade</th><th>Total (${unit})</th><th>Entradas</th></tr></thead>
     <tbody>${tableRows}</tbody>
-    <tfoot><tr><th colspan="4" style="border-top:2px solid #888">${totalLabel}</th><th style="border-top:2px solid #888">${hasVolume ? escapeHtml(total.litres.replace(".", ",")) : "Por confirmar"}</th><td style="border-top:2px solid #888"></td></tr></tfoot>
-  </table>` : "<p>Sem entradas de produtos químicos neste período.</p>";
-  const volumeNote = total.missing ? `<p>${total.missing} produto(s) sem conversão em litros. O total apurado inclui apenas os produtos com volume conhecido; não foi atribuída quantidade zero aos restantes.</p>` : "";
+    <tfoot><tr><th colspan="4" style="border-top:2px solid #888">Total apurado (${unit})</th><th style="border-top:2px solid #888">${escapeHtml(total.replace(".", ","))}</th><td style="border-top:2px solid #888"></td></tr></tfoot>
+  </table>`;
+  }
+  const pending = groups.unknown.length ? `<h2 style="font-size:18px">Produtos por confirmar</h2><p>Não incluídos nos totais em L ou kg: falta a configuração do conteúdo por embalagem.</p><ul>${groups.unknown.map(row => `<li>${escapeHtml(row.name)}: ${escapeHtml(row.quantity.replace(".", ","))} ${escapeHtml(row.unit)}</li>`).join("")}</ul>` : "";
   const notice = test ? "<p><strong>TESTE: pré-visualização dos dados disponíveis. Não corresponde ao fecho mensal e não altera o envio automático.</strong></p>" : "";
   const introduction = report.introductoryNote ? escapeHtml(report.introductoryNote) : "Olá,<br>Segue o resumo mensal, com as quantidades somadas por produto.";
-  return `<h1 style="font-size:22px">${escapeHtml(report.title || "Entradas de produtos químicos")}</h1>${notice}<p>Período: ${report.start.split("-").reverse().join("/")} a ${report.end.split("-").reverse().join("/")}.</p><p>${introduction}</p>${table}${volumeNote}<p>Inclui entradas diretas e stock inicial. Não inclui ajustes nem saídas. Mantém as quantidades na unidade de stock e acrescenta os litros, calculados pela capacidade atual da embalagem registada no produto. Se o stock já estiver em L ou ml, converte diretamente sem voltar a multiplicar pela embalagem. Não converte massas em litros.</p><p>O relatório em CSV segue em anexo e pode ser aberto no Excel.</p>`;
+  return `<h1 style="font-size:22px">${escapeHtml(report.title || "Entradas de produtos químicos")}</h1>${notice}<p>Período: ${report.start.split("-").reverse().join("/")} a ${report.end.split("-").reverse().join("/")}.</p><p>${introduction}</p>${!report.rows.length ? "<p>Sem entradas de produtos químicos neste período.</p>" : ""}<h2 style="font-size:18px">Produtos em volume (L)</h2>${table(groups.volume, "L")}<h2 style="font-size:18px">Produtos em peso (kg)</h2>${table(groups.mass, "kg")}${pending}<p>Inclui entradas diretas e stock inicial. Não inclui ajustes nem saídas. As quantidades são mantidas na unidade de stock e normalizadas separadamente em litros (L) ou quilogramas (kg), usando o conteúdo atual da embalagem. Converte ml em L e g em kg; nunca converte peso em volume nem soma L com kg.</p><p>O relatório em CSV segue em anexo e pode ser aberto no Excel.</p>`;
 }
 
 export function monthlyChemicalHtml(report: Report, test = false, opening?: Report) {

@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { chemicalMonth } from "@/lib/chemical-monthly-calendar";
-import { chemicalVolume } from "@/lib/chemical-volume";
+import { chemicalMeasurement } from "@/lib/chemical-volume";
 import { getPrisma } from "@/lib/prisma";
 import { chemicalTypes } from "@/lib/product-types";
 import type { ChemicalReport } from "@/lib/chemical-monthly-report";
@@ -48,7 +48,7 @@ export async function buildChemicalOpeningReport(prisma: ReportDb = getPrisma())
     const sum = quantities.get(product.id)!;
     const quantity = sum.initial.plus(sum.direct).toFixed();
     breakdown[product.id] = { initial: sum.initial.toFixed(), direct: sum.direct.toFixed() };
-    return { ...product, quantity, entries: sum.entries, ...chemicalVolume(product, quantity) };
+    return { ...product, quantity, entries: sum.entries, ...chemicalMeasurement(product, quantity) };
   }).sort((a, b) => a.name.localeCompare(b.name, "pt") || a.id.localeCompare(b.id));
   return {
     ...period, rows, breakdown,

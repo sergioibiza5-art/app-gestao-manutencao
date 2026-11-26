@@ -33,10 +33,10 @@ test("initial report contains only January through October 2026, without overlap
 test("initial CSV and email keep one product row with initial stock and direct entries distinguished", () => {
   const opening: ChemicalReport = {
     ...chemicalOpeningRange(), title: "Relatório inicial de produtos químicos - 2026", breakdown: { one: { initial: "4", direct: "9" } },
-    rows: [{ id: "one", name: "Produto A", productType: "CHEMICAL_LIQUID", unit: "un", supplier: null, packageQuantity: null, packageUnit: "L", quantity: "13", entries: 4, litresPerUnit: "2", totalLitres: "26", litreNote: "" }],
+    rows: [{ id: "one", name: "Produto A", productType: "CHEMICAL_LIQUID", unit: "un", supplier: null, packageQuantity: null, packageUnit: "L", quantity: "13", entries: 4, litresPerUnit: "2", totalLitres: "26", litreNote: "", kilogramsPerUnit: null, totalKilograms: null }],
   };
   const csv = monthlyChemicalCsv(opening);
-  assert.equal(csv.split("\r\n").length, 5);
+  assert.equal(csv.split("\r\n").length, 6);
   assert.ok(csv.includes('"13";"un";"2";"26"'));
   assert.ok(csv.includes(';"4";"9"'));
   assert.ok(csv.includes("Stock inicial (unidade de stock)"));

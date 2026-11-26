@@ -7,7 +7,11 @@ const volumeUnits: Record<string, string> = {
   cl: "0.01", centilitro: "0.01", centilitros: "0.01",
   dl: "0.1", decilitro: "0.1", decilitros: "0.1",
 };
-const massUnits = new Set(["kg", "g", "gr", "mg", "quilo", "quilos", "quilograma", "quilogramas", "grama", "gramas"]);
+const massFactors: Record<string, string> = {
+  kg: "1", kgs: "1", quilo: "1", quilos: "1", quilograma: "1", quilogramas: "1",
+  g: "0.001", gr: "0.001", grs: "0.001", grama: "0.001", gramas: "0.001", mg: "0.000001",
+};
+const massUnits = new Set(Object.keys(massFactors));
 const normalizeUnit = (unit?: string | null) => unit?.trim().toLowerCase().replace(/\.$/, "") ?? "";
 
 type ProductVolume = { unit: string; packageUnit?: string | null; packageQuantity?: { toString(): string } | string | number | null };
@@ -34,4 +38,25 @@ export function chemicalVolumeTotal(rows: { totalLitres: string | null }[]) {
     else total = total.plus(row.totalLitres);
   }
   return { litres: total.toFixed(), missing };
+}
+
+export function chemicalMass(product: ProductVolume, quantity: string) {
+  const stockUnit = normalizeUnit(product.unit), packageUnit = normalizeUnit(product.packageUnit);
+  let factor = Object.hasOwn(massFactors, stockUnit) ? new Decimal(massFactors[stockUnit]) : null;
+  if (!factor && !Object.hasOwn(volumeUnits, stockUnit) && Object.hasOwn(massFactors, packageUnit) && product.packageQuantity != null) {
+    const capacity = new Decimal(product.packageQuantity.toString());
+    if (capacity.isFinite() && capacity.gt(0)) factor = capacity.times(massFactors[packageUnit]);
+  }
+  return factor ? { kilogramsPerUnit: factor.toFixed(), totalKilograms: new Decimal(quantity).times(factor).toFixed() }
+    : { kilogramsPerUnit: null, totalKilograms: null };
+}
+
+export function chemicalMeasurement(product: ProductVolume, quantity: string) {
+  return { ...chemicalVolume(product, quantity), ...chemicalMass(product, quantity) };
+}
+
+export function chemicalMassTotal(rows: { totalKilograms: string | null }[]) {
+  let total = new Decimal(0);
+  for (const row of rows) if (row.totalKilograms !== null) total = total.plus(row.totalKilograms);
+  return total.toFixed();
 }
