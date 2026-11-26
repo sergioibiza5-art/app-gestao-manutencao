@@ -8,6 +8,9 @@ import type { ChemicalReport } from "@/lib/chemical-monthly-report";
 const Decimal = Prisma.Decimal.clone({ precision: 40 });
 export const openingDeliveryChannel = "chemical-opening-email";
 export const openingDigestDate = "2026-01_2026-10";
+export function openingDeliveryIdentity(resend: boolean, grantHash: string) {
+  return resend ? { channel: "chemical-opening-email-resend", digestDate: grantHash } : { channel: openingDeliveryChannel, digestDate: openingDigestDate };
+}
 export function openingReportRequired(month: string, delivered: boolean) {
   return month === "2026-11" && !delivered;
 }

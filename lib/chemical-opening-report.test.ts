@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { chemicalOpeningRange, openingReportRequired } from "./chemical-opening-report";
+import { chemicalOpeningRange, openingReportRequired, openingDeliveryIdentity, openingDeliveryChannel, openingDigestDate } from "./chemical-opening-report";
 import { chemicalMonth } from "./chemical-monthly-calendar";
 import { monthlyChemicalCsv, monthlyChemicalHtml, type ChemicalReport } from "./chemical-monthly-report";
 
@@ -8,6 +8,15 @@ test("initial delivery is not repeated with November when already sent today", (
   assert.equal(openingReportRequired("2026-11", true), false);
   assert.equal(openingReportRequired("2026-11", false), true);
   assert.equal(openingReportRequired("2026-12", false), false);
+});
+
+test("an explicitly authorized resend keeps its own receipt without replacing the original delivery", () => {
+  assert.deepEqual(openingDeliveryIdentity(false, "new-grant"), { channel: openingDeliveryChannel, digestDate: openingDigestDate });
+  const revision = openingDeliveryIdentity(true, "new-grant");
+  assert.notEqual(revision.channel, openingDeliveryChannel);
+  assert.equal(revision.digestDate, "new-grant");
+  assert.deepEqual(openingDeliveryIdentity(true, "new-grant"), revision);
+  assert.notDeepEqual(openingDeliveryIdentity(true, "another-grant"), revision);
 });
 
 test("initial report contains only January through October 2026, without overlapping November", () => {
