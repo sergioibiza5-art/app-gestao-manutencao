@@ -1,7 +1,7 @@
 import { WorkOrderExecution } from "../work-order-execution";
 ﻿import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowLeft, FileCheck2, Wrench } from "lucide-react";
+import { ArrowLeft, Download, FileCheck2, Wrench } from "lucide-react";
 
 import { createWorkOrderFromSchedule } from "@/app/actions";
 import { AppShell } from "@/app/components/app-shell";
@@ -87,10 +87,13 @@ export default async function MaintenanceSchedulePage({ params }: MaintenanceSch
         title={schedule.title}
         description={`${schedule.equipment.name} - ${typeLabel(schedule.type)} - ${formatDate(schedule.scheduledAt)} - ${scheduleStatusLabel(schedule.status)}`}
         action={
+          <div className="flex flex-wrap gap-3">
+          {workOrder && <a href={`/api/manutencao/ops/${workOrder.id}/pdf`} className={buttonClass}><Download size={17} />Relatório PDF</a>}
           <Link href={backHref} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
             <ArrowLeft size={17} />
             {backLabel}
           </Link>
+          </div>
         }
       />
 

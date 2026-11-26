@@ -4,6 +4,7 @@ import { WorkOrderControls } from "../../work-order-controls";
 import { WorkOrderExecution } from "../../work-order-execution";
 import { workOrderExecutionInclude } from "@/lib/data";
 import Link from "next/link";
+import { Download } from "lucide-react";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, PageHeader, Panel } from "@/app/components/ui";
@@ -49,7 +50,7 @@ export default async function Order({ params, searchParams }: { params: Promise<
   ];
   return <AppShell activeHref="/manutencao">
     <PageHeader eyebrow={op.number} title={op.title} description={[op.equipment.code,op.equipment.name].filter(Boolean).join(" · ")}
-      action={<Link className={buttonClass} href={"/manutencao/ops?" + new URLSearchParams({ q, estado, pagina })}>Voltar à pesquisa</Link>} />
+      action={<div className="flex flex-wrap gap-3"><a className={buttonClass} href={`/api/manutencao/ops/${op.id}/pdf`}><Download size={17} />Relatório PDF</a><Link className={buttonClass} href={"/manutencao/ops?" + new URLSearchParams({ q, estado, pagina })}>Voltar à pesquisa</Link></div>} />
     {["ADMIN", "MANAGER"].includes(user.role) && <WorkOrderEditor order={{
       id: op.id, version: op.updatedAt.toISOString(), title: op.title, type: op.type,
       performedBy: op.performedBy, actionsDone: op.actionsDone || op.maintenanceLog?.description || null,

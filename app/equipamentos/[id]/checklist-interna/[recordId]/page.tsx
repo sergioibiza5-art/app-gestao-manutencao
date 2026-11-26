@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Camera, CheckCircle2, FileText, XCircle } from "lucide-react";
+import { ArrowLeft, Camera, CheckCircle2, Download, FileText, XCircle } from "lucide-react";
 
 import { AppShell } from "@/app/components/app-shell";
 import { ModuleCodificationField } from "@/app/components/module-codification-field";
@@ -68,6 +68,7 @@ export default async function ChecklistDocumentPage({ params }: ChecklistDocumen
         action={
           <div className="flex flex-wrap items-end gap-3">
             <ModuleCodificationField moduleKey="documento-manutencao-interna" returnPath={returnPath} />
+            {record.workOrder && <a href={`/api/manutencao/ops/${record.workOrder.id}/pdf`} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-teal-300/40 bg-teal-300/10 px-4 text-sm font-semibold text-teal-100 hover:bg-teal-300/15"><Download size={17} />Relatório PDF</a>}
             
             <Link href={`/equipamentos/${equipment.id}`} className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-sm font-semibold text-zinc-100 transition hover:border-teal-300/50">
               <ArrowLeft size={17} />
