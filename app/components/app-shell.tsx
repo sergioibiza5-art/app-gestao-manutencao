@@ -8,6 +8,7 @@ import { logoutUser } from "@/app/actions";
 import { PushNotificationToggle } from "@/app/components/push-notification-toggle";
 import { requireUser } from "@/lib/auth";
 import { navigation } from "@/lib/navigation";
+import { employeeHome } from "@/lib/employee-day";
 
 type AppShellProps = {
   activeHref?: string;
@@ -16,20 +17,20 @@ type AppShellProps = {
 
 export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   const user = await requireUser();
-  if (user.role === "TICKET" && !["/tickets", "/producao"].includes(activeHref)) {
-    redirect("/tickets");
+  if (user.role === "TICKET" && !["/funcionario", "/tickets", "/producao"].includes(activeHref)) {
+    redirect(employeeHome(user.role));
   }
-  const qualityAllowed = ["/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis", "/producao"];
+  const qualityAllowed = ["/funcionario", "/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis", "/producao"];
   if (user.role === "HSA") qualityAllowed.push("/inventario");
   if (isQualityRole(user.role) && !qualityAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/calibracao");
   }
-  const userAllowedNavigation = ["/plano", "/tickets", "/manutencao", "/equipamentos", "/localizacoes", "/checklists", "/producao"];
+  const userAllowedNavigation = ["/funcionario", "/plano", "/tickets", "/manutencao", "/equipamentos", "/localizacoes", "/checklists", "/producao"];
   if (user.role === "USER" && !userAllowedNavigation.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/plano");
   }
   const visibleNavigation = user.role === "TICKET"
-    ? navigation.filter((item) => ["/tickets", "/producao"].includes(item.href))
+    ? navigation.filter((item) => ["/funcionario", "/tickets", "/producao"].includes(item.href))
     : isQualityRole(user.role)
     ? navigation.filter((item) => qualityAllowed.includes(item.href))
     : user.role === "USER"
@@ -37,7 +38,7 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
     : ["ADMIN", "MANAGER"].includes(user.role)
     ? navigation
     : navigation.filter((item) => item.href !== "/ferias");
-  const homeHref = user.role === "USER" ? "/plano" : "/";
+  const homeHref = employeeHome(user.role);
   const activeModule = visibleNavigation.find((item) => item.href === activeHref);
   const moduleLinks = visibleNavigation.map((item) => {
     const Icon = item.icon;

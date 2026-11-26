@@ -18,9 +18,11 @@ import {
   Wrench,
   Siren,
   Factory,
+  UserRound,
 } from "lucide-react";
 
 export const navigation = [
+  { name: "O meu dia", href: "/funcionario", meta: "Atividade e tempos", icon: UserRound, color: "bg-teal-400/15 text-teal-200" },
   { name: "Dashboard", href: "/", meta: "Visão diária", icon: LayoutDashboard, color: "bg-teal-400/15 text-teal-200" },
   { name: "Plano do dia", href: "/plano", meta: "Fila por pessoa", icon: CalendarCheck, color: "bg-cyan-400/15 text-cyan-200" },
   { name: "Produção", href: "/producao", meta: "Lotes, atividades e CQ", icon: Factory, color: "bg-teal-400/15 text-teal-200" },

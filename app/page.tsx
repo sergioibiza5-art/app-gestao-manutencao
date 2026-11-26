@@ -13,6 +13,9 @@ import { AppShell } from "@/app/components/app-shell";
 import { buttonClass, inputClass, Panel } from "@/app/components/ui";
 import { getDashboardData } from "@/lib/data";
 import { formatCurrency, formatDate, formatShortDate } from "@/lib/format";
+import { requireUser } from "@/lib/auth";
+import { employeeHome } from "@/lib/employee-day";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -77,6 +80,9 @@ type DashboardPageProps = {
 };
 
 export default async function Page({ searchParams }: DashboardPageProps) {
+  const user = await requireUser();
+  const home = employeeHome(user.role);
+  if (home !== "/") redirect(home);
   const params = (await searchParams) ?? {};
   const selectedView = params.view || "month";
   const selectedDate = params.date || new Date().toISOString().slice(0, 10);

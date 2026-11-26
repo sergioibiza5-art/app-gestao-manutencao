@@ -20,6 +20,7 @@ import { importMicrosoftEnvironmentalReports } from "@/lib/environmental-microso
 import type { ParsedEnvironmentalReading } from "@/lib/environmental-workbook";
 import { parseLisbonDateTimeInput } from "@/lib/lisbon-time";
 import { getPrisma } from "@/lib/prisma";
+import { employeeHome } from "@/lib/employee-day";
 import { sendPushNotifications } from "@/lib/push-notifications";
 
 type PushSubscriptionPayload = {
@@ -528,7 +529,7 @@ export async function setOwnPassword(formData: FormData) {
     await tx.session.deleteMany({ where: { userId: user.id } });
   });
   await createSession(user.id);
-  redirect(user.role === "TICKET" ? "/tickets" : "/");
+  redirect(employeeHome(user.role));
 }
 
 export async function loginUser(formData: FormData) {
@@ -571,7 +572,7 @@ export async function loginUser(formData: FormData) {
   }
 
   await createSession(user.id);
-  redirect(user.mustChangePassword ? "/alterar-password" : user.role === "TICKET" ? "/tickets" : "/");
+  redirect(user.mustChangePassword ? "/alterar-password" : employeeHome(user.role));
 }
 
 export async function logoutUser() {
