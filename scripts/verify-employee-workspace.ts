@@ -117,6 +117,14 @@ async function main() {
     const staleRow = page.getByTestId(`team-person-${stale.id}`);
     await staleRow.getByText("atividade(s) aberta(s) desde outro dia", { exact: false }).waitFor();
     const team = await getEmployeeTeam(coordinator, lisbonDay());
+    assert.ok(team.every(row => row.person.role === "TICKET"));
+    assert.deepEqual(team.filter(row => row.person.name.startsWith(tag)).map(row => row.person.id).sort(), [actor.id, other.id, stale.id].sort());
+    assert.equal(await page.getByTestId(`team-person-${cq.id}`).count(), 0);
+    assert.equal(await page.getByTestId(`team-person-${coordinator.id}`).count(), 0);
+    assert.equal(await page.getByTestId(`team-person-${admin.id}`).count(), 0);
+    const teamCount = page.locator('section[aria-label="Resumo da equipa"] > div').first().locator("p").last();
+    await teamCount.filter({ hasText: /^3$/ }).waitFor();
+    assert.equal(await teamCount.innerText(), "3");
     const own = await getEmployeeDay(actor, actor.id, lisbonDay());
     assert.ok(Math.abs(team.find(row => row.person.id === actor.id)!.totals.total - own.totals.total) < 0.01);
     for (const viewport of [{ width: 1440, height: 1000 }, { width: 820, height: 1180 }, { width: 390, height: 844 }]) {

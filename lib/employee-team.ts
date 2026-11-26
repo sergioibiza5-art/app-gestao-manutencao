@@ -9,7 +9,7 @@ export async function getEmployeeTeam(viewer: Pick<User, "productionCoordinator"
   if (!viewer.productionCoordinator) notFound();
   const db = getPrisma(), window = employeeDayWindow(day), live = day === lisbonDay(now);
   const [people, activities, quality, entries] = await Promise.all([
-    db.user.findMany({ select: { id: true, name: true, role: true, active: true }, orderBy: { name: "asc" } }),
+    db.user.findMany({ where: { role: "TICKET" }, select: { id: true, name: true, role: true, active: true }, orderBy: { name: "asc" } }),
     db.productionActivity.findMany({ where: { startedAt: { lt: window.end }, OR: [{ endedAt: null }, { endedAt: { gt: window.start } }] },
       select: { collaboratorId: true, startedAt: true, endedAt: true, batch: { select: { id: true, lot: true, reference: true } } } }),
     db.productionQualityCall.findMany({ where: { calledAt: { lt: window.end }, technicianId: { not: null }, OR: [{ endedAt: null }, { endedAt: { gt: window.start } }] },
