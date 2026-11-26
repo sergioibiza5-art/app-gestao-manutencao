@@ -1,8 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { chemicalOpeningRange } from "./chemical-opening-report";
+import { chemicalOpeningRange, openingReportRequired } from "./chemical-opening-report";
 import { chemicalMonth } from "./chemical-monthly-calendar";
 import { monthlyChemicalCsv, monthlyChemicalHtml, type ChemicalReport } from "./chemical-monthly-report";
+
+test("initial delivery is not repeated with November when already sent today", () => {
+  assert.equal(openingReportRequired("2026-11", true), false);
+  assert.equal(openingReportRequired("2026-11", false), true);
+  assert.equal(openingReportRequired("2026-12", false), false);
+});
 
 test("initial report contains only January through October 2026, without overlapping November", () => {
   const range = chemicalOpeningRange();

@@ -6,7 +6,7 @@ import { sendGmail } from "@/lib/gmail";
 import { getPrisma } from "@/lib/prisma";
 import { chemicalTypes, productTypeLabel } from "@/lib/product-types";
 import { chemicalVolume, chemicalVolumeTotal } from "@/lib/chemical-volume";
-import { buildChemicalOpeningReport } from "@/lib/chemical-opening-report";
+import { buildChemicalOpeningReport, openingDeliveryChannel, openingDigestDate, openingReportRequired } from "@/lib/chemical-opening-report";
 
 export const monthlyChemicalEntryTypes = ["ENTRADA_DIRETA", "ENTRADA_INICIAL"];
 const channel = "chemical-monthly-email";
@@ -99,10 +99,7 @@ export async function sendMonthlyChemicalReport(now = new Date()) {
   if (!users.length) throw new Error("Não existem destinatários HSA/Admin ativos.");
   const report = await buildMonthlyChemicalReport(schedule.month);
   const opening = schedule.month === "2026-11" ? await buildChemicalOpeningReport() : undefined;
-  const subject = `Entradas de produtos químicos - ${schedule.month}${opening ? " + relatório inicial de 2026" : ""}`;
-  const html = monthlyChemicalHtml(report, false, opening);
   const attachment = { filename: `entradas-quimicos-${schedule.month}.csv`, content: Buffer.from(monthlyChemicalCsv(report), "utf8"), contentType: "text/csv; charset=utf-8" };
-  const attachments = [attachment, ...(opening ? [{ filename: "entradas-quimicos-inicial-2026.csv", content: Buffer.from(monthlyChemicalCsv(opening), "utf8"), contentType: "text/csv; charset=utf-8" }] : [])];
   let sent = 0, failed = 0;
   for (const user of users) {
     try {
@@ -114,9 +111,21 @@ export async function sendMonthlyChemicalReport(now = new Date()) {
           select: { id: true },
         });
         if (previous) return false;
+        let includeOpening = false;
+        if (opening) {
+          await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${openingDeliveryChannel}), hashtext(${user.id}))`;
+          const deliveredOpening = await tx.alertDigestDelivery.findUnique({
+            where: { userId_digestDate_channel: { userId: user.id, digestDate: openingDigestDate, channel: openingDeliveryChannel } }, select: { id: true },
+          });
+          includeOpening = openingReportRequired(schedule.month, Boolean(deliveredOpening));
+        }
+        const subject = `Entradas de produtos químicos - ${schedule.month}${includeOpening ? " + relatório inicial de 2026" : ""}`;
+        const html = monthlyChemicalHtml(report, false, includeOpening ? opening : undefined);
+        const attachments = [attachment, ...(includeOpening && opening ? [{ filename: "entradas-quimicos-inicial-2026.csv", content: Buffer.from(monthlyChemicalCsv(opening), "utf8"), contentType: "text/csv; charset=utf-8" }] : [])];
         const key = createHash("sha256").update(JSON.stringify([channel, user.id, schedule.month])).digest("hex");
         await sendGmail(user.email, subject, html, key, attachments);
         await tx.alertDigestDelivery.create({ data: { userId: user.id, digestDate: schedule.month, channel, subject } });
+        if (includeOpening) await tx.alertDigestDelivery.create({ data: { userId: user.id, digestDate: openingDigestDate, channel: openingDeliveryChannel, subject } });
         return true;
       }, { timeout: 30_000 });
       if (delivered) sent++;

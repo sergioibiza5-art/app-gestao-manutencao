@@ -6,6 +6,11 @@ import { chemicalTypes } from "@/lib/product-types";
 import type { ChemicalReport } from "@/lib/chemical-monthly-report";
 
 const Decimal = Prisma.Decimal.clone({ precision: 40 });
+export const openingDeliveryChannel = "chemical-opening-email";
+export const openingDigestDate = "2026-01_2026-10";
+export function openingReportRequired(month: string, delivered: boolean) {
+  return month === "2026-11" && !delivered;
+}
 type ReportDb = Pick<ReturnType<typeof getPrisma>, "consumable" | "consumableMovement">;
 
 export function chemicalOpeningRange() {
