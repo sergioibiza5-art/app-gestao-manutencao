@@ -3,6 +3,7 @@ import { buildMonthlyChemicalReport, monthlyChemicalCsv, monthlyChemicalHtml } f
 import { isDeliverableEmail } from "@/lib/email-alerts";
 import { sendGmail } from "@/lib/gmail";
 import { getPrisma } from "@/lib/prisma";
+import { buildChemicalOpeningReport } from "@/lib/chemical-opening-report";
 
 export const chemicalTestRequestChannel = "chemical-monthly-test-request";
 const channel = "chemical-monthly-email-test";
@@ -21,8 +22,9 @@ export async function sendMonthlyChemicalTest(token: string) {
   if (!grant || !grant.subject || !/^\d{4}-(0[1-9]|1[0-2])$/.test(grant.subject)) throw new Error("Teste inválido ou expirado.");
   if (!isDeliverableEmail(grant.user.email)) throw new Error("Endereço de email inválido.");
   const report = await buildMonthlyChemicalReport(grant.subject);
+  const opening = report.month === "2026-11" ? await buildChemicalOpeningReport() : undefined;
   const subject = `[Teste] Entradas de produtos químicos - ${report.month}`;
-  const html = monthlyChemicalHtml(report, true);
+  const html = monthlyChemicalHtml(report, true, opening);
   const sent = await prisma.$transaction(async tx => {
     await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${channel}), hashtext(${grant.user.id}))`;
     const marker = { userId: grant.user.id, channel, digestDate: hash };
@@ -30,7 +32,7 @@ export async function sendMonthlyChemicalTest(token: string) {
     await sendGmail(grant.user.email, subject, html, "chemical-test-" + hash, [{
       filename: `teste-entradas-quimicos-${report.month}.csv`,
       content: Buffer.from(monthlyChemicalCsv(report), "utf8"), contentType: "text/csv; charset=utf-8",
-    }]);
+    }, ...(opening ? [{ filename: "teste-entradas-quimicos-inicial-2026.csv", content: Buffer.from(monthlyChemicalCsv(opening), "utf8"), contentType: "text/csv; charset=utf-8" }] : [])]);
     await tx.alertDigestDelivery.create({ data: { ...marker, subject } });
     return 1;
   }, { timeout: 30_000 });
