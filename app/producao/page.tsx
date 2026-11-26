@@ -72,7 +72,7 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
   return <AppShell activeHref="/producao">
     <header className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-4">
       <h1 className="flex items-center gap-3 text-2xl font-semibold"><Factory className="text-teal-300" />Produção</h1>
-      {writer && <details className="relative"><summary className={`${buttonClass} cursor-pointer list-none`}><Plus size={18} />Novo lote</summary><div className="absolute right-0 z-20 mt-2 w-[min(92vw,520px)] rounded-lg border border-zinc-700 bg-zinc-950 p-4 shadow-xl"><ProductionForm command="create">
+      {writer && <details key={selected?.id || "new-lot"} className="relative"><summary className={`${buttonClass} cursor-pointer list-none`}><Plus size={18} />Novo lote</summary><div className="absolute right-0 z-20 mt-2 w-[min(92vw,520px)] rounded-lg border border-zinc-700 bg-zinc-950 p-4 shadow-xl"><ProductionForm command="create">
         <div className="grid gap-3 sm:grid-cols-2">{field("Referência", <input name="reference" required maxLength={180} className={inputClass} />)}{field("Lote", <input name="lot" required maxLength={180} className={inputClass} />)}{field("Sala / linha", <input name="line" required defaultValue="SL1" maxLength={180} className={inputClass} />)}{field("Equipamento", <select name="equipmentId" required className={inputClass}><option value="">Selecionar</option>{equipment.map(e => <option key={e.id} value={e.id}>{e.code ? `${e.code} · ` : ""}{e.name}</option>)}</select>)}</div>
         <button className={buttonClass}><Plus size={17} />Criar lote</button>
       </ProductionForm></div></details>}

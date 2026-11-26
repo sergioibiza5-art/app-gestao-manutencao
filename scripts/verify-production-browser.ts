@@ -40,6 +40,27 @@ async function main() {
     await page.getByRole("button", { name: "Terminar lote", exact: true }).waitFor();
     assert.equal((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).status, "OPEN");
     assert.equal(await page.locator('select[name="status"]').count(), 0);
+    if (process.env.PRODUCTION_FOCUS === "permissions") {
+      await page.locator('summary').filter({ hasText: "Registar atividade manual" }).click();
+      const manual = page.locator('form').filter({ has: page.locator('input[name="command"][value="activity"]') }).first();
+      const operatorIds = await manual.locator('input[name="collaboratorId"]').evaluateAll((inputs: HTMLInputElement[]) => inputs.map(i => i.value).sort());
+      assert.deepEqual(operatorIds, (await db.user.findMany({ where: { active: true, role: "TICKET" }, select: { id: true } })).map(p => p.id).sort());
+      await page.locator('summary').filter({ hasText: "Registo manual de CQ" }).click();
+      const technicians = await page.locator('select[name="technicianId"] option').evaluateAll((options: HTMLOptionElement[]) => options.map(o => o.value).filter(Boolean).sort());
+      assert.deepEqual(technicians, (await db.user.findMany({ where: { active: true, role: "SGQ" }, select: { id: true } })).map(p => p.id).sort());
+      while (await page.locator('details[open] > summary').count()) await page.locator('details[open] > summary').first().press("Enter");
+      await db.user.update({ where: { id: admin.id }, data: { productionCoordinator: false } });
+      await page.getByRole("button", { name: "Atualizar lote" }).click();
+      await page.waitForFunction(() => document.querySelectorAll('[name="startedAt"], [name="calledAt"]').length === 0);
+      await page.locator('summary').filter({ hasText: "Nova chamada de CQ" }).click();
+      const probe = page.getByRole("button", { name: "Chamar CQ", exact: true }).locator('xpath=ancestor::form');
+      await probe.locator('[name="command"]').evaluate((e: HTMLInputElement) => { e.value = "quality"; });
+      await probe.getByRole("button", { name: "Chamar CQ", exact: true }).click();
+      await probe.getByRole("status").filter({ hasText: "Só um coordenador" }).waitFor();
+      assert.equal(await db.productionQualityCall.count({ where: { batchId } }), 0);
+      console.log("PASS ONLINE: lot start button, no state select, exact Ticket/SGQ lists, no editable time fields for unflagged admin, forged manual request rejected.");
+      return;
+    }
     await page.locator('summary').filter({ hasText: "Registar atividade" }).click();
     const activity = page.locator('form').filter({ has: page.locator('input[name="command"][value="activity"]') }).first();
     assert.equal(await activity.locator(`[name="collaboratorId"][value="${technician.id}"]`).count(), 0);
@@ -246,7 +267,7 @@ async function main() {
     assert.equal(await page.locator('[name="startedAt"]').count(), 0);
     assert.equal(await page.locator('[name="calledAt"]').count(), 0);
     await page.locator('summary').filter({ hasText: "Nova chamada de CQ" }).click();
-    const adminProbe = page.locator('form').filter({ has: page.locator('input[name="command"][value="call-quality"]') });
+    const adminProbe = page.getByRole("button", { name: "Chamar CQ", exact: true }).locator('xpath=ancestor::form');
     await adminProbe.locator('[name="command"]').evaluate((e: HTMLInputElement) => { e.value = "quality"; });
     const beforeProbe = await db.productionQualityCall.count({ where: { batchId } });
     await adminProbe.getByRole("button", { name: "Chamar CQ", exact: true }).click();
