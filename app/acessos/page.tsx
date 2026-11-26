@@ -39,6 +39,13 @@ function CleaningVerifierCheckbox({ checked = false }: { checked?: boolean }) {
   );
 }
 
+function ProductionCoordinatorCheckbox({ checked = false }: { checked?: boolean }) {
+  return <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-zinc-800 px-3 py-2 text-sm text-zinc-100 md:col-span-2">
+    <input type="checkbox" name="productionCoordinator" value="true" defaultChecked={checked} className="size-4 shrink-0 accent-teal-300" />
+    <span className="font-semibold">Coordenador de produção</span>
+  </label>;
+}
+
 export default async function AccessPage({ searchParams }: AccessPageProps) {
   const admin = await requireCanAdmin();
   const params = (await searchParams) ?? {};
@@ -82,6 +89,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
               <option value="false">Inativo</option>
             </select>
             <CleaningVerifierCheckbox />
+            <ProductionCoordinatorCheckbox />
             <div className="rounded-lg border border-zinc-800 bg-zinc-950/55 p-3">
               <p className="text-sm font-semibold text-zinc-100">Horário de alertas</p>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -180,6 +188,7 @@ export default async function AccessPage({ searchParams }: AccessPageProps) {
                       <option value="false">Inativo</option>
                     </select>
                     <CleaningVerifierCheckbox checked={user.cleaningVerifier} />
+                    <ProductionCoordinatorCheckbox checked={user.productionCoordinator} />
                     <div className="rounded-lg border border-zinc-800 bg-black/20 p-3 md:col-span-2">
                       <p className="text-sm font-semibold text-zinc-100">Horário de alertas</p>
                       <div className="mt-3 grid gap-3 sm:grid-cols-2">

@@ -4723,6 +4723,7 @@ export async function createUser(formData: FormData) {
         password: hashPassword(password),
         mustChangePassword: true,
         cleaningVerifier: formData.get("cleaningVerifier") === "true",
+        productionCoordinator: formData.get("productionCoordinator") === "true",
         pin: null,
         hourlyRate: decimal(formData, "hourlyRate"),
         notifyStartTime: text(formData, "notifyStartTime") || "08:00",
@@ -4790,6 +4791,7 @@ export async function updateUser(formData: FormData) {
         username: finalUsername,
         email,
         cleaningVerifier: formData.get("cleaningVerifier") === "true",
+        productionCoordinator: formData.get("productionCoordinator") === "true",
 
         ...(role === "TICKET" ? { pin: null } : {}),
         hourlyRate: decimal(formData, "hourlyRate"),

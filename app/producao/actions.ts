@@ -4,7 +4,6 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
-import { productionScope } from "@/lib/production-data";
 import { canManageProduction, canWriteProduction, productionDate, productionOperations, validateInterval, validateQuality } from "@/lib/production";
 
 export type ProductionResult = { error?: string; success?: string; batchId?: string };
@@ -16,8 +15,10 @@ function required(f: FormData, name: string) {
 }
 const snapshot = (value: unknown) => JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
 
-async function checkCollaborator(tx: Prisma.TransactionClient, id: string) {
-  if (!await tx.user.findFirst({ where: { id, active: true }, select: { id: true } })) throw new Error("Seleciona um colaborador ativo.");
+async function checkCollaborator(tx: Prisma.TransactionClient, id: string, role?: "TICKET" | "SGQ") {
+  if (!await tx.user.findFirst({ where: { id, active: true, ...(role ? { role } : {}) }, select: { id: true } })) {
+    throw new Error(role === "SGQ" ? "Seleciona um técnico ativo com perfil SGQ." : role === "TICKET" ? "Seleciona um colaborador ativo com perfil Posto/Ticket." : "Seleciona um colaborador ativo.");
+  }
 }
 async function checkOverlap(tx: Prisma.TransactionClient, person: string, start: Date, end: Date | null, excludedActivity?: string, excludedCq?: string) {
   await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext('production-person'), hashtext(${person}))`;
@@ -36,10 +37,10 @@ async function checkOverlap(tx: Prisma.TransactionClient, person: string, start:
 export async function productionAction(_previous: ProductionResult, form: FormData): Promise<ProductionResult> {
   const user = await requireUser();
   try {
-    if (!canWriteProduction(user.role)) throw new Error("Sem permissão para registar produção.");
+    const manager = canManageProduction(user);
+    if (!canWriteProduction(user.role) && !manager) throw new Error("Sem permissão para registar produção.");
     if (text(form, "notes").length > 4000 || text(form, "reason").length > 500) throw new Error("Observações: máximo de 4000 caracteres. Motivo: máximo de 500 caracteres.");
     const db = getPrisma(), command = text(form, "command");
-    const scope = await productionScope(user);
     const batchId = await db.$transaction(async tx => {
       const audit = async (id: string, action: string, before: unknown, after: unknown) => {
         await tx.productionAudit.create({ data: { batchId: id, actorId: user.id, actorName: user.name, action,
@@ -47,7 +48,7 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       };
       if (command === "create") {
         const equipmentId = required(form, "equipmentId");
-        if (!await tx.equipment.findFirst({ where: { AND: [scope, { id: equipmentId, status: "ACTIVE" }] }, select: { id: true } })) throw new Error("Equipamento sem acesso ou inativo.");
+        if (!await tx.equipment.findFirst({ where: { id: equipmentId, status: "ACTIVE" }, select: { id: true } })) throw new Error("Equipamento inativo ou indisponível.");
         const batch = await tx.productionBatch.create({ data: { reference: required(form, "reference"), lot: required(form, "lot"),
           line: required(form, "line"), equipmentId, createdById: user.id } });
         await audit(batch.id, "Lote criado", null, batch);
@@ -55,9 +56,8 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       }
       const id = required(form, "batchId");
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext('production-batch'), hashtext(${id}))`;
-      const batch = await tx.productionBatch.findFirst({ where: { id, equipment: scope } });
+      const batch = await tx.productionBatch.findUnique({ where: { id } });
       if (!batch) throw new Error("Lote indisponível.");
-      const manager = canManageProduction(user.role);
       if (command === "reopen") {
         if (!manager || !text(form, "reason")) throw new Error("Só a coordenação pode reabrir, indicando o motivo.");
         const after = await tx.productionBatch.update({ where: { id }, data: { status: "OPEN", verifiedAt: null, verifiedById: null } });
@@ -84,35 +84,69 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       } else {
         if (batch.status !== "OPEN") throw new Error("Reabre o lote antes de registar atividades.");
         const rowId = text(form, "rowId");
-        if (command === "activity" || command === "finish") {
+        if (command === "activity" || command === "finish" || command === "start") {
+          if (command === "activity" && !manager) throw new Error("Só um coordenador de produção pode introduzir ou corrigir horários.");
+          if (command === "start" && rowId) throw new Error("Usa Iniciar para uma nova atividade.");
           const before = rowId ? await tx.productionActivity.findFirst({ where: { id: rowId, batchId: id } }) : null;
           if (rowId && !before) throw new Error("Atividade não encontrada.");
           if (before && command !== "finish" && (!manager || !text(form, "reason"))) throw new Error("Uma correção exige coordenação e motivo.");
           if (command === "finish" && (!before || before.endedAt)) throw new Error("Atividade já terminada ou indisponível.");
-          const startedAt = before && command === "finish" ? before.startedAt : productionDate(required(form, "startedAt"), true)!;
-          const endedAt = command === "finish" ? new Date() : productionDate(text(form, "endedAt"));
+          if (command === "finish" && !manager && before!.collaboratorId !== user.id) throw new Error("Só podes terminar a tua própria atividade.");
+          const startedAt = before && command === "finish" ? before.startedAt : command === "start" ? new Date() : productionDate(required(form, "startedAt"), true)!;
+          const endedAt = command === "finish" ? new Date() : command === "start" ? null : productionDate(text(form, "endedAt"));
           validateInterval(startedAt, endedAt);
           const operation = before && command === "finish" ? before.operation : required(form, "operation");
           if (!Object.hasOwn(productionOperations, operation)) throw new Error("Operação inválida.");
           const people = before ? [before.collaboratorId] : [...new Set(form.getAll("collaboratorId").map(String))].sort();
           if (!people.length || people.length > 50) throw new Error("Seleciona entre 1 e 50 colaboradores.");
+          if (!manager && (people.length !== 1 || people[0] !== user.id)) throw new Error("Só podes iniciar a tua própria atividade.");
           for (const collaboratorId of people) {
-            await checkCollaborator(tx, collaboratorId);
+            await checkCollaborator(tx, collaboratorId, before ? undefined : "TICKET");
             await checkOverlap(tx, collaboratorId, startedAt, endedAt, before?.id);
             const data = { batchId: id, collaboratorId, startedAt, endedAt, operation, notes: command === "finish" ? before!.notes : text(form, "notes") };
             const after = before ? await tx.productionActivity.update({ where: { id: before.id }, data }) : await tx.productionActivity.create({ data });
             await audit(id, before ? command === "finish" ? "Atividade terminada" : "Atividade corrigida" : "Atividade registada", before, after);
           }
+        } else if (command === "call-quality") {
+          const now = new Date(), hasStop = form.get("hasStop") === "on";
+          const after = await tx.productionQualityCall.create({ data: { batchId: id, calledAt: now, hasStop,
+            stopStartedAt: hasStop ? now : null, notes: text(form, "notes") } });
+          await audit(id, "CQ solicitado", null, after);
+        } else if (["cq-arrive", "cq-end", "stop-start", "stop-end"].includes(command)) {
+          const before = await tx.productionQualityCall.findFirst({ where: { id: rowId, batchId: id } });
+          if (!before) throw new Error("Pedido de CQ não encontrado.");
+          const now = new Date();
+          let data: Prisma.ProductionQualityCallUpdateInput;
+          if (command === "cq-arrive") {
+            if (before.arrivedAt) throw new Error("O CQ já foi iniciado.");
+            const technicianId = manager ? text(form, "technicianId") || user.id : user.id;
+            await checkCollaborator(tx, technicianId, "SGQ");
+            await checkOverlap(tx, technicianId, now, null, undefined, before.id);
+            data = { arrivedAt: now, technician: { connect: { id: technicianId } } };
+          } else if (command === "cq-end") {
+            if (!before.arrivedAt || before.endedAt) throw new Error("O CQ não está em curso.");
+            if (!manager && before.technicianId !== user.id) throw new Error("Só o técnico que iniciou o CQ ou um coordenador pode terminá-lo.");
+            data = { endedAt: now };
+          } else if (command === "stop-start") {
+            if (before.hasStop || before.endedAt) throw new Error("Este CQ já tem uma paragem ou está terminado.");
+            data = { hasStop: true, stopStartedAt: now };
+          } else {
+            if (!before.hasStop || before.stopEndedAt) throw new Error("Não existe uma paragem em curso.");
+            data = { stopEndedAt: now };
+          }
+          const after = await tx.productionQualityCall.update({ where: { id: before.id }, data });
+          await audit(id, ({ "cq-arrive": "CQ iniciado", "cq-end": "CQ terminado", "stop-start": "Paragem iniciada", "stop-end": "Paragem terminada" })[command]!, before, after);
         } else if (command === "quality") {
+          if (!manager) throw new Error("Só um coordenador de produção pode introduzir ou corrigir horários de CQ.");
           const before = rowId ? await tx.productionQualityCall.findFirst({ where: { id: rowId, batchId: id } }) : null;
           if (rowId && !before) throw new Error("Pedido de CQ não encontrado.");
-          if (before?.endedAt && (!manager || !text(form, "reason"))) throw new Error("Uma correção exige coordenação e motivo.");
+          if (before && !text(form, "reason")) throw new Error("Uma correção exige um motivo.");
           const data = { batchId: id, calledAt: productionDate(required(form, "calledAt"), true)!, arrivedAt: productionDate(text(form, "arrivedAt")),
             endedAt: productionDate(text(form, "endedAt")), technicianId: text(form, "technicianId") || null,
             hasStop: form.get("hasStop") === "on", stopStartedAt: productionDate(text(form, "stopStartedAt")), stopEndedAt: productionDate(text(form, "stopEndedAt")), notes: text(form, "notes") };
           validateQuality(data);
           if (data.technicianId) {
-            await checkCollaborator(tx, data.technicianId);
+            await checkCollaborator(tx, data.technicianId, "SGQ");
             if (data.arrivedAt) await checkOverlap(tx, data.technicianId, data.arrivedAt, data.endedAt, undefined, before?.id);
           }
           const after = before ? await tx.productionQualityCall.update({ where: { id: before.id }, data }) : await tx.productionQualityCall.create({ data });

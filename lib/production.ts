@@ -6,7 +6,7 @@ export const productionOperations = {
   AJM: "Ajuste de máquina", MANT: "Manutenção", LIMP: "Limpeza", TMP: "Troca de matéria-prima", OUT: "Outra",
 } as const;
 export const productionStatuses = { OPEN: "Em curso", DONE: "Terminado", VERIFIED: "Conferido" } as const;
-export const canManageProduction = (role: string) => ["ADMIN", "MANAGER"].includes(role);
+export const canManageProduction = (user: { productionCoordinator: boolean }) => user.productionCoordinator;
 export const canWriteProduction = (role: string) => ["ADMIN", "MANAGER", "USER", "TICKET", "SGQ"].includes(role);
 
 export function productionDate(value: string, required = false) {

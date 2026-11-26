@@ -23,7 +23,8 @@ test("CQ chronology, technician identity and permissions are validated", () => {
   assert.throws(() => validateQuality({ ...cq, arrivedAt: null }));
   assert.throws(() => productionDate("2026-02-30T09:00", true));
   assert.equal(productionDate("2026-07-20T09:00", true)?.toISOString(), "2026-07-20T08:00:00.000Z");
-  assert.equal(canManageProduction("TICKET"), false);
+  assert.equal(canManageProduction({ productionCoordinator: false }), false);
+  assert.equal(canManageProduction({ productionCoordinator: true }), true);
   assert.equal(canWriteProduction("VIEWER"), false);
   assert.equal(canWriteProduction("SGQ"), true);
 });

@@ -4,6 +4,20 @@ import { startTransition, useActionState, useEffect, useState, type ReactNode } 
 import { useRouter } from "next/navigation";
 import { productionAction } from "./actions";
 import { inputClass } from "@/app/components/ui";
+import { RefreshCw } from "lucide-react";
+
+export function ProductionRefresh({ live }: { live: boolean }) {
+  const router = useRouter();
+  useEffect(() => {
+    if (!live) return;
+    const interval = setInterval(() => {
+      if (document.visibilityState !== "visible" || document.activeElement?.matches("input,textarea,select")) return;
+      router.refresh();
+    }, 15_000);
+    return () => clearInterval(interval);
+  }, [live, router]);
+  return <button type="button" title="Atualizar lote" aria-label="Atualizar lote" onClick={() => router.refresh()} className="grid size-11 place-items-center rounded-lg border border-zinc-700 hover:border-teal-300"><RefreshCw size={18} /></button>;
+}
 
 export function ProductionForm({ children, className = "", batchId, command }: { children: ReactNode; className?: string; batchId?: string; command: string }) {
   const [result, action, pending] = useActionState(productionAction, {});
