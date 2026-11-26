@@ -58,6 +58,33 @@ export function stopMinutes(intervals: { start: Date; end: Date | null }[], now 
 }
 
 export function minutesLabel(value: number) {
-  const minutes = Math.round(value);
-  return `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, "0")}m`;
+  const seconds = Math.max(0, Math.round(value * 60));
+  return `${Math.floor(seconds / 3600)}h ${String(Math.floor(seconds / 60) % 60).padStart(2, "0")}m ${String(seconds % 60).padStart(2, "0")}s`;
+}
+
+type Person = { name: string; username?: string | null };
+type PersonActivity = { collaboratorId: string; collaborator: Person; startedAt: Date; endedAt: Date | null };
+type PersonQuality = { technicianId: string | null; technician: Person | null; arrivedAt: Date | null; endedAt: Date | null };
+
+export function productionPeopleSummary(activities: PersonActivity[], quality: PersonQuality[], now = new Date()) {
+  const people = new Map<string, { id: string; name: string; username: string | null; startedAt: Date; endedAt: Date | null; open: boolean; operatorMinutes: number; qualityMinutes: number; totalMinutes: number; sessions: number }>();
+  function add(id: string, person: Person, start: Date, end: Date | null, kind: "operatorMinutes" | "qualityMinutes") {
+    const row = people.get(id) ?? { id, name: person.name, username: person.username ?? null, startedAt: start, endedAt: end, open: false, operatorMinutes: 0, qualityMinutes: 0, totalMinutes: 0, sessions: 0 };
+    if (start < row.startedAt) row.startedAt = start;
+    if (end && (!row.endedAt || end > row.endedAt)) row.endedAt = end;
+    if (!end) row.open = true;
+    row[kind] += elapsedMinutes(start, end, now);
+    row.totalMinutes = row.operatorMinutes + row.qualityMinutes;
+    row.sessions++;
+    people.set(id, row);
+  }
+  for (const a of activities) add(a.collaboratorId, a.collaborator, a.startedAt, a.endedAt, "operatorMinutes");
+  for (const q of quality) if (q.technicianId && q.technician && q.arrivedAt) add(q.technicianId, q.technician, q.arrivedAt, q.endedAt, "qualityMinutes");
+  const rows = [...people.values()].map(row => ({ ...row, endedAt: row.open ? null : row.endedAt })).sort((a, b) => a.name.localeCompare(b.name, "pt") || a.id.localeCompare(b.id));
+  return { rows, totalMinutes: rows.reduce((sum, row) => sum + row.totalMinutes, 0) };
+}
+
+export function productionBatchMinutes(batch: { status: string; startedAt: Date | null; endedAt: Date | null }, now = new Date()) {
+  if (!batch.startedAt || (["DONE", "VERIFIED"].includes(batch.status) && !batch.endedAt)) return null;
+  return elapsedMinutes(batch.startedAt, batch.endedAt, now);
 }

@@ -205,6 +205,8 @@ model ProductionBatch {
   unit         String @default("un")
   notes        String @default("")
   status       String @default("PLANNED")
+  startedAt    DateTime?
+  endedAt      DateTime?
   createdById  String
   verifiedById String?
   verifiedAt   DateTime?

@@ -5,7 +5,7 @@ import { inputClass, textareaClass, buttonClass } from "@/app/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 import { productionBatchAccess } from "@/lib/production-data";
-import { canManageProduction, canWriteProduction, elapsedMinutes, minutesLabel, productionOperations, productionStatuses, stopMinutes } from "@/lib/production";
+import { canManageProduction, canWriteProduction, elapsedMinutes, minutesLabel, productionBatchMinutes, productionPeopleSummary, productionOperations, productionStatuses, stopMinutes } from "@/lib/production";
 import { formatLisbonDateTimeInput as dateInput } from "@/lib/lisbon-time";
 import { ProductionForm, StopFields, ProductionRefresh } from "./forms";
 import type { ReactNode } from "react";
@@ -13,7 +13,7 @@ import type { ReactNode } from "react";
 export const dynamic = "force-dynamic";
 const secondary = "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-zinc-700 px-3 text-sm font-medium hover:border-teal-300";
 const field = (name: string, children: ReactNode) => <label className="block min-w-0 space-y-1 text-sm text-zinc-300"><span>{name}</span>{children}</label>;
-const dateLabel = (date: Date | null) => date ? new Intl.DateTimeFormat("pt-PT", { timeZone: "Europe/Lisbon", dateStyle: "short", timeStyle: "short" }).format(date) : "—";
+const dateLabel = (date: Date | null) => date ? new Intl.DateTimeFormat("pt-PT", { timeZone: "Europe/Lisbon", dateStyle: "short", timeStyle: "medium" }).format(date) : "—";
 const number = (n: number) => n.toLocaleString("pt-PT", { maximumFractionDigits: 3 });
 
 export default async function ProductionPage({ searchParams }: { searchParams: Promise<{ lote?: string; q?: string; estado?: string }> }) {
@@ -36,6 +36,8 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
   const editable = writer && selected?.status === "OPEN";
   const unlocked = writer && selected && ["PLANNED", "OPEN"].includes(selected.status);
   const now = new Date(), nowInput = dateInput(now);
+  const peopleSummary = productionPeopleSummary(selected?.activities || [], selected?.qualityCalls || [], now);
+  const batchMinutes = selected ? productionBatchMinutes(selected, now) : null;
   const operatorMinutes = selected?.activities.reduce((sum, a) => sum + elapsedMinutes(a.startedAt, a.endedAt, now), 0) ?? 0;
   const cqMinutes = selected?.qualityCalls.reduce((sum, q) => sum + (q.arrivedAt ? elapsedMinutes(q.arrivedAt, q.endedAt, now) : 0), 0) ?? 0;
   const downtime = selected ? stopMinutes(selected.qualityCalls.flatMap(q => q.hasStop && q.stopStartedAt ? [{ start: q.stopStartedAt, end: q.stopEndedAt }] : []), now) : 0;
@@ -86,7 +88,8 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
       {!batches.length && <p className="py-8 text-center text-zinc-400">Sem lotes registados.</p>}{batches.length > 100 && <p className="text-sm text-amber-200">Apresentados os 100 lotes mais recentes. Refina a pesquisa.</p>}
     </> : <>
       <div className="flex flex-wrap items-start justify-between gap-3"><div><Link href="/producao" className="text-sm text-teal-300">← Lotes</Link><h2 className="mt-2 break-words text-xl font-semibold">{selected.reference} · {selected.lot}</h2><p className="mt-1 text-sm text-zinc-400">{selected.line} · {selected.equipment.code} · {selected.equipment.name} · {productionStatuses[selected.status as keyof typeof productionStatuses]}</p></div><div className="flex flex-wrap gap-2"><ProductionRefresh live={selected.status === "OPEN"} /><a href={`/api/producao/${selected.id}/export?format=xlsx`} className={secondary}><Download size={16} />Excel</a><a href={`/api/producao/${selected.id}/export?format=pdf`} target="_blank" className={secondary}><Download size={16} />PDF</a></div></div>
-      <dl className="grid grid-cols-2 gap-4 border-y border-zinc-800 py-4 lg:grid-cols-4">{[["Quantidade produzida", `${selected.quantity} ${selected.unit}`], ["Mão de obra · operadores", minutesLabel(operatorMinutes)], ["Controlo de qualidade", minutesLabel(cqMinutes)], ["Paragem de produção", minutesLabel(downtime)]].map(([label, value]) => <div key={label}><dt className="text-sm text-zinc-400">{label}</dt><dd className="mt-1 text-xl font-semibold">{value}</dd></div>)}</dl>
+      <dl className="grid grid-cols-2 gap-4 border-y border-zinc-800 py-4 lg:grid-cols-3 2xl:grid-cols-6">{[["Quantidade produzida", `${selected.quantity} ${selected.unit}`], ["Tempo decorrido do lote", batchMinutes === null ? "Sem tempos registados" : minutesLabel(batchMinutes)], ["Total de horas · pessoas", minutesLabel(peopleSummary.totalMinutes)], ["Mão de obra · operadores", minutesLabel(operatorMinutes)], ["Controlo de qualidade", minutesLabel(cqMinutes)], ["Paragem de produção", minutesLabel(downtime)]].map(([label, value]) => <div key={label}><dt className="text-sm text-zinc-400">{label}</dt><dd className="mt-1 break-words text-lg font-semibold">{value}</dd></div>)}</dl>
+      <dl className="flex flex-wrap gap-x-8 gap-y-2 text-sm"><div><dt className="text-zinc-400">Início do lote</dt><dd>{dateLabel(selected.startedAt)}</dd></div><div><dt className="text-zinc-400">Fim do lote</dt><dd>{selected.endedAt ? dateLabel(selected.endedAt) : selected.status === "OPEN" ? "Em curso" : "—"}</dd></div></dl>
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-3">
         <p className="text-sm font-semibold">Estado do lote: <span className="text-teal-200">{productionStatuses[selected.status as keyof typeof productionStatuses]}</span></p>
         {writer && selected.status === "PLANNED" && <ProductionForm command="batch-start" batchId={selected.id}><button className={buttonClass}><Play size={17} />Iniciar lote</button></ProductionForm>}
@@ -94,6 +97,13 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
       </div>
       {unlocked && <details><summary className="min-h-11 cursor-pointer py-2 font-semibold">Quantidade e observações do lote</summary><ProductionForm command="batch" batchId={selected.id} className="max-w-3xl py-3"><div className="grid gap-3 sm:grid-cols-2">{field("Quantidade produzida", <input name="quantity" type="number" min="0" step="0.001" required defaultValue={selected.quantity.toString()} className={inputClass} />)}{field("Unidade", <input name="unit" required defaultValue={selected.unit} className={inputClass} />)}</div>{field("Observações do lote", <textarea name="notes" defaultValue={selected.notes} className={textareaClass} />)}<button className={buttonClass}><Save size={17} />Guardar lote</button></ProductionForm></details>}
       {selected.notes && <p className="whitespace-pre-wrap text-sm text-zinc-300">{selected.notes}</p>}
+      <section className="space-y-3 border-t border-zinc-800 pt-4" data-testid="production-people-summary">
+        <h2 className="text-lg font-semibold">Resumo de horas por pessoa</h2>
+        {peopleSummary.rows.length ? <div className="overflow-x-auto"><table className="w-full min-w-[760px] text-left text-sm"><thead className="text-xs uppercase text-zinc-400"><tr>{["Colaborador", "Primeiro início", "Último fim", "Produção (h)", "CQ (h)", "Total"].map(label => <th key={label} className="p-2">{label}</th>)}</tr></thead>
+          <tbody>{peopleSummary.rows.map(person => <tr key={person.id} className="border-t border-zinc-800"><td className="p-2 font-semibold">{person.name}<small className="block font-normal text-zinc-400">{person.username}{person.username ? " · " : ""}{person.sessions} registo(s)</small></td><td className="p-2">{dateLabel(person.startedAt)}</td><td className="p-2">{person.open ? "Em curso" : dateLabel(person.endedAt)}</td><td className="p-2">{number(person.operatorMinutes / 60)}</td><td className="p-2">{number(person.qualityMinutes / 60)}</td><td className="whitespace-nowrap p-2 font-semibold">{minutesLabel(person.totalMinutes)}<small className="block font-normal text-zinc-400">{number(person.totalMinutes / 60)} h</small></td></tr>)}</tbody>
+          <tfoot><tr className="border-t-2 border-zinc-700"><th colSpan={5} className="p-2">Total de todas as pessoas</th><td className="whitespace-nowrap p-2 font-semibold text-teal-200">{minutesLabel(peopleSummary.totalMinutes)}<small className="block font-normal">{number(peopleSummary.totalMinutes / 60)} h</small></td></tr></tfoot>
+        </table></div> : <p className="py-2 text-sm text-zinc-400">Sem tempos individuais registados.</p>}
+      </section>
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Colaboradores no lote</h2>
         <div className="divide-y divide-zinc-800 border-y border-zinc-800">

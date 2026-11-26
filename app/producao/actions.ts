@@ -65,14 +65,16 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
           const cq = await tx.productionQualityCall.count({ where: { batchId: id, OR: [{ endedAt: null }, { hasStop: true, stopEndedAt: null }] } });
           if (open || cq) throw new Error("Termina as atividades, os controlos de qualidade e as paragens antes de terminar o lote.");
         }
-        const after = await tx.productionBatch.update({ where: { id }, data: { status } });
+        const now = new Date();
+        const after = await tx.productionBatch.update({ where: { id }, data: { status,
+          ...(command === "batch-start" ? { startedAt: now, endedAt: null } : { endedAt: now }) } });
         await audit(id, command === "batch-start" ? "Lote iniciado" : "Lote terminado", batch, after);
         return id;
       }
       if (command === "reopen") {
         if (!manager || !text(form, "reason")) throw new Error("Só a coordenação pode reabrir, indicando o motivo.");
         if (!["DONE", "VERIFIED"].includes(batch.status)) throw new Error("Só podes reabrir um lote terminado ou conferido.");
-        const after = await tx.productionBatch.update({ where: { id }, data: { status: "OPEN", verifiedAt: null, verifiedById: null } });
+        const after = await tx.productionBatch.update({ where: { id }, data: { status: "OPEN", endedAt: null, verifiedAt: null, verifiedById: null } });
         await audit(id, "Lote reaberto", batch, after);
         return id;
       }

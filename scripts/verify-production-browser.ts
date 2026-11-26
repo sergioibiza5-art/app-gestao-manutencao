@@ -117,6 +117,7 @@ async function main() {
     while (await page.locator('details[open] > summary').count()) await page.locator('details[open] > summary').first().click();
     for (const [label, viewport] of [["desktop", { width: 1440, height: 1000 }], ["tablet", { width: 820, height: 1180 }], ["mobile", { width: 390, height: 844 }]] as const) {
       await page.setViewportSize(viewport);
+      await page.evaluate(() => window.scrollTo(0, 0));
       await page.screenshot({ path: `outputs/production-${label}.png`, fullPage: true });
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${label}: page overflow`);
     }
@@ -134,7 +135,13 @@ async function main() {
     assert.equal(excel.status(), 200);
     const data = await excel.body();
     const workbook = XLSX.read(data, { type: "buffer" });
-    assert.equal(workbook.SheetNames.length, 5);
+    assert.equal(workbook.SheetNames.length, 6);
+    const peopleSheet = XLSX.utils.sheet_to_json(workbook.Sheets.Pessoas) as Record<string, unknown>[];
+    assert.equal(peopleSheet.length, 4);
+    assert.equal(peopleSheet.at(-1)?.["Colaborador"], "Total de todas as pessoas");
+    assert.ok(Math.abs(Number(peopleSheet.at(-1)?.["Total (h)"]) - (110 + 15) / 60) < 0.000001);
+    assert.ok((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).startedAt);
+    assert.ok((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).endedAt);
     assert.equal(XLSX.utils.sheet_to_json(workbook.Sheets.Atividades).length, 2);
     assert.equal(XLSX.utils.sheet_to_json(workbook.Sheets.Qualidade).length, 2);
     writeFileSync("outputs/production-test.xlsx", data);

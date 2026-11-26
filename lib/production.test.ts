@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { batchButtonStatus, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate } from "./production";
+import { batchButtonStatus, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate, productionPeopleSummary, productionBatchMinutes, minutesLabel } from "./production";
 const at = (time: string) => new Date(`2026-11-25T${time}:00Z`);
 const cq = { calledAt: at("09:35"), arrivedAt: at("09:40"), endedAt: at("09:50"), technicianId: "quality", hasStop: false, stopStartedAt: null, stopEndedAt: null };
 test("batch buttons only permit starting planned lots and finishing open lots", () => {
@@ -8,6 +8,36 @@ test("batch buttons only permit starting planned lots and finishing open lots", 
   assert.equal(batchButtonStatus("OPEN", "batch-end"), "DONE");
   for (const state of ["OPEN", "DONE", "VERIFIED"]) assert.throws(() => batchButtonStatus(state, "batch-start"));
   for (const state of ["PLANNED", "DONE", "VERIFIED"]) assert.throws(() => batchButtonStatus(state, "batch-end"));
+});
+test("person totals sum work sessions, include quality but exclude waiting and differ from batch elapsed time", () => {
+  const a = { collaboratorId: "a", collaborator: { name: "Ana", username: "1" } };
+  const b = { collaboratorId: "b", collaborator: { name: "Bruno", username: "2" } };
+  const report = productionPeopleSummary([
+    { ...a, startedAt: at("08:00"), endedAt: at("09:00") },
+    { ...a, startedAt: at("10:00"), endedAt: at("10:30") },
+    { ...b, startedAt: at("08:00"), endedAt: at("09:00") },
+  ], [{ technicianId: "c", technician: { name: "Carla" }, arrivedAt: at("08:15"), endedAt: at("08:45") },
+    { technicianId: "d", technician: { name: "Daniel" }, arrivedAt: null, endedAt: null }]);
+  assert.equal(report.rows.length, 3);
+  assert.equal(report.totalMinutes, 180);
+  const ana = report.rows.find(p => p.id === "a")!;
+  assert.equal(ana.totalMinutes, 90);
+  assert.equal(ana.startedAt.toISOString(), at("08:00").toISOString());
+  assert.equal(ana.endedAt?.toISOString(), at("10:30").toISOString());
+  assert.equal(ana.sessions, 2);
+  assert.equal(productionBatchMinutes({ status: "DONE", startedAt: at("08:00"), endedAt: at("10:30") }), 150);
+});
+test("open sessions keep accumulating, closed batches stay frozen, and missing dates are not zero or invented", () => {
+  const people = productionPeopleSummary([{ collaboratorId: "a", collaborator: { name: "Ana" }, startedAt: at("08:00"), endedAt: at("09:00") },
+    { collaboratorId: "a", collaborator: { name: "Ana" }, startedAt: at("10:00"), endedAt: null }], [], at("10:15"));
+  assert.equal(people.totalMinutes, 75);
+  assert.equal(people.rows[0].endedAt, null);
+  assert.equal(people.rows[0].open, true);
+  assert.equal(productionBatchMinutes({ status: "DONE", startedAt: at("08:00"), endedAt: at("10:00") }, at("12:00")), 120);
+  assert.equal(productionBatchMinutes({ status: "DONE", startedAt: at("08:00"), endedAt: null }), null);
+  assert.equal(productionBatchMinutes({ status: "DONE", startedAt: null, endedAt: at("10:00") }), null);
+  assert.equal(productionPeopleSummary([], []).totalMinutes, 0);
+  assert.equal(minutesLabel(0.5), "0h 00m 30s");
 });
 test("CQ waiting is independent from quality work and operator time", () => {
   validateQuality(cq);
