@@ -1,0 +1,170 @@
+▲ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3010
+- Network:       http://192.168.100.204:3010
+- Environments: .env.local, .env
+✓ Ready in 421ms
+
+ GET /producao 200 in 2.7s (next.js: 1465ms, application-code: 1216ms)
+ POST /producao 200 in 711ms (next.js: 4ms, application-code: 707ms)
+  └─ ƒ productionAction({}, {}) in 294ms app/producao/actions.ts
+ GET /producao?lote=cmwxosua6000088v3yq5sdpq3 200 in 804ms (next.js: 4ms, application-code: 800ms)
+ GET /producao?lote=cmwxosua6000088v3yq5sdpq3 200 in 1041ms (next.js: 3ms, application-code: 1038ms)
+ POST /producao?lote=cmwxosua6000088v3yq5sdpq3 200 in 1243ms (next.js: 3ms, application-code: 1240ms)
+  └─ ƒ productionAction({}, {}) in 657ms app/producao/actions.ts
+ POST /producao?lote=cmwxosua6000088v3yq5sdpq3 200 in 240ms (next.js: 3ms, application-code: 236ms)
+  └─ ƒ productionAction({"batchId":"cmwxosua6000088v3yq5sdpq3","success":"Registo guardado."}, {}) in 230ms app/producao/actions.ts
+ GET /producao?lote=cmwxosua6000088v3yq5sdpq3 200 in 592ms (next.js: 3ms, application-code: 589ms)
+ GET /producao 200 in 694ms (next.js: 3ms, application-code: 690ms)
+ POST /producao 200 in 631ms (next.js: 4ms, application-code: 627ms)
+  └─ ƒ productionAction({}, {}) in 250ms app/producao/actions.ts
+ GET /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 755ms (next.js: 3ms, application-code: 752ms)
+ GET /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 830ms (next.js: 3ms, application-code: 828ms)
+ POST /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 1210ms (next.js: 2ms, application-code: 1207ms)
+  └─ ƒ productionAction({}, {}) in 639ms app/producao/actions.ts
+ POST /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 397ms (next.js: 2ms, application-code: 394ms)
+  └─ ƒ productionAction({"batchId":"cmwxotwc6000688v3b7vqvxfo","success":"Registo guardado."}, {}) in 364ms app/producao/actions.ts
+ GET /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 603ms (next.js: 3ms, application-code: 600ms)
+ POST /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 1021ms (next.js: 2ms, application-code: 1019ms)
+  └─ ƒ productionAction({}, {}) in 439ms app/producao/actions.ts
+ GET /producao?lote=cmwxotwc6000688v3b7vqvxfo 200 in 591ms (next.js: 4ms, application-code: 587ms)
+✓ Compiled in 136ms
+ GET /producao 200 in 867ms (next.js: 117ms, application-code: 750ms)
+ POST /producao 200 in 654ms (next.js: 2ms, application-code: 652ms)
+  └─ ƒ productionAction({}, {}) in 261ms app/producao/actions.ts
+ GET /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 765ms (next.js: 2ms, application-code: 763ms)
+ GET /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 989ms (next.js: 3ms, application-code: 986ms)
+ POST /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 1211ms (next.js: 3ms, application-code: 1208ms)
+  └─ ƒ productionAction({}, {}) in 638ms app/producao/actions.ts
+ GET /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 577ms (next.js: 2ms, application-code: 575ms)
+ POST /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 376ms (next.js: 2ms, application-code: 373ms)
+  └─ ƒ productionAction({"batchId":"cmwxovaw8000e88v3lv5r0o7v","success":"Registo guardado."}, {}) in 368ms app/producao/actions.ts
+ POST /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 1013ms (next.js: 2ms, application-code: 1011ms)
+  └─ ƒ productionAction({}, {}) in 437ms app/producao/actions.ts
+ GET /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 611ms (next.js: 3ms, application-code: 608ms)
+✓ Compiled in 74ms
+ GET /producao?lote=cmwxovaw8000e88v3lv5r0o7v 200 in 1205ms (next.js: 83ms, application-code: 1122ms)
+ GET /producao 200 in 513ms (next.js: 4ms, application-code: 509ms)
+ POST /producao 200 in 660ms (next.js: 3ms, application-code: 657ms)
+  └─ ƒ productionAction({}, {}) in 272ms app/producao/actions.ts
+ GET /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 776ms (next.js: 3ms, application-code: 774ms)
+ GET /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 981ms (next.js: 2ms, application-code: 979ms)
+ POST /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 1231ms (next.js: 2ms, application-code: 1229ms)
+  └─ ƒ productionAction({}, {}) in 656ms app/producao/actions.ts
+ POST /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 412ms (next.js: 3ms, application-code: 409ms)
+  └─ ƒ productionAction({"batchId":"cmwxow921000m88v3r5o7bs6m","success":"Registo guardado."}, {}) in 386ms app/producao/actions.ts
+ GET /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 599ms (next.js: 3ms, application-code: 597ms)
+ POST /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 1037ms (next.js: 4ms, application-code: 1033ms)
+  └─ ƒ productionAction({}, {}) in 446ms app/producao/actions.ts
+ GET /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 591ms (next.js: 3ms, application-code: 588ms)
+ POST /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 1102ms (next.js: 3ms, application-code: 1099ms)
+  └─ ƒ productionAction({"batchId":"cmwxow921000m88v3r5o7bs6m","success":"Registo guardado."}, {}) in 479ms app/producao/actions.ts
+ GET /producao?lote=cmwxow921000m88v3r5o7bs6m 200 in 586ms (next.js: 3ms, application-code: 583ms)
+ GET /producao 200 in 876ms (next.js: 103ms, application-code: 773ms)
+ POST /producao 200 in 672ms (next.js: 2ms, application-code: 669ms)
+  └─ ƒ productionAction({}, {}) in 270ms app/producao/actions.ts
+ GET /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 787ms (next.js: 3ms, application-code: 784ms)
+ GET /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 1031ms (next.js: 5ms, application-code: 1026ms)
+ POST /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 1255ms (next.js: 3ms, application-code: 1252ms)
+  └─ ƒ productionAction({}, {}) in 666ms app/producao/actions.ts
+ POST /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 404ms (next.js: 4ms, application-code: 400ms)
+  └─ ƒ productionAction({"batchId":"cmwxoxknf000w88v3bbd3nw1z","success":"Registo guardado."}, {}) in 379ms app/producao/actions.ts
+ GET /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 593ms (next.js: 2ms, application-code: 590ms)
+ POST /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 1031ms (next.js: 2ms, application-code: 1029ms)
+  └─ ƒ productionAction({}, {}) in 442ms app/producao/actions.ts
+ GET /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 597ms (next.js: 4ms, application-code: 593ms)
+ POST /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 1058ms (next.js: 4ms, application-code: 1054ms)
+  └─ ƒ productionAction({"batchId":"cmwxoxknf000w88v3bbd3nw1z","success":"Registo guardado."}, {}) in 450ms app/producao/actions.ts
+ GET /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 605ms (next.js: 2ms, application-code: 603ms)
+ POST /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 966ms (next.js: 3ms, application-code: 962ms)
+  └─ ƒ productionAction({}, {}) in 376ms app/producao/actions.ts
+ POST /producao?lote=cmwxoxknf000w88v3bbd3nw1z 200 in 61ms (next.js: 2ms, application-code: 59ms)
+ GET /producao 200 in 672ms (next.js: 6ms, application-code: 665ms)
+ POST /producao 200 in 645ms (next.js: 3ms, application-code: 642ms)
+  └─ ƒ productionAction({}, {}) in 263ms app/producao/actions.ts
+ GET /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 764ms (next.js: 2ms, application-code: 762ms)
+ GET /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 989ms (next.js: 3ms, application-code: 986ms)
+ POST /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 1293ms (next.js: 2ms, application-code: 1291ms)
+  └─ ƒ productionAction({}, {}) in 688ms app/producao/actions.ts
+ POST /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 387ms (next.js: 2ms, application-code: 384ms)
+  └─ ƒ productionAction({"batchId":"cmwxoy2sk001888v3nndtqv2x","success":"Registo guardado."}, {}) in 379ms app/producao/actions.ts
+ GET /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 585ms (next.js: 3ms, application-code: 581ms)
+ POST /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 1031ms (next.js: 3ms, application-code: 1028ms)
+  └─ ƒ productionAction({}, {}) in 439ms app/producao/actions.ts
+ GET /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 590ms (next.js: 5ms, application-code: 585ms)
+ POST /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 1032ms (next.js: 3ms, application-code: 1029ms)
+  └─ ƒ productionAction({"batchId":"cmwxoy2sk001888v3nndtqv2x","success":"Registo guardado."}, {}) in 434ms app/producao/actions.ts
+ GET /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 598ms (next.js: 2ms, application-code: 596ms)
+ POST /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 939ms (next.js: 3ms, application-code: 936ms)
+  └─ ƒ productionAction({}, {}) in 373ms app/producao/actions.ts
+ POST /producao?lote=cmwxoy2sk001888v3nndtqv2x 200 in 983ms (next.js: 2ms, application-code: 980ms)
+  └─ ƒ productionAction({}, {}) in 384ms app/producao/actions.ts
+ GET /api/producao/cmwxoy2sk001888v3nndtqv2x/export?format=xlsx 200 in 1299ms (next.js: 1082ms, application-code: 217ms)
+ GET /api/producao/cmwxoy2sk001888v3nndtqv2x/export?format=pdf 200 in 258ms (next.js: 10ms, application-code: 249ms)
+ GET /api/producao/cmwxoy2sk001888v3nndtqv2x/export?format=xlsx 404 in 238ms (next.js: 1652µs, application-code: 236ms)
+ GET /api/producao/cmwxoy2sk001888v3nndtqv2x/export?format=xlsx 200 in 283ms (next.js: 2ms, application-code: 281ms)
+✓ Compiled in 127ms
+ GET /producao 200 in 889ms (next.js: 110ms, application-code: 779ms)
+ POST /producao 200 in 643ms (next.js: 3ms, application-code: 640ms)
+  └─ ƒ productionAction({}, {}) in 264ms app/producao/actions.ts
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 761ms (next.js: 2ms, application-code: 759ms)
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 980ms (next.js: 3ms, application-code: 978ms)
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 1245ms (next.js: 5ms, application-code: 1240ms)
+  └─ ƒ productionAction({}, {}) in 657ms app/producao/actions.ts
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 413ms (next.js: 4ms, application-code: 409ms)
+  └─ ƒ productionAction({"batchId":"cmwxoztde001k88v34gdh5lbt","success":"Registo guardado."}, {}) in 382ms app/producao/actions.ts
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 592ms (next.js: 3ms, application-code: 589ms)
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 1019ms (next.js: 2ms, application-code: 1017ms)
+  └─ ƒ productionAction({}, {}) in 447ms app/producao/actions.ts
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 594ms (next.js: 3ms, application-code: 591ms)
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 1020ms (next.js: 2ms, application-code: 1018ms)
+  └─ ƒ productionAction({"batchId":"cmwxoztde001k88v34gdh5lbt","success":"Registo guardado."}, {}) in 439ms app/producao/actions.ts
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 592ms (next.js: 3ms, application-code: 589ms)
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 948ms (next.js: 3ms, application-code: 946ms)
+  └─ ƒ productionAction({}, {}) in 373ms app/producao/actions.ts
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 945ms (next.js: 3ms, application-code: 943ms)
+  └─ ƒ productionAction({}, {}) in 366ms app/producao/actions.ts
+ GET /api/producao/cmwxoztde001k88v34gdh5lbt/export?format=xlsx 200 in 268ms (next.js: 64ms, application-code: 204ms)
+ GET /api/producao/cmwxoztde001k88v34gdh5lbt/export?format=pdf 200 in 217ms (next.js: 2ms, application-code: 215ms)
+ GET /api/producao/cmwxoztde001k88v34gdh5lbt/export?format=xlsx 404 in 234ms (next.js: 1925µs, application-code: 232ms)
+ GET /api/producao/cmwxoztde001k88v34gdh5lbt/export?format=xlsx 200 in 280ms (next.js: 8ms, application-code: 272ms)
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 670ms (next.js: 3ms, application-code: 667ms)
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 889ms (next.js: 4ms, application-code: 885ms)
+  └─ ƒ productionAction({}, {}) in 302ms app/producao/actions.ts
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 1059ms (next.js: 2ms, application-code: 1056ms)
+  └─ ƒ productionAction({}, {}) in 450ms app/producao/actions.ts
+ GET /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 603ms (next.js: 4ms, application-code: 598ms)
+ POST /producao?lote=cmwxoztde001k88v34gdh5lbt 200 in 1057ms (next.js: 3ms, application-code: 1054ms)
+  └─ ƒ productionAction({}, {}) in 470ms app/producao/actions.ts
+✓ Compiled in 136ms
+ GET /producao 200 in 1015ms (next.js: 160ms, application-code: 855ms)
+ POST /producao 200 in 686ms (next.js: 5ms, application-code: 681ms)
+  └─ ƒ productionAction({}, {}) in 269ms app/producao/actions.ts
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 798ms (next.js: 3ms, application-code: 795ms)
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1032ms (next.js: 3ms, application-code: 1029ms)
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1276ms (next.js: 3ms, application-code: 1274ms)
+  └─ ƒ productionAction({}, {}) in 667ms app/producao/actions.ts
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 384ms (next.js: 5ms, application-code: 380ms)
+  └─ ƒ productionAction({"batchId":"cmwxp1j7l002088v3hjmoavr2","success":"Registo guardado."}, {}) in 372ms app/producao/actions.ts
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 634ms (next.js: 3ms, application-code: 631ms)
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1083ms (next.js: 5ms, application-code: 1077ms)
+  └─ ƒ productionAction({}, {}) in 443ms app/producao/actions.ts
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 659ms (next.js: 5ms, application-code: 654ms)
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1111ms (next.js: 3ms, application-code: 1108ms)
+  └─ ƒ productionAction({"batchId":"cmwxp1j7l002088v3hjmoavr2","success":"Registo guardado."}, {}) in 448ms app/producao/actions.ts
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 655ms (next.js: 3ms, application-code: 653ms)
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 977ms (next.js: 3ms, application-code: 974ms)
+  └─ ƒ productionAction({}, {}) in 386ms app/producao/actions.ts
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 977ms (next.js: 3ms, application-code: 973ms)
+  └─ ƒ productionAction({}, {}) in 378ms app/producao/actions.ts
+ GET /api/producao/cmwxp1j7l002088v3hjmoavr2/export?format=xlsx 200 in 285ms (next.js: 63ms, application-code: 221ms)
+ GET /api/producao/cmwxp1j7l002088v3hjmoavr2/export?format=pdf 200 in 229ms (next.js: 1849µs, application-code: 227ms)
+ GET /api/producao/cmwxp1j7l002088v3hjmoavr2/export?format=xlsx 404 in 232ms (next.js: 9ms, application-code: 223ms)
+ GET /api/producao/cmwxp1j7l002088v3hjmoavr2/export?format=xlsx 200 in 279ms (next.js: 3ms, application-code: 276ms)
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 707ms (next.js: 4ms, application-code: 703ms)
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 939ms (next.js: 4ms, application-code: 935ms)
+  └─ ƒ productionAction({}, {}) in 298ms app/producao/actions.ts
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1100ms (next.js: 3ms, application-code: 1098ms)
+  └─ ƒ productionAction({}, {}) in 454ms app/producao/actions.ts
+ GET /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 832ms (next.js: 4ms, application-code: 828ms)
+ POST /producao?lote=cmwxp1j7l002088v3hjmoavr2 200 in 1099ms (next.js: 3ms, application-code: 1096ms)
+  └─ ƒ productionAction({}, {}) in 473ms app/producao/actions.ts

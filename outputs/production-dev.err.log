@@ -1,0 +1,23 @@
+Produção: Seleciona entre 1 e 50 colaboradores.
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
+⨯ Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at destroySession (lib\auth.ts:61:21)
+    at async getCurrentUser (lib\auth.ts:76:5)
+    at async requireUser (lib\auth.ts:84:16)
+    at async productionBatchAccess (lib\production-data.ts:20:16)
+    at async ProductionPage (app\producao\page.tsx:30:35)
+  59 |   }
+  60 |
+> 61 |   cookieStore.delete(cookieName);
+     |                     ^
+  62 | }
+  63 |
+  64 | export async function getCurrentUser() { {
+  digest: '1869862457'
+}
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
+Produção: Este colaborador já tem uma atividade ou CQ nesse horário. Termina ou corrige o registo anterior.
