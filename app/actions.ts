@@ -529,7 +529,7 @@ export async function setOwnPassword(formData: FormData) {
     await tx.session.deleteMany({ where: { userId: user.id } });
   });
   await createSession(user.id);
-  redirect(employeeHome(user.role));
+  redirect(employeeHome(user.role, user.productionCoordinator));
 }
 
 export async function loginUser(formData: FormData) {
@@ -572,7 +572,7 @@ export async function loginUser(formData: FormData) {
   }
 
   await createSession(user.id);
-  redirect(user.mustChangePassword ? "/alterar-password" : employeeHome(user.role));
+  redirect(user.mustChangePassword ? "/alterar-password" : employeeHome(user.role, user.productionCoordinator));
 }
 
 export async function logoutUser() {
@@ -3154,7 +3154,7 @@ export async function resolveOwnMaintenanceTicket(formData: FormData) {
 }
 
 export async function deleteMaintenanceTicket(formData: FormData) {
-  await requireCanManage();
+  await requireCanManage("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3169,7 +3169,7 @@ export async function deleteMaintenanceTicket(formData: FormData) {
 }
 
 export async function updateMaintenanceTicketAssignee(formData: FormData) {
-  await requireCanManage();
+  await requireCanManage("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   const assignedToId = optionalText(formData, "assignedToId");
@@ -3254,7 +3254,7 @@ export async function updateMaintenanceTicketAssignee(formData: FormData) {
 }
 
 export async function startMaintenanceTicket(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireCanWrite("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3283,7 +3283,7 @@ export async function startMaintenanceTicket(formData: FormData) {
 }
 
 export async function pauseMaintenanceTicket(formData: FormData) {
-  await requireCanWrite();
+  await requireCanWrite("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3309,7 +3309,7 @@ export async function pauseMaintenanceTicket(formData: FormData) {
 }
 
 export async function suspendMaintenanceTicket(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireCanWrite("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3340,7 +3340,7 @@ export async function suspendMaintenanceTicket(formData: FormData) {
 }
 
 export async function reopenMaintenanceTicket(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireCanWrite("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3386,7 +3386,7 @@ export async function reopenMaintenanceTicket(formData: FormData) {
 }
 
 export async function updateMaintenanceTicketTiming(formData: FormData) {
-  const user = await requireCanManage();
+  const user = await requireCanManage("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3518,7 +3518,7 @@ export async function updateMaintenanceTicketTiming(formData: FormData) {
 }
 
 export async function completeMaintenanceTicket(formData: FormData) {
-  const user = await requireCanWrite();
+  const user = await requireCanWrite("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;
@@ -3576,7 +3576,7 @@ export async function completeMaintenanceTicket(formData: FormData) {
 }
 
 export async function validateMaintenanceTicket(formData: FormData) {
-  const user = await requireCanManage();
+  const user = await requireCanManage("tickets");
   const prisma = getPrisma();
   const id = text(formData, "id");
   if (!id) return;

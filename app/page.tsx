@@ -81,7 +81,7 @@ type DashboardPageProps = {
 
 export default async function Page({ searchParams }: DashboardPageProps) {
   const user = await requireUser();
-  const home = employeeHome(user.role);
+  const home = employeeHome(user.role, user.productionCoordinator);
   if (home !== "/") redirect(home);
   const params = (await searchParams) ?? {};
   const selectedView = params.view || "month";

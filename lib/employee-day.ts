@@ -1,7 +1,8 @@
 import { formatLisbonDateTimeInput, parseLisbonDateTimeInput } from "@/lib/lisbon-time";
 import { stopMinutes } from "@/lib/production";
 
-export function employeeHome(role: string) {
+export function employeeHome(role: string, productionCoordinator = false) {
+  if (productionCoordinator) return "/funcionario";
   return ["USER", "TICKET", "SGQ"].includes(role) ? "/funcionario" : role === "HSA" ? "/calibracao" : "/";
 }
 

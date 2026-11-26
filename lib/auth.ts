@@ -1,10 +1,11 @@
 import { isQualityRole } from "@/lib/quality-roles";
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { getPrisma } from "@/lib/prisma";
 import type { UserRole } from "@prisma/client";
+import { coordinatorPathAllowed } from "@/lib/coordinator-access";
 
 const cookieName = "casa_sgq_session";
 const sessionTtlMs = 1000 * 60 * 60 * 12;
@@ -77,6 +78,10 @@ export async function getCurrentUser() {
     return null;
   }
 
+  if (session.user.productionCoordinator) {
+    const path = (await headers()).get("x-app-pathname");
+    if (!path || !coordinatorPathAllowed(path)) redirect("/funcionario");
+  }
   return session.user;
 }
 
@@ -97,26 +102,27 @@ const roleRank: Record<UserRole, number> = {
   ADMIN: 3,
 };
 
-export async function requireRole(minRole: UserRole) {
+export async function requireRole(minRole: UserRole, scope?: "tickets") {
   const user = await requireUser();
-  if (roleRank[user.role] < roleRank[minRole]) {
+  if ((user.productionCoordinator && scope !== "tickets") || roleRank[user.role] < roleRank[minRole]) {
     redirect("/");
   }
   return user;
 }
 
-export async function requireCanWrite() {
-  return requireRole("USER");
+export async function requireCanWrite(scope?: "tickets") {
+  return requireRole("USER", scope);
 }
 
 export async function requireInventoryWrite() {
   const user = await requireUser();
+  if (user.productionCoordinator) redirect("/funcionario");
   if (user.role !== "HSA" && roleRank[user.role] < roleRank.USER) redirect("/");
   return user;
 }
 
-export async function requireCanManage() {
-  return requireRole("MANAGER");
+export async function requireCanManage(scope?: "tickets") {
+  return requireRole("MANAGER", scope);
 }
 
 export async function requireCanAdmin() {
@@ -125,6 +131,7 @@ export async function requireCanAdmin() {
 
 export async function requireCanSgq() {
   const user = await requireUser();
+  if (user.productionCoordinator) redirect("/funcionario");
   if (!["ADMIN", "MANAGER"].includes(user.role) && !isQualityRole(user.role)) {
     redirect("/");
   }

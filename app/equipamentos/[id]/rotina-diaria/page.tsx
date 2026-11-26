@@ -42,7 +42,7 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   const { id } = await params;
   const query = await searchParams;
   const { equipment, units, canRecord, user } = await dailyMaintenanceAccess(id);
-  const isPost = user.role === "TICKET";
+  const isPost = user.role === "TICKET" || user.productionCoordinator;
   const group = maintenanceGroup(equipment.code, query.grupo);
   const cleaning = isCleaning(group.key);
   const groups = maintenancePlan(equipment.code).filter((item) => isCleaning(item.key) === cleaning);

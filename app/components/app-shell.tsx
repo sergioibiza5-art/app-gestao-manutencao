@@ -9,6 +9,7 @@ import { PushNotificationToggle } from "@/app/components/push-notification-toggl
 import { requireUser } from "@/lib/auth";
 import { navigation } from "@/lib/navigation";
 import { employeeHome } from "@/lib/employee-day";
+import { coordinatorModules } from "@/lib/coordinator-access";
 
 type AppShellProps = {
   activeHref?: string;
@@ -17,19 +18,22 @@ type AppShellProps = {
 
 export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   const user = await requireUser();
+  if (user.productionCoordinator && !coordinatorModules.some(href => activeHref === href || activeHref.startsWith(`${href}/`))) redirect("/funcionario");
   if (user.role === "TICKET" && !["/funcionario", "/tickets", "/producao"].includes(activeHref)) {
     redirect(employeeHome(user.role));
   }
   const qualityAllowed = ["/funcionario", "/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis", "/producao"];
   if (user.role === "HSA") qualityAllowed.push("/inventario");
-  if (isQualityRole(user.role) && !qualityAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
+  if (!user.productionCoordinator && isQualityRole(user.role) && !qualityAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/calibracao");
   }
   const userAllowedNavigation = ["/funcionario", "/plano", "/tickets", "/manutencao", "/equipamentos", "/localizacoes", "/checklists", "/producao"];
-  if (user.role === "USER" && !userAllowedNavigation.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
+  if (!user.productionCoordinator && user.role === "USER" && !userAllowedNavigation.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/plano");
   }
-  const visibleNavigation = user.role === "TICKET"
+  const visibleNavigation = user.productionCoordinator
+    ? navigation.filter(item => (coordinatorModules as readonly string[]).includes(item.href))
+    : user.role === "TICKET"
     ? navigation.filter((item) => ["/funcionario", "/tickets", "/producao"].includes(item.href))
     : isQualityRole(user.role)
     ? navigation.filter((item) => qualityAllowed.includes(item.href))
@@ -38,7 +42,7 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
     : ["ADMIN", "MANAGER"].includes(user.role)
     ? navigation
     : navigation.filter((item) => item.href !== "/ferias");
-  const homeHref = employeeHome(user.role);
+  const homeHref = employeeHome(user.role, user.productionCoordinator);
   const activeModule = visibleNavigation.find((item) => item.href === activeHref);
   const moduleLinks = visibleNavigation.map((item) => {
     const Icon = item.icon;
@@ -83,7 +87,7 @@ export async function AppShell({ activeHref = "/", children }: AppShellProps) {
               <p className="truncate text-sm font-semibold text-zinc-100">{user.name}</p>
               <p className="text-xs text-zinc-500">{user.role}</p>
             </div>
-            {user.role !== "TICKET" ? (
+            {user.role !== "TICKET" && !user.productionCoordinator ? (
               <PushNotificationToggle vapidPublicKey={process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY} />
             ) : null}
             <button className="grid size-11 place-items-center rounded-lg border border-zinc-800 bg-zinc-950/70 text-zinc-200 transition hover:border-teal-300/50 hover:text-teal-200" aria-label="Pesquisa e filtros">

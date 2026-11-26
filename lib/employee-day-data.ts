@@ -47,7 +47,7 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
     select: { id: true, number: true, title: true, status: true, openedAt: true, startedAt: true, completedAt: true,
       openedById: true, startedById: true, completedById: true, assignedToId: true, totalWorkSeconds: true, lastResumedAt: true },
     }),
-    db.workOrder.findMany({
+    viewer.productionCoordinator ? Promise.resolve([]) : db.workOrder.findMany({
     where: { ticket: null, status: { in: ["OPEN", "IN_PROGRESS", "PAUSED", "SUSPENDED"] }, OR: [{ schedule: { assignedToId: personId } }, { maintenanceLog: { userId: personId } }] },
     select: { id: true, number: true, title: true, status: true, totalWorkSeconds: true, lastResumedAt: true },
     }),
