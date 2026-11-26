@@ -9,28 +9,30 @@ import { productionOperations } from "@/lib/production";
 export type DayEvent = {
   id: string; at: Date; end?: Date | null; title: string; detail: string;
   kind: string; minutes?: number; href?: string; open?: boolean;
+  work?: { id: string; command: "finish" | "cq-arrive" | "cq-end"; batchStatus: string };
 };
 
 export type PendingDayItem = {
   id: string; title: string; detail: string; status: string;
   statusLabel?: string; minutes?: number; href?: string;
+  resumeId?: string; personalStatus?: string;
 };
 
 export async function getEmployeeDay(viewer: User, personId: string, day: string, now = new Date()) {
   if (!canViewEmployee(viewer, personId)) notFound();
   const db = getPrisma();
-  const person = await db.user.findUnique({ where: { id: personId }, select: { id: true, name: true, active: true } });
+  const person = await db.user.findUnique({ where: { id: personId }, select: { id: true, name: true, active: true, role: true } });
   if (!person) notFound();
   const window = employeeDayWindow(day);
   const inDay = { gte: window.start, lt: window.end };
   const [activities, quality, entries, tickets, orders, batches] = await Promise.all([
     db.productionActivity.findMany({
     where: { collaboratorId: personId, startedAt: { lt: window.end }, OR: [{ endedAt: null }, { endedAt: { gt: window.start } }] },
-    select: { id: true, startedAt: true, endedAt: true, operation: true, batch: { select: { id: true, lot: true, reference: true } } },
+    select: { id: true, startedAt: true, endedAt: true, operation: true, batch: { select: { id: true, lot: true, reference: true, status: true } } },
     }),
     db.productionQualityCall.findMany({
     where: { technicianId: personId, calledAt: { lt: window.end }, OR: [{ endedAt: null }, { endedAt: { gt: window.start } }] },
-    select: { id: true, calledAt: true, arrivedAt: true, endedAt: true, batch: { select: { id: true, lot: true } } },
+    select: { id: true, calledAt: true, arrivedAt: true, endedAt: true, batch: { select: { id: true, lot: true, status: true } } },
     }),
     db.dailyMaintenanceEntry.findMany({
     where: { OR: [{ recordedById: personId, recordedAt: inDay }, { verifiedById: personId, verifiedAt: inDay }] },
@@ -55,7 +57,8 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
         { activities: { some: { collaboratorId: personId } } },
         { qualityCalls: { some: { technicianId: personId } } },
       ] },
-      select: { id: true, reference: true, lot: true, status: true, equipment: { select: { code: true, name: true } } },
+      select: { id: true, reference: true, lot: true, status: true, equipment: { select: { code: true, name: true } },
+        activities: { where: { collaboratorId: personId }, orderBy: [{ startedAt: "desc" }, { id: "desc" }], take: 1, select: { endedAt: true } } },
       orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
     }),
   ]);
@@ -73,7 +76,7 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
       minutes: interval ? (interval.end.getTime() - interval.start.getTime()) / 60000 : 0 };
     if (interval) events.push(event);
     if (!a.endedAt && a.startedAt <= now) {
-      current.push(event);
+      current.push({ ...event, work: { id: a.id, command: "finish", batchStatus: a.batch.status } });
       activeBatchIds.add(a.batch.id);
     }
   }
@@ -87,7 +90,7 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
       ...(interval ? { minutes: (interval.end.getTime() - interval.start.getTime()) / 60000 } : {}) };
     if (interval || (!q.arrivedAt && q.calledAt >= window.start && q.calledAt < window.end)) events.push(event);
     if (!q.endedAt && q.calledAt <= now) {
-      current.push(event);
+      current.push({ ...event, work: { id: q.id, command: q.arrivedAt ? "cq-end" : "cq-arrive", batchStatus: q.batch.status } });
       activeBatchIds.add(q.batch.id);
     }
   }
@@ -114,6 +117,8 @@ export async function getEmployeeDay(viewer: User, personId: string, day: string
       id: `batch-${b.id}`, title: `${b.reference} · Lote ${b.lot}`, status: b.status,
       statusLabel: b.status === "OPEN" ? "Lote em curso" : "Lote por iniciar",
       detail: `${b.equipment.code || b.equipment.name} · Lote de produção`, href: `/producao?lote=${b.id}`,
+      personalStatus: b.activities[0]?.endedAt ? "A tua atividade terminou. O lote continua aberto." : "Sem atividade tua em curso neste lote.",
+      resumeId: b.status === "OPEN" && b.activities[0]?.endedAt && person.role === "TICKET" ? b.id : undefined,
     })),
     ...tickets.filter(t => ["OPEN", "IN_PROGRESS", "PAUSED"].includes(t.status)).map(t => ({ id: t.id, title: `${t.number} · ${t.title}`, status: t.status,
       detail: t.assignedToId === personId ? "Intervenção atribuída" : "Pedido em acompanhamento", minutes: accumulated(t), href: ticketHref(t.openedById, t.id) })),

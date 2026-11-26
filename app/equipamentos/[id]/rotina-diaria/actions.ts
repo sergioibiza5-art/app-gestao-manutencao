@@ -2,6 +2,7 @@
 
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { canVerifyCleaning, cleaningPerformerMaxLength, dailyMaintenanceAccess, dailyPath, lisbonDay, parseDailyChecks } from "@/lib/daily-maintenance";
 import { isCleaning, maintenancePlan } from "@/lib/mcc-maintenance-plan";
 import { getPrisma } from "@/lib/prisma";
@@ -29,6 +30,7 @@ export async function recordMeterReading(id: string, groupKey: string, formData:
     } });
     return true;
   }, { isolationLevel: "Serializable" });
+  if (saved) revalidatePath("/funcionario", "layout");
   redirect(`${path}&${saved ? "leitura=1" : "erro=referencia"}`);
 }
 
@@ -104,6 +106,7 @@ export async function recordDailyMaintenance(id: string, groupKey: string, formD
   } catch (error) {
     if (!(error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")) throw error;
   }
+  if (saved) revalidatePath("/funcionario", "layout");
   redirect(saved ? `${path}&guardado=1` : `${path}&erro=atualizado`);
 }
 
@@ -118,5 +121,6 @@ export async function verifyCleaning(id: string, groupKey: string, month: string
     where: { id: entryId, equipmentId: id, groupKey: group.key, noProduction: false, verifiedAt: null, recordedById: { not: user.id } },
     data: { verifiedAt: new Date(), verifiedById: user.id, verifierName: user.name },
   });
+  if (result.count) revalidatePath("/funcionario", "layout");
   redirect(`${path}&${result.count ? "verificado=1" : "erro=verificacao"}`);
 }

@@ -176,6 +176,7 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       return id;
     }, { timeout: 30_000, maxWait: 10_000 });
     revalidatePath("/producao");
+    revalidatePath("/funcionario", "layout");
     return { success: "Registo guardado.", batchId };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") return { error: "Já existe um lote com essa referência e linha." };

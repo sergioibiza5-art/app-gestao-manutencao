@@ -70,8 +70,8 @@ export default async function DailyMaintenancePage({ params, searchParams }: {
   return (
     <AppShell activeHref={isPost ? "/tickets" : "/equipamentos"}>
       <PageHeader eyebrow={group.documentCode} title={cleaning ? "Limpezas" : "Plano preventivo"} description={equipment.name}
-        action={<Link href={isPost ? "/tickets#equipamentos-do-posto" : `/equipamentos/${id}`} className={buttonClass}>
-          <ArrowLeft size={17} /> {isPost ? "Voltar ao posto" : "Ficha"}
+        action={<Link href={isPost ? "/funcionario" : `/equipamentos/${id}`} className={buttonClass}>
+          <ArrowLeft size={17} /> {isPost ? "O meu dia" : "Ficha"}
         </Link>} />
       <Panel>
         {!cleaning && <nav aria-label="Equipamentos do plano" className="flex flex-wrap gap-2">
