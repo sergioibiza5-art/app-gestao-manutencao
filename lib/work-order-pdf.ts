@@ -130,8 +130,6 @@ export async function workOrderPdf(report: WorkOrderReport, emittedBy: string, o
   field("Mão de obra", op.ticket ? formatCurrency(op.ticket.laborCost) : closedCost === null ? "Sem custo fechado registado" : formatCurrency(Math.max(0, closedCost - consumables)));
   for (const movement of op.consumableMovements) field(movement.consumable.name, `${movement.quantity.toString()} ${movement.consumable.unit} | ${formatCurrency(Number(movement.quantity) * Number(movement.consumable.unitCost))}`);
   if (op.consumableMovements.length) field("Base de cálculo dos consumíveis", "As linhas usam o custo unitário atual do cadastro. O custo total registado é apresentado separadamente.");
-  section("Notas da OP");
-  field("Notas e histórico de correções da OP", op.notes);
   if (references.length || op.documents.length) {
     section("Evidências e documentos associados");
     field("Acesso às evidências", "As ligações abaixo apontam para os ficheiros ou pastas originais. Não constituem imagens incorporadas no PDF e podem exigir autorização de acesso ao OneDrive/SharePoint.");

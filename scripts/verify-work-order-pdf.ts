@@ -18,7 +18,7 @@ async function main() {
   assert.equal(pdf.subarray(0, 5).toString(), "%PDF-");
   await writeFile(resolve(folder, reportFilename(number)), pdf);
   // Stress pagination without altering the source record or database.
-  const longReport = { ...report, order: { ...report.order, notes: Array.from({ length: 90 }, (_, i) => `Observação ${i + 1}: texto de teste para confirmar paginação, acentos e legibilidade.`).join("\n") } };
+  const longReport = { ...report, order: { ...report.order, notes: "OP_NOTES_MUST_NOT_BE_EXPORTED", actionsDone: Array.from({ length: 90 }, (_, i) => `Observação ${i + 1}: texto de teste para confirmar paginação, acentos e legibilidade.`).join("\n") } };
   await writeFile(resolve(folder, "paginacao.pdf"), await workOrderPdf(longReport, "Verificação técnica", "https://app-gestao-manutencao.vercel.app"));
   console.log(JSON.stringify({ file: resolve(folder, reportFilename(number)), bytes: pdf.length, op: number, checklistItems: report.order.checklistRecord?.responses.length ?? 0 }));
 }
