@@ -16,20 +16,20 @@ type AppShellProps = {
 
 export async function AppShell({ activeHref = "/", children }: AppShellProps) {
   const user = await requireUser();
-  if (user.role === "TICKET" && activeHref !== "/tickets") {
+  if (user.role === "TICKET" && !["/tickets", "/producao"].includes(activeHref)) {
     redirect("/tickets");
   }
-  const qualityAllowed = ["/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis"];
+  const qualityAllowed = ["/ambiental", "/calibracao", "/equipamentos", "/analises", "/kpis", "/producao"];
   if (user.role === "HSA") qualityAllowed.push("/inventario");
   if (isQualityRole(user.role) && !qualityAllowed.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/calibracao");
   }
-  const userAllowedNavigation = ["/plano", "/tickets", "/manutencao", "/equipamentos", "/localizacoes", "/checklists"];
+  const userAllowedNavigation = ["/plano", "/tickets", "/manutencao", "/equipamentos", "/localizacoes", "/checklists", "/producao"];
   if (user.role === "USER" && !userAllowedNavigation.some((href) => activeHref === href || activeHref.startsWith(`${href}/`))) {
     redirect("/plano");
   }
   const visibleNavigation = user.role === "TICKET"
-    ? navigation.filter((item) => item.href === "/tickets")
+    ? navigation.filter((item) => ["/tickets", "/producao"].includes(item.href))
     : isQualityRole(user.role)
     ? navigation.filter((item) => qualityAllowed.includes(item.href))
     : user.role === "USER"
