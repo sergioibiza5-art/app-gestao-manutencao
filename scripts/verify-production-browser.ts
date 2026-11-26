@@ -35,10 +35,18 @@ async function main() {
     await create.getByRole("button", { name: "Criar lote" }).click();
     await page.waitForURL(/lote=/);
     batchId = new URL(page.url()).searchParams.get("lote")!;
+    assert.equal((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).status, "PLANNED");
+    await page.getByRole("button", { name: "Iniciar lote", exact: true }).click();
+    await page.getByRole("button", { name: "Terminar lote", exact: true }).waitFor();
+    assert.equal((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).status, "OPEN");
+    assert.equal(await page.locator('select[name="status"]').count(), 0);
     await page.locator('summary').filter({ hasText: "Registar atividade" }).click();
     const activity = page.locator('form').filter({ has: page.locator('input[name="command"][value="activity"]') }).first();
     assert.equal(await activity.locator(`[name="collaboratorId"][value="${technician.id}"]`).count(), 0);
     assert.equal(await activity.locator(`[name="collaboratorId"][value="${admin.id}"]`).count(), 0);
+    const offeredOperators = await activity.locator('input[name="collaboratorId"]').evaluateAll((inputs: HTMLInputElement[]) => inputs.map(i => i.value).sort());
+    const expectedOperators = (await db.user.findMany({ where: { active: true, role: "TICKET" }, select: { id: true } })).map(p => p.id).sort();
+    assert.deepEqual(offeredOperators, expectedOperators);
     await activity.locator(`[name="collaboratorId"][value="${operator.id}"]`).check();
     await activity.locator(`[name="collaboratorId"][value="${operator2.id}"]`).check();
     await activity.locator('[name="startedAt"]').fill("2026-11-25T08:30");
@@ -56,6 +64,9 @@ async function main() {
     const cq = page.locator('form').filter({ has: page.locator('input[name="command"][value="quality"]') }).first();
     assert.equal(await cq.locator(`[name="technicianId"] option[value="${operator.id}"]`).count(), 0);
     assert.equal(await cq.locator(`[name="technicianId"] option[value="${admin.id}"]`).count(), 0);
+    const offeredTechnicians = await cq.locator('[name="technicianId"] option').evaluateAll((options: HTMLOptionElement[]) => options.map(o => o.value).filter(Boolean).sort());
+    const expectedTechnicians = (await db.user.findMany({ where: { active: true, role: "SGQ" }, select: { id: true } })).map(p => p.id).sort();
+    assert.deepEqual(offeredTechnicians, expectedTechnicians);
     await cq.locator('[name="calledAt"]').fill("2026-11-25T09:35");
     await cq.locator('[name="arrivedAt"]').fill("2026-11-25T09:40");
     await cq.locator('[name="endedAt"]').fill("2026-11-25T09:50");
@@ -88,11 +99,12 @@ async function main() {
       await page.screenshot({ path: `outputs/production-${label}.png`, fullPage: true });
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), `${label}: page overflow`);
     }
-    await page.locator('summary').filter({ hasText: "Quantidade, observações" }).click();
+    await page.locator('summary').filter({ hasText: "Quantidade e observações" }).click();
     const batchForm = page.locator('form').filter({ has: page.locator('input[name="command"][value="batch"]') });
     await batchForm.locator('[name="quantity"]').fill("511");
-    await batchForm.locator('[name="status"]').selectOption("DONE");
     await batchForm.getByRole("button", { name: "Guardar lote" }).click();
+    await batchForm.getByRole("status").filter({ hasText: "Registo guardado" }).waitFor();
+    await page.getByRole("button", { name: "Terminar lote", exact: true }).click();
     await page.getByRole("button", { name: "Conferir lote" }).waitFor();
     await page.getByRole("button", { name: "Conferir lote" }).click();
     await page.getByRole("button", { name: "Conferir lote" }).waitFor({ state: "detached" });
@@ -160,6 +172,9 @@ async function main() {
     const currentB = await db.productionActivity.findFirstOrThrow({ where: { batchId, collaboratorId: operator2.id, endedAt: null } });
     assert.ok(currentA.startedAt.getTime() >= beforeStart);
     assert.equal(await db.productionActivity.count({ where: { batchId, endedAt: null } }), 2);
+    await pageA.getByRole("button", { name: "Terminar lote", exact: true }).click();
+    await pageA.locator('form').filter({ has: pageA.locator('input[name="command"][value="batch-end"]') }).getByRole("status").filter({ hasText: "Termina as atividades" }).waitFor();
+    assert.equal((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).status, "OPEN");
     await pageA.getByRole("button", { name: "Atualizar lote" }).click();
     await pageA.getByTestId(`production-person-${operator2.id}`).getByText("Em curso", { exact: true }).waitFor();
     await ownA.locator('[name="rowId"]').evaluate((e: HTMLInputElement, id: string) => { e.value = id; }, currentB.id);
@@ -226,6 +241,17 @@ async function main() {
     assert.equal((await db.user.findUniqueOrThrow({ where: { id: operator2.id } })).productionCoordinator, false);
     await pageB.getByRole("button", { name: "Atualizar lote" }).click();
     await pageB.waitForFunction(() => document.querySelectorAll('[name="startedAt"]').length === 0);
+    await db.user.update({ where: { id: admin.id }, data: { productionCoordinator: false } });
+    await page.goto(`${base}/producao?lote=${batchId}`);
+    assert.equal(await page.locator('[name="startedAt"]').count(), 0);
+    assert.equal(await page.locator('[name="calledAt"]').count(), 0);
+    await page.locator('summary').filter({ hasText: "Nova chamada de CQ" }).click();
+    const adminProbe = page.locator('form').filter({ has: page.locator('input[name="command"][value="call-quality"]') });
+    await adminProbe.locator('[name="command"]').evaluate((e: HTMLInputElement) => { e.value = "quality"; });
+    const beforeProbe = await db.productionQualityCall.count({ where: { batchId } });
+    await adminProbe.getByRole("button", { name: "Chamar CQ", exact: true }).click();
+    await adminProbe.getByRole("status").filter({ hasText: "Só um coordenador" }).waitFor();
+    assert.equal(await db.productionQualityCall.count({ where: { batchId } }), beforeProbe);
     await pageA.screenshot({ path: "outputs/production-shared-tablet.png", fullPage: true });
     console.log("PASS: shared lot, independent simultaneous employee timers, automatic server clocks, rejected manual/other-person tampering, SGQ/Ticket lists, coordinator appointment persistence, audit and revocation.");
   } finally {

@@ -1,8 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate } from "./production";
+import { batchButtonStatus, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate } from "./production";
 const at = (time: string) => new Date(`2026-11-25T${time}:00Z`);
 const cq = { calledAt: at("09:35"), arrivedAt: at("09:40"), endedAt: at("09:50"), technicianId: "quality", hasStop: false, stopStartedAt: null, stopEndedAt: null };
+test("batch buttons only permit starting planned lots and finishing open lots", () => {
+  assert.equal(batchButtonStatus("PLANNED", "batch-start"), "OPEN");
+  assert.equal(batchButtonStatus("OPEN", "batch-end"), "DONE");
+  for (const state of ["OPEN", "DONE", "VERIFIED"]) assert.throws(() => batchButtonStatus(state, "batch-start"));
+  for (const state of ["PLANNED", "DONE", "VERIFIED"]) assert.throws(() => batchButtonStatus(state, "batch-end"));
+});
 test("CQ waiting is independent from quality work and operator time", () => {
   validateQuality(cq);
   assert.equal(elapsedMinutes(cq.calledAt, cq.arrivedAt), 5);

@@ -34,7 +34,7 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
   const participantIds = new Set([user.id, ...(selected?.activities.map(a => a.collaboratorId) || [])]);
   const participants = operators.filter(p => participantIds.has(p.id));
   const editable = writer && selected?.status === "OPEN";
-  const unlocked = writer && selected?.status === "OPEN";
+  const unlocked = writer && selected && ["PLANNED", "OPEN"].includes(selected.status);
   const now = new Date(), nowInput = dateInput(now);
   const operatorMinutes = selected?.activities.reduce((sum, a) => sum + elapsedMinutes(a.startedAt, a.endedAt, now), 0) ?? 0;
   const cqMinutes = selected?.qualityCalls.reduce((sum, q) => sum + (q.arrivedAt ? elapsedMinutes(q.arrivedAt, q.endedAt, now) : 0), 0) ?? 0;
@@ -87,7 +87,12 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
     </> : <>
       <div className="flex flex-wrap items-start justify-between gap-3"><div><Link href="/producao" className="text-sm text-teal-300">← Lotes</Link><h2 className="mt-2 break-words text-xl font-semibold">{selected.reference} · {selected.lot}</h2><p className="mt-1 text-sm text-zinc-400">{selected.line} · {selected.equipment.code} · {selected.equipment.name} · {productionStatuses[selected.status as keyof typeof productionStatuses]}</p></div><div className="flex flex-wrap gap-2"><ProductionRefresh live={selected.status === "OPEN"} /><a href={`/api/producao/${selected.id}/export?format=xlsx`} className={secondary}><Download size={16} />Excel</a><a href={`/api/producao/${selected.id}/export?format=pdf`} target="_blank" className={secondary}><Download size={16} />PDF</a></div></div>
       <dl className="grid grid-cols-2 gap-4 border-y border-zinc-800 py-4 lg:grid-cols-4">{[["Quantidade produzida", `${selected.quantity} ${selected.unit}`], ["Mão de obra · operadores", minutesLabel(operatorMinutes)], ["Controlo de qualidade", minutesLabel(cqMinutes)], ["Paragem de produção", minutesLabel(downtime)]].map(([label, value]) => <div key={label}><dt className="text-sm text-zinc-400">{label}</dt><dd className="mt-1 text-xl font-semibold">{value}</dd></div>)}</dl>
-      {unlocked && <details><summary className="min-h-11 cursor-pointer py-2 font-semibold">Quantidade, observações e fecho do lote</summary><ProductionForm command="batch" batchId={selected.id} className="max-w-3xl py-3"><div className="grid gap-3 sm:grid-cols-3">{field("Quantidade produzida", <input name="quantity" type="number" min="0" step="0.001" required defaultValue={selected.quantity.toString()} className={inputClass} />)}{field("Unidade", <input name="unit" required defaultValue={selected.unit} className={inputClass} />)}{field("Estado", <select name="status" defaultValue={selected.status} className={inputClass}><option value="OPEN">Em curso</option><option value="DONE">Terminado</option></select>)}</div>{field("Observações do lote", <textarea name="notes" defaultValue={selected.notes} className={textareaClass} />)}<button className={buttonClass}><Save size={17} />Guardar lote</button></ProductionForm></details>}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-3">
+        <p className="text-sm font-semibold">Estado do lote: <span className="text-teal-200">{productionStatuses[selected.status as keyof typeof productionStatuses]}</span></p>
+        {writer && selected.status === "PLANNED" && <ProductionForm command="batch-start" batchId={selected.id}><button className={buttonClass}><Play size={17} />Iniciar lote</button></ProductionForm>}
+        {writer && selected.status === "OPEN" && <ProductionForm command="batch-end" batchId={selected.id}><button className={secondary}><Square size={17} />Terminar lote</button></ProductionForm>}
+      </div>
+      {unlocked && <details><summary className="min-h-11 cursor-pointer py-2 font-semibold">Quantidade e observações do lote</summary><ProductionForm command="batch" batchId={selected.id} className="max-w-3xl py-3"><div className="grid gap-3 sm:grid-cols-2">{field("Quantidade produzida", <input name="quantity" type="number" min="0" step="0.001" required defaultValue={selected.quantity.toString()} className={inputClass} />)}{field("Unidade", <input name="unit" required defaultValue={selected.unit} className={inputClass} />)}</div>{field("Observações do lote", <textarea name="notes" defaultValue={selected.notes} className={textareaClass} />)}<button className={buttonClass}><Save size={17} />Guardar lote</button></ProductionForm></details>}
       {selected.notes && <p className="whitespace-pre-wrap text-sm text-zinc-300">{selected.notes}</p>}
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Colaboradores no lote</h2>
@@ -128,7 +133,7 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
         </article>)}
         {!selected.qualityCalls.length && <p className="py-3 text-sm text-zinc-400">Sem chamadas de controlo de qualidade.</p>}
       </section>
-      {manager && selected.status !== "OPEN" && <section className="space-y-3 border-t border-zinc-800 pt-4">
+      {manager && ["DONE", "VERIFIED"].includes(selected.status) && <section className="space-y-3 border-t border-zinc-800 pt-4">
         {selected.status === "DONE" && <ProductionForm command="verify" batchId={selected.id}><input type="hidden" name="quantity" value={selected.quantity.toString()} /><input type="hidden" name="unit" value={selected.unit} /><input type="hidden" name="notes" value={selected.notes} /><button className={buttonClass}><CheckCheck size={18} />Conferir lote</button></ProductionForm>}
         <ProductionForm command="reopen" batchId={selected.id} className="max-w-xl">{field("Motivo da reabertura", <input name="reason" required className={inputClass} />)}<button className={secondary}><RotateCcw size={17} />Reabrir lote</button></ProductionForm>
       </section>}

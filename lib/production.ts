@@ -5,7 +5,16 @@ export const productionOperations = {
   PCS: "Produção de cobre-sapatos", EMB: "Embalamento", SET: "Setup de máquina",
   AJM: "Ajuste de máquina", MANT: "Manutenção", LIMP: "Limpeza", TMP: "Troca de matéria-prima", OUT: "Outra",
 } as const;
-export const productionStatuses = { OPEN: "Em curso", DONE: "Terminado", VERIFIED: "Conferido" } as const;
+export const productionStatuses = { PLANNED: "Por iniciar", OPEN: "Em curso", DONE: "Terminado", VERIFIED: "Conferido" } as const;
+
+export function batchButtonStatus(status: string, command: "batch-start" | "batch-end") {
+  if (command === "batch-start") {
+    if (status !== "PLANNED") throw new Error("Só podes iniciar um lote que esteja por iniciar.");
+    return "OPEN";
+  }
+  if (status !== "OPEN") throw new Error("Só podes terminar um lote em curso.");
+  return "DONE";
+}
 export const canManageProduction = (user: { productionCoordinator: boolean }) => user.productionCoordinator;
 export const canWriteProduction = (role: string) => ["ADMIN", "MANAGER", "USER", "TICKET", "SGQ"].includes(role);
 

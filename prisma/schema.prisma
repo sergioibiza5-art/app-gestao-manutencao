@@ -204,7 +204,7 @@ model ProductionBatch {
   quantity     Decimal @default(0) @db.Decimal(14, 3)
   unit         String @default("un")
   notes        String @default("")
-  status       String @default("OPEN")
+  status       String @default("PLANNED")
   createdById  String
   verifiedById String?
   verifiedAt   DateTime?

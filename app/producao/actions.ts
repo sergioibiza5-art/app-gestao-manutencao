@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
-import { canManageProduction, canWriteProduction, productionDate, productionOperations, validateInterval, validateQuality } from "@/lib/production";
+import { batchButtonStatus, canManageProduction, canWriteProduction, productionDate, productionOperations, validateInterval, validateQuality } from "@/lib/production";
 
 export type ProductionResult = { error?: string; success?: string; batchId?: string };
 const text = (f: FormData, name: string) => String(f.get(name) ?? "").trim();
@@ -50,7 +50,7 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
         const equipmentId = required(form, "equipmentId");
         if (!await tx.equipment.findFirst({ where: { id: equipmentId, status: "ACTIVE" }, select: { id: true } })) throw new Error("Equipamento inativo ou indisponível.");
         const batch = await tx.productionBatch.create({ data: { reference: required(form, "reference"), lot: required(form, "lot"),
-          line: required(form, "line"), equipmentId, createdById: user.id } });
+          line: required(form, "line"), equipmentId, createdById: user.id, status: "PLANNED" } });
         await audit(batch.id, "Lote criado", null, batch);
         return batch.id;
       }
@@ -58,8 +58,20 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext('production-batch'), hashtext(${id}))`;
       const batch = await tx.productionBatch.findUnique({ where: { id } });
       if (!batch) throw new Error("Lote indisponível.");
+      if (command === "batch-start" || command === "batch-end") {
+        const status = batchButtonStatus(batch.status, command);
+        if (command === "batch-end") {
+          const open = await tx.productionActivity.count({ where: { batchId: id, endedAt: null } });
+          const cq = await tx.productionQualityCall.count({ where: { batchId: id, OR: [{ endedAt: null }, { hasStop: true, stopEndedAt: null }] } });
+          if (open || cq) throw new Error("Termina as atividades, os controlos de qualidade e as paragens antes de terminar o lote.");
+        }
+        const after = await tx.productionBatch.update({ where: { id }, data: { status } });
+        await audit(id, command === "batch-start" ? "Lote iniciado" : "Lote terminado", batch, after);
+        return id;
+      }
       if (command === "reopen") {
         if (!manager || !text(form, "reason")) throw new Error("Só a coordenação pode reabrir, indicando o motivo.");
+        if (!["DONE", "VERIFIED"].includes(batch.status)) throw new Error("Só podes reabrir um lote terminado ou conferido.");
         const after = await tx.productionBatch.update({ where: { id }, data: { status: "OPEN", verifiedAt: null, verifiedById: null } });
         await audit(id, "Lote reaberto", batch, after);
         return id;
@@ -71,9 +83,9 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
         if (command === "verify" && batch.status !== "DONE") throw new Error("Termina o lote antes de o conferir.");
         const quantity = text(form, "quantity").replace(",", ".");
         if (!/^\d{1,11}(\.\d{1,3})?$/.test(quantity)) throw new Error("Quantidade inválida (até três casas decimais).");
-        const status = command === "verify" ? "VERIFIED" : text(form, "status");
-        if (!["OPEN", "DONE", "VERIFIED"].includes(status) || (command !== "verify" && status === "VERIFIED")) throw new Error("Estado inválido.");
-        if (status !== "OPEN") {
+        if (command === "batch" && text(form, "status") && text(form, "status") !== batch.status) throw new Error("Usa os botões Iniciar lote ou Terminar lote para mudar o estado.");
+        const status = command === "verify" ? "VERIFIED" : batch.status;
+        if (command === "verify") {
           const open = await tx.productionActivity.count({ where: { batchId: id, endedAt: null } });
           const cq = await tx.productionQualityCall.count({ where: { batchId: id, OR: [{ endedAt: null }, { hasStop: true, stopEndedAt: null }] } });
           if (open || cq) throw new Error("Termina as atividades, os controlos de qualidade e as paragens antes de fechar o lote.");
