@@ -169,6 +169,8 @@ model User {
   documents              Document[]
   sgqRecordsCreated      SGQRecord[]
   sessions               Session[]
+  productionActivities   ProductionActivity[]
+  productionQualityCalls ProductionQualityCall[]
   ticketsOpened          MaintenanceTicket[]       @relation("TicketOpenedBy")
   ticketsAssigned        MaintenanceTicket[]       @relation("TicketAssignedTo")
   ticketsStarted         MaintenanceTicket[]       @relation("TicketStartedBy")
@@ -189,6 +191,82 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@index([email])
+}
+
+model ProductionBatch {
+  id           String @id @default(cuid())
+  reference    String
+  lot          String
+  line         String @default("SL1")
+  equipmentId  String
+  equipment    Equipment @relation(fields: [equipmentId], references: [id], onDelete: Restrict)
+  quantity     Decimal @default(0) @db.Decimal(14, 3)
+  unit         String @default("un")
+  notes        String @default("")
+  status       String @default("OPEN")
+  createdById  String
+  verifiedById String?
+  verifiedAt   DateTime?
+  activities   ProductionActivity[]
+  qualityCalls ProductionQualityCall[]
+  audits       ProductionAudit[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([reference, lot, line])
+  @@index([status, createdAt])
+}
+
+model ProductionActivity {
+  id             String @id @default(cuid())
+  batchId        String
+  batch          ProductionBatch @relation(fields: [batchId], references: [id], onDelete: Restrict)
+  collaboratorId String
+  collaborator   User @relation(fields: [collaboratorId], references: [id], onDelete: Restrict)
+  operation      String
+  startedAt      DateTime
+  endedAt        DateTime?
+  notes          String @default("")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([collaboratorId, startedAt])
+  @@index([batchId, startedAt])
+}
+
+model ProductionQualityCall {
+  id            String @id @default(cuid())
+  batchId       String
+  batch         ProductionBatch @relation(fields: [batchId], references: [id], onDelete: Restrict)
+  calledAt      DateTime
+  arrivedAt     DateTime?
+  endedAt       DateTime?
+  technicianId  String?
+  technician    User? @relation(fields: [technicianId], references: [id], onDelete: Restrict)
+  hasStop       Boolean @default(false)
+  stopStartedAt DateTime?
+  stopEndedAt   DateTime?
+  notes         String @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([batchId, calledAt])
+  @@index([technicianId, arrivedAt])
+}
+
+model ProductionAudit {
+  id        String @id @default(cuid())
+  batchId   String
+  batch     ProductionBatch @relation(fields: [batchId], references: [id], onDelete: Restrict)
+  actorId   String
+  actorName String
+  action    String
+  reason    String @default("")
+  before    Json?
+  after     Json?
+  createdAt DateTime @default(now())
+
+  @@index([batchId, createdAt])
 }
 
 model Session {
@@ -244,6 +322,7 @@ model Equipment {
   expenses                   Expense[]
   documents                  Document[]
   consumables                Consumable[]
+  productionBatches          ProductionBatch[]
   dl50Assessments            EquipmentDl50Assessment[]
 
   createdAt DateTime @default(now())
