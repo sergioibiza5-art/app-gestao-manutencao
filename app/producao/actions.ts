@@ -59,14 +59,20 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       const batch = await tx.productionBatch.findUnique({ where: { id } });
       if (!batch) throw new Error("Lote indisponível.");
       if (command === "batch-start" || command === "batch-end") {
+        if (command === "batch-end" && !manager) throw new Error("Só um coordenador de produção pode fechar o lote.");
         const status = batchButtonStatus(batch.status, command);
+        let closing: { quantity: string; unit: string } | undefined;
         if (command === "batch-end") {
+          if (form.get("confirmClose") !== "true") throw new Error("Confirma a quantidade e o fecho do lote.");
+          const quantity = text(form, "quantity").replace(",", ".");
+          if (!/^\d{1,11}(\.\d{1,3})?$/.test(quantity)) throw new Error("Quantidade final inválida (até três casas decimais).");
+          closing = { quantity, unit: required(form, "unit") };
           const open = await tx.productionActivity.count({ where: { batchId: id, endedAt: null } });
           const cq = await tx.productionQualityCall.count({ where: { batchId: id, OR: [{ endedAt: null }, { hasStop: true, stopEndedAt: null }] } });
           if (open || cq) throw new Error("Termina as atividades, os controlos de qualidade e as paragens antes de terminar o lote.");
         }
         const now = new Date();
-        const after = await tx.productionBatch.update({ where: { id }, data: { status,
+        const after = await tx.productionBatch.update({ where: { id }, data: { status, ...closing,
           ...(command === "batch-start" ? { startedAt: now, endedAt: null } : { endedAt: now }) } });
         await audit(id, command === "batch-start" ? "Lote iniciado" : "Lote terminado", batch, after);
         return id;
