@@ -368,3 +368,6 @@
  POST /acessos 200 in 3.1s (next.js: 8ms, application-code: 3.1s)
   └─ ƒ updateUser({}) in 290ms app/actions.ts
 ✓ Compiled in 128ms
+✓ Compiled in 204ms
+✓ Compiled in 262ms
+✓ Compiled in 62ms
