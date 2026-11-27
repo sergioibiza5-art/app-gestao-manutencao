@@ -32,8 +32,9 @@ async function main() {
     await page.goto(`${base}/acessos`);
     const form = page.locator("form").filter({ has: page.locator(`input[name="id"][value="${quality.id}"]`) }).first();
     await form.getByLabel("Pode executar controlo de qualidade", { exact: true }).check();
+    const saved = page.waitForResponse((r: { url(): string; request(): { method(): string } }) => r.request().method() === "POST" && new URL(r.url()).pathname === "/acessos");
     await form.getByRole("button", { name: "Atualizar", exact: true }).click();
-    await page.waitForTimeout(500);
+    await saved;
     await page.reload();
     assert.equal(await form.getByLabel("Pode executar controlo de qualidade", { exact: true }).isChecked(), true);
     assert.equal((await db.user.findUniqueOrThrow({ where: { id: quality.id } })).qualityExecutor, true);
