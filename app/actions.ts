@@ -4698,8 +4698,8 @@ export async function createUser(formData: FormData) {
   const prisma = getPrisma();
   const password = temporaryPassword;
   const role = enumValue(formData, "role", userRoles, "USER");
-  if (formData.get("qualityExecutor") === "true" && (role !== "SGQ" || !isDeliverableEmail(text(formData, "email")))) {
-    redirect("/acessos?erro=" + encodeURIComponent("Para executar CQ, seleciona o perfil SGQ e indica um email válido."));
+  if (formData.get("qualityExecutor") === "true" && role !== "SGQ") {
+    redirect("/acessos?erro=" + encodeURIComponent("Para executar CQ, seleciona o perfil SGQ."));
   }
   const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
   const email = role === "TICKET"
@@ -4758,8 +4758,8 @@ export async function updateUser(formData: FormData) {
   const id = text(formData, "id");
 
   const role = enumValue(formData, "role", userRoles, "USER");
-  if (formData.get("qualityExecutor") === "true" && (role !== "SGQ" || !isDeliverableEmail(text(formData, "email")))) {
-    redirect("/acessos?erro=" + encodeURIComponent("Para executar CQ, seleciona o perfil SGQ e indica um email válido."));
+  if (formData.get("qualityExecutor") === "true" && role !== "SGQ") {
+    redirect("/acessos?erro=" + encodeURIComponent("Para executar CQ, seleciona o perfil SGQ."));
   }
   const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
   const email = role === "TICKET" ? `${username || id}@ticket.local` : text(formData, "email").toLowerCase();
