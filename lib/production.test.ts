@@ -1,8 +1,29 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { batchButtonStatus, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate, productionPeopleSummary, productionBatchMinutes, minutesLabel } from "./production";
+import { batchButtonStatus, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate, productionPeopleSummary, productionBatchMinutes, minutesLabel, productionWasteQuantity } from "./production";
 const at = (time: string) => new Date(`2026-11-25T${time}:00Z`);
 const cq = { calledAt: at("09:35"), arrivedAt: at("09:40"), endedAt: at("09:50"), technicianId: "quality", hasStop: false, stopStartedAt: null, stopEndedAt: null };
+
+test("Closing waste accepts zero and three decimal places without accepting invalid or negative amounts", () => {
+  for (const value of ["0", "0.000", "12.125", "99999999999.999"]) assert.equal(productionWasteQuantity(value), value);
+  assert.equal(productionWasteQuantity(" 12,5 "), "12.5");
+  for (const value of ["", "-1", "NaN", "Infinity", "1e3", "1.0000", "100000000000", "1,2,3"]) assert.throws(() => productionWasteQuantity(value));
+});
+
+test("Production and CQ summaries have independent totals, dates and open states for the same person", () => {
+  const person = { name: "Ana", username: "1" };
+  const activities = [{ collaboratorId: "a", collaborator: person, startedAt: at("08:00"), endedAt: at("09:00") }];
+  const quality = [{ technicianId: "a", technician: person, arrivedAt: at("09:30"), endedAt: null }, { technicianId: "b", technician: { name: "Bruno" }, arrivedAt: null, endedAt: null }];
+  const production = productionPeopleSummary(activities, [], at("09:40"));
+  const cqOnly = productionPeopleSummary([], quality, at("09:40"));
+  assert.equal(production.totalMinutes, 60);
+  assert.equal(cqOnly.totalMinutes, 10);
+  assert.equal(production.rows[0].open, false);
+  assert.equal(production.rows[0].endedAt?.toISOString(), at("09:00").toISOString());
+  assert.equal(cqOnly.rows[0].startedAt.toISOString(), at("09:30").toISOString());
+  assert.equal(cqOnly.rows[0].open, true);
+  assert.equal(cqOnly.rows.length, 1);
+});
 test("batch buttons only permit starting planned lots and finishing open lots", () => {
   assert.equal(batchButtonStatus("PLANNED", "batch-start"), "OPEN");
   assert.equal(batchButtonStatus("OPEN", "batch-end"), "DONE");

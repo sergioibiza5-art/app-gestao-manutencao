@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
-import { batchButtonStatus, canManageProduction, canWriteProduction, productionDate, productionOperations, validateInterval, validateQuality } from "@/lib/production";
+import { batchButtonStatus, canManageProduction, canWriteProduction, productionDate, productionOperations, productionWasteQuantity, validateInterval, validateQuality } from "@/lib/production";
 
 export type ProductionResult = { error?: string; success?: string; batchId?: string };
 const text = (f: FormData, name: string) => String(f.get(name) ?? "").trim();
@@ -61,12 +61,12 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       if (command === "batch-start" || command === "batch-end") {
         if (command === "batch-end" && !manager) throw new Error("Só um coordenador de produção pode fechar o lote.");
         const status = batchButtonStatus(batch.status, command);
-        let closing: { quantity: string; unit: string } | undefined;
+        let closing: { quantity: string; wasteQuantity: string; unit: string } | undefined;
         if (command === "batch-end") {
           if (form.get("confirmClose") !== "true") throw new Error("Confirma a quantidade e o fecho do lote.");
           const quantity = text(form, "quantity").replace(",", ".");
           if (!/^\d{1,11}(\.\d{1,3})?$/.test(quantity)) throw new Error("Quantidade final inválida (até três casas decimais).");
-          closing = { quantity, unit: required(form, "unit") };
+          closing = { quantity, wasteQuantity: productionWasteQuantity(text(form, "wasteQuantity")), unit: required(form, "unit") };
           const open = await tx.productionActivity.count({ where: { batchId: id, endedAt: null } });
           const cq = await tx.productionQualityCall.count({ where: { batchId: id, OR: [{ endedAt: null }, { hasStop: true, stopEndedAt: null }] } });
           if (open || cq) throw new Error("Termina as atividades, os controlos de qualidade e as paragens antes de terminar o lote.");

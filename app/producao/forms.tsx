@@ -6,8 +6,8 @@ import { productionAction } from "./actions";
 import { inputClass, buttonClass } from "@/app/components/ui";
 import { RefreshCw, Square, X } from "lucide-react";
 
-export function CloseBatchControl({ batchId, lot, quantity, unit, activities, quality, stops }: {
-  batchId: string; lot: string; quantity: string; unit: string; activities: number; quality: number; stops: number;
+export function CloseBatchControl({ batchId, lot, quantity, wasteQuantity, unit, activities, quality, stops }: {
+  batchId: string; lot: string; quantity: string; wasteQuantity: string; unit: string; activities: number; quality: number; stops: number;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const router = useRouter();
@@ -20,8 +20,14 @@ export function CloseBatchControl({ batchId, lot, quantity, unit, activities, qu
       <dl className="mb-4 grid grid-cols-3 gap-3 border-y border-zinc-800 py-3 text-sm">{[["Atividades em curso", activities], ["CQ por terminar", quality], ["Paragens em curso", stops]].map(([label, value]) => <div key={String(label)}><dt className="text-zinc-400">{label}</dt><dd className={`mt-1 text-xl font-semibold ${Number(value) ? "text-amber-200" : "text-teal-200"}`}>{value}</dd></div>)}</dl>
       {pending > 0 && <div className="mb-4 space-y-2"><p role="alert" className="text-sm text-amber-200">Existem registos por terminar. O lote ainda não pode ser fechado.</p><button type="button" onClick={() => router.refresh()} className="inline-flex min-h-11 items-center gap-2 text-sm text-teal-200"><RefreshCw size={17} />Atualizar pendências</button></div>}
       <ProductionForm key={attempt} command="batch-end" batchId={batchId}>
-        <div className="grid gap-3 sm:grid-cols-2"><label className="space-y-1 text-sm">Quantidade final produzida<input name="quantity" type="number" min="0" step="0.001" required defaultValue={quantity} className={inputClass} /></label><label className="space-y-1 text-sm">Unidade<input name="unit" required maxLength={180} defaultValue={unit} className={inputClass} /></label></div>
-        <label className="flex min-h-11 items-center gap-3 text-sm"><input type="checkbox" name="confirmClose" value="true" required className="size-5 shrink-0 accent-teal-300" />Confirmo a quantidade final e o fecho deste lote.</label>
+        <div className="grid items-start gap-3 sm:grid-cols-2">
+          <div className="grid gap-3">
+            <label className="grid gap-1 text-sm">Quantidade final produzida<input name="quantity" type="number" min="0" step="0.001" required defaultValue={quantity} className={inputClass} /></label>
+            <label className="grid gap-1 text-sm">Quantidade final desperdício<input name="wasteQuantity" type="number" min="0" max="99999999999.999" step="0.001" required defaultValue={wasteQuantity} className={inputClass} /></label>
+          </div>
+          <label className="grid gap-1 text-sm">Unidade<input name="unit" required maxLength={180} defaultValue={unit} className={inputClass} /></label>
+        </div>
+        <label className="flex min-h-11 items-center gap-3 text-sm"><input type="checkbox" name="confirmClose" value="true" required className="size-5 shrink-0 accent-teal-300" />Confirmo as quantidades finais e o fecho deste lote.</label>
         <button data-testid="confirm-close-batch" disabled={pending > 0} className={`${buttonClass} disabled:cursor-not-allowed disabled:opacity-40`}><Square size={17} />Confirmar fecho</button>
       </ProductionForm>
     </dialog>

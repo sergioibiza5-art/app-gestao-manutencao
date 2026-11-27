@@ -158,9 +158,11 @@ async function main() {
     const workbook = XLSX.read(data, { type: "buffer" });
     assert.equal(workbook.SheetNames.length, 6);
     const peopleSheet = XLSX.utils.sheet_to_json(workbook.Sheets.Pessoas) as Record<string, unknown>[];
-    assert.equal(peopleSheet.length, 4);
-    assert.equal(peopleSheet.at(-1)?.["Colaborador"], "Total de todas as pessoas");
-    assert.ok(Math.abs(Number(peopleSheet.at(-1)?.["Total (h)"]) - (110 + 15) / 60) < 0.000001);
+    assert.equal(peopleSheet.length, 5);
+    assert.equal(peopleSheet.at(-2)?.["Colaborador"], "Total de produção");
+    assert.equal(peopleSheet.at(-1)?.["Colaborador"], "Total de CQ");
+    assert.ok(Math.abs(Number(peopleSheet.at(-2)?.["Total (h)"]) - 110 / 60) < 0.000001);
+    assert.ok(Math.abs(Number(peopleSheet.at(-1)?.["Total (h)"]) - 15 / 60) < 0.000001);
     assert.ok((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).startedAt);
     assert.ok((await db.productionBatch.findUniqueOrThrow({ where: { id: batchId } })).endedAt);
     assert.equal(XLSX.utils.sheet_to_json(workbook.Sheets.Atividades).length, 2);

@@ -202,6 +202,7 @@ model ProductionBatch {
   equipmentId  String
   equipment    Equipment @relation(fields: [equipmentId], references: [id], onDelete: Restrict)
   quantity     Decimal @default(0) @db.Decimal(14, 3)
+  wasteQuantity Decimal? @db.Decimal(14, 3)
   unit         String @default("un")
   notes        String @default("")
   status       String @default("PLANNED")

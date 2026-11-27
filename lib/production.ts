@@ -18,6 +18,12 @@ export function batchButtonStatus(status: string, command: "batch-start" | "batc
 export const canManageProduction = (user: { productionCoordinator: boolean }) => user.productionCoordinator;
 export const canWriteProduction = (role: string) => ["ADMIN", "MANAGER", "USER", "TICKET", "SGQ"].includes(role);
 
+export function productionWasteQuantity(value: string) {
+  const quantity = value.trim().replace(",", ".");
+  if (!/^\d{1,11}(\.\d{1,3})?$/.test(quantity)) throw new Error("Quantidade final de desperdício inválida. Indica zero ou um valor positivo, com até três casas decimais.");
+  return quantity;
+}
+
 export function productionDate(value: string, required = false) {
   if (!value && !required) return null;
   const date = parseLisbonDateTimeInput(value);
