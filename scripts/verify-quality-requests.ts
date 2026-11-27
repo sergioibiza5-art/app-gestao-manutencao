@@ -75,10 +75,14 @@ async function main() {
     }
     await page.getByTestId(`quality-request-${callId}`).getByRole("link", { name: "Abrir pedido" }).click();
     await page.getByRole("button", { name: "Iniciar CQ", exact: true }).waitFor();
+    await page.evaluate(() => Object.defineProperty(document, "visibilityState", { configurable: true, value: "hidden" }));
     const reminderForm = page.getByRole("button", { name: "Reenviar aviso por email", exact: true }).locator("xpath=ancestor::form");
     await reminderForm.getByRole("button").click();
     await reminderForm.getByRole("status").filter({ hasText: "Registo guardado." }).waitFor();
     assert.equal((await reminderForm.getByRole("status").innerText()).includes("Não foi possível agendar"), false);
+    await page.goto(`${base}/producao?lote=${batchId}`);
+    await page.getByRole("button", { name: "Iniciar CQ", exact: true }).waitFor();
+    await page.evaluate(() => Object.defineProperty(document, "visibilityState", { configurable: true, value: "hidden" }));
     await db.user.update({ where: { id: quality.id }, data: { qualityExecutor: false } });
     await page.getByRole("button", { name: "Iniciar CQ", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "autorização para executar CQ" }).waitFor();
