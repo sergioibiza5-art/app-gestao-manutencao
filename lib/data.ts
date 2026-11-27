@@ -643,7 +643,6 @@ export async function getModuleData({ completeCalibrationHistory = false } = {})
         prisma.document.findMany({ orderBy: { createdAt: "desc" }, take: 50, include: { equipment: true, vehicle: true } }),
         prisma.user.findMany({
           orderBy: { name: "asc" },
-          take: 50,
           include: { ticketEquipmentAccess: { include: { equipment: true } } },
         }),
         prisma.sGQRecord.findMany({ orderBy: { createdAt: "desc" }, take: 50 }),

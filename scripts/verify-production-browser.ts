@@ -20,7 +20,7 @@ async function main() {
     const admin = await db.user.create({ data: { name: `${tag}-admin`, email: "", role: "ADMIN", productionCoordinator: true } }); ids.push(admin.id);
     const operator = await db.user.create({ data: { name: `${tag}-operator`, email: "", role: "TICKET" } }); ids.push(operator.id);
     const operator2 = await db.user.create({ data: { name: `${tag}-operator2`, username: tag, email: "", role: "TICKET" } }); ids.push(operator2.id);
-    const technician = await db.user.create({ data: { name: `${tag}-CQ`, email: "", role: "SGQ" } }); ids.push(technician.id);
+    const technician = await db.user.create({ data: { name: `${tag}-CQ`, email: "", role: "SGQ", qualityExecutor: true } }); ids.push(technician.id);
     await db.session.create({ data: { token, userId: admin.id, expiresAt: new Date(Date.now() + 3_600_000) } });
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     await context.addCookies([{ name: "casa_sgq_session", value: token, url: base }]);
@@ -56,7 +56,7 @@ async function main() {
       assert.deepEqual(operatorIds, (await db.user.findMany({ where: { active: true, role: "TICKET" }, select: { id: true } })).map(p => p.id).sort());
       await openBySummary("Registo manual de CQ", page);
       const technicians = await page.locator('select[name="technicianId"] option').evaluateAll((options: HTMLOptionElement[]) => options.map(o => o.value).filter(Boolean).sort());
-      assert.deepEqual(technicians, (await db.user.findMany({ where: { active: true, role: "SGQ" }, select: { id: true } })).map(p => p.id).sort());
+      assert.deepEqual(technicians, (await db.user.findMany({ where: { active: true, role: "SGQ", qualityExecutor: true }, select: { id: true } })).map(p => p.id).sort());
       while (await page.locator('details[open] > summary:visible').count()) await page.locator('details[open] > summary:visible').first().press("Enter");
       await db.user.update({ where: { id: admin.id }, data: { productionCoordinator: false } });
       await page.getByRole("button", { name: "Atualizar lote" }).click();
@@ -95,7 +95,7 @@ async function main() {
     assert.equal(await cq.locator(`[name="technicianId"] option[value="${operator.id}"]`).count(), 0);
     assert.equal(await cq.locator(`[name="technicianId"] option[value="${admin.id}"]`).count(), 0);
     const offeredTechnicians = await cq.locator('[name="technicianId"] option').evaluateAll((options: HTMLOptionElement[]) => options.map(o => o.value).filter(Boolean).sort());
-    const expectedTechnicians = (await db.user.findMany({ where: { active: true, role: "SGQ" }, select: { id: true } })).map(p => p.id).sort();
+    const expectedTechnicians = (await db.user.findMany({ where: { active: true, role: "SGQ", qualityExecutor: true }, select: { id: true } })).map(p => p.id).sort();
     assert.deepEqual(offeredTechnicians, expectedTechnicians);
     await cq.locator('[name="calledAt"]').fill("2026-11-25T09:35");
     await cq.locator('[name="arrivedAt"]').fill("2026-11-25T09:40");
@@ -294,6 +294,7 @@ async function main() {
     assert.ok(timedCq.stopEndedAt);
     await qualityContext.close();
     // An admin appoints a Ticket user as coordinator; the checkbox must survive reload.
+    await db.user.update({ where: { id: admin.id }, data: { productionCoordinator: false } });
     await page.goto(`${base}/acessos`);
     const access = page.locator('form').filter({ has: page.locator(`input[name="id"][value="${operator2.id}"]`) }).first();
     await access.getByLabel("Coordenador de produção").check();

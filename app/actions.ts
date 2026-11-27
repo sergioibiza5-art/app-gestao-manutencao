@@ -4698,6 +4698,9 @@ export async function createUser(formData: FormData) {
   const prisma = getPrisma();
   const password = temporaryPassword;
   const role = enumValue(formData, "role", userRoles, "USER");
+  if (formData.get("qualityExecutor") === "true" && (role !== "SGQ" || !isDeliverableEmail(text(formData, "email")))) {
+    redirect("/acessos?erro=" + encodeURIComponent("Para executar CQ, seleciona o perfil SGQ e indica um email válido."));
+  }
   const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
   const email = role === "TICKET"
     ? `${username || `posto-${Date.now()}`}@ticket.local`
@@ -4725,6 +4728,7 @@ export async function createUser(formData: FormData) {
         mustChangePassword: true,
         cleaningVerifier: formData.get("cleaningVerifier") === "true",
         productionCoordinator: formData.get("productionCoordinator") === "true",
+        qualityExecutor: role === "SGQ" && formData.get("qualityExecutor") === "true",
         pin: null,
         hourlyRate: decimal(formData, "hourlyRate"),
         notifyStartTime: text(formData, "notifyStartTime") || "08:00",
@@ -4754,6 +4758,9 @@ export async function updateUser(formData: FormData) {
   const id = text(formData, "id");
 
   const role = enumValue(formData, "role", userRoles, "USER");
+  if (formData.get("qualityExecutor") === "true" && (role !== "SGQ" || !isDeliverableEmail(text(formData, "email")))) {
+    redirect("/acessos?erro=" + encodeURIComponent("Para executar CQ, seleciona o perfil SGQ e indica um email válido."));
+  }
   const username = role === "TICKET" ? loginName(formData) : optionalText(formData, "username");
   const email = role === "TICKET" ? `${username || id}@ticket.local` : text(formData, "email").toLowerCase();
   const equipmentIds = formData.getAll("ticketEquipmentId").filter((value): value is string => typeof value === "string" && value.length > 0);
@@ -4793,6 +4800,7 @@ export async function updateUser(formData: FormData) {
         email,
         cleaningVerifier: formData.get("cleaningVerifier") === "true",
         productionCoordinator: formData.get("productionCoordinator") === "true",
+        qualityExecutor: role === "SGQ" && formData.get("qualityExecutor") === "true",
 
         ...(role === "TICKET" ? { pin: null } : {}),
         hourlyRate: decimal(formData, "hourlyRate"),

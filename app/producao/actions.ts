@@ -4,7 +4,8 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
-import { batchButtonStatus, canManageProduction, canWriteProduction, productionDate, productionOperations, productionWasteQuantity, validateInterval, validateQuality } from "@/lib/production";
+import { batchButtonStatus, canExecuteQuality, canManageProduction, canWriteProduction, productionDate, productionOperations, productionWasteQuantity, validateInterval, validateQuality } from "@/lib/production";
+import { notifyQualityCall } from "@/lib/production-quality-email";
 
 export type ProductionResult = { error?: string; success?: string; batchId?: string };
 const text = (f: FormData, name: string) => String(f.get(name) ?? "").trim();
@@ -16,8 +17,8 @@ function required(f: FormData, name: string) {
 const snapshot = (value: unknown) => JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
 
 async function checkCollaborator(tx: Prisma.TransactionClient, id: string, role?: "TICKET" | "SGQ") {
-  if (!await tx.user.findFirst({ where: { id, active: true, ...(role ? { role } : {}) }, select: { id: true } })) {
-    throw new Error(role === "SGQ" ? "Seleciona um técnico ativo com perfil SGQ." : role === "TICKET" ? "Seleciona um colaborador ativo com perfil Posto/Ticket." : "Seleciona um colaborador ativo.");
+  if (!await tx.user.findFirst({ where: { id, active: true, ...(role ? { role } : {}), ...(role === "SGQ" ? { qualityExecutor: true } : {}) }, select: { id: true } })) {
+    throw new Error(role === "SGQ" ? "Seleciona um técnico ativo com perfil SGQ e autorização para executar CQ." : role === "TICKET" ? "Seleciona um colaborador ativo com perfil Posto/Ticket." : "Seleciona um colaborador ativo.");
   }
 }
 async function checkOverlap(tx: Prisma.TransactionClient, person: string, start: Date, end: Date | null, excludedActivity?: string, excludedCq?: string) {
@@ -41,6 +42,7 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
     if (!canWriteProduction(user.role) && !manager) throw new Error("Sem permissão para registar produção.");
     if (text(form, "notes").length > 4000 || text(form, "reason").length > 500) throw new Error("Observações: máximo de 4000 caracteres. Motivo: máximo de 500 caracteres.");
     const db = getPrisma(), command = text(form, "command");
+    let notificationId: string | undefined;
     const batchId = await db.$transaction(async tx => {
       const audit = async (id: string, action: string, before: unknown, after: unknown) => {
         await tx.productionAudit.create({ data: { batchId: id, actorId: user.id, actorName: user.name, action,
@@ -58,6 +60,13 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext('production-batch'), hashtext(${id}))`;
       const batch = await tx.productionBatch.findUnique({ where: { id } });
       if (!batch) throw new Error("Lote indisponível.");
+      if (command === "notify-quality") {
+        if (!manager && !canExecuteQuality(user)) throw new Error("Sem permissão para reenviar avisos de CQ.");
+        const call = await tx.productionQualityCall.findFirst({ where: { id: required(form, "rowId"), batchId: id, arrivedAt: null, endedAt: null } });
+        if (!call || batch.status !== "OPEN") throw new Error("O pedido já não está em espera.");
+        notificationId = call.id;
+        return id;
+      }
       if (command === "batch-start" || command === "batch-end") {
         if (command === "batch-end" && !manager) throw new Error("Só um coordenador de produção pode fechar o lote.");
         const status = batchButtonStatus(batch.status, command);
@@ -132,6 +141,7 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
           const after = await tx.productionQualityCall.create({ data: { batchId: id, calledAt: now, hasStop,
             stopStartedAt: hasStop ? now : null, notes: text(form, "notes") } });
           await audit(id, "CQ solicitado", null, after);
+          notificationId = after.id;
         } else if (["cq-arrive", "cq-end", "stop-start", "stop-end"].includes(command)) {
           const before = await tx.productionQualityCall.findFirst({ where: { id: rowId, batchId: id } });
           if (!before) throw new Error("Pedido de CQ não encontrado.");
@@ -146,6 +156,7 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
           } else if (command === "cq-end") {
             if (!before.arrivedAt || before.endedAt) throw new Error("O CQ não está em curso.");
             if (!manager && before.technicianId !== user.id) throw new Error("Só o técnico que iniciou o CQ ou um coordenador pode terminá-lo.");
+            if (!manager && !canExecuteQuality(user)) throw new Error("Sem autorização para executar CQ.");
             data = { endedAt: now };
           } else if (command === "stop-start") {
             if (before.hasStop || before.endedAt) throw new Error("Este CQ já tem uma paragem ou está terminado.");
@@ -171,13 +182,23 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
           }
           const after = before ? await tx.productionQualityCall.update({ where: { id: before.id }, data }) : await tx.productionQualityCall.create({ data });
           await audit(id, before ? "CQ atualizado" : "CQ solicitado", before, after);
+          if (!before && !after.arrivedAt && !after.endedAt) notificationId = after.id;
         } else throw new Error("Ação inválida.");
       }
       return id;
     }, { timeout: 30_000, maxWait: 10_000 });
     revalidatePath("/producao");
     revalidatePath("/funcionario", "layout");
-    return { success: "Registo guardado.", batchId };
+    let success = "Registo guardado.";
+    if (notificationId) {
+      try {
+        const delivery = await notifyQualityCall(notificationId);
+        success += delivery.failed ? " O pedido ficou guardado, mas houve falhas no email. Podes reenviar o aviso." : delivery.recipients === 0 ? " Sem técnicos SGQ autorizados com email válido para avisar." : delivery.sent ? ` Aviso enviado a ${delivery.sent} técnico(s) de qualidade.` : " Os técnicos já tinham sido avisados.";
+      } catch {
+        success += " O pedido ficou guardado, mas não foi possível enviar o email. Podes reenviar o aviso.";
+      }
+    }
+    return { success, batchId };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") return { error: "Já existe um lote com essa referência e linha." };
     console.error("Produção:", error instanceof Error ? error.message : "Erro desconhecido");

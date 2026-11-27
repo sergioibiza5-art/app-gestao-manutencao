@@ -16,6 +16,7 @@ export function batchButtonStatus(status: string, command: "batch-start" | "batc
   return "DONE";
 }
 export const canManageProduction = (user: { productionCoordinator: boolean }) => user.productionCoordinator;
+export const canExecuteQuality = (user: { role: string; qualityExecutor: boolean }) => user.role === "SGQ" && user.qualityExecutor;
 export const canWriteProduction = (role: string) => ["ADMIN", "MANAGER", "USER", "TICKET", "SGQ"].includes(role);
 
 export function productionWasteQuantity(value: string) {

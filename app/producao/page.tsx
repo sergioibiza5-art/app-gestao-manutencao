@@ -5,12 +5,14 @@ import { inputClass, textareaClass, buttonClass } from "@/app/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 import { productionBatchAccess } from "@/lib/production-data";
-import { canManageProduction, canWriteProduction, elapsedMinutes, minutesLabel, productionBatchMinutes, productionPeopleSummary, productionOperations, productionStatuses, stopMinutes } from "@/lib/production";
+import { canExecuteQuality, canManageProduction, canWriteProduction, elapsedMinutes, minutesLabel, productionBatchMinutes, productionPeopleSummary, productionOperations, productionStatuses, stopMinutes } from "@/lib/production";
 import { formatLisbonDateTimeInput as dateInput } from "@/lib/lisbon-time";
 import { ProductionForm, StopFields, ProductionRefresh, CloseBatchControl } from "./forms";
 import type { ReactNode } from "react";
+import { QualityRequests } from "./quality-requests";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 const secondary = "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-zinc-700 px-3 text-sm font-medium hover:border-teal-300";
 const field = (name: string, children: ReactNode) => <label className="block min-w-0 space-y-1 text-sm text-zinc-300"><span>{name}</span>{children}</label>;
 const dateLabel = (date: Date | null) => date ? new Intl.DateTimeFormat("pt-PT", { timeZone: "Europe/Lisbon", dateStyle: "short", timeStyle: "medium" }).format(date) : "—";
@@ -22,9 +24,14 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
   const db = getPrisma();
   const manager = canManageProduction(user), writer = canWriteProduction(user.role) || manager;
   const equipment = await db.equipment.findMany({ where: { status: "ACTIVE" }, select: { id: true, name: true, code: true }, orderBy: { name: "asc" } });
-  const people = writer ? await db.user.findMany({ where: { active: true }, select: { id: true, name: true, username: true, role: true }, orderBy: { name: "asc" } }) : [];
+  const people = writer ? await db.user.findMany({ where: { active: true }, select: { id: true, name: true, username: true, role: true, qualityExecutor: true }, orderBy: { name: "asc" } }) : [];
   const operators = people.filter(p => p.role === "TICKET");
-  const qualityPeople = people.filter(p => p.role === "SGQ");
+  const qualityPeople = people.filter(canExecuteQuality);
+  const qualityQueue = user.role === "SGQ" || manager ? await db.productionQualityCall.findMany({
+    where: { endedAt: null, batch: { status: "OPEN" } },
+    include: { technician: { select: { name: true } }, batch: { select: { id: true, lot: true, reference: true, line: true, equipment: { select: { code: true, name: true } } } } },
+    orderBy: [{ calledAt: "asc" }, { id: "asc" }], take: 101,
+  }) : [];
   const batches = await db.productionBatch.findMany({ where: {
     ...(params.q ? { OR: [{ reference: { contains: params.q, mode: "insensitive" as const } }, { lot: { contains: params.q, mode: "insensitive" as const } }] } : {}),
     ...(params.estado && Object.hasOwn(productionStatuses, params.estado) ? { status: params.estado } : {}),
@@ -116,15 +123,16 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
     const step = q.endedAt ? 2 : q.arrivedAt ? 1 : 0;
     const stopped = q.hasStop && !q.stopEndedAt;
     const stages = ["A aguardar técnico", "Em controlo", "Terminado"];
-    return <article key={q.id} className={"space-y-4 rounded-lg border p-4 " + (stopped ? "border-amber-300/60 bg-amber-300/5" : "border-zinc-800")}>
+    return <article key={q.id} id={`cq-${q.id}`} className={"scroll-mt-24 space-y-4 rounded-lg border p-4 " + (stopped ? "border-amber-300/60 bg-amber-300/5" : "border-zinc-800")}>
       <div className="flex flex-wrap items-center justify-between gap-2"><p className="min-w-0 break-words font-semibold">{q.technician?.name || "Técnico por atribuir"}</p>{stopped && <span className="text-sm font-semibold text-amber-200">Produção parada</span>}</div>
       <ol aria-label="Estado do controlo de qualidade" className="grid grid-cols-3 gap-2">
         {stages.map((label, i) => <li key={label} aria-current={i === step ? "step" : undefined} className={"min-w-0 border-t-2 pt-2 text-sm " + (i === step ? "border-teal-300 font-semibold text-teal-200" : i < step ? "border-teal-300/40 text-zinc-300" : "border-zinc-700 text-zinc-500")}><span className="block text-xs">{i + 1}</span>{label}</li>)}
       </ol>
       <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm"><p><span className="text-zinc-400">Espera: </span>{minutesLabel(elapsedMinutes(q.calledAt, q.arrivedAt, now))}</p><p><span className="text-zinc-400">Controlo: </span>{q.arrivedAt ? minutesLabel(elapsedMinutes(q.arrivedAt, q.endedAt, now)) : "Por iniciar"}</p></div>
       {editable && <div className="flex flex-wrap items-end gap-2">
-        {!q.arrivedAt && (manager || user.role === "SGQ") && <ProductionForm command="cq-arrive" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} />{manager && field("Técnico SGQ", <select name="technicianId" required defaultValue={user.role === "SGQ" ? user.id : ""} className={inputClass}><option value="">Selecionar</option>{qualityOptions}</select>)}<button className={buttonClass}><Play size={17} />Iniciar CQ</button></ProductionForm>}
-        {q.arrivedAt && !q.endedAt && (manager || q.technicianId === user.id) && <ProductionForm command="cq-end" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} /><button className={secondary}><Square size={17} />Terminar CQ</button></ProductionForm>}
+        {!q.arrivedAt && (manager || canExecuteQuality(user)) && <ProductionForm command="cq-arrive" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} />{manager && field("Técnico SGQ", <select name="technicianId" required defaultValue={canExecuteQuality(user) ? user.id : ""} className={inputClass}><option value="">Selecionar</option>{qualityOptions}</select>)}<button className={buttonClass}><Play size={17} />Iniciar CQ</button></ProductionForm>}
+        {!q.arrivedAt && (manager || canExecuteQuality(user)) && <ProductionForm command="notify-quality" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} /><button className={secondary}>Reenviar aviso por email</button></ProductionForm>}
+        {q.arrivedAt && !q.endedAt && (manager || (q.technicianId === user.id && canExecuteQuality(user))) && <ProductionForm command="cq-end" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} /><button className={secondary}><Square size={17} />Terminar CQ</button></ProductionForm>}
         {!q.hasStop && !q.endedAt && <ProductionForm command="stop-start" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} /><button className={secondary}>Iniciar paragem</button></ProductionForm>}
         {stopped && <ProductionForm command="stop-end" batchId={selected.id}><input name="rowId" type="hidden" value={q.id} /><button className={secondary + " border-amber-300/50 text-amber-200"}>Terminar paragem</button></ProductionForm>}
       </div>}
@@ -143,6 +151,7 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
         <button className={buttonClass}><Plus size={17} />Criar lote</button>
       </ProductionForm></div></details>}
     </header>
+    {(user.role === "SGQ" || manager) && !selected && <QualityRequests calls={qualityQueue} now={now} />}
     {!selected ? <>
       <form className="flex flex-wrap gap-2" action="/producao"><input name="q" aria-label="Pesquisar referência ou lote" placeholder="Referência ou lote" defaultValue={params.q} className={inputClass + " sm:max-w-xs"} /><select name="estado" aria-label="Estado" defaultValue={params.estado || ""} className={inputClass + " sm:max-w-48"}><option value="">Todos os estados</option>{Object.entries(productionStatuses).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select><button className={secondary}>Filtrar</button></form>
       <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead className="text-xs uppercase text-zinc-400"><tr>{["Referência / lote", "Linha", "Equipamento", "Produzido", "Estado", ""].map((x, i) => <th key={i} className="p-3">{x}</th>)}</tr></thead><tbody>{batches.slice(0, 100).map(b => <tr key={b.id} className="border-t border-zinc-800"><td className="p-3 font-semibold">{b.reference}<span className="block font-normal text-zinc-400">{b.lot}</span></td><td className="p-3">{b.line}</td><td className="p-3">{b.equipment.code || b.equipment.name}</td><td className="p-3">{b.quantity.toString()} {b.unit}</td><td className="p-3">{productionStatuses[b.status as keyof typeof productionStatuses]}</td><td className="p-3"><Link href={"/producao?lote=" + b.id} className={secondary}>Abrir lote</Link></td></tr>)}</tbody></table></div>

@@ -1,8 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { batchButtonStatus, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate, productionPeopleSummary, productionBatchMinutes, minutesLabel, productionWasteQuantity } from "./production";
+import { batchButtonStatus, canExecuteQuality, canWriteProduction, canManageProduction, elapsedMinutes, stopMinutes, validateQuality, productionDate, productionPeopleSummary, productionBatchMinutes, minutesLabel, productionWasteQuantity } from "./production";
 const at = (time: string) => new Date(`2026-11-25T${time}:00Z`);
 const cq = { calledAt: at("09:35"), arrivedAt: at("09:40"), endedAt: at("09:50"), technicianId: "quality", hasStop: false, stopStartedAt: null, stopEndedAt: null };
+
+test("CQ execution requires both SGQ profile and explicit permission", () => {
+  assert.equal(canExecuteQuality({ role: "SGQ", qualityExecutor: true }), true);
+  assert.equal(canExecuteQuality({ role: "SGQ", qualityExecutor: false }), false);
+  for (const role of ["ADMIN", "TICKET", "USER", "HSA"]) assert.equal(canExecuteQuality({ role, qualityExecutor: true }), false);
+});
 
 test("Closing waste accepts zero and three decimal places without accepting invalid or negative amounts", () => {
   for (const value of ["0", "0.000", "12.125", "99999999999.999"]) assert.equal(productionWasteQuantity(value), value);
