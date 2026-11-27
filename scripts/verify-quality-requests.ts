@@ -46,6 +46,13 @@ async function main() {
     const count = delivered.length;
     await notifyQualityCall(callId, fakeSend);
     assert.equal(delivered.length, count);
+    const call = await db.productionQualityCall.findUniqueOrThrow({ where: { id: callId } });
+    await notifyQualityCall(callId, fakeSend, { reminder: true, now: new Date(call.calledAt.valueOf() + 20 * 60000 - 1) });
+    assert.equal(delivered.length, count);
+    await notifyQualityCall(callId, fakeSend, { reminder: true, now: new Date(call.calledAt.valueOf() + 20 * 60000) });
+    assert.equal(delivered.length, count * 2);
+    await notifyQualityCall(callId, fakeSend, { reminder: true, now: new Date(call.calledAt.valueOf() + 21 * 60000) });
+    assert.equal(delivered.length, count * 2);
     await db.alertDigestDelivery.deleteMany({ where: { userId: quality.id, channel: "production-quality-call", digestDate: callId } });
     const failed = await notifyQualityCall(callId, async (to: string) => { if (to === quality.email) throw new Error("Simulated SMTP failure"); });
     assert.ok(failed.failed >= 1);
@@ -68,6 +75,10 @@ async function main() {
     }
     await page.getByTestId(`quality-request-${callId}`).getByRole("link", { name: "Abrir pedido" }).click();
     await page.getByRole("button", { name: "Iniciar CQ", exact: true }).waitFor();
+    const reminderForm = page.getByRole("button", { name: "Reenviar aviso por email", exact: true }).locator("xpath=ancestor::form");
+    await reminderForm.getByRole("button").click();
+    await reminderForm.getByRole("status").filter({ hasText: "Registo guardado." }).waitFor();
+    assert.equal((await reminderForm.getByRole("status").innerText()).includes("Não foi possível agendar"), false);
     await db.user.update({ where: { id: quality.id }, data: { qualityExecutor: false } });
     await page.getByRole("button", { name: "Iniciar CQ", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "autorização para executar CQ" }).waitFor();
@@ -79,6 +90,8 @@ async function main() {
     const started = await db.productionQualityCall.findUniqueOrThrow({ where: { id: callId } });
     assert.equal(started.technicianId, quality.id); assert.ok(started.arrivedAt);
     const previous = delivered.length; await notifyQualityCall(callId, fakeSend); assert.equal(delivered.length, previous);
+    await notifyQualityCall(callId, fakeSend, { reminder: true, now: new Date(call.calledAt.valueOf() + 30 * 60000) });
+    assert.equal(delivered.length, previous);
     await page.goto(`${base}/producao`);
     await page.getByTestId(`quality-request-${callId}`).getByText(quality.name, { exact: false }).waitFor();
     await page.getByTestId(`quality-request-${callId}`).getByRole("link", { name: "Abrir pedido" }).click();
@@ -97,7 +110,7 @@ async function main() {
       await db.productionBatch.delete({ where: { id: batchId } });
     }
     if (equipmentId) await db.equipment.delete({ where: { id: equipmentId } });
-    await db.alertDigestDelivery.deleteMany({ where: { OR: [{ userId: { in: ids } }, ...(callId ? [{ digestDate: callId, channel: "production-quality-call" }] : [])] } });
+    await db.alertDigestDelivery.deleteMany({ where: { OR: [{ userId: { in: ids } }, ...(callId ? [{ digestDate: callId, channel: { in: ["production-quality-call", "production-quality-reminder"] } }] : [])] } });
     await db.session.deleteMany({ where: { userId: { in: ids } } });
     await db.user.deleteMany({ where: { id: { in: ids } } });
     await db.$disconnect();

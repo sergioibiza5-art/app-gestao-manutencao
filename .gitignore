@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/.workflow-data/
 /out/
 
 # production
@@ -43,3 +44,4 @@ next-dev.err.log
 next-env.d.ts
 
 /app/generated/prisma
+/.swc

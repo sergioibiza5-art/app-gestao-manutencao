@@ -6,6 +6,7 @@ import { requireUser } from "@/lib/auth";
 import { getPrisma } from "@/lib/prisma";
 import { batchButtonStatus, canExecuteQuality, canManageProduction, canWriteProduction, productionDate, productionOperations, productionWasteQuantity, validateInterval, validateQuality } from "@/lib/production";
 import { notifyQualityCall } from "@/lib/production-quality-email";
+import { scheduleQualityReminder } from "@/lib/schedule-quality-reminder";
 
 export type ProductionResult = { error?: string; success?: string; batchId?: string };
 const text = (f: FormData, name: string) => String(f.get(name) ?? "").trim();
@@ -191,6 +192,12 @@ export async function productionAction(_previous: ProductionResult, form: FormDa
     revalidatePath("/funcionario", "layout");
     let success = "Registo guardado.";
     if (notificationId) {
+      try {
+        await scheduleQualityReminder(notificationId);
+      } catch (error) {
+        console.error("Agendamento do lembrete CQ:", error instanceof Error ? error.message : "Falha de agendamento");
+        success += " Não foi possível agendar o lembrete de 20 minutos. Usa Reenviar aviso para tentar novamente.";
+      }
       try {
         const delivery = await notifyQualityCall(notificationId);
         success += delivery.failed ? " O pedido ficou guardado, mas houve falhas no email. Podes reenviar o aviso." : delivery.recipients === 0 ? " Sem técnicos SGQ autorizados com email válido para avisar." : delivery.sent ? ` Aviso enviado a ${delivery.sent} técnico(s) de qualidade.` : " Os técnicos já tinham sido avisados.";
