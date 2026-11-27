@@ -1,0 +1,16 @@
+▲ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3016
+- Network:       http://192.168.100.204:3016
+- Environments: .env.local, .env
+✓ Ready in 661ms
+✓ Compiled workflows in 834ms (20 steps, 1 workflow)
+
+ GET /acessos 200 in 16.8s (next.js: 3.8s, proxy.ts: 818ms, application-code: 12.2s)
+ POST /acessos 200 in 6.0s (next.js: 7ms, proxy.ts: 18ms, application-code: 6.0s)
+○ Compiling /.well-known/workflow/v1/flow ...
+ POST /.well-known/workflow/v1/flow?__health 200 in 4.6s (next.js: 4.6s, application-code: 21ms)
+ GET /acessos 200 in 5.9s (next.js: 6ms, proxy.ts: 26ms, application-code: 5.8s)
+ POST /acessos 200 in 4.1s (next.js: 4ms, proxy.ts: 7ms, application-code: 4.1s)
+✓ Compiled in 652ms
+✓ Compiled workflows in 514ms (20 steps, 1 workflow)
+✓ Compiled workflows in 1.5s (20 steps, 1 workflow)
